@@ -1,0 +1,2 @@
+class PersonalAddress < Address
+end

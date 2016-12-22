@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  sequence: 1
+  question: one
+  script: one
+
+two:
+  sequence: 1
+  question: two
+  script: two

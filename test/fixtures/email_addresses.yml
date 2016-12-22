@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: 1
+  primary: false
+  address: MyString
+  address_type: MyString
+  status: MyString
+  person_id: 1
+
+two:
+  id: 2
+  primary: false
+  address: MyString
+  address_type: MyString
+  status: MyString
+  person_id: 2

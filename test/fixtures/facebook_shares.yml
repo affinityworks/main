@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  share_page: one
+  title: MyString
+  description: MyString
+  image: MyString
+
+two:
+  share_page: two
+  title: MyString
+  description: MyString
+  image: MyString

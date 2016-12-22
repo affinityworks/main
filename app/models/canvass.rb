@@ -1,0 +1,2 @@
+class Canvass < ApplicationRecord
+end

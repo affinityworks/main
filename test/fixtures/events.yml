@@ -1,0 +1,53 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  origin_system: MyString
+  name: MyString
+  title: MyString
+  description: MyString
+  summary: MyString
+  browser_url: MyString
+  type: 
+  ticket_levels: MyString
+  featured_image_url: MyString
+  total_accepted: 1
+  total_tickets: 1
+  total_amount: 1.5
+  status: MyString
+  instructions: MyString
+  start_date: 2016-12-22 13:52:58
+  end_date: 2016-12-22 13:52:58
+  all_day_date: 2016-12-22
+  all_day: false
+  capacity: 1
+  guests_can_invite_others: false
+  transparency: MyString
+  visibility: MyString
+  ticket_levels: one
+  address: one
+
+two:
+  origin_system: MyString
+  name: MyString
+  title: MyString
+  description: MyString
+  summary: MyString
+  browser_url: MyString
+  type: 
+  ticket_levels: MyString
+  featured_image_url: MyString
+  total_accepted: 1
+  total_tickets: 1
+  total_amount: 1.5
+  status: MyString
+  instructions: MyString
+  start_date: 2016-12-22 13:52:58
+  end_date: 2016-12-22 13:52:58
+  all_day_date: 2016-12-22
+  all_day: false
+  capacity: 1
+  guests_can_invite_others: false
+  transparency: MyString
+  visibility: MyString
+  ticket_levels: two
+  address: two

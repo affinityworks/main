@@ -1,0 +1,2 @@
+class ReferrerDatum < ApplicationRecord
+end

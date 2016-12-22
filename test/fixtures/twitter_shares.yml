@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  share_page: one
+  message: MyString
+  total_shares: 231
+
+two:
+  share_page: two
+  message: MyString
+  total_shares: 2

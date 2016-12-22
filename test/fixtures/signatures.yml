@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  origin_system: MyString
+  action_date: 2016-12-21 23:45:16
+  comments: MyString
+  referrer_data: one
+  petition: one
+  person: one
+
+two:
+  origin_system: MyString
+  action_date: 2016-12-21 23:45:16
+  comments: MyString
+  referrer_data: two
+  petition: two
+  person: two

@@ -1,0 +1,2 @@
+class EmployerAddress < Address
+end

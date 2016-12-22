@@ -1,0 +1,2 @@
+class Petition < ApplicationRecord
+end

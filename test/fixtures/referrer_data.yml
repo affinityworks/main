@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  source: MyString
+  referrer: MyString
+  website: MyString
+  url: MyString
+
+two:
+  source: MyString
+  referrer: MyString
+  website: MyString
+  url: MyString

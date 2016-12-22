@@ -1,0 +1,2 @@
+class EventAddress < Address
+end

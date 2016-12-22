@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  action_date: 2016-12-21 23:45:24
+  value: MyString
+  responses: one
+
+two:
+  action_date: 2016-12-21 23:45:24
+  value: MyString
+  responses: two

@@ -1,0 +1,65 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: 1
+  venue: MyString
+  address_lines: MyString
+  locality: MyString
+  region: MyString
+  postal_code: MyString
+  country: MyString
+  location_id: 1
+  status: MyString
+  primary: false
+  address_type: MyString
+  occupation: MyString
+  person_id: 1
+  type: EmployerAddress
+
+two:
+  id: 2
+  venue: MyString
+  address_lines: MyString
+  locality: MyString
+  region: MyString
+  postal_code: MyString
+  country: MyString
+  location_id: 1
+  status: MyString
+  primary: false
+  address_type: MyString
+  occupation: MyString
+  person_id: 2
+  type: EmployerAddress
+
+three:
+  id: 3
+  venue: MyString
+  address_lines: MyString
+  locality: MyString
+  region: MyString
+  postal_code: MyString
+  country: MyString
+  location_id: 1
+  status: MyString
+  primary: false
+  address_type: MyString
+  occupation: MyString
+  person_id: 1
+  type: PersonalAddress
+
+four:
+  id: 4
+  venue: MyString
+  address_lines: MyString
+  locality: MyString
+  region: MyString
+  postal_code: MyString
+  country: MyString
+  location_id: 1
+  status: MyString
+  primary: false
+  address_type: MyString
+  occupation: MyString
+  person_id: 2
+  type: PersonalAddress

@@ -1,0 +1,33 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  origin_system: MyString
+  action_date: 2016-12-21 23:43:03
+  amount: 
+  credited_amount: 
+  created_date: 2016-12-21 23:43:03
+  currency: MyString
+  subscription_instance: MyString
+  voided: false
+  voided_date: 2016-12-21 23:43:03
+  url: MyString
+  referrer_data: one
+  person: one
+  fundraising_page: one
+  attendance: one
+
+two:
+  origin_system: MyString
+  action_date: 2016-12-21 23:43:03
+  amount: 
+  credited_amount: 
+  created_date: 2016-12-21 23:43:03
+  currency: MyString
+  subscription_instance: MyString
+  voided: false
+  voided_date: 2016-12-21 23:43:03
+  url: MyString
+  referrer_data: two
+  person: two
+  fundraising_page: two
+  attendance: two

@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  origin_system: MyString
+  name: MyString
+  title: MyString
+  description: MyString
+  summary: MyString
+  targets: MyString
+  browser_url: MyString
+  featured_image_url: MyString
+  total_outreaches: 1
+  type: 
+
+two:
+  origin_system: MyString
+  name: MyString
+  title: MyString
+  description: MyString
+  summary: MyString
+  targets: MyString
+  browser_url: MyString
+  featured_image_url: MyString
+  total_outreaches: 1
+  type: 

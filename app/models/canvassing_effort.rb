@@ -1,0 +1,2 @@
+class CanvassingEffort < ApplicationRecord
+end

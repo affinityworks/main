@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  organization: MyString
+  given_name: MyString
+  family_name: MyString
+  ocdid: MyString
+
+two:
+  title: MyString
+  organization: MyString
+  given_name: MyString
+  family_name: MyString
+  ocdid: MyString

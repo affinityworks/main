@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  method: MyString
+  reference_number: MyString
+  authorization_stored: false
+  donation: one
+
+two:
+  method: MyString
+  reference_number: MyString
+  authorization_stored: false
+  donation: two

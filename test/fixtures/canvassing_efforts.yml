@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  origin_system: MyString
+  name: MyString
+  title: MyString
+  description: MyString
+  summary: MyString
+  start_time: 2016-12-21 23:42:21
+  end_time: 2016-12-21 23:42:21
+  type: 
+  total_canvasses: 1
+
+two:
+  origin_system: MyString
+  name: MyString
+  title: MyString
+  description: MyString
+  summary: MyString
+  start_time: 2016-12-21 23:42:21
+  end_time: 2016-12-21 23:42:21
+  type: 
+  total_canvasses: 1

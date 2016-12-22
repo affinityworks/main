@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  origin_system: MyString
+  action_date: 2016-12-21 23:41:01
+  contact_type: MyString
+  imput_type: MyString
+  sucess: false
+  status_code: MyString
+
+two:
+  origin_system: MyString
+  action_date: 2016-12-21 23:41:01
+  contact_type: MyString
+  imput_type: MyString
+  sucess: false
+  status_code: MyString
