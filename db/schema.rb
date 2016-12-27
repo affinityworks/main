@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161222215305) do
+ActiveRecord::Schema.define(version: 20161227024237) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20161222215305) do
     t.string   "location_accuracy"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+    t.index ["location_id"], name: "index_addresses_on_location_id", using: :btree
     t.index ["person_id"], name: "index_addresses_on_person_id", using: :btree
   end
 
@@ -49,10 +50,11 @@ ActiveRecord::Schema.define(version: 20161222215305) do
     t.integer  "total_outreaches"
     t.string   "type"
     t.integer  "creator_id"
-    t.integer  "index"
     t.integer  "modified_by_id"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+    t.index ["creator_id"], name: "index_advocacy_campaigns_on_creator_id", using: :btree
+    t.index ["modified_by_id"], name: "index_advocacy_campaigns_on_modified_by_id", using: :btree
   end
 
   create_table "answers", force: :cascade do |t|
@@ -77,6 +79,7 @@ ActiveRecord::Schema.define(version: 20161222215305) do
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.index ["event_id"], name: "index_attendances_on_event_id", using: :btree
+    t.index ["invited_by_id"], name: "index_attendances_on_invited_by_id", using: :btree
     t.index ["person_id"], name: "index_attendances_on_person_id", using: :btree
     t.index ["referrer_data_id"], name: "index_attendances_on_referrer_data_id", using: :btree
   end
@@ -93,7 +96,9 @@ ActiveRecord::Schema.define(version: 20161222215305) do
     t.integer  "target_id"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
+    t.index ["canvasser_id"], name: "index_canvasses_on_canvasser_id", using: :btree
     t.index ["canvassing_effort_id"], name: "index_canvasses_on_canvassing_effort_id", using: :btree
+    t.index ["target_id"], name: "index_canvasses_on_target_id", using: :btree
   end
 
   create_table "canvassing_efforts", force: :cascade do |t|
@@ -107,10 +112,12 @@ ActiveRecord::Schema.define(version: 20161222215305) do
     t.string   "type"
     t.integer  "total_canvasses"
     t.integer  "creator_id"
-    t.integer  "modifiedy_by_id"
+    t.integer  "modified_by_id"
     t.integer  "script_id"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.index ["creator_id"], name: "index_canvassing_efforts_on_creator_id", using: :btree
+    t.index ["modified_by_id"], name: "index_canvassing_efforts_on_modified_by_id", using: :btree
     t.index ["script_id"], name: "index_canvassing_efforts_on_script_id", using: :btree
   end
 
@@ -199,6 +206,28 @@ ActiveRecord::Schema.define(version: 20161222215305) do
     t.index ["share_page_id"], name: "index_facebook_shares_on_share_page_id", using: :btree
   end
 
+  create_table "forms", force: :cascade do |t|
+    t.string   "origin_system"
+    t.string   "name"
+    t.string   "title"
+    t.string   "description"
+    t.string   "summary"
+    t.string   "call_to_action"
+    t.string   "browser_url"
+    t.string   "featured_image_url"
+    t.integer  "total_submissions"
+    t.integer  "person_id"
+    t.integer  "creator_id"
+    t.integer  "modified_by_id"
+    t.integer  "submissions_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.index ["creator_id"], name: "index_forms_on_creator_id", using: :btree
+    t.index ["modified_by_id"], name: "index_forms_on_modified_by_id", using: :btree
+    t.index ["person_id"], name: "index_forms_on_person_id", using: :btree
+    t.index ["submissions_id"], name: "index_forms_on_submissions_id", using: :btree
+  end
+
   create_table "fundraising_pages", force: :cascade do |t|
     t.string   "origin_system"
     t.string   "name"
@@ -210,10 +239,12 @@ ActiveRecord::Schema.define(version: 20161222215305) do
     t.integer  "total_donations"
     t.float    "total_amount"
     t.string   "currency"
-    t.integer  "person_id"
+    t.integer  "creator_id"
+    t.integer  "modified_by_id"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
-    t.index ["person_id"], name: "index_fundraising_pages_on_person_id", using: :btree
+    t.index ["creator_id"], name: "index_fundraising_pages_on_creator_id", using: :btree
+    t.index ["modified_by_id"], name: "index_fundraising_pages_on_modified_by_id", using: :btree
   end
 
   create_table "outreaches", force: :cascade do |t|
@@ -311,6 +342,7 @@ ActiveRecord::Schema.define(version: 20161222215305) do
     t.string   "handle"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["person_id"], name: "index_profiles_on_person_id", using: :btree
   end
 
   create_table "questions", force: :cascade do |t|
@@ -390,12 +422,12 @@ ActiveRecord::Schema.define(version: 20161222215305) do
     t.string   "description"
     t.string   "summary"
     t.integer  "person_id"
-    t.integer  "creator_id"
+    t.integer  "modified_by_id"
     t.integer  "canvassing_effort_id"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
     t.index ["canvassing_effort_id"], name: "index_scripts_on_canvassing_effort_id", using: :btree
-    t.index ["creator_id"], name: "index_scripts_on_creator_id", using: :btree
+    t.index ["modified_by_id"], name: "index_scripts_on_modified_by_id", using: :btree
     t.index ["person_id"], name: "index_scripts_on_person_id", using: :btree
   end
 
@@ -412,6 +444,8 @@ ActiveRecord::Schema.define(version: 20161222215305) do
     t.integer  "modified_by_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.index ["creator_id"], name: "index_share_pages_on_creator_id", using: :btree
+    t.index ["modified_by_id"], name: "index_share_pages_on_modified_by_id", using: :btree
   end
 
   create_table "signatures", force: :cascade do |t|
@@ -426,6 +460,19 @@ ActiveRecord::Schema.define(version: 20161222215305) do
     t.index ["person_id"], name: "index_signatures_on_person_id", using: :btree
     t.index ["petition_id"], name: "index_signatures_on_petition_id", using: :btree
     t.index ["referrer_data_id"], name: "index_signatures_on_referrer_data_id", using: :btree
+  end
+
+  create_table "submissions", force: :cascade do |t|
+    t.string   "origin_system"
+    t.datetime "action_date"
+    t.integer  "referrer_data_id"
+    t.integer  "person_id"
+    t.integer  "form_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["form_id"], name: "index_submissions_on_form_id", using: :btree
+    t.index ["person_id"], name: "index_submissions_on_person_id", using: :btree
+    t.index ["referrer_data_id"], name: "index_submissions_on_referrer_data_id", using: :btree
   end
 
   create_table "targets", force: :cascade do |t|
@@ -478,7 +525,8 @@ ActiveRecord::Schema.define(version: 20161222215305) do
   add_foreign_key "events", "addresses"
   add_foreign_key "events", "ticket_levels", column: "ticket_levels_id"
   add_foreign_key "facebook_shares", "share_pages"
-  add_foreign_key "fundraising_pages", "people"
+  add_foreign_key "forms", "people"
+  add_foreign_key "forms", "submissions", column: "submissions_id"
   add_foreign_key "outreaches", "referrer_data", column: "referrer_data_id"
   add_foreign_key "payments", "donations"
   add_foreign_key "recipients", "donations"

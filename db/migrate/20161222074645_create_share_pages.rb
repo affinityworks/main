@@ -9,9 +9,9 @@ class CreateSharePages < ActiveRecord::Migration[5.0]
       t.string :browser_url
       t.string :share_url
       t.integer :total_shares
-      t.integer :creator_id
-      t.integer :modified_by_id
-            
+      t.belongs_to :creator, index: true, :class_name => 'Person'
+      t.belongs_to :modified_by, index: true, :class_name => 'Person'
+
       t.timestamps
     end
   end

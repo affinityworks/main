@@ -7,7 +7,7 @@ class CreateAttendances < ActiveRecord::Migration[5.0]
       t.boolean :attended
       t.string :comment
       t.references :person
-      t.integer :invited_by_id
+      t.belongs_to :invited_by, index: true, :class_name => 'Person'
       t.references :event
       t.references :referrer_data
       t.timestamps

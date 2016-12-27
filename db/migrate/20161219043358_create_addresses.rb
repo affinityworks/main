@@ -7,7 +7,7 @@ class CreateAddresses < ActiveRecord::Migration[5.0]
       t.string :region
       t.string :postal_code
       t.string :country
-      t.integer :location_id
+      t.belongs_to :location, index: true, :class_name => 'Address'
       t.string :status
       t.boolean :primary
       t.string :address_type

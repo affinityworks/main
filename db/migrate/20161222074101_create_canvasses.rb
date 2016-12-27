@@ -8,8 +8,8 @@ class CreateCanvasses < ActiveRecord::Migration[5.0]
       t.boolean :sucess
       t.string :status_code
       t.references :canvassing_effort
-      t.integer :canvasser_id
-      t.integer :target_id
+      t.belongs_to :canvasser, index: true, :class_name => 'Person'
+      t.belongs_to :target, index: true, :class_name => 'Person'
       t.timestamps
     end
   end

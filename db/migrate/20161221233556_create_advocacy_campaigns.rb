@@ -11,8 +11,8 @@ class CreateAdvocacyCampaigns < ActiveRecord::Migration[5.0]
       t.string :featured_image_url
       t.integer :total_outreaches
       t.string :type
-      t.integer :creator_id, :index
-      t.integer :modified_by_id, :index
+      t.belongs_to :creator, index: true, :class_name => 'Person'
+      t.belongs_to :modified_by, index: true, :class_name => 'Person'
       t.timestamps
     end
   end

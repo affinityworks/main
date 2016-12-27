@@ -6,11 +6,9 @@ class CreateScripts < ActiveRecord::Migration[5.0]
       t.string :title
       t.string :description
       t.string :summary
-      t.integer :person_id
-      t.integer :creator_id
+      t.belongs_to :person, index: true, :class_name => 'Person', foreign_key: true
+      t.belongs_to :modified_by, index: true, :class_name => 'Person'
       t.references :canvassing_effort, foreign_key: true
-      t.index :creator_id
-      t.index :person_id
 
       t.timestamps
     end

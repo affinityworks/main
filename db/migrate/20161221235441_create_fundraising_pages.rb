@@ -11,8 +11,8 @@ class CreateFundraisingPages < ActiveRecord::Migration[5.0]
       t.integer :total_donations
       t.float :total_amount
       t.string :currency
-      t.references :person, foreign_key: true
-
+      t.belongs_to :creator, index: true, :class_name => 'Person'
+      t.belongs_to :modified_by, index: true, :class_name => 'Person'
       t.timestamps
     end
   end
