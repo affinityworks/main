@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  origin_system: MyString
+  action_date: 2016-12-26 18:42:49
+  referrer_data_id: 1
+  person_id: 1
+  form_id: 1
+
+two:
+  origin_system: MyString
+  action_date: 2016-12-26 18:42:49
+  referrer_data_id: 2
+  person_id: 2
+  form_id: 2
