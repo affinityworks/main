@@ -70,8 +70,15 @@ ActiveRecord::Schema.define(version: 20161222215305) do
     t.string   "status"
     t.boolean  "attended"
     t.string   "comment"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.integer  "person_id"
+    t.integer  "invited_by_id"
+    t.integer  "event_id"
+    t.integer  "referrer_data_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["event_id"], name: "index_attendances_on_event_id", using: :btree
+    t.index ["person_id"], name: "index_attendances_on_person_id", using: :btree
+    t.index ["referrer_data_id"], name: "index_attendances_on_referrer_data_id", using: :btree
   end
 
   create_table "canvasses", force: :cascade do |t|
@@ -81,8 +88,12 @@ ActiveRecord::Schema.define(version: 20161222215305) do
     t.string   "imput_type"
     t.boolean  "sucess"
     t.string   "status_code"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.integer  "canvassing_effort_id"
+    t.integer  "canvasser_id"
+    t.integer  "target_id"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.index ["canvassing_effort_id"], name: "index_canvasses_on_canvassing_effort_id", using: :btree
   end
 
   create_table "canvassing_efforts", force: :cascade do |t|
@@ -95,8 +106,12 @@ ActiveRecord::Schema.define(version: 20161222215305) do
     t.datetime "end_time"
     t.string   "type"
     t.integer  "total_canvasses"
+    t.integer  "creator_id"
+    t.integer  "modifiedy_by_id"
+    t.integer  "script_id"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.index ["script_id"], name: "index_canvassing_efforts_on_script_id", using: :btree
   end
 
   create_table "donations", force: :cascade do |t|

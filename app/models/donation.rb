@@ -3,4 +3,6 @@ class Donation < ApplicationRecord
   belongs_to :person
   belongs_to :fundraising_page
   belongs_to :attendance
+  has_one :payment
+  has_one :recepient
 end

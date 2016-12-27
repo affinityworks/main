@@ -7,7 +7,9 @@ class CreateCanvasses < ActiveRecord::Migration[5.0]
       t.string :imput_type
       t.boolean :sucess
       t.string :status_code
-
+      t.references :canvassing_effort
+      t.integer :canvasser_id
+      t.integer :target_id
       t.timestamps
     end
   end

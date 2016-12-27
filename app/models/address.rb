@@ -8,6 +8,5 @@ class Address < ApplicationRecord
 
   def location
     return( {'latitude' => latitude, 'longitude' => longitude})
-
   end
 end

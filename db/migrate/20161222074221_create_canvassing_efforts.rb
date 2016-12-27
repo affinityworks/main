@@ -10,7 +10,9 @@ class CreateCanvassingEfforts < ActiveRecord::Migration[5.0]
       t.datetime :end_time
       t.string :type
       t.integer :total_canvasses
-
+      t.integer :creator_id
+      t.integer :modifiedy_by_id
+      t.references :script
       t.timestamps
     end
   end

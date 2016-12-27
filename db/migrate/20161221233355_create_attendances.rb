@@ -6,7 +6,10 @@ class CreateAttendances < ActiveRecord::Migration[5.0]
       t.string :status
       t.boolean :attended
       t.string :comment
-
+      t.references :person
+      t.integer :invited_by_id
+      t.references :event
+      t.references :referrer_data
       t.timestamps
     end
   end
