@@ -10,9 +10,8 @@ one:
   browser_url: MyString
   featured_image_url: MyString
   total_submissions: 1
-  person: one
-  creator: one
-  submissions: one
+  person_id: 1
+  creator_id: 1
 
 two:
   origin_system: MyString
@@ -24,6 +23,5 @@ two:
   browser_url: MyString
   featured_image_url: MyString
   total_submissions: 1
-  person: two
-  creator: two
-  submissions: two
+  person_id: 2
+  creator_id: 2

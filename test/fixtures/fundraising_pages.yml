@@ -11,7 +11,8 @@ one:
   total_donations: 1
   total_amount: 1.5
   currency: MyString
-  person: one
+  creator_id: 1
+  modified_by_id: 1
 
 two:
   origin_system: MyString
@@ -24,4 +25,5 @@ two:
   total_donations: 1
   total_amount: 1.5
   currency: MyString
-  person: two
+  creator_id: 2
+  modified_by_id: 2

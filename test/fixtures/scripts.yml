@@ -6,9 +6,9 @@ one:
   title: MyString
   description: MyString
   summary: MyString
-  person: one
-  creator: one
-  canvassing_effort: one
+  person_id: 1
+  modified_by_id: 1
+  canvassing_effort_id: 1
 
 two:
   origin_system: MyString
@@ -16,6 +16,6 @@ two:
   title: MyString
   description: MyString
   summary: MyString
-  person: two
-  creator: two
-  canvassing_effort: two
+  person_id: 2
+  modified_by_id: 2
+  canvassing_effort_id: 2

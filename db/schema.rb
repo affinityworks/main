@@ -535,6 +535,7 @@ ActiveRecord::Schema.define(version: 20161227024237) do
   add_foreign_key "script_questions", "questions"
   add_foreign_key "script_questions", "scripts"
   add_foreign_key "scripts", "canvassing_efforts"
+  add_foreign_key "scripts", "people"
   add_foreign_key "signatures", "people"
   add_foreign_key "signatures", "petitions"
   add_foreign_key "signatures", "referrer_data", column: "referrer_data_id"
