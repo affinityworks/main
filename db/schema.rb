@@ -75,13 +75,13 @@ ActiveRecord::Schema.define(version: 20161227024237) do
     t.integer  "person_id"
     t.integer  "invited_by_id"
     t.integer  "event_id"
-    t.integer  "referrer_data_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.integer  "referrer_datum_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
     t.index ["event_id"], name: "index_attendances_on_event_id", using: :btree
     t.index ["invited_by_id"], name: "index_attendances_on_invited_by_id", using: :btree
     t.index ["person_id"], name: "index_attendances_on_person_id", using: :btree
-    t.index ["referrer_data_id"], name: "index_attendances_on_referrer_data_id", using: :btree
+    t.index ["referrer_datum_id"], name: "index_attendances_on_referrer_datum_id", using: :btree
   end
 
   create_table "canvasses", force: :cascade do |t|
@@ -255,8 +255,12 @@ ActiveRecord::Schema.define(version: 20161227024237) do
     t.string   "subject"
     t.string   "message"
     t.integer  "referrer_data_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.integer  "advocacy_campaign_id"
+    t.integer  "person_id"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.index ["advocacy_campaign_id"], name: "index_outreaches_on_advocacy_campaign_id", using: :btree
+    t.index ["person_id"], name: "index_outreaches_on_person_id", using: :btree
     t.index ["referrer_data_id"], name: "index_outreaches_on_referrer_data_id", using: :btree
   end
 
@@ -520,14 +524,16 @@ ActiveRecord::Schema.define(version: 20161227024237) do
   add_foreign_key "donations", "attendances"
   add_foreign_key "donations", "fundraising_pages"
   add_foreign_key "donations", "people"
-  add_foreign_key "donations", "referrer_data", column: "referrer_data_id"
+  add_foreign_key "donations", "referrer_data"
   add_foreign_key "email_shares", "share_pages"
   add_foreign_key "events", "addresses"
   add_foreign_key "events", "ticket_levels", column: "ticket_levels_id"
   add_foreign_key "facebook_shares", "share_pages"
   add_foreign_key "forms", "people"
   add_foreign_key "forms", "submissions", column: "submissions_id"
-  add_foreign_key "outreaches", "referrer_data", column: "referrer_data_id"
+  add_foreign_key "outreaches", "advocacy_campaigns"
+  add_foreign_key "outreaches", "people"
+  add_foreign_key "outreaches", "referrer_data"
   add_foreign_key "payments", "donations"
   add_foreign_key "recipients", "donations"
   add_foreign_key "reminders", "events"
@@ -538,6 +544,6 @@ ActiveRecord::Schema.define(version: 20161227024237) do
   add_foreign_key "scripts", "people"
   add_foreign_key "signatures", "people"
   add_foreign_key "signatures", "petitions"
-  add_foreign_key "signatures", "referrer_data", column: "referrer_data_id"
+  add_foreign_key "signatures", "referrer_data"
   add_foreign_key "twitter_shares", "share_pages"
 end

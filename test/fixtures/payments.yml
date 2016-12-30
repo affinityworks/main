@@ -1,13 +1,15 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  id: 1
   method: MyString
   reference_number: MyString
   authorization_stored: false
-  donation: one
+  donation_id: 1
 
 two:
+  id: 2
   method: MyString
   reference_number: MyString
   authorization_stored: false
-  donation: two
+  donation_id: 2

@@ -1,12 +1,14 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  id: 1
   source: MyString
   referrer: MyString
   website: MyString
   url: MyString
 
 two:
+  id: 2
   source: MyString
   referrer: MyString
   website: MyString

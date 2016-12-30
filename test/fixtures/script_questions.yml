@@ -1,11 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  id: 1
   sequence: 1
-  question: one
-  script: one
+  question_id: 1
+  script_id: 1
 
 two:
+  id: 2
   sequence: 1
-  question: two
-  script: two
+  question_id: 2
+  script_id: 2

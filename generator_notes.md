@@ -107,3 +107,9 @@ rails generate model FacebookShare share_page:references title:string descriptio
 rails generate model TwitterShare share_page:references message:string description:total_shares --timestamps
 
 rails generate model EmailShare share_page:references subject:string body:string description:total_shares --timestamps
+
+
+
+rails generate model Form origin_system:string name:string title:string description:string summary:string call_to_action:string browser_url:string featured_image_url:string total_submissions:integer person:references creator:references submissions:references --timestamps
+
+rails generate model Submission origin_system:string action_date:datetime references:referrer_data references:person references:form --timestamps

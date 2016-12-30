@@ -1,13 +1,15 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  share_page: one
+  id: 1
+  share_page_id: 1
   title: MyString
   description: MyString
   image: MyString
 
 two:
-  share_page: two
+  id: 2
+  share_page_id: 2
   title: MyString
   description: MyString
   image: MyString

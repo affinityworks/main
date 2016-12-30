@@ -1,6 +1,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  id: 1
   title: MyString
   description: MyString
   amount: 1.5
@@ -8,6 +9,7 @@ one:
   attended: MyString
 
 two:
+  id: 2
   title: MyString
   description: MyString
   amount: 1.5

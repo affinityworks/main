@@ -1,6 +1,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  id: 1
   origin_system: MyString
   name: MyString
   title: MyString
@@ -11,6 +12,7 @@ one:
   modified_by_id: 2
 
 two:
+  id: 2
   origin_system: MyString
   name: MyString
   title: MyString

@@ -1,12 +1,14 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  id: 1
   provider: MyString
   person_id: 1
   url: MyString
   handle: MyString
 
 two:
+  id: 2
   provider: MyString
   person_id: 2
   url: MyString

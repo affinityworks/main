@@ -14,3 +14,10 @@
 # ActiveSupport::Inflector.inflections(:en) do |inflect|
 #   inflect.acronym 'RESTful'
 # end
+
+
+ActiveSupport::Inflector.inflections do |inflect|
+
+   inflect.irregular 'referrer_data', 'referrer_data' # or whatever you want your plural to be
+
+ end

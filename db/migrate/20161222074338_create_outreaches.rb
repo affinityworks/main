@@ -8,7 +8,8 @@ class CreateOutreaches < ActiveRecord::Migration[5.0]
       t.string :subject
       t.string :message
       t.references :referrer_data, foreign_key: true
-
+      t.references :advocacy_campaign, foreign_key: true
+      t.references :person, foreign_key: true
       t.timestamps
     end
   end

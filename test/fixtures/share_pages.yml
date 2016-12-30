@@ -1,6 +1,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  id: 1
   origin_system: MyString
   name: MyString
   title: MyString
@@ -9,10 +10,11 @@ one:
   browser_url: MyString
   share_url: MyString
   total_shares: 1
-  creator: one
-  modified_by: one
+  creator_id: 1
+  modified_by_id: 1
 
 two:
+  id: 2
   origin_system: MyString
   name: MyString
   title: MyString
@@ -21,5 +23,5 @@ two:
   browser_url: MyString
   share_url: MyString
   total_shares: 1
-  creator: two
-  modified_by: two
+  creator_id: 2
+  modified_by_id: 2

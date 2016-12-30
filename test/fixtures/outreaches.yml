@@ -1,19 +1,25 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  id: 1
   origin_system: MyString
   action_date: 2016-12-21 23:43:38
-  type: 
+  type:
   duration: 1
   subject: MyString
   message: MyString
-  referrer_data: one
+  referrer_data_id: 1
+  advocacy_campaign_id: 1
+  person_id: 1
 
 two:
+  id: 2
   origin_system: MyString
   action_date: 2016-12-21 23:43:38
-  type: 
+  type:
   duration: 1
   subject: MyString
   message: MyString
-  referrer_data: two
+  referrer_data_id: 2
+  advocacy_campaign_id: 2
+  person_id: 2

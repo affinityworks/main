@@ -1,13 +1,15 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  id: 1
   method: MyString
   minutes: MyString
-  people: one
-  event: one
+  people_id: 1
+  event_id: 1
 
 two:
+  id: 2
   method: MyString
   minutes: MyString
-  people: two
-  event: two
+  people_id: 2
+  event_id: 2

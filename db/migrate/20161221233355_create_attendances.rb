@@ -9,7 +9,7 @@ class CreateAttendances < ActiveRecord::Migration[5.0]
       t.references :person
       t.belongs_to :invited_by, index: true, :class_name => 'Person'
       t.references :event
-      t.references :referrer_data
+      t.references :referrer_datum
       t.timestamps
     end
   end

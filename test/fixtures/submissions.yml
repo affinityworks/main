@@ -1,6 +1,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  id: 1
   origin_system: MyString
   action_date: 2016-12-26 18:42:49
   referrer_data_id: 1
@@ -8,6 +9,7 @@ one:
   form_id: 1
 
 two:
+  id: 2
   origin_system: MyString
   action_date: 2016-12-26 18:42:49
   referrer_data_id: 2
