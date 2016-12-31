@@ -1,2 +1,0 @@
-class ReferrerDatum < ApplicationRecord
-end
