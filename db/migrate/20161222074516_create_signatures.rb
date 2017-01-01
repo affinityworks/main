@@ -10,5 +10,10 @@ class CreateSignatures < ActiveRecord::Migration[5.0]
 
       t.timestamps
     end
+
+    create_table :petitions_signatures, id: false do |t|
+      t.belongs_to :signature, index: true
+      t.belongs_to :petition, index: true
+    end
   end
 end

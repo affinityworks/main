@@ -8,7 +8,7 @@ class CreateTicketLevels < ActiveRecord::Migration[5.0]
       t.integer :limit
       t.integer :total_tickets
       t.float :total_amount
-
+      t.belongs_to :event
       t.timestamps
     end
   end

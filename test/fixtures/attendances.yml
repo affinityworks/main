@@ -7,6 +7,8 @@ one:
   status: MyString
   attended: false
   comment: MyString
+  person_id: 1
+  event_id: 1
 
 two:
   id: 2
@@ -15,3 +17,5 @@ two:
   status: MyString
   attended: false
   comment: MyString
+  person_id: 2
+  event_id: 1

@@ -3,7 +3,7 @@ class CreateReminders < ActiveRecord::Migration[5.0]
     create_table :reminders do |t|
       t.string :method
       t.string :minutes
-      t.references :people, foreign_key: true
+      t.references :person, foreign_key: true
       t.references :event, foreign_key: true
 
       t.timestamps

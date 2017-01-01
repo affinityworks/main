@@ -7,7 +7,7 @@ one:
   title: MyString
   description: MyString
   summary: MyString
-  person_id: 1
+  creator_id: 1
   modified_by_id: 1
   canvassing_effort_id: 1
 
@@ -18,6 +18,6 @@ two:
   title: MyString
   description: MyString
   summary: MyString
-  person_id: 2
+  creator_id: 2
   modified_by_id: 2
   canvassing_effort_id: 2

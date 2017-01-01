@@ -1,7 +1,9 @@
 require 'test_helper'
 
 class TicketTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  test "basic associations" do
+    one = tickets(:one)
+    assert_kind_of Attendance, one.attendance
+  end
+
 end

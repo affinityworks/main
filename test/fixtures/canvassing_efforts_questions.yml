@@ -1,0 +1,7 @@
+one:
+  question_id: 1
+  canvassing_effort_id: 1
+
+two:
+  question_id: 2
+  canvassing_effort_id: 2

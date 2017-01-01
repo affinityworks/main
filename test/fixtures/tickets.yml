@@ -7,6 +7,7 @@ one:
   amount: 1.5
   currency: MyString
   attended: MyString
+  attendance_id: 1
 
 two:
   id: 2
@@ -15,3 +16,4 @@ two:
   amount: 1.5
   currency: MyString
   attended: MyString
+  attendance_id: 2

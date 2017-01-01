@@ -4,12 +4,12 @@ one:
   id: 1
   method: MyString
   minutes: MyString
-  people_id: 1
+  person_id: 1
   event_id: 1
 
 two:
   id: 2
   method: MyString
   minutes: MyString
-  people_id: 2
+  person_id: 2
   event_id: 2

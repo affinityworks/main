@@ -9,6 +9,7 @@ one:
   limit: 1
   total_tickets: 1
   total_amount: 1.5
+  event_id: 1
 
 two:
   id: 2
@@ -19,3 +20,4 @@ two:
   limit: 1
   total_tickets: 1
   total_amount: 1.5
+  event_id: 2

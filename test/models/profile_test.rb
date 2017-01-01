@@ -1,7 +1,8 @@
 require 'test_helper'
 
 class ProfileTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  test "basic associations" do
+    one = profiles(:one)
+    assert_kind_of Person, one.person
+  end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161227024237) do
+ActiveRecord::Schema.define(version: 20170101020252) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,8 +61,12 @@ ActiveRecord::Schema.define(version: 20161227024237) do
     t.datetime "action_date"
     t.string   "value"
     t.integer  "responses_id"
+    t.integer  "question_id"
+    t.integer  "canvass_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.index ["canvass_id"], name: "index_answers_on_canvass_id", using: :btree
+    t.index ["question_id"], name: "index_answers_on_question_id", using: :btree
     t.index ["responses_id"], name: "index_answers_on_responses_id", using: :btree
   end
 
@@ -101,6 +105,13 @@ ActiveRecord::Schema.define(version: 20161227024237) do
     t.index ["target_id"], name: "index_canvasses_on_target_id", using: :btree
   end
 
+  create_table "canvasses_answers", id: false, force: :cascade do |t|
+    t.integer "canvass_id"
+    t.integer "answer_id"
+    t.index ["answer_id"], name: "index_canvasses_answers_on_answer_id", using: :btree
+    t.index ["canvass_id"], name: "index_canvasses_answers_on_canvass_id", using: :btree
+  end
+
   create_table "canvassing_efforts", force: :cascade do |t|
     t.string   "origin_system"
     t.string   "name"
@@ -119,6 +130,13 @@ ActiveRecord::Schema.define(version: 20161227024237) do
     t.index ["creator_id"], name: "index_canvassing_efforts_on_creator_id", using: :btree
     t.index ["modified_by_id"], name: "index_canvassing_efforts_on_modified_by_id", using: :btree
     t.index ["script_id"], name: "index_canvassing_efforts_on_script_id", using: :btree
+  end
+
+  create_table "canvassing_efforts_questions", id: false, force: :cascade do |t|
+    t.integer "question_id"
+    t.integer "canvassing_effort_id"
+    t.index ["canvassing_effort_id"], name: "index_canvassing_efforts_questions_on_canvassing_effort_id", using: :btree
+    t.index ["question_id"], name: "index_canvassing_efforts_questions_on_question_id", using: :btree
   end
 
   create_table "donations", force: :cascade do |t|
@@ -188,11 +206,17 @@ ActiveRecord::Schema.define(version: 20161227024237) do
     t.boolean  "guests_can_invite_others"
     t.string   "transparency"
     t.string   "visibility"
+    t.integer  "creator_id"
+    t.integer  "organizer_id"
+    t.integer  "modified_by_id"
     t.integer  "ticket_levels_id"
     t.integer  "address_id"
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
     t.index ["address_id"], name: "index_events_on_address_id", using: :btree
+    t.index ["creator_id"], name: "index_events_on_creator_id", using: :btree
+    t.index ["modified_by_id"], name: "index_events_on_modified_by_id", using: :btree
+    t.index ["organizer_id"], name: "index_events_on_organizer_id", using: :btree
     t.index ["ticket_levels_id"], name: "index_events_on_ticket_levels_id", using: :btree
   end
 
@@ -312,8 +336,19 @@ ActiveRecord::Schema.define(version: 20161227024237) do
     t.string   "featured_image_url"
     t.string   "petition_text"
     t.integer  "total_signatures"
+    t.integer  "creator_id"
+    t.integer  "modified_by_id"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+    t.index ["creator_id"], name: "index_petitions_on_creator_id", using: :btree
+    t.index ["modified_by_id"], name: "index_petitions_on_modified_by_id", using: :btree
+  end
+
+  create_table "petitions_signatures", id: false, force: :cascade do |t|
+    t.integer "signature_id"
+    t.integer "petition_id"
+    t.index ["petition_id"], name: "index_petitions_signatures_on_petition_id", using: :btree
+    t.index ["signature_id"], name: "index_petitions_signatures_on_signature_id", using: :btree
   end
 
   create_table "petitions_targets", id: false, force: :cascade do |t|
@@ -347,6 +382,20 @@ ActiveRecord::Schema.define(version: 20161227024237) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["person_id"], name: "index_profiles_on_person_id", using: :btree
+  end
+
+  create_table "queries", force: :cascade do |t|
+    t.string   "origin_system"
+    t.string   "name"
+    t.string   "title"
+    t.string   "description"
+    t.string   "summary"
+    t.string   "browser_url"
+    t.integer  "total_results"
+    t.integer  "creator_id"
+    t.integer  "modified_by_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
   create_table "questions", force: :cascade do |t|
@@ -393,20 +442,22 @@ ActiveRecord::Schema.define(version: 20161227024237) do
   create_table "reminders", force: :cascade do |t|
     t.string   "method"
     t.string   "minutes"
-    t.integer  "people_id"
+    t.integer  "person_id"
     t.integer  "event_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["event_id"], name: "index_reminders_on_event_id", using: :btree
-    t.index ["people_id"], name: "index_reminders_on_people_id", using: :btree
+    t.index ["person_id"], name: "index_reminders_on_person_id", using: :btree
   end
 
   create_table "responses", force: :cascade do |t|
     t.string   "key"
     t.string   "name"
     t.string   "title"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "question_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["question_id"], name: "index_responses_on_question_id", using: :btree
   end
 
   create_table "script_questions", force: :cascade do |t|
@@ -425,14 +476,14 @@ ActiveRecord::Schema.define(version: 20161227024237) do
     t.string   "title"
     t.string   "description"
     t.string   "summary"
-    t.integer  "person_id"
+    t.integer  "creator_id"
     t.integer  "modified_by_id"
     t.integer  "canvassing_effort_id"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
     t.index ["canvassing_effort_id"], name: "index_scripts_on_canvassing_effort_id", using: :btree
+    t.index ["creator_id"], name: "index_scripts_on_creator_id", using: :btree
     t.index ["modified_by_id"], name: "index_scripts_on_modified_by_id", using: :btree
-    t.index ["person_id"], name: "index_scripts_on_person_id", using: :btree
   end
 
   create_table "share_pages", force: :cascade do |t|
@@ -497,8 +548,10 @@ ActiveRecord::Schema.define(version: 20161227024237) do
     t.integer  "limit"
     t.integer  "total_tickets"
     t.float    "total_amount"
+    t.integer  "event_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.index ["event_id"], name: "index_ticket_levels_on_event_id", using: :btree
   end
 
   create_table "tickets", force: :cascade do |t|
@@ -507,8 +560,10 @@ ActiveRecord::Schema.define(version: 20161227024237) do
     t.float    "amount"
     t.string   "currency"
     t.string   "attended"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "attendance_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["attendance_id"], name: "index_tickets_on_attendance_id", using: :btree
   end
 
   create_table "twitter_shares", force: :cascade do |t|
@@ -520,6 +575,8 @@ ActiveRecord::Schema.define(version: 20161227024237) do
     t.index ["share_page_id"], name: "index_twitter_shares_on_share_page_id", using: :btree
   end
 
+  add_foreign_key "answers", "canvasses"
+  add_foreign_key "answers", "questions"
   add_foreign_key "answers", "responses", column: "responses_id"
   add_foreign_key "donations", "attendances"
   add_foreign_key "donations", "fundraising_pages"
@@ -537,11 +594,10 @@ ActiveRecord::Schema.define(version: 20161227024237) do
   add_foreign_key "payments", "donations"
   add_foreign_key "recipients", "donations"
   add_foreign_key "reminders", "events"
-  add_foreign_key "reminders", "people", column: "people_id"
+  add_foreign_key "reminders", "people"
   add_foreign_key "script_questions", "questions"
   add_foreign_key "script_questions", "scripts"
   add_foreign_key "scripts", "canvassing_efforts"
-  add_foreign_key "scripts", "people"
   add_foreign_key "signatures", "people"
   add_foreign_key "signatures", "petitions"
   add_foreign_key "signatures", "referrer_data"

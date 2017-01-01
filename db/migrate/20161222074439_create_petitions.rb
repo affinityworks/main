@@ -10,6 +10,8 @@ class CreatePetitions < ActiveRecord::Migration[5.0]
       t.string :featured_image_url
       t.string :petition_text
       t.integer :total_signatures
+      t.integer :creator_id, index: true
+      t.integer :modified_by_id, index: true
 
       t.timestamps
     end

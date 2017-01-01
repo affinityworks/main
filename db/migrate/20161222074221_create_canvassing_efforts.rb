@@ -15,5 +15,9 @@ class CreateCanvassingEfforts < ActiveRecord::Migration[5.0]
       t.references :script
       t.timestamps
     end
+    create_table :canvassing_efforts_questions, id: false do |t|
+      t.belongs_to :question, index: true
+      t.belongs_to :canvassing_effort, index: true
+    end
   end
 end

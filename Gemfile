@@ -20,6 +20,7 @@ gem 'coffee-rails', '~> 4.2'
 gem 'pg'
 
 gem 'geokit-rails'
+gem 'active_model_serializers', '~> 0.10.0'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

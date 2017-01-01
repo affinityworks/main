@@ -6,7 +6,8 @@ class CreateTickets < ActiveRecord::Migration[5.0]
       t.float :amount
       t.string :currency
       t.string :attended
-
+      t.belongs_to :attendance
+      
       t.timestamps
     end
   end

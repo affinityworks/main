@@ -9,4 +9,6 @@ class Address < ApplicationRecord
   def location
     return( {'latitude' => latitude, 'longitude' => longitude})
   end
+
+  #todo add polymorphic assocaitions for personal adderss / employer / event address
 end

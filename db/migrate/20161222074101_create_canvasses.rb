@@ -12,5 +12,9 @@ class CreateCanvasses < ActiveRecord::Migration[5.0]
       t.belongs_to :target, index: true, :class_name => 'Person'
       t.timestamps
     end
+    create_table :canvasses_answers, id: false do |t|
+      t.belongs_to :canvass, index: true
+      t.belongs_to :answer, index: true
+    end
   end
 end

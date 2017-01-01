@@ -11,6 +11,8 @@ one:
   featured_image_url: MyString
   petition_text: MyString
   total_signatures: 1
+  creator_id: 1
+  modified_by_id: 1
 
 two:
   id: 2
@@ -23,3 +25,5 @@ two:
   featured_image_url: MyString
   petition_text: MyString
   total_signatures: 1
+  creator_id: 2
+  modified_by_id: 2

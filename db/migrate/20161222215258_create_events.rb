@@ -23,6 +23,9 @@ class CreateEvents < ActiveRecord::Migration[5.0]
       t.boolean :guests_can_invite_others
       t.string :transparency
       t.string :visibility
+      t.integer :creator_id, index: true
+      t.integer :organizer_id, index: true
+      t.integer :modified_by_id, index: true
       t.references :ticket_levels, foreign_key: true
       t.references :address, foreign_key: true
 

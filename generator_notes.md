@@ -113,3 +113,6 @@ rails generate model EmailShare share_page:references subject:string body:string
 rails generate model Form origin_system:string name:string title:string description:string summary:string call_to_action:string browser_url:string featured_image_url:string total_submissions:integer person:references creator:references submissions:references --timestamps
 
 rails generate model Submission origin_system:string action_date:datetime references:referrer_data references:person references:form --timestamps
+
+
+rails generate model Query origin_system:string name:string title:string description:string summary:string browser_url:string total_results:integer creator:references modified_by:references results:references --timestamps

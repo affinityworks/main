@@ -5,9 +5,13 @@ one:
   action_date: 2016-12-21 23:45:24
   value: MyString
   responses_id: 1
+  question_id: 1
+  canvass_id: 1
 
 two:
   id: 2
   action_date: 2016-12-21 23:45:24
   value: MyString
   responses_id: 2
+  question_id: 2
+  canvass_id: 2

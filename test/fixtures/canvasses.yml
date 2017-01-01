@@ -8,6 +8,9 @@ one:
   imput_type: MyString
   sucess: false
   status_code: MyString
+  canvasser_id: 1
+  target_id: 1
+  canvassing_effort_id: 1
 
 two:
   id: 2
@@ -17,3 +20,6 @@ two:
   imput_type: MyString
   sucess: false
   status_code: MyString
+  target_id: 2
+  canvasser_id: 2
+  canvassing_effort_id: 2
