@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
+gem 'rails'#, '~> 5.0.0', '>= 5.0.0.1'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 # Use Puma as the app server
@@ -16,11 +16,24 @@ gem 'coffee-rails', '~> 4.2'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
+
 # postgresql database adatper
 gem 'pg'
+gem 'graphql'
+gem 'graphql-rails-resolver'
+gem 'graphiql-rails'
+gem 'react-rails'
+
+# This is an optional gem. When included, GraphQL will use a parser written in C
+# instead of the Ruby parser shipped with graphql-ruby.
+#gem 'graphql-libgraphqlparser', '~> 0.2'
+
+# Asset compilation and NPM modules
+gem 'browserify-rails'
+
 
 gem 'geokit-rails'
-gem 'active_model_serializers', '~> 0.10.0'
+gem 'active_model_serializers'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

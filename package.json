@@ -1,0 +1,11 @@
+{
+  "name": "AdvocacyCommons",
+  "dependencies" : {
+    "browserify": "~10.2.4",
+    "browserify-incremental": "^3.0.1"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">= 0.10"
+  }
+}
