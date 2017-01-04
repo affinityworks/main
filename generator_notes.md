@@ -116,3 +116,6 @@ rails generate model Submission origin_system:string action_date:datetime refere
 
 
 rails generate model Query origin_system:string name:string title:string description:string summary:string browser_url:string total_results:integer creator:references modified_by:references results:references --timestamps
+
+
+rails generate model Membership group:references person:references role:string --timestamps

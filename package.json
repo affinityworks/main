@@ -1,8 +1,14 @@
 {
   "name": "AdvocacyCommons",
   "dependencies" : {
-    "browserify": "~10.2.4",
-    "browserify-incremental": "^3.0.1"
+    "babel-relay-plugin": "^0.2.5",
+    "babelify": "^6.3.0",
+    "browserify": "~> 10.2.4",
+    "browserify-incremental": "^3.0.1",
+    "graphql": "^0.4.4",
+    "react": "^0.14.0-rc1",
+    "react-dom": "^0.14.0-rc1",
+    "react-relay": "^0.3.2"
   },
   "license": "MIT",
   "engines": {

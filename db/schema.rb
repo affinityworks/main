@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170101020252) do
+ActiveRecord::Schema.define(version: 20170104032728) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,13 @@ ActiveRecord::Schema.define(version: 20170101020252) do
     t.datetime "updated_at",         null: false
     t.index ["creator_id"], name: "index_advocacy_campaigns_on_creator_id", using: :btree
     t.index ["modified_by_id"], name: "index_advocacy_campaigns_on_modified_by_id", using: :btree
+  end
+
+  create_table "advocacy_campaigns_groups", id: false, force: :cascade do |t|
+    t.integer "advocacy_campaign_id"
+    t.integer "group_id"
+    t.index ["advocacy_campaign_id"], name: "index_advocacy_campaigns_groups_on_advocacy_campaign_id", using: :btree
+    t.index ["group_id"], name: "index_advocacy_campaigns_groups_on_group_id", using: :btree
   end
 
   create_table "answers", force: :cascade do |t|
@@ -130,6 +137,13 @@ ActiveRecord::Schema.define(version: 20170101020252) do
     t.index ["creator_id"], name: "index_canvassing_efforts_on_creator_id", using: :btree
     t.index ["modified_by_id"], name: "index_canvassing_efforts_on_modified_by_id", using: :btree
     t.index ["script_id"], name: "index_canvassing_efforts_on_script_id", using: :btree
+  end
+
+  create_table "canvassing_efforts_groups", id: false, force: :cascade do |t|
+    t.integer "canvassing_effort_id"
+    t.integer "group_id"
+    t.index ["canvassing_effort_id"], name: "index_canvassing_efforts_groups_on_canvassing_effort_id", using: :btree
+    t.index ["group_id"], name: "index_canvassing_efforts_groups_on_group_id", using: :btree
   end
 
   create_table "canvassing_efforts_questions", id: false, force: :cascade do |t|
@@ -220,6 +234,13 @@ ActiveRecord::Schema.define(version: 20170101020252) do
     t.index ["ticket_levels_id"], name: "index_events_on_ticket_levels_id", using: :btree
   end
 
+  create_table "events_groups", id: false, force: :cascade do |t|
+    t.integer "event_id"
+    t.integer "group_id"
+    t.index ["event_id"], name: "index_events_groups_on_event_id", using: :btree
+    t.index ["group_id"], name: "index_events_groups_on_group_id", using: :btree
+  end
+
   create_table "facebook_shares", force: :cascade do |t|
     t.integer  "share_page_id"
     t.string   "title"
@@ -252,6 +273,13 @@ ActiveRecord::Schema.define(version: 20170101020252) do
     t.index ["submissions_id"], name: "index_forms_on_submissions_id", using: :btree
   end
 
+  create_table "forms_groups", id: false, force: :cascade do |t|
+    t.integer "form_id"
+    t.integer "group_id"
+    t.index ["form_id"], name: "index_forms_groups_on_form_id", using: :btree
+    t.index ["group_id"], name: "index_forms_groups_on_group_id", using: :btree
+  end
+
   create_table "fundraising_pages", force: :cascade do |t|
     t.string   "origin_system"
     t.string   "name"
@@ -269,6 +297,45 @@ ActiveRecord::Schema.define(version: 20170101020252) do
     t.datetime "updated_at",         null: false
     t.index ["creator_id"], name: "index_fundraising_pages_on_creator_id", using: :btree
     t.index ["modified_by_id"], name: "index_fundraising_pages_on_modified_by_id", using: :btree
+  end
+
+  create_table "groups", force: :cascade do |t|
+    t.string   "origin_system"
+    t.string   "name"
+    t.string   "description"
+    t.string   "summary"
+    t.string   "browser_url"
+    t.string   "featured_image_url"
+    t.integer  "creator_id"
+    t.integer  "modified_by_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.index ["creator_id"], name: "index_groups_on_creator_id", using: :btree
+    t.index ["modified_by_id"], name: "index_groups_on_modified_by_id", using: :btree
+  end
+
+  create_table "groups_petitions", id: false, force: :cascade do |t|
+    t.integer "petition_id"
+    t.integer "group_id"
+    t.index ["group_id"], name: "index_groups_petitions_on_group_id", using: :btree
+    t.index ["petition_id"], name: "index_groups_petitions_on_petition_id", using: :btree
+  end
+
+  create_table "groups_share_pages", id: false, force: :cascade do |t|
+    t.integer "share_page_id"
+    t.integer "group_id"
+    t.index ["group_id"], name: "index_groups_share_pages_on_group_id", using: :btree
+    t.index ["share_page_id"], name: "index_groups_share_pages_on_share_page_id", using: :btree
+  end
+
+  create_table "memberships", force: :cascade do |t|
+    t.integer  "group_id"
+    t.integer  "person_id"
+    t.string   "role"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_memberships_on_group_id", using: :btree
+    t.index ["person_id"], name: "index_memberships_on_person_id", using: :btree
   end
 
   create_table "outreaches", force: :cascade do |t|
@@ -324,6 +391,13 @@ ActiveRecord::Schema.define(version: 20170101020252) do
     t.text     "custom_fields"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
+  end
+
+  create_table "people_groups", id: false, force: :cascade do |t|
+    t.integer "person_id"
+    t.integer "group_id"
+    t.index ["group_id"], name: "index_people_groups_on_group_id", using: :btree
+    t.index ["person_id"], name: "index_people_groups_on_person_id", using: :btree
   end
 
   create_table "petitions", force: :cascade do |t|
@@ -588,6 +662,8 @@ ActiveRecord::Schema.define(version: 20170101020252) do
   add_foreign_key "facebook_shares", "share_pages"
   add_foreign_key "forms", "people"
   add_foreign_key "forms", "submissions", column: "submissions_id"
+  add_foreign_key "memberships", "groups"
+  add_foreign_key "memberships", "people"
   add_foreign_key "outreaches", "advocacy_campaigns"
   add_foreign_key "outreaches", "people"
   add_foreign_key "outreaches", "referrer_data"

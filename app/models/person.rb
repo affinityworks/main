@@ -1,4 +1,8 @@
 class Person < ApplicationRecord
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable
 
   has_one :email_address
   has_one :employer_address, :class_name => 'Address'
@@ -11,7 +15,8 @@ class Person < ApplicationRecord
   has_many :attendances
   has_many :events, through: :attendances
   has_many :answers
-
+  has_many :memberships
+  has_many :groups, :through => :memberships
   validates :given_name, presence: true
-
+  #has_many :memberships
 end

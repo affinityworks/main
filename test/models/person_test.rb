@@ -13,11 +13,16 @@ class PersonTest < ActiveSupport::TestCase
     assert_kind_of Address, one.personal_addresses.first
     assert_kind_of Address, one.employer_address
 
-    #todo add check for making sure polymorphism on adresses works. 
+    #todo add check for making sure polymorphism on adresses works.
   end
 
   test "should not save person without name" do
     person = Person.new
     assert_not person.save
+  end
+
+  test "membership in groups" do
+    one = people(:one)
+    assert_kind_of Group, one.groups.first
   end
 end
