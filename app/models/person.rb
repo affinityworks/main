@@ -17,6 +17,6 @@ class Person < ApplicationRecord
   has_many :answers
   has_many :memberships
   has_many :groups, :through => :memberships
-  validates :given_name, presence: true
+  #validates :given_name, presence: true
   #has_many :memberships
 end
