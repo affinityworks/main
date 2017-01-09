@@ -3427,6 +3427,7 @@ tbody.collapse.in {
 }
 .dropdown-toggle:focus {
   outline: 0;
+  width: 350px;
 }
 .dropdown-menu {
   position: absolute;
