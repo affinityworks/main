@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   devise_for :people
-  root to: redirect("/testpage.html")
+  #root to: "_site/index.html"
 
   resources :groups
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
