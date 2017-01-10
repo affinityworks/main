@@ -1,0 +1,2 @@
+node_modules/**/*.js
+src/scripts/sample-data.js

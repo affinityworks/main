@@ -1,0 +1,22 @@
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "airbnb"
+  ],
+  "env": {
+    "browser": true,
+  },
+  "rules": {
+    "import/prefer-default-export": 0,
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/no-unused-prop-types": "off",
+    "react/forbid-prop-types": "off"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["./src/scripts"]
+      }
+    }
+  }
+}

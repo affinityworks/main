@@ -1,0 +1,84 @@
+@font-face {
+    font-family: sans-serif;
+    font-weight: normal;
+    font-style: normal;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  background: white;
+  color: DarkSlateGray;
+  font-family: sans-serif;
+  font-size: 16px;
+  line-height: 1.2;
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  body {
+    padding: 0;
+  }
+}
+
+a {
+  color: #0C92F2;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+h1, h2, h3, h4 {
+  margin: 0 0 1em;
+  padding: 0;
+}
+
+h1 {
+  font-size: 2.5em;
+  margin: 0 0 1em;
+  padding: 0;
+}
+
+h2 {
+  font-size: 2em;
+}
+
+h3 {
+  font-size: 1.5em;
+}
+
+h4 {
+  font-size: 1.2em;
+}
+
+p, ul {
+  margin: 1em 0;
+}
+
+ul {
+  padding: 0;
+}
+
+button {
+  border: none;
+  background-color: #0C92F2;
+  cursor: pointer;
+  &:focus {
+    outline: none;
+  }
+}
+
+.app {
+  padding: 2em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
