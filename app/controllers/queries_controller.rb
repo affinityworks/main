@@ -1,11 +1,12 @@
-class GraphiqlsController < ApplicationController
+class QueriesController < ApplicationController
   def new
   end
 
   def create
     query_string = params[:query]
     query_variables = ensure_hash(params[:variables])
-    result = StarWarsSchema.execute(query_string, variables: query_variables)
+    #result = AdvocacyCommonsSchema.execute(query_string, variables: query_variables)
+    result = {}
     render json: result
   end
 
