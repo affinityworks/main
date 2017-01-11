@@ -1,3 +1,22 @@
 .group-title {
   font-size: 2em;
+  padding-bottom: 1em;
+}
+
+.group {
+
+  display: flex;
+  align-items: top;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.group-main {
+  display: inline-block;
+}
+
+.group-related {
+  display: inline-block;
+  flex-basis: 20em;
+  padding-left: 1em;
 }
