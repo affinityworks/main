@@ -3,19 +3,27 @@ import Update from './update';
 import style from './updates.scss';
 
 export default function UpdateList(props) {
-  let updates = null;
+  const {
+    updates,
+    sticky,
+  } = props;
 
-  updates = props.updates.map((update, index) => (
-    <Update key={index} update={update} />
-  ));
+  const updateItems = (updates) ? updates.map((update, index) => (
+    <Update
+      key={index}
+      update={update}
+      sticky={sticky}
+    />
+  )) : null;
 
   return (
     <div className="update-list" style={style}>
-      {updates}
+      {updateItems}
     </div>
   );
 }
 
 UpdateList.propTypes = {
   updates: React.PropTypes.arrayOf(React.PropTypes.object),
+  sticky: React.PropTypes.bool,
 };

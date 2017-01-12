@@ -3,11 +3,9 @@ import Event from './event';
 import style from './event.scss';
 
 export default function EventList(props) {
-  let eventItems = null;
-
-  eventItems = props.events.map((event, index) => (
+  const eventItems = (props.events) ? props.events.map((event, index) => (
     <Event key={index} event={event} />
-  ));
+  )) : null;
 
   return (
     <div className="event-list" style={style}>
