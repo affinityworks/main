@@ -3,21 +3,24 @@
     <title>
       Indivisible
     </title>
-    <link rel="stylesheet" type="text/css" href="/indivisible/header.css" />
+    <link rel="stylesheet" type="text/css" href="header.css" />
+    <link rel="stylesheet" type="text/css" href="form.css" />
     <script src="/indivisible/jquery-3.1.1.min.js" type="text/javascript"></script>
   </head>
   <body>
-    <div id="header">
-      <span class="header-nav">Link 1</span>
-      <span class="header-nav">Link 2</span>
-      <span class="header-nav">Link 3</span>
+    <div id="header-container">
+      <div id="header">
+        <span class="header-nav">Link 1</span>
+        <span class="header-nav">Link 2</span>
+        <span class="header-nav">Link 3</span>
+      </div>
     </div>
     <div id="form-container">
-      <link href='https://actionnetwork.org/css/style-embed.css' rel='stylesheet' type='text/css' /><script src='https://actionnetwork.org/widgets/v2/form/call-your-senator?format=js&source=widget'></script><div id='can-form-area-call-your-senator' style='width: 100%'><!-- this div is the target for our HTML insertion --></div>
+      <link href='https://actionnetwork.org/css/style-embed.css' rel='stylesheet' type='text/css' /><script src='https://actionnetwork.org/widgets/v2/form/call-your-senator?format=js&source=widget'></script><div id='can-form-area-call-your-senator' style='width: 600px'><!-- this div is the target for our HTML insertion --></div>
     </div>
     <div id="cp-container">
       <span id="cp-intro">Here's our CP widget.</span>
-      <script type="text/javascript">var CallPowerOptions = {}; CallPowerOptions.form = jQuery("#call_form"); CallPowerOptions.phoneField = jQuery("#phone_id"); CallPowerOptions.locationField = jQuery("#location_id"); CallPowerOptions.scriptDisplay = "overlay";console.log('CP options set.');</script><script type="text/javascript" src="https://advocacycommons.callpower.org/api/campaign/2/embed.js"></script>
+      <script type="text/javascript">var CallPowerOptions = {}; CallPowerOptions.form = jQuery("this_form"); CallPowerOptions.phoneField = jQuery("phone_field"); CallPowerOptions.locationField = jQuery("loc_field"); CallPowerOptions.scriptDisplay = "overlay";</script><script type="text/javascript" src="https://advocacycommons.callpower.org/api/campaign/2/embed.js"></script>
     </div>
   </body>
 </html>

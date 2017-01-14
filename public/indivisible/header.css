@@ -8,6 +8,13 @@
   text-transform: uppercase;
 }
 
+div#header {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  width: 600px;
+}
+
 span.header-nav {
   margin:0px 5px 0px 5px;
 }
