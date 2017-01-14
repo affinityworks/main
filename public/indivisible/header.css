@@ -1,20 +1,24 @@
-/* This is lifted straight from indivisibleguide.com, for purposes of mocking up a page like it. */
+/* This is lifted almost straight from indivisibleguide.com, for purposes of mocking up a page like it. */
 .header-nav {
   font-family: Montserrat;
-  font-weight: 400;
-  font-style: normal;
   font-size: 14px;
-  letter-spacing: .18em;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
+  color: rgba(255,255,255,.52);
 }
 
-div#header {
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-  width: 600px;
+div#header-container {
+  background-color: #001d59;
+  display: flex;
+  flex-direction: row;
+  height: 50px;
+  justify-content: center;
+  align-items: center;
 }
+
 
 span.header-nav {
-  margin:0px 5px 0px 5px;
+  margin:0px 10px 0px 10px;
 }
