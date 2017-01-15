@@ -15,16 +15,16 @@ validateZip = function(zip) {
 
 
 commanderData = function() {
-  userPhone = validatePhone($('#phone').val());
-  userLocation = validateZip($('#form-zip_code').val());
+  thisPhone = validatePhone(phoneField.val());
+  thisLocation = validateZip(zipField.val());
   console.log("Phone is " + userPhone);
   console.log("ZIP is " + userLocation);
-  if (userPhone && userLocation) {
+  if (thisPhone && thisLocation) {
 
     var data = {
       campaignId: '2',
-      userPhone: $('#phone').val(),
-      userLocation: $('#form-zip_code').val(),
+      userPhone: thisPhone,
+      userLocation: thisLocation,
       script: 'overlay',
     };
     console.log('Data looks good.');
