@@ -15,8 +15,8 @@ validateZip = function(zip) {
 
 
 commanderData = function() {
-  thisPhone = validatePhone(phoneField.val());
-  thisLocation = validateZip(zipField.val());
+  thisPhone = validatePhone($(phoneField).val());
+  thisLocation = validateZip($(zipField).val());
   console.log("Phone is " + userPhone);
   console.log("ZIP is " + userLocation);
   if (thisPhone && thisLocation) {
