@@ -5,7 +5,6 @@ $(document).on('can_embed_loaded', function() {
   emailField = $('#form-email');
   theForm = $('form#new_answer');
   $(theForm).submit(function(event) {
-    event.preventDefault();
     makeTheCall();
   });
 });
