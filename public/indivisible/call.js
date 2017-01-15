@@ -1,3 +1,10 @@
+validatePhone = function(num) {
+  num = num.replace(/[^0-9]/g, '')
+  if (num.substring(0, 1) != '1') num = "1" + num;
+  if (num.length == 11) return num;
+  return false;
+}
+
 makeTheCall = function() {
 var data = {
   campaignId: '2',
