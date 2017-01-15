@@ -1,5 +1,5 @@
-$('#can_embed_form').load(function(){
+$(document).on('can_embed_loaded', function() {
   console.log('Form loaded.');
-  var phoneField = $('#phone');
-  var zipField = $('#form-zip_code');
+  phoneField = $('#phone');
+  zipField = $('#form-zip_code');
 });
