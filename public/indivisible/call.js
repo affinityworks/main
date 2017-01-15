@@ -32,11 +32,20 @@ commanderData = function() {
 
   } else {
     console.log("Found some data errors.");
-    
-    
+    if (!thisPhone) var error_msg = 'Please enter a valid US phone number';
+    if (!thisLocation) {
+      if (error_msg) {
+        error_msg += ' and ZIP Code';
+      } else {
+        error_msg = 'Please enter a valid ZIP Code';
+      }
+    }
+    error_msg += ' so we can connect you to your senators.'
+    alert(error_msg);
     return false
   }
 }
+
 
 
 makeTheCall = function() {
