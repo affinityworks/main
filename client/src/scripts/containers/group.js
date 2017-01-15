@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import UpdateList from '../components/updates/update-list';
 import EventList from '../components/events/event-list';
+import Related from '../components/related/related';
+import SignUp from '../components/forms/signup';
 
 import style from './group.scss';
 
@@ -51,62 +53,24 @@ class Group extends Component {
     const regularUpdates = (updates) ? updates.regular : null;
 
     const signUpFrom = (
-      <div className="well">
-        <h4>Join Our Group</h4>
-        <input
-          type="email"
-          className="form-control"
-          name="group_signup_form-email"
-          placeholder="Email"
-        />
-        <input
-          type="text"
-          className="form-control"
-          name="group_signup_form-name"
-          placeholder="First Name"
-        />
-        <input
-          type="text"
-          className="form-control"
-          name="group_signup_form-name"
-          placeholder="Last Name"
-        />
-        <input
-          type="phone"
-          className="form-control"
-          name="group_signup_form-phone"
-          placeholder="Phone"
-        />
-        <input
-          type="checkbox"
-          name="volunteer"
-        />
-        <label htmlFor="volunteer">
-          I want to volunteer to help organize events
-        </label>
-        <textarea
-          className="form-control"
-          placeholder="I can help by..."
-        />
-        <button className="btn">Join Group</button>
-      </div>
+      <Related title="Join Our Group">
+        <SignUp to={`group-${name}`} />
+      </Related>
     );
 
     const facebookGroup = (
-      <div className="well">
-        <h4>{name} on Facebook</h4>
+      <Related title={`${name} on Facebook`}>
         <a
           className="facebook-like"
           href={facebookPageUrl}
         >
           Like
         </a>
-      </div>
+      </Related>
     );
 
     const contactWell = (
-      <div className="well">
-        <h4>Contact Info</h4>
+      <Related title="Contact Info">
         <dl>
           <dt>Group Contact:</dt>
           <dd>{contactName}</dd>
@@ -117,11 +81,11 @@ class Group extends Component {
             </a>
           </dd>
         </dl>
-      </div>
+      </Related>
     );
 
     const nearbyWell = (
-      <div className="well">
+      <Related title="Nearby Groups">
         <h4>Nearby Groups</h4>
         {(nearby) ? nearby.map((item, i) => (
           <div key={i}>
@@ -129,7 +93,7 @@ class Group extends Component {
             <span>{item.distance} miles</span>
           </div>
         )) : null }
-      </div>
+      </Related>
     );
 
     return (

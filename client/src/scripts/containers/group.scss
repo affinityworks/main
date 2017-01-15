@@ -1,10 +1,11 @@
 .group-title {
+  display: block;
   font-size: 2em;
   padding-bottom: 1em;
+  border-bottom: 1px solid lightGrey;
 }
 
 .group {
-
   display: flex;
   align-items: top;
   flex-direction: row;
@@ -13,6 +14,13 @@
 
 .group-main {
   display: inline-block;
+
+  .update-list,
+  .event-list {
+    margin: 0;
+    padding: 2em 0;
+    border-bottom: 1px solid lightGrey;
+  }
 }
 
 .group-related {
