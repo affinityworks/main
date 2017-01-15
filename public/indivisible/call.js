@@ -13,13 +13,17 @@ validateZip = function(zip) {
   return false
 }
 
-
+validateEmail = function() {
+  return !$(emailField).hasClass('error_input');
+}
 commanderData = function() {
   thisPhone = validatePhone($(phoneField).val());
   thisLocation = validateZip($(zipField).val());
+  hasEmail = validateEmail();
   console.log("Phone is " + thisPhone);
   console.log("ZIP is " + thisLocation);
-  if (thisPhone && thisLocation) {
+  console.log("Email is " +hasEmail);
+  if (thisPhone && thisLocation && hasEmail) {
 
     var data = {
       campaignId: '2',
@@ -32,15 +36,10 @@ commanderData = function() {
 
   } else {
     console.log("Found some data errors.");
-    if (!thisPhone) var error_msg = 'Please enter a valid US phone number';
-    if (!thisLocation) {
-      if (error_msg) {
-        error_msg += ' and ZIP Code';
-      } else {
-        error_msg = 'Please enter a valid ZIP Code';
-      }
-    }
-    error_msg += ' so we can connect you to your senators.'
+    error_msg = 'To connect you to your senator we need:';
+    if (!thisPhone) error_msg += '\n -your US phone number';
+    if (!thisLocation) error_msg += '\n -your ZIP code';
+    if (!hasEmail) error_msg += '\n -valid email address';
     alert(error_msg);
     return false
   }
