@@ -48,7 +48,7 @@ makeTheCall = function() {
       dataType: 'json',
       complete: function(res){
         console.log('Got response ' + res.status + ' ' + res.statusText);
-        $(window).on('hashchange',handleScript(res));
+        
       }
     });
   }
