@@ -32,7 +32,6 @@ commanderData = function() {
   }
 }
 
-
 makeTheCall = function() {
   data = commanderData();
   if (data) {
@@ -41,12 +40,9 @@ makeTheCall = function() {
       data: data,
       url: 'https://advocacycommons.callpower.org/call/create',
       dataType: 'json',
-      complete: function(res) {
-        console.log("AJAX done");
-        console.log(res);
-
+      complete: function(res){
+        console.log('Got response ' + res.status + ' ' + res.statusText);
       }
-
     });
   }
 }
