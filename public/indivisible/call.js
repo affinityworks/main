@@ -25,13 +25,12 @@ commanderData = function() {
     return data;
 
   } else {
-    console.log('No phone number.');
-    //No use notifying the user, because I haven't figured out how to stop the AN form submission.
+    console.log('No/bad phone number.');
+    return false;
+    //No use notifying the user; I haven't figured out how to stop the AN form submission.
     //alert('Please enter a valid US phone number.');
-
   }
 }
-
 
 makeTheCall = function() {
   data = commanderData();
@@ -41,12 +40,13 @@ makeTheCall = function() {
       data: data,
       url: 'https://advocacycommons.callpower.org/call/create',
       dataType: 'json',
-      complete: function(res) {
-        console.log("AJAX done");
-        console.log(res);
-
-      }
-
+      complete: handleResponse(res)
     });
-  }
+  } else {
+  handleResponse(false);
+}
+
+handleResponse = function(res) {
+  console.log('Received response ' + res);
+  
 }
