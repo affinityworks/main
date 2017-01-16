@@ -15,7 +15,7 @@ modifyForm = function (referrer_settings, slug) {
 }
 $(document).on('can_embed_loaded', function () {
   try {
-    $.get('app/referrers.yaml', function (data) {
+    $.get('/indivisible/app/referrers.yaml', function (data) {
       if (data) {
         referrer_data = jsyaml.load(data);
         //console.log(referrer_data);
