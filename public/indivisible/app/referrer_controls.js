@@ -2,9 +2,38 @@
 
 optInChk = $("#name_optin1");
 optInCtls = $('li#d_sharing');
-try {
-  var doc = yaml.safeLoad(fs.readFileSync('referrers.yaml', 'utf8'));
-  console.log(doc);
-} catch (e) {
-  console.log(e);
+modifyForm = function(referrer_settings) {
+  console.log(referrer_settings);
+  
 }
+
+
+$(document).ready(function(){
+	try {
+		$.get('app/referrers.yaml',function(data){
+			if (data) {
+				referrer_data = jsyaml.load(data);
+				console.log(referrer_data);
+			
+				query_string = new URLSearchParams(window.location.search);
+				if(query_string.has('ref')){
+					var ref = query_string.get('ref');
+					console.log('Got ref slug ' + ref);
+					if(referrer_data.hasOwnProperty(ref)) {
+						referrer_settings = referrer_data[ref];
+						console.log('Found referrer ' + referrer_settings.fullname);
+						$(document).on('can_embed_loaded', modifyForm(referrer_settings));
+					}
+				} else {
+			
+				}
+			
+			} else {
+				console.log('Error while reading YAML referrer data.');
+			}
+		}, 'text');
+	
+	} catch (e) {
+		console.log(e);
+	}
+});
