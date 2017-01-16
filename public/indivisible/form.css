@@ -43,3 +43,16 @@ div.action_description {
     src: url("https://fonts.gstatic.com/s/montserrat/v7/IQHow_FEYlDC4Gzy_m8fcmaVI6zN22yiurzcBKxPjFE.woff2") format("woff2");
     unicode-range: U+0-FF, U+131, U+152-153, U+2C6, U+2DA, U+2DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
 }
+
+/*Set up a background image for the page.  Not straight from indivisibleguide.com, but inspired by it. */
+div#can-form-area-call-your-senator::after {
+  background: rgba(0, 0, 0, 0) url("https://static1.squarespace.com/static/5855a354cd0f68bab2089b40/t/58597f8d29687fe710d051b7/1482191413003/Picture2.jpg?format=1500w") no-repeat scroll right center / cover ;
+  bottom: 0;
+  content: "";
+  left: 0;
+  opacity: 0.32;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: -1;
+}
