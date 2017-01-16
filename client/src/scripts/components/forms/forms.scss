@@ -1,0 +1,51 @@
+form {
+  margin: 1em 0;
+}
+
+input[type='text'],
+input[type='phone'],
+input[type='email'],
+textarea {
+  display: block;
+  width: 100%;
+  height: 3em;
+  padding: 0.35em 0.7em;
+  font-size: 1em;
+  line-height: 1.42857143;
+  margin-bottom: 0.75em;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+textarea {
+  min-height: 5em;
+}
+
+label {
+  display: inline-block;
+  padding: 0.5em;
+  font-size: 0.77em;
+}
+
+button {
+  border: none;
+  background-color: #0C92F2;
+  padding: 0.45em 1em;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1.125em;
+
+  &:hover,
+  &:active {
+    opacity: 0.87;
+  }
+}
+
+.field {
+  margin: 0;
+}
