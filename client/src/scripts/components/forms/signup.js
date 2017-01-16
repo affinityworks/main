@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import classnames from 'classnames';
+
+import slugify from '../../util/slugify';
 
 import style from './signup.scss';
 
@@ -13,6 +16,7 @@ class SignUp extends Component {
       phone: '',
       volunteer: false,
       volunteerDetail: '',
+      initalEntry: true,
     };
 
     this.handleEntryChange = this.handleEntryChange.bind(this);
@@ -21,22 +25,34 @@ class SignUp extends Component {
   handleEntryChange(event) {
     this.setState({
       [event.target.name]: event.target.value,
+      initalEntry: false,
     });
   }
 
+  handleSubmit() {
+    console.log(this.state);
+  }
+
   render() {
+    const formClasses = classnames({
+      signup: true,
+      'signup-initial': (this.state.initalEntry === true),
+    });
+
     return (
       <form
         style={style}
+        className={formClasses}
         onChange={this.handleEntryChange}
+        onSubmit={this.handleSubmit}
       >
         <input
-          type="text"
+          type="hidden"
           name="group-signup-id"
-          value={this.props.to}
+          value={slugify(this.props.to)}
           readOnly
         />
-        <div className="field">
+        <div className="field field-initial">
           <input
             type="email"
             className="form-control"
