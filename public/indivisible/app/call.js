@@ -34,8 +34,14 @@ commanderData = function() {
 handleScript = function(res) {
   console.log(res);
   $('#can_sidebar').slideUp();
-  $('div.action_description').text(res.responseJSON.script);
-  
+  if(res.status == '200'){
+    console.log('Got response 200 OK');
+    targetHTML = res.responseJSON.script
+  } else {
+    console.log('Got response ' + res.status + ' ' + res.statusText);
+    targetHTML = 'There was an error with your call.  Please <a href="http://www.advocacycommons.org/indivisible/">try again</a>.'
+  }
+  $('div.action_description').html(targetHTML);
 }
 makeTheCall = function() {
   data = commanderData();
@@ -46,7 +52,6 @@ makeTheCall = function() {
       url: 'https://advocacycommons.callpower.org/call/create',
       dataType: 'json',
       complete: function(res){
-        console.log('Got response ' + res.status + ' ' + res.statusText);
         handleScript(res);
       }
     });
