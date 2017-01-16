@@ -1,8 +1,12 @@
 .header {
-  width: 100vw;
+  display: block;
+  width: 100%;
   padding: 0em 2em 2em;
   background-color: white;
   color: black;
+  &:hover {
+    color: rgb(57,57,57);
+  }
 }
 
 .title {

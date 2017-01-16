@@ -30,6 +30,7 @@
     "react": "^15.3.2",
     "react-dom": "^15.3.1",
     "react-hot-loader": "^2.0.0-alpha-4",
+    "react-router": "4.0.0-alpha.4",
     "sass-loader": "^3.0.0",
     "style-loader": "^0.12.4",
     "url-loader": "^0.5.5",

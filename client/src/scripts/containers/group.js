@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+
+import Header from '../components/header/header';
 import UpdateList from '../components/updates/update-list';
 import EventList from '../components/events/event-list';
 import Related from '../components/related/related';
@@ -98,6 +100,7 @@ class Group extends Component {
     return (
       <div className="group" style={style}>
         <div className="group-main">
+          <Header />
           <a href={url} className="group-title">{name}</a>
           <UpdateList
             sticky

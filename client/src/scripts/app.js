@@ -1,17 +1,23 @@
-import ReactDOM from 'react-dom';
 import React from 'react';
+import { render } from 'react-dom';
+import { BrowserRouter, Match, Miss } from 'react-router';
+
+import Overview from './containers/overview';
 import Group from './containers/group';
-import Header from './components/header/header';
 
 require('./app.scss');
 
-const view = (
-  <div className="app">
-    <Header />
-    <Group />
-  </div>
+
+const Root = () => (
+  <BrowserRouter>
+    <div>
+      <Match exactly pattern="/" component={Overview} />
+      <Match pattern="/group" component={Group} />
+      <Match pattern="/event" component={Overview} />
+      <Match pattern="/login" component={Overview} />
+      <Miss component={Overview} />
+    </div>
+  </BrowserRouter>
 );
 
-ReactDOM.render(
-  view, document.getElementById('app')
-);
+render(<Root />, document.querySelector('#mount'));
