@@ -31,9 +31,12 @@ commanderData = function() {
 
   }
 }
-handleScript = function() {
+handleScript = function(res) {
   console.log('script handler called' + res);
-
+  if(window.location.hash == '#thanks') {
+    $('#can_sidebar').slideUp();
+    $('div.action_description').text('lorem ipsum scripty scripty');
+  }
 }
 makeTheCall = function() {
   data = commanderData();
