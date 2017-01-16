@@ -33,10 +33,9 @@ commanderData = function() {
 }
 handleScript = function(res) {
   console.log('script handler called' + res);
-  if(window.location.hash == '#thanks') {
-    $('#can_sidebar').slideUp();
-    $('div.action_description').text('lorem ipsum scripty scripty');
-  }
+  $('#can_sidebar').slideUp();
+  $('div.action_description').text('lorem ipsum scripty scripty');
+  
 }
 makeTheCall = function() {
   data = commanderData();
@@ -48,7 +47,7 @@ makeTheCall = function() {
       dataType: 'json',
       complete: function(res){
         console.log('Got response ' + res.status + ' ' + res.statusText);
-        
+        handleScript(res);
       }
     });
   }
