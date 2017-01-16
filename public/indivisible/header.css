@@ -1,5 +1,5 @@
 /* This is lifted almost straight from indivisibleguide.com, for purposes of mocking up a page like it. */
-.header-nav {
+.header-item {
   font-family: Montserrat;
   font-size: 14px;
   font-style: normal;
@@ -7,6 +7,7 @@
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: rgba(255,255,255,.52);
+  margin:0px 10px 0px 10px;
 }
 
 div#header-container {
@@ -16,9 +17,4 @@ div#header-container {
   height: 50px;
   justify-content: center;
   align-items: center;
-}
-
-
-span.header-nav {
-  margin:0px 10px 0px 10px;
 }
