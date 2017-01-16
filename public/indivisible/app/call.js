@@ -32,9 +32,9 @@ commanderData = function() {
   }
 }
 handleScript = function(res) {
-  console.log('script handler called' + res);
+  console.log(res);
   $('#can_sidebar').slideUp();
-  $('div.action_description').text('lorem ipsum scripty scripty');
+  $('div.action_description').text(res.responseJSON.script);
   
 }
 makeTheCall = function() {
