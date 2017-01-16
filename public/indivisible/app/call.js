@@ -31,7 +31,10 @@ commanderData = function() {
 
   }
 }
+handleScript = function() {
+  console.log('script handler called' + res);
 
+}
 makeTheCall = function() {
   data = commanderData();
   if (data) {
@@ -42,6 +45,7 @@ makeTheCall = function() {
       dataType: 'json',
       complete: function(res){
         console.log('Got response ' + res.status + ' ' + res.statusText);
+        $(window).on('hashchange',handleScript(res));
       }
     });
   }
