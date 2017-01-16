@@ -39,7 +39,7 @@ makeTheCall = function() {
     $.ajax({
       method: 'get',
       data: data,
-      url: 'https://advocacycommons.callpower.org/api/call/create',
+      url: 'https://advocacycommons.callpower.org/call/create',
       dataType: 'json',
       complete: function(res) {
         console.log("AJAX done");
