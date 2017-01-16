@@ -13,8 +13,11 @@ var config = {
     publicPath: '/'
   },
   devServer: {
-    inline:true,
+    inline: true,
     port: 9090,
+    historyApiFallback: true,
+    contentBase: './',
+    hot: true,
   },
   eslint: {
     reporter: require('eslint-friendly-formatter'),
