@@ -86,7 +86,6 @@ class Group extends Component {
 
     const nearbyWell = (
       <Related title="Nearby Groups">
-        <h4>Nearby Groups</h4>
         {(nearby) ? nearby.map((item, i) => (
           <div key={i}>
             <a href={item.url}>{item.name}</a>

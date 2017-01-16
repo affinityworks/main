@@ -26,5 +26,12 @@
 .group-related {
   display: inline-block;
   flex-basis: 20em;
-  padding-left: 1em;
+  padding-left: 2em;
+}
+
+@media (max-width: 768px) {
+  .group {
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
 }
