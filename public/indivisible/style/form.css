@@ -18,7 +18,7 @@ div#can_main_col h2 {
   text-transform: uppercase;
 }
 
-div.action_description {
+div.action_description, div#action_welcome_message_inner {
   color: rgba(0, 0, 0, 0.7);
   font-family: Montserrat;
   font-size: 15px;
