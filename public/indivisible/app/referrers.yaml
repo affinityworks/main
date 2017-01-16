@@ -1,9 +1,18 @@
+default:
+ fullname: Default  #Could be displayed somewhere on the page.
+ hide opt in controls: false
+ opt out: false #Whether to uncheck the "opt in to updates" box. Setting this true will uncheck the box.
+ hide email field: false
+ email field contents: #Required if 'hide email field' is true. Must be either a valid email address or 'user IP'
+
 indiv:
  fullname: The Indivisible
- opt in controls: hidden
- email field: visible
+ hide opt in controls: true
+ hide email field: false
 
 dp:
  fullname: Demand Progress
- opt in controls: visible
- email field: hidden
+ hide opt in controls: true
+ opt out: true
+ hide email field: true
+ email field contents: user IP
