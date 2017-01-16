@@ -1,9 +1,9 @@
 indiv:
  fullname: The Indivisible
- opt in checkbox: hidden
+ opt in controls: hidden
  email field: visible
 
 dp:
  fullname: Demand Progress
- opt in checkbox: visible
+ opt in controls: visible
  email field: hidden
