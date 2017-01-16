@@ -1,0 +1,3 @@
+-Finish all styles: done
+-Write referrer code function: done
+-Figure out require.js
