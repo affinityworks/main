@@ -41,7 +41,9 @@ handleScript = function(res) {
     console.log('Got response ' + res.status + ' ' + res.statusText);
     targetHTML = 'There was an error with your call.  Please <a href="http://www.advocacycommons.org/indivisible/">try again</a>.'
   }
-  $('div.action_description').html(targetHTML);
+  $('div.action_description')
+    .html(targetHTML)
+    .addClass('whitespacefix');
 }
 makeTheCall = function() {
   data = commanderData();
