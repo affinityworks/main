@@ -57,7 +57,7 @@ div#can-form-area-call-your-senator::after {
   z-index: -1;
 }
 
-div.action_description {
+div.whitespacefix {
   white-space: pre;
   white-space: pre-line;
 }
