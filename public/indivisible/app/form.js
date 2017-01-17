@@ -7,6 +7,6 @@ $(document).on('can_embed_loaded', function () {
   optInChk = $('input#name_optin1');
   optInCtls = $('li#d_sharing');
   $(theForm).submit(function (event) {
-    makeTheCall();
+    commanderData();
   });
 });

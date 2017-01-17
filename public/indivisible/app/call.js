@@ -5,26 +5,18 @@ validatePhone = function (num) {
   if (num.length == 11) return num;
   return false;
 }
+
 commanderData = function () {
   thisPhone = validatePhone($(phoneField).val());
   thisLocation = $(zipField).val();
   console.log('Phone is ' + thisPhone);
   console.log('ZIP is ' + thisLocation);
-  if (thisPhone) {
-    var data = {
-      campaignId: '2',
-      userPhone: thisPhone,
-      userLocation: thisLocation,
-      script: 'overlay',
-    };
-    console.log('Data looks good.');
-    return data;
-  } else {
-    console.log('No phone number.');
-    //No use notifying the user, because I haven't figured out how to stop the AN form submission.
-    //alert('Please enter a valid US phone number.');
-  }
+  
+  if (thisPhone & thisLocation) geoCheck(thisLocation);
+  if (!thisPhone) console.log('No phone number.');
+  if (!thisLocation) console.log('No location.'); 
 }
+
 handleScript = function (res) {
   console.log(res);
   $('#can_sidebar').slideUp();
@@ -37,8 +29,8 @@ handleScript = function (res) {
   }
   $('div.action_description').html(targetHTML).addClass('whitespacefix');
 }
-makeTheCall = function () {
-  data = commanderData();
+
+makeTheCall = function (data) {
   if (data) {
     $.ajax({
       method: 'get',
