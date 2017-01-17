@@ -1,5 +1,5 @@
 geoCheck = function (zip) {
-  zipfile = 'app/zips/' + zip + '.txt';
+  zipfile = 'indivisible/app/zips/' + zip + '.txt';
   console.log('Looking at ' + zipfile);
   $.ajax({
     type: 'GET',
@@ -16,7 +16,7 @@ geoCheck = function (zip) {
 function getCampaignInfo(state) {
   $.ajax({
     type: 'GET',
-    url: 'app/campaigns/'+state+'.json',
+    url: 'indivisible/app/campaigns/'+state+'.json',
     dataType: 'json',
     success: function (data) {
       console.log('Got campaign data for ' + state);

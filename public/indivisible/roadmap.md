@@ -1,4 +1,6 @@
 -Finish all styles: done
 -Write referrer code function: done
 -Figure out require.js: done, not using
-Get trailing slash redirects working.
+-Get trailing slash redirects working.
+-Direct users to different CP campaigns based on zipcode: done
+-Provide error handler if *no* campaign is active.
