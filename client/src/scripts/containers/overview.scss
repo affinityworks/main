@@ -1,8 +1,13 @@
 .overview {
   display: block;
 
+  .groups-list {
+    padding: 1em;
+  }
   .group-link {
-    
+    display: block;
+    padding: 0.5em 4em;
+    font-size: 1.5em;
   }
 }
 

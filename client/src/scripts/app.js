@@ -10,9 +10,9 @@ require('./app.scss');
 
 const Root = () => (
   <BrowserRouter>
-    <div>
+    <div className="view">
       <Match exactly pattern="/" component={Overview} />
-      <Match pattern="/group" component={Group} />
+      <Match pattern="/group/:groupSlug" component={Group} />
       <Match pattern="/event" component={Overview} />
       <Match pattern="/login" component={Overview} />
       <Miss component={Overview} />

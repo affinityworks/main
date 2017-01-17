@@ -106,7 +106,7 @@ class SignUp extends Component {
             value={this.state.volunteerDetail}
           />
         </div>
-        <button className="btn">Join Group</button>
+        <button className="button">Join Group</button>
       </form>
     );
   }

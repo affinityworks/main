@@ -19,15 +19,20 @@ class Group extends Component {
 
     this.state = {
       data: {},
+      slug: this.props.params.groupSlug,
     };
   }
 
   componentDidMount() {
     getData(uri)
       .then((dataResponse) => {
-        this.setState({
-          data: dataResponse.group,
-        });
+        const groupData = dataResponse.find(element => element.group.slug === this.state.slug);
+
+        if (groupData) {
+          this.setState({
+            data: groupData.group,
+          });
+        }
       });
   }
 
@@ -124,6 +129,7 @@ class Group extends Component {
 
 Group.propTypes = {
   group: React.PropTypes.object,
+  params: React.PropTypes.object,
   name: React.PropTypes.string,
   updates: React.PropTypes.object,
 };

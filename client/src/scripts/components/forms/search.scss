@@ -1,0 +1,31 @@
+@import './forms.scss';
+
+.search {
+  text-align: center;
+  width: 100%;
+
+  .field {
+    display: inline-block;
+    white-space: nowrap;
+  }
+
+  label {
+    display: inline-block;
+    font-size: 1em;
+  }
+
+  [type='search'] {
+    width: 14em;
+    display: inline-block;
+    border-radius: 0.34em 0 0 0.34em;
+    border-right-color: transparent;
+    margin: 0;
+    height: 2.67em;
+  }
+
+  .button {
+    border-radius: 0 0.34em 0.34em 0;
+    margin: 0;
+    height: 2.67em;
+  }
+}
