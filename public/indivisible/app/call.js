@@ -17,7 +17,7 @@ commanderData = function () {
   if (!thisLocation) console.log('No location.'); 
 }
 
-handleScript = function (res) {
+handleCallResponse = function (res) {
   console.log(res);
   $('div#can_thank_you').slideUp();
   if (res.status == '200') {
@@ -42,7 +42,7 @@ makeTheCall = function (data) {
       url: 'https://advocacycommons.callpower.org/call/create',
       dataType: 'json',
       complete: function (res) {
-        handleScript(res);
+        handleCallResponse(res);
       }
     });
   }
