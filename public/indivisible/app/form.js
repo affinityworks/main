@@ -13,6 +13,8 @@ $(document).on('can_embed_loaded', function () {
    .detach()
    .insertAfter('input#phone')
    .css('margin-bottom','20px');
+  $('li#d_sharing_opts').slideDown();
+  $('a#edit_d_sharing_opts').remove();
   
   $(theForm).submit(function (event) {
     commanderData();
