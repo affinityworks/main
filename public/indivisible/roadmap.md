@@ -1,5 +1,6 @@
 **TODO**
 --Provide error handler if *no* campaign is active.
+--Responsive font sizing.
 --Consider server-side IP lookup instead of API.
 
 
