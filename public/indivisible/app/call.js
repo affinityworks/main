@@ -27,7 +27,7 @@ handleCallResponse = function (res) {
     targetHTML = 'There was an error with your call (' + res.status + ' ' + res.statusText + '.  Please <a href="http://www.advocacycommons.org/indivisible/">try again</a>.'
   }
   actionDiv = $('<div>').addClass('action_description').html(targetHTML).addClass('whitespacefix');
-  newh2 = $('<h2>').text('Call your senator');
+  newh2 = $('<h2>').text(form_title);
   $(document).on('can_embed_submitted',function(){
     console.log('Embed submitted.');
 		$('div#can_thank_you').slideUp();

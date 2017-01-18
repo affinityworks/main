@@ -6,7 +6,7 @@ $(document).on('can_embed_loaded', function () {
   theForm = $('form#new_answer');
   optInChk = $('input#name_optin1');
   optInCtls = $('li#d_sharing');
-  form_title=$('div#can_main_col h2').val();
+  form_title=$('div#can_main_col h2').text();
   $(theForm).submit(function (event) {
     commanderData();
   });
