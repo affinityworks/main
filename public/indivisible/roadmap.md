@@ -16,4 +16,3 @@
 -Change handleScript error handler to display error on the page for user's information. 1.18
 -Change handleScript to handleCallResponse 1.18
 -Implement can_embed_submitted for thank-you page DOM changes.
--Force user to fill out all fields even if already logged in DONE 1.18
