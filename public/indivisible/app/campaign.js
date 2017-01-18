@@ -12,15 +12,15 @@ geoCheck = function (zip) {
     }
   });
 }
-
 function getCampaignInfo(state) {
   $.ajax({
     type: 'GET',
-    url: 'indivisible/app/campaigns/'+state+'.json',
+    url: 'indivisible/app/campaigns/' + state + '.json',
     dataType: 'json',
     success: function (data) {
       console.log('Got campaign data for ' + state);
       console.log(data);
+      if (data.campaign.active) {
         var callData = {
           campaignId: data.campaign.id,
           userPhone: thisPhone,
@@ -30,8 +30,9 @@ function getCampaignInfo(state) {
         console.log('Assembled call data');
         console.log(callData);
         makeTheCall(callData);
-      
-
+      } else {
+        console.log('No active campaign for ' + state);
+      }
     },
     fail: function (e) {
       console.log('Error fetching campaign list.');
