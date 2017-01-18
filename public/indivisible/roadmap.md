@@ -1,8 +1,6 @@
 **TODO**
 --Provide error handler if *no* campaign is active.
--Change handleScript to handleCallResponse
--Implement can_embed_submitted for thank-you page DOM changes.
--Get JS from Matt for client IP lookup.
+--Consider server-side IP lookup instead of API.
 
 
 **Done**
@@ -15,3 +13,5 @@
 -Have campaign.js check if campaign.active is TRUE before calling 1.18
 -Email info@actionnetwork.org to find out if there's a JS event for when the thank you page loads too. DONE 1.18
 -Change handleScript error handler to display error on the page for user's information. 1.18
+-Change handleScript to handleCallResponse 1.18
+-Implement can_embed_submitted for thank-you page DOM changes.
