@@ -19,7 +19,7 @@ commanderData = function () {
 
 handleScript = function (res) {
   console.log(res);
-  $('#can_sidebar').slideUp();
+  $('div#can_thank_you').slideUp();
   if (res.status == '200') {
     console.log('Got response 200 OK');
     targetHTML = res.responseJSON.script
@@ -27,7 +27,11 @@ handleScript = function (res) {
     console.log('Got response ' + res.status + ' ' + res.statusText);
     targetHTML = 'There was an error with your call.  Please <a href="http://www.advocacycommons.org/indivisible/">try again</a>.'
   }
-  $('div.action_description').html(targetHTML).addClass('whitespacefix');
+  actionDiv = $('<div>').addClass('action_description').html(targetHTML).addClass('whitespacefix');
+  newh2 = $('<h2>').text('Call your senator');
+  $('div#can_embed_form').append(newh2).append(actionDiv);
+  
+
 }
 
 makeTheCall = function (data) {
