@@ -1,11 +1,11 @@
 {
 	"campaign": {
 	  "active": false,
-		"id": 3,
+		"id": 6,
 		"targets": {
 			"title": "Senator",
-			"name": "Jon Tester",
-			"party": "D"
+			"name": "James M. Inhofe",
+			"party": "R"
 		}
 	}
 }

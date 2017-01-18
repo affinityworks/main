@@ -1,11 +1,11 @@
 {
 	"campaign": {
 	  "active": false,
-		"id": 3,
+		"id": 4,
 		"targets": {
 			"title": "Senator",
-			"name": "Jon Tester",
-			"party": "D"
+			"name": "John Barrasso",
+			"party": "R"
 		}
 	}
 }
