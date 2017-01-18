@@ -19,7 +19,6 @@ commanderData = function () {
 
 handleCallResponse = function (res) {
   console.log(res);
-  $('div#can_thank_you').slideUp();
   if (res.status == '200') {
     console.log('Got response 200 OK');
     targetHTML = res.responseJSON.script
@@ -29,8 +28,11 @@ handleCallResponse = function (res) {
   }
   actionDiv = $('<div>').addClass('action_description').html(targetHTML).addClass('whitespacefix');
   newh2 = $('<h2>').text('Call your senator');
-  $('div#can_embed_form').append(newh2).append(actionDiv);
-  
+  $(document).on('can_embed_submitted',function(){
+    console.log('Embed submitted.');
+		$('div#can_thank_you').slideUp();
+		$('div#can_embed_form').append(newh2).append(actionDiv);
+  });
 
 }
 
