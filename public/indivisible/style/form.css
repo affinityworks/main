@@ -54,3 +54,15 @@ div.whitespacefix {
   white-space: pre;
   white-space: pre-line;
 }
+
+/* Style for the new disclaimer at the bottom of the page */
+li.new-disclaimer {
+  color: #909090;
+  font-family: serif;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1em;
+  text-align: center;
+}

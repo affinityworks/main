@@ -17,6 +17,11 @@ $(document).on('can_embed_loaded', function () {
   //Change the text on the opt-in controls
   $('li#d_sharing_opts label').get(0).lastChild.nodeValue='Send me regular action alerts to stop Trump nominees';
   
+  //Move the disclaimer to the bottom
+  disclaimer = $('li#d_sharing ul li').first();
+  $(disclaimer).detach().addClass('new-disclaimer');
+  $('form#new_answer ul').first().append(disclaimer);
+  
   $(theForm).submit(function (event) {
     commanderData();
   });
