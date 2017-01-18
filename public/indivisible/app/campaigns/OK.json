@@ -1,6 +1,6 @@
 {
 	"campaign": {
-	  "active": false,
+	  "active": true,
 		"id": 6,
 		"targets": {
 			"title": "Senator",
