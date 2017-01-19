@@ -29,7 +29,7 @@ replaceThankYou = function (targetHTML) {
   $('div.clearfix div.can_thank_you-block').last().remove();
   //Remove the thank you div.
   $('div#can_thank_you').remove();
-  actionDiv = $('<div>').addClass('action_description').html(targetHTML).addClass('whitespacefix');
+  actionDiv = $('<div>').addClass('action_description').html(targetHTML).addClass('new-action-description');
   newh2 = $('<h2>').text(form_title);
   $('div#can_embed_form').prepend(actionDiv).prepend(newh2);
 }

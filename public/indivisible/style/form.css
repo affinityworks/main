@@ -50,10 +50,6 @@ div.action_description, div#action_welcome_message_inner {
   z-index: -1;
 }*/
 
-div.whitespacefix {
-  white-space: pre;
-  white-space: pre-line;
-}
 
 /* Style for the new disclaimer at the bottom of the page */
 li.new-disclaimer {
@@ -68,7 +64,13 @@ li.new-disclaimer {
 }
 
 /*Styles to make the swapped-in AN thank you text not look so wacky. */
-div.action_description ul {
+
+div.new-action-description {
+  white-space: pre;
+  white-space: pre-line;
+}
+
+div.new-action-description ul {
     display: inline;
     line-height: 0.75em;
     list-style-type: none;
@@ -77,10 +79,10 @@ div.action_description ul {
     padding-bottom: 1em;
     padding-top: 0;
 }
-div.action_description ul li {
+div.new-action-description ul li {
     padding-left: 1em;
 }
-div.action_description p {
+div.new-action-description p {
     display: inline;
     margin-bottom: 0;
     margin-top: 0;
