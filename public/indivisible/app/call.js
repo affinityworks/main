@@ -21,19 +21,17 @@ handleCallResponse = function (res) {
   console.log(res);
   if (res.status == '200') {
     console.log('Got response 200 OK');
-    targetHTML = res.responseJSON.script
+    targetHTML = res.responseJSON.script;
   } else {
     console.log('Got response ' + res.status + ' ' + res.statusText);
     targetHTML = 'There was an error with your call (' + res.status + ' ' + res.statusText + '.  Please <a href="http://www.advocacycommons.org/indivisible/">try again</a>.'
   }
-  actionDiv = $('<div>').addClass('action_description').html(targetHTML).addClass('whitespacefix');
-  newh2 = $('<h2>').text(form_title);
+  
   $(document).on('can_embed_submitted',function(){
-    console.log('Embed submitted.');
-		$('div#can_thank_you').slideUp();
-		$('div#can_embed_form').append(newh2).append(actionDiv);
+    
+    replaceThankYou(targetHTML)
   });
-
+  
 }
 
 makeTheCall = function (data) {

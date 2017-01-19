@@ -13,30 +13,34 @@ geoCheck = function (zip) {
   });
 }
 function getCampaignInfo(state) {
-  $.ajax({
-    type: 'GET',
+  campaignDataRequest = $.get({
     url: 'indivisible/app/campaigns/' + state + '.json',
-    dataType: 'json',
-    success: function (data) {
-      console.log('Got campaign data for ' + state);
-      console.log(data);
-      if (data.campaign.active) {
-        var callData = {
-          campaignId: data.campaign.id,
-          userPhone: thisPhone,
-          userLocation: thisLocation,
-          script: 'overlay'
-        }
-        console.log('Assembled call data');
-        console.log(callData);
-        makeTheCall(callData);
-      } else {
-        console.log('No active campaign for ' + state);
+    dataType: 'json'
+  });
+  campaignDataRequest.done(function (data) {
+    console.log(data);
+    if (data.campaign.active) {
+      var callData = {
+        campaignId: data.campaign.id,
+        userPhone: thisPhone,
+        userLocation: thisLocation,
+        script: 'overlay'
       }
-    },
-    fail: function (e) {
-      console.log('Error fetching campaign list.');
-      console.log(e);
+      console.log('Assembled call data');
+      console.log(callData);
+      makeTheCall(callData);
+    } else {
+      console.log('No active campaign for ' + state);
+      $(document).on('can_embed_submitted', function () {
+        replaceThankYou(false);
+      });
     }
+  });
+  campaignDataRequest.fail(function (data) {
+    console.log('Failed campaign data request');
+    console.log(data);
+    $(document).on('can_embed_submitted', function () {
+      replaceThankYou('Error ' + data.status + ' while getting campaign info.  Try reloading the page.');
+    });
   });
 }
