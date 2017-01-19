@@ -1,5 +1,4 @@
 **TODO**
---Provide error handler if *no* campaign is active.
 --Responsive font sizing.
 --Consider server-side IP lookup instead of API.
 
@@ -17,3 +16,4 @@
 -Change handleScript to handleCallResponse 1.18
 -Implement can_embed_submitted for thank-you page DOM changes.
 -Force user to fill out all fields even if already logged in DONE 1.18
+-Provide error handler if *no* campaign is active.  Use AN share functions? 1.18
