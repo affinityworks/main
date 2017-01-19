@@ -66,22 +66,3 @@ li.new-disclaimer {
   line-height: 1em;
   text-align: center;
 }
-
-/*Styles to make the swapped-in AN thank you text not look so wacky. */
-div.action_description ul {
-    display: inline;
-    line-height: 0.75em;
-    list-style-type: none;
-    margin-bottom: 1em;
-    margin-top: 0;
-    padding-bottom: 1em;
-    padding-top: 0;
-}
-div.action_description ul li {
-    padding-left: 1em;
-}
-div.action_description p {
-    display: inline;
-    margin-bottom: 0;
-    margin-top: 0;
-}
