@@ -16,6 +16,7 @@ one:
   languages_spoken: MyString
   birthdate: 2016-12-18
   custom_fields: MyText
+  email: joe@somewhere.com
   created_at: 2016-12-18 19:30:05
   updated_at: 2016-12-18 19:30:05
   employer: Modragon Collectives
@@ -29,6 +30,7 @@ two:
   honorific_prefix: MyString
   honorific_sufix: MyString
   gender:
+  email: jane@elsewehre.com
   gender_identity: MyString
   party_identification: MyString
   source: MyString
