@@ -1,5 +1,5 @@
 **TODO**
---Responsive font sizing.
+--Responsive font sizing. (mostly done 1.19)
 --Finish styling thank-you page.
 --Consider server-side IP lookup instead of API.
 
