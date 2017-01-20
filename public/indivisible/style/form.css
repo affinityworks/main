@@ -94,7 +94,7 @@ div#can_embed_form div.clearfix div.can_thank_you-block a.share_button {
 }
 
 div#can_embed_form div.clearfix div.can_thank_you-block input, div#can_embed_form div.clearfix div.can_thank_you-block textarea {
-  font-size: 10px
+  font-size: 10px;
   margin-bottom: 0px;
 }
 
