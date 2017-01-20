@@ -1,5 +1,5 @@
 geoCheck = function (zip) {
-  zipfile = 'indivisible/app/zips/' + zip + '.txt';
+  zipfile = '/indivisible/app/zips/' + zip + '.txt';
   console.log('Looking at ' + zipfile);
   $.ajax({
     type: 'GET',
@@ -22,7 +22,7 @@ function noActiveCampaign(state) {
 
 function getCampaignInfo(state) {
   campaignDataRequest = $.get({
-    url: 'indivisible/app/campaigns/' + state + '.json',
+    url: '/indivisible/app/campaigns/' + state + '.json',
     dataType: 'json'
   });
   campaignDataRequest.done(function (data) {
