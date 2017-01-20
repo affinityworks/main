@@ -7,14 +7,14 @@ div#form-container {
   margin-right:auto;
 }
 
-@media screen and (max-width: 360px) {
+@media screen and (max-width: 492px) {
   div#form-container {
-    width: 234px;
+    width: 320px;
   }
 }
 
 
-@media screen and (max-width: 800px) and (min-width: 360px) {
+@media screen and (max-width: 800px) and (min-width: 492px) {
   div#form-container {
     width: 65%;
   }

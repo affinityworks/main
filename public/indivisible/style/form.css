@@ -17,30 +17,37 @@ div#can_main_col h2 {
   text-transform: uppercase;
 }
 
-/* Set up responsive sizing for the form title */
-@media screen and (max-width: 360px) {
+/* Set up responsive sizing for the form title and description */
+@media screen and (max-width: 492px) {
   div#can_main_col h2 {
-    font-size: 18px;
+    font-size: 24.6px;
+  }
+  div.action_description {
+    font-size: 9.225px;
   }
 }
 
-@media screen and (min-width: 360px) {
+@media screen and (min-width: 492px) and (max-width: 800px) {
   div#can_main_col h2 {
     font-size: 5vw;
+  }
+  div.action_description {
+    font-size: 1.875vw;
   }
 }
 
 @media screen and (min-width: 800px) {
-
   div#can_main_col h2 {
     font-size: 40px;
+  }
+  div.action_description {
+    font-size:15px;
   }
 }
 
 div.action_description, div#action_welcome_message_inner {
   color: rgba(0, 0, 0, 0.7);
   font-family: Montserrat;
-  font-size: 15px;
   font-style: normal;
   font-weight: 400;
   letter-spacing: 0.01em;

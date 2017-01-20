@@ -9,16 +9,16 @@
   margin:0px 10px 0px 10px;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 492px) {
   span.header-item {
-    font-size:10.5px;
+    font-size:8.6px;
   }
   div#header-container {
-    height:37.5px;
+    height:30.75px;
   }
 }
 
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 492px) {
   span.header-item {
     font-size: 1.75vw;
   }
@@ -40,6 +40,7 @@ div#header-container {
   background-color: #001d59;
   display: flex;
   flex-direction: row;
+
   justify-content: center;
   align-items: center;
 }
