@@ -1,5 +1,6 @@
 **TODO**
 --Responsive font sizing.
+--Finish styling thank-you page.
 --Consider server-side IP lookup instead of API.
 
 
