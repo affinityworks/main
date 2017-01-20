@@ -9,7 +9,7 @@ div#action_info, div.action_sidebar h4 {
 }
 
 /*Style the form title.  Most of what follows is lifted from indivisibleguide.org CC BY-NC-SA 4.0 */
-div#can_main_col h2 {
+div#can_embed_form h2 {
   color: #001d59;
   font-family: Montserrat;
   margin-top: 15px;
@@ -19,7 +19,7 @@ div#can_main_col h2 {
 
 /* Set up responsive sizing for the form title and description */
 @media screen and (max-width: 492px) {
-  div#can_main_col h2 {
+  div#can_embed_form h2 {
     font-size: 24.6px;
   }
   div.action_description {
@@ -28,7 +28,7 @@ div#can_main_col h2 {
 }
 
 @media screen and (min-width: 492px) and (max-width: 800px) {
-  div#can_main_col h2 {
+  div#can_embed_form h2 {
     font-size: 5vw;
   }
   div.action_description {
@@ -37,7 +37,7 @@ div#can_main_col h2 {
 }
 
 @media screen and (min-width: 800px) {
-  div#can_main_col h2 {
+  div#can_embed_form h2 {
     font-size: 40px;
   }
   div.action_description {
