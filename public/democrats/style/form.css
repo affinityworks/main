@@ -8,10 +8,10 @@ div#action_info, div.action_sidebar h4 {
   display: none;
 }
 
-/*Style the form title.  Most of what follows is lifted from indivisibleguide.org CC BY-NC-SA 4.0 */
+/*Style the form title.*/
 div#can_embed_form h2 {
-  color: #001d59;
-  font-family: Montserrat;
+  color: #264C99;
+  font-family: Verdana,Tahoma,"DejaVu Sans",sans-serif;
   margin-top: 15px;
   text-align: center;
   text-transform: uppercase;
@@ -67,8 +67,8 @@ div#can_embed_form h2 {
 }
 
 div.action_description, div#action_welcome_message_inner {
-  color: rgba(0, 0, 0, 0.7);
-  font-family: Montserrat;
+  color: rgb(51, 51, 51);
+  font-family: Verdana,Tahoma,"DejaVu Sans",sans-serif;
   font-style: normal;
   font-weight: 400;
   line-height: 2em;
@@ -77,8 +77,8 @@ div.action_description, div#action_welcome_message_inner {
 
 div#can_embed_form div.clearfix div.can_thank_you-block h4.widget_title {
   text-transform: uppercase;
-  color: #001d59;
-  font-family: Montserrat;
+  color: #264C99;;
+  font-family: Verdana,Tahoma,"DejaVu Sans",sans-serif;
   font-style: normal;
   font-weight: 400;
   margin-top: 1em;
@@ -89,7 +89,7 @@ div#can_embed_form div.clearfix div.can_thank_you-block h4.widget_title {
 div#can_embed_form div.clearfix div.can_thank_you-block a.share_button {
   line-height: 2em;
   margin-top: 0.5em;
-  font-family: Montserrat;
+  font-family: Verdana,Tahoma,"DejaVu Sans",sans-serif;
   color: white;
 }
 

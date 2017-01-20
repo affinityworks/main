@@ -19,7 +19,7 @@ $(document).on('can_embed_loaded', function () {
 	if (query_string.has('referrer')) {
 		var ref = query_string.get('referrer');
 		console.log('Got ref slug ' + ref);
-		$.get('/indivisible/app/referrers.yaml', function (data) {
+		$.get('/democrats/app/referrers.yaml', function (data) {
 			if (data) {
 				referrers = jsyaml.load(data);
 				settings = referrers['default']

@@ -1,12 +1,13 @@
 /* This is lifted almost straight from indivisibleguide.com, for purposes of mocking up a page like it. */
 .header-item {
-  font-family: Montserrat;
+  font-family: Verdana,Tahoma,"DejaVu Sans",sans-serif;
   font-style: normal;
   font-weight: 400;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(255,255,255,.52);
+  color: rgb(255,255,255);
   margin:0px 10px 0px 10px;
+  white-space: nowrap;
 }
 
 @media screen and (max-width: 492px) {
@@ -14,7 +15,7 @@
     font-size:8.6px;
   }
   div#header-container {
-    height:30.75px;
+    height:22.14px;
   }
 }
 
@@ -23,7 +24,7 @@
     font-size: 1.75vw;
   }
   div#header-container {
-    height:6.25vw
+    height:4.5vw
   }
 }
 
@@ -32,12 +33,12 @@
     font-size: 14px;
   }
   div#header-container {
-      height: 50px;
+      height: 36px;
   }
 }
 
 div#header-container {
-  background-color: #001d59;
+  background: url(dems_menu_bg.png) repeat-x scroll left top transparent;
   display: flex;
   flex-direction: row;
 
