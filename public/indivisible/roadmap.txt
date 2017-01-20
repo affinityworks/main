@@ -1,7 +1,8 @@
 **TODO**
+--Make referrers.yaml load only if referrer= is present in query string.
 --Responsive font sizing. (mostly done 1.19)
---Finish styling thank-you page.
---Consider server-side IP lookup instead of API.
+--Finish styling thank-you page. (mostly done 1.19)
+--Implement ruby IP lookup instead of API.
 
 
 **Done**
