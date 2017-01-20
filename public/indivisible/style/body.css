@@ -16,12 +16,12 @@ div#form-container {
 
 @media screen and (max-width: 800px) and (min-width: 492px) {
   div#form-container {
-    width: 65%;
+    width: 75%;
   }
 }
 
 @media screen and (min-width: 800px) {
   div#form-container {
-    width: 520px;
+    width: 600px;
   }
 }

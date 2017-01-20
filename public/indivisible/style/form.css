@@ -23,7 +23,7 @@ div#can_main_col h2 {
     font-size: 24.6px;
   }
   div.action_description {
-    font-size: 9.225px;
+    font-size: 12px;
   }
 }
 
@@ -32,7 +32,7 @@ div#can_main_col h2 {
     font-size: 5vw;
   }
   div.action_description {
-    font-size: 1.875vw;
+    font-size: 2.44vw;
   }
 }
 
@@ -41,7 +41,7 @@ div#can_main_col h2 {
     font-size: 40px;
   }
   div.action_description {
-    font-size:15px;
+    font-size:19.5px;
   }
 }
 
@@ -50,7 +50,6 @@ div.action_description, div#action_welcome_message_inner {
   font-family: Montserrat;
   font-style: normal;
   font-weight: 400;
-  letter-spacing: 0.01em;
   line-height: 2em;
   text-transform: none;
 }
