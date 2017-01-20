@@ -20,8 +20,8 @@ $(document).on('can_embed_loaded', function () {
         referrer_data = jsyaml.load(data);
         //console.log(referrer_data);
         query_string = new URLSearchParams(window.location.search);
-        if (query_string.has('ref')) {
-          var ref = query_string.get('ref');
+        if (query_string.has('referrer')) {
+          var ref = query_string.get('referrer');
           console.log('Got ref slug ' + ref);
           if (referrer_data.hasOwnProperty(ref)) {
             referrer_settings = referrer_data[ref];

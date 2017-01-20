@@ -9,13 +9,32 @@ div#action_info, div.action_sidebar h4 {
 }
 
 /*Style the form title.  Most of what follows is lifted from indivisibleguide.org CC BY-NC-SA 4.0 */
-div#can_main_col h2, div#can_embed_form h2 {
+div#can_main_col h2 {
   color: #001d59;
   font-family: Montserrat;
-  font-size: 43px;
-  margin-top: 30px;
+  margin-top: 15px;
   text-align: center;
   text-transform: uppercase;
+}
+
+/* Set up responsive sizing for the form title */
+@media screen and (max-width: 360px) {
+  div#can_main_col h2 {
+    font-size: 18px;
+  }
+}
+
+@media screen and (min-width: 360px) {
+  div#can_main_col h2 {
+    font-size: 5vw;
+  }
+}
+
+@media screen and (min-width: 800px) {
+
+  div#can_main_col h2 {
+    font-size: 40px;
+  }
 }
 
 div.action_description, div#action_welcome_message_inner {
@@ -50,7 +69,45 @@ div.action_description, div#action_welcome_message_inner {
   z-index: -1;
 }*/
 
-div.whitespacefix {
+
+/* Style for the new disclaimer at the bottom of the page */
+li.new-disclaimer {
+  color: #909090;
+  font-family: serif;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1em;
+  text-align: center;
+}
+
+div.action_description p {
+  margin-top: 0px;
+}
+
+
+/*Styles to make the swapped-in AN thank you text not look so wacky. */
+
+div.new-action-description {
   white-space: pre;
   white-space: pre-line;
+}
+
+div.new-action-description ul {
+    display: inline;
+    line-height: 0.75em;
+    list-style-type: none;
+    margin-bottom: 1em;
+    margin-top: 0;
+    padding-bottom: 1em;
+    padding-top: 0;
+}
+div.new-action-description ul li {
+    padding-left: 1em;
+}
+div.new-action-description p {
+    display: inline;
+    margin-bottom: 0px;
+    margin-top: 0px;
 }

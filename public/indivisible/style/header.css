@@ -1,7 +1,6 @@
 /* This is lifted almost straight from indivisibleguide.com, for purposes of mocking up a page like it. */
 .header-item {
   font-family: Montserrat;
-  font-size: 14px;
   font-style: normal;
   font-weight: 400;
   letter-spacing: 0.18em;
@@ -10,11 +9,37 @@
   margin:0px 10px 0px 10px;
 }
 
+@media screen and (max-width: 600px) {
+  span.header-item {
+    font-size:10.5px;
+  }
+  div#header-container {
+    height:37.5px;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  span.header-item {
+    font-size: 1.75vw;
+  }
+  div#header-container {
+    height:6.25vw
+  }
+}
+
+@media screen and (min-width: 800px) {
+  span.header-item {
+    font-size: 14px;
+  }
+  div#header-container {
+      height: 50px;
+  }
+}
+
 div#header-container {
   background-color: #001d59;
   display: flex;
   flex-direction: row;
-  height: 50px;
   justify-content: center;
   align-items: center;
 }

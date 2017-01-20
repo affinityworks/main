@@ -1,10 +1,10 @@
 {
 	"campaign": {
-	  "active": false,
-		"id": 2,
+	  "active": true,
+		"id": 6,
 		"targets": {
 			"title": "Senator",
-			"name": "Jeff Flake",
+			"name": "James M. Inhofe",
 			"party": "R"
 		}
 	}

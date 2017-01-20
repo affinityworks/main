@@ -17,21 +17,21 @@ commanderData = function () {
   if (!thisLocation) console.log('No location.'); 
 }
 
-handleScript = function (res) {
+handleCallResponse = function (res) {
   console.log(res);
-  $('div#can_thank_you').slideUp();
   if (res.status == '200') {
     console.log('Got response 200 OK');
-    targetHTML = res.responseJSON.script
+    targetHTML = res.responseJSON.script;
   } else {
     console.log('Got response ' + res.status + ' ' + res.statusText);
-    targetHTML = 'There was an error with your call.  Please <a href="http://www.advocacycommons.org/indivisible/">try again</a>.'
+    targetHTML = 'There was an error with your call (' + res.status + ' ' + res.statusText + '.  Please <a href="http://www.advocacycommons.org/indivisible/">try again</a>.'
   }
-  actionDiv = $('<div>').addClass('action_description').html(targetHTML).addClass('whitespacefix');
-  newh2 = $('<h2>').text('Call your senator');
-  $('div#can_embed_form').append(newh2).append(actionDiv);
   
-
+  $(document).on('can_embed_submitted',function(){
+    
+    replaceThankYou(targetHTML)
+  });
+  
 }
 
 makeTheCall = function (data) {
@@ -42,7 +42,7 @@ makeTheCall = function (data) {
       url: 'https://advocacycommons.callpower.org/call/create',
       dataType: 'json',
       complete: function (res) {
-        handleScript(res);
+        handleCallResponse(res);
       }
     });
   }

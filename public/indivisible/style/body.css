@@ -1,3 +1,27 @@
 body {
   margin: 0px 0px 0px 0px;
 }
+
+div#form-container {
+  margin-left:auto;
+  margin-right:auto;
+}
+
+@media screen and (max-width: 360px) {
+  div#form-container {
+    width: 234px;
+  }
+}
+
+
+@media screen and (max-width: 800px) and (min-width: 360px) {
+  div#form-container {
+    width: 65%;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  div#form-container {
+    width: 520px;
+  }
+}

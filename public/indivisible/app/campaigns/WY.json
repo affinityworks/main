@@ -1,10 +1,10 @@
 {
 	"campaign": {
-	  "active": false,
-		"id": 2,
+	  "active": true,
+		"id": 4,
 		"targets": {
 			"title": "Senator",
-			"name": "Jeff Flake",
+			"name": "John Barrasso",
 			"party": "R"
 		}
 	}
