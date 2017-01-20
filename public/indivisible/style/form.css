@@ -22,7 +22,14 @@ div#can_embed_form h2 {
   div#can_embed_form h2 {
     font-size: 24.6px;
   }
-  div.action_description {
+  div.action_description  {
+    font-size: 12px;
+  }
+  div#can_embed_form div.clearfix div.can_thank_you-block h4.widget_title, div#can_embed_form div.clearfix div.can_thank_you-block a.share_button {
+    font-size: 12px;
+  }
+  div#can_embed_form div.clearfix div.can_thank_you-block
+  {
     font-size: 12px;
   }
 }
@@ -31,7 +38,14 @@ div#can_embed_form h2 {
   div#can_embed_form h2 {
     font-size: 5vw;
   }
-  div.action_description {
+  div.action_description  {
+    font-size: 2.44vw;
+  }
+  div#can_embed_form div.clearfix div.can_thank_you-block h4.widget_title, div#can_embed_form div.clearfix div.can_thank_you-block a.share_button {
+    font-size: 2.44vw;
+  }
+  div#can_embed_form div.clearfix div.can_thank_you-block
+  {
     font-size: 2.44vw;
   }
 }
@@ -42,6 +56,13 @@ div#can_embed_form h2 {
   }
   div.action_description {
     font-size:19.5px;
+  }
+  div#can_embed_form div.clearfix div.can_thank_you-block h4.widget_title, div#can_embed_form div.clearfix div.can_thank_you-block a.share_button {
+    font-size: 19.5px;
+  }
+  div#can_embed_form div.clearfix div.can_thank_you-block
+  {
+    font-size: 19.5px
   }
 }
 
@@ -54,6 +75,29 @@ div.action_description, div#action_welcome_message_inner {
   text-transform: none;
 }
 
+div#can_embed_form div.clearfix div.can_thank_you-block h4.widget_title {
+  text-transform: uppercase;
+  color: #001d59;
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 400;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+
+
+div#can_embed_form div.clearfix div.can_thank_you-block a.share_button {
+  line-height: 2em;
+  margin-top: 0.5em;
+  font-family: Montserrat;
+  color: white;
+}
+
+div#can_embed_form div.clearfix div.can_thank_you-block input, div#can_embed_form div.clearfix div.can_thank_you-block textarea {
+  font-size: 10px
+  margin-bottom: 0px;
+}
+
 @font-face {
     font-family: "Montserrat";
     font-style: normal;
@@ -61,6 +105,7 @@ div.action_description, div#action_welcome_message_inner {
     src: url("https://fonts.gstatic.com/s/montserrat/v7/zhcz-_WihjSQC0oHJ9TCYAzyDMXhdD8sAj6OAJTFsBI.woff2") format("woff2");
     unicode-range: U+0-FF, U+131, U+152-153, U+2C6, U+2DA, U+2DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
 }
+
 
 /*Set up a background image for the page.  Not straight from indivisibleguide.com, but inspired by it. */
 /*div#can-form-area-call-your-senator::after {
@@ -96,7 +141,8 @@ div.action_description p {
 /*Styles to make the swapped-in AN thank you text not look so wacky. */
 
 div.new-action-description {
-  white-space: pre;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.7);
+  padding-bottom: 5px;
   white-space: pre-line;
 }
 
@@ -111,9 +157,4 @@ div.new-action-description ul {
 }
 div.new-action-description ul li {
     padding-left: 1em;
-}
-div.new-action-description p {
-    display: inline;
-    margin-bottom: 0px;
-    margin-top: 0px;
 }
