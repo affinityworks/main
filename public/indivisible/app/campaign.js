@@ -13,13 +13,6 @@ geoCheck = function (zip) {
   });
 }
 
-function noActiveCampaign(state) {
-  console.log('No active campaign for ' + state);
-  $(document).on('can_embed_submitted', function () {
-    replaceThankYou(false);
-  });
-}
-
 function getCampaignInfo(state) {
   campaignDataRequest = $.get({
     url: '/indivisible/app/campaigns/' + state + '.json',
@@ -38,19 +31,18 @@ function getCampaignInfo(state) {
       console.log(callData);
       makeTheCall(callData);
     } else {
-      noActiveCampaign(state);
+      console.log('No active campaign for ' + state);
     }
   });
   campaignDataRequest.fail(function (data) {
     if (data.status == 404) {
-      noActiveCampaign(state);
+      console.log('No active campaign for ' + state);
     } else {
       console.log('Failed campaign data request');
       console.log(data);
-      $(document).on('can_embed_submitted', function () {
+      $(document).on('thank_you_ready', function () {
         replaceThankYou('Error ' + data.status + ' while getting campaign info.  Try reloading the page.');
       });
     }
   });
 }
-

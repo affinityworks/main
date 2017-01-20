@@ -24,11 +24,10 @@ handleCallResponse = function (res) {
     targetHTML = res.responseJSON.script;
   } else {
     console.log('Got response ' + res.status + ' ' + res.statusText);
-    targetHTML = 'There was an error with your call (' + res.status + ' ' + res.statusText + '.  Please <a href="http://www.advocacycommons.org/indivisible/">try again</a>.'
+    targetHTML = 'There was an error with your call (' + res.status + ' ' + res.statusText + '0.  Please <a href="http://www.advocacycommons.org/indivisible/">try again</a>.'
   }
   
-  $(document).on('can_embed_submitted',function(){
-    
+  $(document).on('thank_you_ready',function(){
     replaceThankYou(targetHTML)
   });
   
