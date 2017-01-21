@@ -2667,11 +2667,11 @@ only screen and (min-resolution: 144dpi) {
 	display:none;
 }
 
-#d_sharing {
+#can_embed_form  #d_sharing {
 	display:none;
 }
 
-input[type="submit"] {
+#can_embed_form input[type="submit"] {
 	display: none;
 }
 
