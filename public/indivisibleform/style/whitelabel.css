@@ -2649,7 +2649,34 @@ only screen and (min-resolution: 144dpi) {
 /* added by MattH */
 
 
+
+
+#form-first_name {
+	display:none;
+}
+
+#form-last_name {
+	display:none;
+}
+
+#form-email {
+	display:none;
+}
+
+#form-zip_code {
+	display:none;
+}
+
+#d_sharing {
+	display:none;
+}
+
+input[type="submit"] {
+	display: none;
+}
+
 #btnHide {
+    display:inline;
     text-decoration: none;
     font-size: 14px;
     font-weight: 700;
@@ -2674,20 +2701,7 @@ only screen and (min-resolution: 144dpi) {
 }
 
 
-#form-first_name {
-	display:none;
-}
 
-#form-last_name {
-	display:none;
-}
 
-#form-email {
-	display:none;
-}
-
-#form-zip_code {
-	display:none;
-}
 
 /* minor change to try republishing*/
