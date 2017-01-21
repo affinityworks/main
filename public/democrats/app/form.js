@@ -28,19 +28,19 @@ $(document).on('can_embed_loaded', function () {
 });
 
 $(document).on('can_embed_submitted', function () {
-	default_contents = $('div#action_thank_you_text').html();
-	//Remove the embed block.
-  $('div.clearfix div.can_thank_you-block').last().remove();
-  //Remove the thank you div.
-  $('div#can_thank_you').remove();
-  actionDiv = $('<div>')
-    .addClass('action_description')
-    .html(default_contents)
-    .addClass('new-action-description')
-    .attr('id','thank_you_replacement');
-  newh2 = $('<h2>').text(form_title);
-  $('div#can_embed_form').prepend(actionDiv).prepend(newh2);
-  $(document).trigger('thank_you_ready');
+	// default_contents = $('div#action_thank_you_text').html();
+// 	//Remove the embed block.
+//   $('div.clearfix div.can_thank_you-block').last().remove();
+//   //Remove the thank you div.
+//   //$('div#can_thank_you').remove();
+//   actionDiv = $('<div>')
+//     .addClass('action_description')
+//     .html(default_contents)
+//     .addClass('new-action-description')
+//     .attr('id','thank_you_replacement');
+//   newh2 = $('<h2>').text(form_title);
+//   $('div#can_embed_form').prepend(actionDiv).prepend(newh2);
+//   $(document).trigger('thank_you_ready');
 });
   
 replaceThankYou = function (targetHTML) {

@@ -1,4 +1,4 @@
-div#can-form-area-call-your-senator {
+div#can-form-area-stop-the-worst-of-the-worst {
   margin-left:auto;
   margin-right:auto;
 }
@@ -9,7 +9,7 @@ div#action_info, div.action_sidebar h4 {
 }
 
 /*Style the form title.*/
-div#can_embed_form h2 {
+div#can_embed_form h2, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h1 {
   color: #264C99;
   font-family: Verdana,Tahoma,"DejaVu Sans",sans-serif;
   margin-top: 15px;
@@ -19,10 +19,10 @@ div#can_embed_form h2 {
 
 /* Set up responsive sizing for the form title and description */
 @media screen and (max-width: 492px) {
-  div#can_embed_form h2 {
+  div#can_embed_form h2, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h1  {
     font-size: 24.6px;
   }
-  div.action_description  {
+  div.action_description, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you div#action_thank_you_text p, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h4  {
     font-size: 12px;
   }
   div#can_embed_form div.clearfix div.can_thank_you-block h4.widget_title, div#can_embed_form div.clearfix div.can_thank_you-block a.share_button {
@@ -35,10 +35,10 @@ div#can_embed_form h2 {
 }
 
 @media screen and (min-width: 492px) and (max-width: 800px) {
-  div#can_embed_form h2 {
+  div#can_embed_form h2, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h1 {
     font-size: 5vw;
   }
-  div.action_description  {
+  div.action_description, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you div#action_thank_you_text p, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h4  {
     font-size: 2.44vw;
   }
   div#can_embed_form div.clearfix div.can_thank_you-block h4.widget_title, div#can_embed_form div.clearfix div.can_thank_you-block a.share_button {
@@ -51,10 +51,10 @@ div#can_embed_form h2 {
 }
 
 @media screen and (min-width: 800px) {
-  div#can_embed_form h2 {
+  div#can_embed_form h2, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h1 {
     font-size: 40px;
   }
-  div.action_description {
+  div.action_description, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you div#action_thank_you_text p, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h4 {
     font-size:19.5px;
   }
   div#can_embed_form div.clearfix div.can_thank_you-block h4.widget_title, div#can_embed_form div.clearfix div.can_thank_you-block a.share_button {
@@ -66,18 +66,26 @@ div#can_embed_form h2 {
   }
 }
 
-div.action_description, div#action_welcome_message_inner {
+div.action_description, div#action_welcome_message_inner, div.can_embed div#can_embed_form div#can_thank_you {
   color: rgb(51, 51, 51);
   font-family: Verdana,Tahoma,"DejaVu Sans",sans-serif;
   font-style: normal;
   font-weight: 400;
   line-height: 2em;
   text-transform: none;
+  background-color:white;
+  border: 0;
+  box-shadow: none;
+  padding: 20px;
+  
+}
+div.can_embed div#can_embed_form div#can_thank_you h4, div.can_embed div#can_embed_form div#can_thank_you h1, div.can_embed div#can_embed_form div#can_thank_you div#action_thank_you_text p {
+  text-shadow: none;
 }
 
 div#can_embed_form div.clearfix div.can_thank_you-block h4.widget_title {
   text-transform: uppercase;
-  color: #264C99;;
+  color: #264C99;
   font-family: Verdana,Tahoma,"DejaVu Sans",sans-serif;
   font-style: normal;
   font-weight: 400;
@@ -108,7 +116,7 @@ div#can_embed_form div.clearfix div.can_thank_you-block input, div#can_embed_for
 
 
 /*Set up a background image for the page.  Not straight from indivisibleguide.com, but inspired by it. */
-/*div#can-form-area-call-your-senator::after {
+/*div#can-form-area-stop-the-worst-of-the-worst::after {
   background: rgba(0, 0, 0, 0) url("https://static1.squarespace.com/static/5855a354cd0f68bab2089b40/t/58597f8d29687fe710d051b7/1482191413003/Picture2.jpg?format=1500w") no-repeat scroll right center / cover ;
   bottom: 0;
   content: "";
