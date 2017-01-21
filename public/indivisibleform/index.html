@@ -11,6 +11,15 @@
 			  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
 			  crossorigin="anonymous"></script>
 		<script type="text/javascript" src="/indivisible/lib/js-yaml.min.js" defer></script>
+		
+		  <script>
+$(document).ready(function(){
+    $("#btnHide").click(function(){
+        $(“#form-last_name”).hide("slow");
+    });
+});
+</script>
+		
   </head>
   <body>
     <div id="header-container">
@@ -20,5 +29,8 @@
     </div>
     <div id="form-container">
       <link href='https://actionnetwork.org/css/style-embed-whitelabel.css' rel='stylesheet' type='text/css' /><script src='https://actionnetwork.org/widgets/v2/form/indivisible-group-signup?format=js&source=widget&style=full&clear_id=true'></script><div id='can-form-area-indivisible-group-signup' style='width: 500px'><!-- this div is the target for our HTML insertion --></div>
+      
+      <span id="btnHide">hide it</span>
+      
   </body>
 </html>
