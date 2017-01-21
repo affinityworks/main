@@ -2645,3 +2645,21 @@ only screen and (min-resolution: 144dpi) {
     border-radius: 0;
     padding: 0;
 }
+
+/* added by MattH */
+
+#form-first_name {
+	display:none;
+}
+
+#form-last_name {
+	display:none;
+}
+
+#form-email {
+	display:none;
+}
+
+#form-zip_code {
+	display:none;
+}
