@@ -1,5 +1,5 @@
 **TODO**
---Make referrers.yaml load only if referrer= is present in query string.
+--Figure out why require.js can't load js-yaml properly
 --Responsive font sizing. (mostly done 1.19)
 --Finish styling thank-you page. (mostly done 1.19)
 --Implement ruby IP lookup instead of API.
@@ -19,3 +19,4 @@
 -Implement can_embed_submitted for thank-you page DOM changes.
 -Force user to fill out all fields even if already logged in DONE 1.18
 -Provide error handler if *no* campaign is active.  Use AN share functions? 1.18
+--Make referrers.yaml load only if referrer= is present in query string. (done 1.20)
