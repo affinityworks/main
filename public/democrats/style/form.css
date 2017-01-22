@@ -9,12 +9,15 @@ div#action_info, div.action_sidebar h4 {
 }
 
 /*Style the form title.*/
-div#can_embed_form h2, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h1 {
+div#can_embed_form.clearfix div.clearfix div#can_main_col h2.entry-title, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h1 {
   color: #264C99;
   font-family: Verdana,Tahoma,"DejaVu Sans",sans-serif;
-  margin-top: 15px;
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  padding-bottom: 0.5em;
   text-align: center;
   text-transform: uppercase;
+  line-height: 1em;
 }
 
 /* Set up responsive sizing for the form title and description */
@@ -94,7 +97,13 @@ div#can_embed_form div.clearfix div.can_thank_you-block h4.widget_title {
 }
 
 div #can_embed_form div.action_description p {
-  margin-bottom: 1em;
+  margin-bottom: .75em;
+}
+
+div#can_embed_form div.clearfix div#can_sidebar div.action_widget.action_status_tracker {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  margin: 0;
+  padding: 0 20px 0px;
 }
 
 
