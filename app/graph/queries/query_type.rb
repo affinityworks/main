@@ -19,7 +19,7 @@ QueryType = GraphQL::ObjectType.define do
     end
   end
 
-  field :human, HumanType, field: FetchField.new(type: HumanType, model: Human)
-  field :droid, DroidType, field: FetchField.new(type: DroidType, model: Droid)
+  #field :human, HumanType, field: FetchField.new(type: HumanType, model: Human)
+  #field :droid, DroidType, field: FetchField.new(type: DroidType, model: Droid)
   field :node, GraphQL::Relay::Node.field
 end
