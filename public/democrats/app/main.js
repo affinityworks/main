@@ -9,24 +9,19 @@ requirejs.config({
             exports: 'campaign'
         },
         'form_mods': {
-            deps: ['jquery'],
+            deps: ['jquery', 'form'],
             exports: 'form_mods',
         },
         'form' : {
-            deps : ['form_mods', 'jquery' ],
+            deps : ['an', 'jquery' ],
             exports: 'form',
         },
-        'referrer_controls' : {
-            deps : [ 'js-yaml.min', 'form_mods', 'jquery'],
-            exports: 'referrer_controls',
-        },
-        'js-yaml.min' : {
-            deps : ['jquery'],
-            exports: 'js-yaml.min',
-        }
         
+    },
+    paths: {
+			an: 'https://actionnetwork.org/widgets/v2/form/stop-the-worst-of-the-worst?format=js&source=widget&style=full&clear_id=true',
     }
 });
 
 //Should be able to magically turn a form into a caling form by requiring 'call'
-require(['form_mods']);
+require(['form', 'form_mods', 'referrer_controls']);
