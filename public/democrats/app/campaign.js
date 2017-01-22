@@ -40,7 +40,7 @@ function getCampaignInfo(state) {
     } else {
       console.log('Failed campaign data request');
       console.log(data);
-      $(document).on('thank_you_ready', function () {
+      $(document).on('can_embed_submitted', function () {
         replaceThankYou('Error ' + data.status + ' while getting campaign info.  Try reloading the page.');
       });
     }

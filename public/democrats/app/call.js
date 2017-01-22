@@ -27,7 +27,7 @@ handleCallResponse = function (res) {
     targetHTML = 'There was an error with your call (' + res.status + ' ' + res.statusText + ').  Please <a href="http://www.advocacycommons.org/democrats/">try again</a>.'
   }
   
-  $(document).on('thank_you_ready',function(){
+  $(document).on('can_embed_submitted',function(){
     replaceThankYou(targetHTML)
   });
   
