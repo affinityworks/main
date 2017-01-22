@@ -38,6 +38,9 @@
     "webpack-dev-server": "^1.12.0"
   },
   "scripts": {
-    "start": "webpack-dev-server --progress --colors --hot --content-base dist"
+    "start": "webpack-dev-server --progress --colors --hot --content-base dist",
+    "build": "webpack --config webpack.production.config.js --progress --profile --colors",
+    "dev": " webpack-dashboard -- webpack-dev-server --progress --profile --colors",
+    "lint": "eslint --ext js --ext jsx src || exit 0"
   }
 }

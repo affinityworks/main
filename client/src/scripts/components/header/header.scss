@@ -1,18 +1,57 @@
-.header {
+.nav {
+  background-color: rgb(46, 46, 46);
+  color: rgba(255,255,255,0.5);
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
   display: block;
   width: 100%;
-  padding: 0em 2em 2em;
-  background-color: white;
-  color: black;
   text-align: center;
-  &:hover {
-    color: rgb(57,57,57);
-  }
-}
+  margin: 0;
 
-.title {
-  text-align: center;
-  font-size: 3em;
-  color: rgb(84, 84, 84);
-  font-weight: normal;
+  .app-logo {
+    height: 2.25em;
+    width: 2.25em;
+    vertical-align: middle;
+  }
+
+  .section {
+    display: inline-block;
+    flex: 1;
+    color: rgba(255,255,255,0.5);
+    font-size: 1em;
+    letter-spacing: 0.05em;
+    height: 100%;
+
+    .section-label {
+      display: inline-block;
+      vertical-align: middle;
+      text-transform: uppercase;
+      padding: 1.2em 1.2em;
+    }
+
+    &:hover {
+      color: rgba(255,255,255,1);
+    }
+
+    &.home {
+      flex: 2;
+      color: rgba(255,255,255,1);
+      font-size: 1.2em;
+
+      .section-label {
+        padding: 1em 4em 1em 0;
+        font-weight: 300;
+      }
+    }
+
+    &.current {
+      border-top: 0.2em;
+      border-top-color: white;
+      border-top-style: solid;
+    }
+  }
 }

@@ -58,10 +58,12 @@ class Overview extends Component {
 
   render() {
     return (
-      <div className="overview" style={style}>
-        <Header />
-        <Search suggestion="Enter a City or Zip Code" />
-        <List items={this.state.groupList} />
+      <div className="wrap">
+        <Header current="group" />
+        <div className="overview" style={style}>
+          <Search suggestion="Enter a City or Zip Code" />
+          <List items={this.state.groupList} />
+        </div>
       </div>
     );
   }
