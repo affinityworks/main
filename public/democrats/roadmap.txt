@@ -1,5 +1,5 @@
 **TODO**
---Figure out why require.js can't load js-yaml properly
+--Figure out why require.js can't load js-yaml properly (only needed for referrer functionality)
 --Responsive font sizing. (mostly done 1.19)
 --Finish styling thank-you page. (mostly done 1.19)
 --Implement ruby IP lookup instead of API.
@@ -8,7 +8,7 @@
 **Done**
 -Finish all styles: 1.16
 -Write referrer code function: 1.16
--Figure out require.js: done, not using 1.17
+-Figure out require.js: done, not using 1.17 (haha YES WE ARE 1.21)
 -Get trailing slash redirects working. 1.17
 -Direct users to different CP campaigns based on zipcode: 1.17
 --Simplify the IP detection so it just gets their IP – probably don't need the API. 1.18 (yes we do need it)
