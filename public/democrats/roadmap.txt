@@ -1,4 +1,8 @@
 **TODO**
+--Make jQuery and AN form scripts load in the right order.
+--Increase minimum font size for small screens.
+--Remove "x number of actions taken" for Democrats signup page.
+--Change "may" to "will": You may receive updates from Democrats.com, the sponsor of this form.
 --Figure out why require.js can't load js-yaml properly (only needed for referrer functionality)
 --Responsive font sizing. (mostly done 1.19)
 --Finish styling thank-you page. (mostly done 1.19)
