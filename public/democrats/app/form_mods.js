@@ -1,3 +1,5 @@
+//Modify the AN form to look the way we want it to.
+
 $(document).on('can_embed_loaded', function () {
   console.log('Form loaded.');
   phoneField = $('#phone');
