@@ -62,7 +62,7 @@
 				}
 			},
 			validate_form: function( $element ) {
-				//console.log($element);
+				console.log($element);  // DEBUG
 				if (!$element.is('form')) {
 					console.log('JQUERY OSDI ERROR: The DOM element passed to the jQuery OSDI plugin is not a form. The jQuery OSDI plugin only supports form elements.');		
 					return false;
@@ -84,9 +84,9 @@
 				}
 			},
 			submit_handler: function( $element, that ) {
-				//console.log('submithandler');
-				//console.log($element);
-				//console.log(that);
+				console.log('submithandler');  // DEBUG
+				console.log($element);   // DEBUG
+				console.log(that);    // DEBUG
 				if (that.validate_submit( $element )) {
 					var	body,
 						endpoint,
@@ -123,13 +123,13 @@
 					fail = that.settings.fail;
 					always = that.settings.always;
 					
-					//console.log(body);
-					//console.log(JSON.stringify(body));
-					//console.log(endpoint);
-					//console.log(ajax_options);
-					//console.log(done);
-					//console.log(fail);
-					//console.log(always);
+					console.log(body);       // DEBUG
+					console.log(JSON.stringify(body));  // DEBUG
+					console.log(endpoint);       // DEBUG
+					console.log(ajax_options);    // DEBUG
+					console.log(done);           // DEBUG
+					console.log(fail);           // DEBUG
+					console.log(always);         // DEBUG
 					
 					that.perform_ajax(ajax_options, done, fail, always);
 				}
@@ -145,9 +145,9 @@
 				}
 			},
 			validate_endpoint: function ( $element ) {
-				//console.log($element);
-				//console.log(!this.settings.endpoint);
-				//console.log(!$element.attr('action'));
+				console.log($element);           // DEBUG
+				console.log(!this.settings.endpoint);   // DEBUG
+				console.log(!$element.attr('action'));  // DEBUG
 				if (!this.settings.endpoint && !$element.attr('action')) {
 					console.log('JQUERY OSDI ERROR: An endpoint is required. Either set the endpoint option with a string when calling the jQuery OSDI plugin, or give your form an action attribute with the endpoint as its value.');
 					return false;
