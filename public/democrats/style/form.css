@@ -23,49 +23,49 @@ div#can_embed_form.clearfix div.clearfix div#can_main_col h2.entry-title, div.ca
 /* Set up responsive sizing for the form title and description */
 @media screen and (max-width: 492px) {
   div#can_embed_form h2, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h1  {
-    font-size: 19px;
+    font-size: 20px;
   }
   div.action_description, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you div#action_thank_you_text p, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h4  {
-    font-size: 10.455px;
+    font-size: 14px;
   }
   div#can_embed_form div.clearfix div.can_thank_you-block h4.widget_title, div#can_embed_form div.clearfix div.can_thank_you-block a.share_button {
-    font-size: 10.455px;
+    font-size: 14px;
   }
   div#can_embed_form div.clearfix div.can_thank_you-block
   {
-    font-size: 10.455px;
+    font-size: 14px;
   }
 }
 
 @media screen and (min-width: 492px) and (max-width: 800px) {
   div#can_embed_form h2, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h1 {
-    font-size: 3.86vw;
+    font-size: 4.5vw;
   }
   div.action_description, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you div#action_thank_you_text p, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h4  {
-    font-size: 2.125vw;
+    font-size: 2.85vw;
   }
   div#can_embed_form div.clearfix div.can_thank_you-block h4.widget_title, div#can_embed_form div.clearfix div.can_thank_you-block a.share_button {
-    font-size: 2.125vw;
+    font-size: 2.85vw;
   }
   div#can_embed_form div.clearfix div.can_thank_you-block
   {
-    font-size: 2.125vw;
+    font-size: 2.85vw;
   }
 }
 
 @media screen and (min-width: 800px) {
   div#can_embed_form h2, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h1 {
-    font-size: 31px;
+    font-size: 37px;
   }
   div.action_description, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you div#action_thank_you_text p, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h4 {
-    font-size:17px;
+    font-size:22.8px;
   }
   div#can_embed_form div.clearfix div.can_thank_you-block h4.widget_title, div#can_embed_form div.clearfix div.can_thank_you-block a.share_button {
-    font-size: 17px;
+    font-size: 22.8px;
   }
   div#can_embed_form div.clearfix div.can_thank_you-block
   {
-    font-size: 17px
+    font-size: 22.8px
   }
 }
 
