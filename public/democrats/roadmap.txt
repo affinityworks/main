@@ -1,0 +1,26 @@
+**TODO**
+--Increase minimum font size for small screens.
+--Change "may" to "will": You may receive updates from Democrats.com, the sponsor of this form.
+--Implement ruby IP lookup instead of API.
+
+
+**Done**
+-Finish all styles: 1.16
+-Write referrer code function: 1.16
+-Figure out require.js: done, not using 1.17 (haha YES WE ARE 1.21)
+-Get trailing slash redirects working. 1.17
+-Direct users to different CP campaigns based on zipcode: 1.17
+--Simplify the IP detection so it just gets their IP – probably don't need the API. 1.18 (yes we do need it)
+-Have campaign.js check if campaign.active is TRUE before calling 1.18
+-Email info@actionnetwork.org to find out if there's a JS event for when the thank you page loads too. DONE 1.18
+-Change handleScript error handler to display error on the page for user's information. 1.18
+-Change handleScript to handleCallResponse 1.18
+-Implement can_embed_submitted for thank-you page DOM changes.
+-Force user to fill out all fields even if already logged in DONE 1.18
+-Provide error handler if *no* campaign is active.  Use AN share functions? 1.18
+--Make referrers.yaml load only if referrer= is present in query string. (done 1.20)
+--Finish styling thank-you page. (done 1.21)
+--Responsive font sizing. (done 1.21)
+--Remove "x number of actions taken" for Democrats signup page. (done 1.22 in form.css)
+--Make jQuery and AN form scripts load in the right order. (done 1.22)
+--Figure out why require.js can't load js-yaml properly (only needed for referrer functionality) (done 1.22)

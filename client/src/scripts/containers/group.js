@@ -103,24 +103,26 @@ class Group extends Component {
     );
 
     return (
-      <div className="group" style={style}>
-        <div className="group-main">
-          <Header />
-          <a href={url} className="group-title">{name}</a>
-          <UpdateList
-            sticky
-            updates={stickyUpdates}
-          />
-          <EventList events={events} />
-          <UpdateList
-            updates={regularUpdates}
-          />
-        </div>
-        <div className="group-related">
-          {signUpFrom}
-          {facebookGroup}
-          {contactWell}
-          {nearbyWell}
+      <div className="wrap">
+        <Header current="group" />
+        <div className="group" style={style}>
+          <div className="group-main">
+            <a href={url} className="group-title">{name}</a>
+            <UpdateList
+              sticky
+              updates={stickyUpdates}
+            />
+            <EventList events={events} />
+            <UpdateList
+              updates={regularUpdates}
+            />
+          </div>
+          <div className="group-related">
+            {signUpFrom}
+            {facebookGroup}
+            {contactWell}
+            {nearbyWell}
+          </div>
         </div>
       </div>
     );
