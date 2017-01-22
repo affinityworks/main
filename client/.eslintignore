@@ -1,3 +1,4 @@
 node_modules/**/*.js
 src/scripts/sample-data.js
 webpack.config.js
+webpack.production.config.js
