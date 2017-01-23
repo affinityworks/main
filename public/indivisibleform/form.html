@@ -5,12 +5,11 @@
 
         <!-- CSS -->
         <link rel="stylesheet" type="text/css" href="/indivisibleform/style/header.css" />
-		<link rel="stylesheet" type="text/css" href="/indivisibleform/style/form.css" />
-		<link rel="stylesheet" type="text/css" href="/indivisibleform/style/body.css" />
+	    	<link rel="stylesheet" type="text/css" href="/indivisibleform/style/form.css" />
+	    	<link rel="stylesheet" type="text/css" href="/indivisibleform/style/body.css" />
         <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css" rel="stylesheet" type="text/css">
         <link href="/indivisibleform/style/whitelabel.css" rel="stylesheet" type="text/css">
-        <!-- 2  -- >
 
         <!-- end CSS -->
 
@@ -22,18 +21,18 @@
 		  		src="https://code.jquery.com/jquery-3.1.1.min.js"
 			  	integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
 				crossorigin="anonymous">
-		</script>
-		<script src="/indivisibleform/js/parsley.js" type="text/javascript"></script>
-		<script src="/indivisibleform/js/jquery.osdi.js" type="text/javascript"></script>
-		<script src="/indivisibleform/js/formfixer.js" type="text/javascript"></script>
+				</script>
+				<script src="/indivisibleform/js/parsley.js" type="text/javascript"></script>
+				<script src="/indivisibleform/js/jquery.osdi.js" type="text/javascript"></script>
+				<script src="/indivisibleform/js/formfixer.js" type="text/javascript"></script>
 
-		<script type="text/javascript">
-			$(document).ready(function() {
-			$('testform').osdi();
-			});
-		</script>
+				<script type="text/javascript">
+						$(document).ready(function() {
+						$('testform').osdi();
+						});
+				</script>
 
-		<!-- end JS -->
+				<!-- end JS -->
 
     </head>
     <body>
@@ -222,6 +221,18 @@
 	});
 	</script>
 
-	<!-- end copied from AN -->
+	<script type="text/javascript">
+	$(function () {
+	  $('#new_answer').parsley().on('field:validated', function() {
+	    var ok = $('.parsley-error').length === 0;
+	    $('.bs-callout-info').toggleClass('hidden', !ok);
+	    $('.bs-callout-warning').toggleClass('hidden', ok);
+	  })
+	//  .on('form:submit', function() {
+	//    return false; // Don't submit form for this demo
+	//  });
+	});
+	</script>
+
 
 </html>
