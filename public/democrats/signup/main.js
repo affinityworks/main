@@ -23,7 +23,7 @@ requirejs.config({
         
     },
     paths: {
-			an: 'https://actionnetwork.org/widgets/v2/form/stop-the-worst-of-the-worst?format=js&source=widget&style=full&clear_id=true',
+			an: 'https://actionnetwork.org/widgets/v2/form/stop-the-worst-of-the-worst?format=js&source=widget&style=full',
     },
     baseUrl: '/democrats/app/'
 });
