@@ -36,7 +36,11 @@ textarea.parsley-error {
 .parsley-error,
 .parsley-required {
 	color: red;
-	top: -40px;
-    left: 70px;
-    position: relative;
+	background-color: red;
+
+}
+
+.parsley-errors-list filled {
+	color: red;
+	background-color: red;
 }
