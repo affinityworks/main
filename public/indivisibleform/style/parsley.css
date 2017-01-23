@@ -31,3 +31,7 @@ textarea.parsley-error {
 .parsley-errors-list.filled {
   opacity: 1;
 }
+
+.parsley-error {
+	color: red;
+}
