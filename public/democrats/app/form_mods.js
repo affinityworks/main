@@ -13,7 +13,10 @@ $(document).on('can_embed_loaded', function () {
   
   //Move the disclaimer to the bottom
   disclaimer = $('li#d_sharing ul li').first();
-  $(disclaimer).detach().addClass('new-disclaimer');
+  $(disclaimer)
+    .detach()
+    .addClass('new-disclaimer')
+    .html('You will receive updates from <em>Democrats.com,</em> the sponsor of this form.');
   $('form#new_answer ul').first().append(disclaimer);
 });
 
