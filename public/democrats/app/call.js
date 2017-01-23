@@ -1,4 +1,4 @@
-$(document).on('can_embed_loaded',function(){
+$(document).on('can_embed_loaded'){
 	$(theForm).submit(function (event) {
     commanderData();
   });
