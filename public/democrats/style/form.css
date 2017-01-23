@@ -196,7 +196,8 @@ div#heads div.nominee label.nominee-label {
 }
 
 div#heads div.nominee {
-  margin-right: 1em;
+  margin-right: .5em;
+  margin-left: .5em;
 }
 div#can_main_col div.action_description.clearfix div#heads {
   display: flex;
