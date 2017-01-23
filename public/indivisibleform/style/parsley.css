@@ -32,6 +32,11 @@ textarea.parsley-error {
   opacity: 1;
 }
 
-.parsley-error {
+/* Matt added */
+.parsley-error,
+.parsley-required {
 	color: red;
+	top: -40px;
+    left: 70px;
+    position: relative;
 }
