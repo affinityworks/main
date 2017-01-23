@@ -188,19 +188,29 @@ div#heads div.nominee img.nominee-img {
 
 div#heads div.nominee label.nominee-label {
   display: inline-block;
+  font-size: 0.75em;
+  line-height: 1em;
+  margin: 0;
   text-align: center;
   vertical-align: bottom;
-  font-size: .5em;
-  line-height: 1em;
-  margin: 0px;
 }
 
 div#heads div.nominee {
-  margin: 0px 0.35em;
+  margin-right: 1em;
+  width: 3em;
 }
+
 div#can_main_col div.action_description.clearfix div#heads {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
   align-items: flex-start;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: .5em;
+}
+
+@media screen and (max-width: 492px) {
+  div#can_main_col div.action_description.clearfix div#heads {
+    display: none;
+  }
 }
