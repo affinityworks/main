@@ -16,6 +16,10 @@ requirejs.config({
             deps : ['an', 'jquery' ],
             exports: 'form',
         },
+        'heads' : {
+          deps : ['form', 'jquery' ],
+          exports: 'heads',
+        }
         
     },
     paths: {
@@ -24,4 +28,4 @@ requirejs.config({
 });
 
 //Should be able to magically turn a form into a caling form by requiring 'call'
-require(['form', 'form_mods', 'referrer_controls']);
+require(['form', 'form_mods', 'heads', 'referrer_controls']);
