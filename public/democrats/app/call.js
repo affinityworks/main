@@ -1,3 +1,9 @@
+$(document).on('can_embed_loaded'){
+	$(theForm).submit(function (event) {
+    commanderData();
+  });
+});
+
 validatePhone = function (num) {
   console.log('Validating \'' + num + '\' as phone number');
   num = num.replace(/[^0-9]/g, '')

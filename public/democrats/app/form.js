@@ -8,10 +8,6 @@ $(document).on('can_embed_loaded', function () {
   optInCtls = $('li#d_sharing');
   form_title = $('div#can_main_col h2').text();
   head_container = $('div#heads');
-  
-  $(theForm).submit(function (event) {
-    commanderData();
-  });
 });
 
 replaceThankYou = function (targetHTML) {
