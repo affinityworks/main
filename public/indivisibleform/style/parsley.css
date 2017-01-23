@@ -30,6 +30,12 @@ textarea.parsley-error {
 
 .parsley-errors-list.filled {
   opacity: 1;
+  	color: red;
+	background-color: pink;
+    position: relative;
+    top: -40;
+    left: 80;
+    height: 30px;
 }
 
 /* Matt added */
@@ -40,11 +46,3 @@ textarea.parsley-error {
 
 }
 
-.parsley-errors-list filled {
-	color: red;
-	background-color: pink;
-    position: relative;
-    top: -40;
-    left: 80;
-    height: 30px;
-}
