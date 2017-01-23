@@ -1,6 +1,4 @@
 **TODO**
---Increase minimum font size for small screens.
---Change "may" to "will": You may receive updates from Democrats.com, the sponsor of this form.
 --Implement ruby IP lookup instead of API.
 
 
@@ -24,3 +22,5 @@
 --Remove "x number of actions taken" for Democrats signup page. (done 1.22 in form.css)
 --Make jQuery and AN form scripts load in the right order. (done 1.22)
 --Figure out why require.js can't load js-yaml properly (only needed for referrer functionality) (done 1.22)
+--Increase minimum font size for small screens. (done 1.22)
+--Change "may" to "will": You may receive updates from Democrats.com, the sponsor of this form. (done 1.22)
