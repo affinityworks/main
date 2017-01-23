@@ -30,8 +30,7 @@ imgs =
 		  'img' : 'tillerson-300.jpg'
 		}
   }
-  
-console.log('heads up!');
+
 $(document).on('can_embed_loaded',function(){
 	for (var key in imgs) {
 		var nominee = imgs[key];
