@@ -105,7 +105,7 @@
 
                                           <input id="email" name="email" placeholder="Email *" size="35" value="" type="email" data-parsley-trigger="change" required="" >
 
-                                          <input id="postal_code" name="postal_code" placeholder="Zip/Postal Code *" size="35" type="text" data-parsley-type="digits" data-parsley-length="[4, 6]" data-parsley-trigger="change">
+                                          <input id="postal_code" name="postal_code" placeholder="Zip/Postal Code *" size="35" type="text" data-parsley-type="digits" data-parsley-minlength="5" data-parsley-maxlength="5" data-parsley-trigger="change">
 
                                           <div class="form_builder_output">
                                           <!-- Text input-->
@@ -117,31 +117,31 @@
                                               <!-- Text input-->
                                               <li class="control-group">
                                                 <label class="control-label" for="GroupEmail"></label>
-                                                <input id="GroupEmail" name="GroupEmail" placeholder="Group Email address" type="email" data-parsley-trigger="change" required="">
+                                                <input id="GroupEmail" name="GroupEmail" placeholder="Group Email address" type="email" data-parsley-trigger="change" required="" data-parsley-group="block1">
                                               </li>
 
                                               <!-- Text input-->
                                               <li class="control-group">
                                                 <label class="control-label" for="GroupFBpage"></label>
-                                                <input id="GroupFBpage" name="GroupFBpage" placeholder="Link to Facebook Page" class="input-xlarge " type="text">
+                                                <input id="GroupFBpage" name="GroupFBpage" placeholder="Link to Facebook Page" class="input-xlarge " type="text" data-parsley-trigger="change" data-parsley-type="url" data-parsley-group="block1">
                                               </li>
 
                                               <!-- Text input-->
                                               <li class="control-group">
                                                 <label class="control-label" for="GroupTwitter"></label>
-                                                <input id="GroupTwitter" name="GroupTwitter" placeholder="Link to Twitter Page" class="input-xlarge " type="text">
+                                                <input id="GroupTwitter" name="GroupTwitter" placeholder="Link to Twitter Page" class="input-xlarge " type="text" data-parsley-trigger="change" data-parsley-type="url" data-parsley-group="block1">
                                               </li>
 
                                               <!-- Text input-->
                                               <li class="control-group">
                                                 <label class="control-label" for="GroupWebsite"></label>
-                                                <input id="GroupWebsite" name="GroupWebsite" placeholder="Website link" class="input-xlarge " type="text">
+                                                <input id="GroupWebsite" name="GroupWebsite" placeholder="Website link" class="input-xlarge " type="text" data-parsley-trigger="change" data-parsley-type="url" data-parsley-group="block1">
                                               </li>
 
                                               <!-- Text input-->
                                               <li class="control-group">
                                                 <label class="control-label" for="GroupPhoneNumber"></label>
-                                                <input id="GroupPhoneNumber" name="GroupPhoneNumber" placeholder="Group phone number" class="input-xlarge " type="text">
+                                                <input id="GroupPhoneNumber" name="GroupPhoneNumber" placeholder="Group phone number"  type="text" data-parsley-group="block1">
                                               </li>
 
                                               <!-- Form Name -->
@@ -232,5 +232,18 @@
 	});
 	</script>
 
+
+<script type="text/javascript">
+$(function () {
+  $('#new_answer').parsley().on('form:validate', function (formInstance) {
+    var ok = formInstance.isValid({group: 'block1', force: true}) || formInstance.isValid({group: 'block2', force: true});
+    $('.invalid-form-error-message')
+      .html(ok ? '' : 'You must correctly fill *at least one of these two blocks!')
+      .toggleClass('filled', !ok);
+    if (!ok)
+      formInstance.validationResult = false;
+  });
+});
+</script>
 
 </html>
