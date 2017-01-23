@@ -24,7 +24,8 @@ requirejs.config({
     },
     paths: {
 			an: 'https://actionnetwork.org/widgets/v2/form/stop-the-worst-of-the-worst?format=js&source=widget&style=full&clear_id=true',
-    }
+    },
+    baseUrl: '/democrats/app/'
 });
 
 //Should be able to magically turn a form into a caling form by requiring 'call'

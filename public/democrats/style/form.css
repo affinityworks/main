@@ -80,6 +80,7 @@ div.action_description, div#action_welcome_message_inner, div.can_embed div#can_
   border: 0;
   box-shadow: none;
   padding: 0;
+  text-align: left;
   
 }
 div.can_embed div#can_embed_form div#can_thank_you h4, div.can_embed div#can_embed_form div#can_thank_you h1, div.can_embed div#can_embed_form div#can_thank_you div#action_thank_you_text p {
