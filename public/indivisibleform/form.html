@@ -28,11 +28,11 @@
 		<script src="/indivisibleform/js/jquery.osdi.js" type="text/javascript"></script>
 		<script src="/indivisibleform/js/formfixer.js" type="text/javascript"></script>
 
-		<script type="text/javascript">
+		<!-- script type="text/javascript">
 				$(document).ready(function() {
 				$('testform').osdi();
 				});
-		</script>
+		</script  -->
 
 				<!-- end JS -->
 
@@ -121,25 +121,25 @@
                                               <!-- Text input-->
                                               <li class="control-group">
                                                 <label class="control-label" for="GroupFBpage"></label>
-                                                <input id="GroupFBpage" name="GroupFBpage" placeholder="Link to Facebook Page"  type="text" data-parsley-type="url" data-parsley-group="block1">
+                                                <input id="GroupFBpage" name="GroupFBpage" placeholder="Link to Facebook Page"  type="text" data-parsley-type="url" data-parsley-group="block2">
                                               </li>
 
                                               <!-- Text input-->
                                               <li class="control-group">
                                                 <label class="control-label" for="GroupTwitter"></label>
-                                                <input id="GroupTwitter" name="GroupTwitter" placeholder="Link to Twitter Page"  type="text" data-parsley-type="url" data-parsley-group="block1">
+                                                <input id="GroupTwitter" name="GroupTwitter" placeholder="Link to Twitter Page"  type="text" data-parsley-type="url">
                                               </li>
 
                                               <!-- Text input-->
                                               <li class="control-group">
                                                 <label class="control-label" for="GroupWebsite"></label>
-                                                <input id="GroupWebsite" name="GroupWebsite" placeholder="Website link"  type="text" data-parsley-type="url" data-parsley-group="block1">
+                                                <input id="GroupWebsite" name="GroupWebsite" placeholder="Website link"  type="text" data-parsley-type="url" >
                                               </li>
 
                                               <!-- Text input-->
                                               <li class="control-group">
                                                 <label class="control-label" for="GroupPhoneNumber"></label>
-                                                <input id="GroupPhoneNumber" name="GroupPhoneNumber" placeholder="Group phone number"  type="text" data-parsley-group="block1">
+                                                <input id="GroupPhoneNumber" name="GroupPhoneNumber" placeholder="Group phone number"  type="text" >
                                               </li>
 
                                               <!-- Form Name -->
@@ -229,17 +229,17 @@
 	</script>
 
 
-<script type="text/javascript">
-$(function () {
-  $('#new_answer').parsley().on('form:validate', function (formInstance) {
-    var ok = formInstance.isValid({group: 'block1', force: true}) || formInstance.isValid({group: 'block2', force: true});
-    $('.invalid-form-error-message')
-      .html(ok ? '' : 'You must correctly fill *at least one of these two blocks!')
-      .toggleClass('filled', !ok);
-    if (!ok)
-      formInstance.validationResult = false;
-  });
-});
-</script>
+	<script type="text/javascript">
+	$(function () {
+	  $('#new_answer').parsley().on('form:validate', function (formInstance) {
+	    var ok = formInstance.isValid({group: 'block1', force: true}) || formInstance.isValid({group: 'block2', force: true});
+	    $('.invalid-form-error-message')
+	      .html(ok ? '' : 'You must correctly fill *at least one of these two blocks!')
+	      .toggleClass('filled', !ok);
+	    if (!ok)
+	      formInstance.validationResult = false;
+	  });
+	});
+	</script>
 
 </html>
