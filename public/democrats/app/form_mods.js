@@ -16,7 +16,7 @@ $(document).on('can_embed_loaded', function () {
   $(disclaimer)
     .detach()
     .addClass('new-disclaimer')
-    .html('You will receive updates from <em>Democrats.com,</em> the sponsor of this form.');
+    .html('You will receive updates from <em>Democrats.com,</em> the sponsor of this form.  By signing up and entering your telephone number, you consent to receive text messages, prerecorded audio messages (including calls to cellular phones), and other communications.');
   $('form#new_answer ul').first().append(disclaimer);
     
   //Remove the "not in the US?" dropdown link
