@@ -3,21 +3,21 @@
 $(document).on('can_embed_loaded', function () {
   
   //Move the opt in controls to above the start calling button.
-  $(optInCtls).detach().css('margin-bottom', '20px');
-  $('input#phone').after(optInCtls);
-  $('li#d_sharing_opts').slideDown();
-  $('a#edit_d_sharing_opts').parent().remove();
-  
-  //Change the text on the opt-in controls
-  $('li#d_sharing_opts label').get(0).lastChild.nodeValue = 'Send me regular action alerts to stop Trump nominees';
-  
-  //Move the disclaimer to the bottom
-  disclaimer = $('li#d_sharing ul li').first();
-  $(disclaimer)
-    .detach()
-    .addClass('new-disclaimer')
-    .html('You will receive updates from <em>Democrats.com,</em> the sponsor of this form.  By signing up and entering your telephone number, you consent to receive text messages, prerecorded audio messages (including calls to cellular phones), and other communications.');
-  $('form#new_answer ul').first().append(disclaimer);
+  // $(optInCtls).detach().css('margin-bottom', '20px');
+//   $('input#phone').after(optInCtls);
+//   $('li#d_sharing_opts').slideDown();
+//   $('a#edit_d_sharing_opts').parent().remove();
+//   
+//   //Change the text on the opt-in controls
+//   $('li#d_sharing_opts label').get(0).lastChild.nodeValue = 'Send me regular action alerts to stop Trump nominees';
+//   
+//   //Move the disclaimer to the bottom
+//   disclaimer = $('li#d_sharing ul li').first();
+//   $(disclaimer)
+//     .detach()
+//     .addClass('new-disclaimer')
+//     .html('You will receive updates from <em>Democrats.com,</em> the sponsor of this form.  By signing up and entering your telephone number, you consent to receive text messages, prerecorded audio messages (including calls to cellular phones), and other communications.');
+//   $('form#new_answer ul').first().append(disclaimer);
     
   //Remove the "not in the US?" dropdown link
   $('div.country_wrap').remove();
