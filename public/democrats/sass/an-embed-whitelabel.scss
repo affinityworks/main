@@ -64,9 +64,7 @@ body.can_embed,body.can_fundraising_widget {
 }
 
 #can_embed_form .entry-title {
-    padding-bottom: 20px;
     border-bottom: 1px solid #CBCBCB;
-    line-height: 35px;
 }
 
 .can_fundraising_widget #noty_top_layout_container {
@@ -96,16 +94,6 @@ body.can_embed,body.can_fundraising_widget {
     bottom: auto;
     left: auto;
     right: auto;
-}
-
-#can_embed_form,#donate_auto_modal {
-    font-size: 16px;
-    line-height: 30px;
-    font-weight: 400;
-    outline: none;
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
 }
 
 #can_embed_form div,#donate_auto_modal div {
@@ -159,17 +147,6 @@ body.can_embed,body.can_fundraising_widget {
     clear: both;
     height: auto;
     overflow: auto;
-}
-
-#can_embed_form p,#donate_auto_modal p {
-    margin-bottom: 15px;
-}
-
-#can_embed_form h2,#donate_auto_modal h2 {
-    margin-bottom: 15px;
-    margin-top: 0;
-    font-size: 28px;
-    text-transform: none;
 }
 
 #can_embed_form h2.line {
