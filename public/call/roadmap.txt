@@ -1,7 +1,6 @@
 **TODO**
---Set up all-Senate Tillerson calls.
+--Set up all-Senate Tillerson calls (waiting on script).
 --Pricing on texting.
---Do we add Call Power JS to an AN page or figure out how to pass referrers through to the AN script?
 --Implement ruby IP lookup instead of API.
 
 
@@ -27,3 +26,4 @@
 --Figure out why require.js can't load js-yaml properly (only needed for referrer functionality) (done 1.22)
 --Increase minimum font size for small screens. (done 1.22)
 --Change "may" to "will": You may receive updates from Democrats.com, the sponsor of this form. (done 1.22)
+--Do we add Call Power JS to an AN page or figure out how to pass referrers through to the AN script? (done 1.24)

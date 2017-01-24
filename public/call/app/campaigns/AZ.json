@@ -1,0 +1,11 @@
+{
+	"campaign": {
+	  "active": false,
+		"id": 2,
+		"targets": {
+			"title": "Senator",
+			"name": "Jeff Flake",
+			"party": "R"
+		}
+	}
+}

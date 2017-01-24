@@ -1,0 +1,177 @@
+div#can-form-area-stop-the-worst-of-the-worst {
+  margin-left: auto;
+  margin-right: auto; }
+
+/* Suppress some elements of the form that we don't want. */
+div#action_info, div.action_sidebar h4 {
+  display: none; }
+
+/*Style the form title.*/
+div#can_embed_form.clearfix div.clearfix div#can_main_col h2.entry-title, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h1 {
+  color: #264C99;
+  font-family: Verdana,Tahoma,"DejaVu Sans",sans-serif;
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  padding-bottom: 0.5em;
+  text-align: center;
+  text-transform: uppercase;
+  line-height: 1em; }
+
+/* Set up responsive sizing for the form title and description */
+@media screen and (max-width: 492px) {
+  div#can_embed_form h2, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h1 {
+    font-size: 20px; }
+
+  div.action_description, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you div#action_thank_you_text p, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h4 {
+    font-size: 14px; }
+
+  div#can_embed_form div.clearfix div.can_thank_you-block h4.widget_title, div#can_embed_form div.clearfix div.can_thank_you-block a.share_button {
+    font-size: 14px; }
+
+  div#can_embed_form div.clearfix div.can_thank_you-block {
+    font-size: 14px; } }
+@media screen and (min-width: 492px) and (max-width: 800px) {
+  div#can_embed_form h2, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h1 {
+    font-size: 4.5vw; }
+
+  div.action_description, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you div#action_thank_you_text p, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h4 {
+    font-size: 2.85vw; }
+
+  div#can_embed_form div.clearfix div.can_thank_you-block h4.widget_title, div#can_embed_form div.clearfix div.can_thank_you-block a.share_button {
+    font-size: 2.85vw; }
+
+  div#can_embed_form div.clearfix div.can_thank_you-block {
+    font-size: 2.85vw; } }
+@media screen and (min-width: 800px) {
+  div#can_embed_form h2, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h1 {
+    font-size: 37px; }
+
+  div.action_description, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you div#action_thank_you_text p, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h4 {
+    font-size: 22.8px; }
+
+  div#can_embed_form div.clearfix div.can_thank_you-block h4.widget_title, div#can_embed_form div.clearfix div.can_thank_you-block a.share_button {
+    font-size: 22.8px; }
+
+  div#can_embed_form div.clearfix div.can_thank_you-block {
+    font-size: 22.8px; } }
+div.action_description, div#action_welcome_message_inner, div.can_embed div#can_embed_form div#can_thank_you {
+  color: #333333;
+  font-family: Verdana,Tahoma,"DejaVu Sans",sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.5em;
+  text-transform: none;
+  background-color: white;
+  border: 0;
+  box-shadow: none;
+  padding: 0;
+  text-align: left; }
+
+div.can_embed div#can_embed_form div#can_thank_you h4, div.can_embed div#can_embed_form div#can_thank_you h1, div.can_embed div#can_embed_form div#can_thank_you div#action_thank_you_text p {
+  text-shadow: none; }
+
+div#can_embed_form div.clearfix div.can_thank_you-block h4.widget_title {
+  text-transform: uppercase;
+  color: #264C99;
+  font-family: Verdana,Tahoma,"DejaVu Sans",sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  margin-top: 1em;
+  margin-bottom: 0.5em; }
+
+div #can_embed_form div.action_description p {
+  margin-bottom: .75em; }
+
+div#can_embed_form div.clearfix div#can_sidebar div.action_widget.action_status_tracker {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 0 20px 0px; }
+
+div#can_embed_form div.clearfix div.can_thank_you-block a.share_button {
+  line-height: 2em;
+  margin-top: 0.5em;
+  font-family: Verdana,Tahoma,"DejaVu Sans",sans-serif;
+  color: white; }
+
+div#can_embed_form div.clearfix div.can_thank_you-block input, div#can_embed_form div.clearfix div.can_thank_you-block textarea {
+  font-size: 10px;
+  margin-bottom: 0px; }
+
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  src: url("https://fonts.gstatic.com/s/montserrat/v7/zhcz-_WihjSQC0oHJ9TCYAzyDMXhdD8sAj6OAJTFsBI.woff2") format("woff2");
+  unicode-range: U+0-FF, U+131, U+152-153, U+2C6, U+2DA, U+2DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215; }
+/*Set up a background image for the page.  Not straight from indivisibleguide.com, but inspired by it. */
+/*div#can-form-area-stop-the-worst-of-the-worst::after {
+  background: rgba(0, 0, 0, 0) url("https://static1.squarespace.com/static/5855a354cd0f68bab2089b40/t/58597f8d29687fe710d051b7/1482191413003/Picture2.jpg?format=1500w") no-repeat scroll right center / cover ;
+  bottom: 0;
+  content: "";
+  left: 0;
+  opacity: 0.32;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: -1;
+}*/
+/* Style for the new disclaimer at the bottom of the page */
+li.new-disclaimer {
+  color: #909090;
+  font-family: serif;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1em;
+  text-align: center; }
+
+div.action_description p {
+  margin-top: 0px; }
+
+/*Styles to make the swapped-in AN thank you text not look so wacky. */
+div.new-action-description {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.7);
+  padding-bottom: 5px;
+  white-space: pre-line; }
+
+div.new-action-description ul {
+  display: inline;
+  line-height: 0.75em;
+  list-style-type: none;
+  margin-bottom: 1em;
+  margin-top: 0;
+  padding-bottom: 1em;
+  padding-top: 0; }
+
+div.new-action-description ul li {
+  padding-left: 1em; }
+
+div#heads div.nominee img.nominee-img {
+  border-radius: 5px;
+  width: 100%; }
+
+div#heads div.nominee label.nominee-label {
+  display: inline-block;
+  font-size: 0.75em;
+  line-height: 1em;
+  margin: 0;
+  text-align: center;
+  vertical-align: bottom; }
+
+div#heads div.nominee {
+  margin-right: 1em;
+  width: 3em; }
+
+div#can_main_col div.action_description.clearfix div#heads {
+  align-items: flex-start;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: .5em; }
+
+@media screen and (max-width: 492px) {
+  div#can_main_col div.action_description.clearfix div#heads {
+    display: none; } }
+
+/*# sourceMappingURL=form.css.map */

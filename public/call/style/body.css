@@ -1,0 +1,18 @@
+body {
+  margin: 0px 0px 0px 0px; }
+
+div#form-container {
+  margin-left: auto;
+  margin-right: auto; }
+
+@media screen and (max-width: 492px) {
+  div#form-container {
+    width: 369px; } }
+@media screen and (max-width: 800px) and (min-width: 492px) {
+  div#form-container {
+    width: 85%; } }
+@media screen and (min-width: 800px) {
+  div#form-container {
+    width: 680px; } }
+
+/*# sourceMappingURL=body.css.map */
