@@ -18,6 +18,9 @@ $(document).on('can_embed_loaded', function () {
     .addClass('new-disclaimer')
     .html('You will receive updates from <em>Democrats.com,</em> the sponsor of this form.');
   $('form#new_answer ul').first().append(disclaimer);
+    
+  //Remove the "not in the US?" dropdown link
+  $('div.country_wrap').remove();
 });
 
 $(document).on('can_embed_submitted', function () {
@@ -37,4 +40,5 @@ $(document).on('can_embed_submitted', function () {
     .attr('id','email_label')
     .text('Hightlight the whole message below, then copy and paste it into an email.')
     .insertBefore('textarea#form-email_friend_message');
+  
 });
