@@ -16,6 +16,7 @@ gem 'coffee-rails', '~> 4.2'
 
 gem 'devise'
 gem 'bootstrap', '~> 4.0.0.alpha5'
+gem 'twitter-bootstrap-rails'
 
 # postgresql database adatper
 gem 'pg'
@@ -37,6 +38,8 @@ gem 'active_model_serializers'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+gem 'jquery-ui-rails', '~> 5.0.4'
+
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -48,6 +51,11 @@ gem 'jbuilder', '~> 2.5'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+
+
+#gem "administrate", "~> 0.3.0"
+gem 'activeadmin', '~> 1.0.0.pre4'
+gem 'inherited_resources', github: 'activeadmin/inherited_resources'
 
 
 
