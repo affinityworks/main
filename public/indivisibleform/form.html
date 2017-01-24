@@ -116,25 +116,25 @@
                                               <!-- Text input-->
                                               <li class="control-group">
                                                 <label class="control-label" for="GroupEmail"></label>
-                                                <input id="GroupEmail" name="GroupEmail" placeholder="Group Email address" type="email"  data-parsley-group="block1">
+                                                <input id="GroupEmail" name="GroupEmail" placeholder="Group Email address" type="email"  data-parsley-group="group-email">
                                               </li>
 
                                               <!-- Text input-->
                                               <li class="control-group">
                                                 <label class="control-label" for="GroupFBpage"></label>
-                                                <input id="GroupFBpage" name="GroupFBpage" placeholder="Link to Facebook Page"  type="text" data-parsley-type="url" data-parsley-group="block2">
+                                                <input id="GroupFBpage" name="GroupFBpage" placeholder="Link to Facebook Page"  type="text" data-parsley-type="url" data-parsley-group="group-fb">
                                               </li>
 
                                               <!-- Text input-->
                                               <li class="control-group">
                                                 <label class="control-label" for="GroupTwitter"></label>
-                                                <input id="GroupTwitter" name="GroupTwitter" placeholder="Link to Twitter Page"  type="text" data-parsley-type="url">
+                                                <input id="GroupTwitter" name="GroupTwitter" placeholder="Link to Twitter Page"  type="text" data-parsley-type="url" data-parsley-group="group-twitter">
                                               </li>
 
                                               <!-- Text input-->
                                               <li class="control-group">
                                                 <label class="control-label" for="GroupWebsite"></label>
-                                                <input id="GroupWebsite" name="GroupWebsite" placeholder="Website link"  type="text" data-parsley-type="url" >
+                                                <input id="GroupWebsite" name="GroupWebsite" placeholder="Website link"  type="text" data-parsley-type="url" data-parsley-group="group-web">
                                               </li>
 
                                               <!-- Text input-->
@@ -148,13 +148,7 @@
                                           </div>  <!-- end form_builder_output -->
                                           <div class="invalid-form-error-message"></div>
 
-
-
                                         <input class="" name="commit" value="Add Your Group" type="submit" class="btn btn-default validate">
-
-
-
-
 
                                           <div class="clear"></div>
                                       </form>
@@ -186,7 +180,7 @@
 	<script type="text/javascript">
 	$(function () {
 	  $('#new_answer').parsley().on('form:validate', function (formInstance) {
-	    var ok = formInstance.isValid({group: 'block1', force: true}) || formInstance.isValid({group: 'block2', force: true});
+	    var ok = formInstance.isValid({group: 'group-email', force: true}) || formInstance.isValid({group: 'group-fb', force: true}) || formInstance.isValid({group: 'group-web', force: true}) || formInstance.isValid({group: 'group-twitter', force: true});
 	    $('.invalid-form-error-message')
 	      .html(ok ? '' : 'You must correctly fill *at least one of these two blocks!')
 	      .toggleClass('filled', !ok);
