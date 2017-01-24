@@ -5,33 +5,43 @@
   font-weight: 400;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: white;
-  margin: 0px 10px 0px 10px;
-  white-space: nowrap; }
+  color: rgb(255,255,255);
+  margin:0px 10px 0px 10px;
+  white-space: nowrap;
+}
 
 @media screen and (max-width: 492px) {
   span.header-item {
-    font-size: 8.6px; }
-
+    font-size:8.6px;
+  }
   div#header-container {
-    height: 22.14px; } }
+    height:22.14px;
+  }
+}
+
 @media screen and (min-width: 492px) {
   span.header-item {
-    font-size: 1.75vw; }
-
+    font-size: 1.75vw;
+  }
   div#header-container {
-    height: 4.5vw; } }
+    height:4.5vw
+  }
+}
+
 @media screen and (min-width: 800px) {
   span.header-item {
-    font-size: 14px; }
-
+    font-size: 14px;
+  }
   div#header-container {
-    height: 36px; } }
+      height: 36px;
+  }
+}
+
 div#header-container {
   background: url(dems_menu_bg.png) repeat-x scroll left top transparent;
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  align-items: center; }
 
-/*# sourceMappingURL=header.css.map */
+  justify-content: center;
+  align-items: center;
+}
