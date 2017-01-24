@@ -29,20 +29,28 @@ textarea.parsley-error {
 }
 
 .parsley-errors-list.filled {
+  font-family: sans-serif;
   opacity: 1;
-  	color: red;
-	background-color: pink;
-    position: relative;
-    top: -40;
-    left: 80;
-    height: 30px;
+	color: red;
+  position: relative;
+  transform: translate(-0.5em,-2.75em);
+  text-align: right;
+  height: 12px;
+  width: 14em;
+  pointer-events: none;
+}
+
+.invalid-form-error-message.filled {
+  font-family: sans-serif;
+  line-height: 1;
+  color: red;
+  padding-top: 0.5em;
+  text-align: left;
+  margin-bottom: 1em;
 }
 
 /* Matt added */
 .parsley-error,
 .parsley-required {
 	color: red;
-	background-color: pink;
-
 }
-

@@ -47,114 +47,90 @@
 				<div id="success"></div>
 	      <div class="can_embed v2  form form_full full">
   		    	<div id="can_embed_form" class="clearfix can_float">
-                  <div class="clearfix">
-
-                      <div id="can_main_col">
-
-                          <h2 class="entry-title js-entry-title">
-                              Indivisible Group Signup
-                          </h2>
-
-                          <div id="action_info">
-                            <div id="action_info_inner" class="clearfix">
-
-
-                              <div class="action_owner_box">
-                                <div class="action_owner_title action_sponsor_title"><h5>Sponsored by</h5></div>
-                                <div class="action_owner_wrap action_sponsor_wrap">
-                                  <div class="action_owner clearfix">
-                                    <a href="https://actionnetwork.org/groups/advocacy-commons" target="_blank">
-                                      <img alt="Protest_bw" class="action_author_avatar avatar" src="https://can2-prod.s3.amazonaws.com/groups/photos/000/028/013/thumb/protest_bw.png">
-                                    </a>
-                                    <div class="action_info_right">
-                                      <div class="action_info_user js-action_info_user">
-                                          <a href="https://actionnetwork.org/groups/advocacy-commons" target="_blank">Advocacy Commons</a>
-                                      </div>
-                                    </div>
-                                  </div>
+              <div class="clearfix">
+                <div id="can_main_col">
+                    <h2 class="entry-title js-entry-title">
+                        Indivisible Group Signup
+                    </h2>
+                    <div id="action_info">
+                      <div id="action_info_inner" class="clearfix">
+                        <div class="action_owner_box">
+                          <div class="action_owner_title action_sponsor_title"><h5>Sponsored by</h5></div>
+                          <div class="action_owner_wrap action_sponsor_wrap">
+                            <div class="action_owner clearfix">
+                              <a href="https://actionnetwork.org/groups/advocacy-commons" target="_blank">
+                                <img alt="Protest_bw" class="action_author_avatar avatar" src="https://can2-prod.s3.amazonaws.com/groups/photos/000/028/013/thumb/protest_bw.png">
+                              </a>
+                              <div class="action_info_right">
+                                <div class="action_info_user js-action_info_user">
+                                    <a href="https://actionnetwork.org/groups/advocacy-commons" target="_blank">Advocacy Commons</a>
                                 </div>
                               </div>
-
                             </div>
                           </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div> <!-- end can_main_col -->
+                    <div id="can_sidebar">
+                      <div class="action_sidebar">
+                          <h4> Form Heading </h4>
+                          <form id="new_answer" data-parsley-validate="" action="/" class="new_answer"  method="post" accept-charset="UTF-8" >
+														<div class="control-group">
+                              <input
+                                  id="first"
+                                  name="first"
+                                  placeholder="First Name"
+                                  size="35"
+                                  background-repeat: no-repeat;
+                                  background-attachment: scroll;
+                                  background-size: 16px 18px;
+                                  background-position: 98% 50%;
+                                  type="text">
+														</div>
+														<div class="control-group">
+                              <input id="last" name="last" placeholder="Last Name" size="35" type="text">
+														</div>
+														<div class="control-group">
+                              <input id="email" name="email" placeholder="Email *" size="35" value="" type="email" data-parsley-trigger="change" required="" >
+														</div>
+														<div class="control-group">
+                              <input id="postal_code" name="postal_code" placeholder="Zip/Postal Code *" size="35" type="text" data-parsley-type="digits" data-parsley-minlength="5" data-parsley-maxlength="5" data-parsley-trigger="change">
+														</div>
+														<div class="control-group">
+															<label class="control-label" for="GroupName"></label>
+															<input id="GroupName" name="GroupName" placeholder="Group Name"  type="text">
+														</div>
+                            <div>
+															<div class="invalid-form-error-message"></div>
 
-                      </div> <!-- end can_main_col -->
+                                <div class="control-group">
+                                  <label class="control-label" for="GroupEmail"></label>
+                                  <input id="GroupEmail" name="GroupEmail" placeholder="Group Email address" type="email"  data-parsley-group="group-email">
+                                </div>
+                                <div class="control-group">
+                                  <label class="control-label" for="GroupFBpage"></label>
+                                  <input id="GroupFBpage" name="GroupFBpage" placeholder="Link to Facebook Page"  type="text" data-parsley-type="url" data-parsley-group="group-fb">
+                                </div>
+                                <div class="control-group">
+                                  <label class="control-label" for="GroupTwitter"></label>
+                                  <input id="GroupTwitter" name="GroupTwitter" placeholder="Link to Twitter Page"  type="text" data-parsley-type="url" data-parsley-group="group-twitter">
+                                </div>
+                                <div class="control-group">
+                                  <label class="control-label" for="GroupWebsite"></label>
+                                  <input id="GroupWebsite" name="GroupWebsite" placeholder="Website link"  type="text" data-parsley-type="url" data-parsley-group="group-web">
+                                </div>
+                                <div class="control-group">
+                                  <label class="control-label" for="GroupPhoneNumber"></label>
+                                  <input id="GroupPhoneNumber" name="GroupPhoneNumber" placeholder="Group phone number"  type="text" >
+                                </div>
+                            </div>
+                            <input class="" name="commit" value="Add Your Group" type="submit" class="btn btn-default validate">
+														<div class="clear"></div>
+                          </form>
 
-                          <div id="can_sidebar">
-
-
-                                  <div class="action_sidebar">
-
-
-                                      <h4> Form Heading </h4>
-                                      <form id="new_answer" data-parsley-validate="" action="/" class="new_answer"  method="post" accept-charset="UTF-8" >
-
-                                          <input
-                                              id="first"
-                                              name="first"
-                                              placeholder="First Name"
-                                              size="35"
-                                              background-repeat: no-repeat;
-                                              background-attachment: scroll;
-                                              background-size: 16px 18px;
-                                              background-position: 98% 50%;
-                                              type="text">
-
-                                          <input id="last" name="last" placeholder="Last Name" size="35" type="text">
-
-                                          <input id="email" name="email" placeholder="Email *" size="35" value="" type="email" data-parsley-trigger="change" required="" >
-
-                                          <input id="postal_code" name="postal_code" placeholder="Zip/Postal Code *" size="35" type="text" data-parsley-type="digits" data-parsley-minlength="5" data-parsley-maxlength="5" data-parsley-trigger="change">
-
-                                          <div class="form_builder_output">
-                                          <!-- Text input-->
-                                              <li class="control-group">
-                                                <label class="control-label" for="GroupName"></label>
-                                                <input id="GroupName" name="GroupName" placeholder="Group Name *"  type="text">
-                                              </li>
-
-                                              <!-- Text input-->
-                                              <li class="control-group">
-                                                <label class="control-label" for="GroupEmail"></label>
-                                                <input id="GroupEmail" name="GroupEmail" placeholder="Group Email address" type="email"  data-parsley-group="group-email">
-                                              </li>
-
-                                              <!-- Text input-->
-                                              <li class="control-group">
-                                                <label class="control-label" for="GroupFBpage"></label>
-                                                <input id="GroupFBpage" name="GroupFBpage" placeholder="Link to Facebook Page"  type="text" data-parsley-type="url" data-parsley-group="group-fb">
-                                              </li>
-
-                                              <!-- Text input-->
-                                              <li class="control-group">
-                                                <label class="control-label" for="GroupTwitter"></label>
-                                                <input id="GroupTwitter" name="GroupTwitter" placeholder="Link to Twitter Page"  type="text" data-parsley-type="url" data-parsley-group="group-twitter">
-                                              </li>
-
-                                              <!-- Text input-->
-                                              <li class="control-group">
-                                                <label class="control-label" for="GroupWebsite"></label>
-                                                <input id="GroupWebsite" name="GroupWebsite" placeholder="Website link"  type="text" data-parsley-type="url" data-parsley-group="group-web">
-                                              </li>
-
-                                              <!-- Text input-->
-                                              <li class="control-group">
-                                                <label class="control-label" for="GroupPhoneNumber"></label>
-                                                <input id="GroupPhoneNumber" name="GroupPhoneNumber" placeholder="Group phone number"  type="text" >
-                                              </li>
-
-                                              <!-- Form Name -->
-
-                                          </div>  <!-- end form_builder_output -->
-                                          <div class="invalid-form-error-message"></div>
-
-                                        <input class="" name="commit" value="Add Your Group" type="submit" class="btn btn-default validate">
-
-                                          <div class="clear"></div>
-                                      </form>
-
-                                  </div> <!-- end action_sidebar -->
-                          </div> <!-- end can_sidebar -->
+                      </div> <!-- end action_sidebar -->
+                    </div> <!-- end can_sidebar -->
                   </div> <!-- end clearfix -->
        		 	</div> <!-- end can_embed_form -->
 	      </div> <!-- end can_embed -->
@@ -182,7 +158,7 @@
 	  $('#new_answer').parsley().on('form:validate', function (formInstance) {
 	    var ok = formInstance.isValid({group: 'group-email', force: true}) || formInstance.isValid({group: 'group-fb', force: true}) || formInstance.isValid({group: 'group-web', force: true}) || formInstance.isValid({group: 'group-twitter', force: true});
 	    $('.invalid-form-error-message')
-	      .html(ok ? '' : 'You must correctly fill *at least one of these two blocks!')
+	      .html(ok ? '' : 'Please enter at least one: your group email, facebook page, twitter url, or group email.')
 	      .toggleClass('filled', !ok);
 	    if (!ok)
 	      formInstance.validationResult = false;
