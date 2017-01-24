@@ -216,7 +216,7 @@
 	  $('#new_answer').parsley().on('form:validate', function (formInstance) {
 	    var ok = formInstance.isValid({group: 'group-email', force: true}) || formInstance.isValid({group: 'group-fb', force: true}) || formInstance.isValid({group: 'group-web', force: true}) || formInstance.isValid({group: 'group-twitter', force: true});
 	    $('.invalid-form-error-message')
-	      .html(ok ? '' : 'Please enter at least one: your group email, facebook page, twitter url, or group email.')
+	      .html(ok ? '' : 'Please enter at least one: your group email, facebook page, twitter url, or group website url.')
 	      .toggleClass('filled', !ok);
 	    if (!ok)
 	      formInstance.validationResult = false;
