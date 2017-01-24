@@ -8,7 +8,8 @@ import getData from '../util/get-data';
 import style from './overview.scss';
 
 // sample data hosted as json
-const uri = 'https://benvoluto.github.io/ac-sample.json';
+// const uri = 'https://benvoluto.github.io/ac-sample.json';
+const uri = '/ac-sample.json';
 
 function List(props) {
   let groupsList = null;
