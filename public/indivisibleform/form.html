@@ -6,11 +6,12 @@
 
         <!-- CSS -->
         <link rel="stylesheet" type="text/css" href="/indivisibleform/style/header.css" />
-	    <link rel="stylesheet" type="text/css" href="/indivisibleform/style/form.css" />
-	    <link rel="stylesheet" type="text/css" href="/indivisibleform/style/body.css" />
+
+	    	<link rel="stylesheet" type="text/css" href="/indivisibleform/style/body.css" />
         <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <!-- link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css" rel="stylesheet" type="text/css"  -->
         <link href="/indivisibleform/style/whitelabel.css" rel="stylesheet" type="text/css">
+			  <link rel="stylesheet" type="text/css" href="/indivisibleform/style/form.css" />
         <link rel="stylesheet" type="text/css" href="/indivisibleform/style/parsley.css" />
 
         <!-- end CSS -->
@@ -76,58 +77,17 @@
                       <div class="action_sidebar">
                           <h4> Form Heading </h4>
                           <form id="new_answer" data-parsley-validate="" action="/" class="new_answer"  method="post" accept-charset="UTF-8" >
-														<div class="control-group">
-                              <input
-                                  id="first"
-                                  name="first"
-                                  placeholder="First Name"
-                                  size="35"
-                                  background-repeat: no-repeat;
-                                  background-attachment: scroll;
-                                  background-size: 16px 18px;
-                                  background-position: 98% 50%;
-                                  type="text">
-														</div>
-														<div class="control-group">
-                              <input id="last"
-																name="last"
-																placeholder="Last Name"
-																size="35"
-																type="text">
-														</div>
-														<div class="control-group">
-                              <input
-																id="email"
-																name="email"
-																placeholder="Email *"
-																size="35" value=""
-																type="email"
-																data-parsley-trigger="change"
-																required="" >
-														</div>
-														<div class="control-group">
-                              <input
-																id="postal_code"
-																name="postal_code"
-																placeholder="Zip/Postal Code *"
-																size="35" type="text"
-																data-parsley-type="digits"
-																data-parsley-minlength="5"
-																data-parsley-maxlength="5"
-																data-parsley-trigger="change">
-														</div>
-														<div class="control-group">
-															<label class="control-label" for="GroupName"></label>
-															<input
-																id="GroupName"
-																name="GroupName"
-																placeholder="Group Name"
-																required=""
-																type="text">
-														</div>
                             <div>
 															<div class="invalid-form-error-message"></div>
-
+															<div class="control-group">
+																<label class="control-label" for="GroupName"></label>
+																<input
+																	id="GroupName"
+																	name="GroupName"
+																	placeholder="Group Name *"
+																	required=""
+																	type="text">
+															</div>
                                 <div class="control-group">
                                   <label class="control-label" for="GroupEmail"></label>
                                   <input
@@ -174,11 +134,55 @@
 																		type="text" >
                                 </div>
                             </div>
+														<div class="control-group step-two">
+															<input
+																	id="first"
+																	name="first"
+																	placeholder="First Name"
+																	size="35"
+																	background-repeat: no-repeat;
+																	background-attachment: scroll;
+																	background-size: 16px 18px;
+																	background-position: 98% 50%;
+																	type="text">
+														</div>
+														<div class="control-group step-two">
+															<input id="last"
+																name="last"
+																placeholder="Last Name"
+																size="35"
+																type="text">
+														</div>
+														<div class="control-group step-two">
+															<input
+																id="email"
+																name="email"
+																placeholder="Email *"
+																size="35" value=""
+																type="email"
+																data-parsley-trigger="change"
+																required="" >
+														</div>
+														<div class="control-group step-two">
+															<input
+																id="postal_code"
+																name="postal_code"
+																placeholder="Zip/Postal Code *"
+																required=""
+																size="35" type="text"
+																data-parsley-type="digits"
+																data-parsley-minlength="5"
+																data-parsley-maxlength="5"
+																data-parsley-trigger="change">
+														</div>
+
+														<button class="next-step">Next...</button>
                             <input
 															name="commit"
 															value="Add Your Group"
 															type="submit"
-															class="btn btn-default validate">
+															id="group-submit"
+															class="btn btn-default validate step-two">
 														<div class="clear"></div>
                           </form>
 
@@ -190,24 +194,25 @@
 	  </div> <!-- end can-form-area-indivisible-group-signup -->
 
 
-      <input id="btnHide" value="Next..." type="submit">
 
 
 	</div> <!-- end form-container -->
 
 	<script type="text/javascript">
+
 	$(function () {
+		$('.next-step').on('click', function() {
+			$('.step-two').show();
+			$(this).hide();
+			return false;
+		});
+
 	  $('#new_answer').parsley().on('field:validated', function() {
 	    var ok = $('.parsley-error').length === 0;
 	    $('.bs-callout-info').toggleClass('hidden', !ok);
 	    $('.bs-callout-warning').toggleClass('hidden', ok);
 	  });
-	});
-	</script>
 
-
-	<script type="text/javascript">
-	$(function () {
 	  $('#new_answer').parsley().on('form:validate', function (formInstance) {
 	    var ok = formInstance.isValid({group: 'group-email', force: true}) || formInstance.isValid({group: 'group-fb', force: true}) || formInstance.isValid({group: 'group-web', force: true}) || formInstance.isValid({group: 'group-twitter', force: true});
 	    $('.invalid-form-error-message')
