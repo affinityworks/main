@@ -1,4 +1,7 @@
 **TODO**
+--Set up all-Senate Tillerson calls.
+--Pricing on texting.
+--Do we add Call Power JS to an AN page or figure out how to pass referrers through to the AN script?
 --Implement ruby IP lookup instead of API.
 
 
