@@ -30,7 +30,7 @@ requirejs.config({
     paths: {
 			an: 'https://actionnetwork.org/widgets/v2/form/call-your-senator?format=js&source=widget&style=full' + ref,
     },
-    baseUrl: '/democrats/app/'
+    baseUrl: '/call/app/'
 });
 
 //Should be able to magically turn a form into a caling form by requiring 'call'
