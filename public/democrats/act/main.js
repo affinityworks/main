@@ -29,4 +29,4 @@ requirejs.config({
 });
 
 //Should be able to magically turn a form into a caling form by requiring 'call'
-require(['form', 'call']);
+require(['form', 'call', 'form_mods']);
