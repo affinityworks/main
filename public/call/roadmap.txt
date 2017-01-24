@@ -1,6 +1,6 @@
 **TODO**
 --Set up all-Senate Tillerson calls (waiting on script).
---Pricing on texting.
+--Pricing on texting (mostly done, waiting on shortcode quote).
 --Implement ruby IP lookup instead of API.
 
 
