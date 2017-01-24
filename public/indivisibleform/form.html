@@ -44,6 +44,7 @@
 	<div id="form-container">
             <!-- script src="https://actionnetwork.org/widgets/v2/form/indivisible-group-signup?format=js&amp;source=widget&amp;style=full&amp;clear_id=true"></script -->
       <div id="can-form-area-indivisible-group-signup" style="width: 500px">
+				<div id="success"></div>
 	      <div class="can_embed v2  form form_full full">
   		    	<div id="can_embed_form" class="clearfix can_float">
                   <div class="clearfix">
@@ -148,7 +149,7 @@
                                           <div class="invalid-form-error-message"></div>
 
 
-                                              
+
                                         <input class="" name="commit" value="Add Your Group" type="submit" class="btn btn-default validate">
 
 
@@ -172,59 +173,12 @@
 	</div> <!-- end form-container -->
 
 	<script type="text/javascript">
-	$(document).ready(function() {
-		$('#new_answer').osdi({
-			endpoint: "https://actionnetwork.org/api/v2/forms/56104ef6-4197-44ae-bdce-2a9289e80ea7/submissions",
-			body: function() {
-				return {
-					"person": {
-						"given_name": $('#first').val(),
-						"family_name": $('#last').val(),
-						"postal_code": $('#postal_code').val(),
-						"email_addresses": [
-							{
-								"address": $('#email').val()
-							}
-						],
-
-						"custom_fields": {
-							"GroupName": $('#GroupName').val(),
-							"GroupEmail": $('#GroupEmail').val(),
-							"GroupPhoneNumber": $('#GroupPhoneNumber').val(),
-							"GroupFBpage": $('#GroupFBpage').val(),
-							"GroupTwitter": $('#GroupTwitter').val(),
-							"GroupWebsite": $('#GroupWebsite').val(),
-							"GroupPhoneNumber": $('#GroupPhoneNumber').val()
-  					},
-					},
-				}
-			},
-			done: function(data, textStatus, jqXHR) {
-				console.log('done');
-				// window.location.replace("https://actionnetwork.org/forms/register-local-group?clear_id=true");
-				$('#success').html('<p><strong>It worked!</strong></p>');
-			},
-			fail: function(jqXHR, textStatus, errorThrown) {
-				console.log('fail');
-				$('#success').html('<p><strong>It failed!</strong></p>');
-			},
-			always: function(data_jqXHR, textStatus, jqXHR_errorThrown) {
-				console.log('always');
-			}
-		});
-	});
-	</script>
-
-	<script type="text/javascript">
 	$(function () {
 	  $('#new_answer').parsley().on('field:validated', function() {
 	    var ok = $('.parsley-error').length === 0;
 	    $('.bs-callout-info').toggleClass('hidden', !ok);
 	    $('.bs-callout-warning').toggleClass('hidden', ok);
-	  })
-	//  .on('form:submit', function() {
-	//    return false; // Don't submit form for this demo
-	//  });
+	  });
 	});
 	</script>
 
@@ -238,7 +192,50 @@
 	      .toggleClass('filled', !ok);
 	    if (!ok)
 	      formInstance.validationResult = false;
-	  });
+	  })
+		.on('form:submit', function() {
+			$('#new_answer').osdi({
+				endpoint: "https://actionnetwork.org/api/v2/forms/56104ef6-4197-44ae-bdce-2a9289e80ea7/submissions",
+				body: function() {
+					return {
+						"person": {
+							"given_name": $('#first').val(),
+							"family_name": $('#last').val(),
+							"postal_code": $('#postal_code').val(),
+							"email_addresses": [
+								{
+									"address": $('#email').val()
+								}
+							],
+
+							"custom_fields": {
+								"GroupName": $('#GroupName').val(),
+								"GroupEmail": $('#GroupEmail').val(),
+								"GroupPhoneNumber": $('#GroupPhoneNumber').val(),
+								"GroupFBpage": $('#GroupFBpage').val(),
+								"GroupTwitter": $('#GroupTwitter').val(),
+								"GroupWebsite": $('#GroupWebsite').val(),
+								"GroupPhoneNumber": $('#GroupPhoneNumber').val()
+	  					},
+						},
+					}
+				},
+				done: function(data, textStatus, jqXHR) {
+					console.log('done');
+					// window.location.replace("https://actionnetwork.org/forms/register-local-group?clear_id=true");
+					$('#success').html('<p><strong>It worked!</strong></p>');
+				},
+				fail: function(jqXHR, textStatus, errorThrown) {
+					console.log('fail');
+					$('#success').html('<p><strong>It failed!</strong></p>');
+				},
+				always: function(data_jqXHR, textStatus, jqXHR_errorThrown) {
+					console.log('always');
+				}
+			});
+
+			return false;
+		});
 	});
 	</script>
 
