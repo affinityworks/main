@@ -71,7 +71,7 @@
 				}
 			},
 			form_submit: function ( $element, that ) {
-				//console.log(that.settings.immediate);
+				console.log(that.settings.immediate); // DEBUG
 				if (that.settings.immediate) {
 					that.submit_handler($element, that);
 				} else {
