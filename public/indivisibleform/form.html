@@ -251,8 +251,11 @@
 				immediate: true,
 				done: function(data, textStatus, jqXHR) {
 					console.log('done');
-					// window.location.replace("https://actionnetwork.org/forms/register-local-group?clear_id=true");
 					$('#success').html('<p><strong>It worked!</strong></p>');
+					setTimeout(function(){
+						window.location.replace("https://www.indivisibleguide.com/");
+					}, 2000);
+					
 				},
 				fail: function(jqXHR, textStatus, errorThrown) {
 					console.log('fail');
