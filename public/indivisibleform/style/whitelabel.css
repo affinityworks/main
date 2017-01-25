@@ -2650,7 +2650,11 @@ only screen and (min-resolution: 144dpi) {
 
 
 
+<<<<<<< HEAD
 /*
+=======
+
+>>>>>>> d57049f836082947a833bd905c776954ff7caaa4
 #form-first_name {
 	display:none;
 }
@@ -2663,7 +2667,11 @@ only screen and (min-resolution: 144dpi) {
 	display:none;
 }
 
+<<<<<<< HEAD
 #form-postal_code {
+=======
+#form-zip_code {
+>>>>>>> d57049f836082947a833bd905c776954ff7caaa4
 	display:none;
 }
 
@@ -2675,7 +2683,10 @@ only screen and (min-resolution: 144dpi) {
 	display: none;
 }
 
+<<<<<<< HEAD
 */
+=======
+>>>>>>> d57049f836082947a833bd905c776954ff7caaa4
 #btnHide {
     display:inline;
     text-decoration: none;

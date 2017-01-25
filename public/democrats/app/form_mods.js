@@ -13,6 +13,7 @@ $(document).on('can_embed_loaded', function () {
   
   //Move the disclaimer to the bottom
   disclaimer = $('li#d_sharing ul li').first();
+<<<<<<< HEAD
   $(disclaimer)
     .detach()
     .addClass('new-disclaimer')
@@ -41,4 +42,13 @@ $(document).on('can_embed_submitted', function () {
     .text('Hightlight the whole message below, then copy and paste it into an email.')
     .insertBefore('textarea#form-email_friend_message');
   
+=======
+  $(disclaimer).detach().addClass('new-disclaimer');
+  $('form#new_answer ul').first().append(disclaimer);
+});
+
+$(document).on('can_embed_submitted', function () {
+	//Remove the embed block.
+  $('div.clearfix div.can_thank_you-block').last().remove();
+>>>>>>> d57049f836082947a833bd905c776954ff7caaa4
 });

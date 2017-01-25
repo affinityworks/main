@@ -10,7 +10,11 @@
 	Repository: https://github.com/opensupporter/jquery-osdi
 	License: MIT open source, https://github.com/opensupporter/jquery-osdi/blob/master/LICENSE.md
 	
+<<<<<<< HEAD
 *************************************************************/
+=======
+************************************************************/
+>>>>>>> d57049f836082947a833bd905c776954ff7caaa4
 
 ;( function( $, window, document, undefined ) {
 
@@ -62,7 +66,11 @@
 				}
 			},
 			validate_form: function( $element ) {
+<<<<<<< HEAD
 				console.log($element);  // DEBUG
+=======
+				//console.log($element);
+>>>>>>> d57049f836082947a833bd905c776954ff7caaa4
 				if (!$element.is('form')) {
 					console.log('JQUERY OSDI ERROR: The DOM element passed to the jQuery OSDI plugin is not a form. The jQuery OSDI plugin only supports form elements.');		
 					return false;
@@ -71,7 +79,11 @@
 				}
 			},
 			form_submit: function ( $element, that ) {
+<<<<<<< HEAD
 				console.log(that.settings.immediate); // DEBUG
+=======
+				//console.log(that.settings.immediate);
+>>>>>>> d57049f836082947a833bd905c776954ff7caaa4
 				if (that.settings.immediate) {
 					that.submit_handler($element, that);
 				} else {
@@ -84,9 +96,15 @@
 				}
 			},
 			submit_handler: function( $element, that ) {
+<<<<<<< HEAD
 				console.log('submithandler');  // DEBUG
 				console.log($element);   // DEBUG
 				console.log(that);    // DEBUG
+=======
+				//console.log('submithandler');
+				//console.log($element);
+				//console.log(that);
+>>>>>>> d57049f836082947a833bd905c776954ff7caaa4
 				if (that.validate_submit( $element )) {
 					var	body,
 						endpoint,
@@ -123,6 +141,7 @@
 					fail = that.settings.fail;
 					always = that.settings.always;
 					
+<<<<<<< HEAD
 					console.log(body);       // DEBUG
 					console.log(JSON.stringify(body));  // DEBUG
 					console.log(endpoint);       // DEBUG
@@ -130,6 +149,15 @@
 					console.log(done);           // DEBUG
 					console.log(fail);           // DEBUG
 					console.log(always);         // DEBUG
+=======
+					//console.log(body);
+					//console.log(JSON.stringify(body));
+					//console.log(endpoint);
+					//console.log(ajax_options);
+					//console.log(done);
+					//console.log(fail);
+					//console.log(always);
+>>>>>>> d57049f836082947a833bd905c776954ff7caaa4
 					
 					that.perform_ajax(ajax_options, done, fail, always);
 				}
@@ -145,9 +173,15 @@
 				}
 			},
 			validate_endpoint: function ( $element ) {
+<<<<<<< HEAD
 				console.log($element);           // DEBUG
 				console.log(!this.settings.endpoint);   // DEBUG
 				console.log(!$element.attr('action'));  // DEBUG
+=======
+				//console.log($element);
+				//console.log(!this.settings.endpoint);
+				//console.log(!$element.attr('action'));
+>>>>>>> d57049f836082947a833bd905c776954ff7caaa4
 				if (!this.settings.endpoint && !$element.attr('action')) {
 					console.log('JQUERY OSDI ERROR: An endpoint is required. Either set the endpoint option with a string when calling the jQuery OSDI plugin, or give your form an action attribute with the endpoint as its value.');
 					return false;
