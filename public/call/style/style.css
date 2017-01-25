@@ -2237,8 +2237,7 @@ div#can_embed_form.clearfix div.clearfix div#can_main_col div#partner_logos {
   flex-wrap: wrap;
   width: 100%; }
   div#can_embed_form.clearfix div.clearfix div#can_main_col div#partner_logos img.partner-logo {
-    width: 20%;
-    display: none; }
+    width: 20%; }
 div#can_embed_form label.checkbox {
   font-family: Verdana, Tahoma, DejaVu Sans, sans-serif;
   font-size: .75em; }
