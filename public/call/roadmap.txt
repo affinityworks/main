@@ -1,5 +1,9 @@
 **TODO**
---Set up all-Senate Tillerson calls (waiting on script).
+--Set up all-Senate Tillerson calls (placeholder done, waiting on script).
+--Figure out asynchronous CSS loading.
+--Require JS optimizer.
+--Add phone disclaimer to /call and /signup pages, integrated nicely with multiple party opt-in text.
+--Show fields only one at a time to save space.
 --Pricing on texting (mostly done, waiting on shortcode quote).
 --Implement ruby IP lookup instead of API.
 

@@ -28,7 +28,7 @@ requirejs.config({
         
     },
     paths: {
-			an: 'https://actionnetwork.org/widgets/v2/form/call-your-senator?format=js&source=widget&style=full' + ref,
+			an: 'https://actionnetwork.org/widgets/v2/form/stop-rex-tillerson?format=js&source=widget&style=full' + ref,
     },
     baseUrl: '/call/app/'
 });
