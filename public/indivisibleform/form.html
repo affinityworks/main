@@ -6,13 +6,13 @@
 
         <!-- CSS -->
         <link rel="stylesheet" type="text/css" href="/indivisibleform/style/header.css" />
-
 	    	<link rel="stylesheet" type="text/css" href="/indivisibleform/style/body.css" />
         <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <!-- link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css" rel="stylesheet" type="text/css"  -->
         <link href="/indivisibleform/style/whitelabel.css" rel="stylesheet" type="text/css">
 			  <link rel="stylesheet" type="text/css" href="/indivisibleform/style/form.css" />
         <link rel="stylesheet" type="text/css" href="/indivisibleform/style/parsley.css" />
+				<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 
         <!-- end CSS -->
 
@@ -24,16 +24,10 @@
 		  		src="https://code.jquery.com/jquery-3.1.1.min.js"
 			  	integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
 				crossorigin="anonymous">
-		</script>
-		<script src="/indivisibleform/js/parsley.js" type="text/javascript"></script>
-		<script src="/indivisibleform/js/jquery.osdi.js" type="text/javascript"></script>
-		<script src="/indivisibleform/js/formfixer.js" type="text/javascript"></script>
-
-		<!-- script type="text/javascript">
-				$(document).ready(function() {
-				$('testform').osdi();
-				});
-		</script  -->
+				</script>
+				<script src="/indivisibleform/js/parsley.js" type="text/javascript"></script>
+				<script src="/indivisibleform/js/jquery.osdi.js" type="text/javascript"></script>
+				<script src="/indivisibleform/js/formfixer.js" type="text/javascript"></script>
 
 				<!-- end JS -->
 
@@ -50,9 +44,13 @@
   		    	<div id="can_embed_form" class="clearfix can_float">
               <div class="clearfix">
                 <div id="can_main_col">
-                    <h2 class="entry-title js-entry-title">
-                        Indivisible Group Signup
-                    </h2>
+                    <div class="control-title">
+                      Indivisible
+                    </div>
+										<div class="control-subtitle">
+											Group Signup
+										</div>
+
                     <div id="action_info">
                       <div id="action_info_inner" class="clearfix">
                         <div class="action_owner_box">
@@ -86,6 +84,9 @@
 																	name="GroupName"
 																	placeholder="Group Name *"
 																	required=""
+																	data-parsley-type="alphanum"
+																	data-parsley-minlength="2"
+																	data-parsley-trigger="change"
 																	type="text">
 															</div>
                                 <div class="control-group">
@@ -95,6 +96,7 @@
 																		name="GroupEmail"
 																		placeholder="Group Email address"
 																		type="email"
+																		data-parsley-trigger="change"
 																		data-parsley-group="group-email">
                                 </div>
                                 <div class="control-group">
@@ -104,6 +106,7 @@
 																		placeholder="Link to Facebook Page"
 																		type="text"
 																		data-parsley-type="url"
+																		data-parsley-trigger="change"
 																		data-parsley-group="group-fb">
                                 </div>
                                 <div class="control-group">
@@ -113,6 +116,7 @@
 																		placeholder="Link to Twitter Page"
 																		type="text"
 																		data-parsley-type="url"
+																		data-parsley-trigger="change"
 																		data-parsley-group="group-twitter">
                                 </div>
                                 <div class="control-group">
@@ -123,6 +127,7 @@
 																		placeholder="Website link"
 																		type="text"
 																		data-parsley-type="url"
+																		data-parsley-trigger="change"
 																		data-parsley-group="group-web">
                                 </div>
                                 <div class="control-group">
@@ -133,6 +138,41 @@
 																		placeholder="Group phone number"
 																		type="text" >
                                 </div>
+																<div class="control-group">
+																	<label class="control-label" for="GroupPhoneNumber"></label>
+																	<input
+																		id="GroupCity"
+																		name="GroupCity"
+																		placeholder="Group City *"
+																		required=""
+																		data-parsley-type="alphanum"
+																		data-parsley-minlength="2"
+																		data-parsley-trigger="change"
+																		type="text" >
+																</div>
+																<div class="control-group">
+																	<input
+																		id="GroupState"
+																		name="GroupState"
+																		placeholder="Group State *"
+																		required=""
+																		data-parsley-type="alphanum"
+																		data-parsley-minlength="2"
+																		data-parsley-trigger="change"
+																		type="text" >
+																</div>
+																<div class="control-group">
+																	<input
+																		id="GroupZipCode"
+																		name="GroupZipCode"
+																		placeholder="Group Zip Code"
+																		type="text"
+																		data-parsley-type="digits"
+																		data-parsley-minlength="5"
+																		data-parsley-maxlength="5"
+																		data-parsley-trigger="change">
+																</div>
+
                             </div>
 														<div class="control-group step-two">
 															<input
@@ -202,8 +242,20 @@
 
 	$(function () {
 		$('.next-step').on('click', function() {
-			$('.step-two').show();
-			$(this).hide();
+			var stepOne = $('#new_answer').parsley();
+			var ok = stepOne.isValid({group: 'group-email', force: true}) || stepOne.isValid({group: 'group-fb', force: true}) || stepOne.isValid({group: 'group-web', force: true}) || stepOne.isValid({group: 'group-twitter', force: true});
+			console.log(ok);
+			if (!ok) {
+				$('.invalid-form-error-message')
+					.html(ok ? '' : 'Please enter at least one: your group email, facebook page, twitter url, or group website url.')
+					.toggleClass('filled', !ok);
+			} else {
+				$('.invalid-form-error-message')
+					.html(ok ? '' : 'Please enter at least one: your group email, facebook page, twitter url, or group website url.')
+					.toggleClass('filled', !ok);
+				$('.step-two').show();
+				$(this).hide();
+			}
 			return false;
 		});
 
@@ -218,8 +270,10 @@
 	    $('.invalid-form-error-message')
 	      .html(ok ? '' : 'Please enter at least one: your group email, facebook page, twitter url, or group website url.')
 	      .toggleClass('filled', !ok);
-	    if (!ok)
-	      formInstance.validationResult = false;
+	    if (!ok) {
+				formInstance.validationResult = false;
+			}
+
 	  })
 		.on('form:submit', function() {
 			$('#new_answer').osdi({
@@ -255,7 +309,7 @@
 					setTimeout(function(){
 						window.location.replace("https://www.indivisibleguide.com/");
 					}, 2000);
-					
+
 				},
 				fail: function(jqXHR, textStatus, errorThrown) {
 					console.log('fail');
