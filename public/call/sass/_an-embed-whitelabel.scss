@@ -512,14 +512,8 @@ body.can_embed,body.can_fundraising_widget {
 }
 
 #can_embed_form #can_thank_you {
-    background-color: #25B036;
-    color: #FFFFFF;
-    padding: 20px;
-    margin-bottom: 20px;
-    text-align: center;
+    margin-bottom: 1em;
     box-sizing: border-box;
-    border: 5px solid #FFFFFF;
-    box-shadow: 0 0 0px 1px #C4C4C4;
 }
 
 #can_embed_form #can_thank_you h1 {
@@ -535,7 +529,6 @@ body.can_embed,body.can_fundraising_widget {
 
 #can_embed_form #can_thank_you h4,#can_embed_form #can_thank_you p {
     font-weight: normal;
-    text-shadow: 0 0 5px #1A4E13;
     line-height: 1.2em;
     font-size: 16px;
 }
