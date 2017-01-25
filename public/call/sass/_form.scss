@@ -1,215 +1,294 @@
-div#can-form-area-stop-the-worst-of-the-worst {
-  margin-left:auto;
-  margin-right:auto;
-}
+//colors
+$color_sapphire_approx: #264c99;
+$color_mine_shaft_approx: rgb(51, 51, 51);
+$white: white;
+$black_5: rgba(0, 0, 0, 0.05);
+$black_70: rgba(0, 0, 0, 0.7);
 
-/* Suppress some elements of the form that we don't want. */
-div#action_info, div.action_sidebar h4 {
-  display: none;
-}
+//fonts
+$font_0: Montserrat;
+$font_1: Verdana;
+$font_2: Tahoma;
+$font_3: DejaVu Sans;
+$font_4: sans-serif;
+@mixin main-font { font-family: $font_1, $font_2, $font_3, $font_4; }
 
-/*Style the form title.*/
-div#can_embed_form.clearfix div.clearfix div#can_main_col h2.entry-title, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h1 {
-  color: #264C99;
-  font-family: Verdana,Tahoma,"DejaVu Sans",sans-serif;
-  margin-top: 0.5em;
-  margin-bottom: 0;
-  padding-bottom: 0.5em;
-  text-align: center;
-  text-transform: uppercase;
-  line-height: 1em;
-}
+//urls
+$url_0: url(https://fonts.gstatic.com/s/montserrat/v7/zhcz-_WihjSQC0oHJ9TCYAzyDMXhdD8sAj6OAJTFsBI.woff2);
+$url_1: url(https://static1.squarespace.com/static/5855a354cd0f68bab2089b40/t/58597f8d29687fe710d051b7/1482191413003/Picture2.jpg?format=1500w);
 
-/* Set up responsive sizing for the form title and description */
-@media screen and (max-width: 492px) {
-  div#can_embed_form h2, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h1  {
-    font-size: 20px;
-  }
-  div.action_description, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you div#action_thank_you_text p, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h4  {
-    font-size: 14px;
-  }
-  div#can_embed_form div.clearfix div.can_thank_you-block h4.widget_title, div#can_embed_form div.clearfix div.can_thank_you-block a.share_button {
-    font-size: 14px;
-  }
-  div#can_embed_form div.clearfix div.can_thank_you-block
-  {
-    font-size: 14px;
-  }
-}
-
-@media screen and (min-width: 492px) and (max-width: 800px) {
-  div#can_embed_form h2, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h1 {
-    font-size: 4.5vw;
-  }
-  div.action_description, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you div#action_thank_you_text p, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h4  {
-    font-size: 2.85vw;
-  }
-  div#can_embed_form div.clearfix div.can_thank_you-block h4.widget_title, div#can_embed_form div.clearfix div.can_thank_you-block a.share_button {
-    font-size: 2.85vw;
-  }
-  div#can_embed_form div.clearfix div.can_thank_you-block
-  {
-    font-size: 2.85vw;
-  }
-}
-
-@media screen and (min-width: 800px) {
-  div#can_embed_form h2, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h1 {
-    font-size: 37px;
-  }
-  div.action_description, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you div#action_thank_you_text p, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h4 {
-    font-size:22.8px;
-  }
-  div#can_embed_form div.clearfix div.can_thank_you-block h4.widget_title, div#can_embed_form div.clearfix div.can_thank_you-block a.share_button {
-    font-size: 22.8px;
-  }
-  div#can_embed_form div.clearfix div.can_thank_you-block
-  {
-    font-size: 22.8px
-  }
-}
-
-div.action_description, div#action_welcome_message_inner, div.can_embed div#can_embed_form div#can_thank_you {
-  color: rgb(51, 51, 51);
-  font-family: Verdana,Tahoma,"DejaVu Sans",sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 1.5em;
-  text-transform: none;
-  background-color:white;
-  border: 0;
-  box-shadow: none;
-  padding: 0;
-  text-align: left;
-  
-}
-div.can_embed div#can_embed_form div#can_thank_you h4, div.can_embed div#can_embed_form div#can_thank_you h1, div.can_embed div#can_embed_form div#can_thank_you div#action_thank_you_text p {
-  text-shadow: none;
-}
-
-div#can_embed_form div.clearfix div.can_thank_you-block h4.widget_title {
-  text-transform: uppercase;
-  color: #264C99;
-  font-family: Verdana,Tahoma,"DejaVu Sans",sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  margin-top: 1em;
-  margin-bottom: 0.5em;
-}
-
-div #can_embed_form div.action_description p {
-  margin-bottom: .75em;
-}
-
-div#can_embed_form div.clearfix div#can_sidebar div.action_widget.action_status_tracker {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  padding: 0 20px 0px;
+//@extend-elements
+//original selectors
+//div#can_embed_form.clearfix div.clearfix div#can_main_col h2.entry-title, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h1
+%extend_1 {
+	color: $color_sapphire_approx;
+	font-family: $font_1, $font_2, $font_3, $font_4;
+	margin-top: 0.5em;
+	margin-bottom: 0;
+	padding-bottom: 0.5em;
+	text-align: center;
+	text-transform: uppercase;
+	line-height: 1em;
 }
 
 
-div#can_embed_form div.clearfix div.can_thank_you-block a.share_button {
-  line-height: 2em;
-  margin-top: 0.5em;
-  font-family: Verdana,Tahoma,"DejaVu Sans",sans-serif;
-  color: white;
+div {
+	&#can-form-area-stop-the-worst-of-the-worst {
+		margin-left: auto;
+		margin-right: auto;
+	}
+	&#action_info {
+		display: none;
+	}
+	&#can_embed_form {
+		&.clearfix div.clearfix div#can_main_col h2.entry-title {
+			@extend %extend_1;
+		}
+		label.checkbox {
+		  @include main-font;
+		  font-size: .75em;
+		}
+		div.clearfix div {
+			&.can_thank_you-block {
+				input {
+					font-size: 10px;
+					margin-bottom: 0;
+				}
+				textarea {
+					font-size: 10px;
+					margin-bottom: 0;
+				}
+				h4.widget_title {
+					text-transform: uppercase;
+					color: $color_sapphire_approx;
+					font-family: $font_1, $font_2, $font_3, $font_4;
+					font-style: normal;
+					font-weight: 400;
+					margin-bottom: 0.5em;
+				}
+				a.share_button {
+					line-height: 2em;
+					margin-top: 0.5em;
+					font-family: $font_1, $font_2, $font_3, $font_4;
+					color: $white;
+				}
+			}
+			&#can_sidebar div.action_widget.action_status_tracker {
+				border-bottom: 1px solid $black_5;
+				padding: 0 20px;
+			}
+		}
+	}
+	&.action_description {
+		color: $color_mine_shaft_approx;
+		font-family: $font_1, $font_2, $font_3, $font_4;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 1.5em;
+		text-transform: none;
+		background-color: $white;
+		border: 0;
+		//Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+		box-shadow: none;
+		padding: 0;
+		text-align: left;
+		p {
+			margin-top: 0;
+		}
+	}
+	&#action_welcome_message_inner {
+		color: $color_mine_shaft_approx;
+		font-family: $font_1, $font_2, $font_3, $font_4;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 1.5em;
+		text-transform: none;
+		background-color: $white;
+		border: 0;
+		//Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+		box-shadow: none;
+		padding: 0;
+		text-align: left;
+	}
+	&.new-action-description {
+		border-bottom: 1px solid $black_70;
+		padding-bottom: 5px;
+		white-space: pre-line;
+		ul {
+			display: inline;
+			line-height: 0.75em;
+			list-style-type: none;
+			margin-bottom: 1em;
+			margin-top: 0;
+			padding-bottom: 1em;
+			padding-top: 0;
+			li {
+				padding-left: 1em;
+			}
+		}
+	}
+	&.action_sidebar h4 {
+		display: none;
+	}
+	&.can_embed div#can_embed_form {
+		&.can_thank_you_wrap div#can_thank_you h1 {
+			@extend %extend_1;
+		}
+		div#can_thank_you {
+			color: $color_mine_shaft_approx;
+			font-family: $font_1, $font_2, $font_3, $font_4;
+			font-style: normal;
+			font-weight: 400;
+			line-height: 1.5em;
+			text-transform: none;
+			text-align: left;
+			h4 {
+				text-shadow: none;
+				padding-top: .5em;
+				border-top: 1px dotted grey;
+				font-style: italic;
+			}
+			h1 {
+				//Instead of the line below you could use @include text-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+				text-shadow: none;
+			}
+			div#action_thank_you_text{
+				margin-bottom: 1em;
+			}
+		}
+	}
+	#can_embed_form div.action_description p {
+		margin-bottom: .75em;
+	}
+	&#heads div.nominee {
+		margin-right: 1em;
+		width: 3em;
+		img.nominee-img {
+			//Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+			border-radius: 5px;
+			width: 100%;
+		}
+		label.nominee-label {
+			display: inline-block;
+			font-size: 0.75em;
+			line-height: 1em;
+			margin: 0;
+			text-align: center;
+			vertical-align: bottom;
+		}
+	}
+	&#can_main_col div.action_description.clearfix div#heads {
+		align-items: flex-start;
+		display: flex;
+		flex-flow: row wrap;
+		justify-content: space-between;
+		width: 100%;
+		margin-bottom: .5em;
+	}
 }
-
-div#can_embed_form div.clearfix div.can_thank_you-block input, div#can_embed_form div.clearfix div.can_thank_you-block textarea {
-  font-size: 10px;
-  margin-bottom: 0px;
+@media screen and(max-width: 492px) {
+	div {
+		&#can_embed_form {
+			h2 {
+				font-size: 20px;
+			}
+			div.clearfix div.can_thank_you-block {
+				font-size: 14px;
+				h4.widget_title {
+					font-size: 14px;
+				}
+				a.share_button {
+					font-size: 14px;
+				}
+			}
+		}
+		&.action_description {
+			font-size: 14px;
+		}
+		&.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you {
+			h1 {
+				font-size: 20px;
+			}
+			h4 {
+				font-size: 10px;
+			}
+			div#action_thank_you_text p {
+				font-size: 14px;
+			}
+		}
+		&#can_main_col div.action_description.clearfix div#heads {
+			display: none;
+		}
+	}
 }
-
+@media screen and(min-width: 492px) and(max-width: 800px) {
+	div {
+		&#can_embed_form {
+			h2 {
+				font-size: 4.5vw;
+			}
+			div.clearfix div.can_thank_you-block {
+				font-size: 2.85vw;
+				h4.widget_title {
+					font-size: 2.85vw;
+				}
+				a.share_button {
+					font-size: 2.85vw;
+				}
+			}
+		}
+		&.action_description {
+			font-size: 2.85vw;
+		}
+		&.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you {
+			h1 {
+				font-size: 4.5vw;
+			}
+			h4 {
+				font-size: 2vw;
+			}
+			div#action_thank_you_text p {
+				font-size: 2.85vw;
+			}
+		}
+	}
+}
+@media screen and(min-width: 800px) {
+	div {
+		&#can_embed_form {
+			h2 {
+				font-size: 37px;
+			}
+			div.clearfix div.can_thank_you-block {
+				font-size: 22.8px;
+				h4.widget_title {
+					font-size: 22.8px;
+				}
+				a.share_button {
+					font-size: 22.8px;
+				}
+			}
+		}
+		&.action_description {
+			font-size: 22.8px;
+		}
+		&.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you {
+			h1 {
+				font-size: 37px;
+			}
+			h4 {
+				font-size: 16px;
+			}
+			div#action_thank_you_text p {
+				font-size: 22.8px;
+			}
+		}
+	}
+}
 @font-face {
-    font-family: "Montserrat";
-    font-style: normal;
-    font-weight: 400;
-    src: url("https://fonts.gstatic.com/s/montserrat/v7/zhcz-_WihjSQC0oHJ9TCYAzyDMXhdD8sAj6OAJTFsBI.woff2") format("woff2");
-    unicode-range: U+0-FF, U+131, U+152-153, U+2C6, U+2DA, U+2DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
-}
-
-
-/*Set up a background image for the page.  Not straight from indivisibleguide.com, but inspired by it. */
-/*div#can-form-area-stop-the-worst-of-the-worst::after {
-  background: rgba(0, 0, 0, 0) url("https://static1.squarespace.com/static/5855a354cd0f68bab2089b40/t/58597f8d29687fe710d051b7/1482191413003/Picture2.jpg?format=1500w") no-repeat scroll right center / cover ;
-  bottom: 0;
-  content: "";
-  left: 0;
-  opacity: 0.32;
-  position: absolute;
-  right: 0;
-  top: 0;
-  z-index: -1;
-}*/
-
-
-/* Style for the new disclaimer at the bottom of the page */
-li.new-disclaimer {
-  color: #909090;
-  font-family: serif;
-  font-size: 11px;
-  font-style: normal;
-  font-weight: 400;
-  letter-spacing: 0.01em;
-  line-height: 1em;
-  text-align: center;
-}
-
-div.action_description p {
-  margin-top: 0px;
-}
-
-
-/*Styles to make the swapped-in AN thank you text not look so wacky. */
-
-div.new-action-description {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.7);
-  padding-bottom: 5px;
-  white-space: pre-line;
-}
-
-div.new-action-description ul {
-    display: inline;
-    line-height: 0.75em;
-    list-style-type: none;
-    margin-bottom: 1em;
-    margin-top: 0;
-    padding-bottom: 1em;
-    padding-top: 0;
-}
-div.new-action-description ul li {
-    padding-left: 1em;
-}
-
-div#heads div.nominee img.nominee-img {
-  border-radius: 5px;
-  width: 100%;
-}
-
-div#heads div.nominee label.nominee-label {
-  display: inline-block;
-  font-size: 0.75em;
-  line-height: 1em;
-  margin: 0;
-  text-align: center;
-  vertical-align: bottom;
-}
-
-div#heads div.nominee {
-  margin-right: 1em;
-  width: 3em;
-}
-
-div#can_main_col div.action_description.clearfix div#heads {
-  align-items: flex-start;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-  width: 100%;
-  margin-bottom: .5em;
-}
-
-@media screen and (max-width: 492px) {
-  div#can_main_col div.action_description.clearfix div#heads {
-    display: none;
-  }
+	font-family: $font_0;
+	font-style: normal;
+	font-weight: 400;
+	src: $url_0 format("woff2");
+	unicode-range: U +0-FF, U +131, U +152-153, U +2C6, U +2DA, U +2DC, U +2000-206F, U +2074, U +20AC, U +2212, U +2215;
 }
