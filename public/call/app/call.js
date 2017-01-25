@@ -42,7 +42,7 @@ handleCallResponse = function (res) {
     targetHTML = res.responseJSON.script;
   } else {
     console.log('Got response ' + res.status + ' ' + res.statusText);
-    targetHTML = 'There was an error with your call (' + res.status + ' ' + res.statusText + ').  Please <a href="http://www.advocacycommons.org/call/">try again</a>.'
+    targetHTML = 'Looks like there was an error with your call (' + res.status + ' ' + res.statusText + ').  Reload the page and give it another shot.'
   }
   
   $(document).on('can_embed_submitted',function(){
