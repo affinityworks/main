@@ -26,11 +26,11 @@ commanderData = function () {
         userPhone: thisPhone,
         userLocation: thisLocation,
       }
-      console.log('Assembled call data');
-      console.log(callData);
-      makeTheCall(callData);
+		console.log('Assembled call data');
+		console.log(callData);
+		makeTheCall(callData);
   } else {
-  console.log('No phone number.');
+		console.log('No phone number.');
   }
   
 }
