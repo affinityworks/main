@@ -17,10 +17,22 @@ commanderData = function () {
   thisLocation = $(zipField).val();
   console.log('Phone is ' + thisPhone);
   console.log('ZIP is ' + thisLocation);
-  
-  if (thisPhone & thisLocation) geoCheck(thisLocation);
-  if (!thisPhone) console.log('No phone number.');
   if (!thisLocation) console.log('No location.'); 
+  if (thisPhone) { 
+    //For now, comment out the state-by-state campaign function.  Make a prettier way of doing this later on.
+    //geoCheck(thisLocation);
+    var callData = {
+        campaignId: '7',
+        userPhone: thisPhone,
+        userLocation: thisLocation,
+      }
+      console.log('Assembled call data');
+      console.log(callData);
+      makeTheCall(callData);
+  } else {
+  console.log('No phone number.');
+  }
+  
 }
 
 handleCallResponse = function (res) {
