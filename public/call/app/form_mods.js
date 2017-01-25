@@ -32,7 +32,7 @@ $(document).on('can_embed_submitted', function () {
   $('div#can_thank_you h1').text('Thank you!');
   
   //Alter text of h4 and put after the thank you text
-  $('div#can_thank_you h4').text('Help us build a powerful rapid response network by spreading the word using the tools below.').detach().appendTo($(thank_you_div));
+  $('div#can_thank_you h4').text('Help us build a powerful rapid response network – spread the word using the tools below.').detach().appendTo($(thank_you_div));
   
   //Create a label for the email sample textarea
   new_label = $('<label>')
