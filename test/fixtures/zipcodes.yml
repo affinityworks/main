@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  zipcode: 
+  zipcode_type: 
+  city: 
+  state: 
+  location_type: 
+  lat: 
+  long: 
+  location: 
+  decommisioned: 
+  tax_returns_filed: 
+  estimated_population: 
+  total_wages: 1
+
+two:
+  zipcode: 
+  zipcode_type: 
+  city: 
+  state: 
+  location_type: 
+  lat: 
+  long: 
+  location: 
+  decommisioned: 
+  tax_returns_filed: 
+  estimated_population: 
+  total_wages: 1

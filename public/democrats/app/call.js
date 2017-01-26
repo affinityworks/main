@@ -1,12 +1,9 @@
-<<<<<<< HEAD
 $(document).on('can_embed_loaded', function(){
 	$(theForm).submit(function (event) {
     commanderData();
   });
 });
 
-=======
->>>>>>> d57049f836082947a833bd905c776954ff7caaa4
 validatePhone = function (num) {
   console.log('Validating \'' + num + '\' as phone number');
   num = num.replace(/[^0-9]/g, '')
@@ -20,10 +17,10 @@ commanderData = function () {
   thisLocation = $(zipField).val();
   console.log('Phone is ' + thisPhone);
   console.log('ZIP is ' + thisLocation);
-  
+
   if (thisPhone & thisLocation) geoCheck(thisLocation);
   if (!thisPhone) console.log('No phone number.');
-  if (!thisLocation) console.log('No location.'); 
+  if (!thisLocation) console.log('No location.');
 }
 
 handleCallResponse = function (res) {
@@ -35,11 +32,11 @@ handleCallResponse = function (res) {
     console.log('Got response ' + res.status + ' ' + res.statusText);
     targetHTML = 'There was an error with your call (' + res.status + ' ' + res.statusText + ').  Please <a href="http://www.advocacycommons.org/democrats/">try again</a>.'
   }
-  
+
   $(document).on('can_embed_submitted',function(){
     replaceThankYou(targetHTML)
   });
-  
+
 }
 
 makeTheCall = function (data) {

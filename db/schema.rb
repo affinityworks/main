@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170124002016) do
+ActiveRecord::Schema.define(version: 20170125195323) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -673,6 +673,23 @@ ActiveRecord::Schema.define(version: 20170124002016) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.index ["share_page_id"], name: "index_twitter_shares_on_share_page_id", using: :btree
+  end
+
+  create_table "zipcodes", force: :cascade do |t|
+    t.string   "zipcode"
+    t.string   "zipcode_type"
+    t.string   "city"
+    t.string   "state"
+    t.string   "location_type"
+    t.float    "lat"
+    t.float    "long"
+    t.string   "location"
+    t.boolean  "decommisioned"
+    t.boolean  "tax_returns_filed"
+    t.integer  "estimated_population"
+    t.integer  "total_wages"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
   add_foreign_key "answers", "canvasses"
