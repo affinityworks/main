@@ -1,7 +1,4 @@
-//Define the module & dependencies, and allow js-yaml to be accessed!
-define(['js-yaml.min','jquery','form'],function(jsyaml,jquery,form){
-
-	/*Methods to control which users see what, based on referrer codes. */
+/*Methods to control which users see what, based on referrer codes. */
 	modifyForm = function (settings, slug) {
 		settings['hide opt in controls'] && $(optInCtls).hide();
 		settings['opt out'] && $(optInChk).prop('checked', false);
@@ -35,4 +32,3 @@ define(['js-yaml.min','jquery','form'],function(jsyaml,jquery,form){
 			}, 'text');
 		}
 	});
-});
