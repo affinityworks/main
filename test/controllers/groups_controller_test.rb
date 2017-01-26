@@ -6,7 +6,6 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get index" do
-    byebug
     get groups_url
     assert_response :success
   end
