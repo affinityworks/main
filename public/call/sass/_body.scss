@@ -5,6 +5,19 @@ body {
 div#form-container {
   margin-left:auto;
   margin-right:auto;
+  
+	//Styles to display partner logos below the action description
+	div#partner_logos {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		margin-top: .5em;
+		flex-wrap: wrap;
+		width: 100%;
+		img.partner-logo {
+			width: 20%;
+		}
+	}
 }
 
 @media screen and (max-width: 492px) {

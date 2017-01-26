@@ -2204,6 +2204,15 @@ body {
 div#form-container {
   margin-left: auto;
   margin-right: auto; }
+  div#form-container div#partner_logos {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: .5em;
+    flex-wrap: wrap;
+    width: 100%; }
+    div#form-container div#partner_logos img.partner-logo {
+      width: 20%; }
 
 @media screen and (max-width: 492px) {
   div#form-container {
@@ -2229,15 +2238,6 @@ div#can-form-area-stop-the-worst-of-the-worst {
   margin-right: auto; }
 div#action_info {
   display: none; }
-div#can_embed_form.clearfix div.clearfix div#can_main_col div#partner_logos {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-bottom: .5em;
-  flex-wrap: wrap;
-  width: 100%; }
-  div#can_embed_form.clearfix div.clearfix div#can_main_col div#partner_logos img.partner-logo {
-    width: 20%; }
 div#can_embed_form label.checkbox {
   font-family: Verdana, Tahoma, DejaVu Sans, sans-serif;
   font-size: .75em; }

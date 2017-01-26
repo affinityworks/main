@@ -42,18 +42,6 @@ div {
 	}
 	&#can_embed_form {
 		&.clearfix div.clearfix div#can_main_col {
-		  //Styles to display partner logos above the action description
-      div#partner_logos {
-        display: flex;
-				flex-direction: row;
-				justify-content: space-between;
-				margin-bottom: .5em;
-				flex-wrap: wrap;
-				width: 100%;
-				img.partner-logo {
-				  width: 20%;
-				}
-      }
     }  	
 			h2.entry-title {
 				@extend %extend_1;
