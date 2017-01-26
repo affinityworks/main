@@ -1,0 +1,2 @@
+module ZipcodesHelper
+end
