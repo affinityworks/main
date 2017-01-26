@@ -1,15 +1,15 @@
 geoCheck = function (zip) {
   //For the moment, use the zip files in /democrats so we don't destroy GH anymore than we already have.
-  zipfile = '/democrats/app/zips/' + zip + '.txt';
-  console.log('Looking at ' + zipfile);
+  ziploc = '/zipcodes/' + zip + '.json';
+  console.log('Looking at ' + ziploc);
   $.ajax({
     type: 'GET',
-    url: zipfile,
-    dataType: 'text',
-    cache: false,
+    url: ziploc,
+    dataType: 'json',
+    cache: true,
     success: function (data) {
-      console.log('Got state ' + data);
-      getCampaignInfo(data);
+      console.log('Got state ' + data.state);
+      getCampaignInfo(data.state);
     }
   });
 }
