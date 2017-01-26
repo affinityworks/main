@@ -1,22 +1,21 @@
 /************************************************************
-
+	
 	jQuery OSDI Plugin
-
+	
 	Submit forms to OSDI-compatible systems using OSDI's non-authenticated POST functions and triggers. Requires jQuery 1.8 or above. More info on OSDI at http://opensupporter.org/
-
+	
 	Version: 1.0.0
 	Last Updated: March 8, 2016
 	Authors: Jason Rosenbaum
 	Repository: https://github.com/opensupporter/jquery-osdi
 	License: MIT open source, https://github.com/opensupporter/jquery-osdi/blob/master/LICENSE.md
-
-
-************************************************************/
+	
+*************************************************************/
 
 ;( function( $, window, document, undefined ) {
 
 	"use strict";
-
+	
 		var pluginName = "osdi",
 			defaults = {
 				autoresponse: true,
@@ -40,49 +39,54 @@
 		function Plugin ( element, options ) {
 			//console.log($element.length);
 			this.$element = $(element);
-
+			
 			this.settings = $.extend( {}, defaults, options );
 			this._defaults = defaults;
 			this._name = pluginName;
 			this.init(this.$element);
-
+			
 			this.submit = function() {
 			    this.form_submit(this.$element, this);
 			};
 		}
-
-
+		
+		
 
 		// Avoid Plugin.prototype conflicts
 		$.extend( Plugin.prototype, {
 			init: function($element) {
-
+				
 				// validate to make sure we can use this form on a basic level
 				if (this.validate_form( $element )) {
 					this.form_submit($element, this);
 				}
 			},
 			validate_form: function( $element ) {
+				console.log($element);  // DEBUG
 				if (!$element.is('form')) {
-					console.log('JQUERY OSDI ERROR: The DOM element passed to the jQuery OSDI plugin is not a form. The jQuery OSDI plugin only supports form elements.');
+					console.log('JQUERY OSDI ERROR: The DOM element passed to the jQuery OSDI plugin is not a form. The jQuery OSDI plugin only supports form elements.');		
 					return false;
 				} else {
 					return true;
 				}
 			},
 			form_submit: function ( $element, that ) {
+				//console.log(that.settings.immediate);
 				if (that.settings.immediate) {
 					that.submit_handler($element, that);
 				} else {
 					$element.on('submit', function() {
 						that.submit_handler($element, that);
-
+						
 						// stop normal form submission
 						return false;
 					});
 				}
 			},
 			submit_handler: function( $element, that ) {
+				console.log('submithandler');  // DEBUG
+				console.log($element);   // DEBUG
+				console.log(that);    // DEBUG
 				if (that.validate_submit( $element )) {
 					var	body,
 						endpoint,
@@ -90,9 +94,9 @@
 						done,
 						fail,
 						always;
-
+					
 					body = that.create_body($element);
-
+					
 					if (that.settings.endpoint && that.settings.endpoint != '') {
 						if (typeof(that.settings.endpoint) == 'function') {
 							endpoint = that.settings.endpoint();
@@ -102,36 +106,35 @@
 					} else {
 						endpoint = $element.attr('action');
 					}
-
+					
 					ajax_options = {
 						url: endpoint,
 						data: JSON.stringify(body),
 					}
-
+					
 					if (typeof(that.settings.ajax_options) == 'function') {
-						ajax_options = $.extend( ajax_options, that.settings.ajax_options() );
+						ajax_options = $.extend( ajax_options, that.settings.ajax_options() ); 
 					} else {
-						ajax_options = $.extend( ajax_options, that.settings.ajax_options );
+						ajax_options = $.extend( ajax_options, that.settings.ajax_options ); 
 					}
-
-
+					
+					
 					done = that.settings.done;
 					fail = that.settings.fail;
 					always = that.settings.always;
-
-
-					//console.log(body);
-					//console.log(JSON.stringify(body));
-					//console.log(endpoint);
-					//console.log(ajax_options);
-					//console.log(done);
-					//console.log(fail);
-					//console.log(always);
-
+					
+					console.log(body);       // DEBUG
+					console.log(JSON.stringify(body));  // DEBUG
+					console.log(endpoint);       // DEBUG
+					console.log(ajax_options);    // DEBUG
+					console.log(done);           // DEBUG
+					console.log(fail);           // DEBUG
+					console.log(always);         // DEBUG
+					
 					that.perform_ajax(ajax_options, done, fail, always);
 				}
-
-
+						
+				
 			},
 			validate_submit: function( $element ) {
 				if (this.validate_endpoint($element) && this.validate_add_tags()
@@ -142,9 +145,9 @@
 				}
 			},
 			validate_endpoint: function ( $element ) {
-				//console.log($element);
-				//console.log(!this.settings.endpoint);
-				//console.log(!$element.attr('action'));
+				console.log($element);           // DEBUG
+				console.log(!this.settings.endpoint);   // DEBUG
+				console.log(!$element.attr('action'));  // DEBUG
 				if (!this.settings.endpoint && !$element.attr('action')) {
 					console.log('JQUERY OSDI ERROR: An endpoint is required. Either set the endpoint option with a string when calling the jQuery OSDI plugin, or give your form an action attribute with the endpoint as its value.');
 					return false;
@@ -174,7 +177,7 @@
 							return true;
 						}
 					}
-
+					
 				} else {
 					return true;
 				}
@@ -187,7 +190,7 @@
 					postal_addresses,
 					phone_number,
 					add_tags;
-
+				
 				if (this.settings.body) {
 					if (typeof(this.settings.body) == 'function') {
 						body = this.settings.body();
@@ -198,7 +201,7 @@
 					body = {
 						"person" : {}
 					}
-
+					
 					if (typeof(this.settings.autoresponse) == 'function') {
 						if (this.settings.autoresponse() === true) {
 							autoresponse = {
@@ -220,9 +223,9 @@
 							}
 						}
 					}
-
+					
 					$.extend( body, autoresponse );
-
+					
 					if (this.settings.add_tags) {
 						if (typeof(this.settings.add_tags) == 'function') {
 							add_tags = {
@@ -233,30 +236,30 @@
 								"add_tags": this.settings.add_tags
 							};
 						}
-
-
+						
+						
 						$.extend( body, add_tags );
 					}
-
+					
 					if ($element.find('input[name="family_name"]').length && $element.find('input[name="family_name"]').val() != '') {
 						body.person.family_name = $element.find('input[name="family_name"]').val();
 					}
-
+					
 					if ($element.find('input[name="given_name"]').length && $element.find('input[name="given_name"]').val() != '') {
 						body.person.given_name = $element.find('input[name="given_name"]').val();
 					}
-
+					
 					if ($element.find('input[name="email_address"]').length && $element.find('input[name="email_address"]').val() != '') {
 						email_address = {
-							"email_addresses" : [
-								{
-									"address" : $element.find('input[name="email_address"]').val()
+							"email_addresses" : [ 
+								{ 
+									"address" : $element.find('input[name="email_address"]').val() 	
 								}
 							]
 						};
-
+						
 						$.extend( body.person, email_address );
-
+						
 						// add status here, if we have email
 						if (typeof(this.settings.status) == 'function') {
 							if (this.settings.status() !== false) {
@@ -268,61 +271,61 @@
 							}
 						}
 					}
-
+					
 					if (
-						   	($element.find('input[name="street"]').length && $element.find('input[name="street"]').val() != '')
-						|| 	($element.find('input[name="locality"]').length && $element.find('input[name="locality"]').val() != '')
-						||	($element.find('input[name="region"]').length && $element.find('input[name="region"]').val() != '')
+						   	($element.find('input[name="street"]').length && $element.find('input[name="street"]').val() != '') 
+						|| 	($element.find('input[name="locality"]').length && $element.find('input[name="locality"]').val() != '') 
+						||	($element.find('input[name="region"]').length && $element.find('input[name="region"]').val() != '') 
 						|| 	($element.find('input[name="postal_code"]').length && $element.find('input[name="postal_code"]').val() != '')
 						|| 	($element.find('input[name="country"]').length && $element.find('input[name="country"]').val() != '')
 					) {
 						postal_address = {};
-
+						
 						if ($element.find('input[name="street"]').length && $element.find('input[name="street"]').val() != '') {
 							postal_address.address_lines = [
 								$element.find('input[name="street"]').val()
 							];
 						}
-
+						
 						if ($element.find('input[name="locality"]').length && $element.find('input[name="locality"]').val() != '') {
 							postal_address.locality = $element.find('input[name="locality"]').val();
 						}
-
+						
 						if ($element.find('input[name="region"]').length && $element.find('input[name="region"]').val() != '') {
 							postal_address.region = $element.find('input[name="region"]').val();
 						}
-
+						
 						if ($element.find('input[name="postal_code"]').length && $element.find('input[name="postal_code"]').val() != '') {
 							postal_address.postal_code = $element.find('input[name="postal_code"]').val();
 						}
-
+						
 						if ($element.find('input[name="country"]').length && $element.find('input[name="country"]').val() != '') {
 							postal_address.country = $element.find('input[name="country"]').val();
 						}
-
+						
 						postal_addresses = {
 							"postal_addresses" : [
 								postal_address
 							]
 						};
-
+						
 						$.extend( body.person, postal_addresses );
 					}
-
+					
 					if ($element.find('input[name="phone_number"]').length && $element.find('input[name="phone_number"]').val() != '') {
 						phone_number = {
-							"phone_numbers" : [
-								{
-									"number" : $element.find('input[name="phone_number"]').val()
+							"phone_numbers" : [ 
+								{ 
+									"number" : $element.find('input[name="phone_number"]').val() 	
 								}
 							]
 						};
-
+						
 						$.extend( body.person, phone_number );
 					}
-
+					
 				}
-
+				
 				return body;
 			},
 			perform_ajax: function(ajax_options, done, fail, always) {
@@ -335,7 +338,7 @@
 				}).always(function(data_jqXHR, textStatus, jqXHR_errorThrown) {
 					always(data_jqXHR, textStatus, jqXHR_errorThrown)
 				});
-			}
+			}	
 		});
 
 		// A really lightweight plugin wrapper around the constructor,
@@ -348,13 +351,13 @@
 				} else {
 					//console.log($.data( this, "plugin_" + pluginName ));
 					//console.log(options);
-
+					
 					//$(this).osdi().submit;
 					$.data( this, "plugin_" + pluginName ).submit();
 				}
 			} );
 		};
-
-
+		
+		
 
 } )( jQuery, window, document );
