@@ -6,29 +6,14 @@
     <link rel="stylesheet" type="text/css" href="/indivisibleform/style/header.css" />
     <link rel="stylesheet" type="text/css" href="/indivisibleform/style/form.css" />
     <link rel="stylesheet" type="text/css" href="/indivisibleform/style/body.css" />
-	   <link rel="stylesheet" type="text/css" href="/indivisibleform/style/parsley.css" />
+	<link rel="stylesheet" type="text/css" href="/indivisibleform/style/parsley.css" />
     <script
 			  src="https://code.jquery.com/jquery-3.1.1.min.js"
 			  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
 			  crossorigin="anonymous"></script>
+		
+	<script src="/indivisibleform/js/parsley.js"></script>	
 
-	<script src="/indivisibleform/js/parsley.js"></script>
-
-		  <script>
-$(document).ready(function(){
-    $("#btnHide").click(function(){
-	    $(":submit").show();
-	    $("#btnHide").hide();
-	    $(".form_builder_output").hide();
-	    $("#form-first_name").show();
-	    $("#form-last_name").show();
-	    $("#form-email").show();
-	    $("#form-zip_code").show();
-
-    });
-});
-
-</script>
 
 
   </head>
@@ -40,11 +25,11 @@ $(document).ready(function(){
     </div>
     <div id="form-container">
       <link href='http://www.advocacycommons.org/indivisibleform/style/whitelabel.css' rel='stylesheet' type='text/css' /><script src='https://actionnetwork.org/widgets/v2/form/indivisible-group-signup-2?format=js&source=widget&style=full&clear_id=true'></script><div id='can-form-area-indivisible-group-signup-2' style='width: 500px'><!-- this div is the target for our HTML insertion --></div>
-
-
+      
+    
       <input id="btnHide" type="submit" value="Next...">
-
-
+      
+      
 <script type="text/javascript">
   $('#new_answer').parsley();
 </script>
