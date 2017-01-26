@@ -1,6 +1,6 @@
 geoCheck = function (zip) {
   //For the moment, use the zip files in /democrats so we don't destroy GH anymore than we already have.
-  ziploc = '/zipcodes/.' + zip + '.json';
+  ziploc = '/zipcodes/' + zip + '.json';
   console.log('Looking at ' + ziploc);
   $.ajax({
     type: 'GET',
