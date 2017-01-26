@@ -4,6 +4,7 @@ div#can-form-area-call-your-senator {
 }
 
 /* Suppress some elements of the form that we don't want. */
+/* */
 div#action_info, div.action_sidebar h4 {
   display: none;
 }
@@ -157,22 +158,6 @@ div.new-action-description ul {
 }
 div.new-action-description ul li {
     padding-left: 1em;
-}
-
-.control-title,
-.control-subtitle {
-  color: rgba(0,31,92,.69);
-  font-family: 'Montserrat', sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: 4em;
-  margin: 1em 0 0.25em 0;
-  text-align: center;
-}
-
-.control-subtitle {
-  font-size: 2em;
-  margin-bottom: 1em;
 }
 
 .control-group {
