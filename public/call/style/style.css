@@ -2214,7 +2214,7 @@ div#form-container {
 @media screen and (min-width: 800px) {
   div#form-container {
     width: 680px; } }
-div#can_embed_form.clearfix div.clearfix div#can_main_col h2.entry-title, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h1 {
+div#can_embed_form h2.entry-title, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h1 {
   color: #264c99;
   font-family: Verdana, Tahoma, DejaVu Sans, sans-serif;
   margin-top: 0.5em;
@@ -2229,6 +2229,15 @@ div#can-form-area-stop-the-worst-of-the-worst {
   margin-right: auto; }
 div#action_info {
   display: none; }
+div#can_embed_form.clearfix div.clearfix div#can_main_col div#partner_logos {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: .5em;
+  flex-wrap: wrap;
+  width: 100%; }
+  div#can_embed_form.clearfix div.clearfix div#can_main_col div#partner_logos img.partner-logo {
+    width: 20%; }
 div#can_embed_form label.checkbox {
   font-family: Verdana, Tahoma, DejaVu Sans, sans-serif;
   font-size: .75em; }
