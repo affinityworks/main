@@ -8,6 +8,7 @@ $(document).ready(function(){
 	    $("#form-last_name").show();
 	    $("#form-email").show();
 	    $("#form-zip_code").show();
+	    //
 	           
     });
 });
