@@ -10,7 +10,7 @@
 	Repository: https://github.com/opensupporter/jquery-osdi
 	License: MIT open source, https://github.com/opensupporter/jquery-osdi/blob/master/LICENSE.md
 	
-*************************************************************/
+************************************************************* **/
 
 ;( function( $, window, document, undefined ) {
 

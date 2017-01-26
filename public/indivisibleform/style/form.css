@@ -4,6 +4,7 @@ div#can-form-area-call-your-senator {
 }
 
 /* Suppress some elements of the form that we don't want. */
+/* */
 div#action_info, div.action_sidebar h4 {
   display: none;
 }
