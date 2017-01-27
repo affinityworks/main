@@ -12,6 +12,11 @@ class AdvocacyCampaignTest < ActiveSupport::TestCase
     assert_not campaign.save
   end
 
+  test "should save address with creator" do
+    campaign = AdvocacyCampaign.new(creator: people(:one))
+    assert campaign.save
+  end
+
   test "should have association with outreach" do
     out = outreaches(:one)
 

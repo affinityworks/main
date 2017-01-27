@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 20170125195323) do
     t.string   "region"
     t.string   "postal_code"
     t.string   "country"
-    t.integer  "location_id"
+    t.integer  "location_id"  #what the hell is a location_id for?
     t.string   "status"
     t.boolean  "primary"
     t.string   "address_type"
@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 20170125195323) do
     t.string   "location_accuracy"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
-    t.index ["location_id"], name: "index_addresses_on_location_id", using: :btree
+    t.index ["location_id"], name: "index_addresses_on_location_id", using: :btree #really is this important?
     t.index ["person_id"], name: "index_addresses_on_person_id", using: :btree
   end
 

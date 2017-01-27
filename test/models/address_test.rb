@@ -7,8 +7,4 @@ class AddressTest < ActiveSupport::TestCase
     assert one.location
   end
 
-  test "should not save address with no data" do
-    address = Address.new
-    assert_not address.save
-  end
 end
