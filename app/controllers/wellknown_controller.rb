@@ -10,7 +10,7 @@ class ZipcodesController < ApplicationController
     }
 
 
-    render :text => @codes{ params[:id] }
+    render :text => @codes[ params[:id] ]
 
   end
 end
