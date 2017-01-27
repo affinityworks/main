@@ -8,6 +8,13 @@
   color: rgb(255,255,255);
   margin:0px 10px 0px 10px;
   white-space: nowrap;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  img {
+    height:1em;
+    margin-left: 0.4em;
+  }
 }
 
 @media screen and (max-width: 492px) {
