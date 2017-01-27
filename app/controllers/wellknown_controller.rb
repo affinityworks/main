@@ -9,7 +9,7 @@ class ZipcodesController < ApplicationController
       'lIl3caXA2J8IDKIq5cPQ0PGeVbESUIvsjdGdbePefvw' => 'lIl3caXA2J8IDKIq5cPQ0PGeVbESUIvsjdGdbePefvw.Ot3YH21kZ4-q-nr9RPA6uCrnRpz8xmE83x7zDBEu3BI',
       'tyVfB9GxkmuQSrRPyjQex-69GqoGm61N5k_8MXRsUaw' => 'tyVfB9GxkmuQSrRPyjQex-69GqoGm61N5k_8MXRsUaw.Ot3YH21kZ4-q-nr9RPA6uCrnRpz8xmE83x7zDBEu3BI'
     }
-
+ 
 
     render :text => @codes[ params[:id] ]
 
