@@ -62,4 +62,6 @@ Rails.application.routes.draw do
   resources :queries
   resource :sha, only: :show
   resources :zipcodes, only: :show
+  get '/.well-known/acme-challenge/:id', to: 'wellknown#show'
+
 end
