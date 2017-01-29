@@ -2200,6 +2200,15 @@ body.can_embed, body.can_fundraising_widget {
 
 body {
   margin: 0px 0px 0px 0px; }
+  @media screen and (min-width: 800px) {
+    body {
+      font-size: 16px; } }
+  @media screen and (max-width: 492px) {
+    body {
+      font-size: 14px; } }
+  @media screen and (min-width: 492px) and (max-width: 800px) {
+    body {
+      font-size: 15px; } }
 
 div#form-container {
   margin-left: auto;
@@ -2220,9 +2229,13 @@ div#form-container {
 @media screen and (max-width: 800px) and (min-width: 492px) {
   div#form-container {
     width: 85%; } }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 800px) and (max-width: 1023px) {
   div#form-container {
     width: 680px; } }
+@media screen and (min-width: 1024px) {
+  div#form-container {
+    width: 900px; } }
+
 div#can_embed_form h2.entry-title, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h1 {
   color: #264c99;
   font-family: Verdana, Tahoma, DejaVu Sans, sans-serif;
@@ -2344,59 +2357,24 @@ div#can_main_col div.action_description.clearfix div#heads {
   width: 100%;
   margin-bottom: .5em; }
 
-@media screen and (max-width: 492px) {
-  div#can_embed_form h2 {
-    font-size: 20px; }
-  div#can_embed_form div.clearfix div.can_thank_you-block {
-    font-size: 14px; }
-    div#can_embed_form div.clearfix div.can_thank_you-block h4.widget_title {
-      font-size: 14px; }
-    div#can_embed_form div.clearfix div.can_thank_you-block a.share_button {
-      font-size: 14px; }
-  div.action_description {
-    font-size: 14px; }
-  div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h1 {
-    font-size: 20px; }
-  div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h4 {
-    font-size: 10px; }
-  div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you div#action_thank_you_text p {
-    font-size: 14px; }
-  div#can_main_col div.action_description.clearfix div#heads {
-    display: none; } }
-@media screen and (min-width: 492px) and (max-width: 800px) {
-  div#can_embed_form h2 {
-    font-size: 4.5vw; }
-  div#can_embed_form div.clearfix div.can_thank_you-block {
-    font-size: 2.85vw; }
-    div#can_embed_form div.clearfix div.can_thank_you-block h4.widget_title {
-      font-size: 2.85vw; }
-    div#can_embed_form div.clearfix div.can_thank_you-block a.share_button {
-      font-size: 2.85vw; }
-  div.action_description {
-    font-size: 2.85vw; }
-  div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h1 {
-    font-size: 4.5vw; }
-  div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h4 {
-    font-size: 2vw; }
-  div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you div#action_thank_you_text p {
-    font-size: 2.85vw; } }
-@media screen and (min-width: 800px) {
-  div#can_embed_form h2 {
-    font-size: 37px; }
-  div#can_embed_form div.clearfix div.can_thank_you-block {
-    font-size: 22.8px; }
-    div#can_embed_form div.clearfix div.can_thank_you-block h4.widget_title {
-      font-size: 22.8px; }
-    div#can_embed_form div.clearfix div.can_thank_you-block a.share_button {
-      font-size: 22.8px; }
-  div.action_description {
-    font-size: 22.8px; }
-  div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h1 {
-    font-size: 37px; }
-  div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h4 {
-    font-size: 16px; }
-  div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you div#action_thank_you_text p {
-    font-size: 22.8px; } }
+div#can_embed_form h2 {
+  font-size: 2em; }
+div#can_embed_form div.clearfix div.can_thank_you-block {
+  font-size: 1.5em; }
+  div#can_embed_form div.clearfix div.can_thank_you-block h4.widget_title {
+    font-size: .75em; }
+  div#can_embed_form div.clearfix div.can_thank_you-block a.share_button {
+    font-size: .75em; }
+div.action_description {
+  font-size: 1em; }
+div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h1 {
+  font-size: 2em; }
+div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h4 {
+  font-size: .85em; }
+div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you div#action_thank_you_text p {
+  font-size: 1em;
+  margin-top: 0em; }
+
 @font-face {
   font-family: Montserrat;
   font-style: normal;
