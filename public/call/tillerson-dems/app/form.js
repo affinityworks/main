@@ -13,6 +13,6 @@ $(document).on('can_embed_loaded', function () {
 	});
 });
 
-replaceThankYou = function (targetHTML) {
-  $('div#action_thank_you_text').html(targetHTML);
-}
+$(document).on('can_embed_submitted', function() {
+  
+});
