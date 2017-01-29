@@ -2229,9 +2229,13 @@ div#form-container {
 @media screen and (max-width: 800px) and (min-width: 492px) {
   div#form-container {
     width: 85%; } }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 800px) and (max-width: 1023px) {
   div#form-container {
     width: 680px; } }
+@media screen and (min-width: 1024px) {
+  div#form-container {
+    width: 900px; } }
+
 div#can_embed_form h2.entry-title, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h1 {
   color: #264c99;
   font-family: Verdana, Tahoma, DejaVu Sans, sans-serif;
@@ -2366,7 +2370,7 @@ div.action_description {
 div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h1 {
   font-size: 2em; }
 div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h4 {
-  font-size: 1em; }
+  font-size: .85em; }
 div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you div#action_thank_you_text p {
   font-size: 1em;
   margin-top: 0em; }

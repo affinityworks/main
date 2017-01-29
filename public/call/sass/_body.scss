@@ -29,21 +29,19 @@ div#form-container {
 	}
 }
 
-@media screen and (max-width: 492px) {
-  div#form-container {
+
+div#form-container {
+  @media screen and (max-width: 492px) {
     width: 369px;
   }
-}
-
-
-@media screen and (max-width: 800px) and (min-width: 492px) {
-  div#form-container {
+  @media screen and (max-width: 800px) and (min-width: 492px) {
     width:85%;
   }
-}
-
-@media screen and (min-width: 800px) {
-  div#form-container {
+  @media screen and (min-width: 800px) and (max-width: 1023px ){
     width: 680px;
   }
+  @media screen and (min-width: 1024px) {
+    width: 900px;
+  }
 }
+
