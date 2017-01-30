@@ -1,0 +1,11 @@
+{
+	"campaign": {
+	  "active": true,
+		"id": 6,
+		"targets": {
+			"title": "Senator",
+			"name": "James M. Inhofe",
+			"party": "R"
+		}
+	}
+}
