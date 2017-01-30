@@ -1,0 +1,11 @@
+{
+	"campaign": {
+	  "active": true,
+		"id": 4,
+		"targets": {
+			"title": "Senator",
+			"name": "John Barrasso",
+			"party": "R"
+		}
+	}
+}
