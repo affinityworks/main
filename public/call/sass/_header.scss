@@ -1,0 +1,54 @@
+/* This is lifted almost straight from indivisibleguide.com, for purposes of mocking up a page like it. */
+.header-item {
+  font-family: Verdana,Tahoma,"DejaVu Sans",sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgb(255,255,255);
+  margin:0px 10px 0px 10px;
+  white-space: nowrap;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  img {
+    height:1em;
+    margin-left: 0.4em;
+  }
+}
+
+@media screen and (max-width: 492px) {
+  span.header-item {
+    font-size:8.6px;
+  }
+  div#header-container {
+    height:22.14px;
+  }
+}
+
+@media screen and (min-width: 492px) {
+  span.header-item {
+    font-size: 1.75vw;
+  }
+  div#header-container {
+    height:4.5vw
+  }
+}
+
+@media screen and (min-width: 800px) {
+  span.header-item {
+    font-size: 14px;
+  }
+  div#header-container {
+      height: 36px;
+  }
+}
+
+div#header-container {
+  background: url(dems_menu_bg.png) repeat-x scroll left top transparent;
+  display: flex;
+  flex-direction: row;
+
+  justify-content: center;
+  align-items: center;
+}

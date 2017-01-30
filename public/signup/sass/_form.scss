@@ -1,0 +1,230 @@
+//colors
+$color_sapphire_approx: #264c99;
+$color_mine_shaft_approx: rgb(51, 51, 51);
+$white: white;
+$black_5: rgba(0, 0, 0, 0.05);
+$black_70: rgba(0, 0, 0, 0.7);
+
+//fonts
+$font_0: Montserrat;
+$font_1: Verdana;
+$font_2: Tahoma;
+$font_3: DejaVu Sans;
+$font_4: sans-serif;
+@mixin main-font { font-family: $font_1, $font_2, $font_3, $font_4; }
+
+//urls
+$url_0: url(https://fonts.gstatic.com/s/montserrat/v7/zhcz-_WihjSQC0oHJ9TCYAzyDMXhdD8sAj6OAJTFsBI.woff2);
+$url_1: url(https://static1.squarespace.com/static/5855a354cd0f68bab2089b40/t/58597f8d29687fe710d051b7/1482191413003/Picture2.jpg?format=1500w);
+
+//@extend-elements
+//original selectors
+//div#can_embed_form.clearfix div.clearfix div#can_main_col h2.entry-title, div.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you h1
+%extend_1 {
+	color: $color_sapphire_approx;
+	font-family: $font_1, $font_2, $font_3, $font_4;
+	margin-top: 0.5em;
+	margin-bottom: 0;
+	padding-bottom: 0.5em;
+	text-align: center;
+	text-transform: uppercase;
+	line-height: 1em;
+}
+
+
+div {
+	&#can-form-area-stop-the-worst-of-the-worst {
+		margin-left: auto;
+		margin-right: auto;
+	}
+	&#action_info {
+		display: none;
+	}
+	&#can_embed_form {
+		&.clearfix div.clearfix div#can_main_col {
+    }  	
+			h2.entry-title {
+				@extend %extend_1;
+			}
+		label.checkbox {
+		  @include main-font;
+		  font-size: .75em;
+		}
+		div.clearfix div {
+			&.can_thank_you-block {
+				input {
+					font-size: 10px;
+					margin-bottom: 0;
+				}
+				textarea {
+					font-size: 10px;
+					margin-bottom: 0;
+				}
+				h4.widget_title {
+					text-transform: uppercase;
+					color: $color_sapphire_approx;
+					font-family: $font_1, $font_2, $font_3, $font_4;
+					font-style: normal;
+					font-weight: 400;
+					margin-bottom: 0.5em;
+				}
+				a.share_button {
+					line-height: 2em;
+					margin-top: 0.5em;
+					font-family: $font_1, $font_2, $font_3, $font_4;
+					color: $white;
+				}
+			}
+			&#can_sidebar div.action_widget.action_status_tracker {
+				border-bottom: 1px solid $black_5;
+				padding: 0 20px;
+			}
+		}
+	}
+	&.action_description {
+		color: $color_mine_shaft_approx;
+		font-family: $font_1, $font_2, $font_3, $font_4;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 1.5em;
+		text-transform: none;
+		background-color: $white;
+		border: 0;
+		//Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+		box-shadow: none;
+		padding: 0;
+		text-align: left;
+		p {
+			margin-top: 0;
+		}
+	}
+	&#action_welcome_message_inner {
+		color: $color_mine_shaft_approx;
+		font-family: $font_1, $font_2, $font_3, $font_4;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 1.5em;
+		text-transform: none;
+		background-color: $white;
+		border: 0;
+		//Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+		box-shadow: none;
+		padding: 0;
+		text-align: left;
+	}
+	&.new-action-description {
+		border-bottom: 1px solid $black_70;
+		padding-bottom: 5px;
+		white-space: pre-line;
+		ul {
+			display: inline;
+			line-height: 0.75em;
+			list-style-type: none;
+			margin-bottom: 1em;
+			margin-top: 0;
+			padding-bottom: 1em;
+			padding-top: 0;
+			li {
+				padding-left: 1em;
+			}
+		}
+	}
+	&.action_sidebar h4 {
+		display: none;
+	}
+	&.can_embed div#can_embed_form {
+		&.can_thank_you_wrap div#can_thank_you h1 {
+			@extend %extend_1;
+		}
+		div#can_thank_you {
+			color: $color_mine_shaft_approx;
+			font-family: $font_1, $font_2, $font_3, $font_4;
+			font-style: normal;
+			font-weight: 400;
+			line-height: 1.5em;
+			text-transform: none;
+			text-align: left;
+			h4 {
+				text-shadow: none;
+				padding-top: .5em;
+				border-top: 1px dotted grey;
+				font-style: italic;
+			}
+			h1 {
+				//Instead of the line below you could use @include text-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+				text-shadow: none;
+			}
+			div#action_thank_you_text{
+				margin-bottom: 1em;
+			}
+		}
+	}
+	#can_embed_form div.action_description p {
+		margin-bottom: .75em;
+	}
+	&#heads div.nominee {
+		margin-right: 1em;
+		width: 3em;
+		img.nominee-img {
+			//Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+			border-radius: 5px;
+			width: 100%;
+		}
+		label.nominee-label {
+			display: inline-block;
+			font-size: 0.75em;
+			line-height: 1em;
+			margin: 0;
+			text-align: center;
+			vertical-align: bottom;
+		}
+	}
+	&#can_main_col div.action_description.clearfix div#heads {
+		align-items: flex-start;
+		display: flex;
+		flex-flow: row wrap;
+		justify-content: space-between;
+		width: 100%;
+		margin-bottom: .5em;
+	}
+}
+
+div {
+	&#can_embed_form {
+		h2 {
+			font-size: 2em;
+		}
+		div.clearfix div.can_thank_you-block {
+			font-size: 1.5em;
+			h4.widget_title {
+				font-size: .75em;
+			}
+			a.share_button {
+				font-size: .75em;
+			}
+		}
+	}
+	&.action_description {
+		font-size: 1em;
+	}
+	&.can_embed div#can_embed_form.can_thank_you_wrap div#can_thank_you {
+		h1 {
+			font-size: 2em;
+		}
+		h4 {
+			font-size: .85em;
+		}
+		div#action_thank_you_text p {
+			font-size: 1em;
+			margin-top: 0em;
+		}
+	}
+}
+
+@font-face {
+	font-family: $font_0;
+	font-style: normal;
+	font-weight: 400;
+	src: $url_0 format("woff2");
+	unicode-range: U +0-FF, U +131, U +152-153, U +2C6, U +2DA, U +2DC, U +2000-206F, U +2074, U +20AC, U +2212, U +2215;
+}
