@@ -14,3 +14,19 @@ Build a platform for discovery, collaboration, and safe data sharing between org
 
 # Status:
 This project is a work in progress and nothing which is useable by end users is available. We welcome developer / designer / activist collaboration.
+
+# Developers
+
+## Getting Started
+* Install Postgresql with dev libraries
+* Install node.js
+* Install Ruby 2.3.3
+* `bin/setup`
+
+## Run Tests
+`rake`
+
+## Run Server
+`rails s`
+Open http://localhost:3000/
+
