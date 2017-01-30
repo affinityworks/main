@@ -1,3 +1,20 @@
+//Function to return URL query values
+function getParameterByName(name) {
+    url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    try {
+			var retval = decodeURIComponent(results[2].replace(/\+/g, " "));
+		} catch(e) {
+		  console.log(e);
+		  var retval = '';
+		}
+    return retval;
+}
+
 $(document).ready(function(){
 	window.Parsley.addValidator('zipcode', {
 		requirementType: 'string',
@@ -27,11 +44,9 @@ $(document).ready(function(){
 		e.preventDefault();
 	});
 	var parsley_instance = $(form).parsley();
-
 	parsley_instance
 	.on('form:success',function() {
 	  console.log('Form validated.');
-	  var query_string = new URLSearchParams(window.location.search);
 	  var email_subscription_status='subscribed';
 	  if(!$('input#email_opt_in_check').prop('checked')) email_subscription_status='unsubscribed';
 
@@ -56,8 +71,8 @@ $(document).ready(function(){
 				}
 			},
 			'action_network:referrer_data' : {
-	      'source' : query_string.get('source'),
-	      'referrer' : query_string.get('referrer'),
+	      'source' : getParameterByName('source'),
+	      'referrer' : getParameterByName('referrer'),
 	      'website' : 'http://www.advocacycommons.org'
 	    },
 	    'custom_fields' : {
@@ -75,7 +90,9 @@ $(document).ready(function(){
 				console.log('Submitted data to AN.');
 				$('div#form_teaser, div#form_full_desc').slideUp();
 				$('div.after-submit-reveal').slideDown();
-				$('div#form_container').fadeTo(500,0.2);
+				$('div#form_container')
+				  .fadeTo(500,0.2)
+				  .addClass('disabled');
 				$('input').attr('disabled','true');
 			},
 			fail : function(jqXHR, textStatus, errorThrown) {

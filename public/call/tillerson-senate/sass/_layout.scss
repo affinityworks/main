@@ -21,6 +21,12 @@ $full-width-content-padding: 2%;
   }
 }
 
+@mixin mobile {
+  @media (max-width: #{$tablet-width}) {
+    @content;
+  }
+}
+
 
 div#header {
   display: flex;

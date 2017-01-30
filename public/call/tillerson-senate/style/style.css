@@ -64,6 +64,9 @@ div#form_title_container div#form_title {
   text-transform: uppercase;
   font-size: 2em; }
 
+@media (max-width: 768px) {
+  div#form_container.disabled {
+    display: none; } }
 div#form_container form#caller_data ul#main_form_elements {
   list-style-type: none;
   padding: 0;
@@ -103,9 +106,11 @@ div#meta_form p {
 div#meta_form div#sharing {
   border-top: 1px dotted #aaaaaa;
   font-size: 0.85em; }
-  div#meta_form div#sharing div#share_widgets_container div.share-container {
-    float: left;
-    margin-right: 1em; }
+  div#meta_form div#sharing div#share_widgets_container {
+    height: 1em; }
+    div#meta_form div#sharing div#share_widgets_container div.share-container {
+      float: left;
+      margin-right: 1em; }
 
 div#header {
   background-color: #c869bf;

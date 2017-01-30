@@ -10,6 +10,11 @@ div#form_title_container {
   }
 }
 div#form_container {
+  &.disabled {
+    @include mobile {
+      display: none;
+    }
+  }
   form#caller_data {
 		ul#main_form_elements{
 			list-style-type: none;
@@ -68,6 +73,7 @@ div#meta_form {
 	  border-top: 1px dotted #aaaaaa;
 	  font-size: 0.85em;
 	  div#share_widgets_container {
+	    height: 1em;
 	    div.share-container {
 	      float:left;
 	      margin-right: 1em;
