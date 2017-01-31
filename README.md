@@ -21,6 +21,7 @@ This project is a work in progress and nothing which is useable by end users is 
 * Install Postgresql with dev libraries
 * Install node.js
 * Install Ruby 2.3.3
+* Ubuntu: `sudo -u postgres createuser $USER -s`
 * `bin/setup`
 
 ## Run Tests
