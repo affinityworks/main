@@ -1,0 +1,13 @@
+div#form_container form#caller_data ul#main_form_elements li {
+  input[type="text"].parsley-error {
+    border: 1px solid $header-bgcolor;
+  }
+
+  ul.parsley-errors-list.filled {
+    font-size: .75em;
+    padding-left: 1em;
+    li {
+      list-style-type: none;
+    }
+  }
+}
