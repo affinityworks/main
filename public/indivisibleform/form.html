@@ -10,6 +10,7 @@
 	    	<link rel="stylesheet" type="text/css" href="/indivisibleform/style/body.css" />
         <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <!-- link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css" rel="stylesheet" type="text/css"  -->
+				<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
         <link href="/indivisibleform/style/whitelabel.css" rel="stylesheet" type="text/css">
 			  <link rel="stylesheet" type="text/css" href="/indivisibleform/style/form.css" />
         <link rel="stylesheet" type="text/css" href="/indivisibleform/style/parsley.css" />
@@ -50,9 +51,8 @@
   		    	<div id="can_embed_form" class="clearfix can_float">
               <div class="clearfix">
                 <div id="can_main_col">
-                    <h2 class="entry-title js-entry-title">
-                        Indivisible Group Signup
-                    </h2>
+                    <div class="control-title">Indivisible</div>
+										<div class="control-subtitle">Group Signup</div>
                     <div id="action_info">
                       <div id="action_info_inner" class="clearfix">
                         <div class="action_owner_box">
@@ -248,6 +248,7 @@
 						},
 					}
 				},
+				immediate: true,
 				done: function(data, textStatus, jqXHR) {
 					console.log('done');
 					// window.location.replace("https://actionnetwork.org/forms/register-local-group?clear_id=true");

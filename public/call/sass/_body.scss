@@ -1,0 +1,47 @@
+body {
+  margin: 0px 0px 0px 0px;
+  @media screen and(min-width: 800px) {
+		font-size: 16px;
+  }
+  @media screen and(max-width: 492px) {
+    font-size: 14px;
+  }
+  @media screen and(min-width: 492px) and(max-width: 800px) {
+    font-size: 15px;
+  }
+}
+
+div#form-container {
+  margin-left:auto;
+  margin-right:auto;
+  
+	//Styles to display partner logos below the action description
+	div#partner_logos {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		margin-top: .5em;
+		flex-wrap: wrap;
+		width: 100%;
+		img.partner-logo {
+			width: 20%;
+		}
+	}
+}
+
+
+div#form-container {
+  @media screen and (max-width: 492px) {
+    width: 369px;
+  }
+  @media screen and (max-width: 800px) and (min-width: 492px) {
+    width:85%;
+  }
+  @media screen and (min-width: 800px) and (max-width: 1023px ){
+    width: 680px;
+  }
+  @media screen and (min-width: 1024px) {
+    width: 900px;
+  }
+}
+

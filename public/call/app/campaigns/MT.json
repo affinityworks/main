@@ -1,0 +1,11 @@
+{
+	"campaign": {
+	  "active": false,
+		"id": 3,
+		"targets": {
+			"title": "Senator",
+			"name": "Jon Tester",
+			"party": "D"
+		}
+	}
+}
