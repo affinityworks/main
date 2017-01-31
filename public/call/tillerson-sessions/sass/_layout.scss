@@ -1,0 +1,93 @@
+/* Screen variables */
+$desktop-width: 1024px;
+$tablet-width: 768px;
+
+/* Content width variables */
+$desktop-content-width: 900px;
+$tablet-content-width: 700px;
+//This is for when content fills the screen (viewport < tablet-width)
+$full-width-content-padding: 2%;
+
+
+@mixin desktop {
+  @media (min-width: #{$desktop-width}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media (max-width: #{$tablet-width}) {
+    @content;
+  }
+}
+
+
+div#header {
+  display: flex;
+  flex-direction: row;
+  width:100%;
+  justify-content: center;
+  height: 2em;
+  align-items: center;
+  margin-bottom: 1em;
+}
+div#padded_wrapper {
+  //Set the full-width content padding.  Always true, but doesn't come into play when content is floating center.
+  padding: 0 $full-width-content-padding;
+}
+div#content {
+  margin: 0 auto;
+  @include desktop {
+    width: $desktop-content-width;
+  }
+  @include tablet {
+    width: $tablet-content-width;
+  }
+  div#form_title_container {
+    margin-bottom: 0.5em;
+  }
+  div#form_container{
+    @include desktop {
+			float:left;
+			width: 40%;
+    }
+    @include tablet {
+      float: left;
+      width: 40%;
+    }
+  }
+  
+  div#meta_form {
+    margin-bottom: 2em;
+    @include desktop {
+			float:right;
+			width: 55%;
+		}
+		@include tablet {
+		  float: right;
+		  width: 55%;
+		}
+		div#form_full_desc, div.after-submit-reveal {
+		  display: none;
+		}
+  }
+}
+  
+div#footer{
+  clear: both;
+  padding-top: 1em;
+  margin: 0 auto;
+  @include desktop {
+    width: $desktop-content-width;
+  }
+  @include tablet {
+    width: $tablet-content-width;
+  }
+ 
+}
