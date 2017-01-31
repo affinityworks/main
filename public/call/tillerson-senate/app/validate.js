@@ -19,7 +19,6 @@ $(document).ready(function(){
 	window.Parsley.addValidator('zipcode', {
 		requirementType: 'string',
 		validateString: function(value) {
-		  console.log('received value ' + value + ' to validate as ZIP');
 			return value.length == 5  && parseInt(value);
 		},
 		messages: {
