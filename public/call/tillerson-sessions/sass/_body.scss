@@ -1,0 +1,24 @@
+/* Variables */
+$link-color: #49a7e9;
+body { 
+  margin: 0;
+  @include body-font;
+  background-color: #f8f8f8;
+  font-size: 16px;
+  @include desktop {
+    font-size: 18px;
+  }
+  @include tablet {
+    font-size: 16px;
+  }
+  a {
+    color: $link-color;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  p {
+	margin: 0;
+  }
+}
