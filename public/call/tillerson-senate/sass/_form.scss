@@ -1,0 +1,83 @@
+/* Variables */
+$form_border_color: #aaa;
+$form_button_color: #bbb;
+$form_button_hover_color: #ccc;
+
+div#form_title_container {
+  div#form_title {
+    @include title-font;
+    font-size: 2em;
+  }
+}
+div#form_container {
+  &.disabled {
+    @include mobile {
+      display: none;
+    }
+  }
+  form#caller_data {
+		ul#main_form_elements{
+			list-style-type: none;
+			padding: 0;
+			margin: 0;
+			li {
+				margin-bottom: .5em;
+				&#email_subscription_controls {
+				    display: flex;
+						flex-direction: column;
+				}
+				a#reveal_email_subscription_preferences {
+				  font-size: 0.75em;
+				}
+				div#email_subscription_preferences {
+				  display: none;
+				}
+		    label {
+					font-size: 0.75em;
+				}
+				input {	  
+				border: 1px solid $form_border_color;
+				transition: all .1s linear;
+				border-radius: 3px;
+					&[type="text"] {
+						width: 100%;
+						font-size: 1em;
+						padding: 0.5em;
+					}
+					&[type="submit"] {
+						width: 100%;
+						text-align: center;
+						height: 2em;
+						font-size: 1em;
+						background-color: $form_button_color;
+						&:hover {
+							background-color: $form_button_hover_color;
+						}
+					}					
+				}
+			}
+		}
+	}
+}
+
+div#meta_form {
+  div#form_teaser {
+    a#show_full_form_desc {
+      font-size:.85em;
+    }
+  }
+  p {
+	  margin-bottom: 1em;
+	}
+	div#sharing {
+	  border-top: 1px dotted #aaaaaa;
+	  font-size: 0.85em;
+	  div#share_widgets_container {
+	    height: 1em;
+	    div.share-container {
+	      float:left;
+	      margin-right: 1em;
+	    }
+	  }
+	}
+}
