@@ -21,7 +21,27 @@ class Api::V1::PeopleControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'pagination' do
+    # 2 fixtures + 6 new people = 8 in DB
+    6.times do |i|
+      Person.create!(email: "person_#{i}@example.com", password: 'topsecret')
+    end
 
+    Api::User.create!(osdi_api_token: 'CF32zTyg_KXFQbPzvoz3', name: 'API friend', email: 'api@example.com')
+
+    get api_v1_people_url,
+        headers: { 'OSDI-API-Token': 'CF32zTyg_KXFQbPzvoz3' },
+        params: { per_page: 3, page: 2 },
+        as: :json
+
+    assert_response :success
+
+    json = JSON.parse(response.body)
+    people = json['_embedded']['osdi:people']
+    assert_equal people.size, 3
+
+    assert_equal 3, json['total_pages'], 'total_pages'
+    assert_equal 8, json['total_records'], 'total_records'
+    assert_equal 2, json['page'], 'page'
   end
 
   test 'require API token' do

@@ -28,6 +28,6 @@ json.set! '_links' do
   end
 end
 
-json.page 1
-json.per_page @people.size
-json.total_records @people.size
+json.page @people.current_page
+json.total_pages @people.size
+json.total_records @people.total_count
