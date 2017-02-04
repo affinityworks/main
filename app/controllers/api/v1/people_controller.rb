@@ -6,7 +6,7 @@ class Api::V1::PeopleController < ApplicationController
 
   def index
     respond_to do |format|
-      format.json { @people = Person.all }
+      format.json { @people = Person.includes(:email_address).all }
     end
   end
 
