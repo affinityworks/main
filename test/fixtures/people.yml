@@ -7,7 +7,7 @@ one:
   given_name: MyString
   additional_name: MyString
   honorific_prefix: MyString
-  honorific_sufix: MyString
+  honorific_suffix: MyString
   gender:
   gender_identity: MyString
   party_identification: MyString
@@ -28,7 +28,7 @@ two:
   given_name: MyString
   additional_name: MyString
   honorific_prefix: MyString
-  honorific_sufix: MyString
+  honorific_suffix: MyString
   gender:
   email: jane@elsewehre.com
   gender_identity: MyString

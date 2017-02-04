@@ -5,9 +5,9 @@ class Person < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   has_one :email_address
-  has_one :employer_address, :class_name => 'Address'
+  has_one :employer_address, class_name: 'EmployerAddress'
 
-  has_many :personal_addresses, :class_name => 'Address'
+  has_many :personal_addresses, class_name: 'PersonalAddress'
   has_many :phone_numbers
   has_many :profiles
   has_many :donations

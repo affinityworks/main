@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170204160804) do
+ActiveRecord::Schema.define(version: 20170204193954) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 20170204160804) do
     t.string   "location_accuracy"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+    t.string   "language"
     t.index ["location_id"], name: "index_addresses_on_location_id", using: :btree
     t.index ["person_id"], name: "index_addresses_on_person_id", using: :btree
   end
@@ -412,7 +413,7 @@ ActiveRecord::Schema.define(version: 20170204160804) do
     t.string   "given_name"
     t.string   "additional_name"
     t.string   "honorific_prefix"
-    t.string   "honorific_sufix"
+    t.string   "honorific_suffix"
     t.string   "gender"
     t.string   "gender_identity"
     t.string   "party_identification"
