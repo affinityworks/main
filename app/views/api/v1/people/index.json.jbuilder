@@ -26,6 +26,18 @@ json.set! '_links' do
   json.self do
     json.href api_v1_people_url
   end
+
+  unless @people.first_page?
+    json.previous do
+      json.href api_v1_people_path(page: @people.prev_page)
+    end
+  end
+
+  unless @people.last_page?
+    json.next do
+      json.href api_v1_people_path(page: @people.next_page)
+    end
+  end
 end
 
 json.page @people.current_page

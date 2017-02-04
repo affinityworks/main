@@ -42,6 +42,11 @@ class Api::V1::PeopleControllerTest < ActionDispatch::IntegrationTest
     assert_equal 3, json['total_pages'], 'total_pages'
     assert_equal 8, json['total_records'], 'total_records'
     assert_equal 2, json['page'], 'page'
+
+    links = json['_links']
+    assert_equal 'http://www.example.com/api/v1/people', links['self']['href'], 'self link'
+    assert_equal '/api/v1/people?page=1', links['previous']['href'], 'previous link'
+    assert_equal '/api/v1/people?page=3', links['next']['href'], 'next link'
   end
 
   test 'require API token' do
