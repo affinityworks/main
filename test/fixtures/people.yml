@@ -12,7 +12,9 @@ one:
   gender_identity: MyString
   party_identification: MyString
   source: MyString
-  ethnicities: MyString
+  ethnicities:
+    - White
+    - Hispanic
   languages_spoken: MyString
   birthdate: 2016-12-18
   custom_fields: MyText
@@ -35,7 +37,9 @@ two:
   party_identification: MyString
   source: MyString
   ethnicities: MyString
-  languages_spoken: MyString
+  languages_spoken:
+    - Greek
+    - Latin
   birthdate: 2016-12-18
   custom_fields: MyText
   created_at: 2016-12-18 19:30:05

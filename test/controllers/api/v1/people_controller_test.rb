@@ -19,6 +19,9 @@ class Api::V1::PeopleControllerTest < ActionDispatch::IntegrationTest
     assert people.all? { |p| p['identifiers'].size == 1 }, 'Each person should have an identifier'
     assert people.all? { |p| p['created_date'].present? }, 'Each person should have created_date'
     assert people.all? { |p| p['modified_date'].present? }, 'Each person should have modified_date'
+
+    person = people.find { |p| p['id'] == 1 }
+    assert_equal ['White', 'Hispanic'], person['ethnicities'], 'ethnicities'
   end
 
   test 'pagination' do

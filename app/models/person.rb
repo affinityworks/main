@@ -4,6 +4,9 @@ class Person < ApplicationRecord
   devise :database_authenticatable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  serialize :ethnicities, Array
+  serialize :languages_spoken, Array
+
   has_one :email_address
   has_one :employer_address, class_name: 'EmployerAddress'
 
