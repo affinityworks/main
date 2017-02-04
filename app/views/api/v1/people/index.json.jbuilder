@@ -5,8 +5,11 @@ end
 json.set! '_embedded' do
   json.set! 'osdi:people' do
     json.array! @people do |person|
-      json.id person.id
       json.identifiers [osdi_identifier(person)]
+      json.created_date person.created_at
+      json.modified_date person.updated_at
+
+      json.id person.id
 
       json.email_address do
         # OSDI specs many emails per person. Our current schema has one.
