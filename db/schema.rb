@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170125195323) do
+ActiveRecord::Schema.define(version: 20170204011908) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 20170125195323) do
     t.string   "region"
     t.string   "postal_code"
     t.string   "country"
-    t.integer  "location_id"  #what the hell is a location_id for?
+    t.integer  "location_id"
     t.string   "status"
     t.boolean  "primary"
     t.string   "address_type"
@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 20170125195323) do
     t.string   "location_accuracy"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
-    t.index ["location_id"], name: "index_addresses_on_location_id", using: :btree #really is this important?
+    t.index ["location_id"], name: "index_addresses_on_location_id", using: :btree
     t.index ["person_id"], name: "index_addresses_on_person_id", using: :btree
   end
 
@@ -415,6 +415,7 @@ ActiveRecord::Schema.define(version: 20170125195323) do
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
+    t.string   "authentication_token"
     t.index ["email"], name: "index_people_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_people_on_reset_password_token", unique: true, using: :btree
   end
