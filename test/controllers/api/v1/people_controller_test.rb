@@ -54,4 +54,11 @@ class Api::V1::PeopleControllerTest < ActionDispatch::IntegrationTest
     get api_v1_people_url as: :json
     assert_response 401
   end
+
+  test 'support auth token as query parm' do
+    Api::User.create!(osdi_api_token: 'CF32zTyg_KXFQbPzvoz3', name: 'API friend', email: 'api@example.com')
+
+    get api_v1_people_url, params: { osdi_api_token: 'CF32zTyg_KXFQbPzvoz3' }, as: :json
+    assert_response :success
+  end
 end
