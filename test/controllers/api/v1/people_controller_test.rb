@@ -8,6 +8,7 @@ class Api::V1::PeopleControllerTest < ActionDispatch::IntegrationTest
 
     get api_v1_people_url, headers: { 'OSDI-API-Token': 'CF32zTyg_KXFQbPzvoz3' }, as: :json
     assert_response :success
+    assert 'application/json', response.header['Content-Type']
 
     json = JSON.parse(response.body)
     assert json['_embedded'].present?
