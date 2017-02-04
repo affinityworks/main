@@ -11,4 +11,7 @@ Style/FrozenStringLiteralComment:
   Enabled: false
 
 Metrics/LineLength:
-  Max: 160  
+  Max: 160
+
+Metrics/MethodLength:
+  Max: 20  
