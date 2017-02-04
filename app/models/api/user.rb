@@ -1,6 +1,10 @@
 class Api::User < ApplicationRecord
   devise :database_authenticatable, :trackable, :lockable
 
+  validates :email, presence: true
+  validates :name, presence: true
+  validates :password, presence: true
+
   # Poor performance if there are many API::Users
   # Vulnerable to timing attacks
   def self.first_by_osdi_api_token(token)
