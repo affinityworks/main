@@ -53,6 +53,11 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   namespace :api, defaults: {format: 'json'} do
+    # Want controller helpers but not routes
+    devise_for :users,
+               class_name: 'Api::User',
+               skip: [:sessions, :passwords, :confirmations, :registrations, :unlocks]
+
     namespace :v1 do
       get '/', to: 'entry_point#show'
       resources :people

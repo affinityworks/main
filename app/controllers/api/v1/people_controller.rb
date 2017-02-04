@@ -1,8 +1,8 @@
 class Api::V1::PeopleController < ApplicationController
   respond_to :json
 
-  before_action :authenticate_person_from_token!
-  before_action :authenticate_person!
+  before_action :authenticate_api_user_from_token!
+  before_action :authenticate_api_user!
 
   def index
     respond_to do |format|
@@ -12,12 +12,13 @@ class Api::V1::PeopleController < ApplicationController
 
   private
 
-  def authenticate_person_from_token!
-    auth_token = request.headers['HTTP_OSDI_API_TOKEN'].presence
-    person       = auth_token && Person.where(authentication_token: auth_token.to_s).first
+  def authenticate_api_user_from_token!
+    osdi_api_token = request.headers['HTTP_OSDI_API_TOKEN']
+    return false unless osdi_api_token.present?
 
-    if person
-      sign_in person, store: false
+    api_user = Api::User.first_by_osdi_api_token(osdi_api_token)
+    if api_user
+      sign_in api_user, store: false
     end
   end
 end
