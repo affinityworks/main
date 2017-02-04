@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Api::V1::PeopleControllerTest < ActionDispatch::IntegrationTest
   test '#index' do
-    get api_v1_people_url, headers: { auth_token: 'CF32zTyg_KXFQbPzvoz3' }, as: :json
+    get api_v1_people_url, headers: { 'OSDI-API-Token': 'CF32zTyg_KXFQbPzvoz3' }, as: :json
     assert_response :success
 
     json = JSON.parse(response.body)
