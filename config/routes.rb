@@ -54,7 +54,7 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: {format: 'json'} do
     namespace :v1 do
-      get '/', to: 'root#show'
+      get '/', to: 'entry_point#show'
       resources :people
     end
   end
