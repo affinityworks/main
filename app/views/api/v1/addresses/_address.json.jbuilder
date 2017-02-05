@@ -8,8 +8,7 @@ json.postal_code address.postal_code
 json.country address.country
 json.language address.language
 json.status address.status
-# Following http://opensupporter.github.io/osdi-docs/people.html
-# json.occupation person.occupation
+json.occupation address.occupation
 
 json.location do
   address.latitude
