@@ -41,3 +41,6 @@ bower.json
 
 # Ignore Byebug command history file.
 .byebug_history
+
+.ruby-gemset
+.ruby-version
