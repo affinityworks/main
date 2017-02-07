@@ -6,7 +6,10 @@ class Api::V1::PeopleController < ApplicationController
 
   def index
     respond_to do |format|
-      format.json { @people = Person.includes(:email_address).page(params[:page]).per(params[:per_page]) }
+      format.json do
+        people = Person.includes(:email_address).page(params[:page]).per(params[:per_page])
+        render json: Api::PersonRepresenter.new(people)
+      end
     end
   end
 
