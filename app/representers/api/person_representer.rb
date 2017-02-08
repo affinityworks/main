@@ -9,9 +9,6 @@ class Api::PersonRepresenter < Roar::Decorator
 
   property :identifiers, exec_context: :decorator
 
-  property :ethnicities
-  property :given_name
-
   property :additional_name
   property :birthdate
   property :employer
@@ -25,6 +22,8 @@ class Api::PersonRepresenter < Roar::Decorator
   property :languages_spoken
   property :party_identification
   property :source
+
+  collection :personal_addresses, as: :postal_addresses, representer: Api::AddressRepresenter
 
   def identifiers
     ["osdi:#{ActiveModel::Naming.singular(represented)}-#{represented.id}"]
