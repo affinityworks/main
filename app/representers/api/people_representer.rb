@@ -11,11 +11,11 @@ class Api::PeopleRepresenter < Representable::Decorator
   collection :to_a, as: 'osdi:people', class: Person, extend: Api::PersonRepresenter, embedded: true
 
   link :previous do
-    api_v1_people_path(page: represented.prev_page)
+    api_v1_people_path(page: represented.prev_page) unless represented.first_page?
   end
 
   link :next do
-    api_v1_people_path(page: represented.next_page)
+    api_v1_people_path(page: represented.next_page) unless represented.last_page?
   end
 
   property :current_page, as: :page
