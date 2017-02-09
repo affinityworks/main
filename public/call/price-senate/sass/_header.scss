@@ -1,0 +1,8 @@
+$header-bgcolor: #c869bf;
+$header-color: white;
+
+div#header {
+  background-color: $header-bgcolor;
+  @include title-font;
+  color: $header-color;
+}
