@@ -11,7 +11,6 @@ class Api::V1::PeopleControllerTest < ActionDispatch::IntegrationTest
     assert 'application/json', response.header['Content-Type']
 
     json = JSON.parse(response.body)
-    pp json
     assert json['_embedded'].present?
 
     people = json['_embedded']['osdi:people']

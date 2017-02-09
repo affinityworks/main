@@ -13,11 +13,10 @@ class Api::AddressRepresenter < Roar::Decorator
   property :region
   property :status
   property :venue
-  property :venue
 
-  # json.location do
-  #   address.latitude
-  #   address.location_accuracy
-  #   address.longitude
-  # end
+  nested :location do
+    property :latitude
+    property :location_accuracy
+    property :longitude
+  end
 end

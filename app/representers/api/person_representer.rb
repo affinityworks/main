@@ -23,7 +23,7 @@ class Api::PersonRepresenter < Roar::Decorator
   property :party_identification
   property :source
 
-  collection :personal_addresses, as: :postal_addresses, representer: Api::AddressRepresenter
+  collection :personal_addresses, as: :postal_addresses, decorator: Api::AddressRepresenter
 
   def identifiers
     ["osdi:#{ActiveModel::Naming.singular(represented)}-#{represented.id}"]
