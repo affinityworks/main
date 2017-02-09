@@ -1,0 +1,75 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="  crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>
+
+    <script type="text/javascript" src="vendor/swag/lib/swag.js"></script>
+
+
+    <script type="text/javascript" src="js/data.js"></script>
+
+
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/user.css" rel="stylesheet">
+
+
+<script>
+
+
+$(document).ready(function(){
+
+    var template = Handlebars.compile($("#groups-search-template").html());
+    $("#content").append(template(data));
+
+
+    var input = document.getElementById('searchTextField');
+    var options = {
+      types: ['(cities)'],
+      componentRestrictions: {country: "us"}
+     };
+
+    autocomplete = new google.maps.places.Autocomplete(input,options);
+
+    google.maps.event.addListener(autocomplete, 'place_changed', function () {
+        var place = autocomplete.getPlace();
+        document.getElementById('state').value = place.address_components[2].short_name;
+        document.getElementById('city').value = place.name;
+        document.getElementById('latitude').value = place.geometry.location.lat();
+        document.getElementById('longitude').value = place.geometry.location.lng();
+    });
+
+
+});
+
+</script>
+
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjDTJc7RFsQQAf7D3z_FhJ51HjdiR77y0&libraries=places"></script>
+
+
+<script type="text/javascript" src="js/public.js"></script>
+
+</head>
+<body>
+<div class="container">
+<h2> <img src="img/logo.png" height="50"> Advocacy Commons - Interface Mockups </h2>
+<hr>
+
+<div id="content"></div>
+
+<h4><a href="./admin_groups.html">Admin Groups</a></h4>
+<h4><a href="./admin_user.html">Admin Users</a></h4>
+<h4><a href="./group_page.html">Group Page</a></h4>
+<h4><a href="./group_event.html">Group Event</a></h4>
+<h4><a href="./group_search.html">Group Search</a></h4>
+<h4><a href="./group_signup.html">Group Signup</a></h4>
+
+
+</div>
+</body>
+</html>

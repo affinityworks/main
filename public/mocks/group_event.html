@@ -1,0 +1,133 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+     
+    
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="  crossorigin="anonymous"></script>    
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>
+    
+    <script type="text/javascript" src="vendor/swag/lib/swag.js"></script> 
+
+
+
+    <script type="text/javascript" src="js/data.js"></script> 
+
+
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/user.css" rel="stylesheet"> 
+    
+    
+<script>
+
+
+$(document).ready(function(){   
+        
+    var template = Handlebars.compile($("#groups-event-template").html());
+    $("#content").append(template(data.groups[0]));
+
+
+
+
+
+});
+
+     function initMap() {
+        var myLatLng = {lat: data.groups[0].events[0].location.latitude, lng: data.groups[0].events[0].location.longitude};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 14,
+          center: myLatLng
+        });
+
+        var marker = new google.maps.Marker({
+          position: myLatLng,
+          map: map,
+          title: data.group.events[0].location.venue
+        });
+      }
+
+</script>        
+ 
+   <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjDTJc7RFsQQAf7D3z_FhJ51HjdiR77y0&callback=initMap">
+    </script>
+
+    
+<script type="text/javascript" src="js/public.js"></script> 
+
+</head>
+<body>
+<div class="container"> 
+<h2> <img src="img/logo.png" height="50"> Advocacy Commons </h2> 
+<hr>
+<div id="content"></div>
+    <div class="col-md-6">
+        <div id="map"></div>
+    </div>
+
+<script id="groups-event-template" type="text/x-handlebars-template">
+<h1>{{name}}</h1>
+
+{{#with events.[0]}}
+    <div class="row">
+
+    <div class="col-md-8 ">
+
+<h2>{{name}}</h2>
+<h3> {{date}} {{start_time}}</h3>
+<p>{{description}}</p>
+
+{{location.venue}}<br>
+{{location.address}}<br>
+{{location.city}} {{location.state}}<br>
+{{location.directions}}<br>
+<br><br>
+
+
+
+    </div>
+
+
+    <div class="col-md-4 ">
+
+        <div class="well">
+            <h4><i class="fa fa-bullhorn"></i> RSVP</h4>
+                <div class="form-group">
+                    <input type="email" class="form-control" id="group_signup_form-email" value="" placeholder="Email">
+                </div>
+                <div class="form-group group_signup_form-name-container">
+                    <input type="text" class="form-control" id="group_signup_form-name" value="" placeholder="First Name">
+                </div>
+                <div class="form-group group_signup_form-name-container">
+                    <input type="text" class="form-control" id="group_signup_form-name" value="" placeholder="Last Name">
+                </div>
+
+                <div class="form-group group_signup_form-phone-container">
+                    <input type="phone" class="form-control" id="group_signup_form-phone" value="" placeholder="Phone">
+                </div>
+                 <div class="checkbox ">
+                    <label>
+                      <input type="checkbox" id="group_signup_form-volunteer"> I want to volunteer at the event
+                    </label>
+                  </div>
+                
+                <div class="form-group group_signup_form-note-container">
+                    <textarea  class="form-control" id="" value="" placeholder="I can help by..."></textarea>
+                </div>
+                <button class="g-button btn  btn-success">RSVP</button>
+
+        </div>
+    </div>
+
+
+{{/with}}
+
+
+</script>
+
+
+</div>
+</body>
+</html>
