@@ -23,6 +23,7 @@ class Api::PersonRepresenter < Roar::Decorator
   property :party_identification
   property :source
 
+  collection :email_addresses, decorator: Api::EmailAddressRepresenter
   collection :personal_addresses, as: :postal_addresses, decorator: Api::AddressRepresenter
 
   def identifiers

@@ -22,4 +22,8 @@ class Person < ApplicationRecord
   has_many :groups, :through => :memberships
   #validates :given_name, presence: true
   #has_many :memberships
+
+  def email_addresses
+    Array.wrap email_address
+  end
 end
