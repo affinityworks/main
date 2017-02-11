@@ -11,6 +11,7 @@ class Api::PersonRepresenter < Roar::Decorator
 
   property :additional_name
   property :birthdate
+  property :custom_fields
   property :employer
   property :ethnicities
   property :family_name
@@ -24,6 +25,7 @@ class Api::PersonRepresenter < Roar::Decorator
   property :source
 
   collection :email_addresses, decorator: Api::EmailAddressRepresenter
+  property :employer_address, decorator: Api::AddressRepresenter
   collection :personal_addresses, as: :postal_addresses, decorator: Api::AddressRepresenter
 
   def identifiers
