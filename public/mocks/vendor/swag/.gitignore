@@ -1,0 +1,33 @@
+# OSX
+.DS_Store
+
+# Thumbnails
+._*
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+# Textmate
+*.tmproj
+*.tmproject
+tmtags
+
+# SublimeText project files
+/*.sublime-project
+
+lib-cov
+*.seed
+*.log
+*.csv
+*.dat
+*.out
+*.pid
+*.gz
+
+pids
+logs
+results
+
+node_modules
+npm-debug.log

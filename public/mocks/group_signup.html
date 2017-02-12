@@ -1,0 +1,165 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+     
+    
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="  crossorigin="anonymous"></script>    
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>
+    
+    <script type="text/javascript" src="vendor/swag/lib/swag.js"></script> 
+
+
+    <script type="text/javascript" src="js/data.js"></script> 
+
+
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/user.css" rel="stylesheet"> 
+    
+    
+<script>
+
+
+$(document).ready(function(){   
+        
+    var template = Handlebars.compile($("#groups-signup-template").html());
+    $("#content").append(template(data));
+
+
+
+    $("#nearby_groups").hide();
+
+
+    var input = document.getElementById('searchTextField');
+    var options = {
+      types: ['(cities)'],
+      componentRestrictions: {country: "us"}
+     };
+    
+    autocomplete = new google.maps.places.Autocomplete(input,options);
+
+    google.maps.event.addListener(autocomplete, 'place_changed', function () {
+        var place = autocomplete.getPlace();
+        document.getElementById('state').value = place.address_components[2].short_name;
+        document.getElementById('city').value = place.name;
+        document.getElementById('latitude').value = place.geometry.location.lat();
+        document.getElementById('longitude').value = place.geometry.location.lng();
+        $("#nearby_groups").show();
+
+    });
+
+
+
+});
+
+
+</script>        
+  
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjDTJc7RFsQQAf7D3z_FhJ51HjdiR77y0&libraries=places"></script>
+  
+  
+<script type="text/javascript" src="js/public.js"></script> 
+
+</head>
+<body>
+<div class="container"> 
+<h2> <img src="img/logo.png" height="50"> Advocacy Commons </h2> 
+<hr>
+<div id="content"></div>
+
+
+
+<script id="groups-signup-template" type="text/x-handlebars-template">
+    
+<div class="group_page">
+    <h2>Sign Up to be an group leader</h2>
+    <p>This is some exciting text about why you should be a group leader</p> 
+    <div class="well ">
+                <div class="row">
+
+        <div class="col-md-6">
+            <h4><i class="fa fa-user"></i> Your Contact Information</h4>
+            <div class="row">
+                <div class="col-md-6">
+                
+                    <div class="form-group ">
+                        <label for="">First Name</label>
+                        <input type="text" class="form-control" id="" placeholder="">
+                    </div>
+                </div>
+                <div class="col-md-6">
+
+                    <div class="form-group ">
+                        <label for="">Last Name</label>
+                        <input type="text" class="form-control" id="" placeholder="">
+                    </div>
+                </div>
+            </div>
+    
+            <div class="form-group">
+                <label for="">Email</label>
+                <input type="email" class="form-control" id="" placeholder="">
+            </div>
+    
+            <div class="form-group">
+                <label for="">Phone</label>
+                <input type="phone" class="form-control" id="" placeholder="">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h4><i class="fa fa-map-marker"></i> Group Location</h4>
+
+            <div class="form-group col-md-8">
+                <label for="">City</label>
+                <input type="text" class="form-control" id="searchTextField" value="" placeholder="Enter a city..">
+            </div>
+
+            <input id="latitude" name="latitude" type="hidden">
+            <input id="longitude" name="longitude" type="hidden">
+            <input id="city" name="city" type="hidden">
+            <input id="state" name="state" type="hidden">
+            
+
+   
+            <div class="form-group col-md-12" id="nearby_groups">
+                <h4>Nearby Groups</h4>
+                    <small>Check out the groups near you and see if you might want to join one before starting a new group</small><br>
+                    {{#each group.nearby_groups}}
+                        <a href="{{url}}" target="_blank">{{name}}</a>, <small>{{distance}} miles away</small><br>
+                    {{/each}}
+                    <br>
+            </div>
+            <div class="form-group col-md-6" >
+
+                <label for="">Suggested group range</label>
+                <select class="form-control">
+                    <option>5 miles</option>
+                    <option >10 miles</option>
+                    <option selected>25 miles</option>
+                    <option>50 miles</option>
+                    <option>1000 miles</option>
+                    
+                </select>
+            </div>  
+        </div>
+    </div>
+        <div class="row">
+            <div class="form-group col-md-10">
+                <label for=""><i class="fa fa-bullhorn"></i> Why would you be a great local leader?</label>
+                <textarea  class="form-control" id="" placeholder="Tell us a bit about yourself and why you are passionate to orgazine in your community" rows=6></textarea>
+            </div>    
+        </div>
+        <button class="btn btn-lg btn-primary ">Signup to be a leader</button>
+    </div>
+
+
+</div>
+   
+</script>
+    
+</div>    
+    
+</body>
+</html>

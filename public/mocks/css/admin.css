@@ -1,0 +1,14 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+ padding-bottom: 20px;
+
+}
+        
+#group_member-add-modal .modal-dialog  {width:75%;}
+#group_admin-add-existing-leader .modal-dialog  {width:75%;}
+
+#event_add-modal .modal-dialog  {width:75%;}
+

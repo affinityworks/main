@@ -1,0 +1,1141 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="  crossorigin="anonymous"></script>    
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>
+    
+    <script type="text/javascript" src="vendor/swag/lib/swag.js"></script> 
+
+
+    <script type="text/javascript" src="js/data.js"></script> 
+    <script type="text/javascript" src="js/admin.js"></script> 
+
+
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/admin.css" rel="stylesheet">
+    <link href="css/user.css" rel="stylesheet"> 
+
+<style>
+ 
+    
+</style>
+</head>
+<body>
+    <div id="fb-root"></div>
+<script>
+
+</script>
+    
+<script id="groups-template" type="text/x-handlebars-template">
+  
+<div class="container">
+    <div class="pull-right">
+        <div class="btn-group">
+            <br>
+            <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                <img src="http://graph.facebook.com/{{admin_user.facebook_id}}/picture?type=square&height=28&width=28">   
+                {{admin_user.name}} 
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href=""><i class="fa fa-user"></i> Account</a></li>
+                <li><a href=""<i class="fa fa-sign-out"></i> Logout</a></li>
+          </ul>
+        </div>
+    </div>
+    <h2> <img src="img/logo.png" height="50"> Advocacy Commons <small>{{groups.0.name}}</small></h2>
+    <!--<div class="g-blue-wide-line"></div> -->
+    
+    <hr>
+    <ul class="nav nav-tabs" role="tablist" id="translate_row-nav_en">
+
+        <li role="presentation" class="active group_nav-members"><a href="#group_pannel-members" aria-controls="groups_pannel-" role="tab" data-toggle="tab"><i class="fa fa-users"></i> Members</a></li>
+        <li role="presentation" class="group_nav-events"><a href="#group_pannel-events" aria-controls="groups_pannel-" role="tab" data-toggle="tab"><i class="fa fa-calendar"></i> Events</a></li>
+        
+ <li role="presentation" class="group_nav-messages"><a href="#group_pannel-messages" aria-controls="groups_pannel-" role="tab" data-toggle="tab"><i class="fa fa-envelope"></i> Messages</a></li>
+
+        <li role="presentation" class="group_nav-updates" ><a href="#group_pannel-updates" aria-controls="groups_pannel-" role="tab" data-toggle="tab"><i class="fa fa-desktop"></i> Group Webpage</a></li>
+              
+
+    </ul>
+
+<div class="tab-content">
+
+    <div role="tabpanel" class="tab-pane" id="group_pannel-tools">
+
+    </div>
+    
+
+    <div role="tabpanel" class="tab-pane active" id="group_pannel-members">
+    <h3><i class="fa fa-users"></i> Group Members</h3>
+       
+
+        
+<div class="group-member-search">
+<a href="#" class="group-member-search_show"><strong><i class="fa fa-search"></i> Search</strong></a>
+<form class="form-inline group-member-search_form">
+    <div class="form-group">
+        <label>Select: </label>
+        <select class="forn-control group-member-search_criteria" name="search">
+            <option value="">Select Search Criteria</option>
+            <option value="tag">Tag</option>
+            <option value="geo">Location</option>
+            <option value="event">Events</option>
+            <option value="activist_score">Activist Score</option>
+            <option value="note">Notes</option>
+            <option value="field">User Fields</option>                   
+        </select>       
+    </div>
+    <div class="form-group">
+        <select class="forn-control group-member-search_scope group-member-search_item " name="condition">
+            <option value="">select scope</option>
+            <option value="" selected>include</option>
+            <option value="">exclude</option>
+        </select>
+    </div>
+    
+    <div class="form-group">
+        <select class="forn-control group-member-search_geo group-member-search_item " name="geo">
+            <option value="" selected>select geo criteria</option>
+            <option value="country" >country</option>
+            <option value="state" >state</option>
+            <option value="point" >point</option>
+            <option value="city" >city</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <select class="forn-control group-member-search_geo_distance group-member-search_item " name="distance">
+            <option value="" selected>select distance</option>
+            <option value="" >5 miles</option>
+            <option value="" >10 miles</option>
+            <option value="" >15 miles</option>
+            <option value="" >20 miles</option>
+            <option value="" >25 miles</option>
+            <option value="" >30 miles</option>
+            <option value="" >35 miles</option>
+            <option value="" >40 miles</option>
+            <option value="" >45 miles</option>
+            <option value="" >50 miles</option>
+
+        </select>
+    </div>    
+
+    <div class="form-group">
+        <select class="forn-control group-member-search_event_status group-member-search_item " name="event_status">
+            <option value="">select event status</option>
+            <option value="">rsvp</option>
+            <option value="">invited</option>
+            <option value="">declined</option>
+            <option value="">attended</option>
+            <option value="">did not attended</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <select class="forn-control group-member-search_events group-member-search_item " name="events">
+            <option value="">select event </option>
+            {{#each groups.0.events}}
+            <option value="{{id}}">{{name}}: {{formatDate date "%m/%d/%Y"}}</option>
+            {{/each}}
+        </select>
+    </div>
+
+
+    <div class="form-group">
+        <select class="forn-control group-member-search_fields group-member-search_item" name="range">
+            <option value="">select field</option>
+            <option value="first_name">First Name</option>
+            <option value="last_name">Last Name</option>
+            <option value="phone">Phone</option>
+            <option value="email">Email</option>
+            <option value="activist_score">Activist Score</option>
+            <option value="date_created">Date Created</option>
+            <option value="date_updated">Date Last Modified</option>
+        </select> 
+    </div>     
+    
+    <div class="form-group">
+        <select class="forn-control group-member-search_operator group-member-search_item" name="operator">
+            <option value="">select operator</option>
+            <option value="equals" selected>equals</option>
+            <option value="like">like</option>
+            <option value="greater">greater than or equal</option>
+            <option value="less">less than or equal</option>
+            <option value="null">null</option>
+            <option value="not_null">not null</option>
+            <option value="true">true</option>
+            <option value="false">false</option>            
+            <option value="before">before</option>
+            <option value="after">after</option>
+
+        </select> 
+    </div> 
+    <div class="form-group">
+        <select class="forn-control group-member-search_range group-member-search_item" name="range">
+            <option value="">select range</option>
+            <option value="before">Before</option>
+            <option value="after">After</option>
+        </select> 
+    </div> 
+
+
+    
+    <div class="form-group">
+        <input class="form-control group-member-search_item group-member-search_input" placeholder="Select Options">
+    </div>
+     <button class="btn-xs btn-primary group-member-search_item group-member-search_add"><i class="fa fa-plus"> Add Criteria</i></button>
+
+ <br>
+    <div class="well">
+        Tags: Include: Puppies, Kittens
+        <button class="btn-xs btn-primary group-member-search_edit"><i class="fa fa-pencil"> Edit</i></button>
+        <button class="btn-xs btn-warning group-member-search_remove"><i class="fa fa-minus"> Remove</i></button>
+        <br>
+        Location: Include: State: CA
+        <button class="btn-xs btn-primary group-member-search_edit"><i class="fa fa-pencil"> Edit</i></button>
+        <button class="btn-xs btn-warning group-member-search_remove"><i class="fa fa-minus"> Remove</i></button>
+        <button class="btn btn-success group-member-search_search pull-right"><i class="fa fa-search"> Search</i></button>
+
+    </div>
+    
+
+    
+</form>
+          
+        </div>  
+        
+                <a href="#" data-toggle="modal" data-target="#group_member-add-modal" class="group_member-add pull-right"><i class="fa fa-user-plus"></i> Add New Group Member</a>
+        
+        
+        <div class="group_members-bulk_actions">
+            <br>
+            <b>Bulk Actions:</b>  
+            
+            <a href="#" class="group_members-bulk_tags--toggle"><i class="fa fa-tags"></i> Tag Users</a> | 
+            <a href="#" class="group_members-bulk_score--toggle"><i class="fa fa-star"></i> Set Activist Score</a> | 
+            <a href="#" class="group_members-bulk_activity--toggle"><i class="fa fa-bullhorn"></i> Log Note</a> | 
+            <a href="#" class="group_members-bulk_event--toggle"><i class="fa fa-calendar"></i> Set Event Attendence</a> 
+            <div class="row">
+                <br>
+                
+                
+                <div class="group_members-bulk_tags">
+                    <form class="form-inline">
+                        <div class="form-group ">
+                            <select class="form-control">
+                                <option value="">Select Tag</option>
+                                {{#each tags}}
+                                <option value="{{id}}">{{name}}</option>
+                                {{/each}}
+                            </select>
+
+                        </div>
+                        or 
+                        <div class="form-group ">
+                            <input type="text" class="form-control" id="" value="" placeholder="create new tag.." data-role="tagsinput"> <button class="btn btn-sm btn-primary"><i class="fa fa-save"></i> Save</button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="group_members-bulk_activity ">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <textarea class="form-control" id="" value="" placeholder="add note.." rows=2></textarea> <button class="btn btn-sm btn-primary"><i class="fa fa-save"></i> Save</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="group_members-bulk_event ">
+                    <form class="form-inline">
+                        <div class="form-group  ">
+                            <select class="form-control">
+                                <option value="">Select Event</option>
+                                {{#each groups.0.events}}
+                                <option value="{{id}}">{{name}}: {{formatDate date "%m/%d/%Y"}}</option>
+                                {{/each}}
+                            </select> 
+                        </div>
+                        <div class="form-group  ">
+                            <select class="form-control">
+                                <option value="">Set Status</option>
+                                <option value="">RSVP</option>
+                                <option value="">Invited</option>
+                                <option value="">Declined</option>
+                                <option value="">Attended</option>
+                                <option value="">Did Not Attend</option>    
+                            </select> 
+                        </div>
+                        <button class="btn btn-sm btn-primary"><i class="fa fa-save"></i> Save</button>
+                    </form>
+                </div>
+
+                <div class="group_members-bulk_score ">
+                    <form class="form-inline">
+
+                        <div class="form-group  ">
+                        <select class="form-control">
+                            <option value="">Set Activist Score</option>
+                            <option value="1">1 - RSVP Only</option>
+                            <option value="2">2 - Attended Meeting</option>
+                            <option value="3">3 - One time volunteer</option>
+                            <option value="4">4 - Active volunteer</option>
+                            <option value="5">5 - Super volunteer</option>
+                        </select> <button class="btn btn-sm btn-primary"><i class="fa fa-save"></i> Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <br>
+        <table class="table table-striped" id="group-member-list">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" data-toggle="tooltip" title="Select All"></th>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th class="group_members-active_header">Last Active</th>
+                    <th class="group_members-tags_header">Tags</th>
+                    <th class="group_members-score_header">Score</th>
+                    <th class="group_members-events_header">Events</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each groups.0.members}}
+
+
+                <tr>
+                    <td><input type="checkbox"></td>
+
+                    <td>{{#if facebook_user_id}}<img src="http://graph.facebook.com/{{facebook_user_id}}/picture?type=square&height=20&width=20">{{/if}}</td>
+                    <td>
+                        <a href="#"  data-toggle="modal" data-target="#group_member-add-modal" >{{first_name}} {{last_name}}</a> <a href="" id="group_member-row-notes--toggle"><i class="fa fa-caret-down"></i></a>
+                        <div class="group_member-row-notes">
+                            {{#each notes}}{{note}}<br>{{/each}}
+                        </div>
+                    
+                    </td>                    
+                    <td>{{phone}}</td>
+                    <td><small>{{email}}<small></td>
+
+                    <td class="group_members-active_row"><small>{{formatDate stats.date_last_active "%m/%d/%Y"}}</small></td>
+
+                     <td class="group_members-tags_row">
+                        <small>{{#each tags}}{{tag}}, {{/each}}</small>
+                    </td>
+                    <td class="group_members-score_row">{{activist_score}}</td>
+                    <td class="group_members-events_row">{{stats.event_count}}</td>
+                    <td>
+
+                        <a href="mailto:{{email}}"><i class="fa fa-envelope"></i></a>
+                        {{#if facebook_user_id}}<a href="https://facebook.com/messages/{{facebook_user_id}}" target="_blank"><i class="fa fa-facebook-square"></i></a>{{/if}}
+                       <!-- <a href=""><i class="fa fa-twitter-square"></i></a> -->                   
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+        <br><br>
+
+<div class="modal fade" id="group_member-add-modal" tabindex="-1" role="dialog" aria-labelledby="group_member-add-modal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close"  aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+        <h4 class="modal-title" >Update Member</h4>
+      </div>
+      <div class="modal-body">
+      {{#with groups.0.members.[0]}}
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="">Name</label>
+                    <div class="input-group">
+                    {{#if facebook_user_id}}<span class="input-group-addon"><img src="http://graph.facebook.com/{{facebook_user_id}}/picture?type=square&height=25&width=25"></span>{{/if}}
+                    <input type="text" class="form-control" name="first_name" value="{{first_name}}" placeholder="First Name">
+                    <input type="text" class="form-control" name="last_name" value="{{last_name}}"  placeholder="Last Name">
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for=""><i class="fa fa-star"></i> Activist Score</label>
+                    <select class="form-control">
+                        <option value="">None</option>
+                        <option value="1">1 - RSVP Only</option>
+                        <option value="2">2 - Attended Meeting</option>
+                        <option value="3">3 - One time volunteer</option>
+                        <option value="4">4 - Active volunteer</option>
+                        <option value="5" selected>5 - Super volunteer</option>
+                    </select>
+                </div> 
+            </div>
+            
+            <div class="col-md-3 col-md-offset-1">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" > Make a group administrator
+                    </label>
+                </div>
+            </div>                
+        </div>
+        
+        <div class="row">
+             <div class="form-group col-md-8">
+                
+                            <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-tags"></i> Tags</span>
+                
+                <input type="text" class="form-control col-md-6" id="" value="{{#each tags}}{{tag}}, {{/each}}" data-role="tagsinput">
+            </div> 
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-phone"></i> Phone</span>
+                    
+                    <input type="phone" class="form-control" id="" value="{{phone}}">
+                        </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div class="input-group">
+
+                        <span class="input-group-addon"><i class="fa fa-envelope"></i> Email</span>
+                        <input type="text" class="form-control" id="" value="{{email}}">
+                    </div>
+                </div>
+            </div>  
+            
+            <div class="col-md-4">
+
+                <div class="btn-group">
+                    <label>Contact:</label>
+                    <a href="mailto:{{email}}"><button class="btn btn-info"><i class="fa fa-envelope"></i> Email</button> </a>
+                    {{#if facebook_user_id}}<a href="https://www.facebook.com/messages/{{facebook_user_id}}" target="_blank"><button class="btn btn-primary"><i class="fa fa-facebook"></i> Facebook</button> </a>  {{/if}}
+                </div>
+            </div>
+            <div class="col-md-3">
+                <!--
+                <div class="form-group">
+                    <label for=""><i class="fa fa-twitter-square"></i> Twitter</label>
+                    <input type="text" class="form-control" id="" value="">
+                </div>
+            --> 
+
+            </div> 
+            
+        </div>  
+        <div class="row hidden">
+            <a href="">Address</a>
+            <div class="">
+                This is the address fields 
+            </div>
+        </div>        
+              
+        <div class="row">
+            <br>
+
+        <div class="form-group col-md-8">
+            <label for=""><i class="fa fa-clipboard"></i> Add Notes</label>
+            <textarea class="form-control " id="" rows="3"></textarea>
+        </div>
+        
+        
+
+        
+        
+        <div class="col-md-2 col-md-offset-1">              <br><br>  <button class="g-button btn  btn-success btn-lg "><i class="fa fa-save"></i> Save Member Info</button>
+        </div>
+        </div>              
+        <hr>
+
+               
+          <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th><i class="fa fa-clipboard"></i> Note</th>
+                    <th>Date</th>
+                    <th>Entered By</th>
+
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each notes}}
+                <tr>
+                    <td>{{note}}</td>
+                    <td>{{formatDate date "%m/%d/%Y"}}</td>
+                    <td>{{logged_by_user.name}}</td>
+                    <td>
+                        <a href="" class="pull-right" data-id="{{id}}"><i class="fa fa-pencil"></i></a>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+          </table>
+
+        
+        <div class="modal fade" id="group_member-note-modal" tabindex="-1" role="dialog" aria-labelledby="group_member-note-modal" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" >Edit Note</h4>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                    <label for="">Note</label>
+                    <textarea class="form-control" id="" rows="3"></textarea>
+                </div>  
+                <div class="form-group">
+                    <label for="">Date</label>
+                    <input type="date" class="form-control " id="" ></input>
+                </div>  
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+                <button class="btn btn-danger"><i class="fa fa-trash"></i> Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>             
+
+          <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th><i class="fa fa-calendar"></i> Event</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each events}}
+                <tr>
+                    <td>{{name}}</td>
+                    <td>{{formatDate date "%m/%d/%Y"}}</td>
+                    <td>{{status}}</td>
+                    <td>
+                        <a href="" class="pull-right" data-id="{{id}}"><i class="fa fa-pencil"></i></a>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+          </table>                  
+                
+        <div class="">
+            <label>Log Event Attendece:</label>
+            <select class="">
+                <option>Select Event</option>
+                <option value="{{event_id}}">2015-06-01: Member Meetup</option>
+                <option value="{{event_id}}">2015-06-01: Member Meetup</option>
+            </select>
+            RSVP: 
+            <button class="btn btn-sm btn-info" data-value="rsvp">Invited</button>
+            <button class="btn btn-sm btn-info" data-value="rsvp">Interested</button>
+            <button class="btn btn-sm btn-primary" data-value="rsvp">RSVPed</button>
+            <button class="btn btn-sm btn-danger" data-value="rsvp">Decline</button>
+            Attendance: 
+            <button class="btn btn-sm btn-success">Attended</button>
+            <button class="btn btn-sm btn-danger">Not Attended</button>
+
+            
+        </div>  
+    
+       {{/with}} 
+</div>
+    </div>
+  </div>
+</div>        
+            
+    
+    </div>
+
+    <div role="tabpanel" class="tab-pane" id="group_pannel-events">
+        <h3><i class="fa fa-calendar"></i> Group Events</h3>
+        <div class="pull-right">
+            <a href="" data-toggle="modal" data-target="#event_add-modal"><i class="fa fa-plus"></i> Add New Event</a>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+
+                    <th>Name</th>
+                    
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Invited</th>
+                    <th>RSVPs</th>
+                    <th>Atended</th>
+                    <th></th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {{#each groups.0.events}}
+                <tr>
+                    <td><a href="" data-toggle="modal" data-target="#event_add-modal">{{name}}</a></td>
+                    <td>{{formatDate date "%m/%d/%Y"}} {{start_time}} </td>
+                    <td>{{status}}</td>
+                    <td>{{stats.invited_count}}</a></td>
+                    <td>{{stats.rsvp_count}}</a></td>
+                    <td>{{stats.attended_count}}</td>
+                    <td><a href="" class="event_list-toggle"> <i class="fa fa-users"></i> View Participant List</a></td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>    
+        
+        <div class="event_list">
+            
+                <br><h3>Event Participants</h3><br>
+            <a href="" class="pull-right"><i class="fa fa-download"></i> Download RSVP List</a>
+                                         <label>mark selected as:</label>
+                             
+                            <button class="btn btn-sm btn-info" data-value="rsvp">Invited</button>
+                            <button class="btn btn-sm btn-info" data-value="interested">Interested</button>
+                            <button class="btn btn-sm btn-primary" data-value="rsvp">RSVPed</button>
+                            <button class="btn btn-sm btn-danger" data-value="decline">Declined</button>
+                            Attendance: 
+                            <button class="btn btn-sm btn-success" data-value="attened">Attended</button>
+                            <button class="btn btn-sm btn-danger" data-value="not_attened">Not Attended</button>
+                            
+              <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Name</th>
+                                        <th>Phone</th>
+                                        <th>RSVP Date</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#with groups.0.events.[0]}}
+                                    {{#each users.rsvp}}
+                                    <tr>
+                                        <td><input type="checkbox"></td>
+                                        <td>{{#if facebook_user_id}}<img src="http://graph.facebook.com/{{facebook_user_id}}/picture?type=square&height=28&width=28"> {{/if}}{{first_name}} {{last_name}}</td>
+                                        <td>{{phone}}</td>
+                                        <td>{{date}}</td>
+                                        <td>Attending</td>
+                                    </tr>
+                                    {{/each}}
+                                    {{#each users.invited}}
+                                    <tr>
+                                        <td><input type="checkbox"></td>
+                                        <td>{{#if facebook_user_id}}<img src="http://graph.facebook.com/{{facebook_user_id}}/picture?type=square&height=28&width=28"> {{/if}}{{first_name}} {{last_name}}</td>
+                                        <td>{{phone}}</td>
+                                        <td>{{date}}</td>
+                                        <td>Invited</td>
+                                    </tr> 
+                                    {{/each}}
+
+                                    {{#each users.declined}}
+                                    <tr>
+                                        <td><input type="checkbox"></td>
+                                        <td>{{#if facebook_user_id}}<img src="http://graph.facebook.com/{{facebook_user_id}}/picture?type=square&height=28&width=28"> {{/if}}{{first_name}} {{last_name}}</td>
+                                        <td>{{phone}}</td>
+                                        <td>{{date}}</td>
+                                        <td>Declined</td>
+                                    </tr> 
+                                    {{/each}}
+
+                                    {{#each users.attended}}
+                                    <tr>
+                                        <td><input type="checkbox"></td>
+                                        <td>{{#if facebook_user_id}}<img src="http://graph.facebook.com/{{facebook_user_id}}/picture?type=square&height=28&width=28"> {{/if}}{{first_name}} {{last_name}}</td>
+                                        <td>{{phone}}</td>
+                                        <td>{{date}}</td>
+                                        <td>Attended</td>
+                                    </tr> 
+                                    {{/each}}
+
+                                    {{#each users.not_attended}}
+                                    <tr>
+                                        <td><input type="checkbox"></td>
+                                        <td>{{#if facebook_user_id}}<img src="http://graph.facebook.com/{{facebook_user_id}}/picture?type=square&height=28&width=28"> {{/if}}{{first_name}} {{last_name}}</td>
+                                        <td>{{phone}}</td>
+                                        <td>{{date}}</td>
+                                        <td>Not Attend</td>
+                                    </tr> 
+                                    {{/each}}
+  
+                                    {{/with}}
+
+
+                                </tbody>
+                            </table>                        
+
+
+
+                            <a href="" class="group_event-log_new_member--toggle"><i class="fa fa-pencil"></i> Enter who else attended the event </a>
+    <br><br>
+                            <div class="group_event-log_new_member">
+                                <h4>Enter attendee contact information </h4>
+                                <small><a href="" class="group_event-log_new_member_row--add"><i class="fa fa-plus"></i> add rows</a></small>
+                                <div class="row group_event-log_new_member_row">
+                                    <div class="form-group col-md-2 ">
+                                        <label for=""> First Name</label>
+                                        <input type="text" class="form-control" id="" value="">
+                                    </div>
+                                    <div class="form-group col-md-2 ">
+                                        <label for=""> Last Name</label>
+                                        <input type="text" class="form-control" id="" value="">
+                                    </div>
+                                    <div class="form-group col-md-2 ">
+                                        <label for=""> Email</label>
+                                        <input type="email" class="form-control" id="" value="">
+                                    </div>
+                                    <div class="form-group col-md-2 ">
+                                        <label for=""> Phone</label>
+                                        <input type="phone" class="form-control" id="" value="">
+                                    </div>
+                                    <div class="form-group col-md-2 ">
+                                        <label for=""> Note</label>
+                                        <input type="text" class="form-control" id="" value="">
+                                    </div>                                                                
+                                    <div class="form-group col-md-2 ">
+                                        <label for=""> Tags</label>
+                                        <input type="text" class="form-control" id="" value="">
+                                    </div>                                
+                                </div>
+                                <button class="btn btn-sm btn-primary pull-right">Save</button>
+                            </div>
+
+                            
+        </div>
+    </div>
+    
+    
+    
+    <div role="tabpanel" class="tab-pane" id="group_pannel-updates">
+        <h3><i class="fa fa-desktop"></i> Website Updates</h3>
+        <br>
+        <div class="pull-right">
+            <a href="" data-toggle="modal" data-target="#group_update-add_modal"><i class="fa fa-plus"></i> Add New Update</a>
+        </div>
+
+        <b>Webpage URL:</b> <a href="group_page.html" target="_blank"><i class="fa fa-eye"></i> {{groups.0.url}} </a><br/>
+        
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Title</th>
+                    <th>Content</th>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each groups.0.updates.sticky}}
+                <tr>
+                    <td> <a href="" data-toggle="modal" data-target="#group_update-add_modal"><i class="fa fa-pencil"></i></a></td>
+                    <td>{{title}}</td>
+                    <td class="col-md-7"><small>{{content}}</small></td>
+                    <td><small>{{date}}</small></td>
+                    <td><small>Sticky</small></td>
+                    <td><small>{{#if published}}Published{{else}}Unpublished{{/if}}</small></td>
+                </tr>
+                {{/each}}
+
+                {{#each groups.0.updates.regular}}
+                <tr>
+                    <td><a href="" data-toggle="modal" data-target="#group_update-add_modal"><i class="fa fa-pencil"></i></a></td>
+                    <td>{{title}}</td>
+                    <td class="col-md-7"><small>{{content}}</small></td>
+                    <td><small>{{date}}</small></td>
+                    <td><small>Regular</small></td>
+                    <td><small>{{#if published}}Published{{else}}Unpublished{{/if}}</small></td>
+                </tr>
+                {{/each}}
+
+            </tbody>
+        </table>
+        
+        <br>
+        <hr>
+        <br>
+        
+          <h3><i class="fa fa-bullhorn"></i> Group Details</h3>  
+            
+            <div class="row">
+
+            <div class="form-group col-md-4 ">
+                <label for=""><i class="fa fa-bullhorn"></i> Group Name</label>
+                <input type="text" class="form-control" id="group_details-name" value="{{groups.0.name}}">
+            </div>
+
+            <div class="form-group col-md-6 ">
+                <label for=""><i class="fa fa-commenting-o"></i> Group Description</label>
+                <textarea  class="form-control" id="group_details-description" rows=2>{{groups.0.description}}</textarea>
+                
+            </div>
+    
+            </div>            
+
+            <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="">City</label>
+                        <input type="text" class="form-control" id="group_details-contact_city" value="{{groups.0.city}}">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="">State</label>
+                        <input type="text" class="form-control" id="group_details-contact_region" value="{{groups.0.region}}">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="">Zip Code</label>
+                        <input type="text" class="form-control" id="group_details-contact_zip" value="{{groups.0.zip}}">
+                    </div>
+            </div>
+
+          
+           <br> 
+            
+            <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for=""><i class="fa fa-user"></i> Public Group Contact Name</label>
+                        <input type="text" class="form-control" id="group_details-contact_name" value="{{groups.0.contact_name}}">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for=""><i class="fa fa-phone"></i> Public Group Contact Phone</label>
+                        <input type="text" class="form-control" id="group_details-contact_phone" value="{{groups.0.contact_phone}}">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for=""><i class="fa fa-envelope"></i> Public Group Contact Email</label>
+                        <input type="text" class="form-control" id="group_details-contact_email" value="{{groups.0.contact_email}}">
+                    </div>
+            </div>
+       
+
+           <br> 
+            <div class="row">
+
+                <div class="form-group col-md-4">
+                    <label for=""><i class="fa fa-facebook"></i>  Facebook Group URL</label>
+                    <input type="text" class="form-control" id="group_details-facebook_page_url" value="{{groups.0.facebook_page_url}}">
+                    <p class="help-block">Make sure to start with http:// or https://</p>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for=""><i class="fa fa-twitter"></i> Twitter Name</label>
+                    <input type="text" class="form-control" id="group_details-twitter" value="{{groups.0.twitter}}">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for=""><i class="fa fa-globe"></i> Website URL</label>
+                    <input type="text" class="form-control" id="group_details-website_url" value="{{groups.0.website_url}}">
+                    <p class="help-block">Make sure to start with http:// or https://</p>
+                </div>
+
+            </div>  
+            <button class="g-button btn btn-lg btn-success group_admin-save--toggle "><i class="fa fa-save"></i> Save</button>
+
+        
+        
+        
+        
+    </div>
+    
+    <div role="tabpanel" class="tab-pane" id="group_pannel-messages">
+        
+        <h3><i class="fa fa-envelope"></i> Send an email message to members of your group</h3> 
+        <div class="pull-right">
+           
+           {{#is groups.0.messages.0.status 'draft'}}
+           
+            <button class="btn btn-lg btn-success"><i class="fa fa-save"></i> Save Message</button><br><br>
+            <button class="g-button btn btn-lg btn-warning"><i class="fa fa-paper-plane-o"></i> Send Test</button><br><br>
+            <button class="g-button btn btn-lg btn-info"><i class="fa fa-paper-plane-o"></i> Send Message </button>
+            
+            {{/is}}
+            
+        </div> 
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="form-group col-md-8">
+                        <label for="">Subject</label>
+                        <input type="text" class="form-control message-content" id="message-subject" value="{{groups.0.messages.0.subject}}" />
+                    </div>  
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="">From Name</label>
+                        <input type="text" class="form-control message-content" id="message-name" value="{{groups.0.messages.0.from_name}}" />
+                    </div>  
+                    <div class="form-group col-md-4">
+                        <label for="">From Email</label>
+                        <input type="text" class="form-control message-content" id="message-email" value="{{groups.0.messages.0.from_email}}" />
+                    </div>  
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label for="">Message</label>
+                        <textarea class="form-control message-content" id="message-content" rows="4">{{groups.0.messages.0.body}}</textarea>
+                    </div> 
+                </div>
+
+            </div>
+        </div>
+            
+            
+            <ul class="nav nav-tabs" role="tablist" id="phone_bank-nav">
+                <li role="presentation" class="active"><a href="#group_message-preview" aria-controls="group_message-preview" role="tab" data-toggle="tab"><i class="fa fa-search"></i> Preview</a></li>
+                <li role="presentation" class="group_message-targeting_nav" ><a href="#group_message-targeting" aria-controls="group_message-targeting" role="tab" data-toggle="tab"><i class="fa fa-bullseye"></i> Targeting</a></li>
+                <li role="presentation" ><a href="#group_message-list" aria-controls="group_message-list" role="tab" data-toggle="tab"><i class="fa fa-list"></i> Message History</a></li>              
+            </ul>
+            
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="group_message-preview"> 
+                    <h4>Message Preview:</h4>
+                    <div class="well">
+                        <b>From:</b> {{admin_user.name}}<br>
+                        <b>Subject:</b> <span  id="message-preview-subject">{{groups.0.messages.0.subject}}</span><br>
+                        <b>Message</b>:<br>
+                        <br>This message was sent to you by {{admin_user.name}} because you joined the group : <a href="">{{groups.0.name}}</a>.<br>
+                        <hr>
+        
+                        <div class="message-preview-content" id="message-preview-content">{{groups.0.messages.0.body}}</div>
+                        
+                        <hr>
+                       To unsubscribe <a href="">click here</a>
+                        
+                    </div>
+                </div>
+
+                <div role="tabpanel" class="tab-pane " id="group_message-targeting"> 
+            
+                    <h4>Message Targeting:</h4>
+                    <div class="form-group">
+                        <label for="">Send only to member in the following tags</label>
+                        <select multiple class="form-control" id="">
+                            {{#each tags}}
+                            <option>{{name}}<!--{{#each ../groups.0.messages.0.targeting.tags}} {{this}} {{/each}}--></option>
+                            {{/each}}
+                        </select>
+                    </div> 
+                    <div class="form-group">
+                        <label for="">Events</label>
+                        <select multiple class="form-control" id="">
+                            {{#each groups.0.events}}
+                            <option>{{name}}</option>
+                            {{/each}}
+                        </select>
+                    </div> 
+                    <div class="form-group">
+                        <label for="">Activist Score</label>
+                        <select multiple class="form-control">
+                            <option>1 - RSVP Only</option>
+                            <option>2 - Attended Meeting</option>
+                            <option>3 - One time volunteer</option>
+                            <option>4 - Active volunteer</option>
+                            <option>5 - Super volunteer</option>
+                        </select>
+                    </div> 
+            
+                </div>
+
+                <div role="tabpanel" class="tab-pane " id="group_message-list"> 
+                    <h4>Message History</h4>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Date Created</th>
+                                <th>Date Sent</th>
+                                <th>Subject</th>
+                                <th>Status</th>
+                                <th># Sent</th>
+                                <th>Open Rate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each groups.0.messages}}
+                            <tr>
+                                <td><a href="#" class="group_message-list_body--toggle"><i class="fa fa-binoculars"></i></a></td>
+                                <td>{{date_created}}</td>
+                                <td>{{date_sent}}</td>
+                                <td>{{subject}}<div class="group_message-list_body"><br>{{body}}</div></td>
+                                <td>{{status}}</td>
+                                <td>{{stats.sent}}</td>
+                                <td>{{#if stats.open_rate}}{{stats.open_rate}}%{{/if}}</td>                    
+                            </tr>
+                        </tbody>
+                        {{/each}}
+                    </table>     
+                </div>
+            </div>       
+        
+    </div>
+
+    
+    
+    
+          <div class="modal fade" id="group_update-add_modal" tabindex="-1" role="dialog" aria-labelledby="group_update-add_modal" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Add/Update Post</h4>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                    <label for="">Title</label>
+                    <input type="text" class="form-control" id="group_updates-title" value="{{groups.0.updates.sticky.0.title}}">
+                </div>
+                <div class="form-group">
+                    <label for="">Update Content</label>
+                    <textarea class="form-control" id="group_updates-content" rows="10">{{groups.0.updates.sticky.0.content}}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="">Date</label>
+                    <input type="date" class="form-control" id="group_updates-date" value="{{groups.0.updates.sticky.0.date}}">
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="group_updates-sticky" value="1" {{#is groups.0.updates.sticky.0.sticky 1 }}checked{{/is}}> Sticky at top of page
+                    </label>
+                </div>
+                
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="group_updates-published" value="1"  {{#is groups.0.updates.sticky.0.published 1 }}checked{{/is}}> Published
+                    </label>
+                </div>
+
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-lg btn-success group_updates--add"><i class="fa fa-save"></i> Save</button>
+                <button class="btn btn-lg btn-danger group_updates--delete"><i class="fa fa-trash"></i> Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+    
+        
+        
+        <div class="modal fade" id="event_add-modal" tabindex="-1" role="dialog" aria-labelledby="event_add-modal" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" >Add / Edit Event</h4>
+              </div>
+              <div class="modal-body">
+
+              {{#with groups.0.events.[0]}}
+               <div id="event_deatil">
+
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="">Event Name</label>
+                            <input type="text" class="form-control" id="" value="{{name}}">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="">Status</label>
+                            <select class="form-control">
+                                <option>Public</option>
+                                <option>Internal</option>
+                            </select>
+                        </div>
+                   
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-3">
+                            <label for="">Date</label>
+                            <input type="date" class="form-control" id="" value="{{date}}">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="">Start Time</label>
+                            <input type="time" class="form-control" id="" value="{{start_time}}">
+                        </div>
+                                                        
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">Description</label>
+                        <textarea  class="form-control" id=""rows=3 >{{description}}</textarea>
+                    </div>
+
+                    <div class="row">
+
+
+
+                        <div class="form-group col-md-4">
+                            <label for="">City</label>
+                            <input type="text" class="form-control" id="" value="{{location.city}}">
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            <label for="">State </label>
+                            <input type="text" class="form-control" id="" value="{{location.state}}">
+                        </div>
+                    </div>
+ 
+                     <div class="row">
+
+                         <div class="form-group col-md-6">
+                            <label for="">Event Location (venue, landmark, cross street)</label>
+                            <textarea  class="form-control" id=""rows=2 >{{location.venue}}</textarea>
+                        </div>
+     
+                        <div class="form-group col-md-6">
+                            <label for="">Address</label>
+                            <textarea  class="form-control" id=""rows=2 >{{location.address}}</textarea>
+                        </div>
+                     </div>
+                    <div class="form-group">
+                        <label for="">Directions</label>
+                        <textarea  class="form-control" id=""rows=2 >{{location.directions}}</textarea>
+                    </div>     
+   
+                    <button class="btn btn-lg btn-success"><i class="fa fa-save"></i> Save</button>
+
+            {{/with}}
+
+              </div>
+
+            </div>
+          </div>
+        </div>        
+
+    </div>
+
+</div>
+
+
+    
+</div>
+
+
+</div>
+
+</script>
+
+
+
+<div id="content"></div>
+
+
+
+</body>
+</html>
