@@ -1,9 +1,0 @@
-json.primary phone_number.primary?
-json.number phone_number.number
-json.extension phone_number.extension
-json.description phone_number.description
-json.number_type phone_number.number_type
-json.operator phone_number.operator
-json.country phone_number.country
-json.sms_capable phone_number.sms_capable
-json.do_not_call phone_number.do_not_call?

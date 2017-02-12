@@ -28,6 +28,9 @@ class Api::PersonRepresenter < Roar::Decorator
   property :employer_address, decorator: Api::AddressRepresenter
   collection :personal_addresses, as: :postal_addresses, decorator: Api::AddressRepresenter
 
+  collection :phone_numbers, decorator: Api::PhoneNumberRepresenter
+  collection :profiles, decorator: Api::ProfileRepresenter
+
   def identifiers
     ["osdi:#{ActiveModel::Naming.singular(represented)}-#{represented.id}"]
   end
