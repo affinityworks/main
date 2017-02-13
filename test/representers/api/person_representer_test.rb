@@ -22,4 +22,13 @@ class Api::PersonRepresenterTest < ActiveSupport::TestCase
     assert_equal 'bar', json['custom_fields']['foo'], 'custom_fields foo'
     assert_equal 'bat', json['custom_fields']['baz'], 'custom_fields baz'
   end
+
+  test 'links' do
+    person = Person.new(id: 39)
+
+    json = JSON.parse(Api::PersonRepresenter.new(person).to_json)
+
+    assert_equal '/api/v1/people/39', json['_links']['self']['href'], '_links self'
+    assert_equal '/api/v1/people/39/donations', json['_links']['donations']['href'], '_links donations'
+  end
 end

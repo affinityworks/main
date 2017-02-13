@@ -30,6 +30,14 @@ class Api::PersonRepresenter < Roar::Decorator
   collection :phone_numbers, decorator: Api::PhoneNumberRepresenter
   collection :profiles, decorator: Api::ProfileRepresenter
 
+  link :self do
+    "/api/v1/people/#{represented.id}"
+  end
+
+  link :donations do
+    "/api/v1/people/#{represented.id}/donations"
+  end
+
   def identifiers
     ["advocacycommons:#{represented.id}"]
   end
