@@ -3,6 +3,11 @@ require 'roar/json/hal'
 class Api::EntryPointRepresenter < Roar::Decorator
   include Roar::JSON::HAL
 
+  property :namespace
+  property :osdi_version
+  property :product_name
+  property :vendor_name
+
   link :self do
     {
       href: '/api/v1',
