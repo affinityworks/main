@@ -10,7 +10,7 @@ class Api::PersonRepresenter < Roar::Decorator
   property :identifiers, exec_context: :decorator
 
   property :additional_name
-  property :birthdate
+  property :birthdate, decorator: Api::BirthdateRepresenter
   property :custom_fields
   property :employer
   property :ethnicities
