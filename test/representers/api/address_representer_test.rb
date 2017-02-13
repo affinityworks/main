@@ -3,10 +3,10 @@ require 'test_helper'
 class Api::AddressRepresenterTest < ActiveSupport::TestCase
   test 'to_json' do
     address = Address.new(
-        latitude: 45.15,
-        longitude: 120,
-        postal_code: '13035'
-      )
+      latitude: 45.15,
+      longitude: 120,
+      postal_code: '13035'
+    )
 
     json = JSON.parse(Api::AddressRepresenter.new(address).to_json)
 
