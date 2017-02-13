@@ -2,11 +2,12 @@ require 'test_helper'
 
 class Api::PersonRepresenterTest < ActiveSupport::TestCase
   test 'to_json' do
-    person = Person.new(family_name: 'Simpson')
+    person = Person.new(family_name: 'Simpson', id: 17)
 
     json = JSON.parse(Api::PersonRepresenter.new(person).to_json)
 
     assert_equal 'Simpson', json['family_name'], 'family_name'
+    assert_equal ['advocacycommons:17'], json['identifiers'], 'identifiers'
   end
 
   test 'custom_fields' do

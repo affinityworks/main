@@ -4,7 +4,6 @@ class Api::PersonRepresenter < Roar::Decorator
   include Roar::JSON::HAL
 
   property :created_at, as: :created_date
-  property :id
   property :updated_at, as: :modified_date
 
   property :identifiers, exec_context: :decorator
@@ -32,6 +31,6 @@ class Api::PersonRepresenter < Roar::Decorator
   collection :profiles, decorator: Api::ProfileRepresenter
 
   def identifiers
-    ["osdi:#{ActiveModel::Naming.singular(represented)}-#{represented.id}"]
+    ["advocacycommons:#{represented.id}"]
   end
 end
