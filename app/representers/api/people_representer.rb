@@ -1,6 +1,6 @@
 require 'roar/json/hal'
 
-class Api::PeopleRepresenter < Representable::Decorator
+class Api::PeopleRepresenter < Roar::Decorator
   include Roar::JSON::HAL
   include Rails.application.routes.url_helpers
 
