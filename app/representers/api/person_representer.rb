@@ -38,6 +38,34 @@ class Api::PersonRepresenter < Roar::Decorator
     "/api/v1/people/#{represented.id}/donations"
   end
 
+  link :submissions do
+    "/api/v1/people/#{represented.id}/submissions"
+  end
+
+  link :attendances do
+    "/api/v1/people/#{represented.id}/attendances"
+  end
+
+  link :signatures do
+    "/api/v1/people/#{represented.id}/signatures"
+  end
+
+  link :outreaches do
+    "/api/v1/people/#{represented.id}/outreaches"
+  end
+
+  link :answers do
+    "/api/v1/people/#{represented.id}/answers"
+  end
+
+  link :taggings do
+    "/api/v1/people/#{represented.id}/taggings"
+  end
+
+  link :items do
+    "/api/v1/people/#{represented.id}/items"
+  end
+
   def identifiers
     ["advocacycommons:#{represented.id}"]
   end
