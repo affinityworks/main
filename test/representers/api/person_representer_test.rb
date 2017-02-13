@@ -29,6 +29,5 @@ class Api::PersonRepresenterTest < ActiveSupport::TestCase
     json = JSON.parse(Api::PersonRepresenter.new(person).to_json)
 
     assert_equal '/api/v1/people/39', json['_links']['self']['href'], '_links self'
-    assert_equal '/api/v1/people/39/donations', json['_links']['donations']['href'], '_links donations'
   end
 end
