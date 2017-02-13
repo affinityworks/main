@@ -4,6 +4,7 @@ class Person < ApplicationRecord
   devise :database_authenticatable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  serialize :custom_fields, Hash
   serialize :ethnicities, Array
   serialize :languages_spoken, Array
 
