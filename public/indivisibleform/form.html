@@ -191,6 +191,7 @@
 				var formInstance = $('#new_answer').parsley();
 				var principlesOk = false;
 				var groupOk = false;
+				formInstance.validate({group: 'group-name', force: true});
 
 				if (formInstance.isValid({group: 'principles', force: true})) {
 					$('.principles-error-message').html('').removeClass('filled');
