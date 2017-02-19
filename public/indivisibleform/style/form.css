@@ -214,3 +214,10 @@ div.new-action-description ul li {
   width: 100%;
   white-space: normal;
 }
+
+.part-two-head {
+  padding: 1em;
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.3em;
+}
