@@ -150,6 +150,10 @@ div.new-action-description ul li {
   margin-top: 0.75em;
 }
 
+.mission {
+  font-family: 'Montserrat', sans-serif;
+}
+
 .control-subtitle {
   font-size: 1.4em;
   margin-bottom: 0.67em;
@@ -162,11 +166,28 @@ div.new-action-description ul li {
 
 .control-group input {
   font-family: 'Montserrat', sans-serif;
+  padding: 0.4em 0.7em;
+  font-size: 1.2em;
 }
 
 .step-two,
 #can_embed_form input#group-submit {
   display: none;
+}
+
+.mission .parsley-errors-list.filled {
+  display: none;
+}
+.mission .checkbox.parsley-error {
+  color: black;
+}
+
+.principles-error-message.filled,
+.group-info-error-message.filled,
+.invalid-form-error-message.filled {
+  font-size: 16px;
+  color: red;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .next-step {
