@@ -153,7 +153,10 @@ div.new-action-description ul li {
 .mission, .group-contact-info-label, .sms-optin-label {
   font-family: 'Montserrat', sans-serif;
 }
-
+input#SMSOptInV1 {
+  line-height:normal!important;
+  margin-bottom: 0px!important;
+}
 .control-subtitle {
   font-size: 1.4em;
   margin-bottom: 0.67em;

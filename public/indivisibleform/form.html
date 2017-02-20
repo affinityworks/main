@@ -60,22 +60,22 @@
 									placeholder="Group Name *"
 									data-parsley-trigger="change"
 									data-parsley-minlength="2"
-									required=""
 									data-parsley-group="group-name"
+									data-parsley-required
 									type="text">
 							</div>
 							<div class="mission">
 							  <label class="control-label check_radio_label">Your group may be pursuing the Indivisible strategy as your main goal or as part of a broader mission. Whatever works! This is for anyone who agrees with these three principles (required):</label>
-								<div class="principles-error-message"></div>
 							  <span class="controls check_radio_field">
 										<ol class="principles-ordered-list">
 											<li class="principle">Resist Trump's agenda. We believe Trump’s agenda is racist, authoritarian, and corrupt, and it must be stopped.</li>
 											<li class="principle">Focus on local, defensive congressional advocacy. We demand that our own local Members of Congress serve as our voice in Washington, DC.</li>
 											<li class="principle">Embrace progressive values. We model inclusion, respect, and fairness in all of our actions.</li>
 										</ol>
+										<div class="principles-error-message"></div>
 										<label class="checkbox">
-											I agree
-								    	<input type="checkbox" name="PrinciplesAgreeV1" data-parsley-required value="1" class=" required=""  checkbox_group">
+											I agree.
+								    	<input type="checkbox" name="PrinciplesAgreeV1" data-parsley-group="PrinciplesAgreeV1" data-parsley-required value="1" class=" required=""  checkbox_group">
 							    </label>
 							  </span>
 							</div>
@@ -124,6 +124,38 @@
 									id="GroupPhoneNumber"
 									name="GroupPhoneNumber"
 									placeholder="Group phone number"
+									type="text" >
+              </div>
+							<div class="control-group">
+                <label class="control-label" for="GroupCity"></label>
+                <input
+									id="GroupCity"
+									name="GroupCity"
+									placeholder="Group city"
+									data-parsley-required
+									data-parsley-type="alphanum"
+									type="text" >
+              </div>
+							<div class="control-group">
+                <label class="control-label" for="GroupState"></label>
+                <input
+									id="GroupState"
+									name="GroupState"
+									placeholder="Group state"
+									data-parsley-required
+									data-parsley-type="alphanum"
+									type="text" >
+              </div>
+							<div class="control-group">
+                <label class="control-label" for="GroupZip"></label>
+                <input
+									id="GroupZip"
+									name="GroupZip"
+									placeholder="Group Zip"
+									data-parsley-required
+									data-parsley-type="digits"
+									data-parsley-minlength="5"
+									data-parsley-maxlength="5"
 									type="text" >
               </div>
 							<div class="part-two-head step-two">And now please tell us about you...</div>
@@ -178,11 +210,11 @@
 									data-parsley-minlength="10"
 									data-parsley-maxlength="10"
 									data-parsley-trigger="change" >
-								</div>
-								<div class="control-group step-two">
-									<input type="checkbox" id="SMSOptInV1" name="SMSOptInV1" value="1" class=" required checkbox_group">
-									<label class="checkbox sms-optin-label" for="SMSOptInV1">
-										Please send me lots of text messages
+							</div>
+							<div class="step-two">
+								<input type="checkbox" id="SMSOptInV1" name="SMSOptInV1" data-parsley-group="SMSOptInV1" value="1" class=" required checkbox_group">
+								<label class="checkbox sms-optin-label" for="SMSOptInV1">
+									By checking this box, I authorize Indivisible to send text messages about actions and other information that might be of interest to me to this phone number. Standard rates will apply. I understand that I can withdraw this consent at any time by email to data@indivisibleguide.com.
 								</label>
 							</div>
 							<div class="invalid-form-error-message"></div>
@@ -209,12 +241,12 @@
 				var groupOk = false;
 				formInstance.validate({group: 'group-name', force: true});
 
-				if (formInstance.isValid({group: 'principles', force: true})) {
+				if (formInstance.isValid({group: 'PrinciplesAgreeV1', force: true})) {
 					$('.principles-error-message').html('').removeClass('filled');
 					principlesOk = true;
 				} else {
 					$('.principles-error-message')
-						.html('Please check each Indivisible principle to show you agree.')
+						.html('Please check to show you agree with the Indivisible principles.')
 						.addClass('filled');
 						formInstance.validationResult = false;
 				}
@@ -253,7 +285,7 @@
 			$('.bs-callout-info').toggleClass('hidden', !ok);
 			$('.bs-callout-warning').toggleClass('hidden', ok);
 	  })
-		.on('form:submit', function() {
+		.on('form:submit', function(e) {
 			$('#new_answer').osdi({
 				endpoint: "https://actionnetwork.org/api/v2/forms/e2d2df13-7d5f-42f0-a80b-6f7d4c7b32b4/submissions",
 				body: function() {
@@ -279,6 +311,9 @@
 								"GroupTwitter": $('#GroupTwitter').val(),
 								"GroupWebsite": $('#GroupWebsite').val(),
 								"GroupPhoneNumber": $('#GroupPhoneNumber').val(),
+								"GroupCity" : $('#GroupCity').val(),
+								"GroupState" : $('#GroupState').val(),
+								"GroupZip" : $('#GroupZip').val(),
 								"Text Message Permission" : $('#SMSOptInV1').prop('checked'),
 								"Mobile Phone Number" : $('#cell_phone').val(),
 	  					},
@@ -287,7 +322,7 @@
 				},
 				immediate: true,
 				done: function(data, textStatus, jqXHR) {
-					// window.location.replace("https://actionnetwork.org/forms/register-local-group?clear_id=true");
+					window.location.replace("https://www.indivisibleguide.com/");
 					 $('#success').html('<p><strong>It worked!</strong></p>');
 				},
 				fail: function(jqXHR, textStatus, errorThrown) {

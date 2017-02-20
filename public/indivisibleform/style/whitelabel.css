@@ -1024,12 +1024,14 @@ body.can_fundraising_widget {
     transition: border-color .3s linear, background-color .3s linear;
     border-radius: 3px;
 }
+
 #can_embed_form input,
 #can_embed_form textarea,
 #can_embed_form select,
 #donate_auto_modal input {
     margin-bottom: 15px;
 }
+
 #can_embed_form #form-zip_code:noth(.mb_needed),
 #can_embed_form #form-zip_code-submit,
 #can_embed_form #campaign_zip_search {
