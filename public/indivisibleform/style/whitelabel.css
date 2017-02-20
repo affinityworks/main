@@ -1024,12 +1024,14 @@ body.can_fundraising_widget {
     transition: border-color .3s linear, background-color .3s linear;
     border-radius: 3px;
 }
+
 #can_embed_form input,
 #can_embed_form textarea,
 #can_embed_form select,
 #donate_auto_modal input {
     margin-bottom: 15px;
 }
+
 #can_embed_form #form-zip_code:noth(.mb_needed),
 #can_embed_form #form-zip_code-submit,
 #can_embed_form #campaign_zip_search {
@@ -1247,6 +1249,7 @@ body.can_fundraising_widget {
     margin-bottom: -15px;
     padding: 0;
 }
+/*
 #can_embed_form form li {
     width: 100%;
     margin: 0 0 15px 0;
@@ -1254,6 +1257,7 @@ body.can_fundraising_widget {
     position: relative;
     box-sizing: border-box;
 }
+*/
 #can_embed_form form ul.clearfix li {
     float: left;
 }
@@ -1316,11 +1320,13 @@ body.can_fundraising_widget {
 #can_embed_form form li.control-group {
     margin-bottom: 0;
 }
+/*
 #can_embed_form form label,
 #donate_auto_modal form label {
     display: block;
     word-wrap: break-word;
 }
+*/
 #can_embed_form #action_welcome_message #action_welcome_message_inner {
     border: 1px solid #E8E8E8;
     padding: 9px;
@@ -2069,7 +2075,7 @@ body.can_fundraising_widget {
     padding: 4px 20px 4px 5px;
     margin: 0;
     outline: 0;
-    font-family: sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 1em;
     border: 1px solid #aaa;
     border-radius: 0;
@@ -2288,7 +2294,7 @@ body.can_fundraising_widget {
 .can_embed_select2 .select2-container-multi .select2-choices .select2-search-field input {
     padding: 5px;
     margin: 1px 0;
-    font-family: sans-serif;
+    ffont-family: 'Montserrat', sans-serif;
     font-size: 100%;
     color: #666;
     outline: 0;
