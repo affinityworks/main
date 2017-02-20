@@ -44,3 +44,6 @@ bower.json
 
 .ruby-gemset
 .ruby-version
+
+#Ignore node
+node_modules/
