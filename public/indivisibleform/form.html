@@ -10,6 +10,7 @@
 	    	<link rel="stylesheet" type="text/css" href="/indivisibleform/style/body.css" />
         <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <!-- link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css" rel="stylesheet" type="text/css"  -->
+				<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
         <link href="/indivisibleform/style/whitelabel.css" rel="stylesheet" type="text/css">
 			  <link rel="stylesheet" type="text/css" href="/indivisibleform/style/form.css" />
         <link rel="stylesheet" type="text/css" href="/indivisibleform/style/parsley.css" />
@@ -38,192 +39,255 @@
 				<!-- end JS -->
 
     </head>
-    <body>
-
-	<!-- begin copied from AN -->
-
+  <body>
 	<div id="form-container">
             <!-- script src="https://actionnetwork.org/widgets/v2/form/indivisible-group-signup?format=js&amp;source=widget&amp;style=full&amp;clear_id=true"></script -->
-      <div id="can-form-area-indivisible-group-signup" style="width: 500px">
-				<div id="success"></div>
-	      <div class="can_embed v2  form form_full full">
-  		    	<div id="can_embed_form" class="clearfix can_float">
-              <div class="clearfix">
-                <div id="can_main_col">
-                    <h2 class="entry-title js-entry-title">
-                        Indivisible Group Signup
-                    </h2>
-                    <div id="action_info">
-                      <div id="action_info_inner" class="clearfix">
-                        <div class="action_owner_box">
-                          <div class="action_owner_title action_sponsor_title"><h5>Sponsored by</h5></div>
-                          <div class="action_owner_wrap action_sponsor_wrap">
-                            <div class="action_owner clearfix">
-                              <a href="https://actionnetwork.org/groups/advocacy-commons" target="_blank">
-                                <img alt="Protest_bw" class="action_author_avatar avatar" src="https://can2-prod.s3.amazonaws.com/groups/photos/000/028/013/thumb/protest_bw.png">
-                              </a>
-                              <div class="action_info_right">
-                                <div class="action_info_user js-action_info_user">
-                                    <a href="https://actionnetwork.org/groups/advocacy-commons" target="_blank">Advocacy Commons</a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div> <!-- end can_main_col -->
-                    <div id="can_sidebar">
-                      <div class="action_sidebar">
-                          <h4> Form Heading </h4>
-                          <form id="new_answer" data-parsley-validate="" action="/" class="new_answer"  method="post" accept-charset="UTF-8" >
-                            <div>
-															<div class="invalid-form-error-message"></div>
-															<div class="control-group">
-																<label class="control-label" for="GroupName"></label>
-																<input
-																	id="GroupName"
-																	name="GroupName"
-																	placeholder="Group Name *"
-																	required=""
-																	type="text">
-															</div>
-                                <div class="control-group">
-                                  <label class="control-label" for="GroupEmail"></label>
-                                  <input
-																		id="GroupEmail"
-																		name="GroupEmail"
-																		placeholder="Group Email address"
-																		type="email"
-																		data-parsley-group="group-email">
-                                </div>
-                                <div class="control-group">
-                                  <label class="control-label" for="GroupFBpage"></label>
-                                  <input id="GroupFBpage"
-																		name="GroupFBpage"
-																		placeholder="Link to Facebook Page"
-																		type="text"
-																		data-parsley-type="url"
-																		data-parsley-group="group-fb">
-                                </div>
-                                <div class="control-group">
-                                  <label class="control-label" for="GroupTwitter"></label>
-                                  <input id="GroupTwitter"
-																		name="GroupTwitter"
-																		placeholder="Link to Twitter Page"
-																		type="text"
-																		data-parsley-type="url"
-																		data-parsley-group="group-twitter">
-                                </div>
-                                <div class="control-group">
-                                  <label class="control-label" for="GroupWebsite"></label>
-                                  <input
-																		id="GroupWebsite"
-																		name="GroupWebsite"
-																		placeholder="Website link"
-																		type="text"
-																		data-parsley-type="url"
-																		data-parsley-group="group-web">
-                                </div>
-                                <div class="control-group">
-                                  <label class="control-label" for="GroupPhoneNumber"></label>
-                                  <input
-																		id="GroupPhoneNumber"
-																		name="GroupPhoneNumber"
-																		placeholder="Group phone number"
-																		type="text" >
-                                </div>
-                            </div>
-														<div class="control-group step-two">
-															<input
-																	id="first"
-																	name="first"
-																	placeholder="First Name"
-																	size="35"
-																	background-repeat: no-repeat;
-																	background-attachment: scroll;
-																	background-size: 16px 18px;
-																	background-position: 98% 50%;
-																	type="text">
-														</div>
-														<div class="control-group step-two">
-															<input id="last"
-																name="last"
-																placeholder="Last Name"
-																size="35"
-																type="text">
-														</div>
-														<div class="control-group step-two">
-															<input
-																id="email"
-																name="email"
-																placeholder="Email *"
-																size="35" value=""
-																type="email"
-																data-parsley-trigger="change"
-																required="" >
-														</div>
-														<div class="control-group step-two">
-															<input
-																id="postal_code"
-																name="postal_code"
-																placeholder="Zip/Postal Code *"
-																required=""
-																size="35" type="text"
-																data-parsley-type="digits"
-																data-parsley-minlength="5"
-																data-parsley-maxlength="5"
-																data-parsley-trigger="change">
-														</div>
-
-														<button class="next-step">Next...</button>
-                            <input
-															name="commit"
-															value="Add Your Group"
-															type="submit"
-															id="group-submit"
-															class="btn btn-default validate step-two">
-														<div class="clear"></div>
-                          </form>
-
-                      </div> <!-- end action_sidebar -->
-                    </div> <!-- end can_sidebar -->
-                  </div> <!-- end clearfix -->
-       		 	</div> <!-- end can_embed_form -->
-	      </div> <!-- end can_embed -->
-	  </div> <!-- end can-form-area-indivisible-group-signup -->
-
-
-
-
-	</div> <!-- end form-container -->
+    <div id="can-form-area-indivisible-group-signup" style="width: 500px">
+			<div id="success"></div>
+      <div class="can_embed v2  form form_full full">
+	    	<div id="can_embed_form">
+          <div id="can_main_col">
+            <div class="control-title">Indivisible</div>
+						<div class="control-subtitle">Group Registration</div>
+          </div>
+          <div id="can_sidebar">
+            <form id="new_answer" data-parsley-validate="" action="/" class="new_answer"  method="post" accept-charset="UTF-8" >
+							<div class="control-group">
+								<label class="control-label" for="GroupName"></label>
+								<input
+									id="GroupName"
+									name="GroupName"
+									placeholder="Group Name *"
+									data-parsley-trigger="change"
+									data-parsley-minlength="2"
+									data-parsley-group="group-name"
+									data-parsley-required
+									type="text">
+							</div>
+							<div class="mission">
+							  <label class="control-label check_radio_label">Your group may be pursuing the Indivisible strategy as your main goal or as part of a broader mission. Whatever works! This is for anyone who agrees with these three principles (required):</label>
+							  <span class="controls check_radio_field">
+										<ol class="principles-ordered-list">
+											<li class="principle">Resist Trump's agenda. We believe Trump’s agenda is racist, authoritarian, and corrupt, and it must be stopped.</li>
+											<li class="principle">Focus on local, defensive congressional advocacy. We demand that our own local Members of Congress serve as our voice in Washington, DC.</li>
+											<li class="principle">Embrace progressive values. We model inclusion, respect, and fairness in all of our actions.</li>
+										</ol>
+										<div class="principles-error-message"></div>
+										<label class="checkbox">
+											I agree.
+								    	<input type="checkbox" name="PrinciplesAgreeV1" data-parsley-group="PrinciplesAgreeV1" data-parsley-required value="1" class=" required=""  checkbox_group">
+							    </label>
+							  </span>
+							</div>
+							<div class="group-info-error-message"></div>
+							 <label class="control-label group-contact-info-label">How should people contact your group? Please list at least one form of contact info below (note: this will be listed in the public directory).</label>
+              <div class="control-group">
+                <label class="control-label" for="GroupEmail"></label>
+                <input
+									id="GroupEmail"
+									name="GroupEmail"
+									placeholder="Group Email address"
+									type="email"
+									data-parsley-group="group-email">
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="GroupFBpage"></label>
+                <input id="GroupFBpage"
+									name="GroupFBpage"
+									placeholder="Link to Facebook Page"
+									type="text"
+									data-parsley-type="url"
+									data-parsley-group="group-fb">
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="GroupTwitter"></label>
+                <input id="GroupTwitter"
+									name="GroupTwitter"
+									placeholder="Link to Twitter Page"
+									type="text"
+									data-parsley-type="url"
+									data-parsley-group="group-twitter">
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="GroupWebsite"></label>
+                <input
+									id="GroupWebsite"
+									name="GroupWebsite"
+									placeholder="Website link"
+									type="text"
+									data-parsley-type="url"
+									data-parsley-group="group-web">
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="GroupPhoneNumber"></label>
+                <input
+									id="GroupPhoneNumber"
+									name="GroupPhoneNumber"
+									placeholder="Group phone number"
+									type="text" >
+              </div>
+							<div class="control-group">
+                <label class="control-label" for="GroupCity"></label>
+                <input
+									id="GroupCity"
+									name="GroupCity"
+									placeholder="Group city"
+									data-parsley-required
+									data-parsley-type="alphanum"
+									type="text" >
+              </div>
+							<div class="control-group">
+                <label class="control-label" for="GroupState"></label>
+                <input
+									id="GroupState"
+									name="GroupState"
+									placeholder="Group state"
+									data-parsley-required
+									data-parsley-type="alphanum"
+									type="text" >
+              </div>
+							<div class="control-group">
+                <label class="control-label" for="GroupZip"></label>
+                <input
+									id="GroupZip"
+									name="GroupZip"
+									placeholder="Group Zip"
+									data-parsley-required
+									data-parsley-type="digits"
+									data-parsley-minlength="5"
+									data-parsley-maxlength="5"
+									type="text" >
+              </div>
+							<div class="part-two-head step-two">And now please tell us about you...</div>
+							<div class="control-group step-two">
+								<input
+										id="first"
+										name="first"
+										placeholder="Your First Name"
+										size="35"
+										background-repeat: no-repeat;
+										background-attachment: scroll;
+										background-size: 16px 18px;
+										background-position: 98% 50%;
+										type="text">
+							</div>
+							<div class="control-group step-two">
+								<input id="last"
+									name="last"
+									placeholder="Your Last Name"
+									size="35"
+									type="text">
+							</div>
+							<div class="control-group step-two">
+								<input
+									id="email"
+									name="email"
+									placeholder="Your Email *"
+									size="35" value=""
+									type="email"
+									data-parsley-trigger="change"
+									required="" >
+							</div>
+							<div class="control-group step-two">
+								<input
+									id="postal_code"
+									name="postal_code"
+									placeholder="Your Zip/Postal Code *"
+									required=""
+									size="35" type="text"
+									data-parsley-type="digits"
+									data-parsley-minlength="5"
+									data-parsley-maxlength="5"
+									data-parsley-trigger="change" >
+							</div>
+							<div class="control-group step-two">
+								<input
+								  id="cell_phone"
+									name="cell_phone"
+									placeholder="Your Cell Phone"
+									size="35" type="text"
+									data-parsley-type="digits"
+									data-parsley-minlength="10"
+									data-parsley-maxlength="10"
+									data-parsley-trigger="change" >
+							</div>
+							<div class="step-two">
+								<input type="checkbox" id="SMSOptInV1" name="SMSOptInV1" data-parsley-group="SMSOptInV1" value="1" class=" required checkbox_group">
+								<label class="checkbox sms-optin-label" for="SMSOptInV1">
+									By checking this box, I authorize Indivisible to send text messages about actions and other information that might be of interest to me to this phone number. Standard rates will apply. I understand that I can withdraw this consent at any time by email to data@indivisibleguide.com.
+								</label>
+							</div>
+							<div class="invalid-form-error-message"></div>
+							<button class="next-step">Next...</button>
+              <input
+								name="commit"
+								value="Add Your Group"
+								type="submit"
+								id="group-submit"
+								class="btn btn-default validate step-two">
+            </form>
+          </div>
+   		 	</div>
+      </div>
+	  </div>
+	</div>
 
 	<script type="text/javascript">
 
 	$(function () {
 		$('.next-step').on('click', function() {
-			$('.step-two').show();
-			$(this).hide();
-			return false;
+				var formInstance = $('#new_answer').parsley();
+				var principlesOk = false;
+				var groupOk = false;
+				formInstance.validate({group: 'group-name', force: true});
+
+				if (formInstance.isValid({group: 'PrinciplesAgreeV1', force: true})) {
+					$('.principles-error-message').html('').removeClass('filled');
+					principlesOk = true;
+				} else {
+					$('.principles-error-message')
+						.html('Please check to show you agree with the Indivisible principles.')
+						.addClass('filled');
+						formInstance.validationResult = false;
+				}
+
+				if (
+					formInstance.isValid({group: 'group-email', force: true}) ||
+					formInstance.isValid({group: 'group-fb', force: true}) ||
+					formInstance.isValid({group: 'group-web', force: true}) ||
+					formInstance.isValid({group: 'group-twitter', force: true})
+				) {
+					$('.group-info-error-message').html('').removeClass('filled');
+					groupOk = true;
+				} else {
+					$('.group-info-error-message')
+						.html('Please enter at least one: your group email, facebook page, twitter url, or group email.')
+						.toggleClass('filled', !groupOk);
+						formInstance.validationResult = false;
+				}
+
+				if (groupOk && principlesOk) {
+					$('.step-two').show();
+					$('.next-step').hide();
+					$('.invalid-form-error-message').html('').removeClass('filled');
+					return false;
+				} else {
+					$('.invalid-form-error-message')
+						.html('Please check your form for problems, above.')
+						.addClass('filled');
+					formInstance.validationResult = false;
+					return false;
+				}
 		});
 
-	  $('#new_answer').parsley().on('field:validated', function() {
-	    var ok = $('.parsley-error').length === 0;
-	    $('.bs-callout-info').toggleClass('hidden', !ok);
-	    $('.bs-callout-warning').toggleClass('hidden', ok);
-	  });
-
 	  $('#new_answer').parsley().on('form:validate', function (formInstance) {
-	    var ok = formInstance.isValid({group: 'group-email', force: true}) || formInstance.isValid({group: 'group-fb', force: true}) || formInstance.isValid({group: 'group-web', force: true}) || formInstance.isValid({group: 'group-twitter', force: true});
-	    $('.invalid-form-error-message')
-	      .html(ok ? '' : 'Please enter at least one: your group email, facebook page, twitter url, or group email.')
-	      .toggleClass('filled', !ok);
-	    if (!ok)
-	      formInstance.validationResult = false;
+			var ok = $('.parsley-error').length === 0;
+			$('.bs-callout-info').toggleClass('hidden', !ok);
+			$('.bs-callout-warning').toggleClass('hidden', ok);
 	  })
-		.on('form:submit', function() {
+		.on('form:submit', function(e) {
 			$('#new_answer').osdi({
-				endpoint: "https://actionnetwork.org/api/v2/forms/56104ef6-4197-44ae-bdce-2a9289e80ea7/submissions",
+				endpoint: "https://actionnetwork.org/api/v2/forms/e2d2df13-7d5f-42f0-a80b-6f7d4c7b32b4/submissions",
 				body: function() {
 					return {
 						"person": {
@@ -245,15 +309,20 @@
 								"GroupFBpage": $('#GroupFBpage').val(),
 								"GroupTwitter": $('#GroupTwitter').val(),
 								"GroupWebsite": $('#GroupWebsite').val(),
-								"GroupPhoneNumber": $('#GroupPhoneNumber').val()
+								"GroupPhoneNumber": $('#GroupPhoneNumber').val(),
+								"GroupCity" : $('#GroupCity').val(),
+								"GroupState" : $('#GroupState').val(),
+								"GroupZip" : $('#GroupZip').val(),
+								"Text Message Permission" : $('#SMSOptInV1').prop('checked'),
+								"Mobile Phone Number" : $('#cell_phone').val(),
 	  					},
 						},
 					}
 				},
+				immediate: true,
 				done: function(data, textStatus, jqXHR) {
-					console.log('done');
-					// window.location.replace("https://actionnetwork.org/forms/register-local-group?clear_id=true");
-					$('#success').html('<p><strong>It worked!</strong></p>');
+					window.location.replace("https://www.indivisibleguide.com/");
+					 $('#success').html('<p><strong>It worked!</strong></p>');
 				},
 				fail: function(jqXHR, textStatus, errorThrown) {
 					console.log('fail');
