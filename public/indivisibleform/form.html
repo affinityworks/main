@@ -229,7 +229,9 @@
 						"person": {
 							"given_name": $('#first').val(),
 							"family_name": $('#last').val(),
-							"postal_code": $('#postal_code').val(),
+							'postal_addresses' : [
+								{ 'postal_code': $('#postal_code').val() }
+							],
 							"email_addresses": [
 								{
 									"address": $('#email').val()
