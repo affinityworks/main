@@ -240,13 +240,16 @@
 	  })
 		.on('form:submit', function() {
 			$('#new_answer').osdi({
-				endpoint: "https://actionnetwork.org/api/v2/forms/56104ef6-4197-44ae-bdce-2a9289e80ea7/submissions",
+				endpoint: "https://actionnetwork.org/api/v2/forms/e2d2df13-7d5f-42f0-a80b-6f7d4c7b32b4/submissions",
 				body: function() {
 					return {
 						"person": {
 							"given_name": $('#first').val(),
 							"family_name": $('#last').val(),
 							"postal_code": $('#postal_code').val(),
+							'postal_addresses' : [
+								{ "postal_code": $('#postal_code').val() }
+							],
 							"email_addresses": [
 								{
 									"address": $('#email').val()
@@ -276,6 +279,7 @@
 				},
 				always: function(data_jqXHR, textStatus, jqXHR_errorThrown) {
 					console.log('always');
+					console.log(data_jqXHR);
 				}
 			});
 
