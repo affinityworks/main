@@ -150,7 +150,7 @@ div.new-action-description ul li {
   margin-top: 0.75em;
 }
 
-.mission {
+.mission, .group-contact-info-label, .sms-optin-label {
   font-family: 'Montserrat', sans-serif;
 }
 
@@ -168,6 +168,13 @@ div.new-action-description ul li {
   font-family: 'Montserrat', sans-serif;
   padding: 0.4em 0.7em;
   font-size: 1.2em;
+}
+
+.mission span.controls.check_radio_field ol.principles-ordered-list {
+  padding-left: 1.5em;
+}
+.mission span.controls.check_radio_field ol.principles-ordered-list li.principle {
+  list-style-type: upper-roman;
 }
 
 .step-two,

@@ -1247,6 +1247,7 @@ body.can_fundraising_widget {
     margin-bottom: -15px;
     padding: 0;
 }
+/*
 #can_embed_form form li {
     width: 100%;
     margin: 0 0 15px 0;
@@ -1254,6 +1255,7 @@ body.can_fundraising_widget {
     position: relative;
     box-sizing: border-box;
 }
+*/
 #can_embed_form form ul.clearfix li {
     float: left;
 }
@@ -1316,11 +1318,13 @@ body.can_fundraising_widget {
 #can_embed_form form li.control-group {
     margin-bottom: 0;
 }
+/*
 #can_embed_form form label,
 #donate_auto_modal form label {
     display: block;
     word-wrap: break-word;
 }
+*/
 #can_embed_form #action_welcome_message #action_welcome_message_inner {
     border: 1px solid #E8E8E8;
     padding: 9px;

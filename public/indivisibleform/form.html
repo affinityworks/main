@@ -48,7 +48,7 @@
 	    	<div id="can_embed_form">
           <div id="can_main_col">
             <div class="control-title">Indivisible</div>
-						<div class="control-subtitle">Group Signup</div>
+						<div class="control-subtitle">Group Registration</div>
           </div>
           <div id="can_sidebar">
             <form id="new_answer" data-parsley-validate="" action="/" class="new_answer"  method="post" accept-charset="UTF-8" >
@@ -68,21 +68,19 @@
 							  <label class="control-label check_radio_label">Your group may be pursuing the Indivisible strategy as your main goal or as part of a broader mission. Whatever works! This is for anyone who agrees with these three principles (required):</label>
 								<div class="principles-error-message"></div>
 							  <span class="controls check_radio_field">
-							    <label class="checkbox">
-							    	<input type="checkbox" name="principles" data-parsley-group="principles" data-parsley-mincheck="3" value="1" class=" required=""  checkbox_group">
-							    	Resist Trump's agenda. We believe Trump’s agenda is racist, authoritarian, and corrupt, and it must be stopped.
-							    </label>
-							    <label class="checkbox">
-							    	<input type="checkbox" name="principles" data-parsley-group="principles" data-parsley-mincheck="3" value="1" class=" required=""  checkbox_group">
-							    	Focus on local, defensive congressional advocacy. We demand that our own local Members of Congress serve as our voice in Washington, DC.
-							    </label>
-							    <label class="checkbox">
-							    	<input type="checkbox" name="principles" data-parsley-group="principles" data-parsley-mincheck="3" value="1" class=" required=""  checkbox_group">
-							    	Embrace progressive values. We model inclusion, respect, and fairness in all of our actions.
+										<ol class="principles-ordered-list">
+											<li class="principle">Resist Trump's agenda. We believe Trump’s agenda is racist, authoritarian, and corrupt, and it must be stopped.</li>
+											<li class="principle">Focus on local, defensive congressional advocacy. We demand that our own local Members of Congress serve as our voice in Washington, DC.</li>
+											<li class="principle">Embrace progressive values. We model inclusion, respect, and fairness in all of our actions.</li>
+										</ol>
+										<label class="checkbox">
+											I agree
+								    	<input type="checkbox" name="PrinciplesAgreeV1" data-parsley-required value="1" class=" required=""  checkbox_group">
 							    </label>
 							  </span>
 							</div>
 							<div class="group-info-error-message"></div>
+							 <label class="control-label group-contact-info-label">How should people contact your group? Please list at least one form of contact info below (note: this will be listed in the public directory).</label>
               <div class="control-group">
                 <label class="control-label" for="GroupEmail"></label>
                 <input
@@ -133,7 +131,7 @@
 								<input
 										id="first"
 										name="first"
-										placeholder="First Name"
+										placeholder="Your First Name"
 										size="35"
 										background-repeat: no-repeat;
 										background-attachment: scroll;
@@ -144,7 +142,7 @@
 							<div class="control-group step-two">
 								<input id="last"
 									name="last"
-									placeholder="Last Name"
+									placeholder="Your Last Name"
 									size="35"
 									type="text">
 							</div>
@@ -152,7 +150,7 @@
 								<input
 									id="email"
 									name="email"
-									placeholder="Email *"
+									placeholder="Your Email *"
 									size="35" value=""
 									type="email"
 									data-parsley-trigger="change"
@@ -162,13 +160,30 @@
 								<input
 									id="postal_code"
 									name="postal_code"
-									placeholder="Zip/Postal Code *"
+									placeholder="Your Zip/Postal Code *"
 									required=""
 									size="35" type="text"
 									data-parsley-type="digits"
 									data-parsley-minlength="5"
 									data-parsley-maxlength="5"
-									data-parsley-trigger="change">
+									data-parsley-trigger="change" >
+							</div>
+							<div class="control-group step-two">
+								<input
+								  id="cell_phone"
+									name="cell_phone"
+									placeholder="Your Cell Phone"
+									size="35" type="text"
+									data-parsley-type="digits"
+									data-parsley-minlength="10"
+									data-parsley-maxlength="10"
+									data-parsley-trigger="change" >
+								</div>
+								<div class="control-group step-two">
+									<input type="checkbox" id="SMSOptInV1" name="SMSOptInV1" value="1" class=" required checkbox_group">
+									<label class="checkbox sms-optin-label" for="SMSOptInV1">
+										Please send me lots of text messages
+								</label>
 							</div>
 							<div class="invalid-form-error-message"></div>
 							<button class="next-step">Next...</button>
@@ -263,7 +278,9 @@
 								"GroupFBpage": $('#GroupFBpage').val(),
 								"GroupTwitter": $('#GroupTwitter').val(),
 								"GroupWebsite": $('#GroupWebsite').val(),
-								"GroupPhoneNumber": $('#GroupPhoneNumber').val()
+								"GroupPhoneNumber": $('#GroupPhoneNumber').val(),
+								"Text Message Permission" : $('#SMSOptInV1').prop('checked'),
+								"Mobile Phone Number" : $('#cell_phone').val(),
 	  					},
 						},
 					}
