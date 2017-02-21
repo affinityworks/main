@@ -1,0 +1,337 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+         
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="  crossorigin="anonymous"></script>    
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/bootcards/1.0.0/js/bootcards.min.js"></script>
+    
+    
+    <script type="text/javascript" src="vendor/swag/lib/swag.js"></script> 
+
+    <script type="text/javascript" src="js/data.js"></script> 
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootcards/1.0.0/css/bootcards-desktop.min.css">
+
+    <link href="css/user.css" rel="stylesheet"> 
+    
+<script>
+
+$(document).ready(function(){   
+        
+    var template = Handlebars.compile($("#groups-tasks-template").html());
+    $("#content").append(template(data.groups[0]));
+
+
+});
+</script>
+
+<style>
+	
+	.bootcards-list .search-form i.fa-search, .bootcards-list form i.fa-search {
+     position: relative;
+    left: 0px;
+    top: 0px;
+    color: #fff; 
+    font-size: 14px;
+}
+
+a.list-group-item:before {
+    font-family: FontAwesome;
+    content: '';
+}
+
+.panel>.list-group .list-group-item {
+    padding: 25px;
+}
+
+
+.btn-xs {
+    width: 120px;
+    margin-bottom: 8px;
+}
+
+
+.bootcards-list .search-form input, .bootcards-list form input {
+    padding-left: 12px; 
+}
+
+.list-group-item img {
+    height: 60px;
+    width: 60px;
+}
+
+
+
+.list-group-item img.img-smaller  {
+    height: 30px;
+    width: 30px;
+    margin-bottom: 8px;
+}
+
+
+
+
+	
+</style>
+
+
+</head>
+
+<body>
+  <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <button type="button" class="btn btn-default btn-back navbar-left pull-left hidden" onclick="history.back()">
+        <i class="fa fa-lg fa-chevron-left"></i>
+        <span>Back</span>
+      </button>
+      <!-- menu button to show/ hide the off canvas menu -->
+      <button type="button" class="btn btn-default btn-menu navbar-left pull-left" data-toggle="offcanvas">
+        <i class="fa fa-lg fa-bars"></i><span>Menu</span>
+      </button>
+
+      <a class="navbar-brand" title="Bootcards Starter" href="/">Affinity</a>  
+
+      <!--right aligned button-->
+
+
+      <!--navbar menu options: shown on desktop only -->
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li>
+            <a href="#">
+              <i class="fa fa-check"></i> Tasks 
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="fa fa-list-alt"></i> Projects
+            </a>
+          </li>
+          <li class="">
+            <a href="#">
+              <i class="fa fa-users"></i> Members
+            </a>
+          </li>
+          <li class="">
+            <a href="#">
+              <i class="fa fa-calendar"></i> Events
+            </a>
+          </li>
+          <li class="">
+            <a href="#">
+              <i class="fa fa-envelope"></i> Messages
+            </a>
+          </li>
+
+
+        </ul>
+      </div>          
+    </div>
+  </div>   
+<div class="container"> 
+
+<div id="content"></div>
+</div>
+</body>
+</html>
+
+<script id="groups-tasks-template" type="text/x-handlebars-template">
+
+<div class="col-md-6 col-sm-6 bootcards-list" id="list" data-title="Notes">	
+	<h3>Tasks</h3>
+
+	<div class="panel panel-default">							
+		<div class="panel-body">
+			<div class="search-form">
+				<div class="row">
+				    <div class="col-xs-9">
+				      <div class="form-group">
+					      <input type="text" class="form-control" placeholder="Search Tasks...">
+					      
+				      </div>
+				    </div>
+				    <div class="col-xs-3">
+						<a class="btn btn-primary btn-block" href="/notes/add" data-toggle="modal" data-target="#editModal">
+							<i class="fa fa-search"></i> 
+							<span>Search</span>
+						</a>
+				    </div>
+				</div>						    
+			</div>							
+		</div>
+					<ul class="nav nav-tabs" role="tablist">
+		        <li role="presentation" class="active"><a href="#group_pannel-members"role="tab" data-toggle="tab">All</a></li>
+		        <li role="presentation" class=""><a href="#group_pannel-members"role="tab" data-toggle="tab">Active</a></li>
+		        <li role="presentation" class=""><a href="#group_pannel-members"role="tab" data-toggle="tab">Unassigned</a></li>
+
+		        <li role="presentation" class=""><a href="#group_pannel-members"role="tab" data-toggle="tab">Overdue</a></li>
+		        <li role="presentation" class=""><a href="#group_pannel-members"role="tab" data-toggle="tab">Completed</a></li>
+			</ul>
+			<br>
+		<div class="list-group">
+			{{#each tasks}}
+			
+			<div class="list-group-item ">
+				<div class="pull-right">
+					<strong>Due: {{due_date}}</strong> 
+					
+					
+				</div>
+				<h4 class="list-group-item-heading">{{name}}</h4>
+				<p class="list-group-item-text">{{description}}			</p>
+				
+				{{#if assigned_to}}
+				<br>
+				{{#each assigned_to}}
+				<div class="row">
+
+			
+				{{#if facebook_id}}
+                <img src="http://graph.facebook.com/{{facebook_id}}/picture?type=square&height=100&width=100" class="img-rounded pull-left img-smaller">
+                {{/if}}   
+				<strong>{{first_name}}  {{last_name}}</strong>: {{phone}} {{email}}
+               
+				</div>
+               
+               {{/each}}
+
+               {{/if}}
+               
+               
+	
+			</div>
+			{{/each}}
+			
+	
+			
+			
+
+		</div>
+		<div class="panel-footer">
+			<a class="btn btn-primary pull-right" href="/notes/add" data-toggle="modal" data-target="#editModal">
+				<i class="fa fa-plus"></i> 
+				<span>Add Task</span>
+			</a>
+
+
+			
+		</div>					
+	</div>
+</div>
+
+
+<div class="col-sm-6 bootcards-cards hidden-xs" id="listDetails">
+<h3>Activists</h3>
+	<div class="panel panel-default">							
+		<div class="panel-body">
+			<div class="search-form">
+				<div class="row">
+				    <div class="col-xs-8">
+				      <div class="form-group">
+					      <input type="text" class="form-control" placeholder="Search Activists...">
+				      </div>
+				    </div>
+				    <div class="col-xs-4">
+					    <a class="btn btn-primary btn-block" href="/notes/add" data-toggle="modal" data-target="#editModal">
+							<i class="fa fa-search"></i> 
+							<span>Search</span>
+						</a>
+					    
+					     <br> <a href="" class="pull-right">Advanced Search <i class="fa fa-arrow-down"></i></a>
+
+				    </div>
+				</div>						    
+			</div>					
+		</div>
+		<div class="list-group">
+			{{#each members}}
+			<div class="list-group-item">
+				<div class="pull-right">
+
+					<button class="btn btn-primary btn-xs" type="button">Activist Score <span class="badge">{{activist_score}}</span></button><br>
+					<button class="btn btn-info btn-xs" type="button">Active Tasks <span class="badge">{{activist_score}}</span></button><br>
+					<button class="btn btn-warning btn-xs" type="button">Overdue Tasks <span class="badge">{{activist_score}}</span></button><br>
+
+
+
+					
+					
+					
+				</div>
+				<img src="http://graph.facebook.com/{{facebook_user_id}}/picture?type=square&height=100&width=100" class="img-rounded pull-left">
+				<h4 class="list-group-item-heading">{{first_name}} {{last_name}}</h4>
+				<p class="list-group-item-text">{{phone}} {{email}}</p>
+				
+				<br>
+				{{#if interests}}
+				<strong><!--<i class="fa fa-check-circle"></i>-->Interests:</strong> {{#each interests}}{{name}}, {{/each}}<br>
+				{{/if}}
+				{{#if skills}}
+				<strong><!--<i class="fa fa-bullhorn"></i>-->Skills:</strong> {{#each skills}}{{name}}, {{/each}}<br>
+				{{/if}}
+				{{#if tags}}
+				<strong><!--<i class="fa fa-tags"></i>-->Tags:</strong> {{#each tags}}{{tag}}, {{/each}}<br>
+				{{/if}}
+			</div>	
+			{{/each}}	
+
+		</div>				
+	</div>
+<!--
+<h3>Projects</h3>
+	<div class="panel panel-default">							
+		<div class="panel-body">
+			<div class="search-form">
+				<div class="row">
+				    <div class="col-xs-9">
+				      <div class="form-group">
+					      <input type="text" class="form-control" placeholder="Search Projects...">
+				      </div>
+				    </div>
+				    <div class="col-xs-3">
+						<a class="btn btn-primary btn-block" href="/notes/add" data-toggle="modal" data-target="#editModal">
+							<i class="fa fa-plus"></i> 
+							<span>Add</span>
+						</a>
+				    </div>
+				</div>						    
+			</div>					
+		</div>
+		<div class="list-group">
+			{{#each projects}}
+			<div class="list-group-item">
+				<h4 class="list-group-item-heading">{{name}}</h4>
+				<p class="list-group-item-text">
+					<i class="fa fa-check"></i>
+					<strong>Tasks:</strong> {{stats.tasks}}
+					<strong>Completed:</strong> {{stats.tasks_completed}}
+					<strong>Overdue:</strong> {{stats.tasks_overdue}} <br>
+					
+					<i class="fa fa-calendar"></i>
+					<strong>Events:</strong> {{stats.events}}<br>
+
+					<i class="fa fa-envelope"></i>
+					<strong>Messages:</strong> {{stats.events}}<br>
+				</p>
+			</div>	
+			{{/each}}	
+		</div>
+				
+	</div>
+-->
+
+</div>
+
+</script>

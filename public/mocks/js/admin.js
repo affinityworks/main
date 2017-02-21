@@ -163,6 +163,13 @@ $(document).ready(function(){
         return false;
     });
 
+    $(".event_task_list").hide();
+    $( ".event_task_list-toggle").click(function() {
+        $(".event_task_list").toggle();
+        return false;
+    });
+
+
 /* Message  */
 
      $('#message-content').keyup(function(){
@@ -175,6 +182,27 @@ $(document).ready(function(){
     $(".group_message-list_body").hide();
     $( ".group_message-list_body--toggle").click(function() {
         $(".group_message-list_body").toggle();
+        return false;
+    });
+
+// TASKS
+
+    $(".task_rating").hide();
+    $( ".task_rating--toggle").click(function() {
+        $(".task_rating").toggle();
+        return false;
+    });
+
+    $(".task_assign").hide();
+    $( ".task_assign--toggle").click(function() {
+        $(".task_assign").toggle();
+        return false;
+    });
+// PROJECTS
+
+    $(".project_detail").hide();
+    $( ".project_detail--toggle").click(function() {
+        $(".project_detail").toggle();
         return false;
     });
 
