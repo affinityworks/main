@@ -1,23 +1,23 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-         
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="  crossorigin="anonymous"></script>    
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="  crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>
-    
-    <script type="text/javascript" src="vendor/swag/lib/swag.js"></script> 
 
-    <script type="text/javascript" src="js/data.js"></script> 
+    <script type="text/javascript" src="vendor/swag/lib/swag.js"></script>
+
+    <script type="text/javascript" src="js/data.js"></script>
 
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="css/user.css" rel="stylesheet"> 
-    
+    <link href="css/user.css" rel="stylesheet">
+
 <script>
 
-$(document).ready(function(){   
-        
+$(document).ready(function(){
+
     var template = Handlebars.compile($("#groups-tasks-template").html());
     $("#content").append(template(data.groups[0]));
 
@@ -27,8 +27,8 @@ $(document).ready(function(){
 </head>
 
 <body>
-<div class="container"> 
-<h2> <img src="img/logo.png" height="50"> Affinity </h2> 
+<div class="container">
+  <a href="./"><h2> <img src="img/logo.png" height="50">Affinity</h2></a>
 <hr>
 <div id="content"></div>
 </div>
@@ -36,7 +36,7 @@ $(document).ready(function(){
 </html>
 
 <script id="groups-tasks-template" type="text/x-handlebars-template">
-<h1>Tasks you can do!</h1>	
+<h1>Tasks you can do!</h1>
 <br>
 {{#each tasks}}
 <div class="well">
@@ -50,8 +50,8 @@ $(document).ready(function(){
 
 	{{/if}}
 	<p>{{description}}</p>
-	
-	
+
+
 	<strong>Due: {{due_date}}</strong>
 </div>
 <br>

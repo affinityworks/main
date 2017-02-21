@@ -1,29 +1,29 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-     
-    
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="  crossorigin="anonymous"></script>    
+
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="  crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>
-    
-    <script type="text/javascript" src="vendor/swag/lib/swag.js"></script> 
+
+    <script type="text/javascript" src="vendor/swag/lib/swag.js"></script>
 
 
-    <script type="text/javascript" src="js/data.js"></script> 
+    <script type="text/javascript" src="js/data.js"></script>
 
 
 
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="css/user.css" rel="stylesheet"> 
-    
-    
+    <link href="css/user.css" rel="stylesheet">
+
+
 <script>
 
 
-$(document).ready(function(){   
-        
+$(document).ready(function(){
+
     var template = Handlebars.compile($("#groups-signup-template").html());
     $("#content").append(template(data));
 
@@ -37,7 +37,7 @@ $(document).ready(function(){
       types: ['(cities)'],
       componentRestrictions: {country: "us"}
      };
-    
+
     autocomplete = new google.maps.places.Autocomplete(input,options);
 
     google.maps.event.addListener(autocomplete, 'place_changed', function () {
@@ -55,27 +55,27 @@ $(document).ready(function(){
 });
 
 
-</script>        
-  
+</script>
+
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjDTJc7RFsQQAf7D3z_FhJ51HjdiR77y0&libraries=places"></script>
-  
-  
-<script type="text/javascript" src="js/public.js"></script> 
+
+
+<script type="text/javascript" src="js/public.js"></script>
 
 </head>
 <body>
-<div class="container"> 
-<h2> <img src="img/logo.png" height="50"> Affinity </h2> 
+<div class="container">
+  <a href="./"><h2> <img src="img/logo.png" height="50">Affinity</h2></a>
 <hr>
 <div id="content"></div>
 
 
 
 <script id="groups-signup-template" type="text/x-handlebars-template">
-    
+
 <div class="group_page">
     <h2>Sign Up to be an group leader</h2>
-    <p>This is some exciting text about why you should be a group leader</p> 
+    <p>This is some exciting text about why you should be a group leader</p>
     <div class="well ">
                 <div class="row">
 
@@ -83,7 +83,7 @@ $(document).ready(function(){
             <h4><i class="fa fa-user"></i> Your Contact Information</h4>
             <div class="row">
                 <div class="col-md-6">
-                
+
                     <div class="form-group ">
                         <label for="">First Name</label>
                         <input type="text" class="form-control" id="" placeholder="">
@@ -97,12 +97,12 @@ $(document).ready(function(){
                     </div>
                 </div>
             </div>
-    
+
             <div class="form-group">
                 <label for="">Email</label>
                 <input type="email" class="form-control" id="" placeholder="">
             </div>
-    
+
             <div class="form-group">
                 <label for="">Phone</label>
                 <input type="phone" class="form-control" id="" placeholder="">
@@ -120,9 +120,9 @@ $(document).ready(function(){
             <input id="longitude" name="longitude" type="hidden">
             <input id="city" name="city" type="hidden">
             <input id="state" name="state" type="hidden">
-            
 
-   
+
+
             <div class="form-group col-md-12" id="nearby_groups">
                 <h4>Nearby Groups</h4>
                     <small>Check out the groups near you and see if you might want to join one before starting a new group</small><br>
@@ -140,26 +140,26 @@ $(document).ready(function(){
                     <option selected>25 miles</option>
                     <option>50 miles</option>
                     <option>1000 miles</option>
-                    
+
                 </select>
-            </div>  
+            </div>
         </div>
     </div>
         <div class="row">
             <div class="form-group col-md-10">
                 <label for=""><i class="fa fa-bullhorn"></i> Why would you be a great local leader?</label>
                 <textarea  class="form-control" id="" placeholder="Tell us a bit about yourself and why you are passionate to orgazine in your community" rows=6></textarea>
-            </div>    
+            </div>
         </div>
         <button class="btn btn-lg btn-primary ">Signup to be a leader</button>
     </div>
 
 
 </div>
-   
+
 </script>
-    
-</div>    
-    
+
+</div>
+
 </body>
 </html>

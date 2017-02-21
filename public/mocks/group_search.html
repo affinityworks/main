@@ -1,29 +1,29 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-     
-    
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="  crossorigin="anonymous"></script>    
+
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="  crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>
-    
-    <script type="text/javascript" src="vendor/swag/lib/swag.js"></script> 
+
+    <script type="text/javascript" src="vendor/swag/lib/swag.js"></script>
 
 
-    <script type="text/javascript" src="js/data.js"></script> 
+    <script type="text/javascript" src="js/data.js"></script>
 
 
 
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="css/user.css" rel="stylesheet"> 
+    <link href="css/user.css" rel="stylesheet">
 
-    
+
 <script>
 
 
-$(document).ready(function(){   
-        
+$(document).ready(function(){
+
     var template = Handlebars.compile($("#groups-search-template").html());
     $("#content").append(template(data));
 
@@ -33,7 +33,7 @@ $(document).ready(function(){
       types: ['(cities)'],
       componentRestrictions: {country: "us"}
      };
-    
+
     autocomplete = new google.maps.places.Autocomplete(input,options);
 
     google.maps.event.addListener(autocomplete, 'place_changed', function () {
@@ -47,26 +47,26 @@ $(document).ready(function(){
 
 });
 
-</script>        
-   
+</script>
+
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjDTJc7RFsQQAf7D3z_FhJ51HjdiR77y0&libraries=places"></script>
-   
-    
-<script type="text/javascript" src="js/public.js"></script> 
+
+
+<script type="text/javascript" src="js/public.js"></script>
 
 </head>
 <body>
-<div class="container"> 
-<h2> <img src="img/logo.png" height="50"> Affinity </h2> 
+<div class="container">
+  <a href="./"><h2> <img src="img/logo.png" height="50">Affinity</h2></a>
 <hr>
 
 
 
-<h2>Find a local group</h2>  
+<h2>Find a local group</h2>
     <div class="row">
 
 <form class="form form-inline">
-    
+
     <div class="form-group col-md-6 col-md-offset-4">
         <input id="searchTextField" placeholder="Enter a city" type="text"  class="form-control text-center" />
         <input id="city" name="city" type="hidden">
@@ -94,10 +94,8 @@ $(document).ready(function(){
 {{distance}} miles away ({{city}})
 {{/each}}
 
-    
+
 </script>
 </div>
 </body>
 </html>
-
- 

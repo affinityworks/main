@@ -1,27 +1,27 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-         
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="  crossorigin="anonymous"></script>    
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="  crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/bootcards/1.0.0/js/bootcards.min.js"></script>
-    
-    
-    <script type="text/javascript" src="vendor/swag/lib/swag.js"></script> 
 
-    <script type="text/javascript" src="js/data.js"></script> 
+
+    <script type="text/javascript" src="vendor/swag/lib/swag.js"></script>
+
+    <script type="text/javascript" src="js/data.js"></script>
 
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootcards/1.0.0/css/bootcards-desktop.min.css">
 
-    <link href="css/user.css" rel="stylesheet"> 
-    
+    <link href="css/user.css" rel="stylesheet">
+
 <script>
 
-$(document).ready(function(){   
-        
+$(document).ready(function(){
+
     var template = Handlebars.compile($("#groups-tasks-template").html());
     $("#content").append(template(data.groups[0]));
 
@@ -30,12 +30,12 @@ $(document).ready(function(){
 </script>
 
 <style>
-	
+
 	.bootcards-list .search-form i.fa-search, .bootcards-list form i.fa-search {
      position: relative;
     left: 0px;
     top: 0px;
-    color: #fff; 
+    color: #fff;
     font-size: 14px;
 }
 
@@ -56,7 +56,7 @@ a.list-group-item:before {
 
 
 .bootcards-list .search-form input, .bootcards-list form input {
-    padding-left: 12px; 
+    padding-left: 12px;
 }
 
 .list-group-item img {
@@ -75,7 +75,7 @@ a.list-group-item:before {
 
 
 
-	
+
 </style>
 
 
@@ -101,7 +101,7 @@ a.list-group-item:before {
         <i class="fa fa-lg fa-bars"></i><span>Menu</span>
       </button>
 
-      <a class="navbar-brand" title="Bootcards Starter" href="/">Affinity</a>  
+      <a class="navbar-brand" title="Bootcards Starter" href="/">Affinity</a>
 
       <!--right aligned button-->
 
@@ -111,7 +111,7 @@ a.list-group-item:before {
         <ul class="nav navbar-nav">
           <li>
             <a href="#">
-              <i class="fa fa-check"></i> Tasks 
+              <i class="fa fa-check"></i> Tasks
             </a>
           </li>
           <li>
@@ -137,10 +137,10 @@ a.list-group-item:before {
 
 
         </ul>
-      </div>          
+      </div>
     </div>
-  </div>   
-<div class="container"> 
+  </div>
+<div class="container">
 
 <div id="content"></div>
 </div>
@@ -149,27 +149,27 @@ a.list-group-item:before {
 
 <script id="groups-tasks-template" type="text/x-handlebars-template">
 
-<div class="col-md-6 col-sm-6 bootcards-list" id="list" data-title="Notes">	
+<div class="col-md-6 col-sm-6 bootcards-list" id="list" data-title="Notes">
 	<h3>Tasks</h3>
 
-	<div class="panel panel-default">							
+	<div class="panel panel-default">
 		<div class="panel-body">
 			<div class="search-form">
 				<div class="row">
 				    <div class="col-xs-9">
 				      <div class="form-group">
 					      <input type="text" class="form-control" placeholder="Search Tasks...">
-					      
+
 				      </div>
 				    </div>
 				    <div class="col-xs-3">
 						<a class="btn btn-primary btn-block" href="/notes/add" data-toggle="modal" data-target="#editModal">
-							<i class="fa fa-search"></i> 
+							<i class="fa fa-search"></i>
 							<span>Search</span>
 						</a>
 				    </div>
-				</div>						    
-			</div>							
+				</div>
+			</div>
 		</div>
 					<ul class="nav nav-tabs" role="tablist">
 		        <li role="presentation" class="active"><a href="#group_pannel-members"role="tab" data-toggle="tab">All</a></li>
@@ -182,59 +182,59 @@ a.list-group-item:before {
 			<br>
 		<div class="list-group">
 			{{#each tasks}}
-			
+
 			<div class="list-group-item ">
 				<div class="pull-right">
-					<strong>Due: {{due_date}}</strong> 
-					
-					
+					<strong>Due: {{due_date}}</strong>
+
+
 				</div>
 				<h4 class="list-group-item-heading">{{name}}</h4>
 				<p class="list-group-item-text">{{description}}			</p>
-				
+
 				{{#if assigned_to}}
 				<br>
 				{{#each assigned_to}}
 				<div class="row">
 
-			
+
 				{{#if facebook_id}}
                 <img src="http://graph.facebook.com/{{facebook_id}}/picture?type=square&height=100&width=100" class="img-rounded pull-left img-smaller">
-                {{/if}}   
+                {{/if}}
 				<strong>{{first_name}}  {{last_name}}</strong>: {{phone}} {{email}}
-               
+
 				</div>
-               
+
                {{/each}}
 
                {{/if}}
-               
-               
-	
+
+
+
 			</div>
 			{{/each}}
-			
-	
-			
-			
+
+
+
+
 
 		</div>
 		<div class="panel-footer">
 			<a class="btn btn-primary pull-right" href="/notes/add" data-toggle="modal" data-target="#editModal">
-				<i class="fa fa-plus"></i> 
+				<i class="fa fa-plus"></i>
 				<span>Add Task</span>
 			</a>
 
 
-			
-		</div>					
+
+		</div>
 	</div>
 </div>
 
 
 <div class="col-sm-6 bootcards-cards hidden-xs" id="listDetails">
 <h3>Activists</h3>
-	<div class="panel panel-default">							
+	<div class="panel panel-default">
 		<div class="panel-body">
 			<div class="search-form">
 				<div class="row">
@@ -245,15 +245,15 @@ a.list-group-item:before {
 				    </div>
 				    <div class="col-xs-4">
 					    <a class="btn btn-primary btn-block" href="/notes/add" data-toggle="modal" data-target="#editModal">
-							<i class="fa fa-search"></i> 
+							<i class="fa fa-search"></i>
 							<span>Search</span>
 						</a>
-					    
+
 					     <br> <a href="" class="pull-right">Advanced Search <i class="fa fa-arrow-down"></i></a>
 
 				    </div>
-				</div>						    
-			</div>					
+				</div>
+			</div>
 		</div>
 		<div class="list-group">
 			{{#each members}}
@@ -266,14 +266,14 @@ a.list-group-item:before {
 
 
 
-					
-					
-					
+
+
+
 				</div>
 				<img src="http://graph.facebook.com/{{facebook_user_id}}/picture?type=square&height=100&width=100" class="img-rounded pull-left">
 				<h4 class="list-group-item-heading">{{first_name}} {{last_name}}</h4>
 				<p class="list-group-item-text">{{phone}} {{email}}</p>
-				
+
 				<br>
 				{{#if interests}}
 				<strong><!--<i class="fa fa-check-circle"></i>-->Interests:</strong> {{#each interests}}{{name}}, {{/each}}<br>
@@ -284,14 +284,14 @@ a.list-group-item:before {
 				{{#if tags}}
 				<strong><!--<i class="fa fa-tags"></i>-->Tags:</strong> {{#each tags}}{{tag}}, {{/each}}<br>
 				{{/if}}
-			</div>	
-			{{/each}}	
+			</div>
+			{{/each}}
 
-		</div>				
+		</div>
 	</div>
 <!--
 <h3>Projects</h3>
-	<div class="panel panel-default">							
+	<div class="panel panel-default">
 		<div class="panel-body">
 			<div class="search-form">
 				<div class="row">
@@ -302,12 +302,12 @@ a.list-group-item:before {
 				    </div>
 				    <div class="col-xs-3">
 						<a class="btn btn-primary btn-block" href="/notes/add" data-toggle="modal" data-target="#editModal">
-							<i class="fa fa-plus"></i> 
+							<i class="fa fa-plus"></i>
 							<span>Add</span>
 						</a>
 				    </div>
-				</div>						    
-			</div>					
+				</div>
+			</div>
 		</div>
 		<div class="list-group">
 			{{#each projects}}
@@ -318,17 +318,17 @@ a.list-group-item:before {
 					<strong>Tasks:</strong> {{stats.tasks}}
 					<strong>Completed:</strong> {{stats.tasks_completed}}
 					<strong>Overdue:</strong> {{stats.tasks_overdue}} <br>
-					
+
 					<i class="fa fa-calendar"></i>
 					<strong>Events:</strong> {{stats.events}}<br>
 
 					<i class="fa fa-envelope"></i>
 					<strong>Messages:</strong> {{stats.events}}<br>
 				</p>
-			</div>	
-			{{/each}}	
+			</div>
+			{{/each}}
 		</div>
-				
+
 	</div>
 -->
 

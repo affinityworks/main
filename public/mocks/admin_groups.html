@@ -1,33 +1,33 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-     
-    
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="  crossorigin="anonymous"></script>    
+
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="  crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>
-    
-    <script type="text/javascript" src="vendor/swag/lib/swag.js"></script> 
+
+    <script type="text/javascript" src="vendor/swag/lib/swag.js"></script>
 
 
-    <script type="text/javascript" src="js/data.js"></script> 
+    <script type="text/javascript" src="js/data.js"></script>
 
 
 
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="css/admin.css" rel="stylesheet">
-    <link href="css/user.css" rel="stylesheet">     
-    
+    <link href="css/user.css" rel="stylesheet">
+
 <script>
-$(document).ready(function(){   
-    
+$(document).ready(function(){
+
     Swag.registerHelpers(window.Handlebars);
 
-    
-    
+
+
     var template = Handlebars.compile($("#groups-admin-template").html());
-    $("#content").append(template(data));    
+    $("#content").append(template(data));
 
 
     var template = Handlebars.compile($("#groups-admin-group-detail-template").html());
@@ -49,36 +49,36 @@ $( ".group_admin-save--toggle").click(function() {
 $( ".group_admin-edit_group--toggle").click(function() {
         $("#content-edit").toggle();
         return false;
-});   
+});
 
 $( ".group_admin-add_group--toggle").click(function() {
         $("#content-add").toggle();
         return false;
 
 });
-    
-    
+
+
     $(".group_admin-add_note").hide();
     $( ".group_admin-add_note--toggle").click(function() {
         $(".group_admin-add_note").toggle();
         return false;
-    });    
+    });
 
     $( ".group_admin-save_note").click(function() {
         $(".group_admin-add_note").toggle();
         return false;
-    });  
+    });
 
 });
-   
+
 </script>
 
 
-  
+
     </head>
 <body>
-<div class="container"> 
-<h2> <img src="img/logo.png" height="50"> Affinity </h2> 
+<div class="container">
+<a href="./"><h2> <img src="img/logo.png" height="50">Affinity</h2></a>
 <hr>
 
 
@@ -96,7 +96,7 @@ $( ".group_admin-add_group--toggle").click(function() {
         <li role="presentation" class="group_nav-updates active" ><a href="#group_pannel-groups" aria-controls="groups_pannel-" role="tab" data-toggle="tab"><i class="fa fa-users"></i> Local Groups</a></li>
 
         <li role="presentation" class="group_nav-updates" ><a href="#group_pannel-tasks" aria-controls="groups_pannel-" role="tab" data-toggle="tab"><i class="fa fa-check-square"></i> Projects and Tasks</a></li>
-              
+
         <li role="presentation" class="group_nav-updates" ><a href="#group_pannel-settings" aria-controls="groups_pannel-" role="tab" data-toggle="tab"><i class="fa fa-cogs"></i> Settings</a></li>
 
     </ul>
@@ -123,18 +123,18 @@ $( ".group_admin-add_group--toggle").click(function() {
     </thead>
     <tbody>
         {{#each groups}}
-        <tr>        
+        <tr>
             <td class="col-md-2"><a href="#" data-id="{{id}}" class="group_admin-edit_group--toggle">{{name}}</a>
-            
+
                {{#if stats.member_count}} <br><br><small><a href="admin_user.html" target="_blank">({{stats.member_count}} members</a></small>){{/if}}
 
-            
-            </td>            
-            <td>{{city}}</td>            
-            <td>{{region}}</td>            
+
+            </td>
+            <td>{{city}}</td>
+            <td>{{region}}</td>
             <td class="col-md-2"><small>{{description}}</small></td>
 
-         
+
             <td>
                 <small>
                 {{contact_name}}
@@ -145,33 +145,33 @@ $( ".group_admin-add_group--toggle").click(function() {
                 {{#if website_url}}<a href="{{website_url}}" target="_blank" title="{{website_url}}"><i class="fa fa-globe"></i></a>{{/if}}
                 {{#if twitter}}<a href="https://twitter.com/{{twitter}}" target="_blank" title="{{twitter}}"><i class="fa fa-twitter"></i></a>{{/if}}
                 {{#if facebook_page_url}}<a href="{{facebook_page_url}}" target="_blank" title="{{facebook_page_url}}"><i class="fa fa-facebook"></i></a>{{/if}}
-           
-           
+
+
            </td>
            <td class="col-md-2">
             {{#each leaders}}
                 {{#if facebook_id}}<a href="https://facebook.com/{{facebook_id}}" target="_blank" title="https://facebook.com/{{facebook_id}}"><img src="http://graph.facebook.com/{{facebook_id}}/picture?type=square&amp;height=20&amp;width=20"></a> {{/if}}<a href="#" data-id="{{id}}"  data-toggle="modal" data-target="#group_member-add-modal">{{name}}</a><br>
             {{/each}}
-        
+
             </td>
 
-                
+
             <td>{{#each notes}}
                {{#if note}}<small>{{note}} <strong>({{date_created}} by {{admin_user}})</strong></small><br><br>{{/if}}
             {{/each}}
             <div class="pull-right"><small><a href="#" class="group_admin-add_note--toggle"><i class="fa fa-plus"></i> Add Note</a></small></div>
             <div class="group_admin-add_note">
                 <textarea rows="2" placeholder="Add Note"></textarea><button class="btn btn-xs btn-primary group_admin-save_note">Save Note</button>
-                
+
             </div>
             </td>
 
             <td>
                 {{status}}<br><br>
-               {{#is status "pending"}} <button class="btn btn-xs btn-success">approve</button> {{/is}}         
-               {{#is status "live"}} <button class="btn btn-xs btn-danger" data-id={{id}}>unpublish</button> {{/is}}           
+               {{#is status "pending"}} <button class="btn btn-xs btn-success">approve</button> {{/is}}
+               {{#is status "live"}} <button class="btn btn-xs btn-danger" data-id={{id}}>unpublish</button> {{/is}}
                {{#is status "unpublished"}} <button class="btn btn-xs btn-warning">publish</button>{{/is}}
-            </td>            
+            </td>
 
 
         </tr>
@@ -215,26 +215,26 @@ $( ".group_admin-add_group--toggle").click(function() {
                         <option value="4">4 - Active volunteer</option>
                         <option value="5" selected>5 - Super volunteer</option>
                     </select>
-                </div> 
+                </div>
             </div>
-            
+
             <div class="col-md-3 col-md-offset-1">
                 <div class="checkbox">
                     <label>
                         <input type="checkbox" > Make a group administrator
                     </label>
                 </div>
-            </div>                
+            </div>
         </div>
-        
+
         <div class="row">
              <div class="form-group col-md-8">
-                
+
                             <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-tags"></i> Tags</span>
-                
+
                 <input type="text" class="form-control col-md-6" id="" value="{{#each tags}}{{tag}}, {{/each}}" data-role="tagsinput">
-            </div> 
+            </div>
             </div>
         </div>
         <div class="row">
@@ -242,7 +242,7 @@ $( ".group_admin-add_group--toggle").click(function() {
                 <div class="form-group">
                     <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-phone"></i> Phone</span>
-                    
+
                     <input type="phone" class="form-control" id="" value="{{phone}}">
                         </div>
                 </div>
@@ -255,8 +255,8 @@ $( ".group_admin-add_group--toggle").click(function() {
                         <input type="text" class="form-control" id="" value="{{email}}">
                     </div>
                 </div>
-            </div>  
-            
+            </div>
+
             <div class="col-md-4">
 
                 <div class="btn-group">
@@ -271,18 +271,18 @@ $( ".group_admin-add_group--toggle").click(function() {
                     <label for=""><i class="fa fa-twitter-square"></i> Twitter</label>
                     <input type="text" class="form-control" id="" value="">
                 </div>
-            --> 
+            -->
 
-            </div> 
-            
-        </div>  
+            </div>
+
+        </div>
         <div class="row hidden">
             <a href="">Address</a>
             <div class="">
-                This is the address fields 
+                This is the address fields
             </div>
-        </div>        
-              
+        </div>
+
         <div class="row">
             <br>
 
@@ -290,17 +290,17 @@ $( ".group_admin-add_group--toggle").click(function() {
             <label for=""><i class="fa fa-clipboard"></i> Add Notes</label>
             <textarea class="form-control " id="" rows="3"></textarea>
         </div>
-        
-        
 
-        
-        
+
+
+
+
         <div class="col-md-2 col-md-offset-1">              <br><br>  <button class="g-button btn  btn-success btn-lg "><i class="fa fa-save"></i> Save Member Info</button>
         </div>
-        </div>              
+        </div>
         <hr>
 
-               
+
           <table class="table table-striped">
             <thead>
                 <tr>
@@ -326,7 +326,7 @@ $( ".group_admin-add_group--toggle").click(function() {
           </table>
 
 
-              
+
         <div class="modal fade" id="group_member-note-modal" tabindex="-1" role="dialog" aria-labelledby="group_member-note-modal" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -338,11 +338,11 @@ $( ".group_admin-add_group--toggle").click(function() {
                 <div class="form-group">
                     <label for="">Note</label>
                     <textarea class="form-control" id="" rows="3"></textarea>
-                </div>  
+                </div>
                 <div class="form-group">
                     <label for="">Date</label>
                     <input type="date" class="form-control " id="" ></input>
-                </div>  
+                </div>
               </div>
               <div class="modal-footer">
                 <button class="btn btn-success"><i class="fa fa-save"></i> Save</button>
@@ -350,7 +350,7 @@ $( ".group_admin-add_group--toggle").click(function() {
               </div>
             </div>
           </div>
-        </div>             
+        </div>
 
           <table class="table table-striped">
             <thead>
@@ -373,8 +373,8 @@ $( ".group_admin-add_group--toggle").click(function() {
                 </tr>
                 {{/each}}
             </tbody>
-          </table>                  
-                
+          </table>
+
         <div class="">
             <label>Log Event Attendece:</label>
             <select class="">
@@ -382,23 +382,23 @@ $( ".group_admin-add_group--toggle").click(function() {
                 <option value="{{event_id}}">2015-06-01: Member Meetup</option>
                 <option value="{{event_id}}">2015-06-01: Member Meetup</option>
             </select>
-            RSVP: 
+            RSVP:
             <button class="btn btn-sm btn-info" data-value="rsvp">Invited</button>
             <button class="btn btn-sm btn-info" data-value="rsvp">Interested</button>
             <button class="btn btn-sm btn-primary" data-value="rsvp">RSVPed</button>
             <button class="btn btn-sm btn-danger" data-value="rsvp">Decline</button>
-            Attendance: 
+            Attendance:
             <button class="btn btn-sm btn-success">Attended</button>
             <button class="btn btn-sm btn-danger">Not Attended</button>
 
-            
-        </div>  
-    
-       {{/with}} 
+
+        </div>
+
+       {{/with}}
 </div>
     </div>
   </div>
-</div>        
+</div>
 
 
 <div class="modal fade" id="group_admin-add-existing-leader" tabindex="-1" role="dialog" aria-labelledby="group_admin-add-existing-leader" aria-hidden="true">
@@ -418,7 +418,7 @@ $( ".group_admin-add_group--toggle").click(function() {
                   </div>
 
               </div>
-              
+
               <table class="table table-striped">
                 <thead>
                     <tr>
@@ -441,7 +441,7 @@ $( ".group_admin-add_group--toggle").click(function() {
                     {{/each}}
                 </tbody>
                 </tabel>
-            
+
             </div>
         </div>
     </div>
@@ -451,37 +451,37 @@ $( ".group_admin-add_group--toggle").click(function() {
 </script>
 
 <script id="groups-admin-group-detail-template" type="text/x-handlebars-template">
-    
-  <h2>Add/Edit Group Details</h2>  
-    
-           
+
+  <h2>Add/Edit Group Details</h2>
 
 
-            
+
+
+
             <div class="row">
 
             <div class="form-group col-md-7 ">
                 <label for=""><i class="fa fa-bullhorn"></i> Group Name</label>
                 <input type="text" class="form-control" id="group_details-name" value="{{name}}">
-                
+
                 <br><div class="row">
-                    
-                    
+
+
                     {{#if leaders}}<div class="col-md-6">                    <b><i class="fa fa-user-circle"></i> Leaders:</b>
                     {{#each leaders}}
                     <a href="#"   data-toggle="modal" data-target="#group_member-add-modal" class="group_details-leader"><img src="http://graph.facebook.com/{{facebook_id}}/picture?type=square&height=20&width=20"> {{name}}</a>
                     {{/each}} </div>{{/if}}
-                    
+
                     <div class="col-md-6">
                         <div class="pull-right">
                         <a href="#" data-toggle="modal" data-target="#group_admin-add-existing-leader"><i class="fa fa-plus"></i> add existing user</a> | <a href="#" data-toggle="modal" data-target="#group_member-add-modal"><i class="fa fa-user-plus"></i> add new user</a>
                     </div>
-                    </div>                    
+                    </div>
                 </div>
-                
-                
 
-                                       
+
+
+
 
 
             </div>
@@ -489,10 +489,10 @@ $( ".group_admin-add_group--toggle").click(function() {
             <div class="form-group col-md-5 ">
                 <label for=""><i class="fa fa-commenting-o"></i> Group Description</label>
                 <textarea  class="form-control" id="group_details-description" rows=4>{{description}}</textarea>
-                
+
             </div>
-    
-            </div>            
+
+            </div>
 
             <div class="row">
                     <div class="form-group col-md-4">
@@ -509,9 +509,9 @@ $( ".group_admin-add_group--toggle").click(function() {
                     </div>
             </div>
 
-          
-           <br> 
-            
+
+           <br>
+
             <div class="row">
                     <div class="form-group col-md-4">
                         <label for=""><i class="fa fa-user"></i> Public Group Contact Name</label>
@@ -526,9 +526,9 @@ $( ".group_admin-add_group--toggle").click(function() {
                         <input type="text" class="form-control" id="group_details-contact_email" value="{{contact_email}}">
                     </div>
             </div>
-       
 
-           <br> 
+
+           <br>
             <div class="row">
 
                 <div class="form-group col-md-4">
@@ -548,9 +548,9 @@ $( ".group_admin-add_group--toggle").click(function() {
                     <p class="help-block">Make sure to start with http:// or https://</p>
                 </div>
 
-            </div>  
+            </div>
             <button class="g-button btn btn-lg btn-success group_admin-save--toggle "><i class="fa fa-save"></i> Save</button>
-            
+
             {{#if notes}}
             <br><br>
             <h4>Group Notes</h4>
@@ -562,7 +562,7 @@ $( ".group_admin-add_group--toggle").click(function() {
                     <th></th>
                 </thead>
                 <tbody>
- 
+
              {{#each notes}}
                    <tr>
                         <td>{{note}}</td>
@@ -576,10 +576,10 @@ $( ".group_admin-add_group--toggle").click(function() {
 
             {{/if}}
 
-            
-        
+
+
    <hr>
-   <br><br> 
+   <br><br>
 </script>
 
 
