@@ -64,11 +64,18 @@
         <div role="tabpanel" class="tab-pane active" id="group_pannel-events">
           <h3><i class="fa fa-calendar"></i> Group Events</h3>
           <div id="event_filter_controls">
-            Filter events by:
+            Filter events by date:
             <select>
               <option>Upcoming</option>
               <option>Past</option>
               <option>Date range</option>
+            </select>
+            by type:
+            <select>
+              <option>Meeting</option>
+              <option>Rally/protest</option>
+              <option>Town hall</option>
+              <option>Direct action</option>
             </select>
           </div>
 
@@ -160,13 +167,6 @@
             <a href="" class="pull-right"><i class="fa fa-download"></i> Download Attendees</a>
             <a href="" class="pull-right"><i class="fa fa-upload"></i> Upload Attendees&nbsp;&nbsp;</a>
             <label>mark selected as:</label>
-
-            <button class="btn btn-sm btn-info" data-value="tentative">Tentative</button>
-            <button class="btn btn-sm btn-primary" data-value="accepted">Accepted</button>
-            <button class="btn btn-sm btn-danger" data-value="declined">Declined</button>
-            <button class="btn btn-sm btn-danger" data-value="cancelled">Cancelled</button>
-            <button class="btn btn-sm btn-warning" data-value="action">Needs Action</button>
-            Attendance:
             <button class="btn btn-sm btn-success" data-value="attened">Attended</button>
             <button class="btn btn-sm btn-danger" data-value="not_attened">Not Attended</button>
 
