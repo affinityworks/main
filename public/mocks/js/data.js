@@ -362,7 +362,7 @@ var data={
                 ],
                 users:
                     {
-                        invited: [
+                        tenative: [
                             {
                                 id:1233,
                                 first_name:"Bob",
@@ -381,7 +381,7 @@ var data={
                             }
 
                         ],
-                        rsvp:[
+                        attending:[
                             {
                                 id:1233,
                                 first_name:"Jane",
