@@ -4,7 +4,7 @@ var data={
         id:1,
         lang:"en",
         url:"/groups/oakland",
-        name:"Indivisible Boulder",
+        name:"Indivisible PA",
         description: "we are group of like-minded people",
         status:'live',
         city:"Boulder",
@@ -45,7 +45,7 @@ var data={
         stats:{
             member_count:10,
             recent_count:3,
-            universe_count:5234            
+            universe_count:5234
         },
         leaders:[
             {
@@ -57,7 +57,7 @@ var data={
                 user_id:"",
                 name:"Bob Activist",
                 facebook_id:"124955570892789"
-            }            
+            }
         ],
         updates:{
             sticky:[
@@ -66,8 +66,8 @@ var data={
                     title:"Welcome to Our Group Page",
                     content:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc imperdiet sodales mauris ut venenatis. Sed condimentum id nulla vel hendrerit. Vivamus eget egestas metus. Sed in ante vel ligula lobortis tristique vitae vitae nunc. Quisque sodales nec lorem at vehicula. Maecenas convallis eleifend sem et vulputate. Aliquam id risus massa. Quisque mollis dolor magna, ut finibus purus ornare ac.",
                     date:"2017-01-02",
-                    sticky:1,  
-                    admin_user_id:"1",              
+                    sticky:1,
+                    admin_user_id:"1",
                     published:1
                 }
             ],
@@ -77,13 +77,13 @@ var data={
                     title:"This is an important update",
                     content:"fLorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc imperdiet sodales mauris ut venenatis. Sed condimentum id nulla vel hendrerit. Vivamus eget egestas metus. Sed in ante vel ligula lobortis tristique vitae vitae nunc. Quisque sodales nec lorem at vehicula. Maecenas convallis eleifend sem et vulputate. Aliquam id risus massa. Quisque mollis dolor magna, ut finibus purus ornare ac.",
                     date:"2017-01-01",
-                    sticky:0,  
-                    admin_user_id:"1",              
+                    sticky:0,
+                    admin_user_id:"1",
                     published:1
                 }
             ]
         },
-        
+
         members:[
             {
                 user_id:12345,
@@ -103,11 +103,11 @@ var data={
                     {
                         tag_id:"23",
                         tag:"Puppy Lover"
-                    }  ,              
+                    }  ,
                     {
                         tag_id:"43",
                         tag:"Phone Bank"
-                    }  
+                    }
                 ],
                 stats:{
                     activity_count:0,
@@ -124,7 +124,7 @@ var data={
                 	{
 	                	name:'Media'
                 	},
-                	
+
                 ],
                 interests:[
                 	{
@@ -143,10 +143,10 @@ var data={
                         date:"2017-01-02",
                         logged_by_user:{
                             id:1,
-                            name:'Davey T'   
-                        }      
+                            name:'Davey T'
+                        }
                     }
-                ],              
+                ],
                 events:[
                     {
                         id:122,
@@ -187,7 +187,7 @@ var data={
 							notes:'They did a good job',
 							review_by:'Jaun Organizer'
 						}
-				    }       
+				    }
                 ],
                 activities:[
                     {
@@ -196,7 +196,7 @@ var data={
                         date:"",
                         logged_by_user:{
                             id:1,
-                            name:'Davey T'   
+                            name:'Davey T'
                         }
                     }
                 ]
@@ -219,11 +219,11 @@ var data={
                     {
                         tag_id:"18",
                         tag:"Facilitator"
-                    }  ,              
+                    }  ,
                     {
                         tag_id:"78",
                         tag:"NVDA Trainer"
-                    }  
+                    }
                 ],
                 stats:{
                     activity_count:0,
@@ -237,10 +237,10 @@ var data={
                         date:"2017-01-02",
                         logged_by_user:{
                             id:1,
-                            name:'Davey T'   
-                        }      
+                            name:'Davey T'
+                        }
                     }
-                ],              
+                ],
                 events:[
                     {
                         id:122,
@@ -256,7 +256,7 @@ var data={
                         date:"",
                         logged_by_user:{
                             id:1,
-                            name:'Davey T'   
+                            name:'Davey T'
                         }
                     }
                 ]
@@ -311,14 +311,15 @@ var data={
                     sent:27,
                     open_rate:12
                 }
-            }            
+            }
         ],
         events:[
             {
                 id:1234,
                 date:"2017-02-01",
                 start_time:"19:30",
-                name:"Local Organzing Meeting",
+                name:"Local Organizing Meeting",
+                group: "Indivisible Philly",
                 description:"This is a great meeting you should come to",
                 location:{
                     address:"1234 Main St",
@@ -357,7 +358,7 @@ var data={
 			                last_name:'X',
 			                email:"email@email.com"
 		                }
-	                }  
+	                }
                 ],
                 users:
                     {
@@ -377,8 +378,8 @@ var data={
                                 facebook_user_id:"61731840657",
                                 phone:"333-333-3333",
                                 date:"2017-01-01"
-                            } 
-    
+                            }
+
                         ],
                         rsvp:[
                             {
@@ -400,7 +401,7 @@ var data={
                         ]
                     }
 
-                
+
 
             }
         ],
@@ -413,8 +414,8 @@ var data={
 					events:1,
 					messages:2,
 					tasks:8,
-					tasks_completed:3,	
-					tasks_overdue:1	
+					tasks_completed:3,
+					tasks_overdue:1
 
 				},
 				campaign:{
@@ -439,7 +440,7 @@ var data={
 						name:'Turnout Email'
 					}
 				]
-			}	
+			}
 		],
 		tasks:[
 		    {
@@ -470,7 +471,7 @@ var data={
 		                email:"email@email.com",
 		                phone:"555-555-5555",
 		                facebook_id:"61731840657"
-	
+
 	                },
 					{
 		                user_id:1223232,
@@ -479,7 +480,7 @@ var data={
 		                email:"email@email.com",
 		                phone:"555-555-5555",
 		                facebook_id:"511719841"
-	
+
 	                }
 	            ],
             	review:{
@@ -511,10 +512,10 @@ var data={
 		                email:"email@email.com",
 		                phone:"555-555-5555",
 		                facebook_id:"61731840657"
-	
+
 	                }
 		        ]
-		    },  
+		    },
 		    {
 		        task_id:1233,
 		        name:"Data entry",
@@ -555,7 +556,7 @@ var data={
         stats:{
             member_count:1234,
             recent_count:3,
-            universe_count:5234            
+            universe_count:5234
         },
 
         leaders:[
@@ -568,11 +569,11 @@ var data={
                 user_id:"233",
                 name:"Sally Person",
                 facebook_id:"124955570892789"
-            }            
+            }
         ]
-     
+
     }
-    
+
     ],
     tags:[
         {
@@ -637,7 +638,7 @@ var data={
             id:5,
             name:"Data",
             count:0
-            
+
         },
         {
             id:5,
@@ -684,7 +685,7 @@ var data={
             display:1,
             stats:{
 	            count:12
-			}                      
+			}
         }
     ],
 
@@ -694,7 +695,7 @@ var data={
             name:"Organzining Meeting",
             events:[
 	            {
-		            name: "Organzing Meeting"
+  		            name: "Organizing Meeting"
 	            }
             ],
             messages:[
@@ -710,55 +711,55 @@ var data={
             ],
             tasks:[
 	            {
-			         name:"Books Sapce"	,	        
+			         name:"Books Sapce"	,
 					 description:"Confirm location of the meeting space ",
 					 due_date:-7,
 					 skills:"organizer, admin"
 	            },
 	            {
-			         name:"Invite Participants",        
+			         name:"Invite Participants",
 					 description:"Send email blast with link to event to all of the participants that you want to attend.",
 					 due_date:-7,
 					 skills:"organizer"
 	            },
 	            {
-			         name:"Reminder Calls",		        
+			         name:"Reminder Calls",
 					 description:"Call all participants that have not RSVPed",
 					 due_date:-2,
 					 skills:"organizer"
 	            },
 	            {
-			         name:"Sign In Table",		        
+			         name:"Sign In Table",
 					 description:"Staff the sign in table",
 					 due_date:0,
 					 skills:""
 	            },
 	            {
-			         name:"Faciliatate Meetings",		        
+			         name:"Faciliatate Meetings",
 					 description:"Prepeare the agneda, run the meeting",
 					 due_date:0,
 					 skills:"facilitator"
 	            },
 	            {
-			         name:"Data Enter the Sign In Sheet",		        
+			         name:"Data Enter the Sign In Sheet",
 					 description:"",
 					 due_date:2,
 					 skills:"office"
 	            },
 	            {
-			         name:"Send weelcome email to new members",	        
+			         name:"Send weelcome email to new members",
 					 description:"For all new memebers that joined for the first time at the meeeting send them a welcome email and ask them to fill out the volunter form",
 					 due_date:2,
 					 skills:"office"
-	            },	            
+	            },
             ],
-	        
+
         }
     ],
     admin_user:{
         user_id:"",
         name:"Jane Doe",
-        facebook_id:"61731840657"        
+        facebook_id:"61731840657"
     },
     search:{
         term:"david",
@@ -776,7 +777,7 @@ var data={
                 last_name:"Davidson",
                 city:"Oakland",
                 region:"CA"
-            }        
+            }
         ]
     },
     campaign_tempaltes:[
@@ -802,13 +803,13 @@ var data={
 			 time_commitment:'',
 			 date:2017-01-15,
 			 logo:"",
-			 url:'',		 
+			 url:'',
 			 reqierments:{
 				 approval:false,
 				 question1:"",
 				 question2:"",
 				 question2:""
-			 }			 
+			 }
 		 },
 		 stats:{
 			acticvites:{
@@ -848,7 +849,7 @@ var data={
 					question2:'',
 					question23:'',
 				}
-			}	 
+			}
 		 ],
 		 groups:[
 			 {
@@ -873,11 +874,11 @@ var data={
 					event_rsvp_count:304,
 					event_url:'',
 					facebook_event_url:''
-				}			 
+				}
 			 }
-			 
+
 		 ]
-    
+
 	    }
     ]
 }

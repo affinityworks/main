@@ -1,0 +1,312 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="  crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>
+
+  <script type="text/javascript" src="vendor/swag/lib/swag.js"></script>
+
+
+  <script type="text/javascript" src="js/data.js"></script>
+  <script type="text/javascript" src="js/admin.js"></script>
+
+
+
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="css/admin.css" rel="stylesheet">
+  <link href="css/user.css" rel="stylesheet">
+
+  <style>
+
+
+  </style>
+</head>
+<body>
+  <div id="fb-root"></div>
+
+
+  <script id="groups-template" type="text/x-handlebars-template">
+
+    <div class="container">
+      <div class="pull-right">
+        <div class="btn-group">
+          <br>
+          <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+            <img src="http://graph.facebook.com/{{admin_user.facebook_id}}/picture?type=square&height=28&width=28">
+            {{admin_user.name}}
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href=""><i class="fa fa-user"></i> Account</a></li>
+            <li><a href=""><i class="fa fa-sign-out"></i> Logout</a></li>
+          </ul>
+        </div>
+      </div>
+      <h2> <img src="img/logo.png" height="50"> <a href="./">Affinity</a> <small>{{groups.0.name}}</small></h2>
+      <!--<div class="g-blue-wide-line"></div> -->
+
+      <hr>
+      <ul class="nav nav-tabs" role="tablist" id="translate_row-nav_en">
+        <li role="presentation" class="active group_nav-events"><a href="#group_pannel-events" aria-controls="groups_pannel-" role="tab" data-toggle="tab"><i class="fa fa-calendar"></i> Events</a></li>
+      </ul>
+
+      <div class="tab-content">
+
+        <div role="tabpanel" class="tab-pane" id="group_pannel-tools">
+
+        </div>
+
+
+        <div role="tabpanel" class="tab-pane active" id="group_pannel-events">
+          <h3><i class="fa fa-calendar"></i> Group Events</h3>
+          <div id="event_filter_controls">
+            Filter events by:
+            <select>
+              <option>Upcoming</option>
+              <option>Past</option>
+              <option>Date range</option>
+            </select>
+          </div>
+
+          <table class="table table-striped">
+            <thead>
+              <tr>
+
+                <th>Name</th>
+                <th>Organizer</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Invited</th>
+                <th>RSVPs</th>
+                <th>Atended</th>
+                <th></th>
+                <th></th>
+
+
+              </tr>
+            </thead>
+            <tbody>
+              {{#each groups.0.events}}
+              <tr>
+                <td><a href="" data-toggle="modal" data-target="#event_add-modal">{{name}}</a></td>
+                <td>{{group}}</td>
+                <td>{{formatDate date "%m/%d/%Y"}} {{start_time}} </td>
+                <td>{{status}}</td>
+                <td>{{stats.invited_count}}</a></td>
+                <td>{{stats.rsvp_count}}</a></td>
+                <td>{{stats.attended_count}}</td>
+                <td><a href="" class="event_list-toggle"> <i class="fa fa-users"></i> View Participants</a></td>
+
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+
+          <div class="event_task_list">
+            <br><h3>Event Tasks</h3><br>
+            <div class="pull-right"><a href="" data-toggle="modal" data-target="#task_add-modal"><i class="fa fa-plus"></i> Add Task</a></div>
+
+
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Task</th>
+                  <th>Due</th>
+                  <th>Assigned To</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                {{#each groups.0.events.[0].tasks}}
+                <tr>
+                  <td><input type="checkbox"></td>
+                  <td><a href="#" class="event_tast_detail-toggle">{{name}}</a></td>
+                  <td>{{due_date}}</td>
+                  <td><a href="#" class="user_detail-toggle">{{user.first_name}}</a></td>
+                  <td>{{status}}</td>
+                </tr>
+                {{/each}}
+              </tbody>
+            </table>
+
+
+
+          </div>
+          <div class="event_list">
+
+            <br><h3>Event Participants</h3><br>
+            <a href="" class="pull-right"><i class="fa fa-download"></i> Download Attendees</a>
+            <a href="" class="pull-right"><i class="fa fa-upload"></i> Upload Attendees&nbsp;&nbsp;</a>
+            <label>mark selected as:</label>
+
+            <button class="btn btn-sm btn-info" data-value="rsvp">Invited</button>
+            <button class="btn btn-sm btn-info" data-value="interested">Interested</button>
+            <button class="btn btn-sm btn-primary" data-value="rsvp">RSVPed</button>
+            <button class="btn btn-sm btn-danger" data-value="decline">Declined</button>
+            Attendance:
+            <button class="btn btn-sm btn-success" data-value="attened">Attended</button>
+            <button class="btn btn-sm btn-danger" data-value="not_attened">Not Attended</button>
+
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Name</th>
+                  <th>Phone</th>
+                  <th>RSVP Date</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#with groups.0.events.[0]}}
+                {{#each users.rsvp}}
+                <tr>
+                  <td><input type="checkbox"></td>
+                  <td>{{#if facebook_user_id}}<img src="http://graph.facebook.com/{{facebook_user_id}}/picture?type=square&height=28&width=28"> {{/if}}{{first_name}} {{last_name}}</td>
+                  <td>{{phone}}</td>
+                  <td>{{date}}</td>
+                  <td>Attending</td>
+                </tr>
+                {{/each}}
+                {{#each users.invited}}
+                <tr>
+                  <td><input type="checkbox"></td>
+                  <td>{{#if facebook_user_id}}<img src="http://graph.facebook.com/{{facebook_user_id}}/picture?type=square&height=28&width=28"> {{/if}}{{first_name}} {{last_name}}</td>
+                  <td>{{phone}}</td>
+                  <td>{{date}}</td>
+                  <td>Invited</td>
+                </tr>
+                {{/each}}
+
+                {{#each users.declined}}
+                <tr>
+                  <td><input type="checkbox"></td>
+                  <td>{{#if facebook_user_id}}<img src="http://graph.facebook.com/{{facebook_user_id}}/picture?type=square&height=28&width=28"> {{/if}}{{first_name}} {{last_name}}</td>
+                  <td>{{phone}}</td>
+                  <td>{{date}}</td>
+                  <td>Declined</td>
+                </tr>
+                {{/each}}
+
+                {{#each users.attended}}
+                <tr>
+                  <td><input type="checkbox"></td>
+                  <td>{{#if facebook_user_id}}<img src="http://graph.facebook.com/{{facebook_user_id}}/picture?type=square&height=28&width=28"> {{/if}}{{first_name}} {{last_name}}</td>
+                  <td>{{phone}}</td>
+                  <td>{{date}}</td>
+                  <td>Attended</td>
+                </tr>
+                {{/each}}
+
+                {{#each users.not_attended}}
+                <tr>
+                  <td><input type="checkbox"></td>
+                  <td>{{#if facebook_user_id}}<img src="http://graph.facebook.com/{{facebook_user_id}}/picture?type=square&height=28&width=28"> {{/if}}{{first_name}} {{last_name}}</td>
+                  <td>{{phone}}</td>
+                  <td>{{date}}</td>
+                  <td>Not Attend</td>
+                </tr>
+                {{/each}}
+
+                {{/with}}
+
+
+              </tbody>
+            </table>
+
+
+
+            <a href="" class="group_event-log_new_member--toggle"><i class="fa fa-pencil"></i> Enter who else attended the event </a>
+            <br><br>
+            <div class="group_event-log_new_member">
+              <h4>Enter attendee contact information </h4>
+              <small><a href="" class="group_event-log_new_member_row--add"><i class="fa fa-plus"></i> add rows</a></small>
+              <div class="row group_event-log_new_member_row">
+                <div class="form-group col-md-2 ">
+                  <label for=""> First Name</label>
+                  <input type="text" class="form-control" id="" value="">
+                </div>
+                <div class="form-group col-md-2 ">
+                  <label for=""> Last Name</label>
+                  <input type="text" class="form-control" id="" value="">
+                </div>
+                <div class="form-group col-md-2 ">
+                  <label for=""> Email</label>
+                  <input type="email" class="form-control" id="" value="">
+                </div>
+                <div class="form-group col-md-2 ">
+                  <label for=""> Phone</label>
+                  <input type="phone" class="form-control" id="" value="">
+                </div>
+                <div class="form-group col-md-2 ">
+                  <label for=""> Note</label>
+                  <input type="text" class="form-control" id="" value="">
+                </div>
+                <div class="form-group col-md-2 ">
+                  <label for=""> Tags</label>
+                  <input type="text" class="form-control" id="" value="">
+                </div>
+              </div>
+              <button class="btn btn-sm btn-primary pull-right">Save</button>
+            </div>
+
+
+          </div>
+        </div>
+
+
+
+
+        <div class="modal fade" id="group_update-add_modal" tabindex="-1" role="dialog" aria-labelledby="group_update-add_modal" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Add/Update Post</h4>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <label for="">Title</label>
+                  <input type="text" class="form-control" id="group_updates-title" value="{{groups.0.updates.sticky.0.title}}">
+                </div>
+                <div class="form-group">
+                  <label for="">Update Content</label>
+                  <textarea class="form-control" id="group_updates-content" rows="10">{{groups.0.updates.sticky.0.content}}</textarea>
+                </div>
+                <div class="form-group">
+                  <label for="">Date</label>
+                  <input type="date" class="form-control" id="group_updates-date" value="{{groups.0.updates.sticky.0.date}}">
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" id="group_updates-sticky" value="1" {{#is groups.0.updates.sticky.0.sticky 1 }}checked{{/is}}> Sticky at top of page
+                  </label>
+                </div>
+
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" id="group_updates-published" value="1"  {{#is groups.0.updates.sticky.0.published 1 }}checked{{/is}}> Published
+                  </label>
+                </div>
+
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-lg btn-success group_updates--add"><i class="fa fa-save"></i> Save</button>
+                <button class="btn btn-lg btn-danger group_updates--delete"><i class="fa fa-trash"></i> Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</script>
+<div id="content"></div>
+</body>
+</html>
