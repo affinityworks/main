@@ -169,6 +169,7 @@ GEM
     mini_portile2 (2.1.0)
     minitest (5.10.1)
     multi_json (1.12.1)
+    newrelic_rpm (3.18.1.330)
     nio4r (1.2.1)
     nokogiri (1.7.0.1)
       mini_portile2 (~> 2.1.0)
@@ -288,6 +289,7 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails (~> 5.0.4)
   listen (~> 3.0.5)
+  newrelic_rpm
   pg
   puma (~> 3.0)
   rails
