@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Api::EventRepresenterTest < ActiveSupport::TestCase
+class Api::EventsRepresenterTest < ActiveSupport::TestCase
   test 'from_json' do
     event = Event.new
     Api::EventRepresenter.new(event).from_json('{"name":"Womens March PDX"}')
