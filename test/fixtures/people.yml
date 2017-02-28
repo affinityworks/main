@@ -2,7 +2,8 @@
 
 one:
   id: 1
-  identifiers: MyString
+  identifiers:
+    - advocacycommons-1
   family_name: MyString
   given_name: MyString
   additional_name: MyString
@@ -25,7 +26,9 @@ one:
 
 two:
   id: 2
-  identifiers: MyString
+  identifiers:
+    - advocacycommons-2
+    - foreign_system-473298
   family_name: MyString
   given_name: MyString
   additional_name: MyString

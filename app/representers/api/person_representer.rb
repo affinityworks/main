@@ -6,7 +6,7 @@ class Api::PersonRepresenter < Roar::Decorator
   property :created_at, as: :created_date
   property :updated_at, as: :modified_date
 
-  property :identifiers, exec_context: :decorator
+  property :identifiers
 
   property :additional_name
   property :birthdate, decorator: Api::BirthdateRepresenter
@@ -32,9 +32,5 @@ class Api::PersonRepresenter < Roar::Decorator
 
   link :self do
     "/api/v1/people/#{represented.id}"
-  end
-
-  def identifiers
-    ["advocacycommons:#{represented.id}"]
   end
 end

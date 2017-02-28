@@ -24,6 +24,19 @@ class Person < ApplicationRecord
   #validates :given_name, presence: true
   #has_many :memberships
 
+  after_save :add_identifier
+
+  def add_identifier
+    identifier = "advocacycommons-#{id}"
+
+    if identifiers.include?(identifier)
+      true
+    else
+      identifiers << identifier
+      save
+    end
+  end
+
   def email_addresses
     Array.wrap email_address
   end
