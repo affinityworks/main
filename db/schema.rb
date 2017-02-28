@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170227013121) do
+ActiveRecord::Schema.define(version: 20170228025254) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -238,7 +238,7 @@ ActiveRecord::Schema.define(version: 20170227013121) do
     t.string   "description"
     t.string   "summary"
     t.string   "browser_url"
-    t.string   "type"
+    t.string   "osdi_type"
     t.string   "ticket_levels"
     t.string   "featured_image_url"
     t.integer  "total_accepted"

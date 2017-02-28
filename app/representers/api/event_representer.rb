@@ -17,6 +17,7 @@ class Api::EventRepresenter < Roar::Decorator
   property :instructions
   property :name
   property :origin_system
+  property :osdi_type, as: :type
   property :share_url
   property :start_date
   property :status
@@ -27,7 +28,6 @@ class Api::EventRepresenter < Roar::Decorator
   property :total_shares
   property :total_tickets
   property :transparency
-  property :type
   property :visibility
 
   link :self do
