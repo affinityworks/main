@@ -8,7 +8,7 @@ one:
   description: MyString
   summary: MyString
   browser_url: MyString
-  type:
+  osdi_type: ticketed
   ticket_levels: MyString
   featured_image_url: MyString
   total_accepted: 1
@@ -38,7 +38,7 @@ two:
   description: MyString
   summary: MyString
   browser_url: MyString
-  type:
+  osdi_type: open
   ticket_levels: MyString
   featured_image_url: MyString
   total_accepted: 1

@@ -12,5 +12,8 @@ class Api::EventTest < ActiveSupport::TestCase
 
     assert Event.where(name: 'March 14th Rally').exists
     assert Event.where(title: 'House Party for Progress').exists
+
+    event = Event.where(name: 'March 14th Rally').first!
+    assert_equal 'open', event.osdi_type
   end
 end
