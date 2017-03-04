@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class EventTest < ActiveSupport::TestCase
-  test "basic associations" do
+  test 'basic associations' do
     one = events(:one)
     assert_kind_of TicketLevel, one.ticket_levels.first
     assert_kind_of Address, one.location
