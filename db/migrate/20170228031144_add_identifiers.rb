@@ -37,6 +37,11 @@ class AddIdentifiers < ActiveRecord::Migration[5.0]
       t.text :identifiers, array: true, default: []
     end
 
+    remove_column :people, :identifiers
+    change_table :people do |t|
+      t.text :identifiers, array: true, default: []
+    end
+
     change_table :petitions do |t|
       t.text :identifiers, array: true, default: []
     end

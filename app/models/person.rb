@@ -24,12 +24,15 @@ class Person < ApplicationRecord
   #validates :given_name, presence: true
   #has_many :memberships
 
-  after_save :add_identifier
+  after_create :add_identifier
 
   def add_identifier
     identifier = "advocacycommons:#{id}"
 
-    if identifiers.include?(identifier)
+    if identifiers.nil?
+      self.identifiers = [identifier]
+      save
+    elsif identifiers.include?(identifier)
       true
     else
       identifiers << identifier

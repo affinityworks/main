@@ -418,7 +418,6 @@ ActiveRecord::Schema.define(version: 20170228031144) do
   end
 
   create_table "people", force: :cascade do |t|
-    t.string   "identifiers"
     t.string   "array"
     t.string   "family_name"
     t.string   "given_name"
@@ -446,6 +445,7 @@ ActiveRecord::Schema.define(version: 20170228031144) do
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
+    t.text     "identifiers",            default: [],              array: true
     t.index ["email"], name: "index_people_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_people_on_reset_password_token", unique: true, using: :btree
   end

@@ -4,6 +4,7 @@ class Api::EventRepresenter < Roar::Decorator
   include Roar::JSON::HAL
 
   property :created_at, as: :created_date
+  property :identifiers
   property :updated_at, as: :modified_date
 
   property :all_day
