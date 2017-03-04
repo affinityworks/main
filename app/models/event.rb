@@ -23,7 +23,7 @@ class Event < ApplicationRecord
   end
 
   def add_identifier
-    identifier = "advocacycommons-#{id}"
+    identifier = "advocacycommons:#{id}"
 
     if identifiers.include?(identifier)
       true

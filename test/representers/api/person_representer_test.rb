@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Api::PersonRepresenterTest < ActiveSupport::TestCase
   test 'to_json' do
-    person = Person.new(family_name: 'Simpson', id: 17, identifiers: ['advocacycommons-17'])
+    person = Person.new(family_name: 'Simpson', id: 17, identifiers: ['advocacycommons:17'])
 
     json = JSON.parse(Api::PersonRepresenter.new(person).to_json)
     puts Api::PersonRepresenter.new(person).to_json

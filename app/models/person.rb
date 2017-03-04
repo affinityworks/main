@@ -27,7 +27,7 @@ class Person < ApplicationRecord
   after_save :add_identifier
 
   def add_identifier
-    identifier = "advocacycommons-#{id}"
+    identifier = "advocacycommons:#{id}"
 
     if identifiers.include?(identifier)
       true
