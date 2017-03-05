@@ -1,0 +1,27 @@
+engines:
+  brakeman:
+    enabled: true
+  # Fails
+  eslint:
+    enabled: false
+  rubocop:
+    enabled: true
+ratings:
+  paths:
+  - "**.rb"
+  - "**.coffee"
+  - "**.js"
+  - "**.jsx"
+  - "**.css"
+  - Gemfile.lock
+exclude_paths:
+- .codeclimate.yml
+- .eslintrc
+- bin/**/*
+- client/**/*
+- config/**/*
+- db/**/*
+- node_modules/**/*
+- script/**/*
+- test/**/*
+- vendor/**/*
