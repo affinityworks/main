@@ -25,7 +25,9 @@ class Event < ApplicationRecord
       Event.where('? = any (identifiers)', action_network_identifier).exists?
     end
 
-    events.each(&:save!)
+    transaction do
+      events.each(&:save!)
+    end
   end
 
   def add_identifier
