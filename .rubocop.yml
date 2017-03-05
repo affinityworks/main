@@ -18,3 +18,6 @@ Metrics/LineLength:
 
 Metrics/MethodLength:
   Max: 20
+
+Rails:
+  Enabled: true
