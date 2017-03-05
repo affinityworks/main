@@ -131,9 +131,8 @@
                 <input
 									id="GroupCity"
 									name="GroupCity"
-									placeholder="Group city"
+									placeholder="Group city *"
 									data-parsley-required
-									data-parsley-type="alphanum"
 									type="text" >
               </div>
 							<div class="control-group">
@@ -141,7 +140,7 @@
                 <input
 									id="GroupState"
 									name="GroupState"
-									placeholder="Group state"
+									placeholder="Group state *"
 									data-parsley-required
 									data-parsley-type="alphanum"
 									type="text" >
@@ -151,7 +150,7 @@
                 <input
 									id="GroupZip"
 									name="GroupZip"
-									placeholder="Group zip"
+									placeholder="Group zip *"
 									data-parsley-required
 									data-parsley-type="digits"
 									data-parsley-minlength="5"
@@ -261,7 +260,7 @@
 					groupOk = true;
 				} else {
 					$('.group-info-error-message')
-						.html('Please enter at least one: your group email, facebook page, twitter url, or group email.')
+						.html('Please enter at least one: your group email, Facebook page, or Twitter url.')
 						.toggleClass('filled', !groupOk);
 						formInstance.validationResult = false;
 				}
@@ -303,13 +302,13 @@
 							],
 
 							"custom_fields": {
-								"GroupName": $('#GroupName').val(),
-								"GroupEmail": $('#GroupEmail').val(),
-								"GroupPhoneNumber": $('#GroupPhoneNumber').val(),
-								"GroupFBpage": $('#GroupFBpage').val(),
-								"GroupTwitter": $('#GroupTwitter').val(),
-								"GroupWebsite": $('#GroupWebsite').val(),
-								"GroupPhoneNumber": $('#GroupPhoneNumber').val(),
+								// These are no longer going to match up 1:1 because we're using Indivisible's existing AN custom fields.  Be VERY careful when modifying these.
+								"Group Name": $('#GroupName').val(),
+								"Group email address": $('#GroupEmail').val(),
+								"Group phone number": $('#GroupPhoneNumber').val(),
+								"Group facebook link": $('#GroupFBpage').val(),
+								"Group twitter handle": $('#GroupTwitter').val(),
+								"Group website link": $('#GroupWebsite').val(),
 								"GroupCity" : $('#GroupCity').val(),
 								"GroupState" : $('#GroupState').val(),
 								"GroupZip" : $('#GroupZip').val(),
