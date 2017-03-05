@@ -10,7 +10,7 @@ class Event < ApplicationRecord
 
   after_save :add_identifier
 
-  scope :identifier, ->(identifier) { where('? = any (identifiers)', identifier) }
+  scope :any_identifier, ->(identifier) { where('? = any (identifiers)', identifier) }
 
   def add_identifier
     identifier = "advocacycommons:#{id}"
@@ -24,5 +24,13 @@ class Event < ApplicationRecord
       identifiers << identifier
       save
     end
+  end
+
+  def identifier(system_prefix)
+    identifiers.detect { |i| i["#{system_prefix}:"] }
+  end
+
+  def identifier_id(system_prefix)
+    identifier(system_prefix)&.split(':')&.second
   end
 end

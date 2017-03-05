@@ -31,7 +31,7 @@ class Api::Events
   def self.partition_events(events)
     events.partition do |event|
       action_network_identifier = event.identifiers.detect { |identifier| identifier['action_network:'] }
-      Event.identifier(action_network_identifier).exists?
+      Event.any_identifier(action_network_identifier).exists?
     end
   end
 
@@ -42,7 +42,7 @@ class Api::Events
     existing_events.each do |event|
       action_network_identifier = event.identifiers.detect { |identifier| identifier['action_network:'] }
       old_event = Event
-                  .identifier(action_network_identifier)
+                  .any_identifier(action_network_identifier)
                   .where('updated_at < ?', event.updated_at)
                   .first
 

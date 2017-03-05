@@ -4,7 +4,7 @@ class Api::EventsTest < ActiveSupport::TestCase
   test '.import!' do
     stub_request(:get, 'https://actionnetwork.org/api/v2/events')
       .with(headers: { 'OSDI-API-TOKEN' => 'test-token' })
-      .to_return(body: File.read("#{Rails.root}/test/fixtures/files/events.json"))
+      .to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'events.json')))
 
     travel_to Time.zone.local(2001) do
       Event.create!(
@@ -14,7 +14,7 @@ class Api::EventsTest < ActiveSupport::TestCase
     end
 
     assert Event.where(title: 'House Party for Progress').exists
-    assert Event.identifier('action_network:1efc3644-af25-4253-90b8-a0baf12dbd1e').exists
+    assert Event.any_identifier('action_network:1efc3644-af25-4253-90b8-a0baf12dbd1e').exists
 
     assert_difference 'Event.count', 1 do
       Api::Events.import!
@@ -34,7 +34,7 @@ class Api::EventsTest < ActiveSupport::TestCase
     ].sort
     assert_equal expected_identifiers, march_14_event.identifiers&.sort, 'identifiers'
 
-    updated_event = Event.identifier('action_network:a3c724db-2799-49a6-970a-7c3c0844645d').first!
+    updated_event = Event.any_identifier('action_network:a3c724db-2799-49a6-970a-7c3c0844645d').first!
     assert_equal 'Teach in', updated_event.title, 'Should update title'
   end
 end
