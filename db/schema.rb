@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170228031144) do
+ActiveRecord::Schema.define(version: 20170305221122) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -123,8 +123,9 @@ ActiveRecord::Schema.define(version: 20170228031144) do
     t.integer  "invited_by_id"
     t.integer  "event_id"
     t.integer  "referrer_datum_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.text     "identifiers",       default: [],              array: true
     t.index ["event_id"], name: "index_attendances_on_event_id", using: :btree
     t.index ["invited_by_id"], name: "index_attendances_on_invited_by_id", using: :btree
     t.index ["person_id"], name: "index_attendances_on_person_id", using: :btree
