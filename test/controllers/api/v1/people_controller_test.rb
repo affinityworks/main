@@ -5,7 +5,6 @@ class Api::V1::PeopleControllerTest < ActionDispatch::IntegrationTest
 
   test '#index' do
     Api::User.create!(osdi_api_token: 'CF32zTyg_KXFQbPzvoz3', name: 'API friend', email: 'api@example.com')
-    p Person.first.identifiers
 
     get api_v1_people_url, headers: { 'OSDI-API-Token': 'CF32zTyg_KXFQbPzvoz3' }, as: :json
     assert_response :success
@@ -17,7 +16,7 @@ class Api::V1::PeopleControllerTest < ActionDispatch::IntegrationTest
     people = json['_embedded']['osdi:people']
     assert_equal 2, people.size
 
-    assert people.all? { |p| p['identifiers'].size == 1 }, 'Each person should have an identifier'
+    assert people.all? { |p| p['identifiers'].size >= 1 }, 'Each person should have an identifier'
     assert people.all? { |p| p['created_date'].present? }, 'Each person should have created_date'
     assert people.all? { |p| p['modified_date'].present? }, 'Each person should have modified_date'
 
