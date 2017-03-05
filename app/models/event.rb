@@ -19,7 +19,13 @@ class Event < ApplicationRecord
     client.get(uri: 'https://actionnetwork.org/api/v2/events', as: 'application/json') do |request|
       request['OSDI-API-TOKEN'] = Rails.application.secrets.action_network_api_token
     end
-    events.events.each(&:save!)
+
+    events = events.events.reject do |event|
+      action_network_identifier = event.identifiers.detect { |identifier| identifier['action_network:'] }
+      Event.where('? = any (identifiers)', action_network_identifier).exists?
+    end
+
+    events.each(&:save!)
   end
 
   def add_identifier

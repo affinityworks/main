@@ -6,7 +6,10 @@ class Api::EventTest < ActiveSupport::TestCase
       .with(headers: { 'OSDI-API-TOKEN' => 'test-token' })
       .to_return(body: File.read("#{Rails.root}/test/fixtures/files/events.json"))
 
-    assert_difference 'Event.count', 2 do
+    assert Event.where(title: 'House Party for Progress').exists
+    assert Event.where(identifiers: 'action_network:1efc3644-af25-4253-90b8-a0baf12dbd1e').exists
+
+    assert_difference 'Event.count', 1 do
       Event.import!
     end
 
@@ -18,7 +21,7 @@ class Api::EventTest < ActiveSupport::TestCase
     assert_equal 'open', march_14_event.osdi_type
 
     expected_identifiers = [
-      'osdi_sample_system:d91b4b2e-ae0e-4cd3-9ed7-d0ec501b0bc3',
+      'action_network:d91b4b2e-ae0e-4cd3-9ed7-d0ec501b0bc3',
       'foreign_system:1',
       "advocacycommons:#{march_14_event.id}"
     ].sort
