@@ -5,6 +5,11 @@ module Api::Identifiers
     after_create :add_identifier
 
     scope :any_identifier, ->(identifier) { where('? = any (identifiers)', identifier) }
+
+    # Older copy of a record from a foreign system?
+    # If local updated_at is more recent, assume there are local modifications (and not 'outdated')
+    # If local updated_at is same as foreign modified_date, assume there are no updates
+    scope :outdated_existing, ->(record, system_prefix) { any_identifier(record.identifier(system_prefix)).where('updated_at < ?', record.updated_at) }
   end
 
   def add_identifier

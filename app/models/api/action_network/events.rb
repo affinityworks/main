@@ -40,11 +40,7 @@ class Api::ActionNetwork::Events
   def self.update_events(existing_events)
     updated_count = 0
     existing_events.each do |event|
-      action_network_identifier = event.identifiers.detect { |identifier| identifier['action_network:'] }
-      old_event = Event
-                  .any_identifier(action_network_identifier)
-                  .where('updated_at < ?', event.updated_at)
-                  .first
+      old_event = Event.outdated_existing(event, 'action_network').first
 
       if old_event
         updated_count += 1

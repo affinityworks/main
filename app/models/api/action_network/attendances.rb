@@ -32,9 +32,7 @@ class Api::ActionNetwork::Attendances
 
   def self.partition_attendances(attendances)
     attendances.partition do |attendance|
-      # TODO: Make this Model.identifier and rename identifier scope
       action_network_identifier = attendance.identifier('action_network')
-      # TODO: make this a single method on model
       Attendance.any_identifier(action_network_identifier).exists?
     end
   end
@@ -44,12 +42,7 @@ class Api::ActionNetwork::Attendances
   def self.update_attendances(existing_attendances)
     updated_count = 0
     existing_attendances.each do |attendance|
-      action_network_identifier = attendance.identifier('action_network')
-      # TODO: make this a single scope?
-      old_attendance = Attendance
-                       .any_identifier(action_network_identifier)
-                       .where('updated_at < ?', attendance.updated_at)
-                       .first
+      old_attendance = Attendance.outdated_existing(attendance, 'action_network').first
 
       if old_attendance
         updated_count += 1
