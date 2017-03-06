@@ -1,0 +1,152 @@
+{
+  "per_page": 25,
+  "page": 1,
+  "_links": {
+    "next": {
+      "href": "https://actionnetwork.org/api/v2/people?page=2"
+    },
+    "osdi:people": [
+      {
+        "href": "https://actionnetwork.org/api/v2/people/d91b4b2e-ae0e-4cd3-9ed7-d0ec501b0bc3"
+      },
+      {
+        "href": "https://actionnetwork.org/api/v2/people/1efc3644-af25-4253-90b8-a0baf12dbd1e"
+      }
+    ],
+    "curies": [
+      {
+        "name": "osdi",
+        "href": "https://actionnetwork.org/docs/v2/{rel}",
+        "templated": true
+      },
+      {
+        "name": "action_network",
+        "href": "https://actionnetwork.org/docs/v2/{rel}",
+        "templated": true
+      }
+    ],
+    "self": {
+      "href": "https://actionnetwork.org/api/v2/people"
+    }
+  },
+  "_embedded": {
+    "osdi:people": [
+      {
+        "created_date": "2014-02-06T16:04:05Z",
+        "modified_date": "2014-02-20T21:16:57Z",
+        "given_name": "John",
+        "family_name": "Smith",
+        "identifiers": [
+          "action_network:d91b4b2e-ae0e-4cd3-9ed7-d0ec501b0bc3"
+        ],
+        "modified_at": "2014-03-20T21:04:31Z",
+        "email_addresses": [
+          {
+            "primary": true,
+            "address": "johnsmith@mail.com",
+            "status": "subscribed"
+          }
+        ],
+        "postal_addresses": [
+          {
+            "primary": true,
+            "locality": "Washington",
+            "region": "DC",
+            "postal_code": "20009",
+            "country": "US",
+            "language": "en",
+            "location": {
+              "latitude": 38.919,
+              "longitude": -77.0379,
+              "accuracy": "Approximate"
+            }
+          }
+        ],
+        "languages_spoken": [
+          "en"
+        ],
+        "_links": {
+          "self": {
+            "href": "https://actionnetwork.org/api/v2/people/d91b4b2e-ae0e-4cd3-9ed7-d0ec501b0bc3"
+          },
+          "osdi:attendances": {
+            "href": "https://actionnetwork.org/api/v2/people/d91b4b2e-ae0e-4cd3-9ed7-d0ec501b0bc3/attendances"
+          },
+          "osdi:signatures": {
+            "href": "https://actionnetwork.org/api/v2/people/d91b4b2e-ae0e-4cd3-9ed7-d0ec501b0bc3/signatures"
+          },
+          "osdi:submissions": {
+            "href": "https://actionnetwork.org/api/v2/people/d91b4b2e-ae0e-4cd3-9ed7-d0ec501b0bc3/submissions"
+          },
+          "osdi:donations": {
+            "href": "https://actionnetwork.org/api/v2/people/d91b4b2e-ae0e-4cd3-9ed7-d0ec501b0bc3/donations"
+          },
+          "osdi:outreaches": {
+            "href": "https://actionnetwork.org/api/v2/people/d91b4b2e-ae0e-4cd3-9ed7-d0ec501b0bc3/outreaches"
+          },
+          "osdi:taggings": {
+            "href": "https://actionnetwork.org/api/v2/people/d91b4b2e-ae0e-4cd3-9ed7-d0ec501b0bc3/taggings"
+          }
+        }
+      },
+      {
+        "created_date": "2014-02-06T16:04:05Z",
+        "modified_date": "2014-02-20T21:16:57Z",
+        "given_name": "Jane",
+        "family_name": "Doe",
+        "identifiers": [
+          "action_network:1efc3644-af25-4253-90b8-a0baf12dbd1e"
+        ],
+        "modified_at": "2014-03-20T20:44:13Z",
+        "email_addresses": [
+          {
+            "primary": true,
+            "address": "janedoe@mail.com",
+            "status": "unsubscribed"
+          }
+        ],
+        "postal_addresses": [
+          {
+            "primary": true,
+            "locality": "Washington",
+            "region": "DC",
+            "postal_code": "20009",
+            "country": "US",
+            "language": "en",
+            "location": {
+              "latitude": 38.919,
+              "longitude": -77.0379,
+              "accuracy": "Approximate"
+            }
+          }
+        ],
+        "languages_spoken": [
+          "en"
+        ],
+        "_links": {
+          "self": {
+            "href": "https://actionnetwork.org/api/v2/people/1efc3644-af25-4253-90b8-a0baf12dbd1e"
+          },
+          "osdi:attendances": {
+            "href": "https://actionnetwork.org/api/v2/people/1efc3644-af25-4253-90b8-a0baf12dbd1e/attendances"
+          },
+          "osdi:signatures": {
+            "href": "https://actionnetwork.org/api/v2/people/1efc3644-af25-4253-90b8-a0baf12dbd1e/signatures"
+          },
+          "osdi:submissions": {
+            "href": "https://actionnetwork.org/api/v2/people/1efc3644-af25-4253-90b8-a0baf12dbd1e/submissions"
+          },
+          "osdi:donations": {
+            "href": "https://actionnetwork.org/api/v2/people/1efc3644-af25-4253-90b8-a0baf12dbd1e/donations"
+          },
+          "osdi:outreaches": {
+            "href": "https://actionnetwork.org/api/v2/people/1efc3644-af25-4253-90b8-a0baf12dbd1e/outreaches"
+          },
+          "osdi:taggings": {
+            "href": "https://actionnetwork.org/api/v2/people/1efc3644-af25-4253-90b8-a0baf12dbd1e/taggings"
+          }
+        }
+      }
+    ]
+  }
+}

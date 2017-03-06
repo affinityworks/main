@@ -3,7 +3,7 @@ class Api::Collections::PeopleRepresenter < Api::Collections::Representer
     api_v1_people_url
   end
 
-  collection :to_a, as: 'osdi:people', class: Person, extend: Api::Resources::PersonRepresenter, embedded: true
+  collection :people, as: 'osdi:people', class: Person, extend: Api::Resources::PersonRepresenter, embedded: true
 
   link :previous do
     api_v1_people_path(page: represented.prev_page) unless represented.first_page?
