@@ -58,7 +58,6 @@ class Api::ActionNetwork::Attendances
   def self.add_associations(new_attendances, event_id)
     new_attendances.each do |attendance|
       attendance.event_id = event_id
-      # TODO: this is too simple
       person = Person.create!(identifiers: ["action_network:#{attendance.person_uuid}"], given_name: 'TBD')
       attendance.person_id = person.id
     end

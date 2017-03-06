@@ -6,14 +6,6 @@ class Api::ActionNetwork::AttendancesTest < ActiveSupport::TestCase
       .with(headers: { 'OSDI-API-TOKEN' => 'test-token' })
       .to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'attendances.json')))
 
-    # TODO: test new attendance, new person
-    # TODO: test existing attendance, person, no updates
-    # TODO: test existing person, no updates
-    # TODO: test existing attendance, person, update attendance
-    # TODO: test existing attendance, person, update person
-    # TODO: test existing attendance, person, update person, attendance
-    # TODO: test existing person, update person
-
     event = Event.any_identifier('action_network:1efc3644-af25-4253-90b8-a0baf12dbd1e').first!
 
     assert_difference 'Attendance.count', 2 do
