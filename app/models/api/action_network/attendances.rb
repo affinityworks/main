@@ -20,14 +20,14 @@ class Api::ActionNetwork::Attendances
   end
 
   def self.request_attendances_from_action_network(action_network_event_id)
-    attendances = Api::ActionNetwork::Attendances.new
-    client = Api::ActionNetwork::AttendancesRepresenter.new(attendances)
+    action_network = Api::ActionNetwork::Attendances.new
+    client = Api::ActionNetwork::AttendancesRepresenter.new(action_network)
     client.get(uri: "https://actionnetwork.org/api/v2/events/#{action_network_event_id}/attendances", as: 'application/json') do |request|
       request['OSDI-API-TOKEN'] = Rails.application.secrets.action_network_api_token
     end
 
-    logger.debug "Api::ActionNetwork::Attendances#import! attendances: #{attendances.attendances.size}"
-    attendances.attendances
+    logger.debug "Api::ActionNetwork::Attendances#import! attendances: #{action_network.attendances.size}"
+    action_network.attendances
   end
 
   def self.partition_attendances(attendances)

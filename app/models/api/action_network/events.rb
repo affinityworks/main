@@ -18,14 +18,14 @@ class Api::ActionNetwork::Events
   end
 
   def self.request_events_from_action_network
-    events = Api::ActionNetwork::Events.new
-    client = Api::EventsRepresenter.new(events)
+    action_network = Api::ActionNetwork::Events.new
+    client = Api::EventsRepresenter.new(action_network)
     client.get(uri: 'https://actionnetwork.org/api/v2/events', as: 'application/json') do |request|
       request['OSDI-API-TOKEN'] = Rails.application.secrets.action_network_api_token
     end
 
-    logger.debug "Api::ActionNetwork::Events#import! events: #{events.events.size}"
-    events.events
+    logger.debug "Api::ActionNetwork::Events#import! events: #{action_network.events.size}"
+    action_network.events
   end
 
   def self.partition_events(events)
