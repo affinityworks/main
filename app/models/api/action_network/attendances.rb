@@ -1,31 +1,32 @@
-class Api::Attendances
+class Api::ActionNetwork::Attendances
   attr_accessor :attendances
 
   # Import event attendances from Action Network OSDI API.
   # Requires ACTION_NETWORK_API_TOKEN set in ENV.
   # There are no external endpoints for this method yet.
   def self.import!(event)
-    event_id = event.identifier_id('action_network')
-    logger.info "Api::Attendances#import! from https://actionnetwork.org/api/v2/events/#{event_id}/attendances"
+    action_network_event_id = event.identifier_id('action_network')
+    logger.info "Api::ActionNetwork::Attendances#import! from https://actionnetwork.org/api/v2/events/#{action_network_event_id}/attendances"
 
-    attendances = request_attendances_from_action_network(event_id)
+    attendances = request_attendances_from_action_network(action_network_event_id)
 
     Attendance.transaction do
       existing_attendances, new_attendances = partition_attendances(attendances)
       updated_count = update_attendances(existing_attendances)
-      logger.debug "Api::Attendances#import! new: #{new_attendances.size} existing: #{existing_attendances.size} updated: #{updated_count}"
+      logger.debug "Api::ActionNetwork::Attendances#import! new: #{new_attendances.size} existing: #{existing_attendances.size} updated: #{updated_count}"
+      new_attendances = add_associations(new_attendances, event.id)
       new_attendances.each(&:save!)
     end
   end
 
-  def self.request_attendances_from_action_network(event_id)
-    attendances = Api::Attendances.new
-    client = Api::AttendancesRepresenter.new(attendances)
-    client.get(uri: "https://actionnetwork.org/api/v2/events/#{event_id}/attendances", as: 'application/json') do |request|
+  def self.request_attendances_from_action_network(action_network_event_id)
+    attendances = Api::ActionNetwork::Attendances.new
+    client = Api::ActionNetwork::AttendancesRepresenter.new(attendances)
+    client.get(uri: "https://actionnetwork.org/api/v2/events/#{action_network_event_id}/attendances", as: 'application/json') do |request|
       request['OSDI-API-TOKEN'] = Rails.application.secrets.action_network_api_token
     end
 
-    logger.debug "Api::Attendances#import! attendances: #{attendances.attendances.size}"
+    logger.debug "Api::ActionNetwork::Attendances#import! attendances: #{attendances.attendances.size}"
     attendances.attendances
   end
 
@@ -59,6 +60,15 @@ class Api::Attendances
     end
 
     updated_count
+  end
+
+  def self.add_associations(new_attendances, event_id)
+    new_attendances.each do |attendance|
+      attendance.event_id = event_id
+      # TODO: this is too simple
+      person = Person.create!(identifiers: ["action_network:#{attendance.person_uuid}"], given_name: 'TBD')
+      attendance.person_id = person.id
+    end
   end
 
   def self.logger

@@ -1,30 +1,30 @@
-class Api::Events
+class Api::ActionNetwork::Events
   attr_accessor :events
 
   # Import events from Action Network OSDI API.
   # Requires ACTION_NETWORK_API_TOKEN set in ENV.
   # There are no external endpoints for this method yet.
   def self.import!
-    logger.info 'Api::Events#import! from https://actionnetwork.org/api/v2/events'
+    logger.info 'Api::ActionNetwork::Events#import! from https://actionnetwork.org/api/v2/events'
 
     events = request_events_from_action_network
 
     Event.transaction do
       existing_events, new_events = partition_events(events)
       updated_count = update_events(existing_events)
-      logger.debug "Api::Events#import! new: #{new_events.size} existing: #{existing_events.size} updated: #{updated_count}"
+      logger.debug "Api::ActionNetwork::Events#import! new: #{new_events.size} existing: #{existing_events.size} updated: #{updated_count}"
       new_events.each(&:save!)
     end
   end
 
   def self.request_events_from_action_network
-    events = Api::Events.new
+    events = Api::ActionNetwork::Events.new
     client = Api::EventsRepresenter.new(events)
     client.get(uri: 'https://actionnetwork.org/api/v2/events', as: 'application/json') do |request|
       request['OSDI-API-TOKEN'] = Rails.application.secrets.action_network_api_token
     end
 
-    logger.debug "Api::Events#import! events: #{events.events.size}"
+    logger.debug "Api::ActionNetwork::Events#import! events: #{events.events.size}"
     events.events
   end
 

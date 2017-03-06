@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Api::EventsTest < ActiveSupport::TestCase
+class Api::ActionNetwork::EventsTest < ActiveSupport::TestCase
   test '.import!' do
     stub_request(:get, 'https://actionnetwork.org/api/v2/events')
       .with(headers: { 'OSDI-API-TOKEN' => 'test-token' })
@@ -17,7 +17,7 @@ class Api::EventsTest < ActiveSupport::TestCase
     assert Event.any_identifier('action_network:1efc3644-af25-4253-90b8-a0baf12dbd1e').exists
 
     assert_difference 'Event.count', 1 do
-      Api::Events.import!
+      Api::ActionNetwork::Events.import!
     end
 
     assert Event.where(name: 'March 14th Rally').exists
