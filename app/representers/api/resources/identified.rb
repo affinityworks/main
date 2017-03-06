@@ -1,4 +1,4 @@
-module Api::IndependentResource
+module Api::Resources::Identified
   extend ActiveSupport::Concern
 
   included do

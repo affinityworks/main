@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Api::AddressRepresenterTest < ActiveSupport::TestCase
+class Api::Resources::AddressRepresenterTest < ActiveSupport::TestCase
   test 'to_json' do
     address = Address.new(
       latitude: 45.15,
@@ -8,7 +8,7 @@ class Api::AddressRepresenterTest < ActiveSupport::TestCase
       postal_code: '13035'
     )
 
-    json = JSON.parse(Api::AddressRepresenter.new(address).to_json)
+    json = JSON.parse(Api::Resources::AddressRepresenter.new(address).to_json)
 
     assert_equal '13035', json['postal_code'], 'postal_code'
     assert_equal 45.15, json['location']['latitude'], 'location.latitude'

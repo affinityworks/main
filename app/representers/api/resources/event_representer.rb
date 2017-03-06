@@ -1,5 +1,5 @@
-class Api::EventRepresenter < Api::Representer
-  include Api::IndependentResource
+class Api::Resources::EventRepresenter < Api::Resources::Representer
+  include Api::Resources::Identified
 
   property :all_day
   property :all_day_date

@@ -1,4 +1,6 @@
 class Api::ActionNetwork::Attendances
+  include Api::ActionNetwork::Collections
+
   attr_accessor :attendances
 
   # Import event attendances from Action Network OSDI API.

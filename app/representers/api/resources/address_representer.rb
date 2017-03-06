@@ -1,4 +1,4 @@
-class Api::AddressRepresenter < Api::Representer
+class Api::Resources::AddressRepresenter < Api::Resources::Representer
   property :address_type
   property :country
   property :language

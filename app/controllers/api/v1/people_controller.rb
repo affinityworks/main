@@ -8,7 +8,7 @@ class Api::V1::PeopleController < ApplicationController
     respond_to do |format|
       format.json do
         people = Person.includes(:email_address).page(params[:page]).per(params[:per_page])
-        render json: Api::PeopleRepresenter.new(people, request)
+        render json: Api::Collections::PeopleRepresenter.new(people, request)
       end
     end
   end

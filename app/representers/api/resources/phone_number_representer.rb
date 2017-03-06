@@ -1,4 +1,4 @@
-class Api::PhoneNumberRepresenter < Api::Representer
+class Api::Resources::PhoneNumberRepresenter < Api::Resources::Representer
   property :country
   property :description
   property :do_not_call, as: :do_not_call?

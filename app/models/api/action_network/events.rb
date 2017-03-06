@@ -1,4 +1,6 @@
 class Api::ActionNetwork::Events
+  include Api::ActionNetwork::Collections
+
   attr_accessor :events
 
   # Import events from Action Network OSDI API.
@@ -19,7 +21,7 @@ class Api::ActionNetwork::Events
 
   def self.request_events_from_action_network
     action_network = Api::ActionNetwork::Events.new
-    client = Api::EventsRepresenter.new(action_network)
+    client = Api::Collections::EventsRepresenter.new(action_network)
     client.get(uri: 'https://actionnetwork.org/api/v2/events', as: 'application/json') do |request|
       request['OSDI-API-TOKEN'] = Rails.application.secrets.action_network_api_token
     end
