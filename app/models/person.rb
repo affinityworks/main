@@ -20,8 +20,9 @@ class Person < ApplicationRecord
   has_many :events, through: :attendances
   has_many :answers
   has_many :memberships
-  has_many :groups, :through => :memberships
-  #validates :given_name, presence: true
+  has_many :groups, through: :memberships
+
+  validate :name_or_email
   #has_many :memberships
 
   after_create :add_identifier
@@ -40,7 +41,27 @@ class Person < ApplicationRecord
     end
   end
 
+  def identifier?(identifier)
+    identifiers.include? identifier
+  end
+
   def email_addresses
     Array.wrap email_address
+  end
+
+  def name_or_email
+    if given_name.blank? && family_name.blank? && email.blank?
+      errors.add :email, ', given_name and family_name cannot be blank'
+    end
+  end
+
+  # Override Devise lib/devise/models/validatable.rb
+  def email_required?
+    password.present?
+  end
+
+  # Override Devise lib/devise/models/validatable.rb
+  def password_required?
+    email.present? && (!persisted? || !password.nil? || !password_confirmation.nil?)
   end
 end
