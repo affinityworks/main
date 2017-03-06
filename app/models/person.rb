@@ -1,4 +1,6 @@
 class Person < ApplicationRecord
+  include Api::Identifiers
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable,
@@ -24,26 +26,6 @@ class Person < ApplicationRecord
 
   validate :name_or_email
   #has_many :memberships
-
-  after_create :add_identifier
-
-  def add_identifier
-    identifier = "advocacycommons:#{id}"
-
-    if identifiers.nil?
-      self.identifiers = [identifier]
-      save
-    elsif identifiers.include?(identifier)
-      true
-    else
-      identifiers << identifier
-      save
-    end
-  end
-
-  def identifier?(identifier)
-    identifiers.include? identifier
-  end
 
   def email_addresses
     Array.wrap email_address
