@@ -1,8 +1,4 @@
-require 'roar/json/hal'
-
-class Api::PhoneNumberRepresenter < Roar::Decorator
-  include Roar::JSON::HAL
-
+class Api::PhoneNumberRepresenter < Api::Representer
   property :country
   property :description
   property :do_not_call, as: :do_not_call?

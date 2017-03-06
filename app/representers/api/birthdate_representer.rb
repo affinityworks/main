@@ -1,8 +1,4 @@
-require 'roar/json/hal'
-
-class Api::BirthdateRepresenter < Roar::Decorator
-  include Roar::JSON::HAL
-
+class Api::BirthdateRepresenter < Api::Representer
   property :day
   property :month
   property :year

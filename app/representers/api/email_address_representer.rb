@@ -1,8 +1,4 @@
-require 'roar/json/hal'
-
-class Api::EmailAddressRepresenter < Roar::Decorator
-  include Roar::JSON::HAL
-
+class Api::EmailAddressRepresenter < Api::Representer
   property :address
   property :primary?, as: :primary
 end

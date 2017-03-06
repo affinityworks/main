@@ -1,11 +1,5 @@
-require 'roar/json/hal'
-
-class Api::PersonRepresenter < Roar::Decorator
-  include Roar::JSON::HAL
-
-  property :created_at, as: :created_date
-  property :identifiers
-  property :updated_at, as: :modified_date
+class Api::PersonRepresenter < Api::Representer
+  include Api::IndependentResource
 
   property :additional_name
   property :birthdate, decorator: Api::BirthdateRepresenter
@@ -28,8 +22,4 @@ class Api::PersonRepresenter < Roar::Decorator
 
   collection :phone_numbers, decorator: Api::PhoneNumberRepresenter
   collection :profiles, decorator: Api::ProfileRepresenter
-
-  link :self do
-    "/api/v1/people/#{represented.id}"
-  end
 end

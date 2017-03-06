@@ -1,8 +1,4 @@
-require 'roar/json/hal'
-
-class Api::ProfileRepresenter < Roar::Decorator
-  include Roar::JSON::HAL
-
+class Api::ProfileRepresenter < Api::Representer
   property :handle
   property :id
   property :provider

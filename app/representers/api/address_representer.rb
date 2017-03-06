@@ -1,8 +1,4 @@
-require 'roar/json/hal'
-
-class Api::AddressRepresenter < Roar::Decorator
-  include Roar::JSON::HAL
-
+class Api::AddressRepresenter < Api::Representer
   property :address_type
   property :country
   property :language
