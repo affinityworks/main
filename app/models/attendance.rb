@@ -1,7 +1,7 @@
 class Attendance < ApplicationRecord
   include Api::Identifiers
 
-  # TODO: these are just for import and need to move
+  # Temporary attributes used for import from Action Network
   attr_accessor :event_uuid
   attr_accessor :person_uuid
 
