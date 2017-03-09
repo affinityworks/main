@@ -1,8 +1,6 @@
 class Api::ActionNetwork::People
   include Api::ActionNetwork::Collections
 
-  attr_accessor :people
-
   # Import people from Action Network OSDI API.
   # Requires ACTION_NETWORK_API_TOKEN set in ENV.
   # There are no external endpoints for this method yet.
@@ -18,6 +16,7 @@ class Api::ActionNetwork::People
       new_people.each(&:save!)
     end
   end
+
   def self.request_people_from_action_network
     action_network = Api::ActionNetwork::People.new
     client = Api::Collections::PeopleRepresenter.new(action_network)
