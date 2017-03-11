@@ -5,7 +5,7 @@ class Api::Resources::AddressRepresenter < Api::Resources::Representer
   property :locality
   property :occupation
   property :postal_code
-  property :primary?, as: :primary
+  property :primary
   property :region
   property :status
   property :venue
