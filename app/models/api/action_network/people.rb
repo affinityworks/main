@@ -5,10 +5,11 @@ class Api::ActionNetwork::People
     people = request_people_from_action_network
 
     Person.transaction do
+      people.each(&:sanitize_email_addresses)
       existing_people, new_people = partition_people(people)
       updated_count = update_people(existing_people)
       logger.debug "Api::ActionNetwork::People#import! new: #{new_people.size} existing: #{existing_people.size} updated: #{updated_count}"
-      new_people.each(&:save!)
+      create new_people
     end
   end
 
@@ -46,6 +47,17 @@ class Api::ActionNetwork::People
     end
 
     updated_count
+  end
+
+  def self.create(new_people)
+    new_people.each do |person|
+      begin
+        person.save!
+      rescue StandardError => e
+        logger.error person
+        raise e
+      end
+    end
   end
 
   def self.logger
