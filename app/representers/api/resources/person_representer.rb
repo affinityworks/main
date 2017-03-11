@@ -16,10 +16,10 @@ class Api::Resources::PersonRepresenter < Api::Resources::Representer
   property :party_identification
   property :source
 
-  collection :email_addresses, decorator: Api::Resources::EmailAddressRepresenter
-  property :employer_address, decorator: Api::Resources::AddressRepresenter
-  collection :personal_addresses, as: :postal_addresses, decorator: Api::Resources::AddressRepresenter
+  collection :email_addresses, decorator: Api::Resources::EmailAddressRepresenter, class: EmailAddress
+  property :employer_address, decorator: Api::Resources::AddressRepresenter, class: EmployerAddress
+  collection :personal_addresses, as: :postal_addresses, decorator: Api::Resources::AddressRepresenter, class: PersonalAddress
 
-  collection :phone_numbers, decorator: Api::Resources::PhoneNumberRepresenter
-  collection :profiles, decorator: Api::Resources::ProfileRepresenter
+  collection :phone_numbers, decorator: Api::Resources::PhoneNumberRepresenter, class: PhoneNumber
+  collection :profiles, decorator: Api::Resources::ProfileRepresenter, class: Profile
 end
