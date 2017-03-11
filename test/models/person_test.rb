@@ -66,4 +66,10 @@ class PersonTest < ActiveSupport::TestCase
     )
     assert !person.valid?
   end
+
+  test 'create with identifiers' do
+    person = Person.create!(given_name: 'Bart', identifiers: ['sncc:123'])
+    person.reload
+    assert_equal ["advocacycommons:#{person.id}", 'sncc:123'], person.identifiers.sort, 'identifiers'
+  end
 end

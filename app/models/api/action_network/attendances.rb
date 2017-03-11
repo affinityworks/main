@@ -9,7 +9,7 @@ class Api::ActionNetwork::Attendances
       existing_attendances, new_attendances = partition_attendances(attendances)
       updated_count = update_attendances(existing_attendances)
       logger.debug "Api::ActionNetwork::Attendances#import! new: #{new_attendances.size} existing: #{existing_attendances.size} updated: #{updated_count}"
-      new_attendances = add_associations(new_attendances, event.id)
+      new_attendances = associate_with_person(new_attendances, event.id)
       new_attendances.each(&:save!)
     end
   end
@@ -50,10 +50,10 @@ class Api::ActionNetwork::Attendances
     updated_count
   end
 
-  def self.add_associations(new_attendances, event_id)
+  def self.associate_with_person(new_attendances, event_id)
     new_attendances.each do |attendance|
       attendance.event_id = event_id
-      person = Person.create!(identifiers: ["action_network:#{attendance.person_uuid}"], given_name: 'TBD')
+      person = Person.any_identifier("action_network:#{attendance.person_uuid}").first!
       attendance.person_id = person.id
     end
   end
