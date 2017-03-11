@@ -34,7 +34,7 @@ class Person < ApplicationRecord
 
   def name_or_email
     if given_name.blank? && family_name.blank? && email.blank?
-      errors.add :email, ', given_name and family_name cannot be blank'
+      errors.add :email, 'and given_name and family_name cannot be blank'
     end
   end
 
