@@ -13,7 +13,15 @@ class Api::EventTest < ActiveSupport::TestCase
     assert Event.where(name: 'March 14th Rally').exists
     assert Event.where(title: 'House Party for Progress').exists
 
-    event = Event.where(name: 'March 14th Rally').first!
-    assert_equal 'open', event.osdi_type
+    march_14_event = Event.where(name: 'March 14th Rally').first!
+
+    assert_equal 'open', march_14_event.osdi_type
+
+    expected_identifiers = [
+      'osdi_sample_system:d91b4b2e-ae0e-4cd3-9ed7-d0ec501b0bc3',
+      'foreign_system:1',
+      "advocacycommons:#{march_14_event.id}"
+    ].sort
+    assert_equal expected_identifiers, march_14_event.identifiers&.sort, 'identifiers'
   end
 end
