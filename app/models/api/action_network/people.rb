@@ -1,9 +1,4 @@
 class Api::ActionNetwork::People
-  include Api::ActionNetwork::Collections
-
-  # Import people from Action Network OSDI API.
-  # Requires ACTION_NETWORK_API_TOKEN set in ENV.
-  # There are no external endpoints for this method yet.
   def self.import!
     logger.info 'Api::ActionNetwork::People#import! from https://actionnetwork.org/api/v2/people'
 
@@ -18,14 +13,14 @@ class Api::ActionNetwork::People
   end
 
   def self.request_people_from_action_network
-    action_network = Api::ActionNetwork::People.new
-    client = Api::Collections::PeopleRepresenter.new(action_network)
+    collection = Api::Collections::People.new
+    client = Api::Collections::PeopleRepresenter.new(collection)
     client.get(uri: 'https://actionnetwork.org/api/v2/people', as: 'application/json') do |request|
       request['OSDI-API-TOKEN'] = Rails.application.secrets.action_network_api_token
     end
 
-    logger.debug "Api::ActionNetwork::People#import! people: #{action_network.people.size}"
-    action_network.people
+    logger.debug "Api::ActionNetwork::People#import! people: #{collection.people.size}"
+    collection.people
   end
 
   def self.partition_people(people)
@@ -42,12 +37,12 @@ class Api::ActionNetwork::People
     existing_people.each do |person|
       old_person = Person.outdated_existing(person, 'action_network').first
 
-      if old_person
-        updated_count += 1
-        attributes = person.attributes
-        attributes.delete_if { |k, v| v.nil? }
-        old_person.update_attributes! attributes
-      end
+      next unless old_person
+
+      updated_count += 1
+      attributes = person.attributes
+      attributes.delete_if { |_, v| v.nil? }
+      old_person.update_attributes! attributes
     end
 
     updated_count
