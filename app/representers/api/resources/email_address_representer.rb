@@ -1,4 +1,6 @@
 class Api::Resources::EmailAddressRepresenter < Api::Resources::Representer
   property :address
-  property :primary?, as: :primary
+  property :address_type
+  property :primary
+  property :status
 end
