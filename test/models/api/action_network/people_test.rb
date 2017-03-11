@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Api::ActionNetwork::PeopleTest < ActiveSupport::TestCase
   test '.import!' do
-    person_not_from_action_network = Person.create!(family_name: 'Flanders', updated_at: Time.zone.local(2016))
+    person_not_from_action_network = Person.create!(updated_at: Time.zone.local(2016))
 
     unchanged_person = Person.create!(
       identifiers: ['action_network:d91b4b2e-ae0e-4cd3-9ed7-d0ec501b0bc3'],

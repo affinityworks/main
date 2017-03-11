@@ -14,9 +14,8 @@ class PersonTest < ActiveSupport::TestCase
     assert_kind_of Address, one.employer_address
   end
 
-  test 'should not save person without name' do
-    person = Person.new
-    assert_not person.save
+  test 'should save person without name' do
+    Person.create!
   end
 
   test 'membership in groups' do
@@ -34,6 +33,20 @@ class PersonTest < ActiveSupport::TestCase
     end
   end
 
+  test '#sanitize_email_addresses' do
+    Person.new.sanitize_email_addresses
+
+    person = Person.new(
+      email_addresses: [
+        EmailAddress.new(primary: true, address: ''),
+        EmailAddress.new(primary: false, address: 'good.one@example.com'),
+        EmailAddress.new(primary: false, address: '12@1.c')
+      ]
+    )
+    person.sanitize_email_addresses
+    assert_equal ['good.one@example.com'], person.email_addresses.map(&:address)
+  end
+
   test 'email + email addresses' do
     Person.create!(
       email: 'lisa@example.com',
@@ -45,7 +58,7 @@ class PersonTest < ActiveSupport::TestCase
     )
   end
 
-  test 'primary email must match #email' do
+  test 'primary email_address may differ from #email' do
     person = Person.new(
       email: 'ls127@example.com',
       password: 'secret123',
@@ -54,21 +67,21 @@ class PersonTest < ActiveSupport::TestCase
         EmailAddress.new(primary: false, address: 'ls127@aol.com')
       ]
     )
-    assert !person.valid?, 'person with mismtached email addresses should be invalid'
+    assert person.valid?, 'person with mismtached email addresses is valid'
   end
 
-  test '#email must be set to primary email address' do
+  test 'blank #email and primary email address is valid' do
     person = Person.new(
       email_addresses: [
         EmailAddress.new(primary: true, address: 'lisa@example.com'),
         EmailAddress.new(primary: false, address: 'ls127@aol.com')
       ]
     )
-    assert !person.valid?
+    assert person.valid?
   end
 
   test 'create with identifiers' do
-    person = Person.create!(given_name: 'Bart', identifiers: ['sncc:123'])
+    person = Person.create!(identifiers: ['sncc:123'])
     person.reload
     assert_equal ["advocacycommons:#{person.id}", 'sncc:123'], person.identifiers.sort, 'identifiers'
   end

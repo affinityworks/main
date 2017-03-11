@@ -1,5 +1,7 @@
-# Devise assumes each Person has a single `email` attribute/DB column in people table.
-# OSDI data model has multiple email_addresses.
+# Devise assumes each Person has a single `email` attribute/DB column in people table. OSDI data model has multiple email_addresses.
+# The `email` attribute is used for authentication. The `email_addresses` association is for mailing list subscriptions, event attendances,
+# etc., and never used for authentication. People may have a different`email` than their primary `email_address`. This isn't intuitive,
+# but is the simplest compromise between OSDI and Devise.
 class Person < ApplicationRecord
   include Api::Identifiers
 
@@ -24,24 +26,8 @@ class Person < ApplicationRecord
   has_many :memberships
   has_many :groups, through: :memberships
 
-  validate :name_or_email
-  validate :email_matches_primary_email_address
-
-  # Need to check against #email before save, so can't use `belongs_to`
   def primary_email_address
     email_addresses.detect(&:primary?)&.address
-  end
-
-  def name_or_email
-    if given_name.blank? && family_name.blank? && email.blank?
-      errors.add :email, 'and given_name and family_name cannot be blank'
-    end
-  end
-
-  def email_matches_primary_email_address
-    if email.present? && primary_email_address.present? && email != primary_email_address
-      errors.add :email, "'#{email}' must match primary email_addresses '#{primary_email_address}'"
-    end
   end
 
   # Override Devise lib/devise/models/validatable.rb
@@ -52,5 +38,9 @@ class Person < ApplicationRecord
   # Override Devise lib/devise/models/validatable.rb
   def password_required?
     email.present? && (!persisted? || !password.nil? || !password_confirmation.nil?)
+  end
+
+  def sanitize_email_addresses
+    self.email_addresses = email_addresses.select(&:valid_address_format?)
   end
 end
