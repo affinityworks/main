@@ -10,6 +10,24 @@ class Api::Resources::PersonRepresenterTest < ActiveSupport::TestCase
     assert_equal ['advocacycommons:17'], json['identifiers'], 'identifiers'
   end
 
+  test 'from_json' do
+    Rails.backtrace_cleaner.remove_silencers!
+    person = Person.new
+    Api::Resources::PersonRepresenter.new(person).from_json(
+      '{"email_addresses": [
+          {
+              "primary": true,
+              "address": "johnsmith@mail.com",
+              "address_type": "Personal",
+              "status": "subscribed"
+          }
+      ]}'
+    )
+    assert_equal 1, person.email_addresses.size
+    assert_equal 'johnsmith@mail.com', person.email_addresses.first.address
+    assert_equal '', person.email
+  end
+
   test 'custom_fields' do
     person = Person.create!(
       custom_fields: { foo: 'bar', baz: 'bat' },
