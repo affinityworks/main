@@ -64,3 +64,5 @@ Export
 * Api::Collections::PersonRepresenter
 
 Duplicate code is extracted into superclasses and modules, expect for the modules in Api::ActionNetwork which still share similar code.
+
+It may be possible to replace Api::Collections::Collection classes with representers by clever use of the Roar API.

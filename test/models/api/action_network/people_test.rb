@@ -22,7 +22,11 @@ class Api::ActionNetwork::PeopleTest < ActiveSupport::TestCase
       .with(headers: { 'OSDI-API-TOKEN' => 'test-token' })
       .to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'people.json')))
 
-    assert_difference 'Person.count', 1 do
+    stub_request(:get, 'https://actionnetwork.org/api/v2/people?page=2')
+      .with(headers: { 'OSDI-API-TOKEN' => 'test-token' })
+      .to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'people_page_2.json')))
+
+    assert_difference 'Person.count', 2 do
       Api::ActionNetwork::People.import!
     end
 
@@ -45,5 +49,8 @@ class Api::ActionNetwork::PeopleTest < ActiveSupport::TestCase
     assert_equal Time.utc(2014, 12, 31), person_with_updates.updated_at
     assert_equal "Joseph Fitzgerald O'Malley", person_with_updates.given_name
     assert_equal 'Quimby', person_with_updates.family_name
+
+    # From page 2
+    assert Person.any_identifier('action_network:65345d7d-cd24-466a-a698-4a7686ef684f').exists?, 'Page through import response'
   end
 end

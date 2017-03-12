@@ -1,4 +1,5 @@
 class Api::Collections::Collection
+  attr_accessor :next
   attr_accessor :page
   attr_accessor :total_pages
   attr_accessor :total_records
