@@ -1,4 +1,6 @@
-class Api::ActionNetwork::Attendances
+module Api::ActionNetwork::Attendances
+  include Api::ActionNetwork::Import
+
   def self.import!(event)
     action_network_event_id = event.identifier_id('action_network')
     logger.info "Api::ActionNetwork::Attendances#import! from https://actionnetwork.org/api/v2/events/#{action_network_event_id}/attendances"

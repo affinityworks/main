@@ -1,4 +1,6 @@
-class Api::ActionNetwork::Events
+module Api::ActionNetwork::Events
+  include Api::ActionNetwork::Import
+
   def self.import!
     logger.info 'Api::ActionNetwork::Events#import! from https://actionnetwork.org/api/v2/events'
 

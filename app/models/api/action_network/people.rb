@@ -1,4 +1,6 @@
-class Api::ActionNetwork::People
+module Api::ActionNetwork::People
+  include Api::ActionNetwork::Import
+
   def self.import!
     existing_count = 0
     new_count = 0
