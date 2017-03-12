@@ -1,19 +1,27 @@
 class Api::ActionNetwork::People
   def self.import!
-    uri = 'https://actionnetwork.org/api/v2/people'
-    logger.info "Api::ActionNetwork::People#import! from #{uri}"
+    existing_count = 0
+    new_count = 0
+    updated_count = 0
+    next_uri = 'https://actionnetwork.org/api/v2/people'
+
+    logger.info "Api::ActionNetwork::People#import! from #{next_uri}"
 
     Person.transaction do
-      while uri
-        collection = request_people_from_action_network(uri)
-        people = collection.people
+      while next_uri
+        people, next_uri = request_people_from_action_network(next_uri)
+
         people.each(&:sanitize_email_addresses)
+
         existing_people, new_people = partition_people(people)
+
+        new_count += new_people.size
+        existing_count += existing_count.size
         updated_count = update_people(existing_people)
-        logger.debug "Api::ActionNetwork::People#import! new: #{new_people.size} existing: #{existing_people.size} updated: #{updated_count}"
+
         create new_people
-        uri = collection.next
       end
+      logger.debug "Api::ActionNetwork::People#import! new: #{new_count} existing: #{existing_count} updated: #{updated_count}"
     end
   end
 
@@ -26,8 +34,8 @@ class Api::ActionNetwork::People
 
     logger.debug "Api::ActionNetwork::People#import! people: #{collection.people.size} page: #{collection.page}"
 
-    collection.next = client.links['next']&.href
-    collection
+    next_uri = client.links['next']&.href
+    [collection.people, next_uri]
   end
 
   def self.partition_people(people)
