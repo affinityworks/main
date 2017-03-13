@@ -24,13 +24,13 @@ Supports import of Events, People, and Attendances. Requires ACTION_NETWORK_API_
 
 ```
 DISABLE_SPRING=1 ACTION_NETWORK_API_TOKEN=${token} rails c
-Api::People.import!
-Api::Events.import!
+Api::ActionNetwork::People.import!
+Api::ActionNetwork::Events.import!
 
 # Just an example. In a complete application, you would choose the event from a UI.
 event = Event.last
 
-Api::Attendances.import!(event)
+Api::ActionNetwork::Attendances.import!(event)
 ```
 
 (The DISABLE_SPRING is needed if ACTION_NETWORK_API_TOKEN wasn't set before Rails Spring started.)
