@@ -1,5 +1,5 @@
 module Api::ActionNetwork::People
-  include Api::ActionNetwork::Import
+  extend Api::ActionNetwork::Import
 
   def self.import!
     existing_count = 0
@@ -74,9 +74,5 @@ module Api::ActionNetwork::People
         raise e
       end
     end
-  end
-
-  def self.logger
-    Person.logger
   end
 end

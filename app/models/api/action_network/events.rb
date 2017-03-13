@@ -1,5 +1,5 @@
 module Api::ActionNetwork::Events
-  include Api::ActionNetwork::Import
+  extend Api::ActionNetwork::Import
 
   def self.import!
     logger.info 'Api::ActionNetwork::Events#import! from https://actionnetwork.org/api/v2/events'
@@ -48,9 +48,5 @@ module Api::ActionNetwork::Events
     end
 
     updated_count
-  end
-
-  def self.logger
-    Event.logger
   end
 end

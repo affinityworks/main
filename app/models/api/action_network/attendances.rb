@@ -1,5 +1,5 @@
 module Api::ActionNetwork::Attendances
-  include Api::ActionNetwork::Import
+  extend Api::ActionNetwork::Import
 
   def self.import!(event)
     action_network_event_id = event.identifier_id('action_network')
@@ -58,9 +58,5 @@ module Api::ActionNetwork::Attendances
       person = Person.any_identifier("action_network:#{attendance.person_uuid}").first!
       attendance.person_id = person.id
     end
-  end
-
-  def self.logger
-    Attendance.logger
   end
 end
