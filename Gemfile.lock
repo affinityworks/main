@@ -91,6 +91,7 @@ GEM
       sprockets (>= 3.5.2)
     builder (3.2.3)
     byebug (9.0.6)
+    cancancan (1.16.0)
     case_transform (0.2)
       activesupport
     coffee-rails (4.2.1)
@@ -235,6 +236,9 @@ GEM
       railties (>= 4.2.0, < 5.1)
     roar (1.1.0)
       representable (~> 3.0.0)
+    roar-jsonapi (0.0.3)
+      representable (~> 3.0, >= 3.0.3)
+      roar (~> 1.1)
     safe_yaml (1.0.4)
     sass (3.4.23)
     sass-rails (5.0.6)
@@ -295,6 +299,7 @@ DEPENDENCIES
   bootstrap (~> 4.0.0.alpha5)
   browserify-rails
   byebug
+  cancancan
   coffee-rails (~> 4.2)
   devise
   geokit-rails
@@ -313,6 +318,7 @@ DEPENDENCIES
   rails
   react-rails
   roar
+  roar-jsonapi
   sass-rails (~> 5.0)
   spring
   spring-watcher-listen (~> 2.0.0)
