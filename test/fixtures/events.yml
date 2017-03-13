@@ -29,12 +29,13 @@ one:
   creator_id: 1
   organizer_id: 1
   modified_by_id: 1
+  identifiers: ['advocacycommons:1']
 
 two:
   id: 2
   origin_system: MyString
   name: MyString
-  title: MyString
+  title: House Party for Progress
   description: MyString
   summary: MyString
   browser_url: MyString
@@ -59,3 +60,4 @@ two:
   creator_id: 2
   organizer_id: 2
   modified_by_id: 2
+  identifiers: ['action_network:1efc3644-af25-4253-90b8-a0baf12dbd1e', 'advocacycommons:2']

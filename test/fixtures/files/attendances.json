@@ -1,0 +1,77 @@
+{
+  "total_pages": 1,
+  "per_page": 25,
+  "page": 1,
+  "total_records": 20,
+  "_links": {
+    "self": {
+      "href": "https://actionnetwork.org/api/v2/events/1efc3644-af25-4253-90b8-a0baf12dbd1e/attendances"
+    },
+    "osdi:attendance": [
+      {
+        "href": "https://actionnetwork.org/api/v2/events/1efc3644-af25-4253-90b8-a0baf12dbd1e/attendances/d51ca19e-9fe9-11e3-a2e9-12313d316c29"
+      },
+      {
+        "href": "https://actionnetwork.org/api/v2/events/1efc3644-af25-4253-90b8-a0baf12dbd1e/attendances/d51c9b4a-9fe9-11e3-a2e9-12313d316c29"
+      }
+    ],
+    "curies": [
+      {
+        "name": "osdi",
+        "href": "https://actionnetwork.org/docs/v2/{rel}",
+        "templated": true
+      },
+      {
+        "name": "action_network",
+        "href": "https://actionnetwork.org/docs/v2/{rel}",
+        "templated": true
+      }
+    ]
+  },
+  "_embedded": {
+    "osdi:attendances": [
+      {
+        "identifiers": [
+	      "action_network:d51ca19e-9fe9-11e3-a2e9-12313d316c29"
+        ],
+        "created_date": "2014-02-18T20:52:59Z",
+        "modified_date": "2014-02-18T20:53:00Z",
+        "status": "accepted",
+        "action_network:person_id": "ceef7e23-4617-4af8-bd0f-60029299d8cd",
+        "action_network:event_id": "1efc3644-af25-4253-90b8-a0baf12dbd1e",
+        "_links": {
+          "self": {
+            "href": "https://actionnetwork.org/api/v2/events/1efc3644-af25-4253-90b8-a0baf12dbd1e/attendances/d51ca19e-9fe9-11e3-a2e9-12313d316c29"
+          },
+          "osdi:event": {
+            "href": "https://actionnetwork.org/api/v2/events/1efc3644-af25-4253-90b8-a0baf12dbd1e"
+          },
+          "osdi:person": {
+            "href": "https://actionnetwork.org/api/v2/people/ceef7e23-4617-4af8-bd0f-60029299d8cd"
+          }
+        }
+      },
+      {
+        "identifiers": [
+	      "action_network:d51c9b4a-9fe9-11e3-a2e9-12313d316c29"
+        ],
+        "created_date": "2014-02-18T20:23:42Z",
+        "modified_date": "2014-02-18T20:23:42Z",
+        "status": "accepted",
+        "action_network:person_id": "06d13a33-6824-493b-a922-95e793f269d3",
+        "action_network:event_id": "1efc3644-af25-4253-90b8-a0baf12dbd1e",
+        "_links": {
+          "self": {
+            "href": "https://actionnetwork.org/api/v2/events/1efc3644-af25-4253-90b8-a0baf12dbd1e/attendances/d51c9b4a-9fe9-11e3-a2e9-12313d316c29"
+          },
+          "osdi:event": {
+            "href": "https://actionnetwork.org/api/v2/events/1efc3644-af25-4253-90b8-a0baf12dbd1e"
+          },
+          "osdi:person": {
+            "href": "https://actionnetwork.org/api/v2/people/06d13a33-6824-493b-a922-95e793f269d3"
+          }
+        }
+      }
+    ]
+  }
+}

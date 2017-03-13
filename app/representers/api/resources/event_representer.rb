@@ -1,11 +1,5 @@
-require 'roar/json/hal'
-
-class Api::EventRepresenter < Roar::Decorator
-  include Roar::JSON::HAL
-
-  property :created_at, as: :created_date
-  property :identifiers
-  property :updated_at, as: :modified_date
+class Api::Resources::EventRepresenter < Api::Resources::Representer
+  include Api::Resources::Identified
 
   property :all_day
   property :all_day_date
@@ -30,8 +24,4 @@ class Api::EventRepresenter < Roar::Decorator
   property :total_tickets
   property :transparency
   property :visibility
-
-  link :self do
-    "/api/v1/events/#{represented.id}"
-  end
 end

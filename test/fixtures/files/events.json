@@ -28,7 +28,7 @@
         "osdi:events": [
             {
                 "identifiers": [
-                    "osdi_sample_system:d91b4b2e-ae0e-4cd3-9ed7-d0ec501b0bc3",
+                    "action_network:d91b4b2e-ae0e-4cd3-9ed7-d0ec501b0bc3",
                     "foreign_system:1"
                 ],
                 "origin_system": "OSDI Sample System",
@@ -120,7 +120,7 @@
             },
             {
                 "identifiers": [
-                    "osdi_sample_system:1efc3644-af25-4253-90b8-a0baf12dbd1e"
+                    "action_network:1efc3644-af25-4253-90b8-a0baf12dbd1e"
                 ],
                 "origin_system": "OSDI Sample System",
                 "created_date": "2014-03-20T20:44:13Z",
@@ -186,6 +186,69 @@
                 "_links": {
                     "self": {
                         "href": "https://actionnetwork.org/api/v2/events/1efc3644-af25-4253-90b8-a0baf12dbd1e"
+                    },
+                    "osdi:attendances": {
+                        "href": "https://actionnetwork.org/api/v2/events/1efc3644-af25-4253-90b8-a0baf12dbd1e/attendances"
+                    },
+                    "osdi:creator": {
+                        "href": "https://actionnetwork.org/api/v2/people/65345d7d-cd24-466a-a698-4a7686ef684f"
+                    },
+                    "osdi:organizer": {
+                        "href": "https://actionnetwork.org/api/v2/people/8a625981-67a4-4457-8b55-2e30b267b2c2"
+                    },
+                    "osdi:modified_by": {
+                        "href": "https://actionnetwork.org/api/v2/people/c945d6fe-929e-11e3-a2e9-12313d316c29"
+                    },
+                    "osdi:record_attendance_helper": {
+                        "href": "https://actionnetwork.org/api/v2/events/1efc3644-af25-4253-90b8-a0baf12dbd1e/record_attendance_helper"
+                    }
+                }
+            },
+            {
+                "identifiers": [
+                    "action_network:a3c724db-2799-49a6-970a-7c3c0844645d"
+                ],
+                "origin_system": "OSDI Sample System",
+                "created_date": "2014-03-20T20:44:13Z",
+                "modified_date": "2015-04-20T20:19:09Z",
+                "title": "Teach in",
+                "description": "Educate yourself",
+                "instructions": "<p>This is an invite-only event, but feel free to bring a friend!</p>",
+                "browser_url": "http://actionnetwork.org/events/party-for-progress",
+                "type": "open",
+                "status": "tentative",
+                "start_date": "2015-01-05T19:00:00Z",
+                "end_date": "2015-01-05T21:00:00Z",
+                "all_day": false,
+                "guests_can_invite_others": false,
+                "capacity": 10,
+                "transparence": "opaque",
+                "visibility": "private",
+                "location": {
+                    "venue": "My House",
+                    "address_lines": [
+                        "1600 Pennsylvania Ave. NW"
+                    ],
+                    "locality": "Washington",
+                    "region": "DC",
+                    "postal_code": "20001",
+                    "country": "US",
+                    "language": "EN",
+                    "location": {
+                        "latitude": 38.9002101,
+                        "longitude": -77.0359252,
+                        "accuracy": "Rooftop"
+                    }
+                },
+                "reminders": [
+                    {
+                        "method": "email",
+                        "minutes": 1440
+                    }
+                ],
+                "_links": {
+                    "self": {
+                        "href": "https://actionnetwork.org/api/v2/events/a3c724db-2799-49a6-970a-7c3c0844645d"
                     },
                     "osdi:attendances": {
                         "href": "https://actionnetwork.org/api/v2/events/1efc3644-af25-4253-90b8-a0baf12dbd1e/attendances"

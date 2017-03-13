@@ -7,13 +7,18 @@ class Api::V1::PeopleController < ApplicationController
   def index
     respond_to do |format|
       format.json do
-        people = Person.includes(:email_address).page(params[:page]).per(params[:per_page])
-        render json: Api::PeopleRepresenter.new(people, request)
+        render json: Api::Collections::PeopleRepresenter.new(people, request)
       end
     end
   end
 
   private
+
+  def people
+    Api::Collections::People.new(
+      Person.includes(:email_addresses).page(params[:page]).per(params[:per_page])
+    )
+  end
 
   def authenticate_api_user_from_token!
     osdi_api_token = request.headers['HTTP_OSDI_API_TOKEN'] || params[:osdi_api_token]

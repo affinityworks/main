@@ -4,7 +4,7 @@ class Api::EntryPoint
   end
 
   def osdi_version
-    '1.0'
+    '1.1.2'
   end
 
   def product_name

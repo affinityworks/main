@@ -1,15 +1,11 @@
-require 'roar/json/hal'
-
-class Api::AddressRepresenter < Roar::Decorator
-  include Roar::JSON::HAL
-
+class Api::Resources::AddressRepresenter < Api::Resources::Representer
   property :address_type
   property :country
   property :language
   property :locality
   property :occupation
   property :postal_code
-  property :primary?, as: :primary
+  property :primary
   property :region
   property :status
   property :venue

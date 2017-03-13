@@ -123,8 +123,9 @@ ActiveRecord::Schema.define(version: 20170228031144) do
     t.integer  "invited_by_id"
     t.integer  "event_id"
     t.integer  "referrer_datum_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.text     "identifiers",       default: [],              array: true
     t.index ["event_id"], name: "index_attendances_on_event_id", using: :btree
     t.index ["invited_by_id"], name: "index_attendances_on_invited_by_id", using: :btree
     t.index ["person_id"], name: "index_attendances_on_person_id", using: :btree
@@ -446,7 +447,7 @@ ActiveRecord::Schema.define(version: 20170228031144) do
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
     t.text     "identifiers",            default: [],              array: true
-    t.index ["email"], name: "index_people_on_email", unique: true, using: :btree
+    t.index ["email"], name: "index_people_on_email", using: :btree
     t.index ["reset_password_token"], name: "index_people_on_reset_password_token", unique: true, using: :btree
   end
 
