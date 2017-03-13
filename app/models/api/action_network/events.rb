@@ -1,13 +1,17 @@
 module Api::ActionNetwork::Events
   extend Api::ActionNetwork::Import
 
+  def self.resource_class
+    Event
+  end
+
   def self.import!
     logger.info 'Api::ActionNetwork::Events#import! from https://actionnetwork.org/api/v2/events'
 
     events = request_events_from_action_network
 
     Event.transaction do
-      existing_events, new_events = partition_events(events)
+      existing_events, new_events = partition(events)
       updated_count = update_events(existing_events)
       logger.debug "Api::ActionNetwork::Events#import! new: #{new_events.size} existing: #{existing_events.size} updated: #{updated_count}"
       new_events.each(&:save!)
@@ -23,13 +27,6 @@ module Api::ActionNetwork::Events
 
     logger.debug "Api::ActionNetwork::Events#import! events: #{collection.events.size}"
     collection.events
-  end
-
-  def self.partition_events(events)
-    events.partition do |event|
-      action_network_identifier = event.identifiers.detect { |identifier| identifier['action_network:'] }
-      Event.any_identifier(action_network_identifier).exists?
-    end
   end
 
   # Update all attributes for events that already exist and have not been modified after import

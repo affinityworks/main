@@ -1,6 +1,10 @@
 module Api::ActionNetwork::People
   extend Api::ActionNetwork::Import
 
+  def self.resource_class
+    Person
+  end
+
   def self.import!
     existing_count = 0
     new_count = 0
@@ -15,7 +19,7 @@ module Api::ActionNetwork::People
 
         people.each(&:sanitize_email_addresses)
 
-        existing_people, new_people = partition_people(people)
+        existing_people, new_people = partition(people)
 
         new_count += new_people.size
         existing_count += existing_count.size
@@ -38,13 +42,6 @@ module Api::ActionNetwork::People
 
     next_uri = client.links['next']&.href
     [collection.people, next_uri]
-  end
-
-  def self.partition_people(people)
-    people.partition do |person|
-      action_network_identifier = person.identifiers.detect { |identifier| identifier['action_network:'] }
-      Person.any_identifier(action_network_identifier).exists?
-    end
   end
 
   # Update all attributes for people that already exist and have not been modified after import

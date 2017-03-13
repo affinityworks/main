@@ -1,6 +1,10 @@
 module Api::ActionNetwork::Attendances
   extend Api::ActionNetwork::Import
 
+  def self.resource_class
+    Attendance
+  end
+
   def self.import!(event)
     action_network_event_id = event.identifier_id('action_network')
     logger.info "Api::ActionNetwork::Attendances#import! from https://actionnetwork.org/api/v2/events/#{action_network_event_id}/attendances"
@@ -8,7 +12,7 @@ module Api::ActionNetwork::Attendances
     attendances = request_attendances_from_action_network(action_network_event_id)
 
     Attendance.transaction do
-      existing_attendances, new_attendances = partition_attendances(attendances)
+      existing_attendances, new_attendances = partition(attendances)
       updated_count = update_attendances(existing_attendances)
       logger.debug "Api::ActionNetwork::Attendances#import! new: #{new_attendances.size} existing: #{existing_attendances.size} updated: #{updated_count}"
       new_attendances = associate_with_person(new_attendances, event.id)
@@ -25,13 +29,6 @@ module Api::ActionNetwork::Attendances
 
     logger.debug "Api::ActionNetwork::Attendances#import! attendances: #{collection.attendances.size}"
     collection.attendances
-  end
-
-  def self.partition_attendances(attendances)
-    attendances.partition do |attendance|
-      action_network_identifier = attendance.identifier('action_network')
-      Attendance.any_identifier(action_network_identifier).exists?
-    end
   end
 
   # Update all attributes for attendances that already exist and have not been modified after import
