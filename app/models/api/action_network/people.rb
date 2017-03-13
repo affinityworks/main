@@ -5,6 +5,14 @@ module Api::ActionNetwork::People
     Person
   end
 
+  def self.collection_class
+    Api::Collections::People
+  end
+
+  def self.representer_class
+    Api::Collections::PeopleRepresenter
+  end
+
   def self.import!
     existing_count = 0
     new_count = 0
@@ -15,7 +23,7 @@ module Api::ActionNetwork::People
 
     Person.transaction do
       while next_uri
-        people, next_uri = request_people_from_action_network(next_uri)
+        people, next_uri = request_resources_from_action_network(next_uri)
 
         people.each(&:sanitize_email_addresses)
 
@@ -29,19 +37,6 @@ module Api::ActionNetwork::People
       end
       logger.debug "Api::ActionNetwork::People#import! new: #{new_count} existing: #{existing_count} updated: #{updated_count}"
     end
-  end
-
-  def self.request_people_from_action_network(uri)
-    collection = Api::Collections::People.new
-    client = Api::Collections::PeopleRepresenter.new(collection)
-    client.get(uri: uri, as: 'application/json') do |request|
-      request['OSDI-API-TOKEN'] = Rails.application.secrets.action_network_api_token
-    end
-
-    logger.debug "Api::ActionNetwork::People#import! people: #{collection.people.size} page: #{collection.page}"
-
-    next_uri = client.links['next']&.href
-    [collection.people, next_uri]
   end
 
   # Update all attributes for people that already exist and have not been modified after import
