@@ -1,8 +1,4 @@
 require 'test_helper'
-require 'representable/debug'
-require 'roar/json'
-require 'roar/json/hal'
-require 'roar/client'
 
 class Api::ActionNetwork::PeopleRepresenterTest < ActiveSupport::TestCase
   test '#from_json' do
