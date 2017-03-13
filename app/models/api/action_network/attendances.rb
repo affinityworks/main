@@ -31,7 +31,7 @@ module Api::ActionNetwork::Attendances
         new_attendances = associate_with_person(new_attendances, event.id)
         new_attendances.each(&:save!)
       end
-      logger.debug "Api::ActionNetwork::People#import! new: #{new_count} existing: #{existing_count} updated: #{updated_count}"
+      logger.debug "Api::ActionNetwork::Attendances#import! new: #{new_count} existing: #{existing_count} updated: #{updated_count}"
     end
   end
 
