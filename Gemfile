@@ -23,8 +23,6 @@ gem 'pg'
 gem 'graphql'
 gem 'graphql-rails-resolver'
 gem 'graphiql-rails'
-gem 'react-rails'
-
 
 gem 'newrelic_rpm'
 

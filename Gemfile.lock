@@ -74,10 +74,6 @@ GEM
     arel (7.1.4)
     autoprefixer-rails (6.7.0)
       execjs
-    babel-source (5.8.35)
-    babel-transpiler (0.7.0)
-      babel-source (>= 4.0, < 6)
-      execjs (~> 2.0)
     bcrypt (3.1.11)
     bootstrap (4.0.0.alpha6)
       autoprefixer-rails (>= 6.0.3)
@@ -102,7 +98,6 @@ GEM
     coffee-script-source (1.12.2)
     commonjs (0.2.7)
     concurrent-ruby (1.0.4)
-    connection_pool (2.2.1)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     debug_inspector (0.0.2)
@@ -220,13 +215,6 @@ GEM
     rb-fsevent (0.9.8)
     rb-inotify (0.9.7)
       ffi (>= 0.5.0)
-    react-rails (1.10.0)
-      babel-transpiler (>= 0.7.0)
-      coffee-script-source (~> 1.8)
-      connection_pool
-      execjs
-      railties (>= 3.2)
-      tilt
     representable (3.0.3)
       declarative (< 0.1.0)
       declarative-option (< 0.2.0)
@@ -311,7 +299,6 @@ DEPENDENCIES
   pg
   puma (~> 3.0)
   rails
-  react-rails
   roar
   sass-rails (~> 5.0)
   spring
@@ -327,4 +314,4 @@ RUBY VERSION
    ruby 2.3.3p222
 
 BUNDLED WITH
-   1.13.7
+   1.14.3
