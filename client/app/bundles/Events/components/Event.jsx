@@ -8,9 +8,16 @@ export default class Event extends React.Component {
 
   render() {
     return (
-      <div>
-        Event {this.state.title}
-      </div>
+    <tr>
+      <td><a href="" data-toggle="modal" data-target="#event_add-modal">{this.state.title}</a></td>
+      <td>group</td>
+      <td>formatDate date "%m/%d/%Y" start_time </td>
+      <td>status</td>
+      <td>stats.invited_count</td>
+      <td>stats.rsvp_count</td>
+      <td>stats.attended_count</td>
+      <td><a href="" class="event_list-toggle"> <i class="fa fa-users"></i> View Participants</a></td>
+    </tr>
     );
   }
 }
