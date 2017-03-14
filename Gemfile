@@ -33,7 +33,6 @@ gem 'newrelic_rpm'
 # Asset compilation and NPM modules
 gem 'browserify-rails'
 
-
 gem 'geokit-rails'
 gem 'active_model_serializers'
 
@@ -46,6 +45,7 @@ gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 gem 'roar'
+gem 'react_on_rails'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
