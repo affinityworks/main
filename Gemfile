@@ -14,9 +14,12 @@ gem 'coffee-rails', '~> 4.2'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
+gem 'cancancan'
 gem 'devise'
 gem 'bootstrap', '~> 4.0.0.alpha5'
 gem 'twitter-bootstrap-rails'
+
+gem 'roar-jsonapi'
 
 # postgresql database adatper
 gem 'pg'
