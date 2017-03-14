@@ -1,26 +1,32 @@
+import axios from 'axios';
 import React, { PropTypes } from 'react';
+import Event from './Event';
 
 export default class Events extends React.Component {
-
-  /**
-   * @param props - Comes from your rails view.
-   * @param _railsContext - Comes from React on Rails
-   */
   constructor(props, _railsContext) {
     super(props);
 
     // How to set initial state in ES6 class syntax
     // https://facebook.github.io/react/docs/reusable-components.html#es6-classes
-    this.state = {};
+    this.state = {events: []};
+  }
+
+  componentDidMount () {
+    axios.get(`events.json`)
+      .then(res => {
+        const events = res.data.data;
+        this.setState({ events });
+      });
   }
 
   render() {
     return (
       <div>
         <h3>
-          Events!
+          {this.state.events.length} events!
         </h3>
         <hr />
+        {this.state.events.map(event => <Event key={event.id} {...event.attributes} /> )}
       </div>
     );
   }
