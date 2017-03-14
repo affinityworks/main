@@ -49,6 +49,7 @@ Rails.application.routes.draw do
   #ActiveAdmin.routes(self)
   #root to: "_site/index.html"
 
+  resources :events
   resources :groups
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
@@ -69,5 +70,4 @@ Rails.application.routes.draw do
   resource :sha, only: :show
   resources :zipcodes, only: :show
   get '/.well-known/acme-challenge/:id', to: 'wellknown#show'
-
 end

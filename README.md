@@ -21,5 +21,5 @@ This project is a work in progress and nothing which is useable by end users is 
 `rake`
 
 ## Run Server
-`rails s`
+`foreman start -f Procfile.dev`
 Open http://localhost:3000/

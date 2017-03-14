@@ -68,6 +68,8 @@ group :development, :test do
 end
 
 group :development do
+  gem 'foreman'
+
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'web-console'
   gem 'listen', '~> 3.0.5'
@@ -85,3 +87,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 
 ruby "2.3.3"
+
+gem 'mini_racer', platforms: :ruby
