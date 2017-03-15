@@ -21,13 +21,24 @@ export default class Events extends React.Component {
 
   render() {
     return (
-      <div>
-        <h3>
-          {this.state.events.length} events!
-        </h3>
-        <hr />
-        {this.state.events.map(event => <Event key={event.id} {...event.attributes} /> )}
-      </div>
+      <table className="table table-striped">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Organizer</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Tentative</th>
+            <th>Attending</th>
+            <th>Attended</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {this.state.events.map(event => <Event key={event.id} {...event.attributes} /> )}
+        </tbody>
+      </table>
     );
   }
 }

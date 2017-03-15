@@ -16,7 +16,7 @@ export default class Event extends React.Component {
       <td>stats.invited_count</td>
       <td>stats.rsvp_count</td>
       <td>stats.attended_count</td>
-      <td><a href="" class="event_list-toggle"> <i class="fa fa-users"></i> View Participants</a></td>
+      <td><a href="" className="event_list-toggle"> <i className="fa fa-users"></i> View Participants</a></td>
     </tr>
     );
   }
