@@ -1,54 +1,55 @@
-<div id="content">
-  <div class="container">
-    <div class="pull-right">
-      <div class="btn-group">
-        <br>
-        <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h2><img src="/mocks/img/logo.png" height="50"> <a href="/">Affinity</a> <small>Group Name</small></h2>
+    </div>
+    <div class="col">
+      <div class="dropdown">
+        <a class="btn btn-secondary btn-lg dropdown-toggle" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <%= image_tag "/mocks/img/jane_doe.jpg" %>
           <%= current_person.given_name %> <%= current_person.family_name %>
-          <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu">
-          <li><a href=""><i class="fa fa-user"></i> Account</a></li>
-          <li><a href=""><i class="fa fa-sign-out"></i> Logout</a></li>
-        </ul>
+        </a>
+
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          <a class="dropdown-item" href="#">Account</a>
+          <a class="dropdown-item" href="#">Logout</a>
+        </div>
       </div>
     </div>
-    <h2> <img src="/mocks/img/logo.png" height="50"> <a href="./">Affinity</a> <small>Group Name</small></h2>
+  </div>
 
-    <hr>
-    <ul class="nav nav-tabs" role="tablist" id="translate_row-nav_en">
-      <li role="presentation" class="active group_nav-events"><a href="#group_pannel-events" aria-controls="groups_pannel-" role="tab" data-toggle="tab"><i class="fa fa-calendar"></i> Events</a></li>
-    </ul>
+  <hr>
+  <ul class="nav nav-tabs" role="tablist" id="translate_row-nav_en">
+    <li role="presentation" class="active group_nav-events"><a href="#group_pannel-events" aria-controls="groups_pannel-" role="tab" data-toggle="tab"><i class="fa fa-calendar"></i> Events</a></li>
+  </ul>
 
-    <div class="tab-content">
+  <div class="tab-content">
 
-      <div role="tabpanel" class="tab-pane" id="group_pannel-tools">
+    <div role="tabpanel" class="tab-pane" id="group_pannel-tools">
 
+    </div>
+
+
+    <div role="tabpanel" class="tab-pane active" id="group_pannel-events">
+      <h3><i class="fa fa-calendar"></i> Group Events</h3>
+      <div id="event_filter_controls">
+        Filter events by date:
+        <select>
+          <option>Upcoming</option>
+          <option>Past</option>
+          <option>Date range</option>
+        </select>
+        by type:
+        <select>
+          <option>Meeting</option>
+          <option>Rally/protest</option>
+          <option>Town hall</option>
+          <option>Direct action</option>
+        </select>
       </div>
 
+      <%= react_component("Events", prerender: false) %>
 
-      <div role="tabpanel" class="tab-pane active" id="group_pannel-events">
-        <h3><i class="fa fa-calendar"></i> Group Events</h3>
-        <div id="event_filter_controls">
-          Filter events by date:
-          <select>
-            <option>Upcoming</option>
-            <option>Past</option>
-            <option>Date range</option>
-          </select>
-          by type:
-          <select>
-            <option>Meeting</option>
-            <option>Rally/protest</option>
-            <option>Town hall</option>
-            <option>Direct action</option>
-          </select>
-        </div>
-
-        <%= react_component("Events", prerender: false) %>
-
-      </div>
     </div>
   </div>
 </div>
