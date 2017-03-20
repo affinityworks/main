@@ -1,11 +1,11 @@
 <div class="container">
   <div class="row">
-    <div class="col">
+    <div class="col-10">
       <h2><img src="/mocks/img/logo.png" height="50"> <a href="/">Affinity</a> <small>Group Name</small></h2>
     </div>
-    <div class="col">
+    <div class="col-2 text-right">
       <div class="dropdown">
-        <a class="btn btn-secondary btn-lg dropdown-toggle" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="btn btn-secondary dropdown-toggle" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <%= image_tag "/mocks/img/jane_doe.jpg" %>
           <%= current_person.given_name %> <%= current_person.family_name %>
         </a>
@@ -19,18 +19,14 @@
   </div>
 
   <hr>
-  <ul class="nav nav-tabs" role="tablist" id="translate_row-nav_en">
-    <li role="presentation" class="active group_nav-events"><a href="#group_pannel-events" aria-controls="groups_pannel-" role="tab" data-toggle="tab"><i class="fa fa-calendar"></i> Events</a></li>
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link active" href="#">Events</a>
+    </li>
   </ul>
 
   <div class="tab-content">
-
-    <div role="tabpanel" class="tab-pane" id="group_pannel-tools">
-
-    </div>
-
-
-    <div role="tabpanel" class="tab-pane active" id="group_pannel-events">
+    <div class="tab-pane active" id="home" role="tabpanel">
       <h3><i class="fa fa-calendar"></i> Group Events</h3>
       <div id="event_filter_controls">
         Filter events by date:
@@ -49,7 +45,6 @@
       </div>
 
       <%= react_component("Events", prerender: false) %>
-
     </div>
   </div>
 </div>
