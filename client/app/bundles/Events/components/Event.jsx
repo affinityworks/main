@@ -6,11 +6,17 @@ export default class Event extends React.Component {
     this.state = {...props};
   }
 
+  organizerName() {
+    if (this.state.organizer) {
+      return this.state.organizer.name;
+    }
+  }
+
   render() {
     return (
     <tr>
       <td><a href="" data-toggle="modal" data-target="#event_add-modal">{this.state.title}</a></td>
-      <td>{this.state.organizer.name}</td>
+      <td>{this.organizerName()}</td>
       <td>{this.state.start_date}</td>
       <td>{this.state.status}</td>
       <td>{this.state.invited_count}</td>
