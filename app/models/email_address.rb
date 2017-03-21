@@ -1,10 +1,9 @@
 class EmailAddress < ApplicationRecord
   ADDRESS_FORMAT = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
 
-  # it will be possible to update email with a duplicated value
-  validates :address, uniqueness: true, on: :create
+  validates :address, uniqueness: { scope: :person_id }
   validates :address, presence: true
-  validates :address, format: { with: ADDRESS_FORMAT }
+  validates :address, format: { with: ADDRESS_FORMAT, message: "'%{value}' does not match #{ADDRESS_FORMAT}" }
 
   belongs_to :person
 
