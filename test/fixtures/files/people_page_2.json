@@ -1,0 +1,66 @@
+{
+  "per_page": 25,
+  "page": 2,
+  "_links": {
+    "previous": {
+      "href": "https://actionnetwork.org/api/v2/people?page=1"
+    },
+    "osdi:people": [
+      {
+        "href": "https://actionnetwork.org/api/v2/people/65345d7d-cd24-466a-a698-4a7686ef684f"
+      }
+    ],
+    "curies": [
+      {
+        "name": "osdi",
+        "href": "https://actionnetwork.org/docs/v2/{rel}",
+        "templated": true
+      },
+      {
+        "name": "action_network",
+        "href": "https://actionnetwork.org/docs/v2/{rel}",
+        "templated": true
+      }
+    ],
+    "self": {
+      "href": "https://actionnetwork.org/api/v2/people?page=2"
+    }
+  },
+  "_embedded": {
+    "osdi:people": [
+      {
+        "created_date": "2012-01-01T00:00:00Z",
+        "modified_date": "2014-12-31T00:00:00Z",
+        "given_name": "Joseph Fitzgerald O'Malley",
+        "family_name": "Quimby",
+        "identifiers": [
+          "action_network:65345d7d-cd24-466a-a698-4a7686ef684f"
+        ],
+        "modified_at": "2014-12-31T00:00:00Z",
+        "_links": {
+          "self": {
+              "href": "https://actionnetwork.org/api/v2/people/action_network:65345d7d-cd24-466a-a698-4a7686ef684f"
+          },
+          "osdi:attendances": {
+            "href": "https://actionnetwork.org/api/v2/people/action_network:65345d7d-cd24-466a-a698-4a7686ef684f/attendances"
+          },
+          "osdi:signatures": {
+            "href": "https://actionnetwork.org/api/v2/people/action_network:65345d7d-cd24-466a-a698-4a7686ef684f/signatures"
+          },
+          "osdi:submissions": {
+            "href": "https://actionnetwork.org/api/v2/people/action_network:65345d7d-cd24-466a-a698-4a7686ef684f/submissions"
+          },
+          "osdi:donations": {
+            "href": "https://actionnetwork.org/api/v2/people/action_network:65345d7d-cd24-466a-a698-4a7686ef684f/donations"
+          },
+          "osdi:outreaches": {
+            "href": "https://actionnetwork.org/api/v2/people/action_network:65345d7d-cd24-466a-a698-4a7686ef684f/outreaches"
+          },
+          "osdi:taggings": {
+            "href": "https://actionnetwork.org/api/v2/people/action_network:65345d7d-cd24-466a-a698-4a7686ef684f/taggings"
+          }
+        }
+      }
+    ]
+  }
+}
