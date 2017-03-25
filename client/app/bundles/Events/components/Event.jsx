@@ -18,7 +18,7 @@ export default class Event extends React.Component {
     <tr>
       <td><a href="" data-toggle="modal" data-target="#event_add-modal">{this.state.title}</a></td>
       <td>{this.organizerName()}</td>
-      <td>{moment(this.state['start-date']).format('LL')}</td>
+      <td>{moment(this.state['start-date']).format('M/D/Y H:mm')}</td>
       <td>{this.state.status}</td>
       <td>{this.state.invited_count}</td>
       <td>{this.state.rsvp_count}</td>
