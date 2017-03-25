@@ -6,6 +6,7 @@ class JsonApi::EventsRepresenter < Roar::Decorator
   attributes do
     property :organizer, decorator: JsonApi::PersonRepresenter
     property :name
+    property :start_date
     property :title
   end
 end
