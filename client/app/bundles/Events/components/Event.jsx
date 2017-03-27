@@ -20,9 +20,9 @@ export default class Event extends React.Component {
       <td>{this.organizerName()}</td>
       <td>{moment(this.state['start-date']).format('M/D/Y H:mm')}</td>
       <td>{this.state.status}</td>
-      <td>{this.state.invited_count}</td>
-      <td>{this.state.rsvp_count}</td>
-      <td>{this.state.attended_count}</td>
+      <td>{this.state['invited-count']}</td>
+      <td>{this.state['rsvp-count']}</td>
+      <td>{this.state['attended-count']}</td>
       <td><a href="" className="event_list-toggle"> <i className="fa fa-users"></i> View Participants</a></td>
     </tr>
     );

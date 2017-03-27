@@ -39,4 +39,17 @@ class EventTest < ActiveSupport::TestCase
     assert_equal '3', event.identifier_id('advocacycommons')
     assert_nil event.identifier_id('foo')
   end
+
+  test '.add_attendance_counts' do
+    events = Event.all
+    Event.add_attendance_counts(events)
+
+    assert_equal 2, events.detect { |e| e.id == 1 }.invited_count
+    assert_equal 2, events.detect { |e| e.id == 1 }.rsvp_count
+    assert_equal 0, events.detect { |e| e.id == 1 }.attended_count
+
+    assert_equal 0, events.detect { |e| e.id == 2 }.invited_count
+    assert_equal 0, events.detect { |e| e.id == 2 }.rsvp_count
+    assert_equal 0, events.detect { |e| e.id == 2 }.attended_count
+  end
 end
