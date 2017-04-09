@@ -26,6 +26,14 @@ class Api::ActionNetwork::PeopleTest < ActiveSupport::TestCase
       .with(headers: { 'OSDI-API-TOKEN' => 'test-token' })
       .to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'people_page_2.json')))
 
+    stub_request(:get, "https://actionnetwork.org/api/v2/people").
+      with(:headers => {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'Osdi-Api-Token'=>'c96dc7a808ed80fca8bb4953f8ac10bf', 'User-Agent'=>'Ruby'}).
+      to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'people.json')))
+
+    stub_request(:get, "https://actionnetwork.org/api/v2/people?page=2").
+      with(:headers => {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'Osdi-Api-Token'=>'c96dc7a808ed80fca8bb4953f8ac10bf', 'User-Agent'=>'Ruby'}).
+      to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'people_page_2.json')))
+
     assert_difference 'Person.count', 2 do
       Api::ActionNetwork::People.import!
     end
