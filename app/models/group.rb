@@ -14,4 +14,16 @@ class Group < ApplicationRecord
   def before_create
     self.modified_by = self.creator
   end
+
+  def import_events
+    Api::ActionNetwork::Events.import!(self)
+  end
+
+  def import_members
+    Api::ActionNetwork::People.import!(self)
+  end
+
+  def import_attendances(event)
+    Api::ActionNetwork::Attendances.import!(event, self)
+  end
 end
