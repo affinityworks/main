@@ -9,7 +9,7 @@ module Api::ActionNetwork::Attendances
     Api::ActionNetwork::AttendancesRepresenter
   end
 
-  def self.import!(event)
+  def self.import!(event, group)
     existing_count = 0
     new_count = 0
     updated_count = 0
@@ -20,7 +20,7 @@ module Api::ActionNetwork::Attendances
 
     Attendance.transaction do
       while next_uri
-        attendances, next_uri = request_resources_from_action_network(next_uri)
+        attendances, next_uri = request_resources_from_action_network(next_uri, group)
 
         existing_attendances, new_attendances = partition(attendances)
 

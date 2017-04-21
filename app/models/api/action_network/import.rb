@@ -6,11 +6,11 @@ module Api::ActionNetwork::Import
     end
   end
 
-  def request_resources_from_action_network(uri)
+  def request_resources_from_action_network(uri, group)
     collection = collection_class.new
     client = representer_class.new(collection)
     client.get(uri: uri, as: 'application/json') do |request|
-      request['OSDI-API-TOKEN'] = Rails.application.secrets.action_network_api_token
+      request['OSDI-API-TOKEN'] = group.an_api_key
     end
 
     logger.debug "#{self.class.name}#import! resources: #{collection.resources.size} page: #{collection.page}"

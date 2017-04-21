@@ -5,7 +5,7 @@ module Api::ActionNetwork::People
     'person'
   end
 
-  def self.import!
+  def self.import!(group)
     existing_count = 0
     new_count = 0
     updated_count = 0
@@ -15,7 +15,7 @@ module Api::ActionNetwork::People
 
     Person.transaction do
       while next_uri
-        people, next_uri = request_resources_from_action_network(next_uri)
+        people, next_uri = request_resources_from_action_network(next_uri, group)
 
         people.each(&:sanitize_email_addresses)
 
@@ -25,9 +25,17 @@ module Api::ActionNetwork::People
         existing_count += existing_count.size
         updated_count = update_resources(existing_people)
 
+        new_people = associate_with_group(new_people, group)
+
         create new_people
       end
       logger.debug "Api::ActionNetwork::People#import! new: #{new_count} existing: #{existing_count} updated: #{updated_count}"
+    end
+  end
+
+  def self.associate_with_group(new_people, group)
+    new_people.each do |person|
+      person.groups.push(group)
     end
   end
 end
