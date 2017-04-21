@@ -1,5 +1,7 @@
 import moment from 'moment';
 import React, { PropTypes } from 'react';
+var PropTypes = require('prop-types');
+var Link = require('react-router-dom').Link;
 
 export default class Event extends React.Component {
   constructor(props, _railsContext) {
@@ -23,7 +25,8 @@ export default class Event extends React.Component {
       <td>{this.state['invited-count']}</td>
       <td>{this.state['rsvp-count']}</td>
       <td>{this.state['attended-count']}</td>
-      <td><a href="" className="event_list-toggle"> <i className="fa fa-users"></i> View Participants</a></td>
+      <td>
+          <Link className='event_list-toggle' to='/events/' + {this.id}>Battle</Link>/td>
     </tr>
     );
   }
