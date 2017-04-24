@@ -28,18 +28,23 @@ module Api::ActionNetwork::Attendances
         existing_count += existing_count.size
         updated_count = update_resources(existing_attendances)
 
-        new_attendances = associate_with_person(new_attendances, event.id)
+        new_attendances = associate_with_person(new_attendances, event.id, group)
         new_attendances.each(&:save!)
       end
       logger.debug "Api::ActionNetwork::Attendances#import! new: #{new_count} existing: #{existing_count} updated: #{updated_count}"
     end
   end
 
-  def self.associate_with_person(new_attendances, event_id)
+  def self.associate_with_person(new_attendances, event_id, group)
     new_attendances.each do |attendance|
       attendance.event_id = event_id
-      person = Person.any_identifier("action_network:#{attendance.person_uuid}").first!
+      person = find_or_import_person(attendance.person_uuid, group)
       attendance.person_id = person.id
     end
+  end
+
+  def self.find_or_import_person(person_uuid, group)
+    Person.any_identifier("action_network:#{person_uuid}").first ||
+      Api::ActionNetwork::Person.import!(person_uuid, group)
   end
 end
