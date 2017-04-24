@@ -12,18 +12,19 @@ module Api::Identifiers
     scope :outdated_existing, ->(record, system_prefix) { any_identifier(record.identifier(system_prefix)).where('updated_at < ?', record.updated_at) }
   end
 
-  def add_identifier
-    identifier = "advocacycommons:#{id}"
+  # Add or update the given identifier
+  def add_identifier(system_prefix='advocacycommons', value=id)
+    identifier_to_add = "#{system_prefix}:#{value}"
 
     if identifiers.nil?
-      self.identifiers = [identifier]
-      save
-    elsif identifiers.include?(identifier)
-      true
+      self.identifiers = [identifier_to_add]
+    elsif identifiers.include?(identifier_to_add)
+      identifiers.delete(identifier(system_prefix))
+      identifiers << identifier_to_add
     else
-      identifiers << identifier
-      save
+      identifiers << identifier_to_add
     end
+    save
   end
 
   def identifier(system_prefix)
