@@ -7,7 +7,18 @@ class EmailAddress < ApplicationRecord
 
   belongs_to :person
 
+  before_save :update_person_identifier
+
   def valid_address_format?
     address.present? && address.match(ADDRESS_FORMAT)
+  end
+
+  private
+
+  def update_person_identifier
+    if address_changed? && primary?
+      hashed_address = Digest::SHA256.base64digest address
+      self.person.add_identifier('affinity_id', hashed_address)
+    end
   end
 end
