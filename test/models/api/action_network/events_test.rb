@@ -2,8 +2,10 @@ require 'test_helper'
 
 class Api::ActionNetwork::EventsTest < ActiveSupport::TestCase
   test '.import!' do
+    group = Group.first
+
     stub_request(:get, 'https://actionnetwork.org/api/v2/events')
-      .with(headers: { 'OSDI-API-TOKEN' => 'test-token' })
+      .with(headers: { 'OSDI-API-TOKEN' => group.an_api_key })
       .to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'events.json')))
 
     stub_request(:get, "https://actionnetwork.org/api/v2/events").
@@ -11,23 +13,23 @@ class Api::ActionNetwork::EventsTest < ActiveSupport::TestCase
       to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'events.json')))
 
     travel_to Time.zone.local(2001) do
-      Event.create!(
+      group.events.create!(
         title: 'TBD',
         identifiers: ['action_network:a3c724db-2799-49a6-970a-7c3c0844645d']
       )
     end
 
-    assert Event.where(title: 'House Party for Progress').exists
-    assert Event.any_identifier('action_network:1efc3644-af25-4253-90b8-a0baf12dbd1e').exists
+    assert group.events.where(title: 'House Party for Progress').exists
+    assert group.events.any_identifier('action_network:1efc3644-af25-4253-90b8-a0baf12dbd1e').exists
 
     assert_difference 'Event.count', 1 do
-      Api::ActionNetwork::Events.import!
+      Api::ActionNetwork::Events.import! group
     end
 
-    assert Event.where(name: 'March 14th Rally').exists
-    assert Event.where(title: 'House Party for Progress').exists
+    assert group.events.where(name: 'March 14th Rally').exists
+    assert group.events.where(title: 'House Party for Progress').exists
 
-    march_14_event = Event.where(name: 'March 14th Rally').first!
+    march_14_event = group.events.where(name: 'March 14th Rally').first!
 
     assert_equal 'open', march_14_event.osdi_type
 

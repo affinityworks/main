@@ -9,4 +9,5 @@ class Event < ApplicationRecord
   belongs_to :modified_by, class_name: 'Person'
   has_many :attendances
   has_many :reminders
+  has_and_belongs_to_many :groups
 end

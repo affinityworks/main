@@ -20,26 +20,27 @@ Use osdi_api_token from previous step as OSDI-API-Token header to browse http://
 
 Import
 ------
-Supports import of Events, People, and Attendances. Requires ACTION_NETWORK_API_TOKEN set in ENV. There are no external endpoints for the import API yet.
+Supports import of Events, People, and Attendances. Requires a group with a valid ACTION_NETWORK_API_TOKEN. There are no external endpoints for the import API yet.
 
 ```
-DISABLE_SPRING=1 ACTION_NETWORK_API_TOKEN=${token} rails c
-Api::ActionNetwork::People.import!
-Api::ActionNetwork::Events.import!
+DISABLE_SPRING=1 rails c
+group = Group.create(name: 'Test Group', an_api_key:
+'YOUR_ACTION_NETWORK_API_TOKEN')
+group.import_members
+group.import_events
 
 # Just an example. In a complete application, you would choose the event from a UI.
 event = Event.last
 
-Api::ActionNetwork::Attendances.import!(event)
+group.import_attendances(event)
 ```
-
-(The DISABLE_SPRING is needed if ACTION_NETWORK_API_TOKEN wasn't set before Rails Spring started.)
 
 Each import! method:
  * Creates new resources (event/person/attendance)
  * Merges attributes from more recent versions of existing resources
  * Ignores existing, unchanged resources
  * Ignores more-recently modified resources—assumes that we've made a change in _our_ system and we don't want to over-write our change.
+ * Assigns those resources to the current group.
 
 Imports can be run and re-run in any order. However, Api::Attendances requires an existing event, and it only associates attendances with existing people. In other words, Api::People should be run before Api::Attendances.
 

@@ -10,6 +10,7 @@ one:
   featured_image_url: MyString
   creator_id: 1
   modified_by_id: 1
+  an_api_key: 'test-token'
 
 two:
   id: 2
@@ -21,3 +22,4 @@ two:
   featured_image_url: MyString
   creator_id: 2
   modified_by_id: 2
+  an_api_key: 'test-token'

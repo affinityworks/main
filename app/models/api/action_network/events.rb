@@ -5,7 +5,7 @@ module Api::ActionNetwork::Events
     'event'
   end
 
-  def self.import!
+  def self.import!(group)
     existing_count = 0
     new_count = 0
     updated_count = 0
@@ -15,7 +15,7 @@ module Api::ActionNetwork::Events
 
     Event.transaction do
       while next_uri
-        events, next_uri = request_resources_from_action_network(next_uri)
+        events, next_uri = request_resources_from_action_network(next_uri, group)
 
         existing_events, new_events = partition(events)
 
@@ -23,9 +23,17 @@ module Api::ActionNetwork::Events
         existing_count += existing_count.size
         updated_count = update_resources(existing_events)
 
+        new_events = associate_with_group(new_events, group)
+
         create new_events
       end
       logger.debug "Api::ActionNetwork::Events#import! new: #{new_count} existing: #{existing_count} updated: #{updated_count}"
+    end
+  end
+
+  def self.associate_with_group(new_events, group)
+    new_events.each do |event|
+      event.groups.push(group)
     end
   end
 end
