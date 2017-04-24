@@ -25,8 +25,7 @@ export default class Event extends React.Component {
       <td>{this.state['invited-count']}</td>
       <td>{this.state['rsvp-count']}</td>
       <td>{this.state['attended-count']}</td>
-      <td>
-          <Link className='event_list-toggle' to='/events/' + {this.id}>Battle</Link>/td>
+      <Link className='event_list-toggle' to={`/events/${this.id}`}>See Attendees</Link>
     </tr>
     );
   }
