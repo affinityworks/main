@@ -1,0 +1,80 @@
+{
+  "given_name": "Evan",
+  "family_name": "Henshaw-Plath",
+  "identifiers": [
+    "action_network:06d13a33-6824-493b-a922-95e793f269d3"
+  ],
+  "email_addresses": [
+    {
+      "primary": true,
+      "address": "evan@henshaw-plath.com",
+      "status": "subscribed"
+    }
+  ],
+  "postal_addresses": [
+    {
+      "primary": true,
+      "address_lines": [
+        "3903 SE Ivon St"
+      ],
+      "locality": "Portland",
+      "region": "OR",
+      "postal_code": "97215",
+      "country": "US",
+      "location": {
+        "latitude": 45.5152,
+        "longitude": -122.601,
+        "accuracy": "Approximate"
+      }
+    }
+  ],
+  "_links": {
+    "self": {
+      "href": "https://actionnetwork.org/api/v2/people/06d13a33-6824-493b-a922-95e793f269d3"
+    },
+    "osdi:signatures": {
+      "href": "https://actionnetwork.org/api/v2/people/06d13a33-6824-493b-a922-95e793f269d3/signatures"
+    },
+    "osdi:submissions": {
+      "href": "https://actionnetwork.org/api/v2/people/06d13a33-6824-493b-a922-95e793f269d3/submissions"
+    },
+    "osdi:donations": {
+      "href": "https://actionnetwork.org/api/v2/people/06d13a33-6824-493b-a922-95e793f269d3/donations"
+    },
+    "curies": [
+      {
+        "name": "osdi",
+        "href": "https://actionnetwork.org/docs/v2/{rel}",
+        "templated": true
+      },
+      {
+        "name": "action_network",
+        "href": "https://actionnetwork.org/docs/v2/{rel}",
+        "templated": true
+      }
+    ],
+    "osdi:taggings": {
+      "href": "https://actionnetwork.org/api/v2/people/06d13a33-6824-493b-a922-95e793f269d3/taggings"
+    },
+    "osdi:outreaches": {
+      "href": "https://actionnetwork.org/api/v2/people/06d13a33-6824-493b-a922-95e793f269d3/outreaches"
+    },
+    "osdi:attendances": {
+      "href": "https://actionnetwork.org/api/v2/people/06d13a33-6824-493b-a922-95e793f269d3/attendances"
+    }
+  },
+  "custom_fields": {
+    "GroupEmail": "notreallyemail@gmail.com",
+    "GroupName": "Not really a group",
+    "groupsize": "20",
+    "tactics_call elected decision makers": "1",
+    "tactics_organize a demonstration (of any size)": "1",
+    "tactics_visit lawmakers office": "1",
+    "usernotes": "Be awesome, that's what we'll do. "
+  },
+  "created_date": "2016-05-04T23:13:41Z",
+  "modified_date": "2017-04-18T15:52:45Z",
+  "languages_spoken": [
+    "en"
+  ]
+}
