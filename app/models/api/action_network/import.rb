@@ -19,32 +19,54 @@ module Api::ActionNetwork::Import
     [collection.resources, next_uri]
   end
 
+  def request_resource_from_action_network(uri, group)
+    resource = resource_class.new
+    client = representer_class.new(resource)
+    client.get(uri: uri, as: 'application/json') do |request|
+      request['OSDI-API-TOKEN'] = group.an_api_key
+    end
+
+    if Person.any_identifier(resource.identifier('action_network')).exists?
+      update_single_resource(resource)
+    else
+      resource.groups.push(group)
+      create_single_resource(resource)
+    end
+  end
+
   # Update all attributes for resources that already exist and have not been modified after import
   # We may want to do something different
   def update_resources(existing_resources)
     updated_count = 0
     existing_resources.each do |resource|
-      old_resource = resource_class.outdated_existing(resource, 'action_network').first
-
-      next unless old_resource
-
-      updated_count += 1
-      attributes = resource.attributes
-      attributes.delete_if { |_, v| v.nil? }
-      old_resource.update_attributes! attributes
+      updated_count += 1 if update_single_resource(resource)
     end
 
     updated_count
   end
 
+  def update_single_resource(resource)
+    old_resource = resource_class.outdated_existing(resource, 'action_network').first
+
+    return unless old_resource
+
+    attributes = resource.attributes
+    attributes.delete_if { |_, v| v.nil? }
+    old_resource.update_attributes! attributes
+
+    old_resource
+  end
+
+  def create_single_resource(resource)
+    resource.tap(&:save!)
+  rescue StandardError => e
+    logger.error resource
+    raise e
+  end
+
   def create(new_resources)
     new_resources.each do |resource|
-      begin
-        resource.save!
-      rescue StandardError => e
-        logger.error resource
-        raise e
-      end
+      create_single_resource(resource)
     end
   end
 
@@ -68,8 +90,8 @@ module Api::ActionNetwork::Import
     "Api::Collections::#{plural_resource}Representer".safe_constantize
   end
 
-  def first_uri
-    "https://actionnetwork.org/api/v2/#{resource.pluralize}"
+  def first_uri(uuid = nil)
+    "https://actionnetwork.org/api/v2/#{resource.pluralize}#{'/' + uuid if uuid}"
   end
 
   def logger
