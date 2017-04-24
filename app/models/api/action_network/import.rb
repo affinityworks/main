@@ -19,7 +19,7 @@ module Api::ActionNetwork::Import
     [collection.resources, next_uri]
   end
 
-  def request_resource_from_action_network(uri, group)
+  def request_single_resource_from_action_network(uri, group)
     resource = resource_class.new
     client = representer_class.new(resource)
     client.get(uri: uri, as: 'application/json') do |request|

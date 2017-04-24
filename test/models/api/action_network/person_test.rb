@@ -9,11 +9,11 @@ class Api::ActionNetwork::PersonTest < ActiveSupport::TestCase
       .with(:headers => {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'Osdi-Api-Token'=>'test-token', 'User-Agent'=>'Ruby'})
       .to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'person.json')))
 
-    assert_difference 'Person.count', 1, 'Creates a new person.' do
+    assert_difference 'group.members.count', 1, 'Creates a new person.' do
       Api::ActionNetwork::Person.import!(person_uuid, group)
     end
 
-    assert_no_difference 'Person.count', 'Does not create already created people.' do
+    assert_no_difference 'group.members.count', 'Does not create already created people.' do
       Api::ActionNetwork::Person.import!(person_uuid, group)
     end
   end
