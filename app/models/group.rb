@@ -26,4 +26,10 @@ class Group < ApplicationRecord
   def import_attendances(event)
     Api::ActionNetwork::Attendances.import!(event, self)
   end
+
+  def sync_with_action_network
+    import_events
+    import_members
+    events.each { |event| import_attendances(event) }
+  end
 end
