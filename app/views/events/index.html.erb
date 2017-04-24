@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="row">
+    <div class="col-10">
+      <h2><img src="/mocks/img/logo.png" height="50"> <a href="/">Affinity</a> <small>Group Name</small></h2>
+    </div>
+    <div class="col-2 text-right">
+      <div class="dropdown">
+        <a class="btn btn-secondary dropdown-toggle" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <%= image_tag "/mocks/img/jane_doe.jpg" %>
+          <%= current_person.given_name %> <%= current_person.family_name %>
+        </a>
+
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          <a class="dropdown-item" href="#">Account</a>
+          <a class="dropdown-item" href="#">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link active" href="#">Events</a>
+    </li>
+  </ul>
+
+  <div class="tab-content">
+    <div class="tab-pane active" id="home" role="tabpanel">
+      <h3><i class="fa fa-calendar"></i> Group Events</h3>
+      <div id="event_filter_controls">
+        Filter events by date:
+        <select>
+          <option>Upcoming</option>
+          <option>Past</option>
+          <option>Date range</option>
+        </select>
+        by type:
+        <select>
+          <option>Meeting</option>
+          <option>Rally/protest</option>
+          <option>Town hall</option>
+          <option>Direct action</option>
+        </select>
+      </div>
+
+      <%= react_component("Events", prerender: false) %>
+    </div>
+  </div>
+</div>

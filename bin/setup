@@ -15,6 +15,7 @@ chdir APP_ROOT do
   # Add necessary setup steps to this file.
 
   puts '== Installing dependencies =='
+  system! 'yarn install'
   system! 'gem install bundler --conservative'
   system('bundle check') || system!('bundle install')
 
@@ -29,6 +30,7 @@ chdir APP_ROOT do
   puts "\n== Removing old logs and tempfiles =="
   system! 'bin/rails log:clear tmp:clear'
 
-  puts "\n== Restarting application server =="
-  system! 'bin/rails restart'
+  # Foreman doesn't support restarts. Need to manually stop and start.
+  puts "\n== Starting application server =="
+  system! 'foreman start -f Procfile.dev'
 end
