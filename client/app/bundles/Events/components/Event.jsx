@@ -1,6 +1,5 @@
 import moment from 'moment';
 import React, { PropTypes } from 'react';
-var PropTypes = require('prop-types');
 var Link = require('react-router-dom').Link;
 
 export default class Event extends React.Component {
