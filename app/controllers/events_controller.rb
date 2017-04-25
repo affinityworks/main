@@ -5,9 +5,9 @@ class EventsController < ApplicationController
   def index
     respond_to do |format|
       format.html
-#      format.json do
-#        render json: JsonApi::EventsRepresenter.for_collection.new(Event.add_attendance_counts(@events)).to_json
-#      end
+      format.json do
+        render json: JsonApi::EventsRepresenter.for_collection.new(Event.add_attendance_counts(events)).to_json
+      end
     end
   end
 
@@ -21,7 +21,7 @@ class EventsController < ApplicationController
       format.html
       format.json do
         render json: JsonApi::EventsRepresenter.for_collection.new(Event.add_attendance_counts(@events)).to_json if @events
-        render json: JsonApi::EventRepresenter.new(@event).to_json if @event 
+        render json: JsonApi::EventRepresenter.new(@event).to_json if @event
       end
     end
   end
