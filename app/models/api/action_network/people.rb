@@ -9,7 +9,7 @@ module Api::ActionNetwork::People
     existing_count = 0
     new_count = 0
     updated_count = 0
-    next_uri = first_uri
+    next_uri = first_uri(synced_at: group.synced_at)
 
     logger.info "Api::ActionNetwork::People#import! from #{next_uri}"
 
