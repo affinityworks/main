@@ -28,8 +28,12 @@ class Group < ApplicationRecord
   end
 
   def sync_with_action_network
-    import_events
-    import_members
-    events.each { |event| import_attendances(event) }
+    Group.transaction do
+      synced_time = Time.now
+      import_events
+      import_members
+      events.each { |event| import_attendances(event) }
+      self.update_attribute(:synced_at, synced_time)
+    end
   end
 end

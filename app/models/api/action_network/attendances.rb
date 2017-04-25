@@ -15,7 +15,7 @@ module Api::ActionNetwork::Attendances
     updated_count = 0
     action_network_event_id = event.identifier_id('action_network') || return
 
-    next_uri = "https://actionnetwork.org/api/v2/events/#{action_network_event_id}/attendances"
+    next_uri = first_uri(action_network_event_id: action_network_event_id)
 
     logger.info "Api::ActionNetwork::Attendances#import! from #{next_uri}"
 
@@ -47,5 +47,9 @@ module Api::ActionNetwork::Attendances
   def self.find_or_import_person(person_uuid, group)
     Person.any_identifier("action_network:#{person_uuid}").first ||
       Api::ActionNetwork::Person.import!(person_uuid, group)
+  end
+
+  def self.first_uri(params={})
+    "https://actionnetwork.org/api/v2/events/#{params[:action_network_event_id]}/attendances"
   end
 end

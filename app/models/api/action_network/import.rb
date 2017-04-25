@@ -12,7 +12,6 @@ module Api::ActionNetwork::Import
     client.get(uri: uri, as: 'application/json') do |request|
       request['OSDI-API-TOKEN'] = group.an_api_key
     end
-
     logger.debug "#{self.class.name}#import! resources: #{collection.resources.size} page: #{collection.page}"
 
     next_uri = client.links && client.links['next']&.href
@@ -90,11 +89,20 @@ module Api::ActionNetwork::Import
     "Api::Collections::#{plural_resource}Representer".safe_constantize
   end
 
-  def first_uri(uuid = nil)
-    "https://actionnetwork.org/api/v2/#{resource.pluralize}#{'/' + uuid if uuid}"
+  def first_uri(params={})
+    uri = "https://actionnetwork.org/api/v2/#{resource.pluralize}#{'/' + params[:uuid] if params[:uuid]}"
+
+    add_uri_filter(uri, params[:synced_at])
   end
 
   def logger
     Rails.logger
+  end
+
+  def add_uri_filter(uri, modified_date)
+    return uri unless modified_date
+    uri = URI.parse(uri)
+    uri.query = "filter=modified_date gt #{modified_date.strftime('%Y-%m-%d')}"
+    uri.to_s
   end
 end
