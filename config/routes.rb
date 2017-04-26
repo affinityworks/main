@@ -62,6 +62,10 @@ Rails.application.routes.draw do
     namespace :v1 do
       get '/', to: 'entry_point#show'
       resources :people
+
+      resources :events, only: [] do
+        resources :attendances
+      end
     end
   end
 
