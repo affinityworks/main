@@ -1,7 +1,7 @@
 import ReactOnRails from 'react-on-rails';
 
-import Events from '../components/Events';
+import App from '../components/App';
 
 ReactOnRails.register({
-  Events,
+  App
 });

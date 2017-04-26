@@ -14,7 +14,7 @@ class EventsController < ApplicationController
   def show
     #this can't be the right way to do this = rabble
     @events = Event.all if params[:id] == 'events'
-    @event = Event.find(params[:id]) if @events.nil? && params[:id].kind_of?(Number)
+    @event = Event.find(params[:id]) if @events.nil? && params[:id].kind_of?(Fixnum)
 
 
     respond_to do |format|

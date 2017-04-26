@@ -1,7 +1,11 @@
 import React from 'react';
-import { Route, IndexRoute } from 'react-router';
+import { Route } from 'react-router';
+
+import Events from '../components/Events';
 
 export default (
-  <Route path="/events/" component={Event}>
-  </Route>
+  <div>
+    <Route path='/' component={Events} />
+    <Route path='/:id' component={Events} />
+  </div>
 );

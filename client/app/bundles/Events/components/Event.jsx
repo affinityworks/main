@@ -1,36 +1,33 @@
 import moment from 'moment';
-import React, { PropTypes } from 'react';
+import React, { Component } from 'react';
 
-import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
-export default class Event extends React.Component {
-  constructor(props, _railsContext) {
-    super(props);
-    this.state = {...props};
-  }
-
+export default class Event extends Component {
   organizerName() {
-    if (this.state.organizer) {
-      return this.state.organizer.name;
+    const attributes = this.props.event.attributes;
+
+    if (attributes.organizer) {
+      return attributes.organizer.name;
     }
   }
 
   render() {
+    const { attributes, id } = this.props.event;
+
     return (
-    <tr>
-      <td><a href="" data-toggle="modal" data-target="#event_add-modal">{this.state.title}</a></td>
-      <td>{this.organizerName()}</td>
-      <td>{moment(this.state['start-date']).format('M/D/Y H:mm')}</td>
-      <td>{this.state.status}</td>
-      <td>{this.state['invited-count']}</td>
-      <td>{this.state['rsvp-count']}</td>
-      <td>{this.state['attended-count']}</td>
-      <a className='event_list-toggle' href="{`/events/${this.id}`}">See Attendees</a>
-    </tr>
+      <tr>
+        <td><a href="" data-toggle="modal" data-target="#event_add-modal">{attributes.title}</a></td>
+        <td>{this.organizerName()}</td>
+        <td>{moment(attributes['start-date']).format('M/D/Y H:mm')}</td>
+        <td>{attributes.status}</td>
+        <td>{attributes['invited-count']}</td>
+        <td>{attributes['rsvp-count']}</td>
+        <td>{attributes['attended-count']}</td>
+        <td>
+          <Link className='event_list-toggle' to={`/${id}`}>See Attendees</Link>
+        </td>
+      </tr>
     );
   }
 }

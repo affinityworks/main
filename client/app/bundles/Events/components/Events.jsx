@@ -37,7 +37,7 @@ export default class Events extends React.Component {
           </tr>
         </thead>
         <tbody>
-          {this.state.events.map(event => <Event key={event.id} {...event.attributes} /> )}
+          {this.state.events.map(event => <Event key={event.id} event={event} />)}
         </tbody>
       </table>
     );
