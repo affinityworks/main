@@ -23,7 +23,9 @@ class Api::ActionNetwork::EventsTest < ActiveSupport::TestCase
     assert group.events.any_identifier('action_network:1efc3644-af25-4253-90b8-a0baf12dbd1e').exists
 
     assert_difference 'Event.count', 1 do
-      Api::ActionNetwork::Events.import! group
+      assert_difference 'EventAddress.count', 1 do
+        Api::ActionNetwork::Events.import! group
+      end
     end
 
     assert group.events.where(name: 'March 14th Rally').exists
