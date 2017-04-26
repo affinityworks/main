@@ -10,5 +10,8 @@ class JsonApi::EventsRepresenter < Roar::Decorator
     property :start_date
     property :status
     property :title
+    property :rsvp_count
+    property :attended_count
+    property :invited_count    
   end
 end
