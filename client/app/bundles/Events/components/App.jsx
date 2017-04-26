@@ -5,7 +5,8 @@ import routes from '../routes/routes';
 import createHistory from 'history/createBrowserHistory';
 const history = createHistory({ basename: '/events' });
 
-import Header from './header';
+import Header from './Header';
+import Nav from './Nav';
 
 class App extends Component {
   render() {
@@ -13,6 +14,7 @@ class App extends Component {
       <Router history={history}>
         <div className='container'>
           <Header />
+          <Nav />
           {routes}
         </div>
       </Router>

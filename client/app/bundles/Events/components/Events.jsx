@@ -23,24 +23,10 @@ export default class Events extends React.Component {
     return (
       <div>
         <EventsFilter />
-        <table className="table table-striped">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Organizer</th>
-              <th>Date</th>
-              <th>Status</th>
-              <th>Tentative</th>
-              <th>Attending</th>
-              <th>Attended</th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.events.map(event => <Event key={event.id} event={event} />)}
-          </tbody>
-        </table>
+        <br />
+        <div className='list-group'>
+          {this.state.events.map(event => <Event key={event.id} event={event} />)}
+        </div>
       </div>
     );
   }

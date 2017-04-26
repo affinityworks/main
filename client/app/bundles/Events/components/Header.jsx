@@ -8,7 +8,7 @@ const Header = () => {
           <h2>
             <img src="/mocks/img/logo.png" height="50" />
             <a href="/">Affinity</a>
-            <small>Group Name</small>
+            <small> {` Group Name`} </small>
           </h2>
         </div>
 
@@ -26,7 +26,7 @@ const Header = () => {
           </div>
         </div>
       </div>
-      <hr />
+      <br />
     </div>
   );
 }
