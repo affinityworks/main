@@ -21,8 +21,8 @@ one:
   email: joe@somewhere.com
   created_at: 2016-12-18 19:30:05
   updated_at: 2016-12-18 19:30:05
-  password: password
-  employer: Modragon Collectives
+  encrypted_password: $2a$11$08m64awvoVFg4sLOu.zA6e70E98bWC2VNewFWUNYjtnvutb/K68xK
+  employer: Modragon Collective
 
 two:
   id: 2
@@ -35,14 +35,14 @@ two:
   gender:
   email: jane@elsewhere.com
   gender_identity: MyString
-  party_identification: MyString
-  source: MyString
-  ethnicities: MyString
+  party_identification: Green
+  source: some source
+  ethnicities: blue poeple
   languages_spoken:
     - Greek
     - Latin
   birthdate: 2016-12-18
-  password: password
+  encrypted_password: $2a$11$08m64awvoVFg4sLOu.zA6e70E98bWC2VNewFWUNYjtnvutb/K68xK
   custom_fields:
     phone: iPhone
   created_at: 2016-12-18 19:30:05
