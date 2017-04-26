@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { PropTypes } from 'react';
+
 import Event from './Event';
 
 export default class Events extends React.Component {
