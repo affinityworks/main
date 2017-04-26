@@ -27,7 +27,6 @@ gem 'graphql'
 gem 'graphql-rails-resolver'
 gem 'graphiql-rails'
 
-gem 'newrelic_rpm'
 
 # This is an optional gem. When included, GraphQL will use a parser written in C
 # instead of the Ruby parser shipped with graphql-ruby.
@@ -79,6 +78,11 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+
+end
+
+group :production do
+  gem 'newrelic_rpm'
 end
 
 group :test do
