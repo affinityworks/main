@@ -49,7 +49,9 @@ Rails.application.routes.draw do
   #ActiveAdmin.routes(self)
   #root to: "_site/index.html"
 
-  resources :events
+  resources :events do
+    resources :attendances
+  end
   resources :groups
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
@@ -62,10 +64,6 @@ Rails.application.routes.draw do
     namespace :v1 do
       get '/', to: 'entry_point#show'
       resources :people
-
-      resources :events, only: [] do
-        resources :attendances
-      end
     end
   end
 
