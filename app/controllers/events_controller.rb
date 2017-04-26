@@ -12,15 +12,11 @@ class EventsController < ApplicationController
   end
 
   def show
-    #this can't be the right way to do this = rabble
-    @events = Event.all if params[:id] == 'events'
-    @event = Event.find(params[:id]) if @events.nil? && params[:id].kind_of?(Fixnum)
-
+    @event = Event.find(params[:id])
 
     respond_to do |format|
       format.html
       format.json do
-        render json: JsonApi::EventsRepresenter.for_collection.new(Event.add_attendance_counts(@events)).to_json if @events
         render json: JsonApi::EventRepresenter.new(@event).to_json if @event
       end
     end
@@ -30,7 +26,7 @@ class EventsController < ApplicationController
   private
 
   def events
-    @events = Event.all
+    params[:filter] ? Event.where('title ilike ?',"%#{params[:filter]}%") : Event.all
   end
 
 end
