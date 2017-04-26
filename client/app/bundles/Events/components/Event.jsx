@@ -1,11 +1,7 @@
 import moment from 'moment';
 import React, { PropTypes } from 'react';
 
-import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 export default class Event extends React.Component {
   organizerName() {
@@ -29,7 +25,7 @@ export default class Event extends React.Component {
         <td>{attributes['rsvp-count']}</td>
         <td>{attributes['attended-count']}</td>
         <td>
-          <a className='event_list-toggle' href={`/events/${id}`}>See Attendees</a>
+          <Link className='event_list-toggle' to={`/${id}`}>See Attendees</Link>
         </td>
       </tr>
     );
