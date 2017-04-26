@@ -17,7 +17,9 @@ export default class Event extends Component {
 
     return (
       <tr>
-        <td><a href="" data-toggle="modal" data-target="#event_add-modal">{attributes.title}</a></td>
+        <td>
+          <a data-toggle="modal" data-target="#event_add-modal">{attributes.title}</a>
+        </td>
         <td>{this.organizerName()}</td>
         <td>{moment(attributes['start-date']).format('M/D/Y H:mm')}</td>
         <td>{attributes.status}</td>

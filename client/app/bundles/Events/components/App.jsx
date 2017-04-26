@@ -5,11 +5,16 @@ import routes from '../routes/routes';
 import createHistory from 'history/createBrowserHistory';
 const history = createHistory({ basename: '/events' });
 
+import Header from './header';
+
 class App extends Component {
   render() {
     return (
       <Router history={history}>
-        {routes}
+        <div className='container'>
+          <Header />
+          {routes}
+        </div>
       </Router>
     )
   }
