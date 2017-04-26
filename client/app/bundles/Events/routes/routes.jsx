@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, IndexRoute, browserHistory, BrowserRouter as Router } from 'react-router';
+import { Route } from 'react-router';
 
 import Events from '../components/Events';
 

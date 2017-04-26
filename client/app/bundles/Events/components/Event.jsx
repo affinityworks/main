@@ -1,9 +1,9 @@
 import moment from 'moment';
-import React, { PropTypes } from 'react';
+import React, { Component } from 'react';
 
 import { Link } from 'react-router-dom';
 
-export default class Event extends React.Component {
+export default class Event extends Component {
   organizerName() {
     const attributes = this.props.event.attributes;
 
