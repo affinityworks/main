@@ -27,6 +27,7 @@ class JsonApi::EventRepresenter < Roar::Decorator
     property :total_tickets
     property :transparency
     property :visibility
+    property :rsvp_count
 
     property :location, decorator: Api::Resources::AddressRepresenter, class: EventAddress
   end
