@@ -18,6 +18,13 @@ class PersonTest < ActiveSupport::TestCase
     Person.create!
   end
 
+  test '#name' do
+    assert_equal '', Person.new.name, '""'
+    assert_equal 'Frank', Person.new(given_name: 'Frank').name, 'given_name only'
+    assert_equal 'Ko', Person.new(family_name: 'Ko').name, 'family_name only'
+    assert_equal 'Francis Ko', Person.new(given_name: 'Francis', family_name: 'Ko').name, 'name'
+  end
+
   test 'membership in groups' do
     one = people(:one)
     assert_kind_of Group, one.groups.first

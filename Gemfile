@@ -26,10 +26,7 @@ gem 'pg'
 gem 'graphql'
 gem 'graphql-rails-resolver'
 gem 'graphiql-rails'
-gem 'react-rails'
 
-
-gem 'newrelic_rpm'
 
 # This is an optional gem. When included, GraphQL will use a parser written in C
 # instead of the Ruby parser shipped with graphql-ruby.
@@ -37,7 +34,6 @@ gem 'newrelic_rpm'
 
 # Asset compilation and NPM modules
 gem 'browserify-rails'
-
 
 gem 'geokit-rails'
 gem 'active_model_serializers'
@@ -51,6 +47,7 @@ gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 gem 'roar'
+gem 'react_on_rails'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
@@ -73,12 +70,19 @@ group :development, :test do
 end
 
 group :development do
+  gem 'foreman'
+
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'web-console'
   gem 'listen', '~> 3.0.5'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+
+end
+
+group :production do
+  gem 'newrelic_rpm'
 end
 
 group :test do
@@ -90,3 +94,9 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 
 ruby "2.3.3"
+
+gem 'mini_racer', platforms: :ruby
+
+source 'https://rails-assets.org' do
+  gem 'rails-assets-tether', '>= 1.3.3'
+end

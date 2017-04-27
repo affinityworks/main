@@ -26,6 +26,10 @@ class Person < ApplicationRecord
   has_many :memberships
   has_many :groups, through: :memberships
 
+  def name
+    [ given_name, family_name ].compact.join(' ')
+  end
+
   def primary_email_address
     email_addresses.detect(&:primary?)&.address
   end

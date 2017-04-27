@@ -24,4 +24,6 @@ class Api::Resources::EventRepresenter < Api::Resources::Representer
   property :total_tickets
   property :transparency
   property :visibility
+
+  property :location, decorator: Api::Resources::AddressRepresenter, class: EventAddress
 end

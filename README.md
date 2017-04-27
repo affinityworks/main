@@ -12,6 +12,8 @@ This project is a work in progress and nothing which is useable by end users is 
 ## Getting Started
 * Install Postgresql with dev libraries
 * Install node.js
+* Install & run yarn
+* Install & run bundler
 * Install Ruby 2.3.3
 * Ubuntu: `sudo -u postgres createuser $USER -s`
 * `bin/setup`
@@ -20,6 +22,5 @@ This project is a work in progress and nothing which is useable by end users is 
 `rake`
 
 ## Run Server
-`rails s`
+`npm run rails-server`
 Open http://localhost:3000/
-

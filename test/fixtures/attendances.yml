@@ -4,7 +4,7 @@ one:
   id: 1
   origin_system: MyString
   action_date: 2016-12-21 23:40:11
-  status: MyString
+  status: tentative
   attended: false
   comment: MyString
   person_id: 1
@@ -14,7 +14,7 @@ two:
   id: 2
   origin_system: MyString
   action_date: 2016-12-21 23:40:11
-  status: MyString
+  status: accepted
   attended: false
   comment: MyString
   person_id: 2

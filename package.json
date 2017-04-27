@@ -1,17 +1,19 @@
 {
-  "name": "AdvocacyCommons",
-  "dependencies" : {
-    "babel-relay-plugin": "^0.2.5",
-    "babelify": "^6.3.0",
-    "browserify": "~> 10.2.4",
-    "browserify-incremental": "^3.0.1",
-    "graphql": "^0.4.4",
-    "react": "^0.14.0-rc1",
-    "react-dom": "^0.14.0-rc1",
-    "react-relay": "^0.3.2"
-  },
-  "license": "MIT",
+  "name": "react-webpack-rails-tutorial",
+  "version": "0.0.1",
+  "private": true,
   "engines": {
-    "node": ">= 0.10"
+    "node": "6.9.0",
+    "npm": "4.1.1"
+  },
+  "scripts": {
+    "postinstall": "cd client && yarn install",
+    "rails-server": "echo 'visit http://localhost:3000/events' && foreman start -f Procfile.dev",
+    "test": "rspec"
+  },
+  "dependencies": {
+    "axios": "^0.15.3",
+    "browserify": "^14.0.0",
+    "browserify-incremental": "^3.1.0"
   }
 }
