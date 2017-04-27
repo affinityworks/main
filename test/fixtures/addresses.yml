@@ -2,12 +2,12 @@
 
 one:
   id: 1
-  venue: MyString
-  address_lines: MyString
-  locality: MyString
-  region: MyString
-  postal_code: MyString
-  country: MyString
+  venue: my venue
+  address_lines: ['first adress line']
+  locality: portland
+  region: oregon
+  postal_code: 97202
+  country: USA
   location_id: 1
   status: MyString
   primary: false
@@ -18,12 +18,12 @@ one:
 
 two:
   id: 2
-  venue: MyString
-  address_lines: MyString
-  locality: MyString
-  region: MyString
-  postal_code: MyString
-  country: MyString
+  venue: another venue
+  address_lines: ['123 main st']
+  locality: anytown
+  region: anystate
+  postal_code: 40123
+  country: USA
   location_id: 1
   status: MyString
   primary: false
@@ -35,7 +35,7 @@ two:
 three:
   id: 3
   venue: MyString
-  address_lines: MyString
+  address_lines: ['MyString']
   locality: MyString
   region: MyString
   postal_code: MyString
@@ -50,8 +50,8 @@ three:
 
 four:
   id: 4
-  venue: MyString
-  address_lines: MyString
+  venue: personal address venue
+  address_lines: ['MyString']
   locality: MyString
   region: MyString
   postal_code: MyString
