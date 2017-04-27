@@ -12,15 +12,16 @@ class EventsController < ApplicationController
   end
 
   def show
-    @event = Event.find(params[:id]) unless params[:id] == 'events'
+    @event = Event.find(params[:id])
+
+    event_with_attendance = Event.add_attendance_counts([@event]).first
 
     event_with_attendance = Event.add_attendance_counts([@event]).first if @event
 
     respond_to do |format|
       format.html
       format.json do
-        render json: JsonApi::EventRepresenter.new(event_with_attendance).to_json if @event
-        render json: JsonApi::EventsRepresenter.for_collection.new(Event.add_attendance_counts(events)).to_json if params[:id] == 'events'
+        render json: JsonApi::EventRepresenter.new(event_with_attendance).to_json
       end
     end
   end
