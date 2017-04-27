@@ -14,10 +14,12 @@ class EventsController < ApplicationController
   def show
     @event = Event.find(params[:id]) unless params[:id] == 'events'
 
+    event_with_attendance = Event.add_attendance_counts([@event]).first if @event
+
     respond_to do |format|
       format.html
       format.json do
-        render json: JsonApi::EventRepresenter.new(@event).to_json if @event
+        render json: JsonApi::EventRepresenter.new(event_with_attendance).to_json if @event
         render json: JsonApi::EventsRepresenter.for_collection.new(Event.add_attendance_counts(events)).to_json if params[:id] == 'events'
       end
     end
@@ -29,15 +31,10 @@ class EventsController < ApplicationController
   def events
     @events = Event.includes(:location)
 
-    @events = if params[:filter] then
-      @events.where('title ilike ?',"%#{params[:filter]}%")
-    elsif params[:id].kind_of?(Fixnum) then
-      @events.find(params[:id]).includes(:location)
-    else
-      @events
+    if params[:filter] then
+      @events = @events.where('title ilike ?',"%#{params[:filter]}%")
     end
 
     @events
   end
-
 end
