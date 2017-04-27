@@ -13,6 +13,7 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
+
     respond_to do |format|
       format.html
       format.json do
@@ -25,7 +26,7 @@ class EventsController < ApplicationController
   private
 
   def events
-    @events = Event.all
+    params[:filter] ? Event.where('title ilike ?',"%#{params[:filter]}%") : Event.all
   end
 
 end
