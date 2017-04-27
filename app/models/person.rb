@@ -47,4 +47,8 @@ class Person < ApplicationRecord
   def sanitize_email_addresses
     self.email_addresses = email_addresses.select(&:valid_address_format?)
   end
+
+  def primary_phone_number
+    phone_numbers.detect(&:primary?)&.number
+  end
 end
