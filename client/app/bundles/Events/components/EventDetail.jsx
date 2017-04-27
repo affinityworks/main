@@ -30,7 +30,8 @@ class EventDetail extends Component {
   showMap() {
     const location = this.state.event.attributes.location;
 
-    if (location)
+    //NOTE we need to update this when we know all the data is present.
+    if (location && location.location && location.location.latitude && location.location.longitude)
       return(
         <GoogleStaticMap
           latitude={location.location.latitude.toString()}
@@ -39,6 +40,7 @@ class EventDetail extends Component {
           size={{ width: 550, height: 300 }}
         />
       );
+    return <div><h2>No location available</h2></div>
   }
 
   showAddress() {
