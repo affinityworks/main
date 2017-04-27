@@ -38,12 +38,9 @@ class EventDetail extends Component {
           longitude={location.location.longitude.toString()}
           zoom={13}
           size={{ width: 550, height: 300 }}
+          key="AIzaSyBfbXecv_Blyv87EGM0yvr_Gyv-nmpTd7M"
         />
       );
-<<<<<<< HEAD
-=======
-
->>>>>>> b03ba951da5b490af9b9164a6f14b9b31eed566b
     return <div><h2>No location available</h2></div>
   }
 
