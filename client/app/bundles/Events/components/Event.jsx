@@ -7,15 +7,15 @@ export default class Event extends Component {
   organizerName() {
     const attributes = this.props.event.attributes;
 
-    if (attributes.organizer) {
+    if (attributes.organizer)
       return attributes.organizer.name;
-    }
   }
 
   locationName() {
     const location = this.props.event.attributes.location;
 
-    return `${location.venue}`;
+    if (location)
+      return `${location.venue}`;
   }
 
   render() {
