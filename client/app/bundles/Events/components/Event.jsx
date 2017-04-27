@@ -24,7 +24,7 @@ export default class Event extends Component {
     return (
       <div className='list-group-item'>
         <div className='col-8'>
-          <a href='' data-toggle="modal" data-target="#event_add-modal">{attributes.title}</a>
+          <Link to={`/${id}`} >{attributes.title}</Link>
           <span> {` at ${this.locationName() || 'Event Location' }`} </span>
           <span> {` hosted by ${this.organizerName() || 'Event Organizer'}`} </span>
         </div>
