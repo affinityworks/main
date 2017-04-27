@@ -28,7 +28,11 @@ class AttendancesController < ApplicationController
   private
 
   def attendance_params
-    params.permit(:attended)
+    attrs = params.permit(:attended)
+
+    return attrs unless attrs.empty?
+
+    { attended: nil } #NOTE Axios ommits the params if its value is nil.
   end
 
   def find_attendances
