@@ -28,7 +28,7 @@ export default class Event extends Component {
         </div>
 
         <div className='col-2'>
-          <Link className='event_list-toggle' to={`/${id}`}>
+          <Link className='event_list-toggle' to={`/${id}/attendances`}>
             <button className='btn btn-primary'>
               RSVPs
             </button>

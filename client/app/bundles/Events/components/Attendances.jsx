@@ -1,29 +1,47 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
+import axios from 'axios';
 
-export default class Attendances extends React.Component {
-  constructor(props, _railsContext) {
+import Event from './Event';
+
+export default class Attendances extends Component {
+  static contextTypes = {
+    router: PropTypes.object
+  };
+
+  constructor(props) {
     super(props);
-    this.state = {...props};
+
+    console.log();
+    this.state = { event: null, attendances: [] };
   }
 
-  organizerName() {
-    if (this.state.organizer) {
-      return this.state.organizer.name;
-    }
+  componentDidMount() {
+    const eventId = this.props.match.params.id;
+
+    axios.get(`/event/${eventId}.json`)
+      .then(res => {
+        const event = res.data.data;
+        this.setState({ event });
+      });
+
+    axios.get(`/event/${eventId}/attendances.json`)
+      .then(res => {
+        const event = res.data.data;
+        this.setState({ event });
+      });
+  }
+
+  renderEvent() {
+    if (this.state.event)
+      return <Event event={this.state.event} />;
   }
 
   render() {
     return (
-    <tr>
-      <td><a href="" data-toggle="modal" data-target="#event_add-modal">{this.state.title}</a></td>
-      <td>{this.organizerName()}</td>
-      <td>{this.state.start_date}</td>
-      <td>{this.state.status}</td>
-      <td>{this.state.invited_count}</td>
-      <td>{this.state.rsvp_count}</td>
-      <td>{this.state.attended_count}</td>
-      <td><a href="" className="event_list-toggle"> <i className="fa fa-users"></i> View Participants</a></td>
-    </tr>
+      <div>
+        {this.renderEvent}
+        ATTENDANCES
+      </div>
     );
   }
 }
