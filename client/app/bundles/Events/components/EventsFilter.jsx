@@ -8,7 +8,6 @@ class EventsFilter extends Component {
   }
 
   onInputSubmit(searchTerm) {
-    console.log('WTF', searchTerm)
     this.setState({searchTerm});
     this.props.onSearchSubmit(searchTerm);
   }
