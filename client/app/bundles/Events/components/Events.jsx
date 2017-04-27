@@ -1,10 +1,10 @@
 import axios from 'axios';
-import React, { PropTypes } from 'react';
+import React, { PropTypes, Component } from 'react';
 
 import Event from './Event';
 import EventsFilter from './EventsFilter';
 
-export default class Events extends React.Component {
+export default class Events extends Component {
   constructor(props, _railsContext) {
     super(props);
 

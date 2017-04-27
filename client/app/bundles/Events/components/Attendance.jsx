@@ -1,18 +1,26 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+import axios from 'axios';
 
 class Attendance extends Component {
-  constructor(props) {
-    super(props);
-  }
+  static contextTypes = {
+    router: PropTypes.object
+  };
 
   componentWillMount() {
     this.state = { attended: this.props.attendance.attributes.attended };
   }
 
+  updateAttended(attended) {
+    const id = this.props.attendance.id;
+    const eventId = this.props.eventId;
+
+    axios.put(`/events/${eventId}/attendances/${id}`, { attended })
+      .then(() => this.setState({ attended }))
+  }
+
   render() {
-    console.log(this.state);
-    const { attributes, id } = this.props.attendance;
-    const attendee = attributes.person.data.attributes;
+    console.log(this.props);
+    const attendee = this.props.attendance.attributes.person.data.attributes;
 
     return (
       <div className='list-group-item'>
@@ -33,21 +41,21 @@ class Attendance extends Component {
             <button
               type='button'
               className={`btn ${this.state.attended === true ? 'btn-success' : 'btn-secondary'}`}
-              onClick={() => this.setState({ attended: true })}>
+              onClick={() => this.updateAttended(true)}>
               Y
             </button>
 
             <button
               type='button'
               className={`btn ${this.state.attended === undefined ? 'btn-warning' : 'btn-secondary'}`}
-              onClick={() => this.setState({ attended: undefined })}>
+              onClick={() => this.updateAttended(undefined)}>
               ?
             </button>
 
             <button
               type='button'
               className={`btn ${this.state.attended === false ? 'btn-danger' : 'btn-secondary'}`}
-              onClick={() => this.setState({ attended: false })}>
+              onClick={() => this.updateAttended(false)}>
               N
             </button>
           </div>

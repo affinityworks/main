@@ -6,14 +6,9 @@ import Event from './Event';
 import Attendance from './Attendance';
 
 export default class Attendances extends Component {
-  static contextTypes = {
-    router: PropTypes.object
-  };
-
   constructor(props) {
     super(props);
 
-    console.log();
     this.state = { event: null, attendances: [] };
   }
 
@@ -40,7 +35,11 @@ export default class Attendances extends Component {
 
   renderAttendances() {
     if (this.state.attendances)
-      return this.state.attendances.map(attendance => <Attendance key={attendance.id} attendance={attendance} />)
+      return this.state.attendances.map(attendance => (
+        <Attendance key={attendance.id}
+          eventId={this.props.match.params.id}
+          attendance={attendance} />
+      ));
   }
 
   render() {
@@ -53,7 +52,7 @@ export default class Attendances extends Component {
           </div>
 
           <br />
-          
+
           <div className='text-right'>
             <Link to='/'>
               <button className='btn btn-success'> Done </button>

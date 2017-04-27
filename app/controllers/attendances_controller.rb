@@ -2,6 +2,8 @@ class AttendancesController < ApplicationController
   before_action :authenticate_person!
   before_action :find_attendances
 
+  protect_from_forgery except: [:update] #TODO: Add the csrf token in react.
+
   def index
     respond_to do |format|
       format.html
