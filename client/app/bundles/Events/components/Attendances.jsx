@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 import Event from './Event';
 import Attendance from './Attendance';
@@ -49,6 +50,14 @@ export default class Attendances extends Component {
         <div className='container'>
           <div className='list-group'>
             {this.renderAttendances()}
+          </div>
+
+          <br />
+          
+          <div className='text-right'>
+            <Link to='/'>
+              <button className='btn btn-success'> Done </button>
+            </Link>
           </div>
         </div>
       </div>

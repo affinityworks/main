@@ -12,7 +12,7 @@ export default class Events extends React.Component {
   }
 
   componentDidMount () {
-    axios.get(`events.json`)
+    axios.get(`/events.json`)
       .then(res => {
         const events = res.data.data;
         this.setState({ events });
