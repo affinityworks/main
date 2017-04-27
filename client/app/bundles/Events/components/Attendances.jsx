@@ -18,16 +18,16 @@ export default class Attendances extends Component {
   componentDidMount() {
     const eventId = this.props.match.params.id;
 
-    axios.get(`/event/${eventId}.json`)
+    axios.get(`/events/${eventId}.json`)
       .then(res => {
         const event = res.data.data;
         this.setState({ event });
       });
 
-    axios.get(`/event/${eventId}/attendances.json`)
+    axios.get(`/events/${eventId}/attendances.json`)
       .then(res => {
-        const event = res.data.data;
-        this.setState({ event });
+        const attendances = res.data.data;
+        this.setState({ attendances });
       });
   }
 
@@ -39,7 +39,7 @@ export default class Attendances extends Component {
   render() {
     return (
       <div>
-        {this.renderEvent}
+        {this.renderEvent()}
         ATTENDANCES
       </div>
     );
