@@ -13,7 +13,6 @@ class App extends Component {
     return (
       <Router history={history}>
         <div className='container'>
-          <Header />
           <Nav />
           {routes}
         </div>

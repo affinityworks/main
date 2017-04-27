@@ -1,6 +1,7 @@
+import axios from 'axios';
 import React from 'react';
 
-const Header = () => {
+const Header = (props) => {
   return (
     <div className='page-header'>
       <div className="row">
@@ -22,7 +23,7 @@ const Header = () => {
 
           <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
             <a className="dropdown-item" href="#">Account</a>
-            <a className="dropdown-item" href="#">Logout</a>
+            <a className="dropdown-item" href="/admin/logout">Logout</a>
           </div>
         </div>
       </div>
