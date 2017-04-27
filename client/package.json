@@ -30,6 +30,7 @@
     "moment": "^2.18.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
+    "react-google-static-map-2": "^0.1.4",
     "react-on-rails": "6.8.0",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
