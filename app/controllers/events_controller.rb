@@ -27,15 +27,17 @@ class EventsController < ApplicationController
   private
 
   def events
-    if params[:filter] then
-     return Event.where('title ilike ?',"%#{params[:filter]}%")
+    @events = Event.includes(:location)
+
+    @events = if params[:filter] then
+      @events.where('title ilike ?',"%#{params[:filter]}%")
     elsif params[:id].kind_of?(Fixnum) then
-      return Event.find(params[:id])
+      @events.find(params[:id]).includes(:location)
     else
-      return Event.all
-      #this obiviously breaks with a user being in multiple groups
-      #return current_user.groups.first.events
+      @events
     end
+
+    @events
   end
 
 end

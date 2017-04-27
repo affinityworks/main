@@ -12,6 +12,12 @@ export default class Event extends Component {
     }
   }
 
+  locationName() {
+    const location = this.props.event.attributes.location;
+
+    return `${location.venue}`;
+  }
+
   render() {
     const { attributes, id } = this.props.event;
 
@@ -19,7 +25,7 @@ export default class Event extends Component {
       <div className='list-group-item'>
         <div className='col-8'>
           <a href='' data-toggle="modal" data-target="#event_add-modal">{attributes.title}</a>
-          <span> {` at ${attributes.location || 'Event Location'}`} </span>
+          <span> {` at ${this.locationName() || 'Event Location }'}`} </span>
           <span> {` hosted by ${this.organizerName() || 'Event Organizer'}`} </span>
         </div>
 
