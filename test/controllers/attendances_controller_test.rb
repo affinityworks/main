@@ -44,6 +44,12 @@ class AttendancesControllerTest < ActionDispatch::IntegrationTest
     json = JSON.parse(response.body)['data']
     assert_equal json['attributes']['attended'], attendance.attended
     assert_equal json['attributes']['status'], attendance.status
+
+    new_attendance_status = nil
+    set_attendance_status(event.id, attendance.id, new_attendance_status)
+
+    attendance.reload
+    assert_nil attendance.attended, 'Sets the attendance to nil.'
   end
 
   def set_attendance_status(event_id, attendance_id, status)

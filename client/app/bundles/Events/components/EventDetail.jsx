@@ -40,6 +40,10 @@ class EventDetail extends Component {
           size={{ width: 550, height: 300 }}
         />
       );
+<<<<<<< HEAD
+=======
+
+>>>>>>> b03ba951da5b490af9b9164a6f14b9b31eed566b
     return <div><h2>No location available</h2></div>
   }
 
