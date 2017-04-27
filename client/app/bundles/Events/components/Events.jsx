@@ -23,7 +23,7 @@ export default class Events extends Component {
   }
 
   getEvents(filter) {
-    const uri = filter ? `events.json?filter=${filter}` : `events.json`;
+    const uri = filter ? `/events.json?filter=${filter}` : `/events.json`;
     axios.get(uri)
       .then(res => {
         const events = res.data.data;
