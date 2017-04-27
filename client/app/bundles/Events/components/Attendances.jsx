@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import axios from 'axios';
 
 import Event from './Event';
+import Attendance from './Attendance';
 
 export default class Attendances extends Component {
   static contextTypes = {
@@ -36,11 +37,20 @@ export default class Attendances extends Component {
       return <Event event={this.state.event} />;
   }
 
+  renderAttendances() {
+    if (this.state.attendances)
+      return this.state.attendances.map(attendance => <Attendance key={attendance.id} attendance={attendance} />)
+  }
+
   render() {
     return (
       <div>
         {this.renderEvent()}
-        ATTENDANCES
+        <div className='container'>
+          <div className='list-group'>
+            {this.renderAttendances()}
+          </div>
+        </div>
       </div>
     );
   }
