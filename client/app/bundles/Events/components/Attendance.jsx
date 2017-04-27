@@ -5,18 +5,23 @@ class Attendance extends Component {
     super(props);
   }
 
+  componentWillMount() {
+    this.state = { attended: this.props.attendance.attributes.attended };
+  }
+
   render() {
-    console.log(this.props.attendance);
+    console.log(this.state);
     const { attributes, id } = this.props.attendance;
     const attendee = attributes.person.data.attributes;
 
-    console.log(attendee);
     return (
       <div className='list-group-item'>
         <div className='col-8'>
           <div className='row'>
             {`${attendee['given-name']} ${attendee['family-name']}`}
           </div>
+
+          <div> {this.state.attended} </div>
 
           <div className='row'>
             <small>{`${attendee['primary-email-address']}`}</small>
@@ -25,9 +30,26 @@ class Attendance extends Component {
 
         <div className='col-4'>
           <div className='btn-group' role='group'>
-            <button type='button' className='btn btn-secondary'> Y </button>
-            <button type='button' className='btn btn-secondary'> ? </button>
-            <button type='button' className='btn btn-secondary'> N </button>
+            <button
+              type='button'
+              className={`btn ${this.state.attended === true ? 'btn-success' : 'btn-secondary'}`}
+              onClick={() => this.setState({ attended: true })}>
+              Y
+            </button>
+
+            <button
+              type='button'
+              className={`btn ${this.state.attended === undefined ? 'btn-warning' : 'btn-secondary'}`}
+              onClick={() => this.setState({ attended: undefined })}>
+              ?
+            </button>
+
+            <button
+              type='button'
+              className={`btn ${this.state.attended === false ? 'btn-danger' : 'btn-secondary'}`}
+              onClick={() => this.setState({ attended: false })}>
+              N
+            </button>
           </div>
         </div>
       </div>
