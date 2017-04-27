@@ -12,12 +12,13 @@ class EventsController < ApplicationController
   end
 
   def show
-    @event = Event.find(params[:id])
+    @event = Event.find(params[:id]) unless params[:id] == 'events'
 
     respond_to do |format|
       format.html
       format.json do
         render json: JsonApi::EventRepresenter.new(@event).to_json if @event
+        render json: JsonApi::EventsRepresenter.for_collection.new(Event.add_attendance_counts(events)).to_json if params[:id] == 'events'
       end
     end
   end
@@ -26,7 +27,15 @@ class EventsController < ApplicationController
   private
 
   def events
-    params[:filter] ? Event.where('title ilike ?',"%#{params[:filter]}%") : Event.all
+    if params[:filter] then
+     return Event.where('title ilike ?',"%#{params[:filter]}%")
+    elsif params[:id].kind_of?(Fixnum) then
+      return Event.find(params[:id])
+    else
+      return Event.all
+      #this obiviously breaks with a user being in multiple groups
+      #return current_user.groups.first.events
+    end
   end
 
 end
