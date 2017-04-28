@@ -14,4 +14,26 @@ class Group < ApplicationRecord
   def before_create
     self.modified_by = self.creator
   end
+
+  def import_events
+    Api::ActionNetwork::Events.import!(self)
+  end
+
+  def import_members
+    Api::ActionNetwork::People.import!(self)
+  end
+
+  def import_attendances(event)
+    Api::ActionNetwork::Attendances.import!(event, self)
+  end
+
+  def sync_with_action_network
+    Group.transaction do
+      synced_time = Time.now
+      import_events
+      import_members
+      events.each { |event| import_attendances(event) }
+      self.update_attribute(:synced_at, synced_time)
+    end
+  end
 end
