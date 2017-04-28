@@ -49,12 +49,21 @@ Rails.application.routes.draw do
   #ActiveAdmin.routes(self)
   #root to: "_site/index.html"
 
+  resources :events do
+    resources :attendances
+  end
   resources :groups
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   namespace :api, defaults: {format: 'json'} do
+    # Want controller helpers but not routes
+    devise_for :users,
+               class_name: 'Api::User',
+               skip: [:sessions, :passwords, :confirmations, :registrations, :unlocks]
+
     namespace :v1 do
-      resource :person
+      get '/', to: 'entry_point#show'
+      resources :people
     end
   end
 
@@ -63,5 +72,4 @@ Rails.application.routes.draw do
   resource :sha, only: :show
   resources :zipcodes, only: :show
   get '/.well-known/acme-challenge/:id', to: 'wellknown#show'
-
 end

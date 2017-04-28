@@ -15,3 +15,48 @@
 // For example, to change the default status-tag color:
 //
 //   .status_tag { background: #6090DB; }
+
+body.logged_out {
+  background-color: white;
+
+  #content_wrapper {
+    #active_admin_content {
+      box-shadow: none;
+
+      h2 {
+        font-size: 0;
+        box-shadow: none;
+        color: #0069ff;
+        background-image: url('/images/affinity-logo.svg');
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 100%;
+        height: 90px;
+        text-shadow: none;
+        border: none;
+        margin: 0;
+        padding: 0.5em 1em;
+        background-color: transparent;
+        font-weight: normal;
+      }
+
+      .action input[type="submit"] {
+        font-size: 1.3em;
+        padding: 1em 2em;
+        border-radius: 0.25em;
+        background-image: none;
+        background-color: #88c440;
+        color: white;
+        text-shadow: none;
+        box-shadow: none;
+        border: none;
+        font-weight: normal;
+      }
+
+      fieldset li {
+        text-align: center;
+        width: 100%;
+      }
+    }
+  }
+}

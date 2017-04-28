@@ -2,16 +2,24 @@
 
 one:
   id: 1
-  primary: false
-  address: MyString
-  address_type: MyString
-  status: MyString
+  primary: true
+  address: joe@somewhere.com
+  address_type: personal
+  status: subscribed
   person_id: 1
 
 two:
   id: 2
+  primary: true
+  address: jane@elsewehre.com
+  address_type: work
+  status: unsubscribed
+  person_id: 2
+
+three:
+  id: 3
   primary: false
-  address: MyString
-  address_type: MyString
-  status: MyString
+  address: jane@hotmail.com
+  address_type: work
+  status: subscribed
   person_id: 2

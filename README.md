@@ -1,16 +1,8 @@
-# Advocacy Commons
+# Affinity
 
-The advocacy commons is a project to build a platform for sharing and collaboration between local social movement groups and national networks.
+Affinity.works is supporting the surge of resistance against Trump. It's coming at it in two ways. First, working with the new activist groups that have sprung up, building MVP's to solve the problems they've encountered in their organizing. Second, Affinity is enabling rapid collaboration between the grassroots and the big national networks like Indivisible & Daily Kos, to defend the institutions of democracy.
 
-The advocacy commons is two components, one is an open source advocacy platform build on OSDI with a focus on the needs of local groups and campaigners. The second part is a commons exchange where national groups can connect with local groups with structured data exchange and collaboration.
-
-# Problem:
-Local groups don’t have either the technical ability to build advocacy tools nor the ability to reach into the membership lists of national groups. The coordination costs between local and national campaigns is high.
-
-National groups need to protect and grow their membership lists while cultivating trusted local partners to do coordinated campaigning. This allows national groups to build lists, share outreach with local groups, activate campaigns, while protecting the fundraising and contact channel with their members by acting as a passthrough for outreach.
-
-# Solution:
-Build a platform for discovery, collaboration, and safe data sharing between organizations. Take existing social practices of movement building and collaboration and give it a ‘sharing economy’ style platform for it to happen easily.
+Concretely, the tool is a SaaS and has components for managing a network of groups, a crm, task management for volunteers, outreach, and a reputation marketplace between campaigns, activists, and groups.
 
 # Status:
 This project is a work in progress and nothing which is useable by end users is available. We welcome developer / designer / activist collaboration.
@@ -20,6 +12,8 @@ This project is a work in progress and nothing which is useable by end users is 
 ## Getting Started
 * Install Postgresql with dev libraries
 * Install node.js
+* Install & run yarn
+* Install & run bundler
 * Install Ruby 2.3.3
 * Ubuntu: `sudo -u postgres createuser $USER -s`
 * `bin/setup`
@@ -28,6 +22,5 @@ This project is a work in progress and nothing which is useable by end users is 
 `rake`
 
 ## Run Server
-`rails s`
+`npm run rails-server`
 Open http://localhost:3000/
-

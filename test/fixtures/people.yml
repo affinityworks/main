@@ -2,42 +2,49 @@
 
 one:
   id: 1
-  identifiers: MyString
+  identifiers: ['advocacycommons:1']
   family_name: MyString
   given_name: MyString
   additional_name: MyString
   honorific_prefix: MyString
-  honorific_sufix: MyString
+  honorific_suffix: MyString
   gender:
   gender_identity: MyString
   party_identification: MyString
   source: MyString
-  ethnicities: MyString
-  languages_spoken: MyString
+  ethnicities:
+    - White
+    - Hispanic
+  languages_spoken:
+    - English
   birthdate: 2016-12-18
-  custom_fields: MyText
   email: joe@somewhere.com
   created_at: 2016-12-18 19:30:05
   updated_at: 2016-12-18 19:30:05
-  employer: Modragon Collectives
+  encrypted_password: $2a$11$08m64awvoVFg4sLOu.zA6e70E98bWC2VNewFWUNYjtnvutb/K68xK
+  employer: Modragon Collective
 
 two:
   id: 2
-  identifiers: MyString
+  identifiers: ['advocacycommons:2', 'foreign_system:473298']
   family_name: MyString
   given_name: MyString
   additional_name: MyString
   honorific_prefix: MyString
-  honorific_sufix: MyString
+  honorific_suffix: MyString
   gender:
-  email: jane@elsewehre.com
+  email: jane@elsewhere.com
   gender_identity: MyString
-  party_identification: MyString
-  source: MyString
-  ethnicities: MyString
-  languages_spoken: MyString
+  party_identification: Green
+  source: some source
+  ethnicities: blue poeple
+  languages_spoken:
+    - Greek
+    - Latin
   birthdate: 2016-12-18
-  custom_fields: MyText
+  encrypted_password: $2a$11$08m64awvoVFg4sLOu.zA6e70E98bWC2VNewFWUNYjtnvutb/K68xK
+  custom_fields:
+    phone: iPhone
   created_at: 2016-12-18 19:30:05
   updated_at: 2016-12-18 19:30:05
   employer: people's republic of our college town
