@@ -17,8 +17,9 @@ gem 'coffee-rails', '~> 4.2'
 gem 'cancancan'
 gem 'devise'
 gem 'bootstrap', '~> 4.0.0.alpha5'
-gem 'twitter-bootstrap-rails'
-
+source 'https://rails-assets.org' do
+  gem 'rails-assets-tether', '>= 1.3.3'
+end
 gem 'roar-jsonapi'
 
 # postgresql database adatper
