@@ -1,9 +1,8 @@
 class Api::V1::BaseApiController < ApplicationController
   respond_to :json
-
+  skip_before_action :verify_authenticity_token
   before_action :authenticate_api_user_from_token!
-  before_action :authenticate_api_user!
-
+  #before_action :authenticate_api_user!
   private
 
   def authenticate_api_user_from_token!

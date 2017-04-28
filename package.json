@@ -9,7 +9,8 @@
   "scripts": {
     "postinstall": "cd client && yarn install",
     "rails-server": "echo 'visit http://localhost:3000/events' && foreman start -f Procfile.dev",
-    "test": "rspec"
+    "test": "rspec",
+    "start": "npm run rails-server"
   },
   "dependencies": {
     "axios": "^0.15.3",
