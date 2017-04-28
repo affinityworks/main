@@ -87,3 +87,7 @@ div {
 label {
   display: block;
 }
+
+.dropdown.open .dropdown-menu {
+  display: block;
+}

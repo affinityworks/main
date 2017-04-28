@@ -7,7 +7,7 @@ const Header = (props) => {
       <div className="row">
         <div className="col-10">
           <h2>
-            <a href="/" className="affinity-logo"><img src="/images/affinity-logo.svg" /></a>
+            <a href="/" className="affinity-logo"><img src="/images/affinity-logo.svg" width="300" /></a>
             <small> {` Group Name`} </small>
           </h2>
         </div>
