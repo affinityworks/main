@@ -19,16 +19,6 @@ class EventsControllerTest < ActionDispatch::IntegrationTest
     assert_equal group.events.count, json['data'].size
   end
 
-  test 'get #index without group' do
-    person = people(:one)
-    person.groups = []
-    person.save
-
-    sign_in people(:one)
-    get events_url, as: :json
-    assert_response :success
-  end
-
   test 'get #index with filter' do
     sign_in people(:one)
     get events_url(filter: Event.first.title.first(4)), as: :json

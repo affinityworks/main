@@ -8,11 +8,7 @@ class EventsController < ApplicationController
     respond_to do |format|
       format.html
       format.json do
-        if @events
-          render json: JsonApi::EventsRepresenter.for_collection.new(Event.add_attendance_counts(@events)).to_json
-        else
-          render json: [].to_json
-        end
+        render json: JsonApi::EventsRepresenter.for_collection.new(Event.add_attendance_counts(@events)).to_json
       end
     end
   end
@@ -32,8 +28,6 @@ class EventsController < ApplicationController
   private
 
   def set_events
-    return unless current_group
-
     @events = current_group.events.includes(:location)
 
     if params[:filter] then
