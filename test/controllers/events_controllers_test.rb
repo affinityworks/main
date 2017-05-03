@@ -16,7 +16,7 @@ class EventsControllerTest < ActionDispatch::IntegrationTest
     get events_url, as: :json
     assert_response :success
     json = JSON.parse(@response.body)
-    assert_equal group.events.count, json['data'].size
+    assert_equal group.events.count, json['events']['data'].size
   end
 
   test 'get #index with filter' do
@@ -24,8 +24,8 @@ class EventsControllerTest < ActionDispatch::IntegrationTest
     get events_url(filter: Event.first.title.first(4)), as: :json
     assert_response :success
     json = JSON.parse(@response.body)
-    assert_equal 1, json['data'].size
-    assert_equal Event.first.id, json['data'].first['id'].to_i
+    assert_equal 1, json['events']['data'].size
+    assert_equal Event.first.id, json['events']['data'].first['id'].to_i
   end
 
   test 'get #index using osdi token' do
