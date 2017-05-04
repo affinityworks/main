@@ -51,4 +51,13 @@ class Person < ApplicationRecord
   def primary_phone_number
     phone_numbers.detect(&:primary?)&.number
   end
+
+  def self.find_first_by_auth_conditions(warden_conditions)
+    conditions = warden_conditions.dup
+    if email = conditions.delete(:email)
+      self.includes(:email_addresses).where(email_addresses: { address: email }).first
+    else
+      super(warden_conditions)
+    end
+  end
 end
