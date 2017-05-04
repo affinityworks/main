@@ -32,23 +32,24 @@ class EventsControllerTest < ActionDispatch::IntegrationTest
     get events_url, headers: { 'OSDI-API-Token': 'CF32zTyg_KXFQbPzvoz3' }, as: :json
     assert_response :success
     json = JSON.parse(@response.body)
-    assert_equal 1, json['data'].size
+    assert_equal Event.count, json['data'].size
     assert_equal Event.first.id, json['data'].first['id'].to_i
   end
 
-  test 'get #show 1' do
+  test 'get #show' do
     sign_in people(:one)
-    get events_url(events(:one)), as: :json
+    event = Event.first
+    get event_url(id: event.id), as: :json
     assert_response :success
     json = JSON.parse(@response.body)
-    assert_equal events(:one).name, json['data'].name
+    assert_equal event.name, json['data']['attributes']['name']
   end
 
-  test 'get #show 1 with token' do
+  test 'get #show with token' do
     get event_url(events(:one)), headers: { 'OSDI-API-Token': 'CF32zTyg_KXFQbPzvoz3' }, as: :json
     assert_response :success
     json = JSON.parse(@response.body)
-    assert_equal events(:one).name, json['data'].name
+    assert_equal events(:one).name, json['data']['attributes']['name']
   end
 
 end
