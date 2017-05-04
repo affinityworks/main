@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_action :authenticate_person!
+  before_action :authenticate_request!
 
   before_action :set_events, only: :index
   before_action :set_event, only: :show
@@ -46,7 +46,7 @@ class EventsController < ApplicationController
     if osdi_api_token.present?
       api_user = Api::User.first_by_osdi_api_token(osdi_api_token)
 
-      sign_in api_user, store: false if api_user
+      sign_in :person, api_user, store: false if api_user
     else
       authenticate_person!
     end
