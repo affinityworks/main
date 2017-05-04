@@ -1,14 +1,16 @@
 import React from 'react';
-import { Route, IndexRoute } from 'react-router';
+import { Route, Switch } from 'react-router';
 
 import Events from '../components/Events';
 import EventDetail from '../components/EventDetail';
 import Attendances from '../components/Attendances';
+import Groups from '../components/Groups';
 
 export default (
-  <div>
-    <Route exact path='/' component={Events} />
-    <Route exact path='/:id' component={EventDetail} />
-    <Route path='/:id/attendances' component={Attendances} />
-  </div>
+  <Switch>
+    <Route path='/events/:id/attendances' component={Attendances} />
+    <Route path='/events/:id' component={EventDetail} />
+    <Route path='/events/' component={Events} />
+    <Route path='/groups' component={Groups} />
+  </Switch>
 );
