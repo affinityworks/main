@@ -9,7 +9,11 @@ class EventsController < ApplicationController
     respond_to do |format|
       format.html
       format.json do
-        render json: JsonApi::EventsRepresenter.for_collection.new(Event.add_attendance_counts(@events)).to_json
+        render json: {
+          events: JsonApi::EventsRepresenter.for_collection.new(Event.add_attendance_counts(@events)),
+          total_pages: @events.total_pages,
+          page: @events.current_page
+        }.to_json
       end
     end
   end
@@ -34,6 +38,8 @@ class EventsController < ApplicationController
     if params[:filter] then
       @events = @events.where('title ilike ?',"%#{params[:filter]}%")
     end
+
+    @events = @events.page(params[:page])
   end
 
   def set_event
