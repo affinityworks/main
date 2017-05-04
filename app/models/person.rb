@@ -36,12 +36,22 @@ class Person < ApplicationRecord
 
   # Override Devise lib/devise/models/validatable.rb
   def email_required?
-    password.present?
+    false
   end
 
   # Override Devise lib/devise/models/validatable.rb
   def password_required?
-    email.present? && (!persisted? || !password.nil? || !password_confirmation.nil?)
+    false
+  end
+
+  # Override Devise lib/devise/models/validatable.rb
+  def email_changed?
+    false
+  end
+
+  # Override Devise lib/devise/models/validatable.rb
+  def email_required?
+    false
   end
 
   def sanitize_email_addresses
