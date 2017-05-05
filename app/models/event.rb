@@ -5,6 +5,8 @@ class Event < ApplicationRecord
   attr_accessor :invited_count
   attr_accessor :rsvp_count
 
+  scope :upcoming, ->() { where('start_date BETWEEN ? AND ?', Date.today, Date.today + 5.days) }
+
   has_many :ticket_levels
 
   belongs_to :location, class_name: 'Address', foreign_key: :address_id

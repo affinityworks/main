@@ -52,4 +52,13 @@ class EventTest < ActiveSupport::TestCase
     assert_equal 0, events.detect { |e| e.id == 2 }.rsvp_count
     assert_equal 0, events.detect { |e| e.id == 2 }.attended_count
   end
+
+  test '.upcoming' do
+    ended_event = Event.create(start_date: 1.days.ago)
+    upcoming_event_1 = Event.create(start_date: Date.today)
+    upcoming_event_2 = Event.create(start_date: Date.today + 2.days)
+    future_event = Event.create(start_date: Date.today + 6.days)
+
+    assert_equal Event.upcoming, [upcoming_event_1, upcoming_event_2]
+  end
 end
