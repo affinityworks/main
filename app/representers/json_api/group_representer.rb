@@ -1,13 +1,16 @@
+require 'roar/json/json_api'
+
 class JsonApi::GroupRepresenter < Roar::Decorator
-  include Roar::JSON
+  include Roar::JSON::JSONAPI.resource :group
 
-  property :id
-  property :name
-  property :origin_system
-  property :description
-  property :summary
-  property :browser_url
-  property :featured_image_url
+  attributes do
+    property :name
+    property :description
+    property :summary
+    property :origin_system
+    property :browser_url
+    property :featured_image_url
 
-  property :creator, decorator: Api::Resources::PersonRepresenter, class: Person
+    property :creator, extend: PeopleRepresenter, class: Person
+  end
 end
