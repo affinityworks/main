@@ -13,4 +13,5 @@ class JsonApi::GroupRepresenter < Roar::Decorator
 
     property :creator, extend: PeopleRepresenter, class: Person
   end
+  has_many :upcoming_events, extend: EventsRepresenter
 end
