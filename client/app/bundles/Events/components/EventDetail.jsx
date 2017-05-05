@@ -51,7 +51,6 @@ class EventDetail extends Component {
   }
 
   render() {
-    console.log(this.state);
     const attributes = this.state.event.attributes;
 
     if(!attributes) { return null}
