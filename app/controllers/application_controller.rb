@@ -10,4 +10,10 @@ class ApplicationController < ActionController::Base
   def current_group
     current_person.groups.first #TODO: Add selected group
   end
+
+  private
+
+  def current_ability
+    @current_ability ||= Ability.new(current_user, current_group)
+  end
 end
