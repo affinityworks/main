@@ -54,37 +54,14 @@ class PersonTest < ActiveSupport::TestCase
     assert_equal ['good.one@example.com'], person.email_addresses.map(&:address)
   end
 
-  test 'email + email addresses' do
+  test 'email addresses' do
     Person.create!(
-      email: 'lisa@example.com',
       password: 'secret123',
       email_addresses: [
         EmailAddress.new(primary: true, address: 'lisa@example.com'),
         EmailAddress.new(primary: false, address: 'ls127@aol.com')
       ]
     )
-  end
-
-  test 'primary email_address may differ from #email' do
-    person = Person.new(
-      email: 'ls127@example.com',
-      password: 'secret123',
-      email_addresses: [
-        EmailAddress.new(primary: true, address: 'lisa@example.com'),
-        EmailAddress.new(primary: false, address: 'ls127@aol.com')
-      ]
-    )
-    assert person.valid?, 'person with mismtached email addresses is valid'
-  end
-
-  test 'blank #email and primary email address is valid' do
-    person = Person.new(
-      email_addresses: [
-        EmailAddress.new(primary: true, address: 'lisa@example.com'),
-        EmailAddress.new(primary: false, address: 'ls127@aol.com')
-      ]
-    )
-    assert person.valid?
   end
 
   test 'create with identifiers' do

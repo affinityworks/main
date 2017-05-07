@@ -33,6 +33,8 @@ class EventsController < ApplicationController
   private
 
   def set_events
+    return [] unless current_group
+
     @events = current_group.events.includes(:location)
     if params[:filter] then
       @events = @events.where('title ilike ?',"%#{params[:filter]}%")

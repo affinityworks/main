@@ -27,7 +27,7 @@ class Api::V1::PeopleControllerTest < ActionDispatch::IntegrationTest
   test 'pagination' do
     # 2 fixtures + 6 new people = 8 in DB
     6.times do |i|
-      Person.create!(email: "person_#{i}@example.com", password: 'topsecret')
+      Person.create!(password: 'topsecret')
     end
 
     Api::User.create!(osdi_api_token: 'CF32zTyg_KXFQbPzvoz3', name: 'API friend', email: 'api@example.com')

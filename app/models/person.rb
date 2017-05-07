@@ -34,14 +34,28 @@ class Person < ApplicationRecord
     email_addresses.detect(&:primary?)&.address
   end
 
+  def email
+    primary_email_address
+  end
+
+  #i'm not really sure if this is needed but devise was failing without it.
+  def email=(email_address)
+    email_addresses.detect(&:primary?).address=(email_address)
+  end
+
   # Override Devise lib/devise/models/validatable.rb
   def email_required?
-    password.present?
+    false
   end
 
   # Override Devise lib/devise/models/validatable.rb
   def password_required?
-    email.present? && (!persisted? || !password.nil? || !password_confirmation.nil?)
+    false
+  end
+
+  # Override Devise lib/devise/models/validatable.rb
+  def email_changed?
+    false
   end
 
   def sanitize_email_addresses
