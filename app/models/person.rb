@@ -39,7 +39,9 @@ class Person < ApplicationRecord
   end
 
   #i'm not really sure if this is needed but devise was failing without it.
+  # this is a bit of a hack. --rabble
   def email=(email_address)
+    return false unless email_addresses.detect(&:primary?)
     email_addresses.detect(&:primary?).address=(email_address)
   end
 

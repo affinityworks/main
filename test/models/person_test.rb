@@ -64,6 +64,21 @@ class PersonTest < ActiveSupport::TestCase
     )
   end
 
+
+  test 'reading email address' do
+    one = people(:one)
+    assert_equal one.email, one.email_addresses.first.address
+  end
+
+
+    test 'writig email address' do
+      one = people(:one)
+      one.email="somethingelse@gmail.com"
+      assert_equal 'somethingelse@gmail.com', one.email
+      assert_equal 'somethingelse@gmail.com', one.email_addresses.first.address
+    end
+
+
   test 'create with identifiers' do
     person = Person.create!(identifiers: ['sncc:123'])
     person.reload
@@ -71,6 +86,6 @@ class PersonTest < ActiveSupport::TestCase
   end
 
   test '' do
-    
+
   end
 end
