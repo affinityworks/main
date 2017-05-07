@@ -5,7 +5,14 @@ class GroupsController < ApplicationController
   # GET /groups
   # GET /groups.json
   def index
-    @groups = Group.all
+    @groups = Group.all.includes(:creator)
+
+    respond_to do |format|
+      format.html
+      format.json do
+        render json: JsonApi::GroupRepresenter.for_collection.new(@groups).to_json
+      end
+    end
   end
 
   # GET /groups/1
