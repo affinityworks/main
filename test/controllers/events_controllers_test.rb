@@ -34,8 +34,9 @@ class EventsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     json = JSON.parse(@response.body)
 
-    assert_equal Group.first.events.count, json['data'].size
-    assert_equal Group.first.events.first.id, json['data'].first['id'].to_i
+    assert_kind_of Array, json['events']['data']
+    assert_equal Group.first.events.count, json['events']['data'].size
+    assert_equal Group.first.events.first.id, json['events']['data'].first['id'].to_i
   end
 
   test 'get #show' do
