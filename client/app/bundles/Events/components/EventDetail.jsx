@@ -66,7 +66,7 @@ class EventDetail extends Component {
         {this.showAddress()}
         <br/>
         <div style={{width: '100%', height: '400px'}}>{this.showMap()}</div>
-        <Link to='/'>
+        <Link to='/events/'>
           <button className='btn btn-primary'>Back to Events</button>
         </Link>
       </div>

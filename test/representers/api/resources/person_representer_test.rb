@@ -25,13 +25,11 @@ class Api::Resources::PersonRepresenterTest < ActiveSupport::TestCase
     )
     assert_equal 1, person.email_addresses.size
     assert_equal 'johnsmith@mail.com', person.email_addresses.first.address
-    assert_equal '', person.email
   end
 
   test 'custom_fields' do
     person = Person.create!(
       custom_fields: { foo: 'bar', baz: 'bat' },
-      email: 'person@example.com',
       password: 'secret'
     )
 
