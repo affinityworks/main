@@ -379,7 +379,7 @@ ActiveRecord::Schema.define(version: 20170504155342) do
   create_table "memberships", force: :cascade do |t|
     t.integer  "group_id"
     t.integer  "person_id"
-    t.integer  "role",       default: 0
+    t.integer  "role",       default: 0, null: false
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.index ["group_id"], name: "index_memberships_on_group_id", using: :btree
