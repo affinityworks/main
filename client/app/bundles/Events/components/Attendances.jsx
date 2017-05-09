@@ -41,6 +41,8 @@ class Attendances extends Component {
   }
 
   render() {
+    const { goBack } = this.props.history;
+
     return (
       <div>
         {this.renderEvent()}
@@ -52,9 +54,7 @@ class Attendances extends Component {
           <br />
 
           <div className='text-right'>
-            <Link to='/events'>
-              <button className='btn btn-success'> Done </button>
-            </Link>
+            <button onClick={goBack} className='btn btn-success'> Done </button>
           </div>
         </div>
       </div>
