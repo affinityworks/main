@@ -2,24 +2,16 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment';
-import EventAddress from './EventAddress';
+import { connect } from 'react-redux';
 import GoogleStaticMap from 'react-google-static-map-2';
 
+import EventAddress from './EventAddress';
+import { fetchEvent } from '../actions';
+
 class EventDetail extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = { event: {} }
-  }
-
-  componentDidMount() {
+  componentWillMount() {
     const eventId = this.props.match.params.id;
-
-    axios.get(`/events/${eventId}.json`)
-      .then(res => {
-        const event = res.data.data;
-        this.setState({ event });
-      });
+    this.props.fetchEvent(eventId);
   }
 
   formatDate(date) {
@@ -28,7 +20,7 @@ class EventDetail extends Component {
   }
 
   showMap() {
-    const location = this.state.event.attributes.location;
+    const location = this.props.event.attributes.location;
 
     //NOTE we need to update this when we know all the data is present.
     if (location && location.location && location.location.latitude && location.location.longitude)
@@ -45,13 +37,13 @@ class EventDetail extends Component {
   }
 
   showAddress() {
-    const location = this.state.event.attributes.location
+    const location = this.props.event.attributes.location
     if (location)
       return <EventAddress location={location}/>
   }
 
   render() {
-    const attributes = this.state.event.attributes;
+    const attributes = this.props.event.attributes;
 
     if(!attributes) { return null}
 
@@ -73,4 +65,8 @@ class EventDetail extends Component {
   }
 }
 
-export default EventDetail;
+const mapStateToProps = ({ event }) => {
+  return { event }
+};
+
+export default connect(mapStateToProps, { fetchEvent })(EventDetail);
