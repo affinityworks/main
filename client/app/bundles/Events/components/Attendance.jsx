@@ -1,25 +1,19 @@
-  import React, { Component, PropTypes } from 'react';
-import axios from 'axios';
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+
+import { updateAttendance } from '../actions';
 
 class Attendance extends Component {
-  static contextTypes = {
-    router: PropTypes.object
-  };
-
-  componentWillMount() {
-    this.state = { attended: this.props.attendance.attributes.attended };
-  }
-
   updateAttended(attended) {
     const id = this.props.attendance.id;
     const eventId = this.props.eventId;
 
-    axios.put(`/events/${eventId}/attendances/${id}`, { attended })
-      .then(() => this.setState({ attended }))
+    this.props.updateAttendance({ id, eventId, attended });
   }
 
   render() {
     const attendee = this.props.attendance.attributes.person.data.attributes;
+    const { attended } = this.props.attendance.attributes;
 
     return (
       <div className='list-group-item'>
@@ -27,8 +21,6 @@ class Attendance extends Component {
           <div className='row'>
             {`${attendee['given-name']} ${attendee['family-name']}`}
           </div>
-
-          <div> {this.state.attended} </div>
 
           <div className='row'>
             <small>{`${attendee['primary-email-address']}`}</small>
@@ -39,21 +31,21 @@ class Attendance extends Component {
           <div className='btn-group' role='group'>
             <button
               type='button'
-              className={`btn ${this.state.attended === true ? 'btn-success' : 'btn-secondary'}`}
+              className={`btn ${attended === true ? 'btn-success' : 'btn-secondary'}`}
               onClick={() => this.updateAttended(true)}>
               Y
             </button>
 
             <button
               type='button'
-              className={`btn ${this.state.attended === undefined ? 'btn-warning' : 'btn-secondary'}`}
+              className={`btn ${attended === undefined ? 'btn-warning' : 'btn-secondary'}`}
               onClick={() => this.updateAttended(undefined)}>
               ?
             </button>
 
             <button
               type='button'
-              className={`btn ${this.state.attended === false ? 'btn-danger' : 'btn-secondary'}`}
+              className={`btn ${attended === false ? 'btn-danger' : 'btn-secondary'}`}
               onClick={() => this.updateAttended(false)}>
               N
             </button>
@@ -64,4 +56,4 @@ class Attendance extends Component {
   }
 }
 
-export default Attendance;
+export default connect(null, { updateAttendance })(Attendance);
