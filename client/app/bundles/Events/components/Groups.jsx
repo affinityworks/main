@@ -1,19 +1,13 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
 import Group from './Group';
+import { fetchGroups } from '../actions';
 
 class Groups extends Component {
-  state = { groups: [] };
-
-  componentDidMount() {
-    const uri = `/groups.json`;
-
-    axios.get(uri)
-      .then(res => {
-        const groups = res.data;
-        this.setState({ groups });
-      });
+  componentWillMount() {
+    this.props.fetchGroups();
   }
 
   render() {
@@ -31,11 +25,15 @@ class Groups extends Component {
           </tr>
         </thead>
         <tbody>
-          {this.state.groups.map(group => <Group key={group.id} group={group} />)}
+          {this.props.groups.map(group => <Group key={group.id} group={group} />)}
         </tbody>
       </table>
     );
   }
 }
 
-export default Groups;
+const mapStateToProps = ({ groups }) => {
+  return { groups };
+};
+
+export default connect(mapStateToProps, { fetchGroups })(Groups);

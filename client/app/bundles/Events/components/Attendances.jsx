@@ -50,8 +50,7 @@ class Attendances extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  const { event, attendances } = state;
+const mapStateToProps = ({ event, attendances }) => {
   return { event, attendances }
 };
 
