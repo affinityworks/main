@@ -4,16 +4,24 @@ import { connect } from 'react-redux';
 import { updateAttendance } from '../actions';
 
 class Attendance extends Component {
+  constructor(props) {
+    super(props)
+
+    const { attended } = props.attendance.attributes;
+    this.state = { attended }
+  }
+
   updateAttended(attended) {
     const id = this.props.attendance.id;
     const eventId = this.props.eventId;
 
+    this.setState({ attended });
     this.props.updateAttendance({ id, eventId, attended });
   }
 
   render() {
     const attendee = this.props.attendance.attributes.person.data.attributes;
-    const { attended } = this.props.attendance.attributes;
+    const { attended } = this.state;
 
     return (
       <div className='list-group-item'>

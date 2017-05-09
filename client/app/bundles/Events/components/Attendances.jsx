@@ -16,7 +16,7 @@ class Attendances extends Component {
   }
 
   renderEvent() {
-    if (this.props.event)
+    if (this.props.event.attributes)
       return <Event event={this.props.event} />;
   }
 
