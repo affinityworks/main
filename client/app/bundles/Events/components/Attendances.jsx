@@ -3,27 +3,16 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { fetchEvent } from '../actions';
 import Event from './Event';
 import Attendance from './Attendance';
+import { fetchEvent, fetchAttendances } from '../actions';
 
 class Attendances extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = { attendances: [] };
-  }
-
   componentWillMount() {
     const eventId = this.props.match.params.id;
 
     this.props.fetchEvent(eventId);
-
-    axios.get(`/events/${eventId}/attendances.json`)
-      .then(res => {
-        const attendances = res.data.data;
-        this.setState({ attendances });
-      });
+    this.props.fetchAttendances(eventId);
   }
 
   renderEvent() {
@@ -32,12 +21,11 @@ class Attendances extends Component {
   }
 
   renderAttendances() {
-    if (this.state.attendances)
-      return this.state.attendances.map(attendance => (
-        <Attendance key={attendance.id}
-          eventId={this.props.match.params.id}
-          attendance={attendance} />
-      ));
+    return this.props.attendances.map(attendance => (
+      <Attendance key={attendance.id}
+        eventId={this.props.match.params.id}
+        attendance={attendance} />
+    ));
   }
 
   render() {
@@ -63,8 +51,8 @@ class Attendances extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { event } = state;
-  return { event }
+  const { event, attendances } = state;
+  return { event, attendances }
 };
 
-export default connect(mapStateToProps, { fetchEvent })(Attendances);
+export default connect(mapStateToProps, { fetchEvent, fetchAttendances })(Attendances);

@@ -2,7 +2,8 @@ import axios from 'axios';
 
 import {
   FETCH_EVENTS,
-  FETCH_EVENT
+  FETCH_EVENT,
+  FETCH_ATTENDANCES
 } from './types';
 
 export const fetchEvents = (queryString = '') => {
@@ -22,3 +23,12 @@ export const fetchEvent = (eventId) => {
     payload: request
   };
 };
+
+export const fetchAttendances = (eventId) => {
+  const request = axios.get(`/events/${eventId}/attendances.json`);
+
+  return {
+    type: FETCH_ATTENDANCES,
+    payload: request
+  };
+}
