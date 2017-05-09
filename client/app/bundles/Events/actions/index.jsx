@@ -15,7 +15,7 @@ export const fetchEvents = (queryString = '') => {
 };
 
 export const fetchEvent = (eventId) => {
-  const request = axios.get(`/events.json/${eventId}`);
+  const request = axios.get(`/events/${eventId}.json`);
 
   return {
     type: FETCH_EVENT,

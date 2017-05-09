@@ -1,25 +1,23 @@
 import React, { Component, PropTypes } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
+import { fetchEvent } from '../actions';
 import Event from './Event';
 import Attendance from './Attendance';
 
-export default class Attendances extends Component {
+class Attendances extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { event: null, attendances: [] };
+    this.state = { attendances: [] };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const eventId = this.props.match.params.id;
 
-    axios.get(`/events/${eventId}.json`)
-      .then(res => {
-        const event = res.data.data;
-        this.setState({ event });
-      });
+    this.props.fetchEvent(eventId);
 
     axios.get(`/events/${eventId}/attendances.json`)
       .then(res => {
@@ -29,8 +27,8 @@ export default class Attendances extends Component {
   }
 
   renderEvent() {
-    if (this.state.event)
-      return <Event event={this.state.event} />;
+    if (this.props.event)
+      return <Event event={this.props.event} />;
   }
 
   renderAttendances() {
@@ -63,3 +61,10 @@ export default class Attendances extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  const { event } = state;
+  return { event }
+};
+
+export default connect(mapStateToProps, { fetchEvent })(Attendances);

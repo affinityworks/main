@@ -19,7 +19,6 @@ class Attendance extends Component {
   }
 
   render() {
-    console.log(this.props);
     const attendee = this.props.attendance.attributes.person.data.attributes;
 
     return (
