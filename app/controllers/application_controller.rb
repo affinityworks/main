@@ -16,7 +16,29 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def validate_admin_persmission
+    return if controller_name == 'sessions' || current_person.nil?
+
+    render_not_found unless current_person.admin?
+  end
+
+  def after_sign_in_path_for(resource)
+    if resource.admin?
+      admin_dashboard_path
+    else
+      events_path
+    end
+  end
+
   private
+
+  def render_not_found
+    respond_to do |format|
+      format.html { render file: "#{Rails.root}/public/404", layout: false, status: :not_found }
+      format.xml  { head :not_found }
+      format.any  { head :not_found }
+    end
+  end
 
   def current_ability
     @current_ability ||= Ability.new(current_user, current_group)
