@@ -2,7 +2,8 @@ import React, { Component} from 'react';
 import { Router } from 'react-router-dom';
 import routes from '../routes/routes';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import ReduxPromise from 'redux-promise';
 
 import reducers from '../reducers/';
 import history from '../history';
@@ -15,8 +16,12 @@ class App extends Component {
     const currentUser = this.props.current_user;
     const currentGroup = this.props.current_group;
 
+    const storeWithMiddleware = createStore(reducers, {
+      currentUser, currentGroup
+    }, applyMiddleware(ReduxPromise));
+
     return (
-      <Provider store={createStore(reducers, { currentUser, currentGroup })}>
+      <Provider store={storeWithMiddleware}>
         <Router history={history}>
           <div className='container'>
             <Header/>

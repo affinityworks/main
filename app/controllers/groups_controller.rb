@@ -5,12 +5,16 @@ class GroupsController < ApplicationController
   # GET /groups
   # GET /groups.json
   def index
-    @groups = Group.all.includes(:creator)
+    @groups = Group.all.includes(:creator).page(params[:page])
 
     respond_to do |format|
       format.html
       format.json do
-        render json: JsonApi::GroupRepresenter.for_collection.new(@groups).to_json
+        render json: {
+          groups: JsonApi::GroupRepresenter.for_collection.new(@groups),
+          total_pages: @groups.total_pages,
+          page: @groups.current_page
+        }.to_json
       end
     end
   end

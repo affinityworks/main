@@ -1,48 +1,36 @@
 import React, { Component, PropTypes } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import Event from './Event';
 import Attendance from './Attendance';
+import { fetchEvent, fetchAttendances } from '../actions';
 
-export default class Attendances extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = { event: null, attendances: [] };
-  }
-
-  componentDidMount() {
+class Attendances extends Component {
+  componentWillMount() {
     const eventId = this.props.match.params.id;
 
-    axios.get(`/events/${eventId}.json`)
-      .then(res => {
-        const event = res.data.data;
-        this.setState({ event });
-      });
-
-    axios.get(`/events/${eventId}/attendances.json`)
-      .then(res => {
-        const attendances = res.data.data;
-        this.setState({ attendances });
-      });
+    this.props.fetchEvent(eventId);
+    this.props.fetchAttendances(eventId);
   }
 
   renderEvent() {
-    if (this.state.event)
-      return <Event event={this.state.event} />;
+    if (this.props.event)
+      return <Event event={this.props.event} />;
   }
 
   renderAttendances() {
-    if (this.state.attendances)
-      return this.state.attendances.map(attendance => (
-        <Attendance key={attendance.id}
-          eventId={this.props.match.params.id}
-          attendance={attendance} />
-      ));
+    return this.props.attendances.map(attendance => (
+      <Attendance key={attendance.id}
+        eventId={this.props.match.params.id}
+        attendance={attendance} />
+    ));
   }
 
   render() {
+    const { goBack } = this.props.history;
+
     return (
       <div>
         {this.renderEvent()}
@@ -54,12 +42,16 @@ export default class Attendances extends Component {
           <br />
 
           <div className='text-right'>
-            <Link to='/events'>
-              <button className='btn btn-success'> Done </button>
-            </Link>
+            <button onClick={goBack} className='btn btn-success'> Done </button>
           </div>
         </div>
       </div>
     );
   }
 }
+
+const mapStateToProps = ({ event, attendances }) => {
+  return { event, attendances }
+};
+
+export default connect(mapStateToProps, { fetchEvent, fetchAttendances })(Attendances);
