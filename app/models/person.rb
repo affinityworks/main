@@ -34,14 +34,30 @@ class Person < ApplicationRecord
     email_addresses.detect(&:primary?)&.address
   end
 
+  def email
+    primary_email_address
+  end
+
+  #i'm not really sure if this is needed but devise was failing without it.
+  # this is a bit of a hack. --rabble
+  def email=(email_address)
+    return false unless email_addresses.detect(&:primary?)
+    email_addresses.detect(&:primary?).address=(email_address)
+  end
+
   # Override Devise lib/devise/models/validatable.rb
   def email_required?
-    password.present?
+    false
   end
 
   # Override Devise lib/devise/models/validatable.rb
   def password_required?
-    email.present? && (!persisted? || !password.nil? || !password_confirmation.nil?)
+    false
+  end
+
+  # Override Devise lib/devise/models/validatable.rb
+  def email_changed?
+    false
   end
 
   def sanitize_email_addresses
@@ -50,5 +66,14 @@ class Person < ApplicationRecord
 
   def primary_phone_number
     phone_numbers.detect(&:primary?)&.number
+  end
+
+  def self.find_first_by_auth_conditions(warden_conditions)
+    conditions = warden_conditions.dup
+    if email = conditions.delete(:email)
+      self.includes(:email_addresses).where(email_addresses: { address: email }).first
+    else
+      super(warden_conditions)
+    end
   end
 end

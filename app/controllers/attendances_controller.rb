@@ -36,7 +36,7 @@ class AttendancesController < ApplicationController
   end
 
   def find_attendances
-    @attendances = Event.find(params[:event_id]).attendances
+    @attendances = current_group.events.find(params[:event_id]).attendances
   end
 
 end

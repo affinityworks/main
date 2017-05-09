@@ -54,7 +54,7 @@ export default class Attendances extends Component {
           <br />
 
           <div className='text-right'>
-            <Link to='/'>
+            <Link to='/events'>
               <button className='btn btn-success'> Done </button>
             </Link>
           </div>

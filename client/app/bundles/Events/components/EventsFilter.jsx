@@ -8,14 +8,19 @@ class EventsFilter extends Component {
   }
 
   onInputSubmit(searchTerm) {
-    this.setState({searchTerm});
+    this.setState({ searchTerm });
     this.props.onSearchSubmit(searchTerm);
   }
 
   render() {
     return (
       <div className='input-group'>
-        <input ref="searchInput" type='text' className='form-control' placeholder='Search by event title' />
+        <input
+          ref="searchInput"
+          type='text'
+          className='form-control'
+          defaultValue={this.props.filter}
+          placeholder='Search by event title' />
          <span className='input-group-btn'>
           <button className='btn btn-secondary'
             onClick={ev => this.onInputSubmit(this.refs.searchInput.value) }>
