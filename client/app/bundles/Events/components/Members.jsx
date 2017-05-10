@@ -4,43 +4,34 @@ import Member from './Member';
 import queryString from 'query-string';
 import Pagination from './Pagination';
 import history from '../history';
+import { connect } from 'react-redux';
+
+import { fetchMembers } from '../actions'
 
 class Members extends Component {
-  constructor(props, _railsContext) {
-    super(props);
-
-    const { page } = queryString.parse(props.location.search);
-
-    this.state = { members: [], page: page };
+  componentWillMount() {
+    this.props.fetchMembers(this.buildQuery(this.props));
   }
 
-  componentDidMount() {
-    this.getMembers(this.state.page);
+  buildQuery(props) {
+    const { page } = queryString.parse(props.location.search);
+    const query = { page };
+
+    return `?${queryString.stringify(query)}`;
   }
 
   componentWillReceiveProps(nextProps) {
-    const { page } = queryString.parse(nextProps.location.search);
-    this.getMembers(page);
-  }
-
-  getMembers(page) {
-    const query = { page };
-    const uri = `/members.json?${queryString.stringify(query)}`;
-
-    axios.get(uri)
-      .then(res => {
-        const members = res.data.members.data;
-        const { total_pages, page } = res.data;
-        this.setState({ members, total_pages, page });
-      });
+    if (this.props.location.search !== nextProps.location.search)
+      this.props.fetchMembers(this.buildQuery(nextProps));
   }
 
   renderPagination() {
-    if (this.state.total_pages) {
+    const { total_pages, page, location } = this.props;
+    if (total_pages) {
       return <Pagination
-        page={this.state.page}
-        totalPages={this.state.total_pages}
-        currentSearch={this.props.location.search} />
+        page={page}
+        totalPages={total_pages}
+        currentSearch={location.search} />
     }
   }
 
@@ -58,7 +49,7 @@ class Members extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.state.members.map(member => <Member key={member.id} member={member.attributes} />)}
+            {this.props.members.map(member => <Member key={member.id} member={member.attributes} />)}
           </tbody>
         </table>
         <br />
@@ -68,4 +59,9 @@ class Members extends Component {
   }
 }
 
-export default Members;
+const mapStateToProps = (state) => {
+  const { members, total_pages, page } = state.members;
+  return { members, total_pages, page };
+};
+
+export default connect(mapStateToProps, { fetchMembers })(Members);

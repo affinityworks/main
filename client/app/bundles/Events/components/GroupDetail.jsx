@@ -1,26 +1,19 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
 import UpcomingEvent from './UpcomingEvent';
+import { fetchGroup } from '../actions';
 
 class GroupDetail extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = { group: {} }
-  }
-
-  componentDidMount() {
+  componentWillMount() {
     const groupId = this.props.match.params.id;
 
-    axios.get(`/groups/${groupId}.json`)
-      .then(res => {
-        const group = res.data.data;
-        this.setState({ group });
-       });
+    this.props.fetchGroup(groupId);
   }
 
   upcoming_events() {
-    const groupRelationships = this.state.group.relationships;
+    console.log('props', this.props);
+    const groupRelationships = this.props.group.relationships;
 
     if (!groupRelationships || !groupRelationships['upcoming-events'].data.length)
       return (<div>The group has not incoming events</div>);
@@ -31,10 +24,11 @@ class GroupDetail extends Component {
   }
 
   render() {
-    const attributes = this.state.group.attributes;
+    const attributes = this.props.group.attributes;
 
     if(!attributes) { return null }
 
+    console.log('before render return');
     return (
       <div>
         <div className='row'>
@@ -57,4 +51,9 @@ class GroupDetail extends Component {
   }
 }
 
-export default GroupDetail;
+const mapStateToProps = ({ group }) => {
+  console.log('group', group);
+  return { group }
+};
+
+export default connect(mapStateToProps, { fetchGroup })(GroupDetail);
