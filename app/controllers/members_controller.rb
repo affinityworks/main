@@ -8,7 +8,7 @@ class MembersController < ApplicationController
       format.html
       format.json do
         render json: {
-          members: JsonApi::PeopleRepresenter.for_collection.new(@members),
+          members: JsonApi::PeopleRepresenter.for_collection.new(Person.add_event_attended(@members,current_group)),
           total_pages: @members.total_pages,
           page: @members.current_page
         }.to_json

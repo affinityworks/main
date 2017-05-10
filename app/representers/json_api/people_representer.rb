@@ -8,5 +8,6 @@ class JsonApi::PeopleRepresenter < Roar::Decorator
     property :given_name
     property :primary_email_address
     property :primary_phone_number
+    property :attended_events_count
   end
 end

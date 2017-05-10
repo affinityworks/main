@@ -16,12 +16,12 @@ class GroupDetail extends Component {
       .then(res => {
         const group = res.data.data;
         this.setState({ group });
-      });
+       });
   }
 
   upcoming_events() {
     const groupRelationships = this.state.group.relationships;
-    // debugger;
+
     if (!groupRelationships || !groupRelationships['upcoming-events'].data.length)
       return (<div>The group has not incoming events</div>);
     else {
@@ -39,8 +39,6 @@ class GroupDetail extends Component {
       <div>
         <div className='row'>
           <div className='col-md-12'>
-            <h1>{attributes.name}</h1>
-            <hr/>
             <div dangerouslySetInnerHTML={{ __html: attributes.description }} />
             <div>
               <hr/>

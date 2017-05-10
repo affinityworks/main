@@ -1,19 +1,39 @@
 import React, { Component } from 'react';
 import queryString from 'query-string';
+import _ from 'lodash';
 
 import { Link } from 'react-router-dom';
 
 class Pagination extends Component {
-  renderPages() {
-    return Array(this.props.totalPages).fill().map((_, i) => {
-      const index = i + 1;
 
+  paginationSize() {
+    return this.props.totalPages < 10 ? this.props.totalPages : 10;
+  }
+
+  pages() {
+    const { totalPages, page } = this.props;
+
+    if (totalPages < 10) // less than 10 total pages so show all
+      return _.range(1, totalPages + 1);
+    else {
+      // more than 10 total pages so calculate start and end pages
+      if (page <= 6)
+        return _.range(1, 11);
+      else if (page + 4 >= totalPages)
+        return _.range(totalPages - 9, totalPages + 1);
+      else
+        return _.range(page - 5, page + 5);
+    }
+  }
+
+  renderPages() {
+    return this.pages().map((pageNumber) => {
       return (
         <li
-          key={index}
-          className={`page-item ${this.props.page === index ? 'active' : ''}`}>
-          <Link to={`?${this.buildQuery(index)}`} className='page-link' >
-            { index }
+          key={pageNumber}
+          className={`page-item ${this.props.page === pageNumber ? 'active' : ''}`}>
+          <Link to={`?${this.buildQuery(pageNumber)}`} className='page-link' >
+            { pageNumber }
           </Link>
         </li>
       );

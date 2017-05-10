@@ -11,14 +11,14 @@ const UpcomingEvent = (props) => {
   }
 
   return(
-    <Link to={`/events/${id}`} className='list-group-item'>
+    <a href={attributes['browser-url']} className='list-group-item'>
       <div className='col-md-1'>
         <span className='badge badge-primary'>RSVP</span>
       </div>
       <div className='col-md-11'>
         {attributes.name} - {formatDate(attributes['start-date'])}
       </div>
-    </Link>
+    </a>
   );
 };
 

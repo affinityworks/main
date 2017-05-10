@@ -5,7 +5,10 @@ const Nav = (props) => {
     <div>
       <ul className="nav nav-tabs">
         <li className="nav-item">
-          <a className="nav-link active" href="#">Events Attendance</a>
+          <a className="nav-link" href="#">Members</a>
+        </li>
+        <li className="nav-item">
+          <a className="nav-link active" href="#">Events</a>
         </li>
       </ul>
       <br />

@@ -11,7 +11,8 @@ class JsonApi::GroupRepresenter < Roar::Decorator
     property :browser_url
     property :featured_image_url
 
-    property :creator, extend: PeopleRepresenter, class: Person
+    property :creator, extend: JsonApi::PeopleRepresenter, class: Person
   end
-  has_many :upcoming_events, extend: EventsRepresenter
+
+  has_many :upcoming_events, extend: JsonApi::EventsRepresenter
 end
