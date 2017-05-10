@@ -1,65 +1,60 @@
 import axios from 'axios';
 import React, { PropTypes, Component } from 'react';
 import queryString from 'query-string';
+import { connect } from 'react-redux';
 
 import Event from './Event';
 import EventsFilter from './EventsFilter';
 import Pagination from './Pagination';
+import { fetchEvents } from '../actions';
 import history from '../history';
 
-export default class Events extends Component {
+class Events extends Component {
   constructor(props, _railsContext) {
     super(props);
 
-    const { filter, page } = queryString.parse(props.location.search);
-
-    this.state = { events: [], page: page, filter: filter, total_pages: null };
     this.filterEvents = this.filterEvents.bind(this);
   }
 
-  componentDidMount() {
-    const { filter, page } = this.state;
-    this.getEvents(filter, page);
+  componentWillMount() {
+    this.props.fetchEvents(this.buildQuery(this.props));
   }
 
   componentWillReceiveProps(nextProps) {
-    const { filter, page } = queryString.parse(nextProps.location.search);
-    this.getEvents(filter, page);
+    if (this.props.location.search !== nextProps.location.search)
+      this.props.fetchEvents(this.buildQuery(nextProps));
+  }
+
+  buildQuery(props) {
+    const { filter, page } = queryString.parse(props.location.search);
+    const query = { filter, page };
+
+    return `?${queryString.stringify(query)}`;
   }
 
   filterEvents(filter) {
     this.props.history.push(`?${queryString.stringify({ filter })}`);
   }
 
-  getEvents(filter, page) {
-    const query = { filter, page };
-    const uri = `/events.json?${queryString.stringify(query)}`;
-
-    axios.get(uri)
-      .then(res => {
-        const events = res.data.events.data;
-        const { total_pages, page } = res.data;
-
-        this.setState({ events, total_pages, page });
-      });
-  }
-
   renderPagination() {
-    if (this.state.total_pages) {
+    const { total_pages, page, location } = this.props;
+    if (total_pages) {
       return <Pagination
-        page={this.state.page}
-        totalPages={this.state.total_pages}
-        currentSearch={this.props.location.search} />
+        page={page}
+        totalPages={total_pages}
+        currentSearch={location.search} />
     }
   }
 
   render() {
+    const { filter } = queryString.parse(this.props.location.search);
+
     return (
       <div>
-        <EventsFilter onSearchSubmit={this.filterEvents} filter={this.state.filter} />
+        <EventsFilter onSearchSubmit={this.filterEvents} filter={filter} />
         <br />
         <div className='list-group'>
-          {this.state.events.map(event => <Event key={event.id} event={event} />)}
+          {this.props.events.map(event => <Event key={event.id} event={event} />)}
         </div>
         <br />
         {this.renderPagination()}
@@ -67,3 +62,11 @@ export default class Events extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  const { events, total_pages, page } = state.events;
+
+  return { events, total_pages, page };
+}
+
+export default connect(mapStateToProps, { fetchEvents })(Events);

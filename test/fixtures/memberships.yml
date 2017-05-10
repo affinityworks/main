@@ -3,9 +3,9 @@
 one:
   group_id: 1
   person_id: 1
-  role: member
+  role: 0
 
 two:
   group_id: 2
   person_id: 2
-  role: admin
+  role: 1
