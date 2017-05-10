@@ -17,7 +17,17 @@ class ApplicationController < ActionController::Base
   end
 
   def validate_admin_persmission
+    return if controller_name == 'sessions' || current_person.nil?
+
     render_not_found unless current_person.admin?
+  end
+
+  def after_sign_in_path_for(resource)
+    if resource.admin?
+      admin_dashboard_path
+    else
+      events_path
+    end
   end
 
   private
