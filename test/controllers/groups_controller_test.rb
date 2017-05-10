@@ -1,11 +1,16 @@
 require 'test_helper'
 
 class GroupsControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+
   setup do
-    @group = groups(:one)
+    @person = people(:one)
+    @group = @person.groups.first
   end
 
   test "should get index" do
+    sign_in @person
+
     get groups_url
     assert_response :success
   end
@@ -26,6 +31,8 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should show group" do
+    sign_in @person
+
     get group_url(@group)
     assert_response :success
   end

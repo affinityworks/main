@@ -1,26 +1,3 @@
 <div class="container">
-  <div class='page-header'>
-    <div class="row">
-      <div class="col-10">
-        <h2>
-          <a href="/" class="affinity-logo"><img src="/images/affinity-logo.svg" width="300" /></a>
-          <small> <%= current_group.name if current_group %> </small>
-        </h2>
-      </div>
-
-      <div class="col-2 text-right">
-        <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span> <%= current_person.given_name %> <%= current_person.family_name %>  </span>
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <a class="dropdown-item" href="#">Account</a>
-            <a class="dropdown-item" href="/admin/logout">Logout</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <br />
-  </div>
-  <%= react_component("App", prerender: false) %>
+  <%= react_component('App', props: { current_user: current_person, current_group: current_group }) %>
 </div>

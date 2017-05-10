@@ -54,9 +54,8 @@ class PersonTest < ActiveSupport::TestCase
     assert_equal ['good.one@example.com'], person.email_addresses.map(&:address)
   end
 
-  test 'email + email addresses' do
+  test 'email addresses' do
     Person.create!(
-      email: 'lisa@example.com',
       password: 'secret123',
       email_addresses: [
         EmailAddress.new(primary: true, address: 'lisa@example.com'),
@@ -65,31 +64,28 @@ class PersonTest < ActiveSupport::TestCase
     )
   end
 
-  test 'primary email_address may differ from #email' do
-    person = Person.new(
-      email: 'ls127@example.com',
-      password: 'secret123',
-      email_addresses: [
-        EmailAddress.new(primary: true, address: 'lisa@example.com'),
-        EmailAddress.new(primary: false, address: 'ls127@aol.com')
-      ]
-    )
-    assert person.valid?, 'person with mismtached email addresses is valid'
+
+  test 'reading email address' do
+    one = people(:one)
+    assert_equal one.email, one.email_addresses.first.address
   end
 
-  test 'blank #email and primary email address is valid' do
-    person = Person.new(
-      email_addresses: [
-        EmailAddress.new(primary: true, address: 'lisa@example.com'),
-        EmailAddress.new(primary: false, address: 'ls127@aol.com')
-      ]
-    )
-    assert person.valid?
-  end
+
+    test 'writig email address' do
+      one = people(:one)
+      one.email="somethingelse@gmail.com"
+      assert_equal 'somethingelse@gmail.com', one.email
+      assert_equal 'somethingelse@gmail.com', one.email_addresses.first.address
+    end
+
 
   test 'create with identifiers' do
     person = Person.create!(identifiers: ['sncc:123'])
     person.reload
     assert_equal ["advocacycommons:#{person.id}", 'sncc:123'], person.identifiers.sort, 'identifiers'
+  end
+
+  test '' do
+
   end
 end
