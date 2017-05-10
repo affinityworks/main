@@ -3,6 +3,7 @@ import axios from 'axios';
 import Member from './Member';
 import queryString from 'query-string';
 import Pagination from './Pagination';
+import Nav from './Nav';
 import history from '../history';
 import { connect } from 'react-redux';
 
@@ -38,6 +39,7 @@ class Members extends Component {
   render() {
     return (
       <div>
+        <Nav activeTab='members'/>
         <table className='table'>
           <thead>
             <tr>

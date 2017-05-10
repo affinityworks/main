@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import Event from './Event';
 import EventsFilter from './EventsFilter';
 import Pagination from './Pagination';
+import Nav from './Nav';
 import { fetchEvents } from '../actions';
 import history from '../history';
 
@@ -51,6 +52,7 @@ class Events extends Component {
 
     return (
       <div>
+        <Nav activeTab='events'/>
         <EventsFilter onSearchSubmit={this.filterEvents} filter={filter} />
         <br />
         <div className='list-group'>
