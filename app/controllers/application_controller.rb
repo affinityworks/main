@@ -16,9 +16,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def validate_admin_persmission
+  def validate_admin_permission
     return if controller_name == 'sessions' || current_person.nil?
-
     render_not_found unless current_person.admin?
   end
 
