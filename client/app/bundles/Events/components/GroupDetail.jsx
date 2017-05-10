@@ -12,7 +12,6 @@ class GroupDetail extends Component {
   }
 
   upcoming_events() {
-    console.log('props', this.props);
     const groupRelationships = this.props.group.relationships;
 
     if (!groupRelationships || !groupRelationships['upcoming-events'].data.length)
@@ -28,7 +27,6 @@ class GroupDetail extends Component {
 
     if(!attributes) { return null }
 
-    console.log('before render return');
     return (
       <div>
         <div className='row'>
@@ -52,7 +50,6 @@ class GroupDetail extends Component {
 }
 
 const mapStateToProps = ({ group }) => {
-  console.log('group', group);
   return { group }
 };
 
