@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  root to: 'static#index'
+  use_doorkeeper
   ActiveAdmin.routes(self)
   #ActiveAdmin.routes(self)
   namespace :admin do
