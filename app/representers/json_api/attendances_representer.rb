@@ -6,6 +6,6 @@ class JsonApi::AttendancesRepresenter < Roar::Decorator
   attributes do
     property :attended
     property :status
-    property :person, extend: PeopleRepresenter, class: Person
+    property :person, extend: JsonApi::PeopleRepresenter, class: Person
   end
 end
