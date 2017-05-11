@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment';
 import { connect } from 'react-redux';
-import GoogleStaticMap from 'react-google-static-map-2';
 
 import EventAddress from './EventAddress';
 import { fetchEvent } from '../actions';
+import GoogleMap from './Googlemap';
 
 class EventDetail extends Component {
   componentWillMount() {
@@ -20,24 +20,26 @@ class EventDetail extends Component {
   }
 
   showMap() {
-    const location = this.props.event.attributes.location;
+    const { location } = this.props.event.attributes;
 
     //NOTE we need to update this when we know all the data is present.
     if (location && location.location && location.location.latitude && location.location.longitude)
       return(
-        <GoogleStaticMap
-          latitude={location.location.latitude.toString()}
-          longitude={location.location.longitude.toString()}
-          zoom={13}
-          size={{ width: 550, height: 300 }}
-          key="AIzaSyBfbXecv_Blyv87EGM0yvr_Gyv-nmpTd7M"
+        <GoogleMap
+          lat={location.location.latitude}
+          lng={location.location.longitude}
+          width={550}
+          height={300}
+          zoom={14}
+          apiKey="AIzaSyDa2U99OyqeAOz1ZBqtUD2yNKXR00VYrM8"
         />
       );
+
     return <div><h2>No location available</h2></div>
   }
 
   showAddress() {
-    const location = this.props.event.attributes.location
+    const { location } = this.props.event.attributes
     if (location)
       return <EventAddress location={location}/>
   }
