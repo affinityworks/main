@@ -13,6 +13,7 @@ class JsonApi::EventsRepresenter < Roar::Decorator
     property :rsvp_count
     property :attended_count
     property :invited_count
+    property :browser_url
 
     property :location, decorator: Api::Resources::AddressRepresenter, class: EventAddress
   end

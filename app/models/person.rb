@@ -26,6 +26,8 @@ class Person < ApplicationRecord
   has_many :memberships
   has_many :groups, through: :memberships
 
+  attr_accessor :attended_events_count #NOTE ROAR purpose
+
   def name
     [ given_name, family_name ].compact.join(' ')
   end
@@ -68,12 +70,26 @@ class Person < ApplicationRecord
     phone_numbers.detect(&:primary?)&.number
   end
 
+  def attended_group_events(group)
+    attendances.attended.includes(:event).where(event_id: group.events.pluck(:id))
+  end
+
+  def attended_group_events_count(group)
+    attended_group_events(group).count
+  end
+
   def self.find_first_by_auth_conditions(warden_conditions)
     conditions = warden_conditions.dup
     if email = conditions.delete(:email)
       self.includes(:email_addresses).where(email_addresses: { address: email }).first
     else
       super(warden_conditions)
+    end
+  end
+
+  def self.add_event_attended(people, current_group)
+    people.each do |person|
+      person.attended_events_count = person.attended_group_events_count(current_group)
     end
   end
 end

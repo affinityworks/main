@@ -1,16 +1,16 @@
 import React from 'react';
+import NavItem from './NavItem';
 
-const Nav = (props) => {
+const Nav = ({ activeTab }) => {
   return (
     <div>
       <ul className="nav nav-tabs">
-        <li className="nav-item">
-          <a className="nav-link active" href="#">Events Attendance</a>
-        </li>
+        <NavItem title='Members' path='/members' active={activeTab === 'members'} />
+        <NavItem title='Events' path='/events' active={activeTab === 'events'} />
       </ul>
       <br />
     </div>
   );
-}
+};
 
 export default Nav;
