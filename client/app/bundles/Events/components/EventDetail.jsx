@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import EventAddress from './EventAddress';
 import { fetchEvent } from '../actions';
-import GoogleMap from './Googlemap';
+import GoogleMap from './GoogleMap';
 
 class EventDetail extends Component {
   componentWillMount() {
