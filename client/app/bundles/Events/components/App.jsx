@@ -9,7 +9,6 @@ import reducers from '../reducers/';
 import history from '../history';
 
 import Header from './Header';
-import Nav from './Nav';
 
 class App extends Component {
   render() {
@@ -25,7 +24,6 @@ class App extends Component {
         <Router history={history}>
           <div className='container'>
             <Header/>
-            <Nav />
             {routes}
           </div>
         </Router>

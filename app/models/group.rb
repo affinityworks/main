@@ -36,4 +36,8 @@ class Group < ApplicationRecord
       self.update_attribute(:synced_at, synced_time)
     end
   end
+
+  def upcoming_events
+    events.upcoming
+  end
 end

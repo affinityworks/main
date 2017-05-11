@@ -6,6 +6,8 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @person = people(:one)
     @group = @person.groups.first
+
+    sign_in people(:one)
   end
 
   test "should get index" do
@@ -30,11 +32,11 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
     #assert_redirected_to group_url(Group.last)
   end
 
-  test "should show group" do
-    sign_in @person
-
-    get group_url(@group)
+  test 'get #show' do
+    get group_url(id: @group.id), as: :json
     assert_response :success
+    json = JSON.parse(@response.body)
+    assert_equal @group.name, json['data']['attributes']['name']
   end
 
   test "should get edit" do

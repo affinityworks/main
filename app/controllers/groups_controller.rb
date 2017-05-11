@@ -1,6 +1,6 @@
 class GroupsController < ApplicationController
   before_action :set_group, only: [:show, :edit, :update, :destroy]
-  #before_action :authenticate_person!
+  before_action :authenticate_person!
 
   # GET /groups
   # GET /groups.json
@@ -22,6 +22,12 @@ class GroupsController < ApplicationController
   # GET /groups/1
   # GET /groups/1.json
   def show
+    respond_to do |format|
+      format.html
+      format.json do
+        render json: JsonApi::GroupRepresenter.new(@group).to_json
+      end
+    end
   end
 
   # GET /groups/new
@@ -66,7 +72,6 @@ class GroupsController < ApplicationController
   # DELETE /groups/1
   # DELETE /groups/1.json
   def destroy
-    byebug
     @group.destroy
     respond_to do |format|
       format.html { redirect_to groups_url, notice: 'Group was successfully destroyed.' }
