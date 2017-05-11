@@ -57,4 +57,17 @@ class GroupTest < ActiveSupport::TestCase
       end
     end
   end
+
+  test '#upcoming_events' do
+    group = Group.first
+    ended_event = Event.create(start_date: 1.days.ago)
+    upcoming_event_1 = Event.create(start_date: Date.today)
+    other_group_event = Event.create(start_date: Date.today)
+    upcoming_event_2 = Event.create(start_date: Date.today + 2.days)
+    future_event = Event.create(start_date: Date.today + 6.days)
+
+    group.events = [ended_event, upcoming_event_1, upcoming_event_2, future_event]
+
+    assert_equal group.upcoming_events, [upcoming_event_1, upcoming_event_2]
+  end
 end
