@@ -24,8 +24,10 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource)
     if resource.admin?
       admin_dashboard_path
-    else
+    elsif can? :manage, current_group
       events_path
+    else
+      group_url(id: current_group.id)
     end
   end
 

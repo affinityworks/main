@@ -14,6 +14,10 @@ class Ability
       can :read, Attendance do |attendance|
         attendance.person.groups.include?(current_group)
       end
+
+      can :manage, Group do
+        person.memberships.organizer.collect(&:group).include?(current_group)
+      end
     end
   end
 end
