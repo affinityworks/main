@@ -30,4 +30,18 @@ class AbilityTest < ActiveSupport::TestCase
     assert ability.can? :read, group_attendance, 'current person is able to read current group\'s attendances'
     assert_not ability.can? :read, Attendance.last, 'current person is not able to read current group\'s attendances'
   end
+
+  test 'can manage current group' do
+    organizer = Membership.organizer.first.person
+    current_group = Membership.organizer.first.group
+    ability = Ability.new(organizer, current_group)
+    assert ability.can? :manage, Group, 'the user can manage current group if has role organizer'
+  end
+
+  test 'can not manage current group' do
+    member = Membership.member.first.person
+    current_group = Membership.member.first.group
+    ability = Ability.new(member, current_group)
+    assert_not ability.can? :manage, current_group, 'the user can manage current group if has role member'
+  end
 end

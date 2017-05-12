@@ -24,7 +24,7 @@ export default class Event extends Component {
     return (
       <div className='list-group-item'>
         <div className='col-8'>
-          <Link to={`/events/${id}`}> {attributes.title} </Link>
+          <Link to={`/events/${id}`}> {attributes.name || attributes.title} </Link>
           <span> {` at ${this.locationName() || 'Event Location' }`} </span>
           <span> {` hosted by ${this.organizerName() || 'Event Organizer'}`} </span>
         </div>
