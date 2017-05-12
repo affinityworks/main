@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { PropTypes, Component } from 'react';
 import queryString from 'query-string';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import Event from './Event';
 import EventsFilter from './EventsFilter';
@@ -22,6 +23,7 @@ class Events extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
     if (this.props.location.search !== nextProps.location.search)
       this.props.fetchEvents(this.buildQuery(nextProps));
   }
@@ -53,7 +55,18 @@ class Events extends Component {
     return (
       <div>
         <Nav activeTab='events'/>
-        <EventsFilter onSearchSubmit={this.filterEvents} filter={filter} />
+        <div className='row'>
+
+          <div className='col-6'>
+            <Link to='?direction=desc'>
+                <button className='btn btn-secondary'>Date</button>
+            </Link>
+          </div>
+
+          <div className='col-6'>
+            <EventsFilter onSearchSubmit={this.filterEvents} filter={filter} />
+          </div>
+        </div>
         <br />
         <div className='list-group'>
           {this.props.events.map(event => <Event key={event.id} event={event} />)}

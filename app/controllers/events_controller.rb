@@ -1,9 +1,7 @@
 class EventsController < ApplicationController
   before_action :authenticate_request!
-
   before_action :set_events, only: :index
   before_action :set_event, only: :show
-
 
   def index
     respond_to do |format|
@@ -40,11 +38,15 @@ class EventsController < ApplicationController
       @events = @events.where('title ilike ?',"%#{params[:filter]}%")
     end
 
-    @events = @events.page(params[:page])
+    @events = @events.sort_by_date(direction_param).page(params[:page])
   end
 
   def set_event
     @event = current_group.events.find(params[:id])
+  end
+
+  def direction_param
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
   end
 
   def authenticate_request!

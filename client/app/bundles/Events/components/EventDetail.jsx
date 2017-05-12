@@ -1,22 +1,17 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import moment from 'moment';
 import { connect } from 'react-redux';
 
 import EventAddress from './EventAddress';
 import { fetchEvent } from '../actions';
 import GoogleMap from './Googlemap';
+import { formatDateTime } from '../utils';
 
 class EventDetail extends Component {
   componentWillMount() {
     const eventId = this.props.match.params.id;
     this.props.fetchEvent(eventId);
-  }
-
-  formatDate(date) {
-    if (date)
-      return moment(date).format('Y-M-D H:mm');
   }
 
   showMap() {
@@ -53,7 +48,7 @@ class EventDetail extends Component {
       <div>
         <h1>{attributes.title}</h1>
         <br/>
-        <h3>{this.formatDate(attributes['start-date'])}</h3>
+        <h3>{formatDateTime(attributes['start-date'])}</h3>
         <div dangerouslySetInnerHTML={{ __html: attributes.description }} />
         <br/>
         {this.showAddress()}
