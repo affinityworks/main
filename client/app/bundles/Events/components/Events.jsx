@@ -2,14 +2,15 @@ import axios from 'axios';
 import React, { PropTypes, Component } from 'react';
 import queryString from 'query-string';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 
 import Event from './Event';
 import EventsFilter from './EventsFilter';
+import SortToggle from './SortToggle';
 import Pagination from './Pagination';
 import Nav from './Nav';
-import { fetchEvents } from '../actions';
 import history from '../history';
+import { addParamToQuery, removeParamFromQuery } from '../utils';
+import { fetchEvents } from '../actions';
 
 class Events extends Component {
   constructor(props, _railsContext) {
@@ -19,20 +20,12 @@ class Events extends Component {
   }
 
   componentWillMount() {
-    this.props.fetchEvents(this.buildQuery(this.props));
+    this.props.fetchEvents(this.props.location.search);
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
     if (this.props.location.search !== nextProps.location.search)
-      this.props.fetchEvents(this.buildQuery(nextProps));
-  }
-
-  buildQuery(props) {
-    const { filter, page } = queryString.parse(props.location.search);
-    const query = { filter, page };
-
-    return `?${queryString.stringify(query)}`;
+      this.props.fetchEvents(nextProps.location.search);
   }
 
   filterEvents(filter) {
@@ -50,7 +43,8 @@ class Events extends Component {
   }
 
   render() {
-    const { filter } = queryString.parse(this.props.location.search);
+    const { search } = this.props.location;
+    const { filter, direction } = queryString.parse(search);
 
     return (
       <div>
@@ -58,9 +52,7 @@ class Events extends Component {
         <div className='row'>
 
           <div className='col-6'>
-            <Link to='?direction=desc'>
-                <button className='btn btn-secondary'>Date</button>
-            </Link>
+            <SortToggle search={search} title='Date' currentDirection={direction} />
           </div>
 
           <div className='col-6'>
