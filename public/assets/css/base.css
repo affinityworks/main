@@ -39,26 +39,28 @@ h1 span {
     font-size: 2em;
     padding-left: 0.1em;
 }
-h2 {
+
+#purpleheader h2 {
     height: 14em;
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #4344CB;
-}
-#purpleheader h2 {
     color: white;
     font-family: Raleway, sans-serif;
 }
 
-h2 img {
+
+
+#purpleheader h2 img {
     margin: auto;
     width: 130%;
     height: auto;
     opacity: 0.6;
 }
-h2 span {
+
+#purpleheader h2 span {
     position: absolute;
     font-size: 2em;
     padding: 3em;
