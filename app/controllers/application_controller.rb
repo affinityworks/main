@@ -22,7 +22,9 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    if resource.admin?
+    if session[:redirect_uri]
+      session[:redirect_uri]
+    elsif resource.admin?
       admin_dashboard_path
     elsif can? :manage, current_group
       events_path
