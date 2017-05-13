@@ -3,11 +3,11 @@
 	<nav id="nav">
 		<ul>
 			{% assign current = page.url | downcase | split: '/' %}
-			<li {% if current[1] == 'index.html' %}class='current'{% endif %}><a href="/index.html">Homepage</a></li>
+			<li {% if current[1] == 'index.html' %}class='current'{% endif %}><a href="/index.html">Home</a></li>
 			<li {% if current[1] == 'blog' %}class='current'{% endif %}><a href="/blog">Blog</a></li>
-			<li {% if current[1] == 'left-sidebar.html' %}class='current'{% endif %}><a href="/left-sidebar.html">Left Sidebar</a></li>
-			<li {% if current[1] == 'right-sidebar.html' %}class='current'{% endif %}><a href="/right-sidebar.html">Right Sidebar</a></li>
-			<li {% if current[1] == 'no-sidebar.html' %}class='current'{% endif %}><a href="/no-sidebar.html">No Sidebar</a></li>
+			<li {% if current[1] == 'about' %}class='current'{% endif %}><a href="/about">About</a></li>
+			<li {% if current[1] == 'joinbeta' %}class='current'{% endif %}><a href="/joinbeta">Join Beta</a></li>
+			<li {% if current[1] == 'contact.html' %}class='current'{% endif %}><a href="/contact.html">Contact</a></li>
 		</ul>
 	</nav>
 </div>
