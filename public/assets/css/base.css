@@ -12,7 +12,7 @@ h2,
 h3 {
     text-align: center;
     margin: 0;
-    color: white;
+    color: #606060;
     font-weight: 400;
 }
 h6 {
@@ -21,10 +21,14 @@ h6 {
     text-align: center;
     font-size: 1.5em;
 }
-h1 {
+#purpleheader h1 {
     height: 2.6em;
     background-color: #311736;
     padding: 2.6em 1em 1em;
+    color: white;
+}
+ {
+    font-family: ;
 }
 h1 img {
     height: 2.4em;
@@ -43,6 +47,11 @@ h2 {
     justify-content: center;
     background-color: #4344CB;
 }
+#purpleheader h2 {
+    color: white;
+    font-family: Raleway, sans-serif;
+}
+
 h2 img {
     margin: auto;
     width: 130%;
@@ -55,7 +64,6 @@ h2 span {
     padding: 3em;
 }
 h3 {
-    color: #606060;
     font-size: 2em;
 }
 .subtitle {
@@ -184,11 +192,12 @@ h3 {
     font-weight: normal;
 }
 #maincontent {
+}
+#postcontent {
+    padding-top: 20px;
     padding-left: 30px;
-    padding-top: 14px;
     padding-right: 30px;
-    padding-bottom: 14px;
-    
+    padding-bottom: 30px;
 }
 #nav li.active a {
     color: #FFF;
