@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
+  root to: 'static#index'
+
+  use_doorkeeper do
+    skip_controllers :applications
+  end
+
   ActiveAdmin.routes(self)
-  #ActiveAdmin.routes(self)
   namespace :admin do
     resources :people
     resources :addresses
