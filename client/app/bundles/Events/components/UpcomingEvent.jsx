@@ -1,22 +1,19 @@
 import React from 'react';
-import moment from 'moment';
 import { Link } from 'react-router-dom';
+
+import { formatDateTime } from '../utils';
 
 const UpcomingEvent = (props) => {
   const { attributes, id } = props.event;
 
-  const formatDate = (date) => {
-    if (date)
-      return moment(date).format('Y-M-D H:mm');
-  }
-
+  console.log(attributes);
   return(
     <a href={attributes['browser-url']} className='list-group-item'>
       <div className='col-md-1'>
         <span className='badge badge-primary'>RSVP</span>
       </div>
       <div className='col-md-11'>
-        {attributes.name} - {formatDate(attributes['start-date'])}
+        {attributes.title} - {formatDateTime(attributes['start-date'])}
       </div>
     </a>
   );

@@ -11,19 +11,12 @@ import { fetchMembers } from '../actions'
 
 class Members extends Component {
   componentWillMount() {
-    this.props.fetchMembers(this.buildQuery(this.props));
-  }
-
-  buildQuery(props) {
-    const { page } = queryString.parse(props.location.search);
-    const query = { page };
-
-    return `?${queryString.stringify(query)}`;
+    this.props.fetchMembers(this.props.location.search);
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.location.search !== nextProps.location.search)
-      this.props.fetchMembers(this.buildQuery(nextProps));
+      this.props.fetchMembers(nextProps.location.search);
   }
 
   renderPagination() {
