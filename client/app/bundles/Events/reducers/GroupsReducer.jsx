@@ -10,7 +10,7 @@ export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case FETCH_GROUPS:
     const { groups, page, total_pages } = action.payload.data
-    return { page, total_pages, groups };
+    return { page, total_pages, groups: groups.data };
   default:
     return state;
   }
