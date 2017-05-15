@@ -112,7 +112,7 @@ module Api::ActionNetwork::Import
   def add_uri_filter(uri, modified_date)
     return uri unless modified_date
     uri = URI.parse(uri)
-    uri.query = "filter=modified_date gt #{modified_date.strftime('%Y-%m-%d')}"
+    uri.query = "filter=modified_date gt '#{modified_date.strftime('%Y-%m-%dT%H:%M:%SZ')}'"
     uri.to_s
   end
 end
