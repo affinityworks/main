@@ -5,7 +5,9 @@ class Event < ApplicationRecord
   attr_accessor :invited_count
   attr_accessor :rsvp_count
 
-  scope :upcoming, ->() { where('start_date BETWEEN ? AND ?', Date.today, Date.today + 5.days) }
+  UPCOMING_EVENTS_DAYS = 30
+
+  scope :upcoming, ->() { where('start_date BETWEEN ? AND ?', Date.today, Date.today + UPCOMING_EVENTS_DAYS.days) }
 
   has_many :ticket_levels
 
@@ -24,5 +26,9 @@ class Event < ApplicationRecord
       event.attended_count = attendances[[event.id, 'attended']] || 0
       event.invited_count = event.rsvp_count + event.attended_count
     end
+  end
+
+  def self.sort_by_date(direction)
+    order(start_date: direction)
   end
 end

@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import queryString from 'query-string';
 import _ from 'lodash';
 
 import { Link } from 'react-router-dom';
+import { addParamToQuery } from '../utils';
 
 class Pagination extends Component {
-
   paginationSize() {
     return this.props.totalPages < 10 ? this.props.totalPages : 10;
   }
@@ -32,7 +31,7 @@ class Pagination extends Component {
         <li
           key={pageNumber}
           className={`page-item ${this.props.page === pageNumber ? 'active' : ''}`}>
-          <Link to={`?${this.buildQuery(pageNumber)}`} className='page-link' >
+          <Link to={this.buildQuery(pageNumber)} className='page-link' >
             { pageNumber }
           </Link>
         </li>
@@ -41,7 +40,7 @@ class Pagination extends Component {
   }
 
   renderPreviousPage() {
-    const previousLink = `?${this.buildQuery(this.props.page - 1)}`;
+    const previousLink = this.buildQuery(this.props.page - 1);
 
     return (
       <li className={`page-item ${this.props.page === 1 ? 'disabled' : ''}`}>
@@ -55,7 +54,7 @@ class Pagination extends Component {
 
   renderNextPage() {
     const active = this.props.totalPages === this.props.page;
-    const nextLink = `?${this.buildQuery(this.props.page + 1)}`;
+    const nextLink = this.buildQuery(this.props.page + 1);
 
     return (
       <li className={`page-item ${active ? 'disabled' : ''}`}>
@@ -68,9 +67,7 @@ class Pagination extends Component {
   }
 
   buildQuery(page) {
-    const params = queryString.parse(this.props.currentSearch);
-
-    return queryString.stringify({ ...params, page: page })
+    return addParamToQuery(this.props.currentSearch, { page });
   }
 
   render() {
