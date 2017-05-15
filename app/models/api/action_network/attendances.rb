@@ -15,7 +15,7 @@ module Api::ActionNetwork::Attendances
     updated_count = 0
     action_network_event_id = event.identifier_id('action_network') || return
 
-    next_uri = first_uri(action_network_event_id: action_network_event_id)
+    next_uri = first_uri(action_network_event_id: action_network_event_id, synced_at: group.synced_at)
 
     logger.info "Api::ActionNetwork::Attendances#import! from #{next_uri}"
 
@@ -50,6 +50,7 @@ module Api::ActionNetwork::Attendances
   end
 
   def self.first_uri(params={})
-    "https://actionnetwork.org/api/v2/events/#{params[:action_network_event_id]}/attendances"
+    uri = "https://actionnetwork.org/api/v2/events/#{params[:action_network_event_id]}/attendances"
+    add_uri_filter(uri, params[:synced_at])
   end
 end
