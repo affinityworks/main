@@ -64,7 +64,7 @@ class GroupTest < ActiveSupport::TestCase
     upcoming_event_1 = Event.create(start_date: Date.today)
     other_group_event = Event.create(start_date: Date.today)
     upcoming_event_2 = Event.create(start_date: Date.today + 2.days)
-    future_event = Event.create(start_date: Date.today + 6.days)
+    future_event = Event.create(start_date: Date.today + (Event::UPCOMING_EVENTS_DAYS + 1).days)
 
     group.events = [ended_event, upcoming_event_1, upcoming_event_2, future_event]
 
