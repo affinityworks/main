@@ -6,7 +6,8 @@ class Person < ApplicationRecord
   include Api::Identifiers
 
   devise :database_authenticatable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable,
+         :omniauthable, :omniauth_providers => [:facebook]
 
   serialize :custom_fields, Hash
   serialize :ethnicities, Array
