@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<!-- saved from url=(0026)http://www.affinity.works/ -->
+<html>
+  <head>
+    <meta content="text/html; charset=windows-1252" http-equiv="content-type">
+    <title>Affinity: Activist Organizing Tools</title>
+    <link rel="stylesheet" href="/assets/css/css">
+    <link rel="stylesheet" href="/assets/css/base.css">
+</head>
+  <body tcap-name="mainman">
+    <div id="nav-wrapper">
+	<!-- Nav -->
+	<nav id="nav">
+		<ul>
+			
+			<li ><a href="/index.html">Home</a></li>
+			<li ><a href="/blog">Blog</a></li>
+			<li ><a href="/about">About</a></li>
+			<li ><a href="/admin/login/">Login</a></li>
+			<!--
+			<li ><a href="/joinbeta">Join Beta</a></li>
+			<li ><a href="/contact.html">Contact</a></li>
+			-->
+		</ul>
+	</nav>
+</div>
+    <div id="purpleheader"><h1><img src="/assets/images/affinity.svg"> <span>affinity</span></h1></div>
+
+<div id="postcontent">
+  <h2 id="update-1">Update #1</h2>
+<p><em>Matt H., Jan. 25, 2017</em></p>
+
+<p>If you’re one of the happy few who are writing the initial code on the Advocacy Commons project, thank you! And if you’re one of the many who have supported the idea and offered encouragement, thanks to you too. Here’s an update on how this idea is becoming a reality.</p>
+
+<p><strong><em>What we’re doing</em></strong></p>
+
+<p>I always find it useful to start by reminding myself of the ultimate goals: We’re here to support and enhance the grassroots, on-the-ground organizing happening around the United States to resist the reactionary right-wing takeover of our government. We will do that in two ways: the Tools, and the Commons.</p>
+
+<p>The point of the Tools is simple: all local grassroots groups have a similar set of tasks for organizing themselves, communicating with each other and the public, etc. You <em>can</em> cobble together a solution with google docs, etc., if you have the time and savvy and already know what you want to do. But we are going to offer a free, open-source set of simple tools to handle the most common local grassroots political organizing tasks, with best-practices built in so that even if this is your first time running a group you will find it easy to be effective.</p>
+
+<p>The Commons has a different goal. The idea is to make it easy for grassroots groups to find and cooperate with each other, and to cooperate with large national organizations. Currently that only happens either when individual activist leaders already have personal trust relationships, or when a national group reaches out to its membership and accidentally finds leaders of pre-existing local groups. We will make it possible for people of goodwill and similar political interests to partner together and trust one another without having a previous relationship.</p>
+
+<p><strong><em>Who’s involved</em></strong></p>
+
+<p>Since the goal is to support grassroots groups, it’s vital that we work WITH real, active grassroots groups during the design phase. We want to build the things they need, not the things we think they should need.</p>
+
+<p>We’ve been meeting with leaders of the https://www.indivisibleguide.com/ movement as a first step in this direction. Indivisible is entirely volunteer led, and they currently have about 4,000 local grassroots groups included in their directory (as well as 100,000+ individuals; unknown which individuals map to which groups, for the most part).</p>
+
+<p>Our first step was to create a better version of their Action Network signup form, to immediately reduce their load of manual data cleaning, and to establish our bona fides as people who can solve technical problems for organizers. Props to Ben for jumping in and making that smooth and pretty. As I write this, we’re still waiting for a connection to Indivisible’s web developer in order to deploy the new, better form.</p>
+
+<p>The next step was to sit down with the person at Indivisible charged with managing the data about all those groups, and walk through a demo of our proposed groups management features. We learned some good stuff, such as “easy reporting tools are important”, and “we want to think in terms of congressional districts, but local groups organize themselves according to cities and neighborhoods.” We’ll post our full notes to this group soon.</p>
+
+<p>Matt is meeting with local leaders of Pantsuit Nation (or rather, the spinoff group which formed after a schism in the Pantsuit Nation. We ARE lefties, after all…) next week, and Matt and Evan will meet with leaders from the Movement for Black Lives the week after that.</p>
+
+<p>Meantime, David has been meeting with local groups in the Oakland area to get their feedback on the mockups; we’ll collect his feedback and post it also.</p>
+
+<p><strong><em>How’s the Build coming</em></strong></p>
+
+<p>We’ve been proceeding on three fronts.</p>
+
+<p><strong>Interface Mockups.</strong> This was the work that initially got us off the ground: David’s Bootstrap + fake JSON data mockups of how the key screens might work. Based on our review of how Indivisible currently works, we added a mock of an admin screen for multiple groups, and their feedback was that it looked a lot like what they need.  These simple/quick mockups are very useful for getting user feedback; we should keep using them.</p>
+
+<p>**React + Node Mockups: **Taking it one step further, Ben has re-created some of the interface mockups using React, though still pulling data from a faked-up JSON. Props to the nice design he’s applied to it, these are looking like a professional web app.</p>
+
+<p>**Rails app: **The lead here is Rabble, and his task is creating the data models which can feed real information into those React components. Major progress here this week getting an admin interface so all the data is available through a good interface for group admins, adding a zipcode lookup service, and trying to sort out the jsonapi to back both react and add osdi support.</p>
+
+<p><strong>Next step</strong> is to recreate David’s new Groups Admin mockup in a React version, and connect it to real data in Rabble’s backend. Then Matt will work to get a sample of live Indivisible data to insert into the database. At that point we can pitch really using this single feature to Indivisible – if they like the idea, that might give us two directions to pursue:
+	- We build the data connector to put <em>all</em> of the real Indivisible data into our system. They currently use Action Network but may switch to something else; whatever it is, it will be useful to us to have a connector to work with it. And once it <em>does</em> work, we have a shot at our first big organizational user.
+	- It gives us a much better demo for raising funds. Showing a functional front end + back end system, with real data, and an endorsement from a currently-famous grassroots group, should help our efforts significantly.</p>
+
+<p><strong><em>Funding</em></strong></p>
+
+<p>Speaking of funding. We’re all doing this because we care about the direction of the country, but we all also have to eat. For this project to have long-term impact, it has to be sustainable. Our current plan is to make the code for the Tools open source, available for anyone to download and install. However we realize that this is still beyond the ability of many of the local grassroots groups we wish to empower. So, we will also offer the Tools as “Software as a Service”. We envision a sliding-scale fee structure with free service for small organizations.</p>
+
+<p>We haven’t yet settled on an income model for the Commons, but the experience of the past decade shows that once a marketplace has been created where people and groups interact, there is usually a financial component that can be tapped to make the system sustainable. Maybe large organizations will find it sufficiently valuable to pay a fee; maybe we’ll integrate fundraising tools for grassroots groups and collect a small percentage.</p>
+
+<p>In the meantime, we’ll be seeking startup funding from at least three sources:</p>
+
+<ul>
+  <li>
+    <p><strong>Angel investors:</strong> We’ve come a long way already on strictly volunteer help, but soon we’ll need at least a little financial runway. We think we can find that from a few high net worth individuals who are ideologically motivated and have personal trust relationships with the principals.</p>
+  </li>
+  <li>
+    <p><strong>Foundations:</strong> We believe that the Tools, in particular, are easy to explain to ideologically-aligned foundations. We think the combination of the pedigree of the project founders in both activism and tech, along with the endorsements we plan to compile from existing groups, will be convincing to grant-makers.</p>
+  </li>
+  <li>
+    <p><strong>Tech startup investors:</strong> We think the Commons, in particular, is a model which is familiar to Silicon Valley types. From a certain angle, this is a startup based on a dis-intermediation business model. Take a process which has historically been complex, slow, and reliant on personal connections, and make it transparent, streamlined, and based on a reputation marketplace.</p>
+  </li>
+</ul>
+
+<p>Matt and Evan will meet with potential investors and donors during the month of February</p>
+
+<p><strong><em>How we’re organizing ourselves</em></strong></p>
+
+<p>The Slack channel is getting more active these days, and the tech work has expanded to the point that we have a new Trello board to keep track of it. There are still only a handful of us, so this is a flat, consensus-based group – do as much, or as little, as you feel, and if you disagree with the way things are happening speak up!</p>
+
+<p><strong>Matt</strong> is focusing mostly on the product vision and making relationships with potential users. <strong>Rabble</strong> is focusing mostly on the technical architecture and the tech-world fundraising approach. Anyone else who wants to raise their hand and say “I’d like to be the go-to person for <strong>__</strong>_____”, now is your moment. :-)</p>
+
+
+</div>
+  </body>
+</html>
