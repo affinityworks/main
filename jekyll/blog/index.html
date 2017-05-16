@@ -1,0 +1,20 @@
+---
+layout: post
+title: Post Categories
+---
+<h3>Posts by Category</h3>
+{% for tag in site.categories %} 
+  <span id="{{ tag[0] }}">{{ tag[0] | capitalize }}</span>
+  <ul class="post-list">
+    {% assign pages_list = tag[1] %}  
+    {% for post in pages_list %}
+      {% if post.title != null %}
+    	{% if group == null or group == post.group %}
+      		<li><a href="{{ post.url }}">{{ post.title }}</a> <span class="entry-date"><time datetime="{{ post.date | date_to_xmlschema }}" itemprop="datePublished">{{ post.date | date: "%B %d, %Y" }}</time></a></li>
+      	{% endif %}
+      {% endif %}
+    {% endfor %}
+    {% assign pages_list = nil %}
+    {% assign group = nil %}
+  </ul>
+{% endfor %}
