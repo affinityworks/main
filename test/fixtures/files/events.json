@@ -66,6 +66,20 @@
                         "accuracy": "Rooftop"
                     }
                 },
+                "osdi:organizer": {
+                  "given_name": "Jane",
+                  "family_name": "Doe",
+                  "identifiers": [
+                    "action_network:1efc3644-af25-4253-90b8-a0baf12dbd1e"
+                  ],
+                  "email_addresses": [
+                    {
+                      "primary": true,
+                      "address": "janedoe@mail.com",
+                      "status": "subscribed"
+                    }
+                  ]
+                },
                 "reminders": [
                     {
                         "method": "email",
@@ -177,6 +191,20 @@
                         "accuracy": "Rooftop"
                     }
                 },
+                "osdi:organizer": {
+                  "given_name": "Jane",
+                  "family_name": "Doe",
+                  "identifiers": [
+                    "action_network:1efc3644-af25-4253-90b8-a0baf12dbd1e"
+                  ],
+                  "email_addresses": [
+                    {
+                      "primary": true,
+                      "address": "janedoe@mail.com",
+                      "status": "subscribed"
+                    }
+                  ]
+                },
                 "reminders": [
                     {
                         "method": "email",
@@ -239,6 +267,20 @@
                         "longitude": -77.0359252,
                         "accuracy": "Rooftop"
                     }
+                },
+                "osdi:organizer": {
+                  "given_name": "Jane",
+                  "family_name": "Doe",
+                  "identifiers": [
+                    "action_network:1efc3644-af25-4253-90b8-a0baf12dbd1e"
+                  ],
+                  "email_addresses": [
+                    {
+                      "primary": true,
+                      "address": "janedoe@mail.com",
+                      "status": "subscribed"
+                    }
+                  ]
                 },
                 "reminders": [
                     {
