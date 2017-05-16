@@ -5,5 +5,6 @@ class JsonApi::PersonRepresenter < Roar::Decorator
 
   attributes do
     property :name
+    property :primary_email_address
   end
 end
