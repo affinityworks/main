@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 import Event from './Event';
 import Attendance from './Attendance';
+import Pagination from './Pagination';
 import { fetchEvent, fetchAttendances } from '../actions';
 
 class Attendances extends Component {
@@ -12,7 +13,23 @@ class Attendances extends Component {
     const eventId = this.props.match.params.id;
 
     this.props.fetchEvent(eventId);
-    this.props.fetchAttendances(eventId);
+    this.props.fetchAttendances(eventId, this.props.location.search);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const eventId = this.props.match.params.id;
+    if (this.props.location.search !== nextProps.location.search)
+      this.props.fetchAttendances(eventId, nextProps.location.search);
+  }
+
+  renderPagination() {
+    const { total_pages, page, location } = this.props;
+    if (total_pages) {
+      return <Pagination
+        page={page}
+        totalPages={total_pages}
+        currentSearch={location.search} />
+    }
   }
 
   renderEvent() {
@@ -42,16 +59,20 @@ class Attendances extends Component {
           <br />
 
           <div className='text-right'>
-            <button onClick={goBack} className='btn btn-success'> Done </button>
+            <Link to='/events' className='btn btn-success'> Done </Link>
           </div>
+          <br />
+          {this.renderPagination()}
         </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ event, attendances }) => {
-  return { event, attendances }
+const mapStateToProps = (state) => {
+  const event = state.event;
+  const { attendances, total_pages, page } = state.attendances;
+  return { event, attendances, page, total_pages }
 };
 
 export default connect(mapStateToProps, { fetchEvent, fetchAttendances })(Attendances);
