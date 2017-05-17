@@ -2,17 +2,7 @@
 
 body {
   width: 100%;
-  font-size: 50px;
-}
-
-.header {
-  width: 100%;
-  font-size: 50px;
-}
-
-.footer {
-  width: 100%;
-  font-size: 40px;
+  font-size: 16px;
 }
 
 .borderless td, .borderless th {
@@ -21,18 +11,38 @@ body {
 
 .inline {
   display: inline-block;
-  margin-right: 50px;
+  margin-right: 16px;
 }
 
 .table {
   table-layout: fixed;
 }
 
+.light-font {
+  font-weight: normal !important;
+}
+
+.right-border {
+  border-right: solid 1px black !important;
+}
+
+table th.bottom-border {
+  border-bottom: 2px solid black
+}
+
+.margin-bottom-0 {
+  margin-bottom: 0 !important;
+}
+
+.left-padding {
+  padding-left: 16px !important;
+}
+
 .square {
-  width: 50px;
-  height: 50px;
+  width: 16px;
+  height: 16px;
   border-style: solid;
   border-color: black;
-  border-width: 4px;
+  border-width: 1px;
   display: inline-block;
 }

@@ -1,13 +1,13 @@
 <div class="col-md-12">
   <div class="row">
-    <table class="table">
+    <table class="table margin-bottom-0">
       <tbody>
         <% attendances.each do |attendance| %>
           <tr>
-            <td><%= attendance.person.name %></td>
-            <td><%= attendance.person.primary_email_address %></td>
-            <td class="text-center"><%= attendance.person.primary_phone_number %></td>
-            <td>
+            <td colspan="2"><%= attendance.person.name %></td>
+            <td colspan="2"><%= attendance.person.primary_email_address %></td>
+            <td class="right-border"><%= attendance.person.primary_phone_number %></td>
+            <td colspan="1" class="left-padding">
               <div class="inline">
                 <span class="square"></span>
                 <span>Y</span>
@@ -21,10 +21,10 @@
         <% end %>
         <% 20.times do %>
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>
+            <td colspan="2"></td>
+            <td colspan="2"></td>
+            <td class="right-border"></td>
+            <td colspan="1" class="left-padding">
               <div class="inline">
                 <span class="square"></span>
                 <span>Y</span>
