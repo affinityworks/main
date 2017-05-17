@@ -16,7 +16,7 @@ class Profile extends Component {
           Welcome {this.props.currentUser.given_name} {this.props.currentUser.family_name}
         </h1>
         <h3>Your Groups</h3>
-        <Groups />
+        <Groups location={this.props.location} />
       </div>
     )
   }
