@@ -25,6 +25,7 @@ twitter_username: jekyllrb
 github_username:  jekyll
 destination: ../public
 keep_files:
+  - images
   - plus
   - mocks
   - hal-browser

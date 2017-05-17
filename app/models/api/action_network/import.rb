@@ -24,7 +24,7 @@ module Api::ActionNetwork::Import
   end
 
   def request_single_resource_from_action_network(uri, group)
-    retires ||= 0
+    retries ||= 0
 
     resource = resource_class.new
     client = representer_class.new(resource)
