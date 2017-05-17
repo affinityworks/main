@@ -15,3 +15,16 @@
 
  // Custom bootstrap variables must be set or imported before bootstrap itself.
  @import "bootstrap";
+
+ .inline {
+   display: inline-block;
+ }
+
+ .square {
+  width: 50px;
+  height: 50px;
+  border-style: solid;
+  border-color: black;
+  border-width: 5px;
+  display: inline-block;
+ }

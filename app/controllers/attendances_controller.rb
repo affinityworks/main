@@ -1,5 +1,6 @@
 class AttendancesController < ApplicationController
   before_action :authenticate_person!
+  before_action :find_event
   before_action :find_attendances
 
 
@@ -10,6 +11,23 @@ class AttendancesController < ApplicationController
       format.html
       format.json do
         render json: JsonApi::AttendancesRepresenter.for_collection.new(@attendances).to_json
+      end
+      format.pdf do
+        render pdf: "attendances",
+               template: "attendances/index.pdf.erb",
+               locals: { attendances: @attendances },
+               header: {
+                 html: {
+                   template: 'attendances/pdf_header.pdf.erb',
+                   locals:   { event: @event, current_group: current_group  }
+                 }
+               },
+               footer: {
+                 html: {
+                   template: 'attendances/pdf_footer.pdf.erb',
+                   locals: { url: "https://affinity.works/events/#{@event.id}/attendance" }
+                 }
+               }
       end
     end
   end
@@ -35,8 +53,12 @@ class AttendancesController < ApplicationController
     { attended: nil } #NOTE Axios ommits the params if its value is nil.
   end
 
+  def find_event
+    @event = current_group.events.find(params[:event_id])
+  end
+
   def find_attendances
-    @attendances = current_group.events.find(params[:event_id]).attendances
+    @attendances = @event.attendances
   end
 
 end

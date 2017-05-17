@@ -1,0 +1,42 @@
+<div class="col-md-12">
+  <div class="row">
+    <table class="table">
+      <tbody>
+        <% attendances.each do |attendance| %>
+          <tr>
+            <td><%= attendance.person.name %></td>
+            <td><%= attendance.person.primary_email_address %></td>
+            <td class="text-center"><%= attendance.person.primary_phone_number %></td>
+            <td>
+              <div class="inline">
+                <span class="square"></span>
+                <span>Y</span>
+              </div>
+              <div class="inline">
+                <span class="square"></span>
+                <span>N</span>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+        <% 20.times do %>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+              <div class="inline">
+                <span class="square"></span>
+                <span>Y</span>
+              </div>
+              <div class="inline">
+                <span class="square"></span>
+                <span>N</span>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
