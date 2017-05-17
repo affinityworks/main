@@ -28,7 +28,7 @@ export default class Event extends Component {
           {formatDate(attributes['start-date'])}
         </div>
 
-        <div className='col-8'>
+        <div className='col-7'>
           <Link to={`/events/${id}`}> {attributes.name || attributes.title} </Link>
           <span> {` at ${this.locationName() || 'Event Location' }`} </span>
           <span> {` hosted by ${this.organizerName() || 'Event Organizer'}`} </span>
@@ -40,6 +40,12 @@ export default class Event extends Component {
               {`${attributes['rsvp-count']} RSVPs`}
             </button>
           </Link>
+        </div>
+        <div className='col-1 text-center'>
+          <a href={`/events/${id}/attendances.pdf`} target="_blank">
+            <i className='fa fa-print fa-2x'>
+            </i>
+          </a>
         </div>
       </div>
     );

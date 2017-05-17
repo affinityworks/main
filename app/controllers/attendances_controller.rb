@@ -1,8 +1,6 @@
 class AttendancesController < ApplicationController
   before_action :authenticate_person!
-  before_action :find_event
   before_action :find_attendances
-
 
   protect_from_forgery except: [:update] #TODO: Add the csrf token in react.
 
@@ -58,7 +56,7 @@ class AttendancesController < ApplicationController
   end
 
   def find_attendances
-    @attendances = @event.attendances
+    @attendances = find_event.attendances
   end
 
 end
