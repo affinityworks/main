@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 class Header extends Component {
   render() {
     const { currentUser, currentGroup } = this.props;
-
+    console.log(currentUser)
     return(
       <div className='page-header'>
         <div className="row">
@@ -21,7 +22,7 @@ class Header extends Component {
                 <span> {`${currentUser.given_name} ${currentUser.family_name}`} </span>
               </button>
               <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <a className="dropdown-item" href="#">Account</a>
+                <Link className="dropdown-item" to={`/profile/`}>Account</Link>
                 <a className="dropdown-item" href="/admin/logout">Logout</a>
               </div>
             </div>

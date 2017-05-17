@@ -327,6 +327,7 @@ DEPENDENCIES
   listen (~> 3.0.5)
   mini_racer
   newrelic_rpm
+  omniauth
   omniauth-facebook
   pg
   puma (~> 3.0)

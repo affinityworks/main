@@ -16,6 +16,7 @@ gem 'coffee-rails', '~> 4.2'
 
 gem 'cancancan'
 gem 'devise'
+gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'bootstrap', '~> 4.0.0.alpha5'
 source 'https://rails-assets.org' do
