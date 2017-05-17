@@ -54,7 +54,7 @@ class EventTest < ActiveSupport::TestCase
   end
 
   test '.upcoming' do
-    ended_event = Event.create(start_date: 1.days.ago)
+    ended_event = Event.create(start_date: 2.days.ago)
     upcoming_event_1 = Event.create(start_date: Date.today)
     upcoming_event_2 = Event.create(start_date: Date.today + 2.days)
     future_event = Event.create(start_date: Date.today + (Event::UPCOMING_EVENTS_DAYS + 1).days)
