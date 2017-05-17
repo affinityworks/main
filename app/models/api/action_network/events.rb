@@ -48,6 +48,9 @@ module Api::ActionNetwork::Events
   def self.associate_with_group(new_events, group)
     new_events.each do |event|
       event.groups.push(group)
+      if event.organizer
+        event.organizer.push(group)
+      end
     end
   end
 end
