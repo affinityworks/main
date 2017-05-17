@@ -8,12 +8,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_group
-    #TODO: Add selected group
-    if current_person.kind_of?(Person)
-       current_person.groups.first
-    else #NOTE Hack until we figure out the relation between Groups and API::Users or OAuth users
-      Group.first
-    end
+    current_person.groups.first
   end
 
   def validate_admin_permission
