@@ -32,6 +32,10 @@ class Api::ActionNetwork::EventsTest < ActiveSupport::TestCase
     assert group.events.where(title: 'House Party for Progress').exists
     assert group.events.find_by(name: 'March 14th Rally').organizer
 
+    # it should pull in from link but it doesn't so this doesn't work. 
+    #assert group.events.find_by(name: 'March 14th Rally').creator
+    #assert group.events.find_by(name: 'March 14th Rally').modified_by
+
     march_14_event = group.events.where(name: 'March 14th Rally').first!
 
     assert_equal 'open', march_14_event.osdi_type
