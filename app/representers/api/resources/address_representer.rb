@@ -9,6 +9,7 @@ class Api::Resources::AddressRepresenter < Api::Resources::Representer
   property :region
   property :status
   property :venue
+  property :address_lines
 
   nested :location do
     property :latitude
