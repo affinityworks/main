@@ -11,3 +11,6 @@ install:
   - bundle install
 before_script:
   - psql -c 'create database advocacyccommons_test;' -U postgres
+script:
+  - bundle exec rake db:schema:load
+  - bundle exec rake db:test:prepare

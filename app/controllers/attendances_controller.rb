@@ -9,7 +9,11 @@ class AttendancesController < ApplicationController
     respond_to do |format|
       format.html
       format.json do
-        render json: JsonApi::AttendancesRepresenter.for_collection.new(@attendances).to_json
+        render json: {
+          attendances: JsonApi::AttendancesRepresenter.for_collection.new(@attendances),
+          total_pages: @attendances.total_pages,
+          page: @attendances.current_page
+        }.to_json
       end
     end
   end
@@ -36,7 +40,7 @@ class AttendancesController < ApplicationController
   end
 
   def find_attendances
-    @attendances = current_group.events.find(params[:event_id]).attendances
+    @attendances = current_group.events.find(params[:event_id]).attendances.page(params[:page])
   end
 
 end

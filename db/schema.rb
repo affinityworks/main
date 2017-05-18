@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170516052527) do
+ActiveRecord::Schema.define(version: 20170516161832) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,25 +92,6 @@ ActiveRecord::Schema.define(version: 20170516052527) do
     t.index ["canvass_id"], name: "index_answers_on_canvass_id", using: :btree
     t.index ["question_id"], name: "index_answers_on_question_id", using: :btree
     t.index ["responses_id"], name: "index_answers_on_responses_id", using: :btree
-  end
-
-  create_table "api_users", force: :cascade do |t|
-    t.string   "name",               default: "", null: false
-    t.string   "email",              default: "", null: false
-    t.string   "encrypted_password", default: "", null: false
-    t.integer  "sign_in_count",      default: 0,  null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.inet     "current_sign_in_ip"
-    t.inet     "last_sign_in_ip"
-    t.integer  "failed_attempts",    default: 0,  null: false
-    t.string   "unlock_token"
-    t.datetime "locked_at"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
-    t.index ["email"], name: "index_api_users_on_email", unique: true, using: :btree
-    t.index ["encrypted_password"], name: "index_api_users_on_encrypted_password", unique: true, using: :btree
-    t.index ["unlock_token"], name: "index_api_users_on_unlock_token", unique: true, using: :btree
   end
 
   create_table "attendances", force: :cascade do |t|
