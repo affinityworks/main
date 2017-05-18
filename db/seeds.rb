@@ -1,4 +1,5 @@
 group = Group.create(name: 'Test Group', an_api_key: '7cc9eff8d105f3ff34c6bf7683abbec6')
+
 admin = Person.create(family_name: 'Admin', given_name: 'Test', password: 'password', admin: true)
 admin_email_address = EmailAddress.create(address: 'test@admin.com', primary: true, person_id: admin.id)
 
