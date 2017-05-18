@@ -5,8 +5,8 @@ import {
   UPDATE_ATTENDANCE
 } from './types';
 
-export const fetchAttendances = (eventId) => {
-  const request = axios.get(`/events/${eventId}/attendances.json`);
+export const fetchAttendances = (eventId, queryString = '') => {
+  const request = axios.get(`/events/${eventId}/attendances.json${queryString}`);
 
   return {
     type: FETCH_ATTENDANCES,

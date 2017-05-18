@@ -18,7 +18,8 @@ class AttendancesControllerTest < ActionDispatch::IntegrationTest
     get event_attendances_url(event_id: @event.id), as: :json
     assert_response :success
     json = JSON.parse(@response.body)
-    assert_equal 2, json['data'].size
+    assert_equal @event.attendances.count, json['attendances']['data'].size
+    assert_equal @event.attendances.first.id, json['attendances']['data'].first['id'].to_i
   end
 
   test 'PUT #update' do

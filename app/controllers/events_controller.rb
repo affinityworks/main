@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_action :authenticate_request!
+  before_action :authenticate_person!
   before_action :set_events, only: :index
   before_action :set_event, only: :show
 
@@ -27,8 +27,6 @@ class EventsController < ApplicationController
     end
   end
 
-  
-
   private
 
   def set_events
@@ -48,17 +46,5 @@ class EventsController < ApplicationController
 
   def direction_param
     %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
-  end
-
-  def authenticate_request!
-    osdi_api_token = request.headers['HTTP_OSDI_API_TOKEN'] || params[:osdi_api_token]
-
-    if osdi_api_token.present?
-      api_user = Api::User.first_by_osdi_api_token(osdi_api_token)
-
-      sign_in :person, api_user, store: false if api_user
-    else
-      authenticate_person!
-    end
   end
 end
