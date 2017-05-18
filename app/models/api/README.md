@@ -24,8 +24,7 @@ Supports import of Events, People, and Attendances. Requires a group with a vali
 
 ```
 DISABLE_SPRING=1 rails c
-group = Group.create(name: 'Test Group', an_api_key:
-'YOUR_ACTION_NETWORK_API_TOKEN')
+group = Group.create(name: 'Test Group', an_api_key:'YOUR_ACTION_NETWORK_API_TOKEN')
 group.import_members
 group.import_events
 

@@ -5,18 +5,22 @@ import { Link } from 'react-router-dom';
 import { formatDate } from '../utils';
 
 export default class Event extends Component {
-  organizerName() {
-    const attributes = this.props.event.attributes;
-
-    if (attributes.organizer)
-      return attributes.organizer.name;
-  }
-
   locationName() {
-    const location = this.props.event.attributes.location;
+    const { location } = this.props.event.attributes;
 
     if (location)
       return `${location.venue}`;
+  }
+
+  renderOrganizer() {
+    const { organizer } = this.props.event.attributes;
+
+    if (organizer) {
+      const primaryEmailAddress = organizer.data.attributes['primary-email-address'];
+      const { name } = organizer.data.attributes;
+
+      return <a href={`mailto:${primaryEmailAddress}`}> {name} </a>
+    }
   }
 
   render() {
@@ -31,7 +35,7 @@ export default class Event extends Component {
         <div className='col-7'>
           <Link to={`/events/${id}`}> {attributes.name || attributes.title} </Link>
           <span> {` at ${this.locationName() || 'Event Location' }`} </span>
-          <span> {` hosted by ${this.organizerName() || 'Event Organizer'}`} </span>
+          {this.renderOrganizer()}
         </div>
 
         <div className='col-2 text-center'>

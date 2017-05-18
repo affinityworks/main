@@ -28,17 +28,6 @@ class EventsControllerTest < ActionDispatch::IntegrationTest
     assert_equal Event.first.id, json['events']['data'].first['id'].to_i
   end
 
-  test 'get #index using osdi token' do
-    api_user = Api::User.create!(osdi_api_token: 'CF32zTyg_KXFQbPzvoz3', name: 'API friend', email: 'api@example.com')
-    get events_url, headers: { 'OSDI-API-Token': api_user.password }, as: :json
-    assert_response :success
-    json = JSON.parse(@response.body)
-
-    assert_kind_of Array, json['events']['data']
-    assert_equal Group.first.events.count, json['events']['data'].size
-    assert_equal Group.first.events.first.id, json['events']['data'].first['id'].to_i
-  end
-
   test 'get #show' do
     sign_in people(:one)
     event = Event.first
@@ -46,14 +35,6 @@ class EventsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     json = JSON.parse(@response.body)
     assert_equal event.name, json['data']['attributes']['name']
-  end
-
-  test 'get #show with token' do
-    api_user = Api::User.create!(osdi_api_token: 'CF32zTyg_KXFQbPzvoz3', name: 'API friend', email: 'api@example.com')
-    get event_url(events(:one)), headers: { 'OSDI-API-Token': api_user.password }, as: :json
-    assert_response :success
-    json = JSON.parse(@response.body)
-    assert_equal events(:one).name, json['data']['attributes']['name']
   end
 
 end
