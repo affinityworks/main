@@ -7,6 +7,7 @@ import Attendances from '../components/Attendances';
 import Groups from '../components/Groups';
 import Members from '../components/Members';
 import GroupDetail from '../components/GroupDetail';
+import Profile from '../components/Profile';
 import MemberDetail from '../components/MemberDetail';
 
 export default (
@@ -18,5 +19,6 @@ export default (
     <Route path='/members' component={Members} />
     <Route path='/groups/:id' component={GroupDetail} />
     <Route path='/groups' component={Groups} />
+    <Route path='/profile/' component={Profile} />
   </Switch>
 );
