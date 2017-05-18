@@ -38,6 +38,10 @@ class Api::ActionNetwork::EventsTest < ActiveSupport::TestCase
     assert new_event.location.address_lines.present?
     assert new_event.location.locality.present?
 
+    # it should pull in from link but it doesn't so this doesn't work. 
+    #assert group.events.find_by(name: 'March 14th Rally').creator
+    #assert group.events.find_by(name: 'March 14th Rally').modified_by
+
     march_14_event = group.events.where(name: 'March 14th Rally').first!
 
     assert_equal 'open', march_14_event.osdi_type

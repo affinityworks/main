@@ -50,7 +50,7 @@ class GroupTest < ActiveSupport::TestCase
     end
 
     assert_difference 'group.events.count', 2, 'Imports the events' do
-      assert_difference 'group.members.count', 4, 'Imports the membmers' do
+      assert_difference 'group.members.count', 5, 'Imports the membmers' do
         assert_difference 'Attendance.count', 2, 'Imports the attendances' do
           group.sync_with_action_network
         end
@@ -60,7 +60,7 @@ class GroupTest < ActiveSupport::TestCase
 
   test '#upcoming_events' do
     group = Group.first
-    ended_event = Event.create(start_date: 1.days.ago)
+    ended_event = Event.create(start_date: 2.days.ago)
     upcoming_event_1 = Event.create(start_date: Date.today)
     other_group_event = Event.create(start_date: Date.today)
     upcoming_event_2 = Event.create(start_date: Date.today + 2.days)

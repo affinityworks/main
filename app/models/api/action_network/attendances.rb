@@ -37,11 +37,13 @@ module Api::ActionNetwork::Attendances
   end
 
   def self.associate_with_person(new_attendances, event_id, group)
-    new_attendances.each do |attendance|
-      attendance.event_id = event_id
+    new_attendances.map do |attendance|
       person = find_or_import_person(attendance.person_uuid, group)
+      next unless person
+      attendance.event_id = event_id
       attendance.person_id = person.id
-    end
+      attendance
+    end.compact
   end
 
   def self.find_or_import_person(person_uuid, group)
