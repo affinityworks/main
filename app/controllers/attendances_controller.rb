@@ -14,7 +14,7 @@ class AttendancesController < ApplicationController
         render pdf: "attendances",
                template: "attendances/index.pdf.erb",
                locals: { attendances: @attendances },
-               margin: { top: 30 },
+               margin: { top: 28 },
                header: {
                  html: {
                    template: 'attendances/pdf_header.pdf.erb',
