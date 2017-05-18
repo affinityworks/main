@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8' />
+    <%= wicked_pdf_stylesheet_link_tag "pdf" -%>
+  </head>
+  <body onload='number_pages'>
+    <div id="header">
+    </div>
+    <div id="content">
+      <%= yield %>
+    </div>
+  </body>
+</html>

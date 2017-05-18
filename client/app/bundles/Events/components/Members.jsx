@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Member from './Member';
 import queryString from 'query-string';
-import Pagination from './Pagination';
 import Nav from './Nav';
-import history from '../history';
 import { connect } from 'react-redux';
 
+import history from '../history';
+import Member from './Member';
+import Pagination from './Pagination';
 import { fetchMembers } from '../actions'
 
 class Members extends Component {
@@ -44,7 +44,9 @@ class Members extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.props.members.map(member => <Member key={member.id} member={member.attributes} />)}
+            {this.props.members.map(member => (
+              <Member key={member.id} id={member.id} member={member.attributes} />
+            ))}
           </tbody>
         </table>
         <br />

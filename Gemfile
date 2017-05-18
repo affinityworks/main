@@ -33,6 +33,10 @@ gem 'graphiql-rails'
 #pretty layout for console
 gem 'hirb'
 
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-heroku'
+gem 'wkhtmltopdf-binary-edge', '~> 0.12.4.0'
+
 
 # This is an optional gem. When included, GraphQL will use a parser written in C
 # instead of the Ruby parser shipped with graphql-ruby.

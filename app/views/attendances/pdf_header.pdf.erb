@@ -1,0 +1,28 @@
+<div class="col-md-12">
+  <div class="row">
+    <table class="table borderless margin-bottom-0">
+      <thead>
+        <th><%= current_group.name %></th>
+        <th colspan='4'>
+          <%= event.title || event.name %>
+          <% if location = event.location %>
+            <span class="light-font"><%= " at #{location.venue}" %></span>
+          <% end %>
+        </th>
+        <th class="left-padding"><%= event.start_date.strftime("%m/%d/%Y") %></th>
+      </thead>
+    </table>
+  </div>
+  <div class="row">
+    <table class="table borderless margin-bottom-0">
+      <thead>
+        <tr>
+          <th class="bottom-border" colspan="2">Name</th>
+          <th class="bottom-border" colspan="2">Email</th>
+          <th class="right-border bottom-border">Phone</th>
+          <th class="left-padding bottom-border">Attendance</th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+</div>

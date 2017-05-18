@@ -2,7 +2,6 @@ class AttendancesController < ApplicationController
   before_action :authenticate_person!
   before_action :find_attendances
 
-
   protect_from_forgery except: [:update] #TODO: Add the csrf token in react.
 
   def index
@@ -14,6 +13,24 @@ class AttendancesController < ApplicationController
           total_pages: @attendances.total_pages,
           page: @attendances.current_page
         }.to_json
+      end
+      format.pdf do
+        render pdf: "attendances",
+               template: "attendances/index.pdf.erb",
+               locals: { attendances: @attendances },
+               margin: { top: 28 },
+               header: {
+                 html: {
+                   template: 'attendances/pdf_header.pdf.erb',
+                   locals:   { event: @event, current_group: current_group  }
+                 }
+               },
+               footer: {
+                 html: {
+                   template: 'attendances/pdf_footer.pdf.erb',
+                   locals: { url: "https://affinity.works/events/#{@event.id}/attendance" }
+                 }
+               }
       end
     end
   end
@@ -39,8 +56,12 @@ class AttendancesController < ApplicationController
     { attended: nil } #NOTE Axios ommits the params if its value is nil.
   end
 
+  def find_event
+    @event = current_group.events.find(params[:event_id])
+  end
+
   def find_attendances
-    @attendances = current_group.events.find(params[:event_id]).attendances.page(params[:page])
+    @attendances = find_event.attendances.page(params[:page])
   end
 
 end

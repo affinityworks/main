@@ -58,8 +58,9 @@ Rails.application.routes.draw do
     resources :attendances
   end
   resources :groups
-  resources :members, only: [:index]
   resources :profile, only: [:index]
+  resources :members
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   namespace :api, defaults: { format: 'json' } do
