@@ -469,6 +469,8 @@ ActiveRecord::Schema.define(version: 20170516161832) do
     t.inet     "last_sign_in_ip"
     t.text     "identifiers",            default: [],                 array: true
     t.boolean  "admin",                  default: false
+    t.string   "provider"
+    t.string   "uid"
     t.index ["reset_password_token"], name: "index_people_on_reset_password_token", unique: true, using: :btree
   end
 
