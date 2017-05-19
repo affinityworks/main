@@ -3,7 +3,7 @@ import { connect} from 'react-redux';
 
 import MemberForm from './MemberForm';
 import Event from '../components/Event';
-import { fetchEvent } from '../actions';
+import { fetchEvent, createMember } from '../actions';
 
 class NewMember extends Component {
   componentWillMount() {
@@ -13,6 +13,16 @@ class NewMember extends Component {
   handleSubmit(e) {
     e.preventDefault();
 
+    const { newMember, createMember } = this.props;
+
+    const attributes = { //NOTE: ROAR MAKES THIS OVER COMPLICATED
+      family_name: newMember['family-name'],
+      given_name: newMember['given-name'],
+      email: newMember['primary-email-address'],
+      primary_phone_number: newMember['primary-phone-number'],
+    }
+
+    createMember(attributes);
   }
 
   renderEvent() {
@@ -26,7 +36,8 @@ class NewMember extends Component {
         {this.renderEvent()}
         <br/>
         <h3> Add New Event Attendee </h3>
-        <MemberForm onSubmit={this.handleSubmit} />
+        <br/>
+        <MemberForm onSubmit={this.handleSubmit.bind(this)} />
         <br/>
       </div>
     );
@@ -34,8 +45,8 @@ class NewMember extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { event } = state;
-  return { event }
+  const { event, newMember } = state;
+  return { event, newMember }
 }
 
-export default connect(mapStateToProps, { fetchEvent })(NewMember);
+export default connect(mapStateToProps, { fetchEvent, createMember })(NewMember);

@@ -7,5 +7,6 @@ export const FETCH_GROUP = 'FETCH_GROUP';
 
 export const FETCH_MEMBERS = 'FETCH_MEMBERS';
 export const FETCH_MEMBER = 'FETCH_MEMBER';
+export const CREATE_MEMBER = 'CREATE_MEMBER';
 export const LOOK_UP_MEMBER = 'LOOK_UP_MEMBER';
 export const SET_MEMBER_ATTRIBUTE = 'SET_MEMBER_ATTRIBUTE';

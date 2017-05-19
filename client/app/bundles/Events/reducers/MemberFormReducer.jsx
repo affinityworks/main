@@ -1,4 +1,6 @@
-import { LOOK_UP_MEMBER, SET_MEMBER_ATTRIBUTE } from '../actions/types';
+import {
+  LOOK_UP_MEMBER, SET_MEMBER_ATTRIBUTE, CREATE_MEMBER
+} from '../actions/types';
 
 const INITIAL_STATE = {
   'primary-email-address': '',
@@ -13,6 +15,9 @@ export default (state = INITIAL_STATE, action) => {
   case SET_MEMBER_ATTRIBUTE:
     const { prop, value } = action.payload;
     return { ...state, [prop]: value };
+  case CREATE_MEMBER:
+    console.log('CREATE_MEMBER', action);
+    return state
   case LOOK_UP_MEMBER:
     const members = action.payload.data.members.data;
 

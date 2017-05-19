@@ -60,7 +60,6 @@ Rails.application.routes.draw do
   resources :groups
   resources :profile, only: [:index]
   resources :members
-
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   namespace :api, defaults: { format: 'json' } do

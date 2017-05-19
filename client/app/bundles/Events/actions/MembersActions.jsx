@@ -3,6 +3,7 @@ import axios from 'axios';
 import {
   FETCH_MEMBER,
   FETCH_MEMBERS,
+  CREATE_MEMBER,
   LOOK_UP_MEMBER,
   SET_MEMBER_ATTRIBUTE
 } from './types';
@@ -21,6 +22,15 @@ export const fetchMember = (id) => {
 
   return {
     type: FETCH_MEMBER,
+    payload: request
+  };
+};
+
+export const createMember = (attributes) => {
+  const request = axios.post('/members.json', { member: attributes });
+
+  return {
+    type: CREATE_MEMBER,
     payload: request
   };
 };
