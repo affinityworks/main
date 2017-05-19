@@ -16,6 +16,8 @@ gem 'coffee-rails', '~> 4.2'
 
 gem 'cancancan'
 gem 'devise'
+gem 'omniauth'
+gem 'omniauth-facebook'
 gem 'bootstrap', '~> 4.0.0.alpha5'
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.3.3'
@@ -30,6 +32,10 @@ gem 'graphiql-rails'
 
 #pretty layout for console
 gem 'hirb'
+
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-heroku'
+gem 'wkhtmltopdf-binary-edge', '~> 0.12.4.0'
 
 
 # This is an optional gem. When included, GraphQL will use a parser written in C

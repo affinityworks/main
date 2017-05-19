@@ -2,7 +2,7 @@
   "name": "affinity",
   "description": "",
   "scripts": {
-    "postdeploy": "bundle exec rake db:schema:load db:seed"
+    "postdeploy": "bundle exec rake db:schema:load db:seed action_network_syncer:sync_groups"
   },
   "env": {
     "HEROKU_POSTGRESQL_BRONZE_URL": {

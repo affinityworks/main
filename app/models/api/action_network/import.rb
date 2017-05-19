@@ -18,13 +18,14 @@ module Api::ActionNetwork::Import
 
     next_uri = client.links && client.links['next']&.href
     [collection.resources, next_uri]
-  rescue
+  rescue => e
+    logger.error e.inspect
     retry if (retries += 1) < 3
     [[], nil]
   end
 
   def request_single_resource_from_action_network(uri, group)
-    retires ||= 0
+    retries ||= 0
 
     resource = resource_class.new
     client = representer_class.new(resource)
@@ -38,9 +39,10 @@ module Api::ActionNetwork::Import
       resource.groups.push(group)
       create_single_resource(resource)
     end
-  rescue
+  rescue => e
+    logger.error e.inspect
     retry if (retries += 1) < 3
-    [[], nil]
+    nil
   end
 
   # Update all attributes for resources that already exist and have not been modified after import

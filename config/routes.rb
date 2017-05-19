@@ -58,15 +58,12 @@ Rails.application.routes.draw do
     resources :attendances
   end
   resources :groups
-  resources :members, only: [:index]
+  resources :profile, only: [:index]
+  resources :members
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
-  namespace :api, defaults: {format: 'json'} do
-    # Want controller helpers but not routes
-    devise_for :users,
-               class_name: 'Api::User',
-               skip: [:sessions, :passwords, :confirmations, :registrations, :unlocks]
-
+  namespace :api, defaults: { format: 'json' } do
     namespace :v1 do
       get '/', to: 'entry_point#show'
       resources :people
