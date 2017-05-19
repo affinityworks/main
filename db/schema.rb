@@ -363,8 +363,9 @@ ActiveRecord::Schema.define(version: 20170524185701) do
     t.string   "provider"
     t.string   "uid"
     t.integer  "person_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.string   "access_token"
   end
 
   create_table "memberships", force: :cascade do |t|

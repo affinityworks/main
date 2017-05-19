@@ -6,6 +6,8 @@ class Identity < ActiveRecord::Base
   scope :facebook, -> { where(provider: 'facebook') }
 
   def self.find_for_oauth(auth)
-    find_or_initialize_by(uid: auth.uid, provider: auth.provider)
+    find_or_initialize_by(uid: auth.uid, provider: auth.provider) do |identity|
+      identity.access_token = auth.credentials.token
+    end
   end
 end
