@@ -3,9 +3,7 @@ import axios from 'axios';
 import {
   FETCH_MEMBER,
   FETCH_MEMBERS,
-  CREATE_MEMBER,
-  LOOK_UP_MEMBER,
-  SET_MEMBER_ATTRIBUTE
+  LOOK_UP_MEMBER
 } from './types';
 
 export const fetchMembers = (queryString = '') => {
@@ -26,15 +24,6 @@ export const fetchMember = (id) => {
   };
 };
 
-export const createMember = (attributes) => {
-  const request = axios.post('/members.json', { member: attributes });
-
-  return {
-    type: CREATE_MEMBER,
-    payload: request
-  };
-};
-
 export const lookUpMember = (email = '') => {
   const request = axios.get(`/members.json?email=${email}`);
 
@@ -43,10 +32,3 @@ export const lookUpMember = (email = '') => {
     payload: request
   };
 };
-
-export const setMemberAttribute = (prop, value) => (
-  {
-    type: SET_MEMBER_ATTRIBUTE,
-    payload: { prop, value }
-  }
-);

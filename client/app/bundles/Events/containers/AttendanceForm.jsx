@@ -4,23 +4,29 @@ import { connect } from 'react-redux';
 
 import FormGroup from '../components/FormGroup';
 import Input from '../components/Input';
-import { lookUpMember, setMemberAttribute } from '../actions';
+import { lookUpMember, setAttendanceAttribute } from '../actions';
 
-class MemberForm extends Component {
+class AttendanceForm extends Component {
   state = { showAddressForm: false };
 
   renderAddressForm() {
     if (this.state.showAddressForm) {
+      const { disabled } = this.props.newAttendance;
+
       return(
         <div>
           OPTIONAL
           <FormGroup>
-            <Input label='Street Address:' classes='col-md-6' />
+            <Input
+              label='Street Address:'
+              classes='col-md-6'
+              disabled={disabled}
+            />
           </FormGroup>
 
           <FormGroup row>
-            <Input label='City:' classes='col-md-4' />
-            <Input label='Zipcode:' classes='col-md-2' />
+            <Input label='City:' classes='col-md-4' disabled={disabled} />
+            <Input label='Zipcode:' classes='col-md-2' disabled={disabled} />
           </FormGroup>
         </div>
       );
@@ -36,7 +42,7 @@ class MemberForm extends Component {
   }
 
   render() {
-    const { lookUpMember, newMember, setMemberAttribute } = this.props;
+    const { lookUpMember, newAttendance, setAttendanceAttribute } = this.props;
 
     return (
       <form onSubmit={this.props.onSubmit}>
@@ -45,33 +51,33 @@ class MemberForm extends Component {
             label='Email'
             classes='col-md-5'
             onBlur={(e) => lookUpMember(e.target.value)}
-            onChange={(e) => setMemberAttribute('primary-email-address', e.target.value)}
-            value={newMember['primary-email-address']} />
+            onChange={(e) => setAttendanceAttribute('primary-email-address', e.target.value)}
+            value={newAttendance['primary-email-address']} />
         </FormGroup>
 
         <FormGroup row>
           <Input
             label='First Name:'
             classes='col-md-4'
-            onChange={(e) => setMemberAttribute('given-name', e.target.value)}
-            value={newMember['given-name']}
-            disabled={newMember.disabled} />
+            onChange={(e) => setAttendanceAttribute('given-name', e.target.value)}
+            value={newAttendance['given-name']}
+            disabled={newAttendance.disabled} />
 
           <Input
             label='Last Name:'
             classes='col-md-4'
-            onChange={(e) => setMemberAttribute('family-name', e.target.value)}
-            value={newMember['family-name']}
-            disabled={newMember.disabled} />
+            onChange={(e) => setAttendanceAttribute('family-name', e.target.value)}
+            value={newAttendance['family-name']}
+            disabled={newAttendance.disabled} />
         </FormGroup>
 
         <FormGroup>
           <Input
             label='Phone:'
             classes='col-md-4'
-            onChange={(e) => setMemberAttribute('primary-phone-number', e.target.value)}
-            value={newMember['primary-phone-number']}
-            disabled={newMember.disabled} />
+            onChange={(e) => setAttendanceAttribute('primary-phone-number', e.target.value)}
+            value={newAttendance['primary-phone-number']}
+            disabled={newAttendance.disabled} />
         </FormGroup>
 
         {this.renderAddressForm()}
@@ -88,10 +94,10 @@ class MemberForm extends Component {
   }
 }
 
-const mapStateToProps = ({ newMember }) => {
-  return { newMember }
+const mapStateToProps = ({ newAttendance }) => {
+  return { newAttendance }
 };
 
 export default connect(
-  mapStateToProps, { lookUpMember, setMemberAttribute}
-)(MemberForm);
+  mapStateToProps, { lookUpMember, setAttendanceAttribute}
+)(AttendanceForm);

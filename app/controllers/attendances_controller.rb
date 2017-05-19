@@ -46,6 +46,15 @@ class AttendancesController < ApplicationController
    end
   end
 
+  def create
+    attendance = create_attendance
+    respond_to do |format|
+      format.json do
+        render json: attendance
+      end
+    end
+  end
+
   private
 
   def attendance_params
@@ -64,4 +73,21 @@ class AttendancesController < ApplicationController
     @attendances = find_event.attendances.page(params[:page])
   end
 
+  def create_attendance
+    event = Event.find(params[:event_id])
+
+    email = new_attendance_params.delete(:email)
+    person = Person.by_email(email).first || Person.create!(new_attendance_params)
+
+    unless person.primary_email_address
+      EmailAddress.create(address: email, primary: true, person: person)
+    end
+
+    person.memberships.create(group_id: current_group.id)
+    person.events.push(event)
+  end
+
+  def new_attendance_params
+    params.require(:attendance).permit(:email, :family_name, :given_name)
+  end
 end

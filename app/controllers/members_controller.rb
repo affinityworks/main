@@ -26,15 +26,6 @@ class MembersController < ApplicationController
     end
   end
 
-  def create
-    puts params[:member]
-    respond_to do |format|
-      format.json do
-
-      end
-    end
-  end
-
   private
 
   def set_members

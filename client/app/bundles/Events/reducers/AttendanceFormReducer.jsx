@@ -1,5 +1,5 @@
 import {
-  LOOK_UP_MEMBER, SET_MEMBER_ATTRIBUTE, CREATE_MEMBER
+  LOOK_UP_MEMBER, SET_ATTENDANCE_ATTRIBUTE, CREATE_ATTENDANCE
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -12,11 +12,11 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case SET_MEMBER_ATTRIBUTE:
+  case SET_ATTENDANCE_ATTRIBUTE:
     const { prop, value } = action.payload;
     return { ...state, [prop]: value };
-  case CREATE_MEMBER:
-    console.log('CREATE_MEMBER', action);
+  case CREATE_ATTENDANCE:
+    console.log('CREATE_ATTENDANCE', action);
     return state
   case LOOK_UP_MEMBER:
     const members = action.payload.data.members.data;
