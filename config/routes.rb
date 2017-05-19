@@ -5,6 +5,10 @@ Rails.application.routes.draw do
     skip_controllers :applications
   end
 
+  devise_config = ActiveAdmin::Devise.config
+  devise_config[:controllers][:omniauth_callbacks] = 'people/omniauth_callbacks'
+  devise_for :people, devise_config
+
   ActiveAdmin.routes(self)
   namespace :admin do
     resources :people
@@ -50,8 +54,7 @@ Rails.application.routes.draw do
     #root to: "people#index"
   end
 
-  devise_for :people, ActiveAdmin::Devise.config
-  #ActiveAdmin.routes(self)
+
   #root to: "_site/index.html"
 
   resources :events do
