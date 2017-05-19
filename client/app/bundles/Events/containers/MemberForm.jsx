@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import FormGroup from '../components/FormGroup';
 import Input from '../components/Input';
+import { lookUpMember, setMemberAttribute } from '../actions';
 
 class MemberForm extends Component {
-  state = {
-    showAddressForm: false
-  };
+  state = { showAddressForm: false };
 
   renderAddressForm() {
     if (this.state.showAddressForm) {
@@ -36,19 +36,42 @@ class MemberForm extends Component {
   }
 
   render() {
+    const { lookUpMember, newMember, setMemberAttribute } = this.props;
+
     return (
       <form onSubmit={this.props.onSubmit}>
         <FormGroup>
-          <Input label='Email' classes='col-md-5' />
+          <Input
+            label='Email'
+            classes='col-md-5'
+            onBlur={(e) => lookUpMember(e.target.value)}
+            onChange={(e) => setMemberAttribute('primary-email-address', e.target.value)}
+            value={newMember['primary-email-address']} />
         </FormGroup>
 
         <FormGroup row>
-          <Input label='First Name:' classes='col-md-4' />
-          <Input label='Last Name:' classes='col-md-4' />
+          <Input
+            label='First Name:'
+            classes='col-md-4'
+            onChange={(e) => setMemberAttribute('given-name', e.target.value)}
+            value={newMember['given-name']}
+            disabled={newMember.disabled} />
+
+          <Input
+            label='Last Name:'
+            classes='col-md-4'
+            onChange={(e) => setMemberAttribute('family-name', e.target.value)}
+            value={newMember['family-name']}
+            disabled={newMember.disabled} />
         </FormGroup>
 
         <FormGroup>
-          <Input label='Phone:' classes='col-md-4' />
+          <Input
+            label='Phone:'
+            classes='col-md-4'
+            onChange={(e) => setMemberAttribute('primary-phone-number', e.target.value)}
+            value={newMember['primary-phone-number']}
+            disabled={newMember.disabled} />
         </FormGroup>
 
         {this.renderAddressForm()}
@@ -65,4 +88,10 @@ class MemberForm extends Component {
   }
 }
 
-export default MemberForm;
+const mapStateToProps = ({ newMember }) => {
+  return { newMember }
+};
+
+export default connect(
+  mapStateToProps, { lookUpMember, setMemberAttribute}
+)(MemberForm);

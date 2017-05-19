@@ -2,7 +2,9 @@ import axios from 'axios';
 
 import {
   FETCH_MEMBER,
-  FETCH_MEMBERS
+  FETCH_MEMBERS,
+  LOOK_UP_MEMBER,
+  SET_MEMBER_ATTRIBUTE
 } from './types';
 
 export const fetchMembers = (queryString = '') => {
@@ -22,3 +24,19 @@ export const fetchMember = (id) => {
     payload: request
   };
 };
+
+export const lookUpMember = (email = '') => {
+  const request = axios.get(`/members.json?email=${email}`);
+
+  return {
+    type: LOOK_UP_MEMBER,
+    payload: request
+  };
+};
+
+export const setMemberAttribute = (prop, value) => (
+  {
+    type: SET_MEMBER_ATTRIBUTE,
+    payload: { prop, value }
+  }
+);

@@ -7,6 +7,7 @@ import GroupsReducer from './GroupsReducer';
 import GroupReducer from './GroupReducer';
 import MembersReducer from './MembersReducer';
 import MemberReducer from './MemberReducer';
+import MemberFormReducer from './MemberFormReducer';
 
 const CurrentGroupReducer = (state = {}) => ( state );
 const CurrentUserReducer = (state = {}) => ( state );
@@ -20,5 +21,6 @@ export default combineReducers({
   member: MemberReducer,
   attendances: AttendancesReducer,
   currentGroup: CurrentGroupReducer,
-  currentUser: CurrentUserReducer
+  currentUser: CurrentUserReducer,
+  newMember: MemberFormReducer
 });
