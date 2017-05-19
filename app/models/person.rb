@@ -29,6 +29,10 @@ class Person < ApplicationRecord
 
   attr_accessor :attended_events_count #NOTE ROAR purpose
 
+  scope :by_email, -> (email) do
+    includes(:email_addresses).where(email_addresses: { address: email })
+  end
+
   def name
     [ given_name, family_name ].compact.join(' ')
   end

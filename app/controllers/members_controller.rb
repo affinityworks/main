@@ -30,5 +30,7 @@ class MembersController < ApplicationController
 
   def set_members
     @members = current_group.members.page(params[:page])
+
+    @members = @members.by_email(params[:email]) if params[:email]
   end
 end

@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+
+import FormGroup from '../components/FormGroup';
+import Input from '../components/Input';
 
 class MemberForm extends Component {
   state = {
@@ -10,22 +14,14 @@ class MemberForm extends Component {
       return(
         <div>
           OPTIONAL
-          <div className='form-group'>
-            <label> Street Address: </label>
-            <input type='text' className='form-control col-md-6'/>
-          </div>
+          <FormGroup>
+            <Input label='Street Address:' classes='col-md-6' />
+          </FormGroup>
 
-          <div className='form-group row'>
-            <div className='col-md-4'>
-              <label> City: </label>
-              <input type='text' className='form-control'/>
-            </div>
-
-            <div className='col-md-2'>
-              <label> Zipcode: </label>
-              <input type='text' className='form-control'/>
-            </div>
-          </div>
+          <FormGroup row>
+            <Input label='City:' classes='col-md-4' />
+            <Input label='Zipcode:' classes='col-md-2' />
+          </FormGroup>
         </div>
       );
     }
@@ -42,35 +38,28 @@ class MemberForm extends Component {
   render() {
     return (
       <form onSubmit={this.props.onSubmit}>
-        <div className='form-group'>
-          <label> Email: </label>
-          <input type='text' className='form-control col-md-5'/>
-        </div>
+        <FormGroup>
+          <Input label='Email' classes='col-md-5' />
+        </FormGroup>
 
-        <div className='form-group row'>
-          <div className='col-md-4'>
-            <label> First Name: </label>
-            <input type='text' className='form-control'/>
-          </div>
+        <FormGroup row>
+          <Input label='First Name:' classes='col-md-4' />
+          <Input label='Last Name:' classes='col-md-4' />
+        </FormGroup>
 
-          <div className='col-md-4'>
-            <label> Last Name: </label>
-            <input type='text' className='form-control'/>
-          </div>
-        </div>
-
-        <div className='form-group'>
-          <label> Phone: </label>
-          <input type='text' className='form-control col-md-4'/>
-        </div>
+        <FormGroup>
+          <Input label='Phone:' classes='col-md-4' />
+        </FormGroup>
 
         {this.renderAddressForm()}
 
         <br />
 
-        <button type='submit' className='btn btn-success'>
-          Done
-        </button>
+        <div>
+          <button type='submit' className='btn btn-success'>
+            Done
+          </button>
+        </div>
       </form>
     );
   }
