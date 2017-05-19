@@ -76,18 +76,14 @@ class AttendancesController < ApplicationController
   def create_attendance
     event = Event.find(params[:event_id])
 
-    email = new_attendance_params.delete(:email)
-    person = Person.by_email(email).first || Person.create!(new_attendance_params)
-
-    unless person.primary_email_address
-      EmailAddress.create(address: email, primary: true, person: person)
-    end
+    person = Person.by_email(new_attendance_params['primary_email_address']).first ||
+      Person.create!(new_attendance_params)
 
     person.memberships.create(group_id: current_group.id)
-    person.events.push(event)
+    person.attendances.create(event_id: event.id)
   end
 
   def new_attendance_params
-    params.require(:attendance).permit(:email, :family_name, :given_name)
+    params.require(:attendance).permit(:primary_email_address, :family_name, :given_name, :primary_phone_number)
   end
 end

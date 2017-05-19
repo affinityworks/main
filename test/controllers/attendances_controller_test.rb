@@ -65,14 +65,18 @@ class AttendancesControllerTest < ActionDispatch::IntegrationTest
 
     post event_attendances_url(
       event_id: event.id,
-      params: { attendance: { email: new_attendee.primary_email_address }}
+      params: {
+        attendance: {
+          primary_email_address: new_attendee.primary_email_address
+        }
+      }
     ), as: :json
 
     assert_response :success
 
     new_attendee.reload
-    assert_equal 1, new_attendee.groups.count
-    assert_equal 1, new_attendee.events.count
+    assert_equal 1, new_attendee.memberships.count, 'creates a new membership'
+    assert_equal 1, new_attendee.attendances.count, 'creates a new attendance'
   end
 
   test 'post #create when the attendee is a new user' do
@@ -81,13 +85,15 @@ class AttendancesControllerTest < ActionDispatch::IntegrationTest
     sign_in current_user
 
     email = 'test@test.com'
+    phone = rand(1_000_000).to_s
 
     assert_difference 'Person.count', 1 do
       post event_attendances_url(
       event_id: event.id,
       params: {
         attendance: {
-          email: email,
+          primary_email_address: email,
+          primary_phone_number: phone,
           family_name: 'wayne',
           given_name: 'bruce'
         }
@@ -101,6 +107,7 @@ class AttendancesControllerTest < ActionDispatch::IntegrationTest
     assert_equal 1, new_attendee.groups.count
     assert_equal 1, new_attendee.events.count
     assert_equal new_attendee.primary_email_address, email
+    assert_equal new_attendee.primary_phone_number, phone
   end
 
   def set_attendance_status(event_id, attendance_id, status)
