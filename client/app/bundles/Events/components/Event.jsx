@@ -34,7 +34,8 @@ export default class Event extends Component {
 
         <div className='col-7'>
           <Link to={`/events/${id}`}> {attributes.name || attributes.title} </Link>
-          <span> {` at ${this.locationName() || 'Event Location' }`} </span>
+          <br />
+          <span> {`${this.locationName() || 'Location Unknown' }`} </span>
           {this.renderOrganizer()}
         </div>
 
