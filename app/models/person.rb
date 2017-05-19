@@ -101,6 +101,12 @@ class Person < ApplicationRecord
     attended_group_events(group).count
   end
 
+  def as_json(options={})
+    super.merge!({
+      linked_with_facebook: identities.facebook.any?
+    }) #NOTE Change if other OAuth provider is added
+  end
+
   def self.find_first_by_auth_conditions(warden_conditions)
     conditions = warden_conditions.dup
     if email = conditions.delete(:email)
