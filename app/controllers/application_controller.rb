@@ -16,6 +16,7 @@ class ApplicationController < ActionController::Base
     render_not_found unless current_person.admin?
   end
 
+
   def after_sign_in_path_for(resource)
     if session[:redirect_uri]
       session[:redirect_uri]

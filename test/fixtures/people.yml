@@ -3,8 +3,8 @@
 one:
   id: 1
   identifiers: ['advocacycommons:1']
-  family_name: MyString
-  given_name: MyString
+  family_name: family_name
+  given_name: given_name
   additional_name: MyString
   honorific_prefix: MyString
   honorific_suffix: MyString
@@ -35,7 +35,9 @@ two:
   gender_identity: MyString
   party_identification: Green
   source: some source
-  ethnicities: blue poeple
+  ethnicities:
+    - White
+    - Hispanic
   languages_spoken:
     - Greek
     - Latin
