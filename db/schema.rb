@@ -359,6 +359,14 @@ ActiveRecord::Schema.define(version: 20170524185701) do
     t.index ["share_page_id"], name: "index_groups_share_pages_on_share_page_id", using: :btree
   end
 
+  create_table "identities", force: :cascade do |t|
+    t.string   "provider"
+    t.string   "uid"
+    t.integer  "person_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "memberships", force: :cascade do |t|
     t.integer  "group_id"
     t.integer  "person_id"
@@ -472,8 +480,6 @@ ActiveRecord::Schema.define(version: 20170524185701) do
     t.inet     "last_sign_in_ip"
     t.text     "identifiers",            default: [],                 array: true
     t.boolean  "admin",                  default: false
-    t.string   "provider"
-    t.string   "uid"
     t.boolean  "synced",                 default: true
     t.index ["reset_password_token"], name: "index_people_on_reset_password_token", unique: true, using: :btree
   end

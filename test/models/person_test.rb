@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'minitest/mock'
 
 class PersonTest < ActiveSupport::TestCase
   test 'basic person associations' do
@@ -143,10 +144,40 @@ class PersonTest < ActiveSupport::TestCase
 
     groups.each {|group| assert_nothing_raised { group.reload }}
     events.each {|event| assert_nothing_raised { event.reload }}
-    assert_nothing_raised { employer_address.reload } if employer_address 
+    assert_nothing_raised { employer_address.reload } if employer_address
 
   end
 
+  test '#from_omniauth' do
+    auth = Minitest::Mock.new
+    info = Minitest::Mock.new
+    uid = Identity.first.uid
 
+    auth.expect :provider, 'facebook'
+    auth.expect :uid, uid
 
+    assert_equal Person.first, Person.from_omniauth(auth)
+
+    info.expect :email, EmailAddress.first.address
+    auth.expect :provider, 'facebook'
+    auth.expect :uid, "#{uid}example2"
+    auth.expect :info, info
+
+    assert_equal Person.first, Person.from_omniauth(auth)
+
+    auth.expect :provider, 'facebook'
+    auth.expect :uid, "#{uid}example2"
+
+    person = Person.from_omniauth(auth, Person.last)
+    assert_equal Person.last, person
+    assert_equal 2, Identity.count
+    assert_equal person, Identity.last.person
+
+    info.expect :email, "anything"
+    auth.expect :provider, 'facebook'
+    auth.expect :uid, "#{uid}example3"
+    auth.expect :info, info
+
+    assert_nil Person.from_omniauth(auth)
+  end
 end
