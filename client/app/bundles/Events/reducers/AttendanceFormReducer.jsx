@@ -7,17 +7,24 @@ const INITIAL_STATE = {
   'given-name': '',
   'family-name': '',
   'primary-phone-number': '',
-  'disabled': ''
+  'disabled': '',
+  'successAlert': '',
+  'errorAlert': ''
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case SET_ATTENDANCE_ATTRIBUTE:
     const { prop, value } = action.payload;
-    return { ...state, [prop]: value };
+    return { ...state, [prop]: value, successAlert: '', errorAlert: '' };
   case CREATE_ATTENDANCE:
-    console.log('CREATE_ATTENDANCE', action);
-    return state
+    if (action.payload.status === 200) {
+      return { ...INITIAL_STATE, successAlert: 'Attendee Successfully Created' }
+    }
+
+    console.log(action.payload);
+
+    return state;
   case LOOK_UP_MEMBER:
     const members = action.payload.data.members.data;
 

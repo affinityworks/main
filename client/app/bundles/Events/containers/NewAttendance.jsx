@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect} from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import AttendanceForm from './AttendanceForm';
 import Event from '../components/Event';
@@ -31,14 +32,33 @@ class NewAttendance extends Component {
   }
 
   render() {
+    const eventId = this.props.match.params.id;
     return (
       <div>
         {this.renderEvent()}
+
         <br/>
+        <br/>
+
         <h3> Add New Event Attendee </h3>
+
         <br/>
-        <AttendanceForm onSubmit={this.handleSubmit.bind(this)} />
-        <br/>
+
+        <AttendanceForm onSubmit={this.handleSubmit.bind(this)}>
+          <div className='row'>
+            <div className='col-1'>
+              <Link to={`/events/${eventId}/attendances`} className='btn btn-primary'>
+                Back
+              </Link>
+            </div>
+            <div className='col-1'/>
+            <div className='col-2'>
+              <button type='submit' className='btn btn-success'>
+                Done
+              </button>
+            </div>
+          </div>
+        </AttendanceForm>
       </div>
     );
   }

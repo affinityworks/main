@@ -41,11 +41,23 @@ class AttendanceForm extends Component {
     );
   }
 
+  renderAlert() {
+    const { errorAlert, successAlert } = this.props.newAttendance;
+
+    if (errorAlert.length)
+      return <div className="alert alert-error">{errorAlert} </div>
+
+    if (successAlert.length)
+      return <div className="alert alert-success">{successAlert} </div>
+  }
+
   render() {
     const { lookUpMember, newAttendance, setAttendanceAttribute } = this.props;
 
     return (
       <form onSubmit={this.props.onSubmit}>
+        {this.renderAlert()}
+
         <FormGroup>
           <Input
             label='Email'
@@ -83,12 +95,9 @@ class AttendanceForm extends Component {
         {this.renderAddressForm()}
 
         <br />
+        <br />
 
-        <div>
-          <button type='submit' className='btn btn-success'>
-            Done
-          </button>
-        </div>
+        {this.props.children}
       </form>
     );
   }
