@@ -18,9 +18,9 @@ export default (
 
     <Route path='/events/:id' component={EventDetail} />
     <Route path='/events' component={Events} />
-    
-    <Route path='/members' component={Members} />
+
     <Route path='/members/:id' component={MemberDetail} />
+    <Route path='/members' component={Members} />
 
     <Route path='/groups/:id' component={GroupDetail} />
     <Route path='/groups' component={Groups} />

@@ -2,7 +2,7 @@ class AttendancesController < ApplicationController
   before_action :authenticate_person!
   before_action :find_attendances
 
-  protect_from_forgery except: [:update] #TODO: Add the csrf token in react.
+  protect_from_forgery except: [:update, :create] #TODO: Add the csrf token in react.
 
   def index
     respond_to do |format|
@@ -36,14 +36,14 @@ class AttendancesController < ApplicationController
   end
 
   def update
-   attendance = @attendances.find(params[:id])
-   attendance.update_attributes(attendance_params)
-   respond_to do |format|
-     format.html
-     format.json do
-       render json: JsonApi::AttendancesRepresenter.new(attendance).to_json
-     end
-   end
+    attendance = @attendances.find(params[:id])
+    attendance.update_attributes(attendance_params)
+    respond_to do |format|
+      format.html
+      format.json do
+        render json: JsonApi::AttendancesRepresenter.new(attendance).to_json
+      end
+    end
   end
 
   def create

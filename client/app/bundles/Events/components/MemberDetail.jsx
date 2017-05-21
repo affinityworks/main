@@ -16,7 +16,6 @@ class MemberDetail extends Component {
     if (!member.attributes)
       return null;
 
-    console.log(member);
     const { attributes } = member;
     return (
       <div>
