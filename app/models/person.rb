@@ -45,6 +45,14 @@ class Person < ApplicationRecord
     email_addresses.new(address: email, primary: true)
   end
 
+  def primary_personal_address
+    personal_addresses.detect(&:primary?)
+  end
+
+  def primary_personal_address=(attributes)
+    personal_addresses.new(attributes.merge(primary: true))
+  end
+
   def email
     primary_email_address
   end

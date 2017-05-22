@@ -11,7 +11,7 @@ class AttendanceForm extends Component {
 
   renderAddressForm() {
     if (this.state.showAddressForm) {
-      const { disabled } = this.props.newAttendance;
+      const { newAttendance, setAttendanceAttribute } = this.props;
 
       return(
         <div>
@@ -20,13 +20,25 @@ class AttendanceForm extends Component {
             <Input
               label='Street Address:'
               classes='col-md-6'
-              disabled={disabled}
+              value={newAttendance.address_lines}
+              onChange={(e) => setAttendanceAttribute('address_lines', e.target.value)}
+              disabled={newAttendance.disabled}
             />
           </FormGroup>
 
           <FormGroup row>
-            <Input label='City:' classes='col-md-4' disabled={disabled} />
-            <Input label='Zipcode:' classes='col-md-2' disabled={disabled} />
+            <Input
+              label='City:'
+              classes='col-md-4'
+              value={newAttendance['locality']}
+              onChange={(e) => setAttendanceAttribute('locality', e.target.value)}
+              disabled={newAttendance.disabled} />
+            <Input
+              label='Zipcode:'
+              classes='col-md-2'
+              value={newAttendance.postal_code}
+              onChange={(e) => setAttendanceAttribute('postal_code', e.target.value)}
+              disabled={newAttendance.disabled} />
           </FormGroup>
         </div>
       );

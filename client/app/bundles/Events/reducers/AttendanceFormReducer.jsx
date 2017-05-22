@@ -1,13 +1,18 @@
+import _ from 'lodash';
+
 import {
   LOOK_UP_MEMBER, SET_ATTENDANCE_ATTRIBUTE, CREATE_ATTENDANCE
 } from '../actions/types';
 
 const INITIAL_STATE = {
   'primary-email-address': '',
-  'given-name': '',
-  'family-name': '',
   'primary-phone-number': '',
+  'family-name': '',
+  'given-name': '',
   'disabled': '',
+  'postal_code': '',
+  'locality': '',
+  'address_lines': [],
   'successAlert': '',
   'errorAlert': ''
 };
@@ -30,7 +35,12 @@ export default (state = INITIAL_STATE, action) => {
 
     if (members.length) {
       const { attributes } = members[0];
-      return { ...state, ...attributes, disabled: true }
+      const address = attributes['primary-personal-address'];
+
+      return {
+        ...state, ..._.omit(attributes, 'primary-personal-address'),
+        ...address, disabled: true
+      }
     } else if (state.disabled) {
       return {
         ...INITIAL_STATE,

@@ -6,7 +6,6 @@ import { formatDateTime } from '../utils';
 const UpcomingEvent = (props) => {
   const { attributes, id } = props.event;
 
-  console.log(attributes);
   return(
     <a href={attributes['browser-url']} className='list-group-item'>
       <div className='col-md-1'>

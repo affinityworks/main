@@ -95,7 +95,12 @@ class AttendancesControllerTest < ActionDispatch::IntegrationTest
           primary_email_address: email,
           primary_phone_number: phone,
           family_name: 'wayne',
-          given_name: 'bruce'
+          given_name: 'bruce',
+          primary_personal_address: {
+            postal_code: '54000',
+            address_lines: ['123 Some Street'],
+            locality: 'Some locality'
+          }
         }
       }
       ), as: :json
@@ -108,6 +113,10 @@ class AttendancesControllerTest < ActionDispatch::IntegrationTest
     assert_equal 1, new_attendee.events.count
     assert_equal new_attendee.primary_email_address, email
     assert_equal new_attendee.primary_phone_number, phone
+    assert_equal new_attendee.primary_personal_address.postal_code, '54000'
+    assert_equal new_attendee.primary_personal_address.address_lines, ['123 Some Street']
+    assert_equal new_attendee.primary_personal_address.locality, 'Some locality'
+    assert new_attendee.primary_personal_address.primary
   end
 
   def set_attendance_status(event_id, attendance_id, status)

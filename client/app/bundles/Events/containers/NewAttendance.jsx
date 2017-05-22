@@ -21,6 +21,11 @@ class NewAttendance extends Component {
       given_name: newAttendance['given-name'],
       primary_email_address: newAttendance['primary-email-address'],
       primary_phone_number: newAttendance['primary-phone-number'],
+      primary_personal_address: {
+        address_lines: [newAttendance.address_lines],
+        postal_code: newAttendance.postal_code,
+        locality: newAttendance.locality
+      }
     }
 
     createAttendance(match.params.id, attributes);

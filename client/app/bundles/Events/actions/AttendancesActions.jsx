@@ -32,6 +32,8 @@ export const setAttendanceAttribute = (prop, value) => (
   }
 );
 
+
+
 export const createAttendance = (eventId, attributes) => {
   const request = axios.post(
     `/events/${eventId}/attendances.json`,
