@@ -48,3 +48,32 @@ two:
   created_at: 2016-12-18 19:30:05
   updated_at: 2016-12-18 19:30:05
   employer: people's republic of our college town
+
+admin:
+  id: 3
+  identifiers: ['advocacycommons:3']
+  family_name: Admin
+  given_name: Test
+  admin: true
+  encrypted_password: $2a$11$08m64awvoVFg4sLOu.zA6e70E98bWC2VNewFWUNYjtnvutb/K68xK
+
+member1:
+  id: 4
+  identifiers: ['advocacycommons:4']
+  family_name: Member
+  given_name: Test
+  encrypted_password: $2a$11$08m64awvoVFg4sLOu.zA6e70E98bWC2VNewFWUNYjtnvutb/K68xK
+
+member2:
+  id: 5
+  identifiers: ['advocacycommons:6']
+  family_name: member
+  given_name: Test
+  encrypted_password: $2a$11$08m64awvoVFg4sLOu.zA6e70E98bWC2VNewFWUNYjtnvutb/K68xK
+
+organizer:
+  id: 6
+  identifiers: ['advocacycommons:6']
+  family_name: Organizer
+  given_name: Test
+  encrypted_password: $2a$11$08m64awvoVFg4sLOu.zA6e70E98bWC2VNewFWUNYjtnvutb/K68xK

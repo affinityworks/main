@@ -27,7 +27,6 @@ class AuthenticationTest < ActionDispatch::IntegrationTest
     assert_response :redirect
     follow_redirect!
     assert_response :success
-    puts path
     assert members_path == path
   end
 

@@ -30,7 +30,13 @@ module Api::ActionNetwork::Attendances
         updated_count = update_resources(existing_attendances)
 
         new_attendances = associate_with_person(new_attendances, event.id, group)
-        new_attendances.each(&:save!)
+        new_attendances.each do |attendance|
+          begin
+            attendance.save!
+          rescue ActiveRecord::RecordInvalid
+            logger.debug "FAILED TO IMPORT DUPLICATE ATTENDANCE - event_id: #{attendance.event_id} person_id: #{attendance.person_id} an_uuid: #{attendance.person_uuid}"
+          end
+        end
       end
       logger.debug "Api::ActionNetwork::Attendances#import! new: #{new_count} existing: #{existing_count} updated: #{updated_count}"
     end

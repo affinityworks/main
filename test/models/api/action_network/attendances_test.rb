@@ -20,12 +20,15 @@ class Api::ActionNetwork::AttendancesTest < ActiveSupport::TestCase
     action_network_attendances = JSON.parse(attendances_response)['_embedded']['osdi:attendances']
     person_count = Person.count
 
-    assert_difference 'Attendance.count', action_network_attendances.size do
+    #this tracks that attendances have been added but not duplicates
+    added_attendances_count = action_network_attendances.size - 1
+    assert_difference 'Attendance.count', added_attendances_count do
       Api::ActionNetwork::Attendances.import!(event, group)
     end
 
+
     assert_equal person_count + 1, Person.count, 'Creates the not imported person.'
-    assert_equal action_network_attendances.size, event.attendances.reload.size
+    assert_equal added_attendances_count, event.attendances.reload.size
 
     assert event.attendances.any? { |a| a.person.identifier?('action_network:ceef7e23-4617-4af8-bd0f-60029299d8cd') }
     assert event.attendances.any? { |a| a.person.identifier?('action_network:06d13a33-6824-493b-a922-95e793f269d3') }

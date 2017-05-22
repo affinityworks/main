@@ -6,6 +6,7 @@ class Attendance < ApplicationRecord
   attr_accessor :person_uuid
 
   scope :attended, -> () { where(attended: true) }
+  validates :person_id, uniqueness: { scope: :event_id }
 
   has_many :tickets
   belongs_to :person
