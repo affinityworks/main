@@ -18,7 +18,7 @@ class MembersControllerTest < ActionDispatch::IntegrationTest
     person = people(:member1)
     sign_in person
     get members_url, as: :json
-    assert_response :redirect
+    assert_response 302
   end
 
 

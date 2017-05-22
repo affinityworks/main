@@ -2,7 +2,6 @@ class Event < ApplicationRecord
   include Api::Identifiers
 
   attr_accessor :attended_count
-  attr_accessor :invited_count
   attr_accessor :rsvp_count
 
   UPCOMING_EVENTS_DAYS = 30
@@ -19,12 +18,13 @@ class Event < ApplicationRecord
   has_many :reminders
   has_and_belongs_to_many :groups
 
+  #My suspicion is that it's better to do this in sql and not sore all this in memory
   def self.add_attendance_counts(events)
-    attendances = Attendance.group(:event_id, :status).count
+    rsvps = Attendance.group(:event_id, :status).count
+    attendances = Attendance.group(:event_id, :attended).count
     events.each do |event|
-      event.rsvp_count = [attendances[[event.id, 'accepted']], attendances[[event.id, 'tentative']]].compact.sum
-      event.attended_count = attendances[[event.id, 'attended']] || 0
-      event.invited_count = event.rsvp_count + event.attended_count
+      event.rsvp_count = [rsvps[[event.id, 'accepted']], rsvps[[event.id, 'tentative']]].compact.sum
+      event.attended_count = attendances[[event.id, true]] || 0
     end
   end
 

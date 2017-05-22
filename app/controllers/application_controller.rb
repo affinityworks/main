@@ -29,6 +29,15 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def authorize_group_access
+    authorize! :manage, current_group
+  end
+
+  rescue_from CanCan::AccessDenied do |exception|
+    flash[:alert] = "Access denied. You are not authorized to access the requested page."
+    redirect_to root_path
+  end
+
   private
 
   def render_not_found

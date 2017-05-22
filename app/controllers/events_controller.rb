@@ -2,6 +2,7 @@ class EventsController < ApplicationController
   before_action :authenticate_person!
   before_action :set_events, only: :index
   before_action :set_event, only: :show
+  before_action :authorize_group_access
 
   def index
     respond_to do |format|

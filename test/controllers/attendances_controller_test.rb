@@ -13,8 +13,8 @@ class AttendancesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'get #index' do
-    attendance_1, attendance_2 = [attendances(:one), attendances(:one)]
-    sign_in people(:one)
+    attendance_1, attendance_2 = [attendances(:two), attendances(:two)]
+    sign_in people(:two)
     get event_attendances_url(event_id: @event.id), as: :json
     assert_response :success
     json = JSON.parse(@response.body)
@@ -23,10 +23,10 @@ class AttendancesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'PUT #update' do
-    sign_in people(:one)
+    sign_in people(:member1)
 
-    event = Event.first
-    attendance = Attendance.first
+    event = people(:member1).events.first
+    attendance = people(:member1).attendances.first
     new_attendance_status = true
 
     assert_not attendance.attended

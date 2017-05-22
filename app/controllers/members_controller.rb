@@ -1,7 +1,7 @@
 class MembersController < ApplicationController
   before_action :authenticate_person!
-
   before_action :set_members
+  before_action :authorize_group_access
 
   def index
     respond_to do |format|
