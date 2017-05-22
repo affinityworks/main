@@ -91,4 +91,19 @@ class PersonTest < ActiveSupport::TestCase
     Attendance.create(attended: true, person: person, event: Event.last)
     assert_equal person.attended_group_events(Group.first), [group_event_attended]
   end
+
+  test 'export' do
+    person = people(:one)
+    person.update_attribute(:synced, false)
+    group = person.groups.first
+
+    stub_request(
+      :post, "https://actionnetwork.org/api/v2/people"
+    ).to_return(status: 200)
+
+    assert_not person.synced
+    person.export(group)
+    person.reload
+    assert person.synced
+  end
 end

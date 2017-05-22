@@ -33,6 +33,8 @@ class Person < ApplicationRecord
     includes(:email_addresses).where(email_addresses: { address: email })
   end
 
+  scope :unsynced, -> { where(synced: false) }
+
   def name
     [ given_name, family_name ].compact.join(' ')
   end
@@ -112,5 +114,10 @@ class Person < ApplicationRecord
     people.each do |person|
       person.attended_events_count = person.attended_group_events_count(current_group)
     end
+  end
+
+  def export(group)
+    Api::ActionNetwork::Person.export!(self, group)
+    self.update_attribute(:synced, true)
   end
 end
