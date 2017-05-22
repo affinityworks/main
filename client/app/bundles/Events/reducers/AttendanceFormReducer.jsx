@@ -1,7 +1,9 @@
 import _ from 'lodash';
 
 import {
-  LOOK_UP_MEMBER, SET_ATTENDANCE_ATTRIBUTE, CREATE_ATTENDANCE
+  LOOK_UP_MEMBER, SET_ATTENDANCE_ATTRIBUTE,
+  ATTENDANCE_CREATE_FAIL, ATTENDANCE_CREATE_SUCCESS,
+  CLEAN_ATTENDANCE_ALERTS
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -21,15 +23,17 @@ export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case SET_ATTENDANCE_ATTRIBUTE:
     const { prop, value } = action.payload;
-    return { ...state, [prop]: value, successAlert: '', errorAlert: '' };
-  case CREATE_ATTENDANCE:
-    if (action.payload.status === 200) {
-      return { ...INITIAL_STATE, successAlert: 'Attendee Successfully Created' }
+    return { ...state, [prop]: value };
+  case ATTENDANCE_CREATE_SUCCESS:
+    return { ...INITIAL_STATE, successAlert: 'Attendee Successfully Created',  errorAlert: '' }
+  case ATTENDANCE_CREATE_FAIL:
+    const { response } = action.payload;
+
+    if (response) {
+      return { ...state, errorAlert: response.data.join(', '), successAlert: '' };
     }
 
-    console.log(action.payload);
-
-    return state;
+    return state
   case LOOK_UP_MEMBER:
     const members = action.payload.data.members.data;
 
@@ -49,6 +53,8 @@ export default (state = INITIAL_STATE, action) => {
     }
 
     return state;
+  case CLEAN_ATTENDANCE_ALERTS:
+    return { ...state, errorAlert: '', successAlert: '' }
   default:
     return state;
   }

@@ -4,10 +4,14 @@ import { connect } from 'react-redux';
 
 import FormGroup from '../components/FormGroup';
 import Input from '../components/Input';
-import { lookUpMember, setAttendanceAttribute } from '../actions';
+import { lookUpMember, setAttendanceAttribute, cleanAttendanceAlerts } from '../actions';
 
 class AttendanceForm extends Component {
   state = { showAddressForm: false };
+
+  componentWillUnmount() {
+    this.props.cleanAttendanceAlerts();
+  }
 
   renderAddressForm() {
     if (this.state.showAddressForm) {
@@ -57,7 +61,7 @@ class AttendanceForm extends Component {
     const { errorAlert, successAlert } = this.props.newAttendance;
 
     if (errorAlert.length)
-      return <div className="alert alert-error">{errorAlert} </div>
+      return <div className="alert alert-danger">{errorAlert} </div>
 
     if (successAlert.length)
       return <div className="alert alert-success">{successAlert} </div>
@@ -120,5 +124,5 @@ const mapStateToProps = ({ newAttendance }) => {
 };
 
 export default connect(
-  mapStateToProps, { lookUpMember, setAttendanceAttribute}
+  mapStateToProps, { lookUpMember, setAttendanceAttribute, cleanAttendanceAlerts }
 )(AttendanceForm);

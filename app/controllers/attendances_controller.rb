@@ -53,7 +53,7 @@ class AttendancesController < ApplicationController
         if attendance.save
           render json: attendance
         else
-          render json: attendance.errors, status: 422
+          render json: attendance.errors.full_messages, status: 422
         end
       end
     end
@@ -81,10 +81,10 @@ class AttendancesController < ApplicationController
     event = Event.find(params[:event_id])
 
     person = Person.by_email(new_attendance_params['primary_email_address']).first ||
-      Person.create!(new_attendance_params)
+      Person.new(new_attendance_params)
 
-    person.memberships.create(group_id: current_group.id)
-    person.attendances.create(event_id: event.id)
+    person.memberships.new(group_id: current_group.id)
+    person.attendances.new(event_id: event.id)
 
     person
   end

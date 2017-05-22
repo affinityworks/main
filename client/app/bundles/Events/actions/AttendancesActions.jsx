@@ -3,8 +3,10 @@ import axios from 'axios';
 import {
   FETCH_ATTENDANCES,
   UPDATE_ATTENDANCE,
-  CREATE_ATTENDANCE,
-  SET_ATTENDANCE_ATTRIBUTE
+  SET_ATTENDANCE_ATTRIBUTE,
+  ATTENDANCE_CREATE_SUCCESS,
+  ATTENDANCE_CREATE_FAIL,
+  CLEAN_ATTENDANCE_ALERTS
 } from './types';
 
 export const fetchAttendances = (eventId, queryString = '') => {
@@ -32,16 +34,18 @@ export const setAttendanceAttribute = (prop, value) => (
   }
 );
 
-
-
 export const createAttendance = (eventId, attributes) => {
-  const request = axios.post(
-    `/events/${eventId}/attendances.json`,
-    { attendance: attributes }
-  );
+  return (dispatch) => {
+    axios.post(`/events/${eventId}/attendances.json`, { attendance: attributes })
+      .then((response) => {
+        dispatch({ type: ATTENDANCE_CREATE_SUCCESS, payload: response.data })
+      }).catch((err) => {
+        console.log('error', err);
+        dispatch({ type: ATTENDANCE_CREATE_FAIL, payload: err })
+      });
+  }
+}
 
-  return {
-    type: CREATE_ATTENDANCE,
-    payload: request
-  };
+export const cleanAttendanceAlerts = () => {
+  return { type: CLEAN_ATTENDANCE_ALERTS }
 }
