@@ -49,8 +49,12 @@ class EventTest < ActiveSupport::TestCase
     assert_equal 0, events.detect { |e| e.id == 1 }.attended_count
 
     #assert_equal 4, events.detect { |e| e.id == 2 }.invited_count
-    assert_equal 4, events.detect { |e| e.id == 2 }.rsvp_count
-    assert_equal 2, events.detect { |e| e.id == 2 }.attended_count
+    assert_equal 0, events.detect { |e| e.id == 2 }.rsvp_count
+    assert_equal 0, events.detect { |e| e.id == 2 }.attended_count
+
+    #assert_equal 4, events.detect { |e| e.id == 2 }.invited_count
+    assert_equal 4, events.detect { |e| e.id == 3 }.rsvp_count
+    assert_equal 2, events.detect { |e| e.id == 3 }.attended_count
   end
 
   test '.upcoming' do

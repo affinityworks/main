@@ -4,7 +4,7 @@ class AttendancesControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   setup do
-    @event = events(:one)
+    @event = events(:test)
   end
 
   test 'require authentication' do
@@ -14,7 +14,7 @@ class AttendancesControllerTest < ActionDispatch::IntegrationTest
 
   test 'get #index' do
     attendance_1, attendance_2 = [attendances(:two), attendances(:two)]
-    sign_in people(:two)
+    sign_in people(:organizer)
     get event_attendances_url(event_id: @event.id), as: :json
     assert_response :success
     json = JSON.parse(@response.body)
@@ -23,10 +23,10 @@ class AttendancesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'PUT #update' do
-    sign_in people(:member1)
+    sign_in people(:organizer)
 
-    event = people(:member1).events.first
-    attendance = people(:member1).attendances.first
+    event = people(:organizer).events.first
+    attendance = people(:organizer).attendances.first
     new_attendance_status = true
 
     assert_not attendance.attended

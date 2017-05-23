@@ -25,25 +25,25 @@ admin:
   status: tentative
   attended: true
   person_id: 3
-  event_id: 2
+  event_id: 3
 
 member1:
   id: 4
   status: accepted
   attended: false
   person_id: 4
-  event_id: 2
+  event_id: 3
 
 member2:
   id: 5
   status: accepted
   attended: true
   person_id: 5
-  event_id: 2
+  event_id: 3
 
 organizer:
   id: 6
   status: accepted
   attended: false
   person_id: 6
-  event_id: 2
+  event_id: 3

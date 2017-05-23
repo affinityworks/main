@@ -26,7 +26,6 @@ class Api::ActionNetwork::AttendancesTest < ActiveSupport::TestCase
       Api::ActionNetwork::Attendances.import!(event, group)
     end
 
-
     assert_equal person_count + 1, Person.count, 'Creates the not imported person.'
     assert_equal added_attendances_count, event.attendances.reload.size
 
