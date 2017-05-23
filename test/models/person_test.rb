@@ -86,7 +86,7 @@ class PersonTest < ActiveSupport::TestCase
   end
 
   test 'attended_group_events' do
-    person = Person.first
+    person = Person.create(:given_name=>"Random person")
     group_event_attended = Attendance.create(attended: true, person: person, event: Event.first)
     Attendance.create(attended: true, person: person, event: Event.last)
     assert_equal person.attended_group_events(Group.first), [group_event_attended]

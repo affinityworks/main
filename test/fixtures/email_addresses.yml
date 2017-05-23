@@ -23,3 +23,27 @@ three:
   address_type: work
   status: subscribed
   person_id: 2
+
+admin:
+  id: 4
+  primary: true
+  address: test@admin.com
+  person_id: 3
+
+member1:
+  id: 5
+  primary: true
+  address: test@member.com
+  person_id: 4
+
+member2:
+  id: 6
+  primary: true
+  address: member2@member.com
+  person_id: 5
+
+admin:
+  id: 7
+  primary: true
+  address: organizer@admin.com
+  person_id: 6

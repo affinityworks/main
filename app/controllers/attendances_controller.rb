@@ -1,6 +1,7 @@
 class AttendancesController < ApplicationController
   before_action :authenticate_person!
   before_action :find_attendances
+  before_action :authorize_group_access
 
   protect_from_forgery except: [:update, :create] #TODO: Add the csrf token in react.
 

@@ -12,14 +12,15 @@ This project is a work in progress and nothing which is useable by end users is 
 ## Getting Started
 * Install Postgresql with dev libraries
 * Install node.js
-* Install & run yarn
-* Install & run bundler
 * Install Ruby 2.3.3
+* Install & run bundler
+* Install & run yarn
+* cd client && yarn install
 * Ubuntu: `sudo -u postgres createuser $USER -s`
-* `bin/setup`
+* `rake db:setup`
 
 ## Run Tests
-`rake`
+`rails test`
 
 ## Run Server
 `npm run rails-server`

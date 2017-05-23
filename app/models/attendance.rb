@@ -5,8 +5,11 @@ class Attendance < ApplicationRecord
   attr_accessor :event_uuid
   attr_accessor :person_uuid
 
+
   scope :attended, -> { where(attended: true) }
   scope :unsynced, -> { where(synced: false) }
+  validates :person_id, uniqueness: { scope: :event_id }
+
 
   has_many :tickets
   belongs_to :person

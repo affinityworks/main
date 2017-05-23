@@ -23,3 +23,7 @@ two:
   creator_id: 2
   modified_by_id: 2
   an_api_key: 'test-token'
+
+test:
+  id: 3
+  an_api_key: 7cc9eff8d105f3ff34c6bf7683abbec6

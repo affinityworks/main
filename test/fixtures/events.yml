@@ -61,3 +61,34 @@ two:
   organizer_id: 2
   modified_by_id: 2
   identifiers: ['action_network:1efc3644-af25-4253-90b8-a0baf12dbd1e', 'advocacycommons:2']
+
+test:
+  id: 3
+  origin_system: MyString
+  name: MyString
+  title: House Party for Progress
+  description: MyString
+  summary: MyString
+  browser_url: MyString
+  osdi_type: open
+  ticket_levels: MyString
+  featured_image_url: MyString
+  total_accepted: 1
+  total_tickets: 1
+  total_amount: 1.5
+  status: MyString
+  instructions: MyString
+  start_date: 2016-12-22 13:52:58
+  end_date: 2016-12-22 13:52:58
+  all_day_date: 2016-12-22
+  all_day: false
+  capacity: 1
+  guests_can_invite_others: false
+  transparency: MyString
+  visibility: MyString
+  ticket_levels_id: 2
+  address_id: 2
+  creator_id: 5
+  organizer_id: 6
+  modified_by_id: 4
+  identifiers: ['action_network:1efc3644-af25-4253-90b8-a0baf1ddbd1e', 'advocacycommons:2']

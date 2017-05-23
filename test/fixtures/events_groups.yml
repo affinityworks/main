@@ -5,3 +5,7 @@ one:
 two:
   event_id: 2
   group_id: 2
+
+test:
+  event_id: 3
+  group_id: 3

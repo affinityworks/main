@@ -9,3 +9,23 @@ two:
   group_id: 2
   person_id: 2
   role: 1
+
+admin:
+  group_id: 3
+  person_id: 3
+  role: 1
+
+member1:
+  group_id: 3
+  person_id: 4
+  role: 0
+
+member2:
+  group_id: 3
+  person_id: 5
+  role: 0
+
+organizer:
+  group_id: 3
+  person_id: 6
+  role: 1
