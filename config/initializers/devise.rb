@@ -252,7 +252,7 @@ Devise.setup do |config|
 
 
   config.omniauth :facebook, ENV["FACEBOOK_APP_ID"], ENV["FACEBOOK_APP_SECRET"],
-                  callback_url: ENV["CALLBACK_URL"] #OAuth v2.0.1 callback url issue
+                  scope: 'user_events,rsvp_event'
 
 
   # ==> Warden configuration
