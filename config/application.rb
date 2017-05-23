@@ -13,5 +13,7 @@ module AdvocacyCommons
     # -- all .rb files in that directory are automatically loaded.
     config.eager_load_paths << Rails.root.join('app', 'graph', 'types')
     config.eager_load_paths << Rails.root.join('app', 'graph', 'fields')
+
+    config.autoload_paths << "#{Rails.root}/lib"
   end
 end

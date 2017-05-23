@@ -140,6 +140,8 @@ GEM
     hashdiff (0.3.2)
     hashie (3.5.5)
     hirb (0.7.3)
+    httparty (0.15.5)
+      multi_xml (>= 0.5.2)
     i18n (0.7.0)
     jbuilder (2.6.1)
       activesupport (>= 3.0.0, < 5.1)
@@ -322,6 +324,7 @@ DEPENDENCIES
   graphql
   graphql-rails-resolver
   hirb
+  httparty
   inherited_resources!
   jbuilder (~> 2.5)
   jquery-rails
