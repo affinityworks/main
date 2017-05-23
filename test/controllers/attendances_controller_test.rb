@@ -117,6 +117,8 @@ class AttendancesControllerTest < ActionDispatch::IntegrationTest
     assert_equal new_attendee.primary_personal_address.address_lines, ['123 Some Street']
     assert_equal new_attendee.primary_personal_address.locality, 'Some locality'
     assert new_attendee.primary_personal_address.primary
+    assert_not new_attendee.synced
+    assert_not new_attendee.attendances.last.synced
   end
 
   def set_attendance_status(event_id, attendance_id, status)
