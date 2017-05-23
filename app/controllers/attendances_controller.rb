@@ -84,7 +84,7 @@ class AttendancesController < ApplicationController
     event = Event.find(params[:event_id])
 
     person = Person.by_email(new_attendance_params['primary_email_address']).first ||
-      Person.new(new_attendance_params.merge(synced: false))
+    Person.new(new_attendance_params.merge(synced: false))
 
     person.memberships.new(group_id: current_group.id)
     person.attendances.new(event_id: event.id, synced: false)
