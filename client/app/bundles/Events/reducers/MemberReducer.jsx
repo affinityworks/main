@@ -1,7 +1,6 @@
 import { FETCH_MEMBER } from '../actions/types';
 
 const MemberReducer = (state = {}, action) => {
-  console.log('action', action);
   switch (action.type) {
   case FETCH_MEMBER:
     return action.payload.data.data;

@@ -16,7 +16,6 @@ class ApplicationController < ActionController::Base
     render_not_found unless current_person.admin?
   end
 
-
   def after_sign_in_path_for(resource)
     if session[:redirect_uri]
       session[:redirect_uri]
@@ -50,5 +49,9 @@ class ApplicationController < ActionController::Base
 
   def current_ability
     @current_ability ||= Ability.new(current_user, current_group)
+  end
+
+  def json_request?
+    request.format.json?
   end
 end

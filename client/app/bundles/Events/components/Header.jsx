@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 class Header extends Component {
   render() {
     const { currentUser, currentGroup } = this.props;
-    console.log(currentUser)
+
     return(
       <div className='page-header'>
         <div className="row">

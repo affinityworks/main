@@ -29,12 +29,28 @@ class Person < ApplicationRecord
 
   attr_accessor :attended_events_count #NOTE ROAR purpose
 
+  scope :by_email, -> (email) do
+    includes(:email_addresses).where(email_addresses: { address: email })
+  end
+
   def name
     [ given_name, family_name ].compact.join(' ')
   end
 
   def primary_email_address
     email_addresses.detect(&:primary?)&.address
+  end
+
+  def primary_email_address=(email)
+    email_addresses.new(address: email, primary: true)
+  end
+
+  def primary_personal_address
+    personal_addresses.detect(&:primary?)
+  end
+
+  def primary_personal_address=(attributes)
+    personal_addresses.new(attributes.merge(primary: true))
   end
 
   def email
@@ -69,6 +85,10 @@ class Person < ApplicationRecord
 
   def primary_phone_number
     phone_numbers.detect(&:primary?)&.number
+  end
+
+  def primary_phone_number=(number)
+    phone_numbers.new(number: number, primary: true)
   end
 
   def attended_group_events(group)

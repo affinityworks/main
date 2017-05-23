@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 import EventsReducer from './EventsReducer';
 import EventReducer from './EventReducer';
 import AttendancesReducer from './AttendancesReducer';
+import AttendanceFormReducer from './AttendanceFormReducer';
 import GroupsReducer from './GroupsReducer';
 import GroupReducer from './GroupReducer';
 import MembersReducer from './MembersReducer';
@@ -19,6 +20,7 @@ export default combineReducers({
   members: MembersReducer,
   member: MemberReducer,
   attendances: AttendancesReducer,
+  newAttendance: AttendanceFormReducer,
   currentGroup: CurrentGroupReducer,
   currentUser: CurrentUserReducer
 });

@@ -4,6 +4,7 @@ import routes from '../routes/routes';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import ReduxPromise from 'redux-promise';
+import thunk from 'redux-thunk';
 
 import reducers from '../reducers/';
 import history from '../history';
@@ -17,7 +18,7 @@ class App extends Component {
 
     const storeWithMiddleware = createStore(reducers, {
       currentUser, currentGroup
-    }, applyMiddleware(ReduxPromise));
+    }, applyMiddleware(ReduxPromise, thunk));
 
     return (
       <Provider store={storeWithMiddleware}>
