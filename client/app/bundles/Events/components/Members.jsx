@@ -6,10 +6,17 @@ import { connect } from 'react-redux';
 
 import history from '../history';
 import Member from './Member';
+import MembersFilter from './MembersFilter';
 import Pagination from './Pagination';
 import { fetchMembers } from '../actions'
 
 class Members extends Component {
+  constructor(props, _railsContext) {
+    super(props);
+
+    this.filterMembers = this.filterMembers.bind(this);
+  }
+
   componentWillMount() {
     this.props.fetchMembers(this.props.location.search);
   }
@@ -17,6 +24,10 @@ class Members extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.location.search !== nextProps.location.search)
       this.props.fetchMembers(nextProps.location.search);
+  }
+
+  filterMembers(filter) {
+    this.props.history.push(`?${queryString.stringify({ filter })}`);
   }
 
   renderPagination() {
@@ -30,9 +41,19 @@ class Members extends Component {
   }
 
   render() {
+    const { search } = this.props.location;
+    const { filter, direction } = queryString.parse(search);
+
     return (
       <div>
+        <br />
         <Nav activeTab='members'/>
+        <div className='row'>
+          <div className='col-6'>
+            <MembersFilter onSearchSubmit={this.filterMembers} filter={filter} />
+          </div>
+        </div>
+
         <table className='table'>
           <thead>
             <tr>

@@ -31,6 +31,15 @@ class MembersController < ApplicationController
   def set_members
     @members = current_group.members.page(params[:page])
 
-    @members = @members.by_email(params[:email]) if params[:email]
+    if params[:filter] then
+
+      @members = @members.where('given_name ilike ? or family_name ilike ?', "%#{params[:filter]}%","%#{params[:filter]}%")
+      #members = Member.arel_table
+      #wildcard_search = "%#{params[:filter]}%"
+
+      #@members = @members.where('given_name ilike :search or family_name ilike :search', :search wildcard_search)
+    elsif params[:email]
+      @members = @members.by_email(params[:email])
+    end
   end
 end

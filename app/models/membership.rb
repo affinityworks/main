@@ -8,4 +8,5 @@ class Membership < ApplicationRecord
 
   scope :organizer, -> () { where(role: 'organizer') }
   scope :member, -> () { where(role: 'member') }
+
 end

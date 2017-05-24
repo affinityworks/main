@@ -4,7 +4,7 @@ class Event < ApplicationRecord
   attr_accessor :attended_count
   attr_accessor :rsvp_count
 
-  UPCOMING_EVENTS_DAYS = 30
+  UPCOMING_EVENTS_DAYS = 90
 
   scope :upcoming, ->() { where('start_date BETWEEN ? AND ?', Date.today, Date.today + UPCOMING_EVENTS_DAYS.days) }
 
