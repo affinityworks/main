@@ -17,4 +17,11 @@ class EmailAddressTest < ActiveSupport::TestCase
     hashed_address = Digest::SHA256.base64digest email_address.address
     assert_equal hashed_address, person.identifier_id('affinity_id')
   end
+
+  test 'with duplicated address' do
+    address = EmailAddress.create(address: 'test@test.com')
+    duplicated_address = EmailAddress.new(address: 'test@test.com')
+
+    assert_not duplicated_address.save
+  end
 end

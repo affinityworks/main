@@ -79,6 +79,28 @@ class AttendancesControllerTest < ActionDispatch::IntegrationTest
     assert_equal 1, new_attendee.attendances.count, 'creates a new attendance'
   end
 
+  test 'post #create when the membership already exist' do
+    event = events(:test)
+    current_user = people(:organizer)
+    sign_in current_user
+
+    membership = memberships(:member1)
+
+    memberships_count_before = Membership.count
+
+    post event_attendances_url(
+      event_id: event.id,
+      params: {
+        attendance: {
+          primary_email_address: membership.person.primary_email_address
+        }
+      }
+    ), as: :json
+
+    assert_response :success
+    assert_equal memberships_count_before, Membership.count
+  end
+
   test 'post #create when the attendee is a new user' do
     event = events(:test)
     current_user = people(:organizer)
