@@ -32,7 +32,7 @@ class MembersController < ApplicationController
     @members = current_group.members.page(params[:page])
 
     if params[:filter] then
-
+      #in the future we might want ot search all fields like address, town, city, state... etc.... 
       @members = @members.where('given_name ilike ? or family_name ilike ?', "%#{params[:filter]}%","%#{params[:filter]}%")
       #members = Member.arel_table
       #wildcard_search = "%#{params[:filter]}%"

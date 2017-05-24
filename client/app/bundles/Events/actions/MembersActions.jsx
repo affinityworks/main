@@ -3,7 +3,8 @@ import axios from 'axios';
 import {
   FETCH_MEMBER,
   FETCH_MEMBERS,
-  LOOK_UP_MEMBER
+  LOOK_UP_MEMBER,
+  FETCH_MEMBERS_EVENTS
 } from './types';
 
 export const fetchMembers = (queryString = '') => {
@@ -29,6 +30,15 @@ export const lookUpMember = (email = '') => {
 
   return {
     type: LOOK_UP_MEMBER,
+    payload: request
+  };
+};
+
+export const fetchMembersEvents = (id) => {
+  const request = axios.get(`/members/${id}/events.json`);
+
+  return {
+    type: FETCH_MEMBERS_EVENTS,
     payload: request
   };
 };
