@@ -54,8 +54,8 @@ class AttendancesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'post #create when the attendee is already in the database' do
-    event = events(:one)
-    current_user = people(:one)
+    event = events(:test)
+    current_user = people(:organizer)
     sign_in current_user
 
     new_attendee = people(:two)
@@ -80,8 +80,8 @@ class AttendancesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'post #create when the attendee is a new user' do
-    event = events(:one)
-    current_user = people(:one)
+    event = events(:test)
+    current_user = people(:organizer)
     sign_in current_user
 
     email = 'test@test.com'
