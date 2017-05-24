@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170523144045) do
+ActiveRecord::Schema.define(version: 20170524141532) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -207,6 +207,7 @@ ActiveRecord::Schema.define(version: 20170523144045) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.index ["address", "person_id"], name: "index_email_addresses_on_address_and_person_id", unique: true, using: :btree
+    t.index ["address"], name: "index_email_addresses_on_address", unique: true, using: :btree
     t.index ["person_id"], name: "index_email_addresses_on_person_id", using: :btree
   end
 
@@ -365,6 +366,7 @@ ActiveRecord::Schema.define(version: 20170523144045) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.index ["group_id"], name: "index_memberships_on_group_id", using: :btree
+    t.index ["person_id", "group_id"], name: "index_memberships_on_person_id_and_group_id", unique: true, using: :btree
     t.index ["person_id"], name: "index_memberships_on_person_id", using: :btree
   end
 

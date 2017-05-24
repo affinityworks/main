@@ -14,6 +14,16 @@ class MembershipTest < ActiveSupport::TestCase
     #assert_kind_of Person, one.group.members.first
   end
 
+  test 'when duplicated membership' do
+    person = people(:one)
+    group = groups(:one)
+
+    membership = Membership.create(person: person, group: group)
+    duplicated_membership = Membership.new(person: person, group: group)
+
+    assert_not duplicated_membership.save
+  end
+
   test '#organizer' do
     organizers = Membership.where(role: 'organizer')
     assert_equal Membership.organizer, organizers
