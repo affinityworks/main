@@ -106,4 +106,47 @@ class PersonTest < ActiveSupport::TestCase
     person.reload
     assert person.synced
   end
+
+  test 'remove dependencies on destroy' do
+    person = people(:member1)
+
+    #things we do want deleted
+    attendances = person.attendances
+    memberships = person.memberships
+    email_addresses = person.email_addresses
+    phone_numbers = person.phone_numbers
+    donations = person.donations
+    submissions = person.submissions
+    personal_addresses = person.personal_addresses
+
+    #things we dont want deleted
+    groups = person.groups
+    employer_address = person.employer_address
+    events = person.events
+
+    assert person.destroy
+
+    attendances.each {|attendance|
+      assert_raise(ActiveRecord::RecordNotFound) { attendance.reload }}
+    memberships.each {|membership|
+      assert_raise(ActiveRecord::RecordNotFound) { memberships.reload }}
+    email_addresses.each {|email_address|
+      assert_raise(ActiveRecord::RecordNotFound) { email_address.reload }}
+    phone_numbers.each {|phone_number|
+      assert_raise(ActiveRecord::RecordNotFound) { phone_number.reload }}
+    donations.each {|donations|
+      assert_raise(ActiveRecord::RecordNotFound) { donations.reload }}
+    submissions.each {|submission|
+      assert_raise(ActiveRecord::RecordNotFound) { submission.reload }}
+    personal_addresses.each {|personal_address|
+      assert_raise(ActiveRecord::RecordNotFound) { personal_addresses.reload }}
+
+    groups.each {|group| assert_nothing_raised { group.reload }}
+    events.each {|event| assert_nothing_raised { event.reload }}
+    assert_nothing_raised { employer_address.reload } if employer_address 
+
+  end
+
+
+
 end

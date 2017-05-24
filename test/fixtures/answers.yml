@@ -15,3 +15,11 @@ two:
   responses_id: 2
   question_id: 2
   canvass_id: 2
+
+member1:
+  id: 3
+  action_date: 2016-12-21 23:45:24
+  value: MyString
+  responses_id: 3
+  question_id: 3
+  canvass_id: 3
