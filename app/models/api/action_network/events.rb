@@ -32,12 +32,8 @@ module Api::ActionNetwork::Events
   end
 
   def self.create_single_resource(event)
-    address = event.organizer&.primary_email_address
-
-    if address && email = EmailAddress.where(address: address).first
-      #NOTE: Roar was creating duplicated people as organizer in some cases.
-      event.organizer = email.person
-    end
+    assign_person_to_event(event, :organizer)
+    assign_person_to_event(event, :creator)
 
     event.tap(&:save!)
   rescue StandardError => e
@@ -49,8 +45,16 @@ module Api::ActionNetwork::Events
     new_events.each do |event|
       event.groups.push(group)
       event.organizer.groups.push(group)   if event.organizer
-      event.organizer.groups.push(group)   if event.creator
+      event.creator.groups.push(group)      if event.creator
       event.modified_by.groups.push(group) if event.modified_by
+    end
+  end
+
+  def self.assign_person_to_event(event, person_relation)
+    address = event.send(person_relation)&.primary_email_address
+
+    if address && email = EmailAddress.where(address: address).first
+      event.send("#{person_relation}=",  email.person)
     end
   end
 end
