@@ -20,7 +20,6 @@ export default class Event extends Component {
       const { name } = organizer.data.attributes;
 
       return <Link to={`/members/${organizer.data['id']}`}>{name}</Link>
-      //<a href={`mailto:${primaryEmailAddress}`}> {name} </a>
     }
   }
 

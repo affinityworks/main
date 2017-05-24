@@ -10,6 +10,28 @@ const Member = (props) => {
       return <a href={`mailto:'${email}'`} className='fa fa-envelope-o'/>
   }
 
+  const localityAndRegion = () => {
+    const address = props.member['primary-personal-address']
+    if (address) {
+      if (address['locality'] && address['region']) {
+        return <span>{address['locality']}, {address['region']}</span>
+      }
+      else if (address['locality']) {
+        return <span>{address['locality']}</span>
+      }
+      else if (address['region']){
+        return <span>{address['region']}</span>
+      }
+      else if (address['postal_code']){
+        return <span>{address['region']}</span>
+      }
+    }
+    return <span></span>
+    //const region = props.member['primary-personal-address']['region']
+    //if (locality && region)
+    //  return {locality}
+  }
+
   return(
     <tr>
       <td>
@@ -18,7 +40,7 @@ const Member = (props) => {
         </Link>
       </td>
       <td>{props.member['primary-phone-number']}</td>
-      <td>{props.member['primary-email-address']}</td>
+      <td>{ localityAndRegion() }</td>
       <td>{props.member['attended-events-count']}</td>
       <td>{ emailAddressLink() }</td>
     </tr>

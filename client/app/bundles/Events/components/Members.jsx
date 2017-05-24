@@ -38,7 +38,7 @@ class Members extends Component {
             <tr>
               <th>Name</th>
               <th>Phone</th>
-              <th>Email</th>
+              <th>Location</th>
               <th>Events</th>
               <th></th>
             </tr>
