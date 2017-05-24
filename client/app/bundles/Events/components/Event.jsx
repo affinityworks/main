@@ -19,7 +19,8 @@ export default class Event extends Component {
       const primaryEmailAddress = organizer.data.attributes['primary-email-address'];
       const { name } = organizer.data.attributes;
 
-      return <a href={`mailto:${primaryEmailAddress}`}> {name} </a>
+      return <Link to={`/members/${organizer.data['id']}`}>{name}</Link>
+      //<a href={`mailto:${primaryEmailAddress}`}> {name} </a>
     }
   }
 
