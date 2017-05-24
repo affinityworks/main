@@ -1,9 +1,10 @@
 require 'roar/client'
 require 'roar/json/hal'
 
-class Api::ActionNetwork::ExportAttendanceRepresenter < Roar::Decorator
+class Api::ActionNetwork::Export::AttendanceRepresenter < Roar::Decorator
   include Roar::Client
   include Roar::JSON::HAL
+  extend  Api::Resources::Identified
 
   link 'osdi:person' do
     person_id = represented.person.identifier_id('action_network')
