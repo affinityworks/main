@@ -8,7 +8,7 @@ module Api::ActionNetwork::Attendance
   end
 
   def self.representer_class
-    Api::ActionNetwork::ExportAttendanceRepresenter
+    Api::ActionNetwork::Export::AttendanceRepresenter
   end
 
   def self.resource

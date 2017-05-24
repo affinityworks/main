@@ -88,6 +88,8 @@ class AttendancesController < ApplicationController
 
     person.memberships.find_or_initialize_by(group_id: current_group.id)
     person.attendances.find_or_initialize_by(event_id: event.id) do |attendance|
+      attendance.invited_by_id ||= current_user.id
+      attendance.status ||= 'tentative'
       attendance.synced = false
     end
 
