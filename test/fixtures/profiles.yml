@@ -13,3 +13,10 @@ two:
   person_id: 2
   url: MyString
   handle: MyString
+
+member1:
+  id: 3
+  provider: MyString
+  person_id: 3
+  url: MyString
+  handle: MyString

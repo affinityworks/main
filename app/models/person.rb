@@ -15,16 +15,15 @@ class Person < ApplicationRecord
 
   has_one :employer_address, class_name: 'EmployerAddress'
 
-  has_many :email_addresses
+  has_many :email_addresses, dependent: :destroy
   has_many :personal_addresses, class_name: 'PersonalAddress'
-  has_many :phone_numbers
-  has_many :profiles
-  has_many :donations
-  has_many :submissions
-  has_many :attendances
+  has_many :phone_numbers, dependent: :destroy
+  has_many :profiles, dependent: :destroy
+  has_many :donations, dependent: :destroy
+  has_many :submissions, dependent: :destroy
+  has_many :attendances, dependent: :destroy
   has_many :events, through: :attendances
-  has_many :answers
-  has_many :memberships
+  has_many :memberships, dependent: :destroy
   has_many :groups, through: :memberships
 
   attr_accessor :attended_events_count #NOTE ROAR purpose
