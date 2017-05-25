@@ -58,10 +58,10 @@ class EventTest < ActiveSupport::TestCase
   end
 
   test '.upcoming' do
-    ended_event = Event.create(start_date: 2.days.ago)
-    upcoming_event_1 = Event.create(start_date: Date.today)
-    upcoming_event_2 = Event.create(start_date: Date.today + 2.days)
-    future_event = Event.create(start_date: Date.today + (Event::UPCOMING_EVENTS_DAYS + 1).days)
+    ended_event = Event.create(status: 'confirmed', start_date: 2.days.ago)
+    upcoming_event_1 = Event.create(status: 'confirmed', start_date: Date.today)
+    upcoming_event_2 = Event.create(status: 'confirmed', start_date: Date.today + 2.days)
+    future_event = Event.create(status: 'confirmed', start_date: Date.today + (Event::UPCOMING_EVENTS_DAYS + 1).days)
 
     assert_equal Event.upcoming, [upcoming_event_1, upcoming_event_2]
   end

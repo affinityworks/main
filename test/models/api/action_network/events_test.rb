@@ -15,6 +15,7 @@ class Api::ActionNetwork::EventsTest < ActiveSupport::TestCase
     travel_to Time.zone.local(2001) do
       group.events.create!(
         title: 'TBD',
+        status: 'confirmed',
         identifiers: ['action_network:a3c724db-2799-49a6-970a-7c3c0844645d']
       )
     end
@@ -38,7 +39,7 @@ class Api::ActionNetwork::EventsTest < ActiveSupport::TestCase
     assert new_event.location.address_lines.present?
     assert new_event.location.locality.present?
 
-    # it should pull in from link but it doesn't so this doesn't work. 
+    # it should pull in from link but it doesn't so this doesn't work.
     #assert group.events.find_by(name: 'March 14th Rally').creator
     #assert group.events.find_by(name: 'March 14th Rally').modified_by
 
