@@ -7,14 +7,30 @@ import Input from '../components/Input';
 
 import {
   lookUpMember, setAttendanceAttribute,
-  cleanAttendanceAlerts, resetAttendanceForm
+  createAttendance, resetAttendanceForm
 } from '../actions';
 
 class AttendanceForm extends Component {
   state = { showAddressForm: false };
 
-  componentWillUnmount() {
-    this.props.cleanAttendanceAlerts();
+  handleSubmit(e) {
+    e.preventDefault();
+
+    const { newAttendance, createAttendance, match } = this.props;
+
+    const attributes = { //NOTE: ROAR MAKES THIS OVER COMPLICATED
+      family_name: newAttendance['family-name'],
+      given_name: newAttendance['given-name'],
+      primary_email_address: newAttendance['primary-email-address'],
+      primary_phone_number: newAttendance['primary-phone-number'],
+      primary_personal_address: {
+        address_lines: [newAttendance.address_lines],
+        postal_code: newAttendance.postal_code,
+        locality: newAttendance.locality
+      }
+    }
+
+    createAttendance(match.params.id, attributes);
   }
 
   renderAddressForm() {
@@ -96,7 +112,7 @@ class AttendanceForm extends Component {
     const { lookUpMember, newAttendance, setAttendanceAttribute } = this.props;
 
     return (
-      <form onSubmit={this.props.onSubmit}>
+      <form onSubmit={this.handleSubmit.bind(this)}>
         {this.renderAlert()}
 
         <FormGroup row>
@@ -153,7 +169,7 @@ export default connect(
   mapStateToProps, {
     lookUpMember,
     setAttendanceAttribute,
-    cleanAttendanceAlerts,
+    createAttendance,
     resetAttendanceForm
   }
 )(AttendanceForm);

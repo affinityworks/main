@@ -62,7 +62,7 @@ class Attendances extends Component {
           {this.renderPagination()}
           <br />
 
-          <AttendanceForm />
+          <AttendanceForm match={this.props.match} />
         </div>
       </div>
     );
