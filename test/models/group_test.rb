@@ -79,6 +79,9 @@ class GroupTest < ActiveSupport::TestCase
 
     group.events = [ended_event, upcoming_event_1, upcoming_event_2, future_event]
 
-    assert_equal group.upcoming_events, [upcoming_event_1, upcoming_event_2]
+    assert_includes group.upcoming_events, upcoming_event_1
+    assert_includes group.upcoming_events, upcoming_event_2
+    refute_includes group.upcoming_events, other_group_event
+    refute_includes group.upcoming_events, future_event
   end
 end

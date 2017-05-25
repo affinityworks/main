@@ -10,8 +10,9 @@ class MembersControllerTest < ActionDispatch::IntegrationTest
     get members_url, as: :json
     assert_response :success
     json = JSON.parse(response.body)
-    assert_equal 4, json['members']['data'].count
-    assert_equal person.groups.first.members.first.id, json['members']['data'].first['id'].to_i
+    assert_equal person.groups.first.members.count, json['members']['data'].count
+    response_members_ids = json['members']['data'].map { |m| m['id'].to_i }
+    assert_includes response_members_ids, person.groups.first.members.first.id
   end
 
   test 'members shouldnt be able to see list' do
