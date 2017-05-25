@@ -19,21 +19,17 @@ class AttendanceForm extends Component {
 
       return(
         <div>
-          OPTIONAL
-          <FormGroup>
+          <FormGroup row>
             <Input
               label='Street Address:'
-              classes='col-md-6'
+              classes='col-md-3'
               value={newAttendance.address_lines}
               onChange={(e) => setAttendanceAttribute('address_lines', e.target.value)}
               disabled={newAttendance.disabled}
             />
-          </FormGroup>
-
-          <FormGroup row>
             <Input
               label='City:'
-              classes='col-md-4'
+              classes='col-md-2'
               value={newAttendance['locality']}
               onChange={(e) => setAttendanceAttribute('locality', e.target.value)}
               disabled={newAttendance.disabled} />
@@ -43,6 +39,7 @@ class AttendanceForm extends Component {
               value={newAttendance.postal_code}
               onChange={(e) => setAttendanceAttribute('postal_code', e.target.value)}
               disabled={newAttendance.disabled} />
+              {this.renderButtons()}
           </FormGroup>
         </div>
       );
@@ -51,7 +48,7 @@ class AttendanceForm extends Component {
     return (
       <div>
         <a href='#' onClick={() => this.setState({ showAddressForm: true })}>
-          Click here to add optional street address
+          Enter address...
         </a>
       </div>
     );
@@ -67,6 +64,21 @@ class AttendanceForm extends Component {
       return <div className="alert alert-success">{successAlert} </div>
   }
 
+  renderButtons() {
+    const col = this.state.showAddressForm ? '5' : '3';
+    return(
+      <div className={`col-${col} text-right`} style={{ marginTop: 'auto' }}>
+        <button className='btn btn-danger' style={{ marginRight: '10px' }}>
+          Cancel
+        </button>
+
+        <button type='submit' className='btn btn-success'>
+          Save
+        </button>
+      </div>
+    )
+  }
+
   render() {
     const { lookUpMember, newAttendance, setAttendanceAttribute } = this.props;
 
@@ -74,38 +86,41 @@ class AttendanceForm extends Component {
       <form onSubmit={this.props.onSubmit}>
         {this.renderAlert()}
 
-        <FormGroup>
-          <Input
-            label='Email'
-            classes='col-md-5'
-            onBlur={(e) => lookUpMember(e.target.value)}
-            onChange={(e) => setAttendanceAttribute('primary-email-address', e.target.value)}
-            value={newAttendance['primary-email-address']} />
-        </FormGroup>
-
         <FormGroup row>
           <Input
+            label='Email'
+            classes='col-md-3'
+            onBlur={(e) => lookUpMember(e.target.value)}
+            onChange={(e) => setAttendanceAttribute('primary-email-address', e.target.value)}
+            value={newAttendance['primary-email-address']}
+          />
+
+          <Input
             label='First Name:'
-            classes='col-md-4'
+            classes='col-md-2'
             onChange={(e) => setAttendanceAttribute('given-name', e.target.value)}
             value={newAttendance['given-name']}
-            disabled={newAttendance.disabled} />
+            disabled={newAttendance.disabled}
+          />
 
           <Input
             label='Last Name:'
-            classes='col-md-4'
+            classes='col-md-2'
             onChange={(e) => setAttendanceAttribute('family-name', e.target.value)}
             value={newAttendance['family-name']}
-            disabled={newAttendance.disabled} />
-        </FormGroup>
+            disabled={newAttendance.disabled}
+          />
 
-        <FormGroup>
           <Input
             label='Phone:'
-            classes='col-md-4'
+            classes='col-md-2'
             onChange={(e) => setAttendanceAttribute('primary-phone-number', e.target.value)}
             value={newAttendance['primary-phone-number']}
-            disabled={newAttendance.disabled} />
+            disabled={newAttendance.disabled}
+          />
+
+          {!this.state.showAddressForm && this.renderButtons()}
+
         </FormGroup>
 
         {this.renderAddressForm()}
@@ -113,7 +128,6 @@ class AttendanceForm extends Component {
         <br />
         <br />
 
-        {this.props.children}
       </form>
     );
   }

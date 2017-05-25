@@ -6,14 +6,12 @@ import EventDetail from '../components/EventDetail';
 import Attendances from '../components/Attendances';
 import Groups from '../components/Groups';
 import Members from '../components/Members';
-import NewAttendance from '../containers/NewAttendance';
 import GroupDetail from '../components/GroupDetail';
 import Profile from '../components/Profile';
 import MemberDetail from '../components/MemberDetail';
 
 export default (
   <Switch>
-    <Route path='/events/:id/attendances/new' component={NewAttendance} />
     <Route path='/events/:id/attendances' component={Attendances} />
 
     <Route path='/events/:id' component={EventDetail} />

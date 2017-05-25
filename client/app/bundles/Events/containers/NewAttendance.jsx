@@ -50,19 +50,7 @@ class NewAttendance extends Component {
         <br/>
 
         <AttendanceForm onSubmit={this.handleSubmit.bind(this)}>
-          <div className='row'>
-            <div className='col-1'>
-              <Link to={`/events/${eventId}/attendances`} className='btn btn-primary'>
-                Back
-              </Link>
-            </div>
-            <div className='col-1'/>
-            <div className='col-2'>
-              <button type='submit' className='btn btn-success'>
-                Done
-              </button>
-            </div>
-          </div>
+          
         </AttendanceForm>
       </div>
     );
