@@ -14,6 +14,7 @@ module AdvocacyCommons
     config.eager_load_paths << Rails.root.join('app', 'graph', 'types')
     config.eager_load_paths << Rails.root.join('app', 'graph', 'fields')
 
-    config.autoload_paths << "#{Rails.root}/lib"
+    config.eager_load_paths << Rails.root.join('lib')
+
   end
 end

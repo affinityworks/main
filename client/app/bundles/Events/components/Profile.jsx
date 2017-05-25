@@ -7,21 +7,6 @@ class Profile extends Component {
     super(props);
   }
 
-  linkWithFacebook() {
-    if (!this.props.currentUser.linked_with_facebook)
-      return (
-        <a href='/admin/auth/facebook' className='btn btn-primary'>
-          Connect with Facebook
-        </a>
-      )
-    else
-      return (
-        <a href='#' className='btn btn-danger'>
-          Disconnect from Facebook
-        </a>
-      )
-  }
-
   render() {
     const { currentUser, currentGroup } = this.props;
     return (
@@ -29,9 +14,6 @@ class Profile extends Component {
         <div className='row'>
           <div className='col-md-6'>
             <h1>Welcome {currentUser.given_name} {currentUser.family_name}</h1>
-          </div>
-          <div className='col-md-3 offset-md-3 text-right'>
-            { this.linkWithFacebook(currentUser) }
           </div>
         </div>
         <br/>

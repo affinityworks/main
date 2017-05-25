@@ -7,6 +7,7 @@ class Event < ApplicationRecord
   UPCOMING_EVENTS_DAYS = 90
 
   scope :upcoming, ->() { where('start_date BETWEEN ? AND ?', Date.today, Date.today + UPCOMING_EVENTS_DAYS.days) }
+  scope :start, ->(start) { where("DATE(start_date) = ?", start) }
 
   has_many :ticket_levels
 
