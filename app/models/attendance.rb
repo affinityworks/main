@@ -15,6 +15,10 @@ class Attendance < ApplicationRecord
   belongs_to :person
   belongs_to :event
 
+  has_many :email_addresses, through: :person
+  has_many :phone_numbers, through: :person
+  has_many :personal_addresses, through: :person
+
   def export(group)
     Api::ActionNetwork::Attendance.export!(self, group)
     self.update_attribute(:synced, true)

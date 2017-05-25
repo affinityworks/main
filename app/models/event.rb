@@ -15,6 +15,7 @@ class Event < ApplicationRecord
   belongs_to :organizer, class_name: 'Person'
   belongs_to :modified_by, class_name: 'Person'
   has_many :attendances
+  has_many :attendees, through: :attendances, source: :person
   has_many :reminders
   has_and_belongs_to_many :groups
 
