@@ -58,6 +58,11 @@ Rails.application.routes.draw do
   #root to: "_site/index.html"
 
   resources :events do
+    collection do
+      resources :imports, only: [:new] do
+        get :find, on: :collection
+      end
+    end
     resources :attendances
   end
   resources :groups

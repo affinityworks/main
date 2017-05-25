@@ -42,6 +42,14 @@ class Events extends Component {
     }
   }
 
+  linkWithFacebook() {
+    return (
+      <a href='/admin/auth/facebook' className='btn btn-facebook'>
+        Import Event From Facebook
+      </a>
+    )
+  }
+
   render() {
     const { search } = this.props.location;
     const { filter, direction } = queryString.parse(search);
@@ -51,12 +59,15 @@ class Events extends Component {
         <Nav activeTab='events'/>
         <div className='row'>
 
-          <div className='col-6'>
+          <div className='col-1'>
             <SortToggle search={search} title='Date' currentDirection={direction} />
           </div>
 
-          <div className='col-6'>
+          <div className='col-5'>
             <EventsFilter onSearchSubmit={this.filterEvents} filter={filter} />
+          </div>
+          <div className='col-3 offset-3 text-right'>
+            { this.linkWithFacebook() }
           </div>
         </div>
         <br />
