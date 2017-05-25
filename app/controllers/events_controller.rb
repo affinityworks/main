@@ -33,6 +33,9 @@ class EventsController < ApplicationController
   def set_events
     return [] unless current_group
 
+    #this is a bit clunky and could be cleaned up. --rabble
+    return @events = Person.find(params[:member_id]).events.page(params[:page]) if params[:member_id]
+
     @events = current_group.events.includes(:location)
     if params[:filter] then
       @events = @events.where('title ilike ?',"%#{params[:filter]}%")

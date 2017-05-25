@@ -1,6 +1,8 @@
 class Group < ApplicationRecord
   has_many :memberships
   has_many :members, through: :memberships, source: :person
+
+  #this doesn't seem right...
   has_many :attendances, through: :members
 
   has_and_belongs_to_many :events
