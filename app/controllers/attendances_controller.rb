@@ -75,9 +75,9 @@ class AttendancesController < ApplicationController
   end
 
   def find_attendances
-    @attendances = find_event.attendances.includes(
-      person: [:email_addresses, :phone_numbers, :personal_addresses]
-    ).page(params[:page])
+    @attendances = find_event.attendances.joins(:person).includes(
+      :email_addresses, :phone_numbers, :personal_addresses
+    ).order('LOWER("people"."given_name") asc').page(params[:page])
   end
 
   def new_attendance

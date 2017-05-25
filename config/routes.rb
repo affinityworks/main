@@ -59,7 +59,10 @@ Rails.application.routes.draw do
   end
   resources :groups
   resources :profile, only: [:index]
-  resources :members
+  resources :members do
+    resources :events
+  end
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   namespace :api, defaults: { format: 'json' } do
