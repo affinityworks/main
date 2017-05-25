@@ -4,7 +4,11 @@ import { connect } from 'react-redux';
 
 import FormGroup from '../components/FormGroup';
 import Input from '../components/Input';
-import { lookUpMember, setAttendanceAttribute, cleanAttendanceAlerts } from '../actions';
+
+import {
+  lookUpMember, setAttendanceAttribute,
+  cleanAttendanceAlerts, resetAttendanceForm
+} from '../actions';
 
 class AttendanceForm extends Component {
   state = { showAddressForm: false };
@@ -27,19 +31,24 @@ class AttendanceForm extends Component {
               onChange={(e) => setAttendanceAttribute('address_lines', e.target.value)}
               disabled={newAttendance.disabled}
             />
+
             <Input
               label='City:'
               classes='col-md-2'
               value={newAttendance['locality']}
               onChange={(e) => setAttendanceAttribute('locality', e.target.value)}
-              disabled={newAttendance.disabled} />
+              disabled={newAttendance.disabled}
+            />
+
             <Input
               label='Zipcode:'
               classes='col-md-2'
               value={newAttendance.postal_code}
               onChange={(e) => setAttendanceAttribute('postal_code', e.target.value)}
-              disabled={newAttendance.disabled} />
-              {this.renderButtons()}
+              disabled={newAttendance.disabled}
+            />
+
+            {this.renderButtons()}
           </FormGroup>
         </div>
       );
@@ -68,7 +77,11 @@ class AttendanceForm extends Component {
     const col = this.state.showAddressForm ? '5' : '3';
     return(
       <div className={`col-${col} text-right`} style={{ marginTop: 'auto' }}>
-        <button className='btn btn-danger' style={{ marginRight: '10px' }}>
+        <button
+          className='btn btn-danger'
+          type='button'
+          style={{ marginRight: '10px' }}
+          onClick={() => (this.props.resetAttendanceForm() & this.setState({ showAddressForm: false }))}>
           Cancel
         </button>
 
@@ -126,7 +139,6 @@ class AttendanceForm extends Component {
         {this.renderAddressForm()}
 
         <br />
-        <br />
 
       </form>
     );
@@ -138,5 +150,10 @@ const mapStateToProps = ({ newAttendance }) => {
 };
 
 export default connect(
-  mapStateToProps, { lookUpMember, setAttendanceAttribute, cleanAttendanceAlerts }
+  mapStateToProps, {
+    lookUpMember,
+    setAttendanceAttribute,
+    cleanAttendanceAlerts,
+    resetAttendanceForm
+  }
 )(AttendanceForm);

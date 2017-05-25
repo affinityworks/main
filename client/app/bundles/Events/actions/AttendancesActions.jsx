@@ -6,7 +6,8 @@ import {
   SET_ATTENDANCE_ATTRIBUTE,
   ATTENDANCE_CREATE_SUCCESS,
   ATTENDANCE_CREATE_FAIL,
-  CLEAN_ATTENDANCE_ALERTS
+  CLEAN_ATTENDANCE_ALERTS,
+  RESET_ATTENDANCE_FORM
 } from './types';
 
 export const fetchAttendances = (eventId, queryString = '') => {
@@ -48,4 +49,8 @@ export const createAttendance = (eventId, attributes) => {
 
 export const cleanAttendanceAlerts = () => {
   return { type: CLEAN_ATTENDANCE_ALERTS }
+}
+
+export const resetAttendanceForm = () => {
+  return { type: RESET_ATTENDANCE_FORM }
 }

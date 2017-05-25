@@ -3,7 +3,7 @@ import _ from 'lodash';
 import {
   LOOK_UP_MEMBER, SET_ATTENDANCE_ATTRIBUTE,
   ATTENDANCE_CREATE_FAIL, ATTENDANCE_CREATE_SUCCESS,
-  CLEAN_ATTENDANCE_ALERTS
+  CLEAN_ATTENDANCE_ALERTS, RESET_ATTENDANCE_FORM
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -55,6 +55,8 @@ export default (state = INITIAL_STATE, action) => {
     return state;
   case CLEAN_ATTENDANCE_ALERTS:
     return { ...state, errorAlert: '', successAlert: '' }
+  case RESET_ATTENDANCE_FORM:
+    return INITIAL_STATE;
   default:
     return state;
   }
