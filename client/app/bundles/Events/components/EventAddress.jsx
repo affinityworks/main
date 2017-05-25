@@ -1,9 +1,10 @@
 import React from 'react';
 
-const EventAddress = (props) => (
+const EventAddress = ({ location }) => (
   <div>
-    <div className='address-1'>{props.location.venue}</div>
-    <div className='state'>{props.location.locality} {props.location.region} {props.location.postal_code}</div>
+    <div> {location.address_lines && location.address_lines.join(' ')}</div>
+    <div className='address-1'>{location.venue}</div>
+    <div className='state'>{location.locality} {location.region} {location.postal_code}</div>
   </div>
 );
 
