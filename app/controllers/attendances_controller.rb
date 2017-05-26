@@ -48,11 +48,11 @@ class AttendancesController < ApplicationController
   end
 
   def create
-    attendee = new_attendance
+    attendance = new_attendance
     respond_to do |format|
       format.json do
-        if attendee.save
-          render json: JsonApi::AttendancesRepresenter.new(attendee.attendances.last).to_json
+        if attendance.save
+          render json: JsonApi::AttendancesRepresenter.new(attendance).to_json
         else
           render json: attendee.errors.full_messages, status: 422
         end
@@ -93,7 +93,7 @@ class AttendancesController < ApplicationController
       attendance.synced = false
     end
 
-    person
+    attendance
   end
 
   def new_attendance_params
