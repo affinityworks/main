@@ -32,13 +32,9 @@ module Api::ActionNetwork::Import
     client.get(uri: uri, as: 'application/json') do |request|
       request['OSDI-API-TOKEN'] = group.an_api_key
     end
-
-    if Person.any_identifier(resource.identifier('action_network')).exists?
-      update_single_resource(resource)
-    else
-      resource.groups.push(group)
-      create_single_resource(resource)
-    end
+    
+    yield(resource) if block_given?
+    resource
   rescue => e
     logger.error e.inspect
     retry if (retries += 1) < 3
@@ -61,18 +57,26 @@ module Api::ActionNetwork::Import
 
     return unless old_resource
 
+    merge_resources(old_resource, resource)
+  end
+
+  def merge_resources(old_resource, resource)
     attributes = resource.attributes
     attributes.delete_if { |_, v| v.nil? }
+
     old_resource.update_attributes! attributes
 
     old_resource
   end
 
   def create_single_resource(resource)
-    resource.tap(&:save!)
-  rescue StandardError => e
-    logger.error resource
-    raise e
+    begin
+      resource.tap(&:save!)
+    rescue Exception => e
+      logger.error resource
+      logger.error e
+      raise e
+    end
   end
 
   def create(new_resources)

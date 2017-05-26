@@ -19,7 +19,8 @@ class AttendancesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     json = JSON.parse(@response.body)
     assert_equal @event.attendances.count, json['attendances']['data'].size
-    assert_equal @event.attendances.first.id, json['attendances']['data'].first['id'].to_i
+    response_attendances_ids = json['attendances']['data'].map { |a| a['id'].to_i }
+    assert_includes response_attendances_ids, @event.attendances.first.id
   end
 
   test 'PUT #update' do

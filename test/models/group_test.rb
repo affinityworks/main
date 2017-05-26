@@ -65,20 +65,23 @@ class GroupTest < ActiveSupport::TestCase
     ended_event = Event.create(start_date: 2.days.ago)
     group.events<<ended_event
 
-    upcoming_event_1 = Event.create(start_date: Date.today)
+    upcoming_event_1 = Event.create(status: 'confirmed', start_date: Date.today)
     group.events<<upcoming_event_1
 
-    other_group_event = Event.create(start_date: Date.today)
+    other_group_event = Event.create(status: 'confirmed', start_date: Date.today)
     other_group.events<<upcoming_event_1
 
-    upcoming_event_2 = Event.create(start_date: Date.today + 2.days)
+    upcoming_event_2 = Event.create(status: 'confirmed', start_date: Date.today + 2.days)
     group.events<<upcoming_event_2
 
-    future_event = Event.create(start_date: Date.today + (Event::UPCOMING_EVENTS_DAYS + 1).days)
+    future_event = Event.create(status: 'confirmed', start_date: Date.today + (Event::UPCOMING_EVENTS_DAYS + 1).days)
     group.events<<future_event
 
     group.events = [ended_event, upcoming_event_1, upcoming_event_2, future_event]
 
-    assert_equal group.upcoming_events, [upcoming_event_1, upcoming_event_2]
+    assert_includes group.upcoming_events, upcoming_event_1
+    assert_includes group.upcoming_events, upcoming_event_2
+    refute_includes group.upcoming_events, other_group_event
+    refute_includes group.upcoming_events, future_event
   end
 end

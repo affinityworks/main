@@ -13,7 +13,7 @@ module Api::ActionNetwork::People
 
     logger.info "Api::ActionNetwork::People#import! from #{next_uri}"
 
-    Person.transaction do
+    ::Person.transaction do
       while next_uri
         people, next_uri = request_resources_from_action_network(next_uri, group)
 
@@ -23,19 +23,12 @@ module Api::ActionNetwork::People
 
         new_count += new_people.size
         existing_count += existing_count.size
-        updated_count = update_resources(existing_people)
 
-        new_people = associate_with_group(new_people, group)
-
-        create new_people
+        people.each do |new_person|
+          Api::ActionNetwork::Person.after_import(new_person, group)
+        end
       end
       logger.debug "Api::ActionNetwork::People#import! new: #{new_count} existing: #{existing_count} updated: #{updated_count}"
-    end
-  end
-
-  def self.associate_with_group(new_people, group)
-    new_people.each do |person|
-      person.groups.push(group)
     end
   end
 end
