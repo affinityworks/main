@@ -42,6 +42,7 @@ module Api::ActionNetwork::Import
       create_single_resource(resource)
     end
     resource.groups.push(group) unless group.members.include?(resource)
+    resource
   rescue => e
     logger.error e.inspect
     retry if (retries += 1) < 3
