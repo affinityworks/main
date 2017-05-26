@@ -32,16 +32,8 @@ module Api::ActionNetwork::Import
     client.get(uri: uri, as: 'application/json') do |request|
       request['OSDI-API-TOKEN'] = group.an_api_key
     end
-    # we need something which also checks about a user with the same email.
-    if Person.any_identifier(resource.identifier('action_network')).exists?
-      update_single_resource(resource)
-    elsif do_we_know_about_this_email(resource)
-      resource = merge_person_with_resource(resource)
-    else
-      create_single_resource(resource)
-    end
 
-    resource.groups.push(group) unless group.members.include?(resource)
+    yield(resource) if block_given?
 
     resource
   rescue => e
@@ -67,25 +59,6 @@ module Api::ActionNetwork::Import
     return unless old_resource
 
     merge_resources(old_resource, resource)
-  end
-
-  def merge_person_with_resource(resource)
-    resource.email_addresses.each do |email_address_obj|
-      old_person = Person.by_email(email_address_obj.address)
-      unless old_person.empty?
-        return merge_resources(old_person.first, resource)
-      end
-    end
-  end
-
-  def do_we_know_about_this_email(resource)
-    answer = false
-
-    resource.email_addresses.each do |email_address_obj|
-      answer = true if EmailAddress.find_by_address(email_address_obj.address)
-    end
-
-    return answer
   end
 
   def merge_resources(old_resource, resource)
