@@ -39,6 +39,7 @@ export const createAttendance = (eventId, attributes) => {
     axios.post(`/events/${eventId}/attendances.json`, { attendance: attributes })
       .then((response) => {
         dispatch({ type: ATTENDANCE_CREATE_SUCCESS, payload: response.data })
+        dispatch(fetchAttendances(eventId))
       }).catch((err) => {
         console.log('error', err);
         dispatch({ type: ATTENDANCE_CREATE_FAIL, payload: err })

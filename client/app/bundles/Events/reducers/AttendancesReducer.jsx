@@ -22,14 +22,6 @@ export default (state = INITIAL_STATE, action) => {
     });
     return { ...state, attendances }
   }
-  case ATTENDANCE_CREATE_SUCCESS:
-    const { id } = action.payload.data;
-
-    if (state.attendances.length < 25 && !_.find(state.attendances, { id })) {
-      return { ...state, attendances: state.attendances.concat(action.payload.data) }
-    }
-
-    return state;
   default:
     return state;
   }
