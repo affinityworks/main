@@ -48,7 +48,6 @@ class Attendances extends Component {
 
   render() {
     const { goBack } = this.props.history;
-    const eventId = this.props.match.params.id;
 
     return (
       <div>
