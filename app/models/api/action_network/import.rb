@@ -39,9 +39,9 @@ module Api::ActionNetwork::Import
     elsif do_we_know_about_this_email(resource)
       merge_person_with_resource(resource)
     else
-      resource.groups.push(group)
       create_single_resource(resource)
     end
+    resource.groups.push(group) unless group.members.include?(resource)
   rescue => e
     logger.error e.inspect
     retry if (retries += 1) < 3
@@ -87,7 +87,6 @@ module Api::ActionNetwork::Import
   end
 
   def merge_resources(old_resource, resource)
-    #logger.error "merging:" + resource.to_yaml + " and: " + old_resource.to_yaml
     attributes = resource.attributes
     attributes.delete_if { |_, v| v.nil? }
 
@@ -97,10 +96,13 @@ module Api::ActionNetwork::Import
   end
 
   def create_single_resource(resource)
-    resource.tap(&:save!)
-  rescue StandardError => e
-    logger.error resource
-    raise e
+    begin
+      resource.tap(&:save!)
+    rescue Exception => e
+      logger.error resource
+      logger.error e
+      raise e
+    end
   end
 
   def create(new_resources)
