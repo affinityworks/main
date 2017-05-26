@@ -3,6 +3,7 @@ class Membership < ApplicationRecord
   belongs_to :person
 
   validates :person_id, uniqueness: { scope: :group_id }
+  validates :group_id, uniqueness: { scope: :person_id }
 
   enum role: [:member, :organizer]
 

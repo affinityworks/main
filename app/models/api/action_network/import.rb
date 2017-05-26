@@ -27,14 +27,17 @@ module Api::ActionNetwork::Import
   def request_single_resource_from_action_network(uri, group)
     retries ||= 0
 
+
     resource = resource_class.new
     client = representer_class.new(resource)
     client.get(uri: uri, as: 'application/json') do |request|
       request['OSDI-API-TOKEN'] = group.an_api_key
     end
-
+    # we need something which also checks about a user with the same email.
     if Person.any_identifier(resource.identifier('action_network')).exists?
       update_single_resource(resource)
+    elsif do_we_know_about_this_email(resource)
+      merge_person_with_resource(resource)
     else
       resource.groups.push(group)
       create_single_resource(resource)
@@ -61,11 +64,36 @@ module Api::ActionNetwork::Import
 
     return unless old_resource
 
+    merge_resources(old_resource, resource)
+  end
+
+  def merge_person_with_resource(resource)
+    resource.email_addresses.each do |email_address_obj|
+      old_person = Person.by_email(email_address_obj.address)
+      unless old_person.empty?
+        return merge_resources(old_person.first, resource)
+      end
+    end
+  end
+
+  def do_we_know_about_this_email(resource)
+    answer = false
+
+    resource.email_addresses.each do |email_address_obj|
+      answer = true if EmailAddress.find_by_address(email_address_obj.address)
+    end
+
+    return answer
+  end
+
+  def merge_resources(old_resource, resource)
+    #logger.error "merging:" + resource.to_yaml + " and: " + old_resource.to_yaml
     attributes = resource.attributes
     attributes.delete_if { |_, v| v.nil? }
+
     old_resource.update_attributes! attributes
 
-    old_resource
+    old_resource.save!
   end
 
   def create_single_resource(resource)
