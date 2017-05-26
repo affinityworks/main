@@ -27,7 +27,6 @@ module Api::ActionNetwork::Import
   def request_single_resource_from_action_network(uri, group)
     retries ||= 0
 
-
     resource = resource_class.new
     client = representer_class.new(resource)
     client.get(uri: uri, as: 'application/json') do |request|
@@ -37,11 +36,14 @@ module Api::ActionNetwork::Import
     if Person.any_identifier(resource.identifier('action_network')).exists?
       update_single_resource(resource)
     elsif do_we_know_about_this_email(resource)
-      merge_person_with_resource(resource)
+      resource = merge_person_with_resource(resource)
     else
       create_single_resource(resource)
     end
+
     resource.groups.push(group) unless group.members.include?(resource)
+
+    resource
   rescue => e
     logger.error e.inspect
     retry if (retries += 1) < 3
@@ -92,7 +94,7 @@ module Api::ActionNetwork::Import
 
     old_resource.update_attributes! attributes
 
-    old_resource.save!
+    old_resource
   end
 
   def create_single_resource(resource)
