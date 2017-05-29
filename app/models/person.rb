@@ -89,6 +89,7 @@ class Person < ApplicationRecord
   end
 
   def primary_phone_number=(number)
+    return unless number.present?
     phone_numbers.new(number: number, primary: true)
   end
 

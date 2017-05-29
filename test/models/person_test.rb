@@ -143,10 +143,24 @@ class PersonTest < ActiveSupport::TestCase
 
     groups.each {|group| assert_nothing_raised { group.reload }}
     events.each {|event| assert_nothing_raised { event.reload }}
-    assert_nothing_raised { employer_address.reload } if employer_address 
+    assert_nothing_raised { employer_address.reload } if employer_address
 
   end
 
+  test '#primary_phone_address=' do
+    person = Person.create
 
+    person.primary_phone_number = '12341234'
+    person.save
+    person.reload
+
+    assert_equal person.primary_phone_number, '12341234'
+
+    person.primary_phone_number = ''
+    person.save
+    person.reload
+
+    assert_equal person.phone_numbers.count, 1
+  end
 
 end
