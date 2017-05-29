@@ -1,0 +1,153 @@
+{
+    "per_page": 25,
+    "page": 1,
+    "_links": {
+        "next": {
+            "href": "https://actionnetwork.org/api/v2/events?page=2"
+        },
+        "osdi:forms": [
+            {
+                "href": "https://actionnetwork.org/api/v2/events/d91b4b2e-ae0e-4cd3-9ed7-d0ec501b0bc3"
+            },
+            {
+                "href": "https://actionnetwork.org/api/v2/events/1efc3644-af25-4253-90b8-a0baf12dbd1e"
+            }
+        ],
+        "curies": [
+            {
+                "name": "osdi",
+                "href": "https://actionnetwork.org/docs/v1/{rel}",
+                "templated": true
+            }
+        ],
+        "self": {
+            "href": "https://actionnetwork.org/api/v2/events"
+        }
+    },
+    "_embedded": {
+        "osdi:events": [
+            {
+                "identifiers": [
+                    "action_network:d91b4b2e-ae0e-4cd3-9ed7-d0ec501b0bc3",
+                    "foreign_system:1"
+                ],
+                "origin_system": "OSDI Sample System",
+                "created_date": "2014-03-20T21:04:31Z",
+                "modified_date": "2017-03-20T21:04:31Z",
+                "name": "March 15th Rally",
+                "title": "Rally for Justice",
+                "description": "<p>Join us in the park to rally for justice!</p>",
+                "summary": "Join us in the park to rally for justice!",
+                "instructions": "<p>Bring a friend and a sign.</p>",
+                "browser_url": "http://actionnetwork.org/events/rally-for-justice",
+                "type": "open",
+                "featured_image_url": "http://actionnetwork.org/images/rally-for-justice-banner.jpg",
+                "total_accepted": 14,
+                "status": "confirmed",
+                "start_date": "2015-03-14T12:00:00Z",
+                "end_date": "2015-03-14T14:00:00Z",
+                "all_day": false,
+                "guests_can_invite_others": true,
+                "transparence": "opaque",
+                "visibility": "public",
+                "location": {
+                    "venue": "Lafayette Circle",
+                    "address_lines": [
+                        "1564 H St NW"
+                    ],
+                    "locality": "Washington",
+                    "region": "DC",
+                    "postal_code": "20001",
+                    "country": "US",
+                    "language": "EN",
+                    "location": {
+                        "latitude": 38.9002101,
+                        "longitude": -77.0359252,
+                        "accuracy": "Rooftop"
+                    }
+                },
+                "osdi:organizer": {
+                  "given_name": "Jane",
+                  "family_name": "Doe",
+                  "identifiers": [
+                    "action_network:1efc3644-af25-4253-90b8-a0baf12dbd1e"
+                  ],
+                  "email_addresses": [
+                    {
+                      "primary": true,
+                      "address": "janedoe@mail.com",
+                      "status": "subscribed"
+                    }
+                  ]
+                },
+                "reminders": [
+                    {
+                        "method": "email",
+                        "minutes": 1440
+                    },
+                    {
+                        "method": "sms",
+                        "minutes": 60
+                    }
+                ],
+                "share_url": "http://actionnetwork.org/events/my-event/",
+                "total_shares": 345,
+                "share_options": [
+                    {
+                        "facebook_share": {
+                            "title": "Debate watch party!",
+                            "description": "Come and watch the debate.",
+                            "image": "http://odsi-sample-system.org/images/event-share-image.jpg",
+                            "total_shares": 100
+                        },
+                        "twitter_share": {
+                            "message": "Watch the debate with @OSDI! Click here: http://actionnetwork.org/events/my-event/",
+                            "total_shares": 100
+                        },
+                        "email_share": {
+                            "subject": "Come watch the debate!",
+                            "body": "Can you watch the debate with us? Click here: http://actionnetwork.org/events/my-event/",
+                            "total_shares": 145
+                        }
+                    }
+                ],
+                "_embedded": {
+                  "osdi:creator": {
+                    "given_name": "Evan",
+                    "family_name": "Henshaw-Plath",
+                    "identifiers": [
+                      "action_network:06d13a33-6824-493b-a922-95e793f269d4"
+                    ],
+                    "email_addresses": [
+                      {
+                        "primary": true,
+                        "address": "creator@email.com",
+                        "status": "subscribed"
+                      }
+                    ]
+                  }
+                },
+                "_links": {
+                    "self": {
+                        "href": "https://actionnetwork.org/api/v2/events/d91b4b2e-ae0e-4cd3-9ed7-d0ec501b0bc3"
+                    },
+                    "osdi:attendances": {
+                        "href": "https://actionnetwork.org/api/v2/events/d91b4b2e-ae0e-4cd3-9ed7-d0ec501b0bc3/attendances"
+                    },
+                    "osdi:creator": {
+                        "href": "https://actionnetwork.org/api/v2/people/65345d7d-cd24-466a-a698-4a7686ef684f"
+                    },
+                    "osdi:organizer": {
+                        "href": "https://actionnetwork.org/api/v2/people/8a625981-67a4-4457-8b55-2e30b267b2c2"
+                    },
+                    "osdi:modified_by": {
+                        "href": "https://actionnetwork.org/api/v2/people/c945d6fe-929e-11e3-a2e9-12313d316c29"
+                    },
+                    "osdi:record_attendance_helper": {
+                        "href": "https://actionnetwork.org/api/v2/events/d91b4b2e-ae0e-4cd3-9ed7-d0ec501b0bc3/record_attendance_helper"
+                    }
+                }
+            }
+        ]
+    }
+}

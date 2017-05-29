@@ -57,4 +57,22 @@ module Api::ActionNetwork::Events
       event.send("#{person_relation}=",  email.person)
     end
   end
+
+  def self.merge_resources(old_resource, resource)
+    attributes = resource.attributes
+    location_attributes = resource.location.attributes
+
+    attributes.delete_if { |_, v| v.nil? }
+    location_attributes.delete_if { |_, v| v.nil? }
+
+    if old_resource.location
+      old_resource.location.update_attributes! location_attributes
+    else
+      old_resource.location = Address.new location_attributes
+    end
+
+    old_resource.update_attributes! attributes
+
+    old_resource
+  end
 end
