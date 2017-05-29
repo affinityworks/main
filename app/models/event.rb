@@ -21,6 +21,7 @@ class Event < ApplicationRecord
   has_many :attendees, through: :attendances, source: :person
   has_many :reminders
   has_and_belongs_to_many :groups
+  has_many :facebook_events
 
   #My suspicion is that it's better to do this in sql and not sore all this in memory
   def self.add_attendance_counts(events)

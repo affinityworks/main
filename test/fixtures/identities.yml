@@ -4,3 +4,10 @@ one:
   uid: 'exampleUIDFacebook'
   person_id: 1
   access_token: 'access_token'
+
+organizer:
+  id: 2
+  provider: 'facebook'
+  uid: 'exampleUIDFacebook'
+  person_id: 6 #Organizer id
+  access_token: 'access_token'

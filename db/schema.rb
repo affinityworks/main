@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170524185701) do
+ActiveRecord::Schema.define(version: 20170529140001) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -617,6 +617,16 @@ ActiveRecord::Schema.define(version: 20170524185701) do
     t.datetime "updated_at", null: false
     t.index ["event_id"], name: "index_reminders_on_event_id", using: :btree
     t.index ["person_id"], name: "index_reminders_on_person_id", using: :btree
+  end
+
+  create_table "remote_events", force: :cascade do |t|
+    t.string   "type"
+    t.string   "name"
+    t.string   "description"
+    t.string   "uid"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.integer  "event_id"
   end
 
   create_table "responses", force: :cascade do |t|

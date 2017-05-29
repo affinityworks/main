@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import RemoteEventMatches from './RemoteEventMatches';
 import RemoteEvent from './RemoteEvent';
@@ -6,6 +7,37 @@ import RemoteEvent from './RemoteEvent';
 class RemoteEventMatch extends Component {
   constructor(props) {
     super(props);
+
+    this.state = { selectedEvent: '', errorAlert: '' };
+    this.setActiveEvent = this.setActiveEvent.bind(this);
+    this.createRemoteEvent = this.createRemoteEvent.bind(this);
+  }
+
+  createRemoteEvent() {
+    const { remoteEvent } = this.props;
+    axios.post(`/events/imports.json`, { remote_event: remoteEvent, event_id: this.state.selectedEvent})
+      .then((response) => {
+        console.log('remoteEvent created', response.data);
+      }).catch((err) => {
+        this.setState({ ...this.state, errorAlert: 'An error ocurred. Try again later.' })
+      });
+  }
+
+  setActiveEvent(event_id) {
+    this.setState({selectedEvent: event_id})
+  }
+
+  renderAlert() {
+    const { errorAlert } = this.state;
+
+    if (errorAlert.length)
+      return (
+        <div className='container'>
+          <div className="col-12 alert alert-danger">{errorAlert}</div>
+        </div>
+      )
+    else
+      return null;
   }
 
   render() {
@@ -18,11 +50,16 @@ class RemoteEventMatch extends Component {
 
     return (
       <div className='row'>
+        {this.renderAlert()}
         <div className='col-4'>
           <RemoteEvent event={remoteEvent} />
         </div>
         <div className='col-4'>
-          <RemoteEventMatches date={remoteEvent.start_time} events={events} />
+          <RemoteEventMatches date={remoteEvent.start_time}
+            events={events}
+            selected={this.state.selectedEvent}
+            onClick={this.setActiveEvent}
+          />
           <br/>
           <div>
             <a href='#'>Search other Affinity Events.</a>
@@ -30,7 +67,10 @@ class RemoteEventMatch extends Component {
         </div>
         <div className='col-3 offset-1'>
           <div className='row'>
-            <div className='btn btn-success'>Sync RSVP's</div>
+            <div className='btn btn-success'
+              onClick={this.createRemoteEvent}>
+              Sync RSVP's
+            </div>
           </div>
           <br />
           <div className='row'>
