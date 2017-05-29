@@ -45,7 +45,7 @@ module Api::ActionNetwork::Events
     new_events.each do |event|
       event.groups.push(group)
       event.organizer.groups.push(group)   if event.organizer
-      event.creator.groups.push(group)      if event.creator
+      event.creator.groups.push(group)     if event.creator
       event.modified_by.groups.push(group) if event.modified_by
     end
   end

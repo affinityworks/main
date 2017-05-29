@@ -8,10 +8,6 @@ class Api::ActionNetwork::EventsTest < ActiveSupport::TestCase
       .with(headers: { 'OSDI-API-TOKEN' => group.an_api_key })
       .to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'events.json')))
 
-    stub_request(:get, "https://actionnetwork.org/api/v2/events").
-      with(:headers => {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'Osdi-Api-Token'=>'c96dc7a808ed80fca8bb4953f8ac10bf', 'User-Agent'=>'Ruby'}).
-      to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'events.json')))
-
     travel_to Time.zone.local(2001) do
       group.events.create!(
         title: 'TBD',
@@ -34,13 +30,14 @@ class Api::ActionNetwork::EventsTest < ActiveSupport::TestCase
 
     new_event = group.events.find_by(name: 'March 14th Rally')
     assert new_event.organizer
+    assert new_event.creator
 
     assert new_event.location.venue.present?
     assert new_event.location.address_lines.present?
     assert new_event.location.locality.present?
 
     # it should pull in from link but it doesn't so this doesn't work.
-    #assert group.events.find_by(name: 'March 14th Rally').creator
+    # assert group.events.find_by(name: 'March 14th Rally').creator
     #assert group.events.find_by(name: 'March 14th Rally').modified_by
 
     march_14_event = group.events.where(name: 'March 14th Rally').first!
