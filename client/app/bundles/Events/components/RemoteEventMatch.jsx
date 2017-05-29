@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { formatDay, formatTime} from '../utils';
 import { Link } from 'react-router-dom';
 import RemoteEventMatches from './RemoteEventMatches';
+import RemoteEvent from './RemoteEvent';
 
 class RemoteEventMatch extends Component {
   constructor(props) {
@@ -19,10 +19,7 @@ class RemoteEventMatch extends Component {
     return (
       <div className='row'>
         <div className='col-4'>
-          <h5>{remoteEvent.name}</h5>
-          <div>{formatDay(remoteEvent.start_time)}</div>
-          <div>{`${formatTime(remoteEvent.start_time)} - ${formatTime(remoteEvent.end_time)}`}</div>
-          <div>{remoteEvent.place.name}</div>
+          <RemoteEvent event={remoteEvent} />
         </div>
         <div className='col-4'>
           <RemoteEventMatches date={remoteEvent.start_time} events={events} />
