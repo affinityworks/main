@@ -13,6 +13,10 @@ import {
 class AttendanceForm extends Component {
   state = { showAddressForm: false };
 
+  componentWillUnmount() {
+    this.props.resetAttendanceForm();
+  }
+
   handleSubmit(e) {
     e.preventDefault();
 
