@@ -7,7 +7,7 @@ class Person < ApplicationRecord
 
   devise :database_authenticatable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :omniauthable, :omniauth_providers => [:facebook]
+         :omniauthable, omniauth_providers: [:facebook]
 
   serialize :custom_fields, Hash
   serialize :ethnicities, Array
@@ -113,7 +113,7 @@ class Person < ApplicationRecord
   end
 
   def json_representation
-    JsonApi::PeopleRepresenter.new(self)
+    JsonApi::PersonRepresenter.new(self)
   end
 
   def self.find_first_by_auth_conditions(warden_conditions)

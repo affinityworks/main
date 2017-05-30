@@ -17,12 +17,18 @@ class RemoteEventMatch extends Component {
 
   createRemoteEvent() {
     const { remoteEvent } = this.props;
+    const { selectedEvent } = this.state;
 
-    axios.post(`/events/imports.json`, { remote_event: remoteEvent, event_id: this.state.selectedEvent})
+    if (!selectedEvent) {
+      this.setState({ errorAlert: 'Please select an event.' });
+      return;
+    }
+
+    axios.post('/events/imports.json', { remote_event: remoteEvent, event_id: selectedEvent })
       .then((response) => {
         history.push(`/events/imports/${response.data.id}/attendances`);
       }).catch((err) => {
-        this.setState({ ...this.state, errorAlert: 'An error ocurred. Try again later.' })
+        this.setState({ errorAlert: 'An error ocurred. Try again later.' })
       });
   }
 

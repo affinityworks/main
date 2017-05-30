@@ -38,15 +38,14 @@ class ImportsController < ApplicationController
   def attendances
     remote_event = RemoteEvent.find(params[:remote_event_id])
     remote_attendances = remote_event.attendances(current_person.identities.facebook.first)
+    matches = current_group.members.map_with_remote_rsvps(remote_attendances)
+
     respond_to do |format|
       format.html
       format.json do
-        render json: current_group.members.map_with_remote_rsvps(remote_attendances).to_json
+        render json: matches.to_json
       end
     end
-  end
-
-  def matching
   end
 
   private
