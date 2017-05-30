@@ -31,7 +31,7 @@ gem 'graphql-rails-resolver'
 gem 'graphiql-rails'
 
 #pretty layout for console
-gem 'hirb'
+gem 'pry'
 
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-heroku'
