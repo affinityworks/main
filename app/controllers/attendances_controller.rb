@@ -52,9 +52,9 @@ class AttendancesController < ApplicationController
     respond_to do |format|
       format.json do
         if attendance.save
-          render json: attendance
+          render json: JsonApi::AttendancesRepresenter.new(attendance).to_json
         else
-          render json: attendance.errors.full_messages, status: 422
+          render json: attendee.errors.full_messages, status: 422
         end
       end
     end
@@ -87,13 +87,13 @@ class AttendancesController < ApplicationController
     Person.new(new_attendance_params.merge(synced: false))
 
     person.memberships.find_or_initialize_by(group_id: current_group.id)
-    person.attendances.find_or_initialize_by(event_id: event.id) do |attendance|
+    attendance = person.attendances.find_or_initialize_by(event_id: event.id) do |attendance|
       attendance.invited_by_id ||= current_user.id
       attendance.status ||= 'tentative'
       attendance.synced = false
     end
 
-    person
+    attendance
   end
 
   def new_attendance_params
