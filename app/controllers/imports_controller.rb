@@ -25,7 +25,9 @@ class ImportsController < ApplicationController
     respond_to do |format|
       format.json do
         if facebook_event.save
-          render json: 'FacebookEvent successfully created.'
+          render json: {
+            id: facebook_event.id
+          }
         else
           render json: facebook_event.errors.full_messages, status: 422
         end
@@ -42,6 +44,9 @@ class ImportsController < ApplicationController
         render json: current_group.members.map_with_remote_rsvps(remote_attendances).to_json
       end
     end
+  end
+
+  def matching
   end
 
   private

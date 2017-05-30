@@ -11,10 +11,13 @@ import GroupDetail from '../components/GroupDetail';
 import Profile from '../components/Profile';
 import MemberDetail from '../components/MemberDetail';
 import EventImport from '../components/EventImport';
+import AttendanceMatching from '../containers/AttendanceMatching';
 
 export default (
   <Switch>
     <Route path='/events/imports/new' component={EventImport} />
+    <Route path='/events/imports/:id/attendances' component={AttendanceMatching} />
+
     <Route path='/events/:id/attendances/new' component={NewAttendance} />
     <Route path='/events/:id/attendances' component={Attendances} />
 

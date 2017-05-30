@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+
 import RemoteEventMatches from './RemoteEventMatches';
 import RemoteEvent from './RemoteEvent';
+import history from '../history';
 
 class RemoteEventMatch extends Component {
   constructor(props) {
@@ -15,9 +17,10 @@ class RemoteEventMatch extends Component {
 
   createRemoteEvent() {
     const { remoteEvent } = this.props;
+
     axios.post(`/events/imports.json`, { remote_event: remoteEvent, event_id: this.state.selectedEvent})
       .then((response) => {
-        console.log('remoteEvent created', response.data);
+        history.push(`/events/imports/${response.data.id}/attendances`);
       }).catch((err) => {
         this.setState({ ...this.state, errorAlert: 'An error ocurred. Try again later.' })
       });
