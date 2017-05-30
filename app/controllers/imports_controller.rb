@@ -33,6 +33,17 @@ class ImportsController < ApplicationController
     end
   end
 
+  def attendances
+    remote_event = RemoteEvent.find(params[:remote_event_id])
+    remote_attendances = remote_event.attendances(current_person.identities.facebook.first)
+    respond_to do |format|
+      format.html
+      format.json do
+        render json: current_group.members.map_with_remote_rsvps(remote_attendances).to_json
+      end
+    end
+  end
+
   private
 
   def validate_facebook_auth

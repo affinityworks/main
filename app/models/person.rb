@@ -107,6 +107,15 @@ class Person < ApplicationRecord
     }) #NOTE Change if other OAuth provider is added
   end
 
+  def export(group)
+    Api::ActionNetwork::Person.export!(self, group)
+    self.update_attribute(:synced, true)
+  end
+
+  def json_representation
+    JsonApi::PeopleRepresenter.new(self)
+  end
+
   def self.find_first_by_auth_conditions(warden_conditions)
     conditions = warden_conditions.dup
     if email = conditions.delete(:email)
@@ -142,8 +151,14 @@ class Person < ApplicationRecord
     end
   end
 
-  def export(group)
-    Api::ActionNetwork::Person.export!(self, group)
-    self.update_attribute(:synced, true)
+  def self.map_with_remote_rsvps(remote_rsvps)
+    all.each.with_object([]) do |person, mapping|
+      matches, remote_rsvps = remote_rsvps.partition do |rsvp|
+        rsvp['name'].include?(person.given_name) &&
+        rsvp['name'].include?(person.family_name)
+      end
+
+      mapping << { fb_rsvp: matches.first, person: person.json_representation } if matches.any?
+    end
   end
 end

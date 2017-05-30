@@ -1,0 +1,9 @@
+facebook:
+  id: 1
+  type: 'FacebookEvent'
+  uid: 'exampleUIDFacebook'
+  event_id: 3
+  name: 'example'
+  description: 'description'
+  start_date: 2016-12-22 13:52:58
+  end_date: 2016-12-22 13:52:58

@@ -180,10 +180,12 @@ class PersonTest < ActiveSupport::TestCase
     credentials.expect :token, 'access_token'
     auth.expect :credentials, credentials
     facebook_auth.expect :request_long_lived_token, 'new_token'
+
+    old_identity_count = Identity.count
     Facebook::Authorization.stub :new, facebook_auth do
       person = Person.from_omniauth(auth, Person.last)
       assert_equal Person.last, person
-      assert_equal 2, Identity.count
+      assert_equal old_identity_count, Identity.count
       assert_equal person, Identity.last.person
     end
 
@@ -198,4 +200,21 @@ class PersonTest < ActiveSupport::TestCase
       assert_nil Person.from_omniauth(auth)
     end
   end
+
+  test '#map_with_remote_rsvps' do
+    remote_rsvps = [{ 'name' => 'Test Admin'}, { 'name' => 'Test Example'}, { 'name' => 'Test Member'}]
+    result = Group.last.members.map_with_remote_rsvps(remote_rsvps)
+
+    assert_equal 2, result.count
+    assert_equal remote_rsvps.first, result.first[:fb_rsvp]
+    assert_equal people(:admin).id, result.first[:person].represented.id
+    assert_equal remote_rsvps.last, result.last[:fb_rsvp]
+    assert_equal people(:member1).id, result.last[:person].represented.id
+  end
+
+  test 'json_representation' do
+    person = people(:admin)
+    assert_equal person, person.json_representation.represented
+  end
+
 end
