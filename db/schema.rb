@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170531171246) do
+ActiveRecord::Schema.define(version: 20170531203724) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,6 +92,13 @@ ActiveRecord::Schema.define(version: 20170531171246) do
     t.index ["canvass_id"], name: "index_answers_on_canvass_id", using: :btree
     t.index ["question_id"], name: "index_answers_on_question_id", using: :btree
     t.index ["responses_id"], name: "index_answers_on_responses_id", using: :btree
+  end
+
+  create_table "attendance_origins", force: :cascade do |t|
+    t.integer "origin_id"
+    t.integer "attendance_id"
+    t.index ["attendance_id"], name: "index_attendance_origins_on_attendance_id", using: :btree
+    t.index ["origin_id"], name: "index_attendance_origins_on_origin_id", using: :btree
   end
 
   create_table "attendances", force: :cascade do |t|
@@ -415,6 +422,10 @@ ActiveRecord::Schema.define(version: 20170531171246) do
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
+  end
+
+  create_table "origins", force: :cascade do |t|
+    t.string "name"
   end
 
   create_table "outreaches", force: :cascade do |t|

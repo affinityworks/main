@@ -1,6 +1,9 @@
 class Attendance < ApplicationRecord
   include Api::Identifiers
 
+  has_many :attendance_origins
+  has_many :origins, through: :attendance_origins
+
   # Temporary attributes used for import from Action Network
   attr_accessor :event_uuid
   attr_accessor :person_uuid

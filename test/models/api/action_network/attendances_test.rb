@@ -31,5 +31,6 @@ class Api::ActionNetwork::AttendancesTest < ActiveSupport::TestCase
 
     assert event.attendances.any? { |a| a.person.identifier?('action_network:ceef7e23-4617-4af8-bd0f-60029299d8cd') }
     assert event.attendances.any? { |a| a.person.identifier?('action_network:06d13a33-6824-493b-a922-95e793f269d3') }
+    assert_includes event.attendances.last.origins, Origin.action_network
   end
 end

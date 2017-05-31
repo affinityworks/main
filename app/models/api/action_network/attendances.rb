@@ -30,6 +30,8 @@ module Api::ActionNetwork::Attendances
         updated_count = update_resources(existing_attendances)
 
         new_attendances = associate_with_person(new_attendances, event.id, group)
+        new_attendances = add_origin(new_attendances)
+
         new_attendances.each do |attendance|
           begin
             attendance.save!
@@ -50,6 +52,14 @@ module Api::ActionNetwork::Attendances
       attendance.person_id = person.id
       attendance
     end.compact
+  end
+
+  def self.add_origin(new_attendances)
+    action_network = Origin.action_network
+
+    new_attendances.each do |attendance|
+      attendance.origins.push(action_network)
+    end
   end
 
   def self.find_or_import_person(person_uuid, group)
