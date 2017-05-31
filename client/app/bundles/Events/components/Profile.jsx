@@ -8,14 +8,19 @@ class Profile extends Component {
   }
 
   render() {
-    //const { currentUser, currentGroup } = this.state;
+    const { currentUser, currentGroup } = this.props;
     return (
-      <div className='list-group-item'>
-        <h1>
-          Welcome {this.props.currentUser.given_name} {this.props.currentUser.family_name}
-        </h1>
-        <h3>Your Groups</h3>
-        <Groups location={this.props.location} />
+      <div>
+        <div className='row'>
+          <div className='col-md-6'>
+            <h1>Welcome {currentUser.given_name} {currentUser.family_name}</h1>
+          </div>
+        </div>
+        <br/>
+        <div className='list-group-item'>
+          <h3>Your Groups</h3>
+          <Groups location={this.props.location} />
+        </div>
       </div>
     )
   }

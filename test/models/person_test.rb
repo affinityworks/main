@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'minitest/mock'
 
 class PersonTest < ActiveSupport::TestCase
   test 'basic person associations' do
@@ -143,10 +144,58 @@ class PersonTest < ActiveSupport::TestCase
 
     groups.each {|group| assert_nothing_raised { group.reload }}
     events.each {|event| assert_nothing_raised { event.reload }}
-    assert_nothing_raised { employer_address.reload } if employer_address 
+    assert_nothing_raised { employer_address.reload } if employer_address
 
   end
 
+  test '#from_omniauth' do
+    auth = Minitest::Mock.new
+    info = Minitest::Mock.new
+    credentials = Minitest::Mock.new
+    uid = Identity.first.uid
+    facebook_auth = Minitest::Mock.new
 
+    auth.expect :provider, 'facebook'
+    auth.expect :uid, uid
+    credentials.expect :token, 'access_token'
+    auth.expect :credentials, credentials
+    facebook_auth.expect :request_long_lived_token, 'new_token'
+    Facebook::Authorization.stub :new, facebook_auth do
+      assert_equal Person.first, Person.from_omniauth(auth)
+    end
 
+    info.expect :email, EmailAddress.first.address
+    auth.expect :provider, 'facebook'
+    auth.expect :uid, "#{uid}example2"
+    auth.expect :info, info
+    credentials.expect :token, 'access_token'
+    auth.expect :credentials, credentials
+    facebook_auth.expect :request_long_lived_token, 'new_token'
+    Facebook::Authorization.stub :new, facebook_auth do
+      assert_equal Person.first, Person.from_omniauth(auth)
+    end
+
+    auth.expect :provider, 'facebook'
+    auth.expect :uid, "#{uid}example2"
+    credentials.expect :token, 'access_token'
+    auth.expect :credentials, credentials
+    facebook_auth.expect :request_long_lived_token, 'new_token'
+    Facebook::Authorization.stub :new, facebook_auth do
+      person = Person.from_omniauth(auth, Person.last)
+      assert_equal Person.last, person
+      assert_equal 2, Identity.count
+      assert_equal person, Identity.last.person
+    end
+
+    info.expect :email, "anything"
+    auth.expect :provider, 'facebook'
+    auth.expect :uid, "#{uid}example3"
+    auth.expect :info, info
+    credentials.expect :token, 'access_token'
+    auth.expect :credentials, credentials
+    facebook_auth.expect :request_long_lived_token, 'new_token'
+    Facebook::Authorization.stub :new, facebook_auth do
+      assert_nil Person.from_omniauth(auth)
+    end
+  end
 end

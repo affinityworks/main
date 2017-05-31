@@ -4,7 +4,9 @@ class Api::ActionNetwork::PeopleTest < ActiveSupport::TestCase
   test '.import!' do
     group = Group.first
 
-    person_not_from_action_network = group.members.create!(updated_at: Time.zone.local(2016))
+    person_not_from_action_network = group.members.create!
+    person_not_from_action_network.updated_at= Time.zone.local(2016)
+    person_not_from_action_network.save
 
     unchanged_person = group.members.create!(
       identifiers: ['action_network:d91b4b2e-ae0e-4cd3-9ed7-d0ec501b0bc3'],
@@ -39,7 +41,7 @@ class Api::ActionNetwork::PeopleTest < ActiveSupport::TestCase
     assert_difference 'Person.count', 2 do
       Api::ActionNetwork::People.import!(group)
     end
-
+    
     assert_equal Time.zone.local(2016), person_not_from_action_network.reload.updated_at
 
     new_person = group.members.any_identifier('action_network:1efc3644-af25-4253-90b8-a0baf12dbd1e').first!

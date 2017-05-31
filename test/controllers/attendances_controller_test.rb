@@ -76,8 +76,9 @@ class AttendancesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
 
     new_attendee.reload
-    assert_equal 1, new_attendee.memberships.count, 'creates a new membership'
+
     assert_equal 1, new_attendee.attendances.count, 'creates a new attendance'
+    assert_equal 1, new_attendee.memberships.count, 'creates a new membership'
   end
 
   test 'post #create when the membership already exist' do

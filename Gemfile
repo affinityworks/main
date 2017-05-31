@@ -30,9 +30,6 @@ gem 'graphql'
 gem 'graphql-rails-resolver'
 gem 'graphiql-rails'
 
-#pretty layout for console
-gem 'hirb'
-
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-heroku'
 gem 'wkhtmltopdf-binary-edge', '~> 0.12.4.0'
@@ -59,7 +56,7 @@ gem 'jquery-ui-rails', '~> 5.0.4'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 gem 'roar'
-gem 'react_on_rails'
+gem 'react_on_rails', '6.8.0'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
@@ -76,10 +73,12 @@ gem 'inherited_resources', github: 'activeadmin/inherited_resources'
 
 gem 'kaminari'
 gem 'doorkeeper'
+gem 'httparty'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
+  gem 'awesome_print'
 end
 
 group :development do
@@ -91,7 +90,6 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
-
 end
 
 group :production do
@@ -101,6 +99,8 @@ end
 group :test do
   gem 'webmock'
 end
+
+
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

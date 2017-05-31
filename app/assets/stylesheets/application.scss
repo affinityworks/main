@@ -15,3 +15,16 @@
 
  // Custom bootstrap variables must be set or imported before bootstrap itself.
  @import "bootstrap";
+
+.btn-facebook {
+  background-color: #3b5998;
+  border-color: #3b5998;
+  color: white;
+  &:hover {
+    color: white;
+  }
+}
+
+.list-group-item.active span {
+  color: white !important;
+}

@@ -1,0 +1,6 @@
+one:
+  id: 1
+  provider: 'facebook'
+  uid: 'exampleUIDFacebook'
+  person_id: 1
+  access_token: 'access_token'
