@@ -16,6 +16,7 @@ class Person < ApplicationRecord
   has_one :employer_address, class_name: 'EmployerAddress'
 
   has_many :email_addresses, dependent: :destroy
+  has_many :identities
   has_many :personal_addresses, class_name: 'PersonalAddress'
   has_many :phone_numbers, dependent: :destroy
   has_many :profiles, dependent: :destroy
@@ -101,6 +102,12 @@ class Person < ApplicationRecord
     attended_group_events(group).count
   end
 
+  def as_json(options={})
+    super.merge!({
+      linked_with_facebook: identities.facebook.any?
+    }) #NOTE Change if other OAuth provider is added
+  end
+
   def self.find_first_by_auth_conditions(warden_conditions)
     conditions = warden_conditions.dup
     if email = conditions.delete(:email)
@@ -108,6 +115,26 @@ class Person < ApplicationRecord
     else
       super(warden_conditions)
     end
+  end
+
+  def self.from_omniauth(auth, signed_in_resource = nil)
+    identity = Identity.find_for_oauth(auth)
+
+    person = signed_in_resource ? signed_in_resource : identity.person
+
+    #NOTE This should never happen, because only signed in people can connect with Omniauth
+    if person.nil?
+      email = auth.info.email
+      person = EmailAddress.where(:address => email).first.try(:person) if email
+
+      return if person.nil?
+    end
+
+    if identity.person != person
+      identity.person = person
+      identity.save!
+    end
+    person
   end
 
   def self.add_event_attended(people, current_group)

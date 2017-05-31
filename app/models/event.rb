@@ -9,6 +9,7 @@ class Event < ApplicationRecord
   UPCOMING_EVENTS_DAYS = 90
 
   scope :upcoming, ->() { where('start_date BETWEEN ? AND ?', Date.today, Date.today + UPCOMING_EVENTS_DAYS.days) }
+  scope :start, ->(start) { where("DATE(start_date) = ?", start) }
 
   has_many :ticket_levels
 
@@ -20,6 +21,7 @@ class Event < ApplicationRecord
   has_many :attendees, through: :attendances, source: :person
   has_many :reminders
   has_and_belongs_to_many :groups
+  has_many :facebook_events
 
   #My suspicion is that it's better to do this in sql and not sore all this in memory
   def self.add_attendance_counts(events)
