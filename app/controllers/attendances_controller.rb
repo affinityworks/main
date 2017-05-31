@@ -87,7 +87,7 @@ class AttendancesController < ApplicationController
     Person.new(new_attendance_params.merge(synced: false))
 
     person.memberships.find_or_initialize_by(group_id: current_group.id)
-    person.attendances.find_or_initialize_by(event_id: event.id) do |attendance|
+    person.attendances.find_or_initialize_by(event_id: event.id).tap do |attendance|
       attendance.invited_by_id ||= current_user.id
       attendance.status ||= 'tentative'
       attendance.synced = false

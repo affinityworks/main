@@ -1,0 +1,11 @@
+action_network:
+  id: 1
+  name: Action Network
+
+facebook:
+  id: 2
+  name: Facebook
+
+affinity:
+  id: 3
+  name: Affinity

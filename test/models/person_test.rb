@@ -218,14 +218,16 @@ class PersonTest < ActiveSupport::TestCase
   end
 
   test '#map_with_remote_rsvps' do
-    remote_rsvps = [{ 'name' => 'Test Admin'}, { 'name' => 'Test Example'}, { 'name' => 'Test Member'}]
+    person_1 = people(:admin)
+    person_2 = people(:member1)
+    remote_rsvps = [{ 'name' => person_1.name }, { 'name' => 'Test Example'}, { 'name' => person_2.name}]
     result = Group.last.members.map_with_remote_rsvps(remote_rsvps)
 
     assert_equal 2, result.count
-    assert_equal remote_rsvps.first, result.first[:fb_rsvp]
-    assert_equal people(:admin).id, result.first[:person].represented.id
-    assert_equal remote_rsvps.last, result.last[:fb_rsvp]
-    assert_equal people(:member1).id, result.last[:person].represented.id
+    assert_includes result.map{ |mapping| mapping[:fb_rsvp] }, remote_rsvps.first
+    assert_equal person_1.id, result.first[:person].represented.id
+    assert_includes result.map{ |mapping| mapping[:fb_rsvp] }, remote_rsvps.last
+    assert_equal person_2.id, result.last[:person].represented.id
   end
 
   test 'json_representation' do

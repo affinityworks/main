@@ -2,7 +2,7 @@ class ImportsController < ApplicationController
   before_action :authenticate_person!
   before_action :validate_facebook_auth
 
-  protect_from_forgery except: [:create] #TODO: Add the csrf token in react.
+  protect_from_forgery except: [:create_facebook_attendance, :delete_facebook_attendance] #TODO: Add the csrf token in react.
 
   def find
     identity = current_person.identities.facebook.first
@@ -46,6 +46,32 @@ class ImportsController < ApplicationController
         render json: matches.to_json
       end
     end
+  end
+
+  def create_facebook_attendance
+    event = FacebookEvent.find(params[:remote_event_id]).event
+    member = current_group.members.find(params[:person_id])
+    member.add_identifier('facebook', params[:facebook_id])
+
+    attendance = member.attendances.find_or_initialize_by(event_id: event.id).tap do |attendance|
+      attendance.origins.push(Origin.facebook)
+      attendance.invited_by_id ||= current_user.id
+      attendance.status ||= 'tentative'
+    end
+
+    member.save!
+  end
+
+  def delete_facebook_attendance
+    event = FacebookEvent.find(params[:remote_event_id]).event
+    member = current_group.members.find(params[:person_id])
+    member.remove_identifier('facebook')
+    attendance = member.attendances.find_by(event_id: event.id)
+    attendance.origins.delete(Origin.facebook)
+
+    attendance.delete if attendance.origins.empty?
+
+    member.save!
   end
 
   private

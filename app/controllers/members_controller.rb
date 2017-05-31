@@ -28,10 +28,6 @@ class MembersController < ApplicationController
     end
   end
 
-  def update
-    current_group.members.find(params[:id]).update_attributes(member_params)
-  end
-
   private
 
   def set_members
@@ -47,9 +43,5 @@ class MembersController < ApplicationController
     elsif params[:email]
       @members = @members.by_email(params[:email])
     end
-  end
-
-  def member_params
-    params.require(:member).permit(identifiers: [])
   end
 end
