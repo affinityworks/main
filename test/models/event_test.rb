@@ -67,9 +67,9 @@ class EventTest < ActiveSupport::TestCase
   end
 
   test '.start' do
-    ended_event = Event.create(start_date: 2.days.ago)
-    event_1 = Event.create(start_date: Date.today)
-    event_2 = Event.create(start_date: Date.today + 1.days)
+    ended_event = Event.create(start_date: 2.days.ago, status: 'Status')
+    event_1 = Event.create(start_date: Date.today, status: 'Status')
+    event_2 = Event.create(start_date: Date.today + 1.days, status: 'Status')
 
     assert_equal [event_1], Event.start(Date.today)
   end

@@ -333,6 +333,7 @@ DEPENDENCIES
   graphiql-rails
   graphql
   graphql-rails-resolver
+  httparty
   inherited_resources!
   jbuilder (~> 2.5)
   jquery-rails
