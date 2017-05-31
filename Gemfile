@@ -30,9 +30,6 @@ gem 'graphql'
 gem 'graphql-rails-resolver'
 gem 'graphiql-rails'
 
-#pretty layout for console
-gem 'pry'
-
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-heroku'
 gem 'wkhtmltopdf-binary-edge', '~> 0.12.4.0'
@@ -80,6 +77,7 @@ gem 'doorkeeper'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
+  gem 'awesome_print'
 end
 
 group :development do
@@ -91,7 +89,6 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
-
 end
 
 group :production do
@@ -101,6 +98,8 @@ end
 group :test do
   gem 'webmock'
 end
+
+
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
