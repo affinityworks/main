@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170524185701) do
+ActiveRecord::Schema.define(version: 20170531171246) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -234,7 +234,7 @@ ActiveRecord::Schema.define(version: 20170524185701) do
     t.integer  "total_accepted"
     t.integer  "total_tickets"
     t.float    "total_amount"
-    t.string   "status"
+    t.string   "status",                   default: "confirmed"
     t.string   "instructions"
     t.datetime "start_date"
     t.datetime "end_date"
@@ -249,11 +249,11 @@ ActiveRecord::Schema.define(version: 20170524185701) do
     t.integer  "modified_by_id"
     t.integer  "ticket_levels_id"
     t.integer  "address_id"
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
     t.string   "share_url"
     t.integer  "total_shares",             default: 0
-    t.text     "identifiers",              default: [],              array: true
+    t.text     "identifiers",              default: [],                       array: true
     t.index ["address_id"], name: "index_events_on_address_id", using: :btree
     t.index ["creator_id"], name: "index_events_on_creator_id", using: :btree
     t.index ["modified_by_id"], name: "index_events_on_modified_by_id", using: :btree
