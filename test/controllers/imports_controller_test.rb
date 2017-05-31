@@ -109,7 +109,7 @@ class ImportsControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'post #create_facebook_attendance with existing attenance' do
+  test 'post #create_facebook_attendance with existing attendance' do
     current_user = people(:organizer)
     remote_event = remote_events(:facebook)
     person = people(:member2)
@@ -126,7 +126,7 @@ class ImportsControllerTest < ActionDispatch::IntegrationTest
     assert_includes person.attendances.last.origins, Origin.facebook
   end
 
-  test 'post #create_facebook_attendance without existing attenance' do
+  test 'post #create_facebook_attendance without existing attendance' do
     current_user = people(:organizer)
     remote_event = remote_events(:facebook)
     person = Person.create(groups: current_user.groups)
@@ -143,5 +143,48 @@ class ImportsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_equal "facebook:#{facebook_id}", person.identifier('facebook')
     assert_includes person.attendances.last.origins, Origin.facebook
+  end
+
+  test 'delete #delete_facebook_attendance with only origin' do
+    current_user = people(:organizer)
+    remote_event = remote_events(:facebook)
+    person = people(:member2)
+    facebook_id = '1232345'
+    person.add_identifier('facebook', facebook_id)
+    person.attendances.first.origins.push(Origin.facebook)
+    person.save
+    sign_in current_user
+
+    assert_difference 'person.attendances.count', -1 do
+      delete delete_attendance_imports_url(remote_event_id: remote_event.id,
+        person_id: person.id
+      )
+      person.reload
+    end
+
+    assert_response :success
+    assert_nil person.identifier('facebook')
+  end
+
+  test 'delete #delete_facebook_attendance with multiple origins' do
+    current_user = people(:organizer)
+    remote_event = remote_events(:facebook)
+    person = people(:member2)
+    facebook_id = '1232345'
+    person.add_identifier('facebook', facebook_id)
+    person.attendances.first.origins.push(Origin.facebook)
+    person.attendances.first.origins.push(Origin.action_network)
+    person.save
+    sign_in current_user
+
+    assert_difference 'person.attendances.count', 0 do
+      delete delete_attendance_imports_url(remote_event_id: remote_event.id,
+        person_id: person.id
+      )
+      person.reload
+    end
+
+    assert_response :success
+    assert_nil person.identifier('facebook')
   end
 end

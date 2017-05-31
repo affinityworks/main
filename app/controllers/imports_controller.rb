@@ -2,7 +2,7 @@ class ImportsController < ApplicationController
   before_action :authenticate_person!
   before_action :validate_facebook_auth
 
-  protect_from_forgery except: [:create] #TODO: Add the csrf token in react.
+  protect_from_forgery except: [:create_facebook_attendance, :delete_facebook_attendance] #TODO: Add the csrf token in react.
 
   def find
     identity = current_person.identities.facebook.first
@@ -67,7 +67,7 @@ class ImportsController < ApplicationController
     member = current_group.members.find(params[:person_id])
     member.remove_identifier('facebook')
     attendance = member.attendances.find_by(event_id: event.id)
-    attendance.shift(Origin.facebook)
+    attendance.origins.delete(Origin.facebook)
 
     attendance.delete if attendance.origins.empty?
 

@@ -14,22 +14,22 @@ class AttendanceMatch extends Component {
   }
 
   handleClick() {
-    let identifiers;
-
+    const { remote_event_id } = this.props;
     const { person, fb_rsvp } = this.props.match;
     const { attributes } = person.data;
-    const facebook_id = fb_rsvp.id;
+    const person_id = person.data.id
 
     if (this.state.checked) {
-      identifiers = _.reject(attributes.identifiers, (identifier) => {
-        return identifier.indexOf('facebook') >= 0;
-      });
+      axios.delete(
+        `/events/imports/${remote_event_id}/attendances`,
+        { params: { person_id } });
     } else {
-      identifiers = attributes.identifiers.concat(`facebook:${facebook_id}`);
+      const facebook_id = fb_rsvp.id;
+
+      axios.post(`/events/imports/${remote_event_id}/attendances`, { facebook_id, person_id })
     }
 
     this.setState({ checked: !this.state.checked });
-    axios.put(`/members/${attributes.id}.json`, { member: { identifiers }});
   }
 
   render() {
