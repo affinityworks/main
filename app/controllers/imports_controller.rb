@@ -48,6 +48,32 @@ class ImportsController < ApplicationController
     end
   end
 
+  def create_facebook_attendance
+    event = FacebookEvent.find(params[:remote_event_id]).event
+    member = current_group.members.find(params[:person_id])
+    member.add_identifier('facebook', params[:facebook_id])
+
+    attendance = member.attendances.find_or_initialize_by(event_id: event.id).tap do |attendance|
+      attendance.origins.push(Origin.facebook)
+      attendance.invited_by_id ||= current_user.id
+      attendance.status ||= 'tentative'
+    end
+
+    member.save!
+  end
+
+  def delete_facebook_attendance
+    event = FacebookEvent.find(params[:remote_event_id]).event
+    member = current_group.members.find(params[:person_id])
+    member.remove_identifier('facebook')
+    attendance = member.attendances.find_by(event_id: event.id)
+    attendance.shift(Origin.facebook)
+
+    attendance.delete if attendance.origins.empty?
+
+    member.save!
+  end
+
   private
 
   def validate_facebook_auth

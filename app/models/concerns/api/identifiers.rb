@@ -27,6 +27,11 @@ module Api::Identifiers
     save
   end
 
+  def remove_identifier(system_prefix)
+    identifiers.delete(identifier(system_prefix))
+    save
+  end
+
   def identifier(system_prefix)
     identifiers.detect { |i| i["#{system_prefix}:"] }
   end

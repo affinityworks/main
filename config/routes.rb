@@ -63,6 +63,8 @@ Rails.application.routes.draw do
         collection do
           get :find
           get '/:remote_event_id/attendances', to: 'imports#attendances', as: 'attendances'
+          post '/:remote_event_id/attendances', to: 'imports#create_facebook_attendance', as: 'create_attendance'
+          delete '/:remote_event_id/attendances', to: 'imports#delete_facebook_attendance', as: 'delete_attendance'
         end
       end
     end
