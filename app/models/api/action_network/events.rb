@@ -45,7 +45,7 @@ module Api::ActionNetwork::Events
     new_events.each do |event|
       event.groups.push(group)
       event.organizer.groups.push(group)   if event.organizer
-      event.creator.groups.push(group)      if event.creator
+      event.creator.groups.push(group)     if event.creator
       event.modified_by.groups.push(group) if event.modified_by
     end
   end
@@ -56,5 +56,23 @@ module Api::ActionNetwork::Events
     if address && email = EmailAddress.where(address: address).first
       event.send("#{person_relation}=",  email.person)
     end
+  end
+
+  def self.merge_resources(old_resource, resource)
+    attributes = resource.attributes
+    location_attributes = resource.location.attributes
+
+    attributes.delete_if { |_, v| v.nil? }
+    location_attributes.delete_if { |_, v| v.nil? }
+
+    if old_resource.location
+      old_resource.location.update_attributes! location_attributes
+    else
+      old_resource.location = Address.new location_attributes
+    end
+
+    old_resource.update_attributes! attributes
+
+    old_resource
   end
 end

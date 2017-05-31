@@ -8,10 +8,6 @@ class Api::ActionNetwork::EventsTest < ActiveSupport::TestCase
       .with(headers: { 'OSDI-API-TOKEN' => group.an_api_key })
       .to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'events.json')))
 
-    stub_request(:get, "https://actionnetwork.org/api/v2/events").
-      with(:headers => {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'Osdi-Api-Token'=>'c96dc7a808ed80fca8bb4953f8ac10bf', 'User-Agent'=>'Ruby'}).
-      to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'events.json')))
-
     travel_to Time.zone.local(2001) do
       group.events.create!(
         title: 'TBD',
@@ -24,7 +20,7 @@ class Api::ActionNetwork::EventsTest < ActiveSupport::TestCase
     assert group.events.any_identifier('action_network:1efc3644-af25-4253-90b8-a0baf12dbd1e').exists
 
     assert_difference 'Event.count', 1 do
-      assert_difference 'EventAddress.count', 1 do
+      assert_difference 'EventAddress.count', 2 do
         Api::ActionNetwork::Events.import! group
       end
     end
@@ -34,14 +30,12 @@ class Api::ActionNetwork::EventsTest < ActiveSupport::TestCase
 
     new_event = group.events.find_by(name: 'March 14th Rally')
     assert new_event.organizer
+    assert new_event.creator
+    # assert new_event.modified_by
 
     assert new_event.location.venue.present?
     assert new_event.location.address_lines.present?
     assert new_event.location.locality.present?
-
-    # it should pull in from link but it doesn't so this doesn't work.
-    #assert group.events.find_by(name: 'March 14th Rally').creator
-    #assert group.events.find_by(name: 'March 14th Rally').modified_by
 
     march_14_event = group.events.where(name: 'March 14th Rally').first!
 
@@ -56,5 +50,21 @@ class Api::ActionNetwork::EventsTest < ActiveSupport::TestCase
 
     updated_event = Event.any_identifier('action_network:a3c724db-2799-49a6-970a-7c3c0844645d').first!
     assert_equal 'Teach in', updated_event.title, 'Should update title'
+
+    stub_request(:get, 'https://actionnetwork.org/api/v2/events')
+      .with(headers: { 'OSDI-API-TOKEN' => group.an_api_key })
+      .to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'events2.json')))
+
+      travel_to Time.zone.local(2001) do
+        new_event.updated_at = Time.now
+        new_event.save
+      end
+
+    Api::ActionNetwork::Events.import! group
+
+    new_event.reload
+
+    assert_equal 'March 15th Rally', new_event.name
+    assert_equal 'Lafayette Circle', new_event.location.venue
   end
 end
