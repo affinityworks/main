@@ -3,6 +3,8 @@ class MembersController < ApplicationController
   before_action :set_members
   before_action :authorize_group_access
 
+  protect_from_forgery except: [:update, :create] #TODO: Add the csrf token in react.
+
   def index
     respond_to do |format|
       format.html
@@ -26,13 +28,17 @@ class MembersController < ApplicationController
     end
   end
 
+  def update
+    current_group.members.find(params[:id]).update_attributes(member_params)
+  end
+
   private
 
   def set_members
     @members = current_group.members.page(params[:page])
 
     if params[:filter] then
-      #in the future we might want ot search all fields like address, town, city, state... etc.... 
+      #in the future we might want ot search all fields like address, town, city, state... etc....
       @members = @members.where('given_name ilike ? or family_name ilike ?', "%#{params[:filter]}%","%#{params[:filter]}%")
       #members = Member.arel_table
       #wildcard_search = "%#{params[:filter]}%"
@@ -41,5 +47,9 @@ class MembersController < ApplicationController
     elsif params[:email]
       @members = @members.by_email(params[:email])
     end
+  end
+
+  def member_params
+    params.require(:member).permit(identifiers: [])
   end
 end

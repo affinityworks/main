@@ -88,4 +88,24 @@ class ImportsControllerTest < ActionDispatch::IntegrationTest
     assert_equal remote_event_count_before + 1, RemoteEvent.count
     assert_equal remote_event_count_before + 1, FacebookEvent.count
   end
+
+  test 'get #attendances' do
+    current_user = people(:organizer)
+    remote_event = remote_events(:facebook)
+    sign_in current_user
+
+    remote_attendances = [{ 'name' => 'Test Admin', 'id' => '12345' }]
+    facebook_event_attendance = Minitest::Mock.new
+    facebook_event_attendance.expect :attendances, remote_attendances
+
+    Facebook::EventAttendance.stub :new, facebook_event_attendance do
+      get attendances_imports_url(remote_event_id: remote_event.id), as: :json
+      data = JSON.parse(@response.body)
+
+      assert_response :success
+      assert_equal 1, data.size
+      assert_equal 'Test Admin', data.first['fb_rsvp']['name']
+      assert_equal people(:admin).id , data.first['person']['data']['id'].to_i
+    end
+  end
 end

@@ -28,3 +28,13 @@
 .list-group-item.active span {
   color: white !important;
 }
+
+.check {
+  cursor: pointer;
+  text-shadow: 0px 0px 1px black;
+  color: white;
+}
+
+.check--active {
+  color: green;
+}

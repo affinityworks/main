@@ -9,4 +9,8 @@ class FacebookEvent < RemoteEvent
       end_date: remote_event['start_time']
     )
   end
+
+  def attendances(identity)
+    Facebook::EventAttendance.new(identity, uid).attendances
+  end
 end

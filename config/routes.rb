@@ -60,7 +60,10 @@ Rails.application.routes.draw do
   resources :events do
     collection do
       resources :imports, only: [:new, :create] do
-        get :find, on: :collection
+        collection do
+          get :find
+          get '/:remote_event_id/attendances', to: 'imports#attendances', as: 'attendances'
+        end
       end
     end
     resources :attendances

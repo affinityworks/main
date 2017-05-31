@@ -6,16 +6,21 @@ class Facebook::EventAttendance
     @api_agent = Facebook::ApiAgent.new
   end
 
+  #NOTE we need to add API pagination
+  def attendances
+    attending + interested + interested
+  end
+
   def attending
-    @api_agent.get("/#{@event_id}/attending", @options)
+    @api_agent.get("/#{@event_id}/attending", @options)['data']
   end
 
   def declined
-    @api_agent.get("/#{@event_id}/declined", @options)
+    @api_agent.get("/#{@event_id}/declined", @options)['data']
   end
 
   def interested
-    @api_agent.get("/#{@event_id}/interested", @options)
+    @api_agent.get("/#{@event_id}/interested", @options)['data']
   end
 
   def maybe
