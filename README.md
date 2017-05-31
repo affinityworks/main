@@ -15,6 +15,7 @@ This project is a work in progress and nothing which is useable by end users is 
 * Install Ruby 2.3.3
 * Install & run bundler
 * Install & run yarn
+* Build webpack -  rake react_on_rails:assets:webpack 
 * cd client && yarn install
 * Ubuntu: `sudo -u postgres createuser $USER -s`
 * `rake db:setup`

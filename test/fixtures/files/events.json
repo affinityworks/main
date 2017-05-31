@@ -111,6 +111,22 @@
                         }
                     }
                 ],
+                "_embedded": {
+                  "osdi:creator": {
+                    "given_name": "Evan",
+                    "family_name": "Henshaw-Plath",
+                    "identifiers": [
+                      "action_network:06d13a33-6824-493b-a922-95e793f269d4"
+                    ],
+                    "email_addresses": [
+                      {
+                        "primary": true,
+                        "address": "creator@email.com",
+                        "status": "subscribed"
+                      }
+                    ]
+                  }
+                },
                 "_links": {
                     "self": {
                         "href": "https://actionnetwork.org/api/v2/events/d91b4b2e-ae0e-4cd3-9ed7-d0ec501b0bc3"
@@ -211,6 +227,22 @@
                         "minutes": 1440
                     }
                 ],
+                "_embedded": {
+                  "osdi:creator": {
+                    "given_name": "Evan",
+                    "family_name": "Henshaw-Plath",
+                    "identifiers": [
+                      "action_network:06d13a33-6824-493b-a922-95e793f269d4"
+                    ],
+                    "email_addresses": [
+                      {
+                        "primary": true,
+                        "address": "creator@email.com",
+                        "status": "subscribed"
+                      }
+                    ]
+                  }
+                },
                 "_links": {
                     "self": {
                         "href": "https://actionnetwork.org/api/v2/events/1efc3644-af25-4253-90b8-a0baf12dbd1e"
@@ -288,6 +320,22 @@
                         "minutes": 1440
                     }
                 ],
+                "_embedded": {
+                  "osdi:creator": {
+                    "given_name": "Evan",
+                    "family_name": "Henshaw-Plath",
+                    "identifiers": [
+                      "action_network:06d13a33-6824-493b-a922-95e793f269d4"
+                    ],
+                    "email_addresses": [
+                      {
+                        "primary": true,
+                        "address": "creator@email.com",
+                        "status": "subscribed"
+                      }
+                    ]
+                  }
+                },
                 "_links": {
                     "self": {
                         "href": "https://actionnetwork.org/api/v2/events/a3c724db-2799-49a6-970a-7c3c0844645d"

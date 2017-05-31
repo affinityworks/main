@@ -50,7 +50,7 @@ class GroupTest < ActiveSupport::TestCase
     end
 
     assert_difference 'group.events.count', 2, 'Imports the events' do
-      assert_difference 'group.members.count', 5, 'Imports the membmers' do
+      assert_difference 'group.members.count', 6, 'Imports the membmers' do
         assert_difference 'Attendance.count', 2, 'Imports the attendances' do
           group.sync_with_action_network
         end

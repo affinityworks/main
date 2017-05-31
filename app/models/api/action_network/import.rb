@@ -32,7 +32,7 @@ module Api::ActionNetwork::Import
     client.get(uri: uri, as: 'application/json') do |request|
       request['OSDI-API-TOKEN'] = group.an_api_key
     end
-    
+
     yield(resource) if block_given?
     resource
   rescue => e

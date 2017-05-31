@@ -21,3 +21,19 @@ namespace :action_network_syncer do
     Rails.logger.debug '### EXPORT FINISHED ###'
   end
 end
+
+
+
+namespace :action_network do
+  task import: :environment do
+    Rake::Task["action_network_syncer:sync_groups"].execute
+  end
+
+  task sync: :environment do
+    Rake::Task["action_network_syncer:sync_groups"].execute
+  end
+
+  task export: :environment do
+    Rake::Task["action_network_syncer:export"].execute
+  end
+end
