@@ -81,6 +81,10 @@ class Person < ApplicationRecord
     false
   end
 
+  def will_save_change_to_email?
+    email_changed?
+  end
+
   def sanitize_email_addresses
     self.email_addresses = email_addresses.select(&:valid_address_format?)
   end
