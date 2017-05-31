@@ -56,7 +56,7 @@ gem 'jquery-ui-rails', '~> 5.0.4'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 gem 'roar'
-gem 'react_on_rails'
+gem 'react_on_rails', '6.8.0'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
