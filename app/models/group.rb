@@ -14,6 +14,8 @@ class Group < ApplicationRecord
   belongs_to :creator, class_name: "Person"
   belongs_to :modified_by, class_name: "Person"
 
+  #validates :an_api_key, uniqueness: true
+
   def before_create
     self.modified_by = self.creator
   end
