@@ -22,7 +22,7 @@ two:
   featured_image_url: MyString
   creator_id: 2
   modified_by_id: 2
-  an_api_key: 'test-token'
+  an_api_key: 'test-token-2'
 
 test:
   id: 3

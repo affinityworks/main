@@ -1,4 +1,7 @@
 class Group < ApplicationRecord
+
+  validates :an_api_key, uniqueness: true
+
   has_many :memberships
   has_many :members, through: :memberships, source: :person
 

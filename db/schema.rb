@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170524185701) do
+ActiveRecord::Schema.define(version: 20170531181906) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -341,6 +341,7 @@ ActiveRecord::Schema.define(version: 20170524185701) do
     t.datetime "updated_at",         null: false
     t.string   "an_api_key"
     t.datetime "synced_at"
+    t.index ["an_api_key"], name: "index_groups_on_an_api_key", unique: true, using: :btree
     t.index ["creator_id"], name: "index_groups_on_creator_id", using: :btree
     t.index ["modified_by_id"], name: "index_groups_on_modified_by_id", using: :btree
   end
@@ -357,6 +358,15 @@ ActiveRecord::Schema.define(version: 20170524185701) do
     t.integer "group_id"
     t.index ["group_id"], name: "index_groups_share_pages_on_group_id", using: :btree
     t.index ["share_page_id"], name: "index_groups_share_pages_on_share_page_id", using: :btree
+  end
+
+  create_table "identities", force: :cascade do |t|
+    t.string   "provider"
+    t.string   "uid"
+    t.integer  "person_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.string   "access_token"
   end
 
   create_table "memberships", force: :cascade do |t|
@@ -472,8 +482,6 @@ ActiveRecord::Schema.define(version: 20170524185701) do
     t.inet     "last_sign_in_ip"
     t.text     "identifiers",            default: [],                 array: true
     t.boolean  "admin",                  default: false
-    t.string   "provider"
-    t.string   "uid"
     t.boolean  "synced",                 default: true
     t.index ["reset_password_token"], name: "index_people_on_reset_password_token", unique: true, using: :btree
   end
@@ -610,6 +618,16 @@ ActiveRecord::Schema.define(version: 20170524185701) do
     t.datetime "updated_at", null: false
     t.index ["event_id"], name: "index_reminders_on_event_id", using: :btree
     t.index ["person_id"], name: "index_reminders_on_person_id", using: :btree
+  end
+
+  create_table "remote_events", force: :cascade do |t|
+    t.string   "type"
+    t.string   "name"
+    t.string   "description"
+    t.string   "uid"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.integer  "event_id"
   end
 
   create_table "responses", force: :cascade do |t|
