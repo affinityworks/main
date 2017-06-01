@@ -11,6 +11,7 @@ import MemberReducer from './MemberReducer';
 
 const CurrentGroupReducer = (state = {}) => ( state );
 const CurrentUserReducer = (state = {}) => ( state );
+const CurrentRole = (state = {}) => ( state );
 
 export default combineReducers({
   events: EventsReducer,
@@ -22,5 +23,6 @@ export default combineReducers({
   attendances: AttendancesReducer,
   newAttendance: AttendanceFormReducer,
   currentGroup: CurrentGroupReducer,
-  currentUser: CurrentUserReducer
+  currentUser: CurrentUserReducer,
+  currentRole: CurrentRole
 });

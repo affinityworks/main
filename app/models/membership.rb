@@ -5,9 +5,7 @@ class Membership < ApplicationRecord
   validates :person_id, uniqueness: { scope: :group_id }
   validates :group_id, uniqueness: { scope: :person_id }
 
-  enum role: [:member, :organizer]
+  scope :any_organizer, -> () { where(role: ['organizer', 'national_organizer']) }
 
-  scope :organizer, -> () { where(role: 'organizer') }
-  scope :member, -> () { where(role: 'member') }
-
+  enum role: [:member, :organizer, :national_organizer]
 end

@@ -46,8 +46,8 @@ class Members extends Component {
 
     return (
       <div>
-        <br />
         <Nav activeTab='members'/>
+
         <div className='row'>
           <div className='col-6'>
             <MembersFilter onSearchSubmit={this.filterMembers} filter={filter} />

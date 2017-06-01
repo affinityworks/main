@@ -16,4 +16,8 @@ organizer = Person.create(family_name: 'Organizer', given_name: 'Test', password
 organizer_email_address = EmailAddress.create(address: 'organizer@member.com', primary: true, person_id: organizer.id)
 Membership.create(person: organizer, group: group, role: 'organizer')
 
+national_organizer = Person.create(family_name: 'Organizer', given_name: 'National', password: 'password')
+organizer_email_address = EmailAddress.create(address: 'norganizer@member.com', primary: true, person_id: national_organizer.id)
+Membership.create(person: national_organizer, group: group, role: 'national_organizer')
+
 group.sync_with_action_network

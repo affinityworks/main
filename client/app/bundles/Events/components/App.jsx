@@ -15,9 +15,10 @@ class App extends Component {
   render() {
     const currentUser = this.props.current_user;
     const currentGroup = this.props.current_group;
+    const currentRole = this.props.current_role;
 
     const storeWithMiddleware = createStore(reducers, {
-      currentUser, currentGroup
+      currentUser, currentGroup, currentRole
     }, applyMiddleware(ReduxPromise, thunk));
 
     return (
