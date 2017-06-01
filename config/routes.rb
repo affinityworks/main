@@ -75,7 +75,8 @@ Rails.application.routes.draw do
   resources :members do
     resources :events
   end
-  resources :dashboard, only: [:index]
+
+  get '/dashboard', to: 'dashboard#show', as: 'dashboard'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
