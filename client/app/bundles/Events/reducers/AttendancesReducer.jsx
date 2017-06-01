@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import { FETCH_ATTENDANCES, UPDATE_ATTENDANCE } from '../actions/types';
+import { FETCH_ATTENDANCES, UPDATE_ATTENDANCE, ATTENDANCE_CREATE_SUCCESS } from '../actions/types';
 
 const INITIAL_STATE = {
   attendances: [],
