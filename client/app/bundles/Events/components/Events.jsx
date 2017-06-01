@@ -43,11 +43,15 @@ class Events extends Component {
   }
 
   linkWithFacebook() {
-    return (
-      <a href='/admin/auth/facebook' className='btn btn-facebook'>
-        Import Event From Facebook
-      </a>
-    )
+    const {current_user} = this.props
+    //this should be fixed as it doesnt' work, curent_user is always nil
+    if (current_user && current_user.admin) {
+      return (
+        <a href='/admin/auth/facebook' className='btn btn-facebook'>
+          Import Event From Facebook
+        </a>
+      )
+    }
   }
 
   render() {
@@ -67,8 +71,7 @@ class Events extends Component {
             <EventsFilter onSearchSubmit={this.filterEvents} filter={filter} />
           </div>
           <div className='col-3 offset-3 text-right'>
-            { //this.linkWithFacebook()
-             }
+            { this.linkWithFacebook() }
           </div>
         </div>
         <br />
