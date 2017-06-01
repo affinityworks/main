@@ -21,7 +21,7 @@ class ImportsController < ApplicationController
   end
 
   def create
-    facebook_event = FacebookEvent.initialize_for_event(params[:event_id], params[:remote_event])
+    facebook_event = FacebookEvent.find_or_initialize_for_event(params[:event_id], params[:remote_event])
     respond_to do |format|
       format.json do
         if facebook_event.save

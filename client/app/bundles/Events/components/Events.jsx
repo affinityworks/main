@@ -67,7 +67,8 @@ class Events extends Component {
             <EventsFilter onSearchSubmit={this.filterEvents} filter={filter} />
           </div>
           <div className='col-3 offset-3 text-right'>
-            { this.linkWithFacebook() }
+            { //this.linkWithFacebook()
+             }
           </div>
         </div>
         <br />
