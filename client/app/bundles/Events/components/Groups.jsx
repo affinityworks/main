@@ -40,6 +40,7 @@ class Groups extends Component {
     return (
       <div>
         <Nav activeTab='groups' />
+
         <table className='table table-striped'>
           <thead>
             <tr>
