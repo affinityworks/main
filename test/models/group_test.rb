@@ -22,6 +22,10 @@ class GroupTest < ActiveSupport::TestCase
       .with(headers: { 'OSDI-API-TOKEN' => group.an_api_key })
       .to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'events.json')))
 
+    stub_request(:get, 'https://actionnetwork.org/api/v2/events?page=2')
+      .with(headers: { 'OSDI-API-TOKEN' => group.an_api_key })
+      .to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'events_page_2.json')))
+
     stub_request(:get, 'https://actionnetwork.org/api/v2/people')
       .with(headers: { 'OSDI-API-TOKEN' => group.an_api_key })
       .to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'people.json')))
@@ -34,6 +38,7 @@ class GroupTest < ActiveSupport::TestCase
       1efc3644-af25-4253-90b8-a0baf12dbd1e
       a3c724db-2799-49a6-970a-7c3c0844645d
       d91b4b2e-ae0e-4cd3-9ed7-d0ec501b0bc3
+      d91b4b2e-ae0e-4cd3-9ed7-d0ec501b0bd4
     ).each do |event_id|
       stub_request(:get, "https://actionnetwork.org/api/v2/events/#{event_id}/attendances")
         .with(headers: { 'OSDI-API-TOKEN' => group.an_api_key })
@@ -49,7 +54,7 @@ class GroupTest < ActiveSupport::TestCase
       to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'person.json')))
     end
 
-    assert_difference 'group.events.count', 2, 'Imports the events' do
+    assert_difference 'group.events.count', 3, 'Imports the events' do
       assert_difference 'group.members.count', 6, 'Imports the membmers' do
         assert_difference 'Attendance.count', 2, 'Imports the attendances' do
           group.sync_with_action_network
