@@ -1,6 +1,6 @@
 import React from 'react';
 
-const EventAddress = ({ location }) => (
+const Address = ({ location }) => (
   <div>
     <div> {location.address_lines && location.address_lines.join(' ')}</div>
     <div className='address-1'>{location.venue}</div>
@@ -8,4 +8,4 @@ const EventAddress = ({ location }) => (
   </div>
 );
 
-export default EventAddress;
+export default Address;

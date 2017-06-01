@@ -6,7 +6,6 @@ import queryString from 'query-string';
 import Group from './Group';
 import { fetchGroups } from '../actions';
 import Pagination from './Pagination';
-import Nav from './Nav';
 
 class Groups extends Component {
   componentWillMount() {
@@ -36,22 +35,19 @@ class Groups extends Component {
   }
 
   render() {
+    console.log('groups', this.props.groups);
     return (
       <div>
-        <Nav activeTab='groups' />
-
-        <table className='table table-striped'>
+        <table className='table table--fixed'>
           <thead>
             <tr>
-              <th>Name</th>
+              <th>Group Name</th>
               <th>Location</th>
-              <th>Description</th>
-              <th>Public Contact</th>
-              <th>Leaders</th>
-              <th>Internal Notes</th>
-              <th>Status</th>
+              <th>Tags</th>
+              <th>Owner</th>
             </tr>
           </thead>
+
           <tbody>
             {this.props.groups.map(group => <Group key={group.id} group={group} />)}
           </tbody>

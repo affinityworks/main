@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Groups from './Groups';
+import Groups from '../components/Groups';
 
 class Profile extends Component {
   constructor(props) {
