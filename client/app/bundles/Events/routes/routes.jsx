@@ -11,9 +11,12 @@ import Profile from '../components/Profile';
 import MemberDetail from '../components/MemberDetail';
 import EventImport from '../components/EventImport';
 import AttendanceMatching from '../containers/AttendanceMatching';
+import Dashboard from '../containers/Dashboard';
 
 export default (
   <Switch>
+    <Route path='/dashboard' component={Dashboard} />
+
     <Route path='/events/imports/new' component={EventImport} />
     <Route path='/events/imports/:id/attendances' component={AttendanceMatching} />
 
