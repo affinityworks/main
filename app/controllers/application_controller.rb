@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
-  helper_method :current_group
+  helper_method :current_group, :current_role
 
   def current_user
     current_person
@@ -9,6 +9,12 @@ class ApplicationController < ActionController::Base
 
   def current_group
     current_person.groups.first
+  end
+
+  def current_role
+    Membership.where(
+      person_id: current_person.id, group_id: current_group.id
+    ).first.role
   end
 
   def validate_admin_permission

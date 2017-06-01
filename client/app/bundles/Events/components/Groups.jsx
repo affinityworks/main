@@ -6,6 +6,7 @@ import queryString from 'query-string';
 import Group from './Group';
 import { fetchGroups } from '../actions';
 import Pagination from './Pagination';
+import Nav from './Nav';
 
 class Groups extends Component {
   componentWillMount() {
@@ -37,6 +38,8 @@ class Groups extends Component {
   render() {
     return (
       <div>
+        <Nav activeTab='groups' />
+
         <table className='table table-striped'>
           <thead>
             <tr>

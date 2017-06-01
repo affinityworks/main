@@ -17,7 +17,7 @@ class Ability
 
       can :manage, Group do
         return true if person.admin?
-        person.memberships.organizer.collect(&:group).include?(current_group)
+        person.memberships.any_organizer.collect(&:group).include?(current_group)
       end
     end
   end
