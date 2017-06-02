@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+import { eventsPath } from '../utils/Pathnames';
+
 class AttendanceMatch extends Component {
   constructor(props) {
     super(props);
@@ -21,12 +23,12 @@ class AttendanceMatch extends Component {
 
     if (this.state.checked) {
       axios.delete(
-        `/events/imports/${remote_event_id}/attendances`,
+        `${eventsPath()}/imports/${remote_event_id}/attendances`,
         { params: { person_id } });
     } else {
       const facebook_id = fb_rsvp.id;
 
-      axios.post(`/events/imports/${remote_event_id}/attendances`, { facebook_id, person_id })
+      axios.post(`${eventsPath()}/imports/${remote_event_id}/attendances`, { facebook_id, person_id })
     }
 
     this.setState({ checked: !this.state.checked });

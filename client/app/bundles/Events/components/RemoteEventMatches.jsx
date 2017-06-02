@@ -11,8 +11,11 @@ class RemoteEventMatches extends Component {
   renderEvent(event) {
     const { attributes } = event;
     return (
-      <div className={`list-group-item list-group-item-action ${this.props.selected === event.id ? 'active' : ''}`}
-        key={event.id} onClick={ev => this.props.onClick(event.id)} >
+      <div
+        className={`list-group-item list-group-item-action ${this.props.selected === event.id ? 'active' : ''}`}
+        key={event.id}
+        onClick={ev => this.props.onClick(event.id)} >
+
         <span className='text-primary'>{attributes.title}</span>
         <span>{this.startEndTime(attributes)}</span>
         {this.eventLocation(attributes)}

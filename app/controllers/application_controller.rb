@@ -23,19 +23,13 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    puts resource
-    puts 'walalal'
     if session[:redirect_uri]
-      puts 'walalal1'
       session[:redirect_uri]
     elsif resource.admin?
-      puts 'walalal2'
       admin_dashboard_path
     elsif can? :manage, current_group
-      puts 'walalal3'
       group_dashboard_path(current_group.id)
     else
-      puts 'walalal4'
       group_url(current_group.id)
     end
   end
