@@ -21,6 +21,4 @@ class MembersControllerTest < ActionDispatch::IntegrationTest
     get members_url, as: :json
     assert_response 302
   end
-
-
 end

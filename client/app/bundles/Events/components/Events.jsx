@@ -5,11 +5,8 @@ import { connect } from 'react-redux';
 
 import Event from './Event';
 import EventsFilter from './EventsFilter';
-import SortToggle from './SortToggle';
 import Pagination from './Pagination';
-import Nav from './Nav';
-import history from '../history';
-import { addParamToQuery, removeParamFromQuery } from '../utils';
+
 import { fetchEvents } from '../actions';
 
 class Events extends Component {
@@ -17,6 +14,9 @@ class Events extends Component {
     super(props);
 
     this.filterEvents = this.filterEvents.bind(this);
+    this.renderEvents = this.renderEvents.bind(this);
+    this.groupColumn = this.groupColumn.bind(this);
+    this.printColumn = this.printColumn.bind(this);
   }
 
   componentWillMount() {
@@ -54,30 +54,56 @@ class Events extends Component {
     }
   }
 
+  groupColumn() {
+    if (this.props.showGroupName)
+      return <th>Group Name</th>
+  }
+
+  printColumn() {
+    if (this.props.showPrintIcon)
+      return <th></th>
+  }
+
+  renderEvents() {
+    return this.props.events.map(event => (<Event
+      key={event.id} event={event}
+      showGroupName={this.props.showGroupName}
+      showPrintIcon={this.props.showPrintIcon}
+    />))
+  }
+
   render() {
     const { search } = this.props.location;
     const { filter, direction } = queryString.parse(search);
 
     return (
       <div>
-        <Nav activeTab='events'/>
         <div className='row'>
-
-          <div className='col-1'>
-            <SortToggle search={search} title='Date' currentDirection={direction} />
-          </div>
 
           <div className='col-5'>
             <EventsFilter onSearchSubmit={this.filterEvents} filter={filter} />
           </div>
-          <div className='col-3 offset-3 text-right'>
+          <div className='col-3 offset-4 text-right'>
             { this.linkWithFacebook() }
           </div>
         </div>
+
         <br />
-        <div className='list-group'>
-          {this.props.events.map(event => <Event key={event.id} event={event} />)}
-        </div>
+        <table className='table table--fixed'>
+          <thead>
+            <tr>
+              <th>Event Name</th>
+              <th>Date</th>
+              <th>Location</th>
+              { this.groupColumn() }
+              <th>RSVPs</th>
+              { this.printColumn() }
+            </tr>
+          </thead>
+          <tbody>
+            {this.renderEvents()}
+          </tbody>
+        </table>
         <br />
         {this.renderPagination()}
       </div>

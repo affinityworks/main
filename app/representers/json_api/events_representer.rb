@@ -14,6 +14,8 @@ class JsonApi::EventsRepresenter < Roar::Decorator
     property :attended_count
     property :browser_url
 
+    property :group, decorator: JsonApi::GroupsRepresenter, class: Group
+
     property :location, decorator: Api::Resources::AddressRepresenter, class: EventAddress
   end
 end
