@@ -6,9 +6,9 @@ import { membersPath, eventsPath, affiliatesPath } from '../utils/Pathnames';
 
 class Nav extends Component {
   renderGroupsTab() {
-    const { activeTab } = this.props;
+    const { activeTab, root } = this.props;
 
-    if (this.isNationalOrgnizer())
+    if (this.isNationalOrgnizer() && root)
       return <NavItem
         title='Groups'
         path={affiliatesPath()}
@@ -21,7 +21,7 @@ class Nav extends Component {
   }
 
   render() {
-    const { activeTab } = this.props;
+    const { activeTab, root } = this.props;
 
     return (
       <div>
@@ -29,13 +29,13 @@ class Nav extends Component {
           {this.renderGroupsTab()}
 
           <NavItem
-            title={`${this.isNationalOrgnizer() ? 'All' : ''} Members`}
+            title={`${this.isNationalOrgnizer() && root ? 'All' : ''} Members`}
             path={membersPath()}
             active={activeTab === 'members'}
           />
 
           <NavItem
-            title={`${this.isNationalOrgnizer() ? 'All' : ''} Events`}
+            title={`${this.isNationalOrgnizer() && root ? 'All' : ''} Events`}
             path={eventsPath()}
             active={activeTab === 'events'}
           />

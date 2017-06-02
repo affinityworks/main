@@ -35,7 +35,6 @@ class Groups extends Component {
   }
 
   render() {
-    console.log('groups', this.props.groups);
     return (
       <div>
         <table className='table table--fixed'>
