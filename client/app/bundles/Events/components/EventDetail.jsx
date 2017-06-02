@@ -7,6 +7,7 @@ import Address from './Address';
 import { fetchEvent } from '../actions';
 import GoogleMap from './GoogleMap';
 import { formatDateTime } from '../utils';
+import { eventsPath } from '../utils/Pathnames';
 
 class EventDetail extends Component {
   componentWillMount() {
@@ -54,7 +55,7 @@ class EventDetail extends Component {
         {this.showAddress()}
         <br/>
         <div style={{width: '100%', height: '400px'}}>{this.showMap()}</div>
-        <Link to='/events/'>
+        <Link to={`${eventsPath()}`}>
           <button className='btn btn-primary'>Back to Events</button>
         </Link>
       </div>

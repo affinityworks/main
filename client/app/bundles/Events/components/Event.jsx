@@ -4,6 +4,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { formatDate } from '../utils';
 
+import { eventsPath, attendancesPath, membersPath } from '../utils/Pathnames';
+
 export default class Event extends Component {
   locationName() {
     const { location } = this.props.event.attributes;
@@ -19,7 +21,7 @@ export default class Event extends Component {
       const primaryEmailAddress = organizer.data.attributes['primary-email-address'];
       const { name } = organizer.data.attributes;
 
-      return <Link to={`/members/${organizer.data['id']}`}>{name}</Link>
+      return <Link to={`${membersPath()}/${organizer.data['id']}`}>{name}</Link>
     }
   }
 
@@ -33,21 +35,21 @@ export default class Event extends Component {
         </div>
 
         <div className='col-7'>
-          <Link to={`/events/${id}`}> {attributes.name || attributes.title} </Link>
+          <Link to={`${eventsPath()}/${id}`}> {attributes.name || attributes.title} </Link>
           <br />
           <span> {`${this.locationName() || 'Location Unknown' }`} </span>
           {this.renderOrganizer()}
         </div>
 
         <div className='col-2 text-center'>
-          <Link className='event_list-toggle' to={`/events/${id}/attendances`}>
+          <Link className='event_list-toggle' to={`${attendancesPath(id)}`}>
             <button className='btn btn-primary'>
               {`${rsvpCount || attributes['rsvp-count']} RSVPs`}
             </button>
           </Link>
         </div>
         <div className='col-1 text-center'>
-          <a href={`/events/${id}/attendances.pdf`} target="_blank">
+          <a href={`${attendancesPath(id)}`} target="_blank">
             <i className='fa fa-print fa-2x'>
             </i>
           </a>

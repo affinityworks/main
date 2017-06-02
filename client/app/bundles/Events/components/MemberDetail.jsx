@@ -5,6 +5,7 @@ import Nav from './Nav';
 import axios from 'axios';
 import Event from './Event';
 import { fetchMember, fetchMembersEvents } from '../actions';
+import { membersPath } from '../utils/Pathnames';
 
 class MemberDetail extends Component {
   componentWillMount() {
@@ -42,7 +43,7 @@ class MemberDetail extends Component {
         <br />
         {this.renderPagination()}
         <br />
-        <Link to='/members'>
+        <Link to={membersPath()}>
           <button className='btn btn-primary'>Back to Members</button>
         </Link>
       </div>

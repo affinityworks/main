@@ -15,21 +15,22 @@ import Dashboard from '../containers/Dashboard';
 
 export default (
   <Switch>
-    <Route path='/dashboard' component={Dashboard} />
+    <Route path='/groups/:groupId/dashboard' component={Dashboard} />
 
-    <Route path='/events/imports/new' component={EventImport} />
-    <Route path='/events/imports/:id/attendances' component={AttendanceMatching} />
+    <Route path='/groups/:groupId/events/imports/new' component={EventImport} />
+    <Route path='/groups/:groupId/events/imports/:id/attendances' component={AttendanceMatching} />
 
-    <Route path='/events/:id/attendances' component={Attendances} />
+    <Route path='/groups/:groupId/events/:id/attendances' component={Attendances} />
 
-    <Route path='/events/:id' component={EventDetail} />
-    <Route path='/events' component={Events} />
+    <Route path='/groups/:groupId/events/:id' component={EventDetail} />
+    <Route path='/groups/:groupId/events' component={Events} />
 
-    <Route path='/members/:id' component={MemberDetail} />
-    <Route path='/members' component={Members} />
+    <Route path='/groups/:groupId/members/:id' component={MemberDetail} />
+    <Route path='/groups/:groupId/members' component={Members} />
 
-    <Route path='/groups/:id' component={GroupDetail} />
-    <Route path='/groups' component={Groups} />
-    <Route path='/profile/' component={Profile} />
+    <Route path='/groups/:groupId/profile/' component={Profile} />
+
+    <Route path='/groups/:groupId/' component={GroupDetail} />
+    <Route path='/groups/:groupId/affiliates' component={Groups} />
   </Switch>
 );
