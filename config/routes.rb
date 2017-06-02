@@ -77,6 +77,8 @@ Rails.application.routes.draw do
   end
   resources :dashboard, only: [:index]
 
+  get '/dashboard', to: 'dashboard#show', as: 'dashboard'
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   namespace :api, defaults: { format: 'json' } do
