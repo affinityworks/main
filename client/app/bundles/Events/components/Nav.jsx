@@ -5,9 +5,9 @@ import NavItem from './NavItem';
 
 class Nav extends Component {
   renderGroupsTab() {
-    const { activeTab } = this.props;
+    const { activeTab, root } = this.props;
 
-    if (this.isNationalOrgnizer())
+    if (this.isNationalOrgnizer() && root)
       return <NavItem title='Groups' path='/groups' active={activeTab === 'groups'} />
   }
 
@@ -16,7 +16,7 @@ class Nav extends Component {
   }
 
   render() {
-    const { activeTab } = this.props;
+    const { activeTab, root } = this.props;
 
     return (
       <div>
@@ -24,13 +24,13 @@ class Nav extends Component {
           {this.renderGroupsTab()}
 
           <NavItem
-            title={`${this.isNationalOrgnizer() ? 'All' : ''} Members`}
+            title={`${this.isNationalOrgnizer() && root ? 'All' : ''} Members`}
             path='/members'
             active={activeTab === 'members'}
           />
 
           <NavItem
-            title={`${this.isNationalOrgnizer() ? 'All' : ''} Events`}
+            title={`${this.isNationalOrgnizer() && root ? 'All' : ''} Events`}
             path='/events'
             active={activeTab === 'events'}
           />

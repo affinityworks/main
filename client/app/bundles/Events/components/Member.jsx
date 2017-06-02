@@ -2,16 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Member = (props) => {
-  if(!props.member) { return null }
+  const { member } = props;
+  if(!member) { return null }
 
   const emailAddressLink = () => {
-    const email = props.member['primary-email-address']
+    const email = member['primary-email-address']
     if (email)
       return <a href={`mailto:'${email}'`} className='fa fa-envelope-o'/>
   }
 
   const localityAndRegion = () => {
-    const address = props.member['primary-personal-address']
+    const address = member['primary-personal-address']
     if (address) {
       if (address['locality'] && address['region']) {
         return <span>{address['locality']}, {address['region']}</span>
@@ -27,21 +28,18 @@ const Member = (props) => {
       }
     }
     return <span></span>
-    //const region = props.member['primary-personal-address']['region']
-    //if (locality && region)
-    //  return {locality}
   }
 
   return(
     <tr>
       <td>
         <Link to={`/members/${props.id}`}>
-          {props.member['given-name']} {props.member['family-name']}
+          {member['given-name']} {member['family-name']}
         </Link>
       </td>
-      <td>{props.member['primary-phone-number']}</td>
+      <td>{member['primary-phone-number']}</td>
       <td>{ localityAndRegion() }</td>
-      <td>{props.member['attended-events-count']}</td>
+      <td>{props.role}</td>
       <td>{ emailAddressLink() }</td>
     </tr>
   )

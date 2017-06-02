@@ -7,9 +7,9 @@ class Groups extends Component {
   render() {
     return (
       <div>
-        <Nav activeTab='groups' />
+        <Nav activeTab='groups' root />
 
-        <GroupsList location={this.props.location}/>
+        <GroupsList location={this.props.location} />
       </div>
     );
   }
