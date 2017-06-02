@@ -78,6 +78,7 @@ Rails.application.routes.draw do
     end
   end
   resources :dashboard, only: [:index]
+  resources :memberships, only: [:index]
 
   resources :profile, only: [:index]
 
