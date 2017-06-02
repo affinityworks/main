@@ -33,8 +33,8 @@
                 ],
                 "origin_system": "OSDI Sample System",
                 "created_date": "2014-03-20T21:04:31Z",
-                "modified_date": "2017-03-20T21:04:31Z",
-                "name": "March 15th Rally",
+                "modified_date": "2014-03-20T21:04:31Z",
+                "name": "March 16th Rally",
                 "title": "Rally for Justice",
                 "description": "<p>Join us in the park to rally for justice!</p>",
                 "summary": "Join us in the park to rally for justice!",
@@ -145,6 +145,215 @@
                     },
                     "osdi:record_attendance_helper": {
                         "href": "https://actionnetwork.org/api/v2/events/d91b4b2e-ae0e-4cd3-9ed7-d0ec501b0bc3/record_attendance_helper"
+                    }
+                }
+            },
+            {
+                "identifiers": [
+                    "action_network:1efc3644-af25-4253-90b8-a0baf12dbd1e"
+                ],
+                "origin_system": "OSDI Sample System",
+                "created_date": "2014-03-20T20:44:13Z",
+                "modified_date": "2014-03-20T20:44:13Z",
+                "title": "House Party for Progress",
+                "description": "<p>Come to my small house party. We'll discuss how we can make more progress.</p>",
+                "instructions": "<p>This is an invite-only event, but feel free to bring a friend!</p>",
+                "browser_url": "http://actionnetwork.org/events/party-for-progress",
+                "type": "ticketed",
+                "ticket_levels": [
+                    {
+                        "title": "General Admission",
+                        "description": "Gets you into the event and all activities.",
+                        "amount": 5,
+                        "currency": "USD",
+                        "limit": 20,
+                        "total_tickets": 10,
+                        "total_amount": 50
+                    },
+                    {
+                        "title": "VIP",
+                        "description": "Gets you into the event and all activities, plus a special meet and greet with the candidate.",
+                        "amount": 50,
+                        "currency": "USD",
+                        "limit": 5,
+                        "total_tickets": 2,
+                        "total_amount": 100
+                    }
+                ],
+                "total_tickets": 12,
+                "total_amount": 150,
+                "total_accepted": 3,
+                "status": "tentative",
+                "start_date": "2015-01-05T19:00:00Z",
+                "end_date": "2015-01-05T21:00:00Z",
+                "all_day": false,
+                "guests_can_invite_others": false,
+                "capacity": 10,
+                "transparence": "opaque",
+                "visibility": "private",
+                "location": {
+                    "venue": "My House",
+                    "address_lines": [
+                        "1600 Pennsylvania Ave. NW"
+                    ],
+                    "locality": "Washington",
+                    "region": "DC",
+                    "postal_code": "20001",
+                    "country": "US",
+                    "language": "EN",
+                    "location": {
+                        "latitude": 38.9002101,
+                        "longitude": -77.0359252,
+                        "accuracy": "Rooftop"
+                    }
+                },
+                "osdi:organizer": {
+                  "given_name": "Jane",
+                  "family_name": "Doe",
+                  "identifiers": [
+                    "action_network:1efc3644-af25-4253-90b8-a0baf12dbd1e"
+                  ],
+                  "email_addresses": [
+                    {
+                      "primary": true,
+                      "address": "janedoe@mail.com",
+                      "status": "subscribed"
+                    }
+                  ]
+                },
+                "reminders": [
+                    {
+                        "method": "email",
+                        "minutes": 1440
+                    }
+                ],
+                "_embedded": {
+                  "osdi:creator": {
+                    "given_name": "Evan",
+                    "family_name": "Henshaw-Plath",
+                    "identifiers": [
+                      "action_network:06d13a33-6824-493b-a922-95e793f269d4"
+                    ],
+                    "email_addresses": [
+                      {
+                        "primary": true,
+                        "address": "creator@email.com",
+                        "status": "subscribed"
+                      }
+                    ]
+                  }
+                },
+                "_links": {
+                    "self": {
+                        "href": "https://actionnetwork.org/api/v2/events/1efc3644-af25-4253-90b8-a0baf12dbd1e"
+                    },
+                    "osdi:attendances": {
+                        "href": "https://actionnetwork.org/api/v2/events/1efc3644-af25-4253-90b8-a0baf12dbd1e/attendances"
+                    },
+                    "osdi:creator": {
+                        "href": "https://actionnetwork.org/api/v2/people/65345d7d-cd24-466a-a698-4a7686ef684f"
+                    },
+                    "osdi:organizer": {
+                        "href": "https://actionnetwork.org/api/v2/people/8a625981-67a4-4457-8b55-2e30b267b2c2"
+                    },
+                    "osdi:modified_by": {
+                        "href": "https://actionnetwork.org/api/v2/people/c945d6fe-929e-11e3-a2e9-12313d316c29"
+                    },
+                    "osdi:record_attendance_helper": {
+                        "href": "https://actionnetwork.org/api/v2/events/1efc3644-af25-4253-90b8-a0baf12dbd1e/record_attendance_helper"
+                    }
+                }
+            },
+            {
+                "identifiers": [
+                    "action_network:a3c724db-2799-49a6-970a-7c3c0844645d"
+                ],
+                "origin_system": "OSDI Sample System",
+                "created_date": "2014-03-20T20:44:13Z",
+                "modified_date": "2015-04-20T20:19:09Z",
+                "title": "Teach in",
+                "description": "Educate yourself",
+                "instructions": "<p>This is an invite-only event, but feel free to bring a friend!</p>",
+                "browser_url": "http://actionnetwork.org/events/party-for-progress",
+                "type": "open",
+                "status": "tentative",
+                "start_date": "2015-01-05T19:00:00Z",
+                "end_date": "2015-01-05T21:00:00Z",
+                "all_day": false,
+                "guests_can_invite_others": false,
+                "capacity": 10,
+                "transparence": "opaque",
+                "visibility": "private",
+                "location": {
+                    "venue": "My House",
+                    "address_lines": [
+                        "1600 Pennsylvania Ave. NW"
+                    ],
+                    "locality": "Washington",
+                    "region": "DC",
+                    "postal_code": "20001",
+                    "country": "US",
+                    "language": "EN",
+                    "location": {
+                        "latitude": 38.9002101,
+                        "longitude": -77.0359252,
+                        "accuracy": "Rooftop"
+                    }
+                },
+                "osdi:organizer": {
+                  "given_name": "Jane",
+                  "family_name": "Doe",
+                  "identifiers": [
+                    "action_network:1efc3644-af25-4253-90b8-a0baf12dbd1e"
+                  ],
+                  "email_addresses": [
+                    {
+                      "primary": true,
+                      "address": "janedoe@mail.com",
+                      "status": "subscribed"
+                    }
+                  ]
+                },
+                "reminders": [
+                    {
+                        "method": "email",
+                        "minutes": 1440
+                    }
+                ],
+                "_embedded": {
+                  "osdi:creator": {
+                    "given_name": "Evan",
+                    "family_name": "Henshaw-Plath",
+                    "identifiers": [
+                      "action_network:06d13a33-6824-493b-a922-95e793f269d4"
+                    ],
+                    "email_addresses": [
+                      {
+                        "primary": true,
+                        "address": "creator@email.com",
+                        "status": "subscribed"
+                      }
+                    ]
+                  }
+                },
+                "_links": {
+                    "self": {
+                        "href": "https://actionnetwork.org/api/v2/events/a3c724db-2799-49a6-970a-7c3c0844645d"
+                    },
+                    "osdi:attendances": {
+                        "href": "https://actionnetwork.org/api/v2/events/1efc3644-af25-4253-90b8-a0baf12dbd1e/attendances"
+                    },
+                    "osdi:creator": {
+                        "href": "https://actionnetwork.org/api/v2/people/65345d7d-cd24-466a-a698-4a7686ef684f"
+                    },
+                    "osdi:organizer": {
+                        "href": "https://actionnetwork.org/api/v2/people/8a625981-67a4-4457-8b55-2e30b267b2c2"
+                    },
+                    "osdi:modified_by": {
+                        "href": "https://actionnetwork.org/api/v2/people/c945d6fe-929e-11e3-a2e9-12313d316c29"
+                    },
+                    "osdi:record_attendance_helper": {
+                        "href": "https://actionnetwork.org/api/v2/events/1efc3644-af25-4253-90b8-a0baf12dbd1e/record_attendance_helper"
                     }
                 }
             }
