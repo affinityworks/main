@@ -7,3 +7,12 @@ facebook:
   description: 'description'
   start_date: 2016-12-22 13:52:58
   end_date: 2016-12-22 13:52:58
+
+not_associated:
+  id: 2
+  type: "FacebookEvent"
+  name: "GEMINI PARTY 2017"
+  description: "Please join us for a night of dancing and communit..."
+  uid: "439761533049554"
+  start_date: "2017-06-03 04:00:00"
+  end_date: "2017-06-03 04:00:00"

@@ -8,6 +8,10 @@ class Api::ActionNetwork::EventsTest < ActiveSupport::TestCase
       .with(headers: { 'OSDI-API-TOKEN' => group.an_api_key })
       .to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'events.json')))
 
+    stub_request(:get, 'https://actionnetwork.org/api/v2/events?page=2')
+      .with(headers: { 'OSDI-API-TOKEN' => group.an_api_key })
+      .to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'events_page_2.json')))
+
     travel_to Time.zone.local(2001) do
       group.events.create!(
         title: 'TBD',
@@ -16,22 +20,15 @@ class Api::ActionNetwork::EventsTest < ActiveSupport::TestCase
       )
     end
 
-    assert group.events.where(title: 'House Party for Progress').exists
-    assert group.events.any_identifier('action_network:1efc3644-af25-4253-90b8-a0baf12dbd1e').exists
-
-    assert_difference 'Event.count', 1 do
-      assert_difference 'EventAddress.count', 2 do
+    assert_difference 'Event.count', 2 do
+      assert_difference 'EventAddress.count', 3 do
         Api::ActionNetwork::Events.import! group
       end
     end
 
-    assert group.events.where(name: 'March 14th Rally').exists
-    assert group.events.where(title: 'House Party for Progress').exists
-
     new_event = group.events.find_by(name: 'March 14th Rally')
     assert new_event.organizer
     assert new_event.creator
-    # assert new_event.modified_by
 
     assert new_event.location.venue.present?
     assert new_event.location.address_lines.present?
@@ -64,7 +61,7 @@ class Api::ActionNetwork::EventsTest < ActiveSupport::TestCase
 
     new_event.reload
 
-    assert_equal 'March 15th Rally', new_event.name
+    assert_equal 'March 16th Rally', new_event.name
     assert_equal 'Lafayette Circle', new_event.location.venue
   end
 end

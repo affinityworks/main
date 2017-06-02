@@ -24,7 +24,7 @@ export default class Event extends Component {
   }
 
   render() {
-    const { attributes, id } = this.props.event;
+    const { attributes, id, rsvpCount } = this.props.event;
 
     return (
       <div className='list-group-item'>
@@ -42,7 +42,7 @@ export default class Event extends Component {
         <div className='col-2 text-center'>
           <Link className='event_list-toggle' to={`/events/${id}/attendances`}>
             <button className='btn btn-primary'>
-              {`${attributes['rsvp-count']} RSVPs`}
+              {`${rsvpCount || attributes['rsvp-count']} RSVPs`}
             </button>
           </Link>
         </div>

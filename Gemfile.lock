@@ -75,6 +75,7 @@ GEM
     arel (7.1.4)
     autoprefixer-rails (6.7.0)
       execjs
+    awesome_print (1.7.0)
     bcrypt (3.1.11)
     bootstrap (4.0.0.alpha6)
       autoprefixer-rails (>= 6.0.3)
@@ -311,6 +312,7 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers
   activeadmin (~> 1.0.0.pre4)
+  awesome_print
   bootstrap (~> 4.0.0.alpha5)
   browserify-rails
   byebug

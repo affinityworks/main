@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import Event from './Event';
 import Attendance from './Attendance';
 import Pagination from './Pagination';
+import AttendanceForm from '../containers/AttendanceForm';
 import { fetchEvent, fetchAttendances } from '../actions';
 
 class Attendances extends Component {
@@ -47,7 +48,6 @@ class Attendances extends Component {
 
   render() {
     const { goBack } = this.props.history;
-    const eventId = this.props.match.params.id;
 
     return (
       <div>
@@ -58,22 +58,10 @@ class Attendances extends Component {
           </div>
 
           <br />
-
-          <div className='row text-right'>
-            <div className='col-md-8' />
-            <div className='col-md-2'>
-              <Link to={`/events/${eventId}/attendances/new`} className='btn btn-primary'>
-                Add New Attendee
-              </Link>
-            </div>
-
-            <div className='col-md-2'>
-              <Link to='/events' className='btn btn-success'> Done </Link>
-            </div>
-          </div>
-
-          <br />
           {this.renderPagination()}
+          <br />
+
+          <AttendanceForm match={this.props.match} />
         </div>
       </div>
     );
