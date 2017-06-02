@@ -75,6 +75,7 @@ Rails.application.routes.draw do
   resources :members do
     resources :events
   end
+  resources :dashboard, only: [:index]
 
   get '/dashboard', to: 'dashboard#show', as: 'dashboard'
 

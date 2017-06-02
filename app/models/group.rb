@@ -1,4 +1,5 @@
 class Group < ApplicationRecord
+  acts_as_taggable
 
   validates :an_api_key, uniqueness: true
 
@@ -16,6 +17,7 @@ class Group < ApplicationRecord
   has_and_belongs_to_many :forms
   belongs_to :creator, class_name: "Person"
   belongs_to :modified_by, class_name: "Person"
+  belongs_to :location, class_name: 'GroupAddress', foreign_key: :address_id
 
   def before_create
     self.modified_by = self.creator

@@ -36,22 +36,20 @@ class Groups extends Component {
   }
 
   render() {
+    console.log('groups', this.props.groups);
     return (
       <div>
         <Nav activeTab='groups' />
-
         <table className='table table-striped'>
           <thead>
             <tr>
-              <th>Name</th>
+              <th>Group Name</th>
               <th>Location</th>
-              <th>Description</th>
-              <th>Public Contact</th>
-              <th>Leaders</th>
-              <th>Internal Notes</th>
-              <th>Status</th>
+              <th>Tags</th>
+              <th>Owner</th>
             </tr>
           </thead>
+
           <tbody>
             {this.props.groups.map(group => <Group key={group.id} group={group} />)}
           </tbody>

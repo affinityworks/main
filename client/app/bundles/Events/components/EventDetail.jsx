@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { connect } from 'react-redux';
 
-import EventAddress from './EventAddress';
+import Address from './Address';
 import { fetchEvent } from '../actions';
 import GoogleMap from './GoogleMap';
 import { formatDateTime } from '../utils';
@@ -36,7 +36,7 @@ class EventDetail extends Component {
   showAddress() {
     const { location } = this.props.event.attributes
     if (location)
-      return <EventAddress location={location}/>
+      return <Address location={location}/>
   }
 
   render() {

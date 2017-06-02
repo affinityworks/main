@@ -11,7 +11,7 @@ class GroupsController < ApplicationController
       format.html
       format.json do
         render json: {
-          groups: JsonApi::GroupRepresenter.for_collection.new(@groups),
+          groups: JsonApi::GroupsRepresenter.for_collection.new(@groups),
           total_pages: @groups.total_pages,
           page: @groups.current_page
         }.to_json

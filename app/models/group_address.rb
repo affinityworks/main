@@ -1,0 +1,2 @@
+class GroupAddress < Address
+end
