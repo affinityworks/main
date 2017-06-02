@@ -30,7 +30,8 @@ export default (
 
     <Route path='/groups/:groupId/profile/' component={Profile} />
 
-    <Route path='/groups/:groupId/' component={GroupDetail} />
     <Route path='/groups/:groupId/affiliates' component={Groups} />
+    
+    <Route path='/groups/:groupId/' component={GroupDetail} />
   </Switch>
 );

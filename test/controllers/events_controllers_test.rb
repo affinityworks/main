@@ -4,7 +4,8 @@ class EventsControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   test 'require authentication' do
-    get events_url, as: :json
+    group = groups(:one)
+    get group_events_url(group.id), as: :json
     assert_response :unauthorized
   end
 
@@ -13,7 +14,7 @@ class EventsControllerTest < ActionDispatch::IntegrationTest
     group = person.groups.first
     sign_in person
 
-    get events_url, as: :json
+    get group_events_url(group.id), as: :json
     assert_response :success
     json = JSON.parse(@response.body)
     assert_equal group.events.count, json['events']['data'].size
@@ -21,8 +22,10 @@ class EventsControllerTest < ActionDispatch::IntegrationTest
 
   test 'get #index with filter' do
     organizer = people(:organizer)
+    group = organizer.groups.first
     sign_in organizer
-    get events_url(filter: organizer.events.first.title.first(4)), as: :json
+
+    get group_events_url(group_id: group.id, filter: organizer.events.first.title.first(4)), as: :json
     assert_response :success
     json = JSON.parse(@response.body)
     assert_equal 1, json['events']['data'].size
@@ -30,9 +33,12 @@ class EventsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'get #show' do
-    sign_in people(:organizer)
+    organizer = people(:organizer)
+    sign_in organizer
     event = events(:test)
-    get event_url(id: event.id), as: :json
+    group = organizer.groups.first
+
+    get group_event_url(group_id: group.id, id: event.id), as: :json
     assert_response :success
     json = JSON.parse(@response.body)
     assert_equal event.name, json['data']['attributes']['name']

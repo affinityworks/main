@@ -7,7 +7,7 @@ class MembersControllerTest < ActionDispatch::IntegrationTest
     person = people(:organizer)
     sign_in person
 
-    get members_url, as: :json
+    get group_members_url(group_id: person.groups.first.id), as: :json
     assert_response :success
     json = JSON.parse(response.body)
     assert_equal person.groups.first.members.count, json['members']['data'].count
@@ -18,7 +18,7 @@ class MembersControllerTest < ActionDispatch::IntegrationTest
   test 'members shouldnt be able to see list' do
     person = people(:member1)
     sign_in person
-    get members_url, as: :json
+    get group_members_url(group_id: person.groups.first.id), as: :json
     assert_response 302
   end
 

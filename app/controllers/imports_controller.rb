@@ -77,6 +77,6 @@ class ImportsController < ApplicationController
   private
 
   def validate_facebook_auth
-    redirect_to events_url unless current_person.identities.facebook.any?
+    redirect_to group_events_url(current_group.id) unless current_person.identities.facebook.any?
   end
 end

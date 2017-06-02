@@ -42,14 +42,14 @@ export default class Event extends Component {
         </div>
 
         <div className='col-2 text-center'>
-          <Link className='event_list-toggle' to={`${attendancesPath(id)}`}>
+          <Link className='event_list-toggle' to={attendancesPath(id)}>
             <button className='btn btn-primary'>
               {`${rsvpCount || attributes['rsvp-count']} RSVPs`}
             </button>
           </Link>
         </div>
         <div className='col-1 text-center'>
-          <a href={`${attendancesPath(id)}`} target="_blank">
+          <a href={`${attendancesPath(id)}.pdf`} target="_blank">
             <i className='fa fa-print fa-2x'>
             </i>
           </a>
