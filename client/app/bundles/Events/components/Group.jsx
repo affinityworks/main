@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import Tags from './Tags';
+import { groupPath } from '../utils/Pathnames';
 
 class Group extends Component {
-
   showAddress() {
     const { location } = this.props.group.attributes;
     if (location) {
@@ -12,9 +13,11 @@ class Group extends Component {
   }
 
   showTags() {
-    const tags = this.props.group.attributes['tag-list'];
+    const { tags } = this.props.group.attributes;
+    const { id } = this.props.group;
+
     if (tags)
-      return tags.join(', ');
+      return <Tags tags={tags} groupId={id} />
   }
 
   showOwner() {
@@ -31,7 +34,7 @@ class Group extends Component {
     return (
       <tr>
         <th>
-          <Link to={`/groups/${id}`}>{attributes.name}</Link>
+          <Link to={groupPath(id)}>{attributes.name}</Link>
         </th>
         <td>{this.showAddress()}</td>
         <td>{this.showTags()}</td>
