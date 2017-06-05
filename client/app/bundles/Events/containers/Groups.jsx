@@ -9,7 +9,7 @@ class Groups extends Component {
       <div>
         <Nav activeTab='groups' />
 
-        <GroupsList location={this.props.location}/>
+        <GroupsList location={this.props.location} />
       </div>
     );
   }

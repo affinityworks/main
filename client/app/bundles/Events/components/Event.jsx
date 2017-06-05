@@ -2,59 +2,88 @@ import moment from 'moment';
 import React, { Component } from 'react';
 
 import { Link } from 'react-router-dom';
-import { formatDate } from '../utils';
+import { formatDate, formatTime } from '../utils';
 
 import { eventsPath, attendancesPath, membersPath } from '../utils/Pathnames';
 
 export default class Event extends Component {
+  constructor(props, _railsContext) {
+    super(props);
+
+    this.showDate = this.date.bind(this);
+    this.locationName = this.locationName.bind(this);
+    this.groupColumn = this.groupColumn.bind(this);
+    this.printColumn = this.printColumn.bind(this);
+    this.rsvps = this.rsvps.bind(this);
+  }
+
   locationName() {
     const { location } = this.props.event.attributes;
 
     if (location)
       return `${location.venue}`;
+    else
+      return 'Location Unknown'
   }
 
-  renderOrganizer() {
-    const { organizer } = this.props.event.attributes;
+  date() {
+    const event = this.props.event.attributes;
 
-    if (organizer) {
-      const primaryEmailAddress = organizer.data.attributes['primary-email-address'];
-      const { name } = organizer.data.attributes;
+    if (!event['start-date']) { return null }
 
-      return <Link to={`${membersPath()}/${organizer.data['id']}`}>{name}</Link>
+    const date = formatDate(event['start-date']);
+    let time = formatTime(event['start-date'])
+    if (event['end-date'])
+      time = `${time}-${formatTime(event['end-date'])}`
+
+    return `${date} ${time}`
+  }
+
+  groupColumn() {
+    const group = this.props.event.attributes.group;
+    if (group && this.props.showGroupName){
+      const { attributes } = group.data;
+      return <td>{attributes.name}</td>
     }
   }
 
-  render() {
-    const { attributes, id, rsvpCount } = this.props.event;
+  printColumn() {
+    const { id } = this.props.event;
 
-    return (
-      <div className='list-group-item'>
-        <div className='col-2  text-center'>
-          {formatDate(attributes['start-date'])}
-        </div>
-
-        <div className='col-7'>
-          <Link to={`${eventsPath()}/${id}`}> {attributes.name || attributes.title} </Link>
-          <br />
-          <span> {`${this.locationName() || 'Location Unknown' }`} </span>
-          {this.renderOrganizer()}
-        </div>
-
-        <div className='col-2 text-center'>
-          <Link className='event_list-toggle' to={attendancesPath(id)}>
-            <button className='btn btn-primary'>
-              {`${rsvpCount || attributes['rsvp-count']} RSVPs`}
-            </button>
-          </Link>
-        </div>
-        <div className='col-1 text-center'>
-          <a href={`${attendancesPath(id)}.pdf`} target="_blank">
+    if (this.props.showPrintIcon)
+      return (
+        <td>
+          <a href={`/events/${id}/attendances.pdf`} target="_blank">
             <i className='fa fa-print fa-2x'>
             </i>
           </a>
-        </div>
-      </div>
+        </td>
+      )
+  }
+
+  rsvps() {
+    const { attributes, id, rsvpCount } = this.props.event;
+    return (
+      <Link className='event_list-toggle btn btn-primary' to={`/events/${id}/attendances`}>
+        {`${rsvpCount || attributes['rsvp-count']} RSVPs`}
+      </Link>
+    )
+  }
+
+  render() {
+    const { attributes, id } = this.props.event;
+
+    return (
+      <tr>
+        <td>
+          <Link to={`${eventsPath()}/${id}`}> {attributes.name || attributes.title} </Link>
+        </td>
+        <td>{this.date()}</td>
+        <td>{this.locationName()}</td>
+        {this.groupColumn()}
+        <td>{this.rsvps()}</td>
+        {this.printColumn()}
+      </tr>
     );
   }
 }

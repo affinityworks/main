@@ -1,11 +1,11 @@
 import React from 'react';
 import { Route, Switch } from 'react-router';
 
-import Events from '../components/Events';
+import Events from '../containers/Events';
 import EventDetail from '../components/EventDetail';
 import Attendances from '../components/Attendances';
 import Groups from '../containers/Groups';
-import Members from '../components/Members';
+import Members from '../containers/Members';
 import GroupDetail from '../components/GroupDetail';
 import Profile from '../containers/Profile';
 import MemberDetail from '../components/MemberDetail';

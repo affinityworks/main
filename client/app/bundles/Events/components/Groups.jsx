@@ -6,7 +6,6 @@ import queryString from 'query-string';
 import Group from './Group';
 import { fetchGroups } from '../actions';
 import Pagination from './Pagination';
-import Nav from './Nav';
 
 class Groups extends Component {
   componentWillMount() {
@@ -36,11 +35,9 @@ class Groups extends Component {
   }
 
   render() {
-    console.log('groups', this.props.groups);
     return (
       <div>
-        <Nav activeTab='groups' />
-        <table className='table table-striped'>
+        <table className='table table--fixed'>
           <thead>
             <tr>
               <th>Group Name</th>

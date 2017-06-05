@@ -36,4 +36,8 @@ class Event < ApplicationRecord
   def self.sort_by_date(direction)
     order(start_date: direction)
   end
+
+  def group #TODO Change relation to 1 to Many
+    groups.first
+  end
 end

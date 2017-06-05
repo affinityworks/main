@@ -2,22 +2,30 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import NavItem from './NavItem';
-import { membersPath, eventsPath, affiliatesPath } from '../utils/Pathnames';
+import { membersPath, eventsPath, affiliatesPath, groupsPath, groupId } from '../utils/Pathnames';
 
 class Nav extends Component {
   renderGroupsTab() {
     const { activeTab } = this.props;
 
-    if (this.isNationalOrgnizer())
+    if (this.isRootNav())
       return <NavItem
         title='Groups'
-        path={affiliatesPath()}
+        path={groupsPath()}
         active={activeTab === 'groups'}
       />
   }
 
   isNationalOrgnizer() {
-    return this.props.currentRole == 'national_organizer';
+    return this.props.currentRole === 'national_organizer';
+  }
+
+  managingCurrentGroup() {
+    return this.props.currentGroup.id == groupId()
+  }
+
+  isRootNav() {
+    return this.isNationalOrgnizer() && this.managingCurrentGroup();
   }
 
   render() {
@@ -29,13 +37,13 @@ class Nav extends Component {
           {this.renderGroupsTab()}
 
           <NavItem
-            title={`${this.isNationalOrgnizer() ? 'All' : ''} Members`}
+            title={`${this.isRootNav() ? 'All' : ''} Members`}
             path={membersPath()}
             active={activeTab === 'members'}
           />
 
           <NavItem
-            title={`${this.isNationalOrgnizer() ? 'All' : ''} Events`}
+            title={`${this.isRootNav() ? 'All' : ''} Events`}
             path={eventsPath()}
             active={activeTab === 'events'}
           />
@@ -46,8 +54,8 @@ class Nav extends Component {
   }
 }
 
-const mapStateToProps = ({ currentRole }) => {
-  return { currentRole }
+const mapStateToProps = ({ currentRole, currentGroup }) => {
+  return { currentRole, currentGroup }
 };
 
 export default connect(mapStateToProps)(Nav);

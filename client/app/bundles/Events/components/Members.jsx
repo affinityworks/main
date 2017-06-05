@@ -1,29 +1,28 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import queryString from 'query-string';
-import Nav from './Nav';
 import { connect } from 'react-redux';
 
-import history from '../history';
 import Member from './Member';
 import MembersFilter from './MembersFilter';
 import Pagination from './Pagination';
-import { fetchMembers } from '../actions'
+import { fetchMemberships } from '../actions'
 
 class Members extends Component {
   constructor(props, _railsContext) {
     super(props);
 
     this.filterMembers = this.filterMembers.bind(this);
+    this.renderMembers = this.renderMembers.bind(this);
   }
 
   componentWillMount() {
-    this.props.fetchMembers(this.props.location.search);
+    this.props.fetchMemberships(this.props.location.search);
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.location.search !== nextProps.location.search)
-      this.props.fetchMembers(nextProps.location.search);
+      this.props.fetchMemberships(nextProps.location.search);
   }
 
   filterMembers(filter) {
@@ -40,34 +39,41 @@ class Members extends Component {
     }
   }
 
+  renderMembers() {
+    return this.props.memberships.map(membership => {
+      const person = membership.attributes.person.data;
+      return <Member key={person.id} id={person.id}
+        member={person.attributes}
+        role={membership.attributes.role}
+      />
+    })
+  }
+
   render() {
     const { search } = this.props.location;
     const { filter, direction } = queryString.parse(search);
 
     return (
       <div>
-        <Nav activeTab='members'/>
-
         <div className='row'>
-          <div className='col-6'>
+          <div className='col-6 offset-6'>
             <MembersFilter onSearchSubmit={this.filterMembers} filter={filter} />
           </div>
         </div>
 
+        <br />
         <table className='table'>
           <thead>
             <tr>
               <th>Name</th>
               <th>Phone</th>
               <th>Location</th>
-              <th>Events</th>
+              <th>Role</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
-            {this.props.members.map(member => (
-              <Member key={member.id} id={member.id} member={member.attributes} />
-            ))}
+            {this.renderMembers()}
           </tbody>
         </table>
         <br />
@@ -78,8 +84,8 @@ class Members extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { members, total_pages, page } = state.members;
-  return { members, total_pages, page };
+  const { memberships, total_pages, page } = state.memberships;
+  return { memberships, total_pages, page };
 };
 
-export default connect(mapStateToProps, { fetchMembers })(Members);
+export default connect(mapStateToProps, { fetchMemberships })(Members);
