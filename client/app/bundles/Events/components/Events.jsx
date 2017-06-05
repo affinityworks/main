@@ -89,7 +89,7 @@ class Events extends Component {
         </div>
 
         <br />
-        <table className='table table--fixed'>
+        <table className={`table ${this.props.showPrintIcon ? '' : 'table--fixed'}`}>
           <thead>
             <tr>
               <th>Event Name</th>
