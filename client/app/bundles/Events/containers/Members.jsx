@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 
 import history from '../history';
 import GroupMembers from '../components/Members';
+import Breadcrumbs from '../components/Breadcrumbs';
 
 class Members extends Component {
   render() {
@@ -13,7 +14,7 @@ class Members extends Component {
 
     return (
       <div>
-        {/* NOTE Breadcrumbs */}
+        <Breadcrumbs active='All Members' />
 
         <h2>{`${currentGroup.name} Members`}</h2>
         <br />

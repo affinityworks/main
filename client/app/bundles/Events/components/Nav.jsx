@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import NavItem from './NavItem';
-import { membersPath, eventsPath, affiliatesPath, groupsPath, groupId } from '../utils/Pathnames';
+import { membersPath, eventsPath, affiliatesPath, groupId } from '../utils/Pathnames';
 
 class Nav extends Component {
   renderGroupsTab() {
@@ -11,7 +11,7 @@ class Nav extends Component {
     if (this.isRootNav())
       return <NavItem
         title='Groups'
-        path={groupsPath()}
+        path={affiliatesPath()}
         active={activeTab === 'groups'}
       />
   }
