@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import Event from './Event';
+import AttendanceEvent from './AttendanceEvent';
 import Attendance from './Attendance';
 import Pagination from './Pagination';
 import AttendanceForm from '../containers/AttendanceForm';
@@ -36,7 +36,7 @@ class Attendances extends Component {
 
   renderEvent() {
     if (this.props.event.attributes)
-      return <Event event={this.props.event} />;
+      return <AttendanceEvent event={this.props.event} />;
   }
 
   renderAttendances() {
