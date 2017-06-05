@@ -7,7 +7,7 @@ import { addParamToQuery, removeParamFromQuery } from '../utils';
 
 class SortableHeader extends Component {
   render() {
-    const { location, sortBy, title } = this.props;
+    const { location, sortBy, title, className, style } = this.props;
     const { direction, sort } = queryString.parse(location.search);
     const currentDirection = sortBy === sort ? direction : 'desc';
     const oppositeDirection = currentDirection == 'desc' ? 'asc' : 'desc';
@@ -15,7 +15,7 @@ class SortableHeader extends Component {
     const directionQuery = addParamToQuery(location.search, { direction: oppositeDirection, sort: sortBy });
 
     return (
-      <th>
+      <th className={className} style={style}>
         <Link to={directionQuery} style={{ color: 'black', textDecoration: 'none' }}>
           {`${title} `}
           <i className={`fa fa-angle-${currentDirection == 'desc' ? 'down' : 'up'} fa-lg`} />

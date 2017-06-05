@@ -66,11 +66,11 @@ class Members extends Component {
         <table className='table'>
           <thead>
             <tr>
-              <SortableHeader title='Name' sortBy='name' />
-              <th>Phone</th>
-              <SortableHeader title='Location' sortBy='location' />
-              <SortableHeader title='Role' sortBy='role' />
-              <th></th>
+              <SortableHeader title='Name' sortBy='name' style={{ width: '30%'}} />
+              <th style={{ width: '15%'}}>Phone</th>
+              <th style={{ width: '30%'}}>Location</th>
+              <SortableHeader title='Role' sortBy='role' style={{ width: '20%'}} />
+              <th style={{ width: '5%'}}></th>
             </tr>
           </thead>
           <tbody>
