@@ -15,10 +15,10 @@ class Events extends Component {
 
         <h2>{`${currentGroup.name} Events`}</h2>
         <br />
-        <Nav activeTab='members'/>
+        <Nav activeTab='events'/>
 
         <GroupEvents location={this.props.location} history={this.props.history}
-          showGroupName={false} showPrintIcon={true}
+          showGroupName={true} showPrintIcon={false}
         />
       </div>
     );

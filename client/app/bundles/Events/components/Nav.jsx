@@ -2,13 +2,13 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import NavItem from './NavItem';
-import { membersPath, eventsPath, affiliatesPath, groupsPath } from '../utils/Pathnames';
+import { membersPath, eventsPath, affiliatesPath, groupsPath, groupId } from '../utils/Pathnames';
 
 class Nav extends Component {
   renderGroupsTab() {
-    const { activeTab, root } = this.props;
+    const { activeTab } = this.props;
 
-    if (this.isNationalOrgnizer() && root)
+    if (this.isRootNav())
       return <NavItem
         title='Groups'
         path={groupsPath()}
@@ -17,11 +17,19 @@ class Nav extends Component {
   }
 
   isNationalOrgnizer() {
-    return this.props.currentRole == 'national_organizer';
+    return this.props.currentRole === 'national_organizer';
+  }
+
+  managingCurrentGroup() {
+    return this.props.currentGroup.id == groupId()
+  }
+
+  isRootNav() {
+    return this.isNationalOrgnizer() && this.managingCurrentGroup();
   }
 
   render() {
-    const { activeTab, root } = this.props;
+    const { activeTab } = this.props;
 
     return (
       <div>
@@ -29,13 +37,13 @@ class Nav extends Component {
           {this.renderGroupsTab()}
 
           <NavItem
-            title={`${this.isNationalOrgnizer() && root ? 'All' : ''} Members`}
+            title={`${this.isRootNav() ? 'All' : ''} Members`}
             path={membersPath()}
             active={activeTab === 'members'}
           />
 
           <NavItem
-            title={`${this.isNationalOrgnizer() && root ? 'All' : ''} Events`}
+            title={`${this.isRootNav() ? 'All' : ''} Events`}
             path={eventsPath()}
             active={activeTab === 'events'}
           />
@@ -46,8 +54,8 @@ class Nav extends Component {
   }
 }
 
-const mapStateToProps = ({ currentRole }) => {
-  return { currentRole }
+const mapStateToProps = ({ currentRole, currentGroup }) => {
+  return { currentRole, currentGroup }
 };
 
 export default connect(mapStateToProps)(Nav);

@@ -6,7 +6,7 @@ class Dashboard extends Component {
   render() {
     return (
       <div>
-        <Nav root />
+        <Nav />
       </div>
     );
   }
