@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class MembersControllerTest < ActionDispatch::IntegrationTest
+class MembershipsControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   test 'get #index' do
