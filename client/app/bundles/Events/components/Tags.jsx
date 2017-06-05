@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import _ from 'lodash';
 import { groupPath } from '../utils/Pathnames';
 
 class Tags extends Component {
@@ -27,6 +28,14 @@ class Tags extends Component {
     })
   }
 
+  removeTag(id) {
+    axios.delete(
+      `${groupPath(this.props.groupId)}/tags/${id}.json`).then(response => {
+        const tags = _.filter(this.state.tags, (tag) => (tag.id != id));
+        this.setState({ tags })
+      });
+  }
+
   handleInputChange(ev) {
     this.setState({ tagName: ev.target.value });
   }
@@ -52,13 +61,24 @@ class Tags extends Component {
     this.setState({isEditing: true});
   }
 
-  render() {
+  showTags() {
     const { tags } = this.state;
+    return (
+      tags.map((tag) => (
+        <span className='tag'
+          key={tag.id}>{tag.name}
+          <span className='tag-action--remove' onClick={() => (this.removeTag(tag.id))}>&times;
+          </span>
+        </span>
+      )))
+  }
+
+  render() {
     return (
       <div>
         {this.showAddTagInput()}
         <div>
-          {tags.map((tag) => (<span className='tag' key={tag.id}>{tag.name}</span>))}
+          {this.showTags()}
           {this.showAddTagIcon()}
         </div>
       </div>

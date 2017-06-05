@@ -68,11 +68,17 @@
 .tag-action {
   color: $brand-primary;
   margin: 15px 5px 0 5px;
+  cursor: pointer;
 }
 
 .tag-action--create {
   background: transparent;
   border: none;
+}
+
+.tag-action--remove {
+  padding: 5px 0px 5px 10px;
+  cursor: pointer;
 }
 
 .add-tag-container {

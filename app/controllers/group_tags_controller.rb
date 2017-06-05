@@ -17,4 +17,15 @@ class GroupTagsController < ApplicationController
       end
     end
   end
+
+  def destroy
+    group = Group.find(params[:group_id])
+    tag = group.tags.find(params[:id])
+
+    tag.destroy
+    respond_to do |format|
+      format.html { redirect_to groups_url, notice: 'Tag successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
 end

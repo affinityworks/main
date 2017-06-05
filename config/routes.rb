@@ -81,7 +81,7 @@ Rails.application.routes.draw do
       resources :attendances
     end
 
-    resources :tags, only: [:create], controller: 'group_tags'
+    resources :tags, only: [:create, :destroy], controller: 'group_tags'
   end
 
   resources :dashboard, only: [:index]
