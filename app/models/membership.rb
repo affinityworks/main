@@ -1,4 +1,5 @@
 class Membership < ApplicationRecord
+  acts_as_taggable
   belongs_to :group
   belongs_to :person
 
