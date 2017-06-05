@@ -1,7 +1,7 @@
 class MembershipsController < ApplicationController
   before_action :authenticate_person!
   before_action :authorize_group_access
-  before_action :find_memberships
+  before_action :find_memberships, only: :index
 
   def index
     respond_to do |format|
@@ -19,7 +19,9 @@ class MembershipsController < ApplicationController
   private
 
   def find_memberships
-    @memberships = current_group.memberships.joins(:person).page(params[:page])
+    @memberships = current_group.memberships.joins(:person).includes(
+      person: [:email_addresses, :personal_addresses, :phone_numbers]
+    ).page(params[:page])
 
     if params[:filter]
       @memberships = @memberships
@@ -27,5 +29,19 @@ class MembershipsController < ApplicationController
           "%#{params[:filter]}%","%#{params[:filter]}%"
         )
     end
+
+    if sortParam && directionParam
+      sort = sortParam == 'name' ? 'people.given_name' : sortParam
+
+      @memberships = @memberships.order("#{sort} #{directionParam}")
+    end
+  end
+
+  def sortParam
+    @sortParam ||= ['name', 'role'].include?(params[:sort]) && params[:sort] || nil
+  end
+
+  def directionParam
+    @directionParam ||= ['asc', 'desc'].include?(params[:direction]) && params[:direction] || nil
   end
 end

@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import Member from './Member';
 import MembersFilter from './MembersFilter';
 import Pagination from './Pagination';
+import SortableHeader from './SortableHeader';
 import { fetchMemberships } from '../actions'
 
 class Members extends Component {
@@ -51,7 +52,7 @@ class Members extends Component {
 
   render() {
     const { search } = this.props.location;
-    const { filter, direction } = queryString.parse(search);
+    const { filter } = queryString.parse(search);
 
     return (
       <div>
@@ -65,11 +66,11 @@ class Members extends Component {
         <table className='table'>
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Phone</th>
-              <th>Location</th>
-              <th>Role</th>
-              <th></th>
+              <SortableHeader title='Name' sortBy='name' style={{ width: '30%'}} />
+              <th style={{ width: '15%'}}>Phone</th>
+              <th style={{ width: '30%'}}>Location</th>
+              <SortableHeader title='Role' sortBy='role' style={{ width: '20%'}} />
+              <th style={{ width: '5%'}}></th>
             </tr>
           </thead>
           <tbody>
