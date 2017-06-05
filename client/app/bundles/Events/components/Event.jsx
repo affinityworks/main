@@ -53,7 +53,7 @@ export default class Event extends Component {
     if (this.props.showPrintIcon)
       return (
         <td>
-          <a href={`/events/${id}/attendances.pdf`} target="_blank">
+          <a href={`${attendancesPath(id)}.pdf`} target="_blank">
             <i className='fa fa-print fa-2x'>
             </i>
           </a>
@@ -64,7 +64,7 @@ export default class Event extends Component {
   rsvps() {
     const { attributes, id, rsvpCount } = this.props.event;
     return (
-      <Link className='event_list-toggle btn btn-primary' to={`/events/${id}/attendances`}>
+      <Link className='event_list-toggle btn btn-primary' to={attendancesPath(id)}>
         {`${rsvpCount || attributes['rsvp-count']} RSVPs`}
       </Link>
     )

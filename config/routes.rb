@@ -63,6 +63,9 @@ Rails.application.routes.draw do
     resources :members do
       resources :events
     end
+
+    resources :affiliates
+
     resources :events do
       collection do
         resources :imports, only: [:new, :create] do
@@ -74,10 +77,14 @@ Rails.application.routes.draw do
           end
         end
       end
+
       resources :attendances
     end
   end
+
   resources :dashboard, only: [:index]
+  resources :memberships, only: [:index]
+
   resources :memberships, only: [:index]
 
   resources :profile, only: [:index]

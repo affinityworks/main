@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import history from '../history';
 import GroupEvents from '../components/Events';
+import Breadcrumbs from '../components/Breadcrumbs';
 
 class Events extends Component {
   render() {
@@ -11,8 +12,7 @@ class Events extends Component {
 
     return (
       <div>
-        {/* NOTE Breadcrumbs */}
-
+        <Breadcrumbs active='All Events' />
         <h2>{`${currentGroup.name} Events`}</h2>
         <br />
         <Nav activeTab='events'/>
