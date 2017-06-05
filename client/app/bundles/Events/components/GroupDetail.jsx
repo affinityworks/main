@@ -6,7 +6,7 @@ import { fetchGroup } from '../actions';
 
 class GroupDetail extends Component {
   componentWillMount() {
-    const groupId = this.props.match.params.id;
+    const { groupId } = this.props.match.params;
 
     this.props.fetchGroup(groupId);
   }
