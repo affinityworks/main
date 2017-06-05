@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import Nav from '../components/Nav';
 import AttendanceMatch from '../components/AttendanceMatch';
+import { eventsPath } from '../utils/Pathnames';
 
 class AttendanceMatching extends Component {
   state = { matches: [] };
@@ -10,7 +11,7 @@ class AttendanceMatching extends Component {
   componentWillMount() {
     const { id } = this.props.match.params;
 
-    axios.get(`/events/imports/${id}/attendances.json`)
+    axios.get(`${eventsPath()}/imports/${id}/attendances.json`)
       .then((response) => {
         this.setState({ matches: response.data });
       });

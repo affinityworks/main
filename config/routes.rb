@@ -57,28 +57,30 @@ Rails.application.routes.draw do
 
   #root to: "_site/index.html"
 
-  resources :events do
-    collection do
-      resources :imports, only: [:new, :create] do
-        collection do
-          get :find
-          get '/:remote_event_id/attendances', to: 'imports#attendances', as: 'attendances'
-          post '/:remote_event_id/attendances', to: 'imports#create_facebook_attendance', as: 'create_attendance'
-          delete '/:remote_event_id/attendances', to: 'imports#delete_facebook_attendance', as: 'delete_attendance'
+  resources :groups do
+    get '/dashboard', to: 'dashboard#show', as: 'dashboard'
+
+    resources :members do
+      resources :events
+    end
+    resources :events do
+      collection do
+        resources :imports, only: [:new, :create] do
+          collection do
+            get :find
+            get '/:remote_event_id/attendances', to: 'imports#attendances', as: 'attendances'
+            post '/:remote_event_id/attendances', to: 'imports#create_facebook_attendance', as: 'create_attendance'
+            delete '/:remote_event_id/attendances', to: 'imports#delete_facebook_attendance', as: 'delete_attendance'
+          end
         end
       end
+      resources :attendances
     end
-    resources :attendances
-  end
-  resources :groups
-  resources :profile, only: [:index]
-  resources :members do
-    resources :events
   end
   resources :dashboard, only: [:index]
   resources :memberships, only: [:index]
 
-  get '/dashboard', to: 'dashboard#show', as: 'dashboard'
+  resources :profile, only: [:index]
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 

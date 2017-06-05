@@ -8,6 +8,7 @@ import Attendance from './Attendance';
 import Pagination from './Pagination';
 import AttendanceForm from '../containers/AttendanceForm';
 import { fetchEvent, fetchAttendances } from '../actions';
+import { eventsPath, attendancesPath } from '../utils/Pathnames';
 
 class Attendances extends Component {
   componentWillMount() {

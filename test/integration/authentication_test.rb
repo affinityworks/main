@@ -5,7 +5,7 @@ require 'test_helper'
 class AuthenticationTest < ActionDispatch::IntegrationTest
 
   test "redirects group member to their groups page on login" do
-    get "/events/"
+    get "/groups/1/events/"
     assert_response :redirect
     follow_redirect!
 
@@ -18,7 +18,7 @@ class AuthenticationTest < ActionDispatch::IntegrationTest
   end
 
   test "redirects group organizer to their events on login" do
-    get "/events/"
+    get "/groups/1/events/"
     assert_response :redirect
     follow_redirect!
 
@@ -27,7 +27,7 @@ class AuthenticationTest < ActionDispatch::IntegrationTest
     assert_response :redirect
     follow_redirect!
     assert_response :success
-    assert members_path == path
+    assert group_dashboard_path == path
   end
 
 end

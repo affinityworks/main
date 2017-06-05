@@ -4,6 +4,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { formatDate, formatTime } from '../utils';
 
+import { eventsPath, attendancesPath, membersPath } from '../utils/Pathnames';
+
 export default class Event extends Component {
   constructor(props, _railsContext) {
     super(props);
@@ -74,7 +76,7 @@ export default class Event extends Component {
     return (
       <tr>
         <td>
-          <Link to={`/events/${id}`}> {attributes.name || attributes.title} </Link>
+          <Link to={`${eventsPath()}/${id}`}> {attributes.name || attributes.title} </Link>
         </td>
         <td>{this.date()}</td>
         <td>{this.locationName()}</td>

@@ -5,8 +5,10 @@ import {
   FETCH_EVENT
 } from './types';
 
+import { eventsPath } from '../utils/Pathnames';
+
 export const fetchEvents = (queryString = '') => {
-  const request = axios.get(`/events.json${queryString}`);
+  const request = axios.get(`${eventsPath()}.json${queryString}`);
 
   return {
     type: FETCH_EVENTS,
@@ -15,7 +17,7 @@ export const fetchEvents = (queryString = '') => {
 };
 
 export const fetchEvent = (eventId) => {
-  const request = axios.get(`/events/${eventId}.json`);
+  const request = axios.get(`${eventsPath()}/${eventId}.json`);
 
   return {
     type: FETCH_EVENT,

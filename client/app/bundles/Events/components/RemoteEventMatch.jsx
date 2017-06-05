@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import RemoteEventMatches from './RemoteEventMatches';
 import RemoteEvent from './RemoteEvent';
 import history from '../history';
+import { eventsPath } from '../utils/Pathnames';
 
 class RemoteEventMatch extends Component {
   constructor(props) {
@@ -24,9 +25,9 @@ class RemoteEventMatch extends Component {
       return;
     }
 
-    axios.post('/events/imports.json', { remote_event: remoteEvent, event_id: selectedEvent })
+    axios.post(`${eventsPath()}/imports.json`, { remote_event: remoteEvent, event_id: selectedEvent })
       .then((response) => {
-        history.push(`/events/imports/${response.data.id}/attendances`);
+        history.push(`${eventsPath()}/imports/${response.data.id}/attendances`);
       }).catch((err) => {
         this.setState({ errorAlert: 'An error ocurred. Try again later.' })
       });

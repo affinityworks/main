@@ -7,8 +7,10 @@ import {
   FETCH_MEMBERS_EVENTS
 } from './types';
 
+import { membersPath } from '../utils/Pathnames';
+
 export const fetchMembers = (queryString = '') => {
-  const request = axios.get(`/members.json${queryString}`);
+  const request = axios.get(`${membersPath()}.json${queryString}`);
 
   return {
     type: FETCH_MEMBERS,
@@ -17,7 +19,7 @@ export const fetchMembers = (queryString = '') => {
 };
 
 export const fetchMember = (id) => {
-  const request = axios.get(`/members/${id}.json`);
+  const request = axios.get(`${membersPath()}/${id}.json`);
 
   return {
     type: FETCH_MEMBER,
@@ -26,7 +28,7 @@ export const fetchMember = (id) => {
 };
 
 export const lookUpMember = (email = '') => {
-  const request = axios.get(`/members.json?email=${email}`);
+  const request = axios.get(`${membersPath()}.json?email=${email}`);
 
   return {
     type: LOOK_UP_MEMBER,
@@ -35,7 +37,7 @@ export const lookUpMember = (email = '') => {
 };
 
 export const fetchMembersEvents = (id) => {
-  const request = axios.get(`/members/${id}/events.json`);
+  const request = axios.get(`${membersPath()}/${id}/events.json`);
 
   return {
     type: FETCH_MEMBERS_EVENTS,

@@ -28,9 +28,9 @@ class ApplicationController < ActionController::Base
     elsif resource.admin?
       admin_dashboard_path
     elsif can? :manage, current_group
-      dashboard_path
+      group_dashboard_path(current_group.id)
     else
-      group_url(id: current_group.id)
+      group_url(current_group.id)
     end
   end
 

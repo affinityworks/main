@@ -5,17 +5,18 @@ class AttendancesControllerTest < ActionDispatch::IntegrationTest
 
   setup do
     @event = events(:test)
+    @group = groups(:one)
   end
 
   test 'require authentication' do
-    get event_attendances_url(event_id: @event.id), as: :json
+    get group_event_attendances_url(group_id: @group.id, event_id: @event.id), as: :json
     assert_response :unauthorized
   end
 
   test 'get #index' do
     attendance_1, attendance_2 = [attendances(:two), attendances(:two)]
     sign_in people(:organizer)
-    get event_attendances_url(event_id: @event.id), as: :json
+    get group_event_attendances_url(group_id: @group.id, event_id: @event.id), as: :json
     assert_response :success
     json = JSON.parse(@response.body)
     assert_equal @event.attendances.count, json['attendances']['data'].size
@@ -24,21 +25,23 @@ class AttendancesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'PUT #update' do
-    sign_in people(:organizer)
+    organizer = people(:organizer)
+    sign_in organizer
 
-    event = people(:organizer).events.first
-    attendance = people(:organizer).attendances.first
+    group = organizer.groups.first
+    event = organizer.events.first
+    attendance = organizer.attendances.first
     new_attendance_status = true
 
     assert_not attendance.attended
 
-    set_attendance_status(event.id, attendance.id, new_attendance_status)
+    set_attendance_status(group.id, event.id, attendance.id, new_attendance_status)
 
     attendance.reload
     assert attendance.attended, 'Sets the attendance to true.'
 
     new_attendance_status = false
-    set_attendance_status(event.id, attendance.id, new_attendance_status)
+    set_attendance_status(group.id, event.id, attendance.id, new_attendance_status)
 
     attendance.reload
     assert_not attendance.attended, 'Sets the attendance to true.'
@@ -48,7 +51,7 @@ class AttendancesControllerTest < ActionDispatch::IntegrationTest
     assert_equal json['attributes']['status'], attendance.status
 
     new_attendance_status = nil
-    set_attendance_status(event.id, attendance.id, new_attendance_status)
+    set_attendance_status(group.id, event.id, attendance.id, new_attendance_status)
 
     attendance.reload
     assert_nil attendance.attended, 'Sets the attendance to nil.'
@@ -64,7 +67,8 @@ class AttendancesControllerTest < ActionDispatch::IntegrationTest
     new_attendee.attendances = []
     new_attendee.save
 
-    post event_attendances_url(
+    post group_event_attendances_url(
+      group_id: groups(:one).id,
       event_id: event.id,
       params: {
         attendance: {
@@ -89,7 +93,8 @@ class AttendancesControllerTest < ActionDispatch::IntegrationTest
 
     memberships_count_before = Membership.count
 
-    post event_attendances_url(
+    post group_event_attendances_url(
+      group_id: groups(:one).id,
       event_id: event.id,
       params: {
         attendance: {
@@ -111,21 +116,22 @@ class AttendancesControllerTest < ActionDispatch::IntegrationTest
     phone = rand(1_000_000).to_s
 
     assert_difference 'Person.count', 1 do
-      post event_attendances_url(
-      event_id: event.id,
-      params: {
-        attendance: {
-          primary_email_address: email,
-          primary_phone_number: phone,
-          family_name: 'wayne',
-          given_name: 'bruce',
-          primary_personal_address: {
-            postal_code: '54000',
-            address_lines: ['123 Some Street'],
-            locality: 'Some locality'
+      post group_event_attendances_url(
+        group_id: groups(:one).id,
+        event_id: event.id,
+        params: {
+          attendance: {
+            primary_email_address: email,
+            primary_phone_number: phone,
+            family_name: 'wayne',
+            given_name: 'bruce',
+            primary_personal_address: {
+              postal_code: '54000',
+              address_lines: ['123 Some Street'],
+              locality: 'Some locality'
+            }
           }
         }
-      }
       ), as: :json
     end
 
@@ -144,8 +150,10 @@ class AttendancesControllerTest < ActionDispatch::IntegrationTest
     assert_not new_attendee.attendances.last.synced
   end
 
-  def set_attendance_status(event_id, attendance_id, status)
-    put event_attendance_url(event_id: event_id, id: attendance_id, params: { attended: status }),
+  def set_attendance_status(group_id, event_id, attendance_id, status)
+    put group_event_attendance_url(
+      group_id: group_id, event_id: event_id, id: attendance_id, params: { attended: status }
+    ),
       as: :json
     end
 end

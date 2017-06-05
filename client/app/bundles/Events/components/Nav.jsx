@@ -1,14 +1,19 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import NavItem from './NavItem';
+import { membersPath, eventsPath, affiliatesPath, groupsPath } from '../utils/Pathnames';
 
 class Nav extends Component {
   renderGroupsTab() {
     const { activeTab, root } = this.props;
 
     if (this.isNationalOrgnizer() && root)
-      return <NavItem title='Groups' path='/groups' active={activeTab === 'groups'} />
+      return <NavItem
+        title='Groups'
+        path={groupsPath()}
+        active={activeTab === 'groups'}
+      />
   }
 
   isNationalOrgnizer() {
@@ -25,13 +30,13 @@ class Nav extends Component {
 
           <NavItem
             title={`${this.isNationalOrgnizer() && root ? 'All' : ''} Members`}
-            path='/members'
+            path={membersPath()}
             active={activeTab === 'members'}
           />
 
           <NavItem
             title={`${this.isNationalOrgnizer() && root ? 'All' : ''} Events`}
-            path='/events'
+            path={eventsPath()}
             active={activeTab === 'events'}
           />
         </ul>

@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import { membersPath } from '../utils/Pathnames';
+
 const Member = (props) => {
   const { member } = props;
   if(!member) { return null }
@@ -33,7 +35,7 @@ const Member = (props) => {
   return(
     <tr>
       <td>
-        <Link to={`/members/${props.id}`}>
+        <Link to={`${membersPath()}/${props.id}`}>
           {member['given-name']} {member['family-name']}
         </Link>
       </td>

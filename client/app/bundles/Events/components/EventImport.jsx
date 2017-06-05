@@ -4,6 +4,8 @@ import RemoteEventSearch from './RemoteEventSearch';
 import RemoteEventMatch from './RemoteEventMatch';
 import axios from 'axios';
 
+import { eventsPath } from '../utils/Pathnames';
+
 class EventImport extends Component {
   constructor(props) {
     super(props);
@@ -14,7 +16,7 @@ class EventImport extends Component {
   }
 
   searchEvent(eventUrl) {
-    axios.get(`/events/imports/find.json?remote_event_url=${eventUrl}`).then(response => {
+    axios.get(`${eventsPath()}/imports/find.json?remote_event_url=${eventUrl}`).then(response => {
       const { events } = response.data;
       const remoteEvent = response.data.remote_event;
       this.setState({ remoteEvent, events })
