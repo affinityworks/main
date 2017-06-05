@@ -42,3 +42,45 @@
 .table--fixed {
   table-layout: fixed;
 }
+
+.tag {
+  background-color: $brand-primary;
+  color: white;
+  padding: 5px 10px;
+  margin: 5px;
+  border-radius: 0.25rem;
+  display: inline-block;
+}
+
+.tag-input {
+  padding: 5px 10px;
+  margin: 0 5px;
+  padding: 5px 10px;
+  background-color: #fff;
+  background-image: none;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+  display: inline;
+  width: 55%;
+}
+
+.tag-action {
+  color: $brand-primary;
+  margin: 15px 5px 0 5px;
+  cursor: pointer;
+}
+
+.tag-action--create {
+  background: transparent;
+  border: none;
+}
+
+.tag-action--remove {
+  padding: 5px 0px 5px 10px;
+  cursor: pointer;
+}
+
+.add-tag-container {
+  margin-bottom: 15px;
+}

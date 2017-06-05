@@ -5,10 +5,10 @@ class JsonApi::GroupsRepresenter < Roar::Decorator
 
   attributes do
     property :name
-    property :tag_list
 
     property :creator, extend: JsonApi::PersonRepresenter, class: Person
 
     property :location, decorator: Api::Resources::AddressRepresenter, class: GroupAddress
+    collection :tags, extend: JsonApi::TagsRepresenter
   end
 end
