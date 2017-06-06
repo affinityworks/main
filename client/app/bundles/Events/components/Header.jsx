@@ -11,7 +11,7 @@ class Header extends Component {
         <div className="row">
           <div className="col-10">
             <h2>
-              <a href="/" className="affinity-logo"><img src="/images/affinity-logo.svg" width="300" /></a>
+              <a href="/" className="affinity-logo"><img src="/images/affinity-logo.svg" width="230" /></a>
               <small style={{ position: 'relative', bottom: '-5px', marginLeft: '5px' }}>
                 {this.props.currentGroup.name}
               </small>
