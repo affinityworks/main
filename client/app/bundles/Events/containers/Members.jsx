@@ -15,8 +15,9 @@ class Members extends Component {
     return (
       <div>
         <Breadcrumbs active='All Members' />
-        <h2>{`${currentGroup.name} Members`}</h2>
+
         <br />
+
         <Nav activeTab='members'/>
 
         <GroupMembers location={this.props.location} history={this.props.history} />
