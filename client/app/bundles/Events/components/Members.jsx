@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import queryString from 'query-string';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
 import Member from './Member';
 import MembersFilter from './MembersFilter';
@@ -15,6 +16,7 @@ class Members extends Component {
 
     this.filterMembers = this.filterMembers.bind(this);
     this.renderMembers = this.renderMembers.bind(this);
+    this.state = { emails: [] };
   }
 
   componentWillMount() {
@@ -46,8 +48,30 @@ class Members extends Component {
       return <Member key={person.id} id={person.id}
         member={person.attributes}
         role={membership.attributes.role}
+        onCheckboxChecked={this.addMemberEmail.bind(this)}
+        onCheckboxUnChecked={this.removeMemberEmail.bind(this)}
       />
     })
+  }
+
+  addMemberEmail(email) {
+    const emails = this.state.emails.concat(email);
+    this.setState({ emails });
+  }
+
+  removeMemberEmail(memberEmail) {
+    const emails = _.filter(this.state.emails, (email) => (email !== memberEmail));
+    this.setState({ emails });
+  }
+
+  generateEmailsLink() {
+    const { emails } = this.state;
+    if (emails.length)
+      return (
+        <a href={`mailto:${emails.join(',')}`} className='fa fa-envelope-o'/>
+      );
+    else
+      return (<i className='fa fa-envelope-o'/>);
   }
 
   render() {
@@ -66,7 +90,8 @@ class Members extends Component {
         <table className='table'>
           <thead>
             <tr>
-              <SortableHeader title='Name' sortBy='name' style={{ width: '30%'}} />
+              <th style={{ width: '5%'}}>{this.generateEmailsLink()}</th>
+              <SortableHeader title='Name' sortBy='name' style={{ width: '25%'}} />
               <th style={{ width: '15%'}}>Phone</th>
               <th style={{ width: '30%'}}>Location</th>
               <SortableHeader title='Role' sortBy='role' style={{ width: '20%'}} />
