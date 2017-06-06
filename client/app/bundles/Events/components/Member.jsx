@@ -6,6 +6,7 @@ import { membersPath, groupPath } from '../utils/Pathnames';
 class Member extends Component {
   emailAddressLink() {
     const email = this.props.member['primary-email-address']
+
     if (email)
       return <a href={`mailto:${email}`} className='fa fa-envelope-o'/>
   }
