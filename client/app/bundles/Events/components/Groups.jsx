@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import queryString from 'query-string';
 
 import Group from './Group';
+import SortableHeader from './SortableHeader';
 import { fetchGroups } from '../actions';
 import Pagination from './Pagination';
 
@@ -18,8 +19,8 @@ class Groups extends Component {
   }
 
   buildQuery(props) {
-    const { page } = queryString.parse(props.location.search);
-    const query = { page };
+    const { page, sort, direction } = queryString.parse(props.location.search);
+    const query = { page, sort, direction };
 
     return `?${queryString.stringify(query)}`;
   }
@@ -40,10 +41,10 @@ class Groups extends Component {
         <table className='table table--fixed'>
           <thead>
             <tr>
-              <th>Group Name</th>
+              <SortableHeader title='Group Name' sortBy='name' />
               <th>Location</th>
               <th>Tags</th>
-              <th>Owner</th>
+              <SortableHeader title='Owner' sortBy='owner' />
             </tr>
           </thead>
 

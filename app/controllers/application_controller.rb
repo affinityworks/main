@@ -60,4 +60,8 @@ class ApplicationController < ActionController::Base
   def json_request?
     request.format.json?
   end
+
+  def directionParam
+    @directionParam ||= ['asc', 'desc'].include?(params[:direction]) && params[:direction] || nil
+  end
 end

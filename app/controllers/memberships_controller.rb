@@ -40,8 +40,4 @@ class MembershipsController < ApplicationController
   def sortParam
     @sortParam ||= ['name', 'role'].include?(params[:sort]) && params[:sort] || nil
   end
-
-  def directionParam
-    @directionParam ||= ['asc', 'desc'].include?(params[:direction]) && params[:direction] || nil
-  end
 end
