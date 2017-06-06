@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import { membersPath } from '../utils/Pathnames';
+import { membersPath, groupPath } from '../utils/Pathnames';
 
 class Member extends Component {
   emailAddressLink() {
@@ -44,6 +44,16 @@ class Member extends Component {
     return <input type='checkbox' disabled={email ? false : true} onChange={this.handleChange.bind(this)}/>
   }
 
+  groupColumn() {
+    const {groups} = this.props;
+    if (groups.length && this.props.showGroupName){
+      return <td>{groups.map(group => {
+        const { id, name } = group;
+        return <Link className='group-list' to={`${groupPath(id)}`} key={id} >{name}</Link>
+      })}</td>
+    }
+  }
+
   render() {
     const { member, role, id } = this.props;
 
@@ -59,6 +69,7 @@ class Member extends Component {
         </td>
         <td>{member['primary-phone-number']}</td>
         <td>{this.localityAndRegion()}</td>
+        {this.groupColumn()}
         <td>{role}</td>
         <td>{this.emailAddressLink()}</td>
       </tr>

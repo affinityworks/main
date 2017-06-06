@@ -19,7 +19,9 @@ class Members extends Component {
         <br />
         <Nav activeTab='members'/>
 
-        <GroupMembers location={this.props.location} history={this.props.history} />
+        <GroupMembers location={this.props.location} history={this.props.history}
+          showGroupName={true}
+        />
       </div>
     );
   }

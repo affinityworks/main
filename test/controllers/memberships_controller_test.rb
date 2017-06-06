@@ -13,6 +13,7 @@ class MembershipsControllerTest < ActionDispatch::IntegrationTest
 
     assert_equal person.groups.first.members.count, json['memberships']['data'].count
     response_members_ids = json['memberships']['data'].map { |m| m['id'].to_i }
+    byebug
     assert_includes response_members_ids, person.groups.first.memberships.first.id
   end
 
