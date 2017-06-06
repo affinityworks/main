@@ -13,7 +13,6 @@ class Groups extends Component {
       <div>
         <Breadcrumbs active='All Groups' />
 
-        <h2>{`${currentGroup.name} Groups`}</h2>
         <br/>
 
         <Nav activeTab='groups' />

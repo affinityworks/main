@@ -27,14 +27,16 @@ class Group extends Component {
   }
 
   render() {
+    console.log(this.props);
     const { attributes, id } = this.props.group;
+    const linkTo = this.props.linkToDashboard ? (groupPath(id) + '/dashboard') : groupPath(id);
 
     if (!attributes) { return null }
 
     return (
       <tr>
         <th>
-          <Link to={groupPath(id)}>{attributes.name}</Link>
+          <Link to={linkTo}>{attributes.name}</Link>
         </th>
         <td>{this.showAddress()}</td>
         <td>{this.showTags()}</td>

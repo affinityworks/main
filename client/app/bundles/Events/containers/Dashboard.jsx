@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import Breadcrumbs from '../components/Breadcrumbs';
+
 import Nav from '../components/Nav';
 
 class Dashboard extends Component {
@@ -8,6 +9,10 @@ class Dashboard extends Component {
 
     return (
       <div>
+        <Breadcrumbs active='Dashboard' />
+
+        <br />
+        
         <Nav activeTab='dashboard' />
         <br />
         <div dangerouslySetInnerHTML={{ __html: currentGroup.description }} />

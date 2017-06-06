@@ -17,6 +17,8 @@ export default (
   <Switch>
     <Route path='/groups/:groupId/dashboard' component={Dashboard} />
 
+    <Route path='/groups/:groupId/affiliates' component={Groups} />
+
     <Route path='/groups/:groupId/events/imports/new' component={EventImport} />
     <Route path='/groups/:groupId/events/imports/:id/attendances' component={AttendanceMatching} />
 
@@ -28,10 +30,8 @@ export default (
     <Route path='/groups/:groupId/members/:id' component={MemberDetail} />
     <Route path='/groups/:groupId/members' component={Members} />
 
-    <Route path='/groups/:groupId/profile/' component={Profile} />
+    <Route path='/profile' component={Profile} />
 
-    <Route path='/groups/:groupId/affiliates' component={Groups} />
-    
     <Route path='/groups/:groupId/' component={GroupDetail} />
   </Switch>
 );

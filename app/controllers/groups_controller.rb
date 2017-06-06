@@ -7,6 +7,12 @@ class GroupsController < ApplicationController
   def index
     @groups = Group.all.includes(:creator).page(params[:page])
 
+    if sortParam && directionParam
+      sort = sortParam == 'owner' ? 'people.given_name' : sortParam
+
+      @groups = @groups.order("#{sort} #{directionParam}")
+    end
+
     respond_to do |format|
       format.html
       format.json do
@@ -80,13 +86,17 @@ class GroupsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_group
-      @group = Group.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_group
+    @group = Group.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def group_params
-      params.require(:group).permit(:origin_system, :name, :description, :summary, :browser_url, :featured_image_url, :creator_id)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def group_params
+    params.require(:group).permit(:origin_system, :name, :description, :summary, :browser_url, :featured_image_url, :creator_id)
+  end
+
+  def sortParam
+    @sortParam ||= ['name', 'owner'].include?(params[:sort]) && params[:sort] || nil
+  end
 end
