@@ -89,4 +89,14 @@ class GroupTest < ActiveSupport::TestCase
     refute_includes group.upcoming_events, other_group_event
     refute_includes group.upcoming_events, future_event
   end
+
+  test 'correctly destroying groups' do
+    group = groups(:test)
+    memberships = group.members
+    assert memberships.any?
+    group.destroy
+    assert memberships.empty?
+  end
+
+
 end
