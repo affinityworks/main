@@ -10,7 +10,7 @@ class Breadcrumbs extends Component {
     const { currentGroup } = this.props;
     const id = groupId();
 
-    if (currentGroup.id != id && !this.props.group.attributes)
+    if (currentGroup.id != id)
       this.props.fetchGroup(id);
   }
 
