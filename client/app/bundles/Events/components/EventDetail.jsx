@@ -4,15 +4,16 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 
 import Address from './Address';
-import { fetchEvent } from '../actions';
+import { fetchEvent, fetchGroup } from '../actions';
 import GoogleMap from './GoogleMap';
-import { formatDateTime } from '../utils';
-import { eventsPath } from '../utils/Pathnames';
+import { formatDay, formatTime } from '../utils';
+import { eventsPath, groupPath } from '../utils/Pathnames';
 
 class EventDetail extends Component {
   componentWillMount() {
-    const eventId = this.props.match.params.id;
-    this.props.fetchEvent(eventId);
+    const { groupId, id} = this.props.match.params;
+    this.props.fetchEvent(id);
+    this.props.fetchGroup(groupId);
   }
 
   showMap() {
@@ -40,20 +41,73 @@ class EventDetail extends Component {
       return <Address location={location}/>
   }
 
-  render() {
-    const attributes = this.props.event.attributes;
+  showCreator() {
+    const { attributes } = this.props.event.attributes.creator.data;
 
-    if(!attributes) { return null}
+    if (!attributes) { return null }
+
+    return(
+      <div>
+        <span> Event Organizer: </span>
+        <a href={`mailto:${attributes['primary-email-address']}`}>
+          {`${attributes['given-name']} ${attributes['family-name']}`}
+        </a>
+      </div>
+    )
+  }
+
+  showActionNetworkLink() {
+    const { attributes } = this.props.event;
+
+    if (!attributes['browser-url']) { return false }
+
+    return(
+      <div>
+        <a href={attributes['browser-url']}> Action Network Page </a>
+      </div>
+    );
+  }
+
+  render() {
+    const { attributes } = this.props.event;
+    const { group } = this.props;
+
+    if(!attributes || !group.attributes) { return null }
 
     return (
       <div>
-        <h1>{attributes.title}</h1>
+        <Link to={`${groupPath(group.id)}`}>
+          <h2>{group.attributes.name}</h2>
+        </Link>
+
         <br/>
-        <h3>{formatDateTime(attributes['start-date'])}</h3>
-        <div dangerouslySetInnerHTML={{ __html: attributes.description }} />
+
+        <div className='row'>
+          <div className='col-6'>
+
+            <h3>{attributes.title}</h3>
+
+            <div>{formatDay(attributes['start-date'])}</div>
+            <div>{formatTime(attributes['start-date'])}</div>
+
+            {this.showCreator()}
+          </div>
+
+          <div className='col-6'>
+            <div className='badge badge-primary col-2'>
+              {`${attributes['rsvp-count']} RSVPs`}
+            </div>
+
+            {this.showActionNetworkLink()}
+          </div>
+        </div>
+
         <br/>
+
         {this.showAddress()}
+
         <br/>
+
         <div style={{width: '100%', height: '400px'}}>{this.showMap()}</div>
         <Link to={`${eventsPath()}`}>
           <button className='btn btn-primary'>Back to Events</button>
@@ -63,8 +117,8 @@ class EventDetail extends Component {
   }
 }
 
-const mapStateToProps = ({ event }) => {
-  return { event }
+const mapStateToProps = ({ event, group }) => {
+  return { event, group }
 };
 
-export default connect(mapStateToProps, { fetchEvent })(EventDetail);
+export default connect(mapStateToProps, { fetchEvent, fetchGroup })(EventDetail);
