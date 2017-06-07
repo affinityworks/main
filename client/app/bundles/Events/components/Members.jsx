@@ -98,7 +98,7 @@ class Members extends Component {
     return (
       <div>
         <div className='row'>
-          <div className='col-6 offset-6'>
+          <div className='col-6'>
             <MembersFilter onSearchSubmit={this.filterMembers} filter={filter} />
           </div>
         </div>

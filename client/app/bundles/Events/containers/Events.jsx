@@ -13,8 +13,9 @@ class Events extends Component {
     return (
       <div>
         <Breadcrumbs active='All Events' />
-        <h2>{`${currentGroup.name} Events`}</h2>
+
         <br />
+
         <Nav activeTab='events'/>
 
         <GroupEvents location={this.props.location} history={this.props.history}
