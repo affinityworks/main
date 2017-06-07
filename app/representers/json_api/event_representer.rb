@@ -30,5 +30,6 @@ class JsonApi::EventRepresenter < Roar::Decorator
     property :rsvp_count
 
     property :location, decorator: Api::Resources::AddressRepresenter, class: EventAddress
+    property :creator, extend: JsonApi::PeopleRepresenter, class: Person
   end
 end
