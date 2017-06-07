@@ -31,7 +31,7 @@ class MembersController < ApplicationController
   private
 
   def set_members
-    @members = current_group.members.includes(
+    @members = Group.find(params[:group_id]).members.includes( #TODO: Also get affiliates groups
       [:email_addresses, :personal_addresses, :phone_numbers]
     ).page(params[:page])
 
