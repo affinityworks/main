@@ -10,11 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20170606220214) do
-=======
-ActiveRecord::Schema.define(version: 20170606181147) do
->>>>>>> eb9f2096301d23e666f0ebfe53432b46343936ef
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -349,6 +345,7 @@ ActiveRecord::Schema.define(version: 20170606181147) do
   create_table "groups", force: :cascade do |t|
     t.string   "origin_system"
     t.string   "name"
+    t.text     "description"
     t.string   "summary"
     t.string   "browser_url"
     t.string   "featured_image_url"
@@ -359,7 +356,6 @@ ActiveRecord::Schema.define(version: 20170606181147) do
     t.string   "an_api_key"
     t.datetime "synced_at"
     t.integer  "address_id"
-    t.text     "description"
     t.index ["an_api_key"], name: "index_groups_on_an_api_key", unique: true, using: :btree
     t.index ["creator_id"], name: "index_groups_on_creator_id", using: :btree
     t.index ["modified_by_id"], name: "index_groups_on_modified_by_id", using: :btree
