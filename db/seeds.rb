@@ -22,4 +22,4 @@ Membership.create(person: national_organizer, group: group, role: 'national_orga
 
 group.sync_with_action_network
 
-affiliate = Group.create(name: 'Affiliate Group', an_api_key: 'fake_api_key', creator: organizer)
+affiliate = Group.create(name: 'Affiliate Group', an_api_key: '7697d3813267b9ea9550648064dbc90b', creator: organizer)

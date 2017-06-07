@@ -1,5 +1,6 @@
 export const affiliatesPath = (id = null) => (`/groups/${id || groupId()}/affiliates`);
 export const membersPath = () => (`/groups/${groupId()}/members`);
+export const membershipPath = () => (`/groups/${groupId()}/memberships`);
 export const eventsPath = () => (`/groups/${groupId()}/events`);
 export const attendancesPath = (eventId) => (`/groups/${groupId()}/events/${eventId}/attendances`);
 export const groupsPath = () => (`/groups/${groupId()}/dashboard`)

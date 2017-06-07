@@ -6,7 +6,7 @@ class JsonApi::MembershipRepresenter < Roar::Decorator
   attributes do
     property :role
 
-    property :person, extend: JsonApi::PeopleRepresenter, class: Person
+    property :person, extend: JsonApi::MemberRepresenter, class: Person
     property :group, extend: JsonApi::GroupsRepresenter, class: Group
   end
 end

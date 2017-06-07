@@ -5,7 +5,7 @@ class AttendancesControllerTest < ActionDispatch::IntegrationTest
 
   setup do
     @event = events(:test)
-    @group = groups(:one)
+    @group = groups(:test)
   end
 
   test 'require authentication' do
@@ -68,7 +68,7 @@ class AttendancesControllerTest < ActionDispatch::IntegrationTest
     new_attendee.save
 
     post group_event_attendances_url(
-      group_id: groups(:one).id,
+      group_id: groups(:test).id,
       event_id: event.id,
       params: {
         attendance: {
@@ -94,7 +94,7 @@ class AttendancesControllerTest < ActionDispatch::IntegrationTest
     memberships_count_before = Membership.count
 
     post group_event_attendances_url(
-      group_id: groups(:one).id,
+      group_id: groups(:test).id,
       event_id: event.id,
       params: {
         attendance: {
@@ -117,7 +117,7 @@ class AttendancesControllerTest < ActionDispatch::IntegrationTest
 
     assert_difference 'Person.count', 1 do
       post group_event_attendances_url(
-        group_id: groups(:one).id,
+        group_id: groups(:test).id,
         event_id: event.id,
         params: {
           attendance: {

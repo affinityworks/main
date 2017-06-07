@@ -8,7 +8,11 @@ class ApplicationController < ActionController::Base
   end
 
   def current_group
-    current_person.groups.first
+    if params[:group_id ] then
+      return Group.find(params[:group_id])
+    else
+      return current_person.groups.first
+    end
   end
 
   def current_role

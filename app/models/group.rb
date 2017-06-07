@@ -8,7 +8,6 @@ class Group < ApplicationRecord
 
   #this doesn't seem right...
   has_many :attendances, through: :members
-
   has_and_belongs_to_many :events, dependent: :destroy
   has_and_belongs_to_many :advocacy_campaigns
   has_and_belongs_to_many :canvassing_efforts

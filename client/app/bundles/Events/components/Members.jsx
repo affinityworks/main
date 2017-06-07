@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import queryString from 'query-string';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
 import Member from './Member';
 import MembersFilter from './MembersFilter';
@@ -15,6 +16,7 @@ class Members extends Component {
 
     this.filterMembers = this.filterMembers.bind(this);
     this.renderMembers = this.renderMembers.bind(this);
+    this.state = { emails: [] };
   }
 
   componentWillMount() {
@@ -45,9 +47,48 @@ class Members extends Component {
       const person = membership.attributes.person.data;
       return <Member key={person.id} id={person.id}
         member={person.attributes}
+        groups={person.relationships.groups.data}
         role={membership.attributes.role}
+        onCheckboxChecked={this.addMemberEmail.bind(this)}
+        onCheckboxUnChecked={this.removeMemberEmail.bind(this)}
+        showGroupName={this.props.showGroupName}
       />
     })
+  }
+
+  addMemberEmail(email) {
+    const emails = this.state.emails.concat(email);
+    this.setState({ emails });
+  }
+
+  removeMemberEmail(memberEmail) {
+    const emails = _.filter(this.state.emails, (email) => (email !== memberEmail));
+    this.setState({ emails });
+  }
+
+  generateEmailsLink() {
+    const { emails } = this.state;
+    if (emails.length)
+      return (
+        <a href={`mailto:${emails.join(',')}`} className='fa fa-envelope-o'/>
+      );
+    else
+      return (<i className='fa fa-envelope-o'/>);
+  }
+
+  groupColumn() {
+    if (this.props.showGroupName)
+      return <th style={{ width: '25%'}}>Group Name</th>
+  }
+
+  locationColumn() {
+    const width = this.props.showGroupName ? '10%' : '30%'
+    return <th style={{ width: `${width}`}}>Location</th>
+  }
+
+  phoneColumn() {
+    const width = this.props.showGroupName ? '10%' : '15%'
+    return <th style={{ width: `${width}`}}>Phone</th>
   }
 
   render() {
@@ -66,9 +107,11 @@ class Members extends Component {
         <table className='table'>
           <thead>
             <tr>
-              <SortableHeader title='Name' sortBy='name' style={{ width: '30%'}} />
-              <th style={{ width: '15%'}}>Phone</th>
-              <th style={{ width: '30%'}}>Location</th>
+              <th style={{ width: '5%'}}>{this.generateEmailsLink()}</th>
+              <SortableHeader title='Name' sortBy='name' style={{ width: '25%'}} />
+              { this.phoneColumn() }
+              { this.locationColumn() }
+              { this.groupColumn() }
               <SortableHeader title='Role' sortBy='role' style={{ width: '20%'}} />
               <th style={{ width: '5%'}}></th>
             </tr>

@@ -7,7 +7,7 @@ class MembershipsControllerTest < ActionDispatch::IntegrationTest
     person = people(:organizer)
     sign_in person
 
-    get memberships_url, as: :json
+    get group_memberships_url(group_id: groups(:test).id), as: :json
     assert_response :success
     json = JSON.parse(response.body)
 
@@ -20,7 +20,7 @@ class MembershipsControllerTest < ActionDispatch::IntegrationTest
     person = people(:organizer)
     sign_in person
 
-    get memberships_url(filter: 'admin'), as: :json
+    get group_memberships_url(group_id: groups(:test).id, filter: 'admin'), as: :json
     assert_response :success
     json = JSON.parse(response.body)
 
