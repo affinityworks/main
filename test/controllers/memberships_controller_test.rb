@@ -7,13 +7,12 @@ class MembershipsControllerTest < ActionDispatch::IntegrationTest
     person = people(:organizer)
     sign_in person
 
-    get memberships_url, as: :json
+    get group_memberships_url(group_id: groups(:test).id), as: :json
     assert_response :success
     json = JSON.parse(response.body)
 
     assert_equal person.groups.first.members.count, json['memberships']['data'].count
     response_members_ids = json['memberships']['data'].map { |m| m['id'].to_i }
-    byebug
     assert_includes response_members_ids, person.groups.first.memberships.first.id
   end
 
@@ -21,7 +20,7 @@ class MembershipsControllerTest < ActionDispatch::IntegrationTest
     person = people(:organizer)
     sign_in person
 
-    get memberships_url(filter: 'admin'), as: :json
+    get group_memberships_url(group_id: groups(:test).id, filter: 'admin'), as: :json
     assert_response :success
     json = JSON.parse(response.body)
 
