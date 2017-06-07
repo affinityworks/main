@@ -36,7 +36,8 @@ class EventsController < ApplicationController
     #this is a bit clunky and could be cleaned up. --rabble
     return @events = Person.find(params[:member_id]).events.page(params[:page]) if params[:member_id]
 
-    @events = Group.find(params[:group_id]).events.includes(:location) #TODO: Also get affiliates groups
+    @events = Group.find(params[:group_id]).all_events.includes(:location)
+
     if params[:filter] then
       @events = @events.where('title ilike ?',"%#{params[:filter]}%")
     end
@@ -45,7 +46,7 @@ class EventsController < ApplicationController
   end
 
   def set_event
-    @event = Group.find(params[:group_id]).events.find(params[:id])
+    @event = Group.find(params[:group_id]).all_events.find(params[:id])
   end
 
   def direction_param
