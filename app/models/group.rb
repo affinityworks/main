@@ -9,6 +9,11 @@ class Group < ApplicationRecord
   #this doesn't seem right...
   has_many :attendances, through: :members
 
+
+  has_many :affiliations
+  has_many :affilated_with, through: :affiliations, source: :affiliated_with
+  has_many :affiliates, through: :affiliations, source: :affiliates
+
   has_and_belongs_to_many :events
   has_and_belongs_to_many :advocacy_campaigns
   has_and_belongs_to_many :canvassing_efforts

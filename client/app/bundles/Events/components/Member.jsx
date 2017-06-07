@@ -49,7 +49,7 @@ class Member extends Component {
     if (groups.length && this.props.showGroupName){
       return <td>{groups.map(group => {
         const { id, name } = group;
-        return <Link className='group-list' to={`${groupPath(id)}`} key={id} >{name}</Link>
+        return <Link className='group-list' to={`${groupPath(id)}/dashboard`} key={id} >{name}</Link>
       })}</td>
     }
   }

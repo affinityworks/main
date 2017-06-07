@@ -63,6 +63,7 @@ Rails.application.routes.draw do
     resources :members do
       resources :events
     end
+    resources :memberships, only: [:index]
 
     resources :affiliates
 
@@ -85,9 +86,7 @@ Rails.application.routes.draw do
   end
 
   resources :dashboard, only: [:index]
-  resources :memberships, only: [:index]
 
-  resources :memberships, only: [:index]
 
   resources :profile, only: [:index]
 
