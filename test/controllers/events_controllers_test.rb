@@ -14,10 +14,15 @@ class EventsControllerTest < ActionDispatch::IntegrationTest
     group = person.groups.first
     sign_in person
 
+    affiliate = Group.create(an_api_key: rand(1_000_000).to_s)
+    affiliate_event = Event.create
+    affiliate.events.push(affiliate_event)
+    Affiliation.create(affiliated: affiliate, group: group)
+
     get group_events_url(group.id), as: :json
     assert_response :success
     json = JSON.parse(@response.body)
-    assert_equal group.events.count, json['events']['data'].size
+    assert_equal group.events.count + affiliate.events.count, json['events']['data'].size
   end
 
   test 'get #index with filter' do
