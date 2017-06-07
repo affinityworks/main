@@ -37,7 +37,6 @@ class EventsController < ApplicationController
     return @events = Person.find(params[:member_id]).events.page(params[:page]) if params[:member_id]
 
     @events = Group.find(params[:group_id]).all_events.includes(:location)
-
     if params[:filter] then
       @events = @events.where('title ilike ?',"%#{params[:filter]}%")
     end
