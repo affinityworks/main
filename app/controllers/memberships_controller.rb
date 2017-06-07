@@ -19,7 +19,7 @@ class MembershipsController < ApplicationController
   private
 
   def find_memberships
-    @memberships = current_group.memberships.joins(:person).includes(
+    @memberships = Group.find(params[:group_id]).memberships.joins(:person).includes( #TODO: Also get affiliates memberships
       person: [:email_addresses, :personal_addresses, :phone_numbers]
     ).page(params[:page])
 
