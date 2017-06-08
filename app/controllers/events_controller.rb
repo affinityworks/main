@@ -41,14 +41,18 @@ class EventsController < ApplicationController
       @events = @events.where('title ilike ?',"%#{params[:filter]}%")
     end
 
-    @events = @events.sort_by_date(direction_param).page(params[:page])
+    if sort_param && direction_param
+      @events = @events.order("#{sort_param} #{direction_param}")
+    end
+
+    @events = @events.page(params[:page])
   end
 
   def set_event
     @event = Group.find(params[:group_id]).events.find(params[:id])
   end
 
-  def direction_param
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
+  def sort_param
+    @sort_param ||= ['title', 'start_date'].include?(params[:sort]) && params[:sort] || nil
   end
 end
