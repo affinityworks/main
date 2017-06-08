@@ -9,10 +9,11 @@ class Group < ApplicationRecord
   #this doesn't seem right...
   has_many :attendances, through: :members
 
+  has_many :affiliations, foreign_key: :group_id, class_name: 'Affiliation'
+  has_many :affiliations_with, foreign_key: :affiliated_id, class_name: 'Affiliation'
 
-  has_many :affiliations
-  has_many :affilated_with, through: :affiliations, source: :affiliated_with
-  has_many :affiliates, through: :affiliations, source: :affiliates
+  has_many :affiliates, through: :affiliations, source: 'affiliated'
+  has_many :affiliated_with, through: :affiliations_with, source: 'group'
 
   has_and_belongs_to_many :events
   has_and_belongs_to_many :advocacy_campaigns
@@ -48,6 +49,20 @@ class Group < ApplicationRecord
       events.each { |event| import_attendances(event) }
       self.update_attribute(:synced_at, synced_time)
     end
+  end
+
+  def all_events
+    groups_ids = affiliates.pluck(:id) << id
+    Event.joins(:groups).where(groups: { id: groups_ids })
+  end
+
+  def all_memberships
+    groups_ids = affiliates.pluck(:id) << id
+    Membership.where(group_id: groups_ids)
+  end
+
+  def all_members
+    Person.where(id: all_memberships.pluck(:person_id))
   end
 
   def upcoming_events

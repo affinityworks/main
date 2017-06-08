@@ -24,4 +24,6 @@ group.sync_with_action_network
 
 affiliate = Group.create(name: 'Affiliate Group', an_api_key: '7697d3813267b9ea9550648064dbc90b', creator: organizer)
 
-#TODO: ADD AFFILIATION
+affiliate.sync_with_action_network
+
+Affiliation.create(affiliated: affiliate, group: group)

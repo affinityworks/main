@@ -5,15 +5,24 @@ class MembershipsControllerTest < ActionDispatch::IntegrationTest
 
   test 'get #index' do
     person = people(:organizer)
+    group = person.groups.first
     sign_in person
 
-    get group_memberships_url(group_id: groups(:test).id), as: :json
+    affiliate = Group.create(an_api_key: rand(1_000_000).to_s)
+    affiliate_membership = Membership.create(person: Person.create)
+    affiliate.memberships.push(affiliate_membership)
+    Affiliation.create(affiliated: affiliate, group: group)
+
+    get group_memberships_url(group_id: group.id), as: :json
     assert_response :success
     json = JSON.parse(response.body)
 
-    assert_equal person.groups.first.members.count, json['memberships']['data'].count
+    assert_equal  group.memberships.count + affiliate.memberships.count,
+                  json['memberships']['data'].count
+
     response_members_ids = json['memberships']['data'].map { |m| m['id'].to_i }
-    assert_includes response_members_ids, person.groups.first.memberships.first.id
+    assert_includes response_members_ids, group.memberships.first.id
+    assert_includes response_members_ids, affiliate_membership.id
   end
 
   test 'get #index with filter' do
