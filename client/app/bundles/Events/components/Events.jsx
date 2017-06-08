@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import Event from './Event';
 import EventsFilter from './EventsFilter';
 import Pagination from './Pagination';
+import SortableHeader from './SortableHeader';
 
 import { fetchEvents } from '../actions';
 
@@ -43,8 +44,8 @@ class Events extends Component {
   }
 
   linkWithFacebook() {
-    const {current_user} = this.props
-    //this should be fixed as it doesnt' work, curent_user is always nil
+    const { current_user } = this.props
+
     if (current_user && current_user.admin) {
       return (
         <a href='/admin/auth/facebook' className='btn btn-facebook'>
@@ -92,8 +93,8 @@ class Events extends Component {
         <table className={`table ${this.props.showPrintIcon ? '' : 'table--fixed'}`}>
           <thead>
             <tr>
-              <th>Event Name</th>
-              <th>Date</th>
+              <SortableHeader title='Event Name' sortBy='title' />
+              <SortableHeader title='Date' sortBy='start_date' />
               <th>Location</th>
               { this.groupColumn() }
               <th>RSVPs</th>

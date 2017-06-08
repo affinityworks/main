@@ -30,14 +30,14 @@ class MembershipsController < ApplicationController
         )
     end
 
-    if sortParam && directionParam
-      sort = sortParam == 'name' ? 'people.given_name' : sortParam
+    if sort_param && direction_param
+      sort = sort_param == 'name' ? 'people.given_name' : sort_param
 
-      @memberships = @memberships.order("#{sort} #{directionParam}")
+      @memberships = @memberships.order("#{sort} #{direction_param}")
     end
   end
 
-  def sortParam
-    @sortParam ||= ['name', 'role'].include?(params[:sort]) && params[:sort] || nil
+  def sort_param
+    @sort_param ||= ['name', 'role'].include?(params[:sort]) && params[:sort] || nil
   end
 end
