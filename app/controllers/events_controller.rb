@@ -36,19 +36,23 @@ class EventsController < ApplicationController
     #this is a bit clunky and could be cleaned up. --rabble
     return @events = Person.find(params[:member_id]).events.page(params[:page]) if params[:member_id]
 
-    @events = current_group.events.includes(:location)
+    @events = Group.find(params[:group_id]).all_events.includes(:location)
     if params[:filter] then
       @events = @events.where('title ilike ?',"%#{params[:filter]}%")
     end
 
-    @events = @events.sort_by_date(direction_param).page(params[:page])
+    if sort_param && direction_param
+      @events = @events.order("#{sort_param} #{direction_param}")
+    end
+
+    @events = @events.page(params[:page])
   end
 
   def set_event
-    @event = current_group.events.find(params[:id])
+    @event = Group.find(params[:group_id]).all_events.find(params[:id])
   end
 
-  def direction_param
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
+  def sort_param
+    @sort_param ||= ['title', 'start_date'].include?(params[:sort]) && params[:sort] || nil
   end
 end

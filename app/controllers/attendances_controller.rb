@@ -71,7 +71,7 @@ class AttendancesController < ApplicationController
   end
 
   def find_event
-    @event = current_group.events.find(params[:event_id])
+    @event = Group.find(params[:group_id]).all_events.find(params[:event_id])
   end
 
   def find_attendances

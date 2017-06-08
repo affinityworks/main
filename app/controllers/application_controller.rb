@@ -8,11 +8,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_group
-    if params[:group_id ] then
-      return Group.find(params[:group_id])
-    else
-      return current_person.groups.first
-    end
+    return current_person.groups.first
   end
 
   def current_role
@@ -65,7 +61,7 @@ class ApplicationController < ActionController::Base
     request.format.json?
   end
 
-  def directionParam
-    @directionParam ||= ['asc', 'desc'].include?(params[:direction]) && params[:direction] || nil
+  def direction_param
+    @direction_param ||= ['asc', 'desc'].include?(params[:direction]) && params[:direction] || nil
   end
 end

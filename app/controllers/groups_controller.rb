@@ -7,10 +7,10 @@ class GroupsController < ApplicationController
   def index
     @groups = Group.all.includes(:creator).page(params[:page])
 
-    if sortParam && directionParam
-      sort = sortParam == 'owner' ? 'people.given_name' : sortParam
+    if sort_param && direction_param
+      sort = sort_param == 'owner' ? 'people.given_name' : sort_param
 
-      @groups = @groups.order("#{sort} #{directionParam}")
+      @groups = @groups.order("#{sort} #{direction_param}")
     end
 
     respond_to do |format|
@@ -96,7 +96,7 @@ class GroupsController < ApplicationController
     params.require(:group).permit(:origin_system, :name, :description, :summary, :browser_url, :featured_image_url, :creator_id)
   end
 
-  def sortParam
-    @sortParam ||= ['name', 'owner'].include?(params[:sort]) && params[:sort] || nil
+  def sort_param
+    @sort_param ||= ['name', 'owner'].include?(params[:sort]) && params[:sort] || nil
   end
 end

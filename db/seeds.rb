@@ -1,5 +1,5 @@
 admin = Person.create(family_name: 'Admin', given_name: 'Test', password: 'password', admin: true)
-group = Group.create(name: 'Test Group', an_api_key: '7cc9eff8d105f3ff34c6bf7683abbec6', creator: admin)
+group = Group.create(name: 'National Network', an_api_key: '7cc9eff8d105f3ff34c6bf7683abbec6', creator: admin)
 
 admin_email_address = EmailAddress.create(address: 'test@admin.com', primary: true, person_id: admin.id)
 Membership.create(person: admin, group: group, role: 'organizer')
@@ -20,6 +20,10 @@ national_organizer = Person.create(family_name: 'Organizer', given_name: 'Nation
 organizer_email_address = EmailAddress.create(address: 'norganizer@member.com', primary: true, person_id: national_organizer.id)
 Membership.create(person: national_organizer, group: group, role: 'national_organizer')
 
-group.sync_with_action_network
-
 affiliate = Group.create(name: 'Affiliate Group', an_api_key: '7697d3813267b9ea9550648064dbc90b', creator: organizer)
+
+affiliate.sync_with_action_network
+
+Affiliation.create(affiliated: affiliate, group: group)
+
+group.sync_with_action_network

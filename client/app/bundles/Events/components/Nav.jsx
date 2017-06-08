@@ -7,9 +7,10 @@ import {
   membersPath,
   eventsPath,
   affiliatesPath,
-  dashboardPath,
-  groupId
+  dashboardPath
 } from '../utils/Pathnames';
+
+import { isNationalOrgnizer, managingCurrentGroup } from '../utils/Permissions'
 
 class Nav extends Component {
   renderGroupsTab() {
@@ -23,16 +24,8 @@ class Nav extends Component {
       />
   }
 
-  isNationalOrgnizer() {
-    return this.props.currentRole === 'national_organizer';
-  }
-
-  managingCurrentGroup() {
-    return this.props.currentGroup.id == groupId()
-  }
-
   isRootNav() {
-    return this.isNationalOrgnizer() && this.managingCurrentGroup();
+    return isNationalOrgnizer(this.props.currentRole) && managingCurrentGroup(this.props.currentGroup);
   }
 
   render() {

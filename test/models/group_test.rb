@@ -98,5 +98,51 @@ class GroupTest < ActiveSupport::TestCase
     assert memberships.empty?
   end
 
+  test '#all_events' do
+    group = Group.first
+    affiliated = Group.last
 
+    Affiliation.create(group: group, affiliated: affiliated)
+
+    group_event = Event.create
+    group.events.push(group_event)
+    affiliated_event = Event.create
+    affiliated.events.push(affiliated_event)
+
+    assert_includes group.all_events, group_event
+    assert_includes group.all_events, affiliated_event
+    assert_equal group.all_events.count, group.events.count + affiliated.events.count
+  end
+
+  test '#all_memberships' do
+    group = Group.first
+    affiliated = Group.last
+
+    Affiliation.create(group: group, affiliated: affiliated)
+
+    group_membership = Membership.create(person: Person.create)
+    group.memberships.push(group_membership)
+    affiliated_membership = Membership.create(person: Person.create)
+    affiliated.memberships.push(affiliated_membership)
+
+    assert_includes group.all_memberships, group_membership
+    assert_includes group.all_memberships, affiliated_membership
+    assert_equal group.all_memberships.count, group.memberships.count + affiliated.memberships.count
+  end
+
+  test '#all_members' do
+    group = Group.first
+    affiliated = Group.last
+
+    Affiliation.create(group: group, affiliated: affiliated)
+
+    group_member = Person.create
+    group.members.push(group_member)
+    affiliated_member = Person.create
+    affiliated.members.push(affiliated_member)
+
+    assert_includes group.all_members, group_member
+    assert_includes group.all_members, affiliated_member
+    assert_equal group.all_members.count, group.members.count + affiliated.members.count
+  end
 end
