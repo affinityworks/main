@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-
+import Tags from './Tags';
 import { membersPath, groupPath } from '../utils/Pathnames';
 
 class Member extends Component {
@@ -55,6 +55,13 @@ class Member extends Component {
     }
   }
 
+  showTags() {
+    const { tags, membershipId } = this.props;
+
+    if (tags)
+      return <Tags tags={tags} membershipId={membershipId} />
+  }
+
   render() {
     const { member, role, id } = this.props;
 
@@ -71,6 +78,7 @@ class Member extends Component {
         <td>{member['primary-phone-number']}</td>
         <td>{this.localityAndRegion()}</td>
         {this.groupColumn()}
+        <td>{this.showTags()}</td>
         <td>{role}</td>
         <td>{this.emailAddressLink()}</td>
       </tr>

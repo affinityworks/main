@@ -44,6 +44,7 @@ class Members extends Component {
 
   renderMembers() {
     return this.props.memberships.map(membership => {
+      const { tags } = membership.attributes;
       const person = membership.attributes.person.data;
       return <Member key={person.id} id={person.id}
         member={person.attributes}
@@ -52,6 +53,8 @@ class Members extends Component {
         onCheckboxChecked={this.addMemberEmail.bind(this)}
         onCheckboxUnChecked={this.removeMemberEmail.bind(this)}
         showGroupName={this.props.showGroupName}
+        membershipId={membership.id}
+        tags={tags}
       />
     })
   }
@@ -78,17 +81,22 @@ class Members extends Component {
 
   groupColumn() {
     if (this.props.showGroupName)
-      return <th style={{ width: '25%'}}>Group Name</th>
+      return <th style={{ width: '20%'}}>Group Name</th>
   }
 
   locationColumn() {
-    const width = this.props.showGroupName ? '10%' : '30%'
+    const width = this.props.showGroupName ? '10%' : '20%'
     return <th style={{ width: `${width}`}}>Location</th>
   }
 
   phoneColumn() {
     const width = this.props.showGroupName ? '10%' : '15%'
     return <th style={{ width: `${width}`}}>Phone</th>
+  }
+
+  nameColumn() {
+    const width = this.props.showGroupName ? '15%' : '20%'
+    return <SortableHeader title='Name' sortBy='name' style={{ width: `${width}`}} />
   }
 
   render() {
@@ -108,11 +116,12 @@ class Members extends Component {
           <thead>
             <tr>
               <th style={{ width: '5%'}}>{this.generateEmailsLink()}</th>
-              <SortableHeader title='Name' sortBy='name' style={{ width: '25%'}} />
-              { this.phoneColumn() }
-              { this.locationColumn() }
-              { this.groupColumn() }
-              <SortableHeader title='Role' sortBy='role' style={{ width: '20%'}} />
+              {this.nameColumn()}
+              {this.phoneColumn()}
+              {this.locationColumn()}
+              {this.groupColumn()}
+              <th style={{ width: '20%'}}>Tags</th>
+              <SortableHeader title='Role' sortBy='role' style={{ width: '15%'}} />
               <th style={{ width: '5%'}}></th>
             </tr>
           </thead>
