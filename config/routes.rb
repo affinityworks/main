@@ -57,6 +57,8 @@ Rails.application.routes.draw do
 
   #root to: "_site/index.html"
 
+  resources :tags, only: [:create, :destroy]
+
   resources :groups do
     get '/dashboard', to: 'dashboard#show', as: 'dashboard'
 
