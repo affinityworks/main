@@ -10,3 +10,5 @@ export const groupPath = (id) => (`/groups/${id}`)
 export const groupId = () => {
   return window.location.href.match(/groups\/(\d+)/)[1];
 }
+
+export const eventWithoutGroupPath = (id) => (`/events/${id}`)

@@ -87,8 +87,11 @@ Rails.application.routes.draw do
 
   resources :dashboard, only: [:index]
 
-
   resources :profile, only: [:index]
+
+  resources :events, only: [] do
+    resources :tags, only: [:create, :destroy], controller: 'event_tags'
+  end
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 

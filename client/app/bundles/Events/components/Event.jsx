@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { formatDate, formatTime } from '../utils';
 
 import { eventsPath, attendancesPath, membersPath } from '../utils/Pathnames';
+import Tags from './Tags';
 
 export default class Event extends Component {
   constructor(props, _railsContext) {
@@ -70,6 +71,14 @@ export default class Event extends Component {
     )
   }
 
+  showTags() {
+    const { tags } = this.props.event.attributes;
+    const { id } = this.props.event;
+
+    if (tags)
+      return <Tags tags={tags} eventId={id} />
+  }
+
   render() {
     const { attributes, id } = this.props.event;
 
@@ -81,6 +90,7 @@ export default class Event extends Component {
         <td>{this.date()}</td>
         <td>{this.locationName()}</td>
         {this.groupColumn()}
+        <td>{this.showTags()}</td>
         <td>{this.rsvps()}</td>
         {this.printColumn()}
       </tr>
