@@ -24,7 +24,7 @@ class Tags extends Component {
 
   tagsPath() {
     let tags_path = '';
-    var tags_path = ''
+    //var tags_path = ''
     if (this.props.groupId) {
       tags_path = groupPath(this.props.groupId)
     } else if (this.props.eventId) {
