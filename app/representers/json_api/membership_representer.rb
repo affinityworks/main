@@ -8,5 +8,6 @@ class JsonApi::MembershipRepresenter < Roar::Decorator
 
     property :person, extend: JsonApi::MemberRepresenter, class: Person
     property :group, extend: JsonApi::GroupsRepresenter, class: Group
+    collection :tags, extend: JsonApi::TagsRepresenter
   end
 end

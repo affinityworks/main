@@ -6,6 +6,8 @@ export const attendancesPath = (eventId) => (`/groups/${groupId()}/events/${even
 export const groupsPath = () => (`/groups/${groupId()}/dashboard`)
 export const dashboardPath = (id = null) => (`/groups/${id || groupId()}/dashboard`)
 export const groupPath = (id) => (`/groups/${id}`)
+export const eventWithoutGroupPath = (id) => (`/events/${id}`)
+export const membershipWithoutGroupPath = (id) => (`/memberships/${id}`);
 
 export const groupId = () => {
   return window.location.href.match(/groups\/(\d+)/)[1];

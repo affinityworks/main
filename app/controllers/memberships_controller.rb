@@ -23,6 +23,8 @@ class MembershipsController < ApplicationController
       person: [:email_addresses, :personal_addresses, :phone_numbers]
     ).page(params[:page])
 
+    @memberships = @memberships.tagged_with(params[:tag]) if params[:tag]
+
     if params[:filter]
       @memberships = @memberships
         .where('people.given_name ilike ? or people.family_name ilike ?',

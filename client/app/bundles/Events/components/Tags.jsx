@@ -4,7 +4,7 @@ import _ from 'lodash';
 import queryString from 'query-string';
 import { withRouter } from 'react-router';
 
-import { groupPath, eventWithoutGroupPath } from '../utils/Pathnames';
+import { groupPath, eventWithoutGroupPath, membershipWithoutGroupPath } from '../utils/Pathnames';
 
 class Tags extends Component {
   constructor(props) {
@@ -23,11 +23,14 @@ class Tags extends Component {
   }
 
   tagsPath() {
+    let tags_path = '';
     var tags_path = ''
     if (this.props.groupId) {
       tags_path = groupPath(this.props.groupId)
     } else if (this.props.eventId) {
       tags_path = eventWithoutGroupPath(this.props.eventId)
+    } else if (this.props.membershipId) {
+      tags_path = membershipWithoutGroupPath(this.props.membershipId)
     }
     return tags_path
   }
