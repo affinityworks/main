@@ -17,5 +17,6 @@ class JsonApi::EventsRepresenter < Roar::Decorator
     property :group, decorator: JsonApi::GroupsRepresenter, class: Group
 
     property :location, decorator: Api::Resources::AddressRepresenter, class: EventAddress
+    collection :tags, extend: JsonApi::TagsRepresenter
   end
 end

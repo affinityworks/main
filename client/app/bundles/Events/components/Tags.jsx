@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import _ from 'lodash';
+import { groupPath, eventWithoutGroupPath } from '../utils/Pathnames';
+
 import queryString from 'query-string';
 import { withRouter } from 'react-router';
-
-import { groupPath } from '../utils/Pathnames';
 
 class Tags extends Component {
   constructor(props) {
@@ -22,10 +22,20 @@ class Tags extends Component {
     this.setState({isEditing: false});
   }
 
+  tagsPath() {
+    var tags_path = ''
+    if (this.props.groupId) {
+      tags_path = groupPath(this.props.groupId)
+    } else if (this.props.eventId) {
+      tags_path = eventWithoutGroupPath(this.props.eventId)
+    }
+    return tags_path
+  }
+
   createTag(ev) {
     const tag_name = this.state.tagName;
     ev.preventDefault();
-    axios.post(`${groupPath(this.props.groupId)}/tags.json`, { tag_name }).then(response => {
+    axios.post(`${this.tagsPath()}/tags.json`, { tag_name }).then(response => {
       const tags = this.state.tags.concat(response.data);
       this.setState({ tags, isEditing: false, tagName: '' })
     })
@@ -33,7 +43,7 @@ class Tags extends Component {
 
   removeTag(id) {
     axios.delete(
-      `${groupPath(this.props.groupId)}/tags/${id}.json`).then(response => {
+      `${this.tagsPath()}/tags/${id}.json`).then(response => {
         const tags = _.filter(this.state.tags, (tag) => (tag.id != id));
         this.setState({ tags })
       });
