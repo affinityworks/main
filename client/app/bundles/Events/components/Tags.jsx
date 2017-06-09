@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import _ from 'lodash';
-import { groupPath, eventWithoutGroupPath } from '../utils/Pathnames';
-
 import queryString from 'query-string';
 import { withRouter } from 'react-router';
+
+import { groupPath, eventWithoutGroupPath } from '../utils/Pathnames';
 
 class Tags extends Component {
   constructor(props) {
