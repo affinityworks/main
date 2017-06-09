@@ -19,11 +19,11 @@ class Events extends Component {
   }
 
   render() {
-    const { currentGroup } = this.props;
+    const { currentGroup, location } = this.props;
 
     return (
       <div>
-        <Breadcrumbs active='All Events' />
+        <Breadcrumbs active='All Events' location={location} />
 
         <br />
 

@@ -19,7 +19,7 @@ class Dashboard extends Component {
 
     return (
       <div>
-        <Breadcrumbs active='Dashboard' />
+        <Breadcrumbs active='Dashboard' location={this.props.location} />
 
         <br />
 
