@@ -5,7 +5,8 @@ class GroupsController < ApplicationController
   # GET /groups
   # GET /groups.json
   def index
-    @groups = Group.all.includes(:creator).page(params[:page])
+    @groups = params[:tag] ? Group.tagged_with(params[:tag]) : Group.all
+    @groups = @groups.includes(:creator).page(params[:page])
 
     if sort_param && direction_param
       sort = sort_param == 'owner' ? 'people.given_name' : sort_param
