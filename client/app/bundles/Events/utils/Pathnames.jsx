@@ -12,3 +12,5 @@ export const membershipWithoutGroupPath = (id) => (`/memberships/${id}`);
 export const groupId = () => {
   return window.location.href.match(/groups\/(\d+)/)[1];
 }
+
+export const eventWithoutGroupPath = (id) => (`/events/${id}`)
