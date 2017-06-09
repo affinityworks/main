@@ -47,7 +47,7 @@ class Tags extends Component {
     const tag_name = this.state.tagName;
     const { resource_type, resource_id } = this.tagResourceData();
 
-    axios.post(`tags.json`, { tag_name, resource_type, resource_id })
+    axios.post(`/tags.json`, { tag_name, resource_type, resource_id })
       .then(response => {
         const tags = this.state.tags.concat(response.data);
         this.setState({ tags, isEditing: false, tagName: '' })
@@ -55,7 +55,7 @@ class Tags extends Component {
   }
 
   removeTag(id) {
-    axios.delete(`tags/${id}.json`, { params: this.tagResourceData() })
+    axios.delete(`/tags/${id}.json`, { params: this.tagResourceData() })
       .then(response => {
         const tags = _.filter(this.state.tags, (tag) => (tag.id != id));
         this.setState({ tags })
