@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import _ from 'lodash';
-import { groupPath } from '../utils/Pathnames';
+import queryString from 'query-string';
+import { withRouter } from 'react-router';
+
+import { groupPath, eventWithoutGroupPath, membershipWithoutGroupPath } from '../utils/Pathnames';
 
 class Tags extends Component {
   constructor(props) {
@@ -19,10 +22,23 @@ class Tags extends Component {
     this.setState({isEditing: false});
   }
 
+  tagsPath() {
+    let tags_path = '';
+    //var tags_path = ''
+    if (this.props.groupId) {
+      tags_path = groupPath(this.props.groupId)
+    } else if (this.props.eventId) {
+      tags_path = eventWithoutGroupPath(this.props.eventId)
+    } else if (this.props.membershipId) {
+      tags_path = membershipWithoutGroupPath(this.props.membershipId)
+    }
+    return tags_path
+  }
+
   createTag(ev) {
     const tag_name = this.state.tagName;
     ev.preventDefault();
-    axios.post(`${groupPath(this.props.groupId)}/tags.json`, { tag_name }).then(response => {
+    axios.post(`${this.tagsPath()}/tags.json`, { tag_name }).then(response => {
       const tags = this.state.tags.concat(response.data);
       this.setState({ tags, isEditing: false, tagName: '' })
     })
@@ -30,7 +46,7 @@ class Tags extends Component {
 
   removeTag(id) {
     axios.delete(
-      `${groupPath(this.props.groupId)}/tags/${id}.json`).then(response => {
+      `${this.tagsPath()}/tags/${id}.json`).then(response => {
         const tags = _.filter(this.state.tags, (tag) => (tag.id != id));
         this.setState({ tags })
       });
@@ -38,6 +54,10 @@ class Tags extends Component {
 
   handleInputChange(ev) {
     this.setState({ tagName: ev.target.value });
+  }
+
+  addTagFilter(tag) {
+    this.props.history.push(`?${queryString.stringify({ tag })}`);
   }
 
   showAddTagInput() {
@@ -64,10 +84,16 @@ class Tags extends Component {
   showTags() {
     const { tags } = this.state;
     return (
-      tags.map((tag) => (
+      tags.map(({ name, id }) => (
         <span className='tag'
-          key={tag.id}>{tag.name}
-          <span className='tag-action--remove' onClick={() => (this.removeTag(tag.id))}>&times;
+          key={id}
+          onClick={() => (this.addTagFilter(name))}>
+          {name}
+
+          <span
+            className='tag-action--remove'
+            onClick={(e) => { e.stopPropagation(); this.removeTag(id); }}>
+            &times;
           </span>
         </span>
       )))
@@ -86,4 +112,4 @@ class Tags extends Component {
   }
 }
 
-export default Tags;
+export default withRouter(Tags);

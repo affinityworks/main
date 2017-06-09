@@ -1,6 +1,8 @@
 class Event < ApplicationRecord
   include Api::Identifiers
 
+  acts_as_taggable
+
   default_scope { where.not(status: 'cancelled') }
 
   attr_accessor :attended_count
