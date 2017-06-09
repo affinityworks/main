@@ -11,7 +11,7 @@ class Groups extends Component {
 
     return (
       <div>
-        <Breadcrumbs active='All Groups' />
+        <Breadcrumbs active='All Groups' location={this.props.location} />
 
         <br/>
 

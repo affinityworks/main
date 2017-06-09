@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import _ from 'lodash';
+import queryString from 'query-string';
+import { withRouter } from 'react-router';
+
 import { groupPath } from '../utils/Pathnames';
 
 class Tags extends Component {
@@ -40,6 +43,10 @@ class Tags extends Component {
     this.setState({ tagName: ev.target.value });
   }
 
+  addTagFilter(tag) {
+    this.props.history.push(`?${queryString.stringify({ tag })}`);
+  }
+
   showAddTagInput() {
     if(this.state.isEditing) {
       return(
@@ -64,10 +71,16 @@ class Tags extends Component {
   showTags() {
     const { tags } = this.state;
     return (
-      tags.map((tag) => (
+      tags.map(({ name, id }) => (
         <span className='tag'
-          key={tag.id}>{tag.name}
-          <span className='tag-action--remove' onClick={() => (this.removeTag(tag.id))}>&times;
+          key={id}
+          onClick={() => (this.addTagFilter(name))}>
+          {name}
+
+          <span
+            className='tag-action--remove'
+            onClick={(e) => { e.stopPropagation(); this.removeTag(id); }}>
+            &times;
           </span>
         </span>
       )))
@@ -86,4 +99,4 @@ class Tags extends Component {
   }
 }
 
-export default Tags;
+export default withRouter(Tags);

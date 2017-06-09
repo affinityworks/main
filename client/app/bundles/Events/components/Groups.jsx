@@ -19,8 +19,8 @@ class Groups extends Component {
   }
 
   buildQuery(props) {
-    const { page, sort, direction } = queryString.parse(props.location.search);
-    const query = { page, sort, direction };
+    const { page, sort, direction, tag } = queryString.parse(props.location.search);
+    const query = { page, sort, direction, tag };
 
     return `?${queryString.stringify(query)}`;
   }

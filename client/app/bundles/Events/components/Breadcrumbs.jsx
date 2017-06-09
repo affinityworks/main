@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import queryString from 'query-string';
 
 import { fetchGroup } from '../actions';
 import { dashboardPath, groupId, affiliatesPath, groupsPath } from '../utils/Pathnames';
@@ -23,6 +24,32 @@ class Breadcrumbs extends Component {
     return (
       <li className='breadcrumb-item'>
         <Link to={affiliatesPath(currentGroup.id)}>All Groups</Link>
+      </li>
+    );
+  }
+
+  renderTagBreadcrumb() {
+    const { tag } = queryString.parse(this.props.location.search);
+
+    if (tag)
+      return (
+        <li className='breadcrumb-item active'>
+          {tag}
+        </li>
+      );
+  }
+
+  renderActiveBreadcrumb() {
+    const { active, location } = this.props;
+    const { tag } = queryString.parse(location.search);
+
+    if (!tag)
+      return <li className='breadcrumb-item active'>{active}</li>
+
+
+    return (
+      <li className='breadcrumb-item'>
+        <Link to={location.pathname}>{active}</Link>
       </li>
     );
   }
@@ -53,9 +80,12 @@ class Breadcrumbs extends Component {
         </li>
 
         {this.renderAffiliatesBreadcrumb()}
+
         {this.renderCurrentAffiliateBreadcrumb()}
 
-        <li className='breadcrumb-item active'>{active}</li>
+        {this.renderActiveBreadcrumb()}
+
+        {this.renderTagBreadcrumb()}
       </ol>
     );
   }
