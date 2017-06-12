@@ -37,6 +37,10 @@ class Group < ApplicationRecord
     Api::ActionNetwork::People.import!(self)
   end
 
+  def import_tags
+    Api::ActionNetwork::Tags.import!(self)
+  end
+
   def import_attendances(event)
     Api::ActionNetwork::Attendances.import!(event, self)
   end
@@ -47,6 +51,7 @@ class Group < ApplicationRecord
       import_events
       import_members
       events.each { |event| import_attendances(event) }
+      import_tags
       self.update_attribute(:synced_at, synced_time)
     end
   end

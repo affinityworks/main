@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170607160151) do
+ActiveRecord::Schema.define(version: 20170609184642) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -734,6 +734,14 @@ ActiveRecord::Schema.define(version: 20170607160151) do
     t.index ["form_id"], name: "index_submissions_on_form_id", using: :btree
     t.index ["person_id"], name: "index_submissions_on_person_id", using: :btree
     t.index ["referrer_data_id"], name: "index_submissions_on_referrer_data_id", using: :btree
+  end
+
+  create_table "tag_origins", force: :cascade do |t|
+    t.integer "origin_id"
+    t.integer "tag_id"
+    t.string  "uid"
+    t.index ["origin_id"], name: "index_tag_origins_on_origin_id", using: :btree
+    t.index ["tag_id"], name: "index_tag_origins_on_tag_id", using: :btree
   end
 
   create_table "taggings", force: :cascade do |t|
