@@ -57,13 +57,15 @@ Rails.application.routes.draw do
 
   #root to: "_site/index.html"
 
+  resources :tags, only: [:create, :destroy]
+
   resources :groups do
     get '/dashboard', to: 'dashboard#show', as: 'dashboard'
 
     resources :members do
       resources :events
-      resources :tags, only: [:create, :destroy], controller: 'membership_tags'
     end
+
     resources :memberships, only: [:index]
 
     resources :affiliates
@@ -82,19 +84,9 @@ Rails.application.routes.draw do
 
       resources :attendances
     end
-
-    resources :tags, only: [:create, :destroy], controller: 'group_tags'
   end
 
   resources :dashboard, only: [:index]
-
-  resources :memberships, only: [] do
-    resources :tags, only: [:create, :destroy], controller: 'membership_tags'
-  end
-
-  resources :events, only: [] do
-    resources :tags, only: [:create, :destroy], controller: 'event_tags'
-  end
 
   resources :profile, only: [:index]
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
