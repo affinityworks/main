@@ -56,7 +56,7 @@ class ImportsController < ApplicationController
     attendance = member.attendances.find_or_initialize_by(event_id: event.id).tap do |attendance|
       attendance.origins.push(Origin.facebook)
       attendance.invited_by_id ||= current_user.id
-      attendance.status ||= 'tentative'
+      attendance.status ||= 'accepted'
     end
 
     member.save!
