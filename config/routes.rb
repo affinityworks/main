@@ -63,6 +63,7 @@ Rails.application.routes.draw do
     get '/dashboard', to: 'dashboard#show', as: 'dashboard'
 
     resources :members do
+      get :attendances, on: :member
       resources :events
     end
 

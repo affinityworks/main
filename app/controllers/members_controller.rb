@@ -28,6 +28,17 @@ class MembersController < ApplicationController
     end
   end
 
+  def attendances
+    person = Person.find(params[:id])
+    attendances = person.attendances.includes(:event).order('events.start_date')
+    respond_to do |format|
+      format.html
+      format.json do
+        render json: JsonApi::AttendanceWithEventsRepresenter.for_collection.new(attendances).to_json
+      end
+    end
+  end
+
   private
 
   def set_members
