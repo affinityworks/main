@@ -5,4 +5,5 @@ class Tag < ApplicationRecord
 
   validates :name, uniqueness: true
   has_many :tag_origins
+  has_many :taggings
 end
