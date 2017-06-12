@@ -34,9 +34,6 @@ class TagsController < ApplicationController
   private
 
   def resource
-    puts "WALALALA"
-    puts TYPE_MAPPING[params[:resource_type]]
-    puts "WALALALAL"
     model = TYPE_MAPPING[params[:resource_type]] or return
     @resource ||= model.find(params[:resource_id])
   end
