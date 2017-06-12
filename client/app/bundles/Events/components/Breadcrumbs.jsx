@@ -68,10 +68,7 @@ class Breadcrumbs extends Component {
   }
 
   render() {
-    const { currentRole, currentGroup, active } = this.props;
-
-    if (currentRole != 'national_organizer')
-      return false;
+    const { currentGroup, active } = this.props;
 
     return (
       <ol className='breadcrumb'>
@@ -91,8 +88,8 @@ class Breadcrumbs extends Component {
   }
 }
 
-const mapStateToProps = ({ currentGroup, currentRole, group }) => {
-  return { currentGroup, currentRole, group };
+const mapStateToProps = ({ currentGroup, group }) => {
+  return { currentGroup, group };
 };
 
 export default connect(mapStateToProps, { fetchGroup })(Breadcrumbs);

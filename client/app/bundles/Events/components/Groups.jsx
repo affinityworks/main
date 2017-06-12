@@ -36,8 +36,7 @@ class Groups extends Component {
   }
 
   render() {
-    const { groups, currentRole } = this.props;
-    const linkToDashboard = currentRole === 'national_organizer';
+    const { groups } = this.props;
 
     return (
       <div>
@@ -52,7 +51,7 @@ class Groups extends Component {
           </thead>
 
           <tbody>
-            {groups.map(group => <Group key={group.id} group={group} linkToDashboard={linkToDashboard} />)}
+            {groups.map(group => <Group key={group.id} group={group} linkToDashboard={true} />)}
           </tbody>
         </table>
         <br />
@@ -65,9 +64,8 @@ class Groups extends Component {
 
 const mapStateToProps = (props) => {
   const { groups, total_pages, page } = props.groups;
-  const { currentRole } = props;
 
-  return { groups, total_pages, page, currentRole };
+  return { groups, total_pages, page };
 };
 
 export default connect(mapStateToProps, { fetchGroups })(Groups);
