@@ -68,4 +68,15 @@ class Group < ApplicationRecord
   def upcoming_events
     events.upcoming
   end
+
+  def has_affiliates
+    affiliates.any?
+  end
+
+  def as_json(options={})
+    super({
+      only: [:name, :id],
+      methods: :has_affiliates
+    }.merge(options))
+  end
 end
