@@ -1,0 +1,5 @@
+action_network:
+  id: 1
+  uid: 'some-uid'
+  tag_id: 1
+  origin_id: 1
