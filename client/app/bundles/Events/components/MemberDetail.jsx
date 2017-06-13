@@ -8,7 +8,7 @@ import Event from './Event';
 import { fetchMember, fetchMembersEvents } from '../actions';
 import { membersPath } from '../utils/Pathnames';
 import EmailLink from './EmailLink';
-import UpcomingEvent from './UpcomingEvent';
+import ActionHistory from './ActionHistory';
 
 class MemberDetail extends Component {
   state = { attendances: [] }
@@ -25,26 +25,7 @@ class MemberDetail extends Component {
       .then(response => this.setState({ attendances: response.data.data }));
   }
 
-  showAttendances() {
-    const { attendances } = this.state;
-
-    if (!attendances.length) {
-      return (
-        <div> Hasn't rvsp'd any events recently. </div>
-      );
-    }
-
-    return (
-      attendances.map(attendance => {
-        return (
-          <UpcomingEvent key={attendance.id} event={attendance.attributes.event.data} />
-        );
-      })
-    );
-  }
-
   render() {
-    console.log(this.state.attendances);
     const { member } = this.props;
 
     if (!member.attributes)
@@ -69,8 +50,11 @@ class MemberDetail extends Component {
 
         <br/>
 
-        <h4> RVSP'd events </h4>
-        {this.showAttendances()}
+        <div className='row'>
+          <div className='col-6'>
+            <ActionHistory attendances={this.state.attendances}/>
+          </div>
+        </div>
 
         <br/>
 
