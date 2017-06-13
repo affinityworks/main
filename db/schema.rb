@@ -746,6 +746,14 @@ ActiveRecord::Schema.define(version: 20170613183620) do
     t.index ["referrer_data_id"], name: "index_submissions_on_referrer_data_id", using: :btree
   end
 
+  create_table "tag_origins", force: :cascade do |t|
+    t.integer "origin_id"
+    t.integer "tag_id"
+    t.string  "uid"
+    t.index ["origin_id"], name: "index_tag_origins_on_origin_id", using: :btree
+    t.index ["tag_id"], name: "index_tag_origins_on_tag_id", using: :btree
+  end
+
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"
     t.string   "taggable_type"
