@@ -49,7 +49,9 @@ class MemberDetail extends Component {
             style={{ marginLeft: '14px', alignSelf: 'center' }}
           />
         </div>
-
+        <div style={{ textTransform: 'capitalize' }}> 
+          {membership.attributes.role}
+        </div>
         <div> {attributes['primary-phone-number']} </div>
 
         <br/>
