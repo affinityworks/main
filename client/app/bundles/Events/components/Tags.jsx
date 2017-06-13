@@ -88,7 +88,7 @@ class Tags extends Component {
   }
 
   addTagClick() {
-    this.setState({isEditing: true});
+    this.setState({ isEditing: true });
   }
 
   showTags() {

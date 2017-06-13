@@ -30,7 +30,7 @@ class MembersController < ApplicationController
 
   def attendances
     person = Person.find(params[:id])
-    attendances = person.attendances.includes(:event).order('events.start_date')
+    attendances = person.attendances.includes(:event).order('events.start_date').page.per(10)
     respond_to do |format|
       format.html
       format.json do
