@@ -56,6 +56,7 @@ Rails.application.routes.draw do
 
 
   #root to: "_site/index.html"
+  resources :notes, only: :create
 
   resources :tags, only: [:create, :destroy]
 

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 import Nav from './Nav';
 import Tags from './Tags';
+import Notes from './Notes';
 import Event from './Event';
 import { membersPath, membershipPath } from '../utils/Pathnames';
 import EmailLink from './EmailLink';
@@ -49,7 +50,7 @@ class MemberDetail extends Component {
             style={{ marginLeft: '14px', alignSelf: 'center' }}
           />
         </div>
-        <div style={{ textTransform: 'capitalize' }}> 
+        <div style={{ textTransform: 'capitalize' }}>
           {membership.attributes.role}
         </div>
         <div> {attributes['primary-phone-number']} </div>
@@ -62,8 +63,7 @@ class MemberDetail extends Component {
           </div>
           <div className='col-6'>
             <h4>Notes</h4>
-            <div className='list-group'>
-            </div>
+            <Notes notes={membership.attributes.notes} membershipId={membership.id}/>
           </div>
         </div>
 

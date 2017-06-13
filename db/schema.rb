@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170607160151) do
+ActiveRecord::Schema.define(version: 20170613183620) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -395,6 +395,15 @@ ActiveRecord::Schema.define(version: 20170607160151) do
     t.index ["group_id"], name: "index_memberships_on_group_id", using: :btree
     t.index ["person_id", "group_id"], name: "index_memberships_on_person_id_and_group_id", unique: true, using: :btree
     t.index ["person_id"], name: "index_memberships_on_person_id", using: :btree
+  end
+
+  create_table "notes", force: :cascade do |t|
+    t.string  "notable_type"
+    t.integer "notable_id"
+    t.integer "author_id"
+    t.text    "text"
+    t.index ["author_id"], name: "index_notes_on_author_id", using: :btree
+    t.index ["notable_type", "notable_id"], name: "index_notes_on_notable_type_and_notable_id", using: :btree
   end
 
   create_table "oauth_access_grants", force: :cascade do |t|
