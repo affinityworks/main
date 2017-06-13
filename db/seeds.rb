@@ -1,4 +1,8 @@
 
+Origin.find_or_create_by(name: 'Action Network')
+Origin.find_or_create_by(name: 'Facebook')
+Origin.find_or_create_by(name: 'Affinity')
+
 admin = Person.create(family_name: 'Admin', given_name: 'Test', password: 'password', admin: true)
 group = Group.create(name: 'National Network', an_api_key: '7cc9eff8d105f3ff34c6bf7683abbec6', creator: admin)
 

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 import { eventsPath } from '../utils/Pathnames';
+import FacebookLink from './FacebookLink';
 
 class AttendanceMatch extends Component {
   constructor(props) {
@@ -44,9 +45,7 @@ class AttendanceMatch extends Component {
         <td>{fb_rsvp.name}</td>
 
         <td style={{ width: '20%' }}>
-          <a href={`https://facebook.com/${fb_rsvp.id}`} target='_blank'>
-            <i className='fa fa-facebook-official fa-2x' style={{ color: '#3b5998' }} />
-          </a>
+          <FacebookLink id={fb_rsvp.id} />
         </td>
 
         <td>

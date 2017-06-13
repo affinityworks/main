@@ -78,7 +78,8 @@ class RemoteEventMatch extends Component {
         <div className='col-3 offset-1'>
           <div className='row'>
             <div className='btn btn-success'
-              onClick={this.createRemoteEvent}>
+              onClick={this.createRemoteEvent}
+               style={{ cursor: 'pointer'}}>
               Sync RSVP's
             </div>
           </div>

@@ -43,18 +43,6 @@ class Events extends Component {
     }
   }
 
-  linkWithFacebook() {
-    const { current_user } = this.props
-
-    if (current_user && current_user.admin) {
-      return (
-        <a href='/admin/auth/facebook' className='btn btn-facebook'>
-          Import Event From Facebook
-        </a>
-      )
-    }
-  }
-
   groupColumn() {
     if (this.props.showGroupName)
       return <th>Group Name</th>
@@ -84,8 +72,10 @@ class Events extends Component {
           <div className='col-6'>
             <EventsFilter onSearchSubmit={this.filterEvents} filter={filter} />
           </div>
-          <div className='col-3 offset-4 text-right'>
-            { this.linkWithFacebook() }
+          <div className='col-3 offset-3 text-right'>
+            <a href='/admin/auth/facebook' className='btn btn-facebook'>
+              Import Event From Facebook
+            </a>
           </div>
         </div>
 

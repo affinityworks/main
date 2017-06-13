@@ -6,26 +6,29 @@ import AttendanceMatch from '../components/AttendanceMatch';
 import { eventsPath } from '../utils/Pathnames';
 
 class AttendanceMatching extends Component {
-  state = { matches: [] };
+  state = { matches: [], anyMatch: true };
 
   componentWillMount() {
     const { id } = this.props.match.params;
 
     axios.get(`${eventsPath()}/imports/${id}/attendances.json`)
       .then((response) => {
-        this.setState({ matches: response.data });
+        this.setState({ matches: response.data, anyMatch: !!response.data.length  });
       });
   }
 
   renderRows() {
-    const { matches } = this.state;
+    const { matches, anyMatch } = this.state;
     const { id } = this.props.match.params;
 
-    return matches.map((match) => {
-      return (
-        <AttendanceMatch match={match} key={match.fb_rsvp.id} remote_event_id={id} />
-      );
-    });
+    if (anyMatch)
+      return matches.map((match) => {
+        return (
+          <AttendanceMatch match={match} key={match.fb_rsvp.id} remote_event_id={id} />
+        );
+      });
+    else
+      return (<tr><td>No matches were found.</td></tr>)
   }
 
   render() {
