@@ -14,11 +14,11 @@ class Notes extends Component {
 
     const note = {
       text: this.state.text,
-      type: 'membership',
-      id: this.props.membershipId
+      resource_type: 'membership',
+      resource_id: this.props.membershipId
     }
 
-    axios.post('/notes', { note })
+    axios.post('/notes.json', { note })
       .then(response => {
         const notes = this.state.notes.concat(response.data);
         this.setState({ notes, text: '' })
@@ -44,10 +44,15 @@ class Notes extends Component {
 
   render() {
     return (
-      <div className='list-group'>
-        {this.renderNotes()}
-        <form onSubmit={this.handleSubmit().bind(this)}>
+      <div>
+        <div
+          className='list-group'
+          style={{ maxHeight: '500px', overflow: 'scroll', display: 'block' }}>
+          {this.renderNotes()}
+        </div>
+        <form onSubmit={this.handleSubmit.bind(this)}>
           <textarea
+            rows={3}
             className='form-control'
             value={this.state.text}
             onChange={(e) => this.setState({ text: e.target.value })} />
