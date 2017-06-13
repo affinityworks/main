@@ -7,8 +7,6 @@ class FacebookEvent < RemoteEvent
       fb_event.description = remote_event['description']
       fb_event.start_date = remote_event['start_time']
       fb_event.end_date = remote_event['start_time']
-
-      puts fb_event.event_id
     end
   end
 
