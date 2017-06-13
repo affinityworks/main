@@ -36,4 +36,12 @@ class MembershipsControllerTest < ActionDispatch::IntegrationTest
     assert_equal 1, json['memberships']['data'].count
     assert_equal people(:admin).memberships.first.id, json['memberships']['data'].first['id'].to_i
   end
+
+  test 'get #show' do
+    person = people(:organizer)
+    sign_in person
+
+    get group_membership_url(group_id: groups(:test).id, id: person.id), as: :json
+    assert_response :success
+  end
 end
