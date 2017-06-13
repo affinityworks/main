@@ -14,7 +14,8 @@ class RemoteEventMatches extends Component {
       <div
         className={`list-group-item list-group-item-action ${this.props.selected === event.id ? 'active' : ''}`}
         key={event.id}
-        onClick={ev => this.props.onClick(event.id)} >
+        onClick={ev => this.props.onClick(event.id)}
+        style={{cursor: 'pointer'}} >
 
         <span className='text-primary'>{attributes.title}</span>
         <span>{this.startEndTime(attributes)}</span>

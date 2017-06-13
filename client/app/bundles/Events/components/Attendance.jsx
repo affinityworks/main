@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import { updateAttendance } from '../actions';
+import FacebookLink from './FacebookLink';
 
 class Attendance extends Component {
   constructor(props) {
@@ -9,6 +10,21 @@ class Attendance extends Component {
 
     const { attended } = props.attendance.attributes;
     this.state = { attended }
+  }
+
+  renderFacebookLink() {
+    const { attributes } = this.props.attendance;
+
+    let fromFB = _.find(attributes.origins, { name: 'Facebook' });
+
+    if (fromFB) {
+      const { identifiers } = attributes.person.data.attributes;
+      const fbIdentifier = _.find(identifiers, (identifier) => {
+        return identifier.indexOf('facebook') >= 0;
+      });
+
+      return <FacebookLink id={fbIdentifier} />;
+    }
   }
 
   updateAttended(attended) {
@@ -25,13 +41,19 @@ class Attendance extends Component {
 
     return (
       <div className='list-group-item'>
-        <div className='col-8'>
-          <div className='row'>
-            {`${attendee['given-name']} ${attendee['family-name']}`}
+        <div className='col-8' style={{ display: 'flex', alignItems: 'center' }}>
+          <div style={{ marginRight: '20px' }}>
+            <div>
+              {`${attendee['given-name']} ${attendee['family-name']}`}
+            </div>
+
+            <div>
+              <small>{`${attendee['primary-email-address']}`}</small>
+            </div>
           </div>
 
-          <div className='row'>
-            <small>{`${attendee['primary-email-address']}`}</small>
+          <div>
+            {this.renderFacebookLink()}
           </div>
         </div>
 
