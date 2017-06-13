@@ -7,20 +7,23 @@ import { connect } from 'react-redux';
 import history from '../history';
 import GroupMembers from '../components/Members';
 import Breadcrumbs from '../components/Breadcrumbs';
-import { isNationalOrgnizer, managingCurrentGroup } from '../utils/Permissions'
+import { managingCurrentGroupWithAffiliates } from '../utils/Permissions'
 
 class Members extends Component {
   showGroupName() {
-    const { currentGroup, currentRole } = this.props;
-    return (isNationalOrgnizer(currentRole) && managingCurrentGroup(currentGroup))
+    const { currentGroup } = this.props;
+    return managingCurrentGroupWithAffiliates(currentGroup);
   }
 
   render() {
     const { currentGroup, location } = this.props;
+    const activeText = managingCurrentGroupWithAffiliates(currentGroup)
+      ? 'All Members'
+      : 'Members';
 
     return (
       <div>
-        <Breadcrumbs active='All Members' location={location} />
+        <Breadcrumbs active={activeText} location={location} />
 
         <br />
 
@@ -34,8 +37,8 @@ class Members extends Component {
   }
 }
 
-const mapStateToProps = ({ currentGroup, currentRole }) => {
-  return { currentGroup, currentRole }
+const mapStateToProps = ({ currentGroup }) => {
+  return { currentGroup }
 };
 
 export default connect(mapStateToProps)(Members);
