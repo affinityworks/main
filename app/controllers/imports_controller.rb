@@ -48,6 +48,22 @@ class ImportsController < ApplicationController
     end
   end
 
+  def new_facebook_attendance
+    remote_event = RemoteEvent.find(params[:remote_event_id])
+    remote_attendances = remote_event.attendances(current_person.identities.facebook.first)
+    unmatched = current_group.members.unmatched_remote_rsvps(remote_attendances)
+
+    respond_to do |format|
+      format.html
+      format.json do
+        render json: {
+          attendances: unmatched,
+          remote_event: remote_event
+        }.to_json
+      end
+    end
+  end
+
   def create_facebook_attendance
     event = FacebookEvent.find(params[:remote_event_id]).event
     member = current_group.members.find(params[:person_id])

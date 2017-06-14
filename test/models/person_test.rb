@@ -235,4 +235,57 @@ class PersonTest < ActiveSupport::TestCase
     assert_equal person, person.json_representation.represented
   end
 
+  test '#import_remote' do
+    remote_attendance_1 = { id: '123456', name: 'Jon Snow' }
+    remote_attendance_2 = { id: '123457', name: 'Example Long Name' }
+    person = people(:organizer)
+    group = groups(:test)
+    event = events(:test)
+
+    assert_difference 'Person.count', 2 do
+      assert_difference 'Membership.count', 2 do
+        assert_difference 'Attendance.count', 2 do
+          Person.import_remote([remote_attendance_1, remote_attendance_2], group, event, person.id)
+        end
+      end
+    end
+
+    new_person = Person.last
+    assert_equal '123457', new_person.identifier_id('facebook')
+    assert_equal 'Example Long', new_person.given_name
+    assert_equal 'Name', new_person.family_name
+
+    new_membership = Membership.last
+    assert_equal new_person.id, new_membership.person_id
+    assert_equal group.id, new_membership.group_id
+
+    new_attendance = Attendance.last
+    assert_equal new_person.id, new_attendance.person_id
+    assert_equal event.id, new_attendance.event_id
+    assert_equal person.id, new_attendance.invited_by_id
+    assert_equal 'accepted', new_attendance.status
+  end
+
+  test '#import_remote when email is given' do
+    person = people(:organizer)
+    group = groups(:test)
+    event = events(:test)
+
+    email = email_addresses(:member2)
+    remote_attendance_1 = { id: '123456', name: 'Jon Snow', email: email.address }
+
+    assert_difference 'Person.count', 0 do
+      assert_difference 'Membership.count', 0 do
+        assert_difference 'Attendance.count', 0 do
+          Person.import_remote([remote_attendance_1], group, event, person.id)
+        end
+      end
+    end
+
+    matched_person = people(:member2)
+
+    attendance = matched_person.attendances.find_by(event_id: event.id)
+    assert_includes attendance.origins, Origin.facebook
+    assert_equal 'accepted', attendance.status
+  end
 end

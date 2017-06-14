@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-
+import { Link } from 'react-router-dom';
 import Nav from '../components/Nav';
 import AttendanceMatch from '../components/AttendanceMatch';
 import { eventsPath } from '../utils/Pathnames';
@@ -31,7 +31,19 @@ class AttendanceMatching extends Component {
       return (<tr><td>No matches were found.</td></tr>)
   }
 
+  renderNotMatchesMessage() {
+    const { anyMatch } = this.state;
+
+    if (!anyMatch)
+      return (
+        <div>
+          We couldn't find any potential matches of people between the facebook and affinity version of the event.
+        </div>
+      )
+  }
+
   render() {
+    const { id } = this.props.match.params;
     return (
       <div>
         <Nav activeTab='events'/>
@@ -52,6 +64,13 @@ class AttendanceMatching extends Component {
             {this.renderRows()}
           </tbody>
         </table>
+        { this.renderNotMatchesMessage() }
+        <br />
+        <Link className='pull-right btn btn-success'
+          to={`${eventsPath()}/imports/${id}/attendances/new`}>
+
+          Import Unmatched RSVP's
+        </Link>
       </div>
     );
   }
