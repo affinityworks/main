@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import FormGroup from '../components/FormGroup';
 import Input from '../components/Input';
+import Spinner from '../components/Spinner';
 
 import {
   lookUpMember, setAttendanceAttribute,
@@ -93,6 +94,15 @@ class AttendanceForm extends Component {
       return <div className="alert alert-success">{successAlert} </div>
   }
 
+  renderSpinner() {
+    if (this.props.newAttendance.loading)
+      return (
+        <div className='col-md-2' style={{ marginTop: '40px' }}>
+          <Spinner />
+        </div>
+      );
+  }
+
   renderButtons() {
     const col = this.state.showAddressForm ? '5' : '3';
     return(
@@ -120,13 +130,19 @@ class AttendanceForm extends Component {
         {this.renderAlert()}
 
         <FormGroup row>
-          <Input
-            label='Email'
-            classes='col-md-3'
-            onBlur={(e) => lookUpMember(e.target.value)}
-            onChange={(e) => setAttendanceAttribute('primary-email-address', e.target.value)}
-            value={newAttendance['primary-email-address']}
-          />
+          <div className='col-md-3'>
+            <div className='row'>
+              <Input
+                label='Email'
+                classes='col-md-10'
+                onBlur={(e) => lookUpMember(e.target.value)}
+                onChange={(e) => setAttendanceAttribute('primary-email-address', e.target.value)}
+                value={newAttendance['primary-email-address']}
+              />
+
+              {this.renderSpinner()}
+            </div>
+          </div>
 
           <Input
             label='First Name:'
