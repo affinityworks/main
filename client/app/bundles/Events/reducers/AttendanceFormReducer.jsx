@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 import {
-  LOOK_UP_MEMBER, SET_ATTENDANCE_ATTRIBUTE,
+  LOOK_UP_MEMBER, LOOK_UP_MEMBER_START, SET_ATTENDANCE_ATTRIBUTE,
   ATTENDANCE_CREATE_FAIL, ATTENDANCE_CREATE_SUCCESS,
   RESET_ATTENDANCE_FORM
 } from '../actions/types';
@@ -16,7 +16,8 @@ const INITIAL_STATE = {
   'locality': '',
   'address_lines': [],
   'successAlert': '',
-  'errorAlert': ''
+  'errorAlert': '',
+  'loading': false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -34,6 +35,8 @@ export default (state = INITIAL_STATE, action) => {
     }
 
     return state
+  case LOOK_UP_MEMBER_START:
+    return { ...state, loading: true }
   case LOOK_UP_MEMBER:
     const members = action.payload.data.members.data;
 
@@ -43,7 +46,7 @@ export default (state = INITIAL_STATE, action) => {
 
       return {
         ...state, ..._.omit(attributes, 'primary-personal-address'),
-        ...address, disabled: true
+        ...address, disabled: true, loading: false
       }
     } else if (state.disabled) {
       return {

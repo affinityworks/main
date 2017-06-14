@@ -4,6 +4,7 @@
 # but is the simplest compromise between OSDI and Devise.
 class Person < ApplicationRecord
   include Api::Identifiers
+  acts_as_taggable
 
   devise :database_authenticatable,
          :recoverable, :rememberable, :trackable, :validatable,

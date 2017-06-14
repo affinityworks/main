@@ -19,34 +19,44 @@ class Tags extends Component {
   }
 
   cancelTagCreation() {
-    this.setState({isEditing: false});
+    this.setState({ isEditing: false });
   }
 
-  tagsPath() {
-    let tags_path = '';
-    //var tags_path = ''
-    if (this.props.groupId) {
-      tags_path = groupPath(this.props.groupId)
-    } else if (this.props.eventId) {
-      tags_path = eventWithoutGroupPath(this.props.eventId)
-    } else if (this.props.membershipId) {
-      tags_path = membershipWithoutGroupPath(this.props.membershipId)
+  tagResourceData() {
+    let resource_type = '';
+    let resource_id = '';
+    const { groupId, eventId, membershipId } = this.props
+
+    if (groupId) {
+      resource_type = 'group';
+      resource_id = groupId;
+    } else if (eventId) {
+      resource_type = 'event';
+      resource_id = eventId;
+    } else if (membershipId) {
+      resource_type = 'membership';
+      resource_id = membershipId;
     }
-    return tags_path
+
+    return { resource_type, resource_id }
   }
 
   createTag(ev) {
-    const tag_name = this.state.tagName;
     ev.preventDefault();
-    axios.post(`${this.tagsPath()}/tags.json`, { tag_name }).then(response => {
-      const tags = this.state.tags.concat(response.data);
-      this.setState({ tags, isEditing: false, tagName: '' })
-    })
+
+    const tag_name = this.state.tagName;
+    const { resource_type, resource_id } = this.tagResourceData();
+
+    axios.post(`/tags.json`, { tag_name, resource_type, resource_id })
+      .then(response => {
+        const tags = this.state.tags.concat(response.data);
+        this.setState({ tags, isEditing: false, tagName: '' })
+      });
   }
 
   removeTag(id) {
-    axios.delete(
-      `${this.tagsPath()}/tags/${id}.json`).then(response => {
+    axios.delete(`/tags/${id}.json`, { params: this.tagResourceData() })
+      .then(response => {
         const tags = _.filter(this.state.tags, (tag) => (tag.id != id));
         this.setState({ tags })
       });
@@ -78,7 +88,7 @@ class Tags extends Component {
   }
 
   addTagClick() {
-    this.setState({isEditing: true});
+    this.setState({ isEditing: true });
   }
 
   showTags() {

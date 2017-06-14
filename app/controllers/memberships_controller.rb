@@ -16,6 +16,19 @@ class MembershipsController < ApplicationController
     end
   end
 
+  def show
+    @membership = Membership.find_by!(
+      person_id: params[:id], group_id: params[:group_id]
+    )
+
+    respond_to do |format|
+      format.html
+      format.json do
+        render json: JsonApi::MembershipRepresenter.new(@membership)
+      end
+    end
+  end
+
   private
 
   def find_memberships

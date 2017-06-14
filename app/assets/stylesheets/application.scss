@@ -20,7 +20,7 @@
   background-color: #3b5998;
   border-color: #3b5998;
   color: white;
-  &:hover {
+  &:hover, &:active {
     color: white;
   }
 }
@@ -88,4 +88,8 @@
 
 .group-list {
   margin-right: 10px;
+}
+
+a.fa {
+  text-decoration: none;
 }

@@ -54,6 +54,18 @@ class GroupTest < ActiveSupport::TestCase
       to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'person.json')))
     end
 
+    tag_uid = '480cd227-7490-44db-90ec-81cd47483745'
+    person_uid = '636c4f79-2fde-4a6b-9ef3-276801f63315'
+    stub_request(:get, "https://actionnetwork.org/api/v2/tags")
+      .with(:headers => {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'Osdi-Api-Token'=>'test-token', 'User-Agent'=>'Ruby'})
+      .to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'tags.json')))
+    stub_request(:get, "https://actionnetwork.org/api/v2/tags/#{tag_uid}/taggings")
+      .with(:headers => {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'Osdi-Api-Token'=>'test-token', 'User-Agent'=>'Ruby'})
+      .to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'taggings.json')))
+    stub_request(:get, "https://actionnetwork.org/api/v2/people/#{person_uid}")
+      .with(:headers => {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'Osdi-Api-Token'=>'test-token', 'User-Agent'=>'Ruby'})
+      .to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'person.json')))
+
     assert_difference 'group.events.count', 3, 'Imports the events' do
       assert_difference 'group.members.count', 6, 'Imports the membmers' do
         assert_difference 'Attendance.count', 2, 'Imports the attendances' do

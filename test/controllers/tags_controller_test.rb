@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class GroupTagsControllerTest < ActionDispatch::IntegrationTest
+class TagsControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   test 'post #create' do
@@ -9,12 +9,20 @@ class GroupTagsControllerTest < ActionDispatch::IntegrationTest
 
     tag_name = 'example'
     group = groups(:test)
-    post group_tags_url(group_id: group.id, tag_name: tag_name), as: :json
+    post tags_url(resource_type: 'group', resource_id: group.id, tag_name: tag_name), as: :json
     assert_response :success
     json = JSON.parse(response.body)
 
     assert_equal group.reload.tags.last.name, json['name']
     assert_equal group.reload.tags.last.id, json['id']
+  end
+
+  test 'post #create with invlalid type' do
+    person = people(:organizer)
+    sign_in person
+
+    post tags_url(resource_type: 'invalid', resource_id: 1, tag_name: 'tag'), as: :json
+    assert_response :not_found
   end
 
   test 'delete #destroy' do
@@ -27,7 +35,9 @@ class GroupTagsControllerTest < ActionDispatch::IntegrationTest
     group.save
 
     assert_difference 'group.tags.count', -1 do
-      delete group_tag_url(group_id: group.id, id: group.tags.first.id), as: :json
+      delete tag_url(resource_type: 'group', resource_id: group.id, id: group.tags.first.id), as: :json
     end
+
+    assert_response :success
   end
 end

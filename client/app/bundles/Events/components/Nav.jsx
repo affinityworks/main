@@ -10,7 +10,7 @@ import {
   dashboardPath
 } from '../utils/Pathnames';
 
-import { isNationalOrgnizer, managingCurrentGroup } from '../utils/Permissions'
+import { managingCurrentGroupWithAffiliates } from '../utils/Permissions'
 
 class Nav extends Component {
   renderGroupsTab() {
@@ -25,7 +25,7 @@ class Nav extends Component {
   }
 
   isRootNav() {
-    return isNationalOrgnizer(this.props.currentRole) && managingCurrentGroup(this.props.currentGroup);
+    return managingCurrentGroupWithAffiliates(this.props.currentGroup);
   }
 
   render() {
@@ -60,8 +60,8 @@ class Nav extends Component {
   }
 }
 
-const mapStateToProps = ({ currentRole, currentGroup }) => {
-  return { currentRole, currentGroup }
+const mapStateToProps = ({ currentGroup }) => {
+  return { currentGroup }
 };
 
 export default connect(mapStateToProps)(Nav);
