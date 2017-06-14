@@ -11,6 +11,7 @@ import Profile from '../containers/Profile';
 import MemberDetail from '../components/MemberDetail';
 import EventImport from '../components/EventImport';
 import AttendanceMatching from '../containers/AttendanceMatching';
+import AttendanceImport from '../containers/AttendanceImport';
 import Dashboard from '../containers/Dashboard';
 
 export default (
@@ -20,6 +21,7 @@ export default (
     <Route path='/groups/:groupId/affiliates' component={Groups} />
 
     <Route path='/groups/:groupId/events/imports/new' component={EventImport} />
+    <Route path='/groups/:groupId/events/imports/:id/attendances/new' component={AttendanceImport} />
     <Route path='/groups/:groupId/events/imports/:id/attendances' component={AttendanceMatching} />
 
     <Route path='/groups/:groupId/events/:id/attendances' component={Attendances} />

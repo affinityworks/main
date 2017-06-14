@@ -150,10 +150,33 @@ class AttendancesControllerTest < ActionDispatch::IntegrationTest
     assert_not new_attendee.attendances.last.synced
   end
 
+  test 'post #import_remote' do
+    event = events(:test)
+    current_user = people(:organizer)
+    sign_in current_user
+
+    post import_remote_group_event_attendances_url(
+      group_id: groups(:test).id,
+      event_id: event.id,
+      params: {
+        remote_attendances: [{
+          id: '123456',
+          name: 'Remote Person'
+        }]
+      }
+    ), as: :json
+
+    assert_response :success
+
+    new_person = Person.last
+    assert_equal 'Remote Person', new_person.name
+    assert_equal '123456', new_person.identifier_id('facebook')
+  end
+
   def set_attendance_status(group_id, event_id, attendance_id, status)
     put group_event_attendance_url(
       group_id: group_id, event_id: event_id, id: attendance_id, params: { attended: status }
     ),
       as: :json
-    end
+  end
 end

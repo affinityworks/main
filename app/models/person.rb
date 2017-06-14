@@ -162,4 +162,31 @@ class Person < ApplicationRecord
       mapping << { fb_rsvp: matches.first, person: person.json_representation } if matches.any?
     end
   end
+
+  def self.unmatched_remote_rsvps(remote_rsvps)
+    remote_rsvps.delete_if { |rsvp| all.collect(&:name).include?(rsvp['name']) }
+  end
+
+  def self.import_remote(remote_people, group, event, member_id)
+    remote_people.each do |remote_person|
+      name_array = remote_person[:name].split(' ')
+      family_name = name_array.pop
+      given_name = name_array.join(' ')
+
+      # byebug
+      person = remote_person[:email] ? Person.by_email(remote_person[:email]).first :
+        Person.new(synced: false, given_name: given_name,
+          family_name: family_name
+        )
+
+      person.add_identifier('facebook', remote_person[:id])
+      person.memberships.find_or_initialize_by(group_id: group.id)
+      person.attendances.find_or_initialize_by(event_id: event.id).tap do |attendance|
+        attendance.origins.push(Origin.facebook)
+        attendance.invited_by_id ||= member_id
+        attendance.status ||= 'accepted'
+      end
+      person.save
+    end
+  end
 end
