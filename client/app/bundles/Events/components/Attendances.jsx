@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import AttendanceEvent from './AttendanceEvent';
+import Nav from './Nav';
 import Attendance from './Attendance';
 import Pagination from './Pagination';
 import AttendanceForm from '../containers/AttendanceForm';
@@ -52,6 +53,8 @@ class Attendances extends Component {
 
     return (
       <div>
+        <Nav activeTab='events'/>
+
         {this.renderEvent()}
         <div className='container'>
           <div className='list-group'>

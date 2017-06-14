@@ -56,6 +56,7 @@ Rails.application.routes.draw do
 
 
   #root to: "_site/index.html"
+  resources :notes, only: :create
 
   resources :tags, only: [:create, :destroy]
 
@@ -63,10 +64,11 @@ Rails.application.routes.draw do
     get '/dashboard', to: 'dashboard#show', as: 'dashboard'
 
     resources :members do
+      get :attendances, on: :member
       resources :events
     end
 
-    resources :memberships, only: [:index]
+    resources :memberships, only: [:index, :show]
 
     resources :affiliates
 

@@ -17,6 +17,7 @@ module Api::ActionNetwork::Import
     logger.debug "#{self.class.name}#import! resources: #{collection.resources.size} page: #{collection.page}"
 
     next_uri = client.links && client.links['next']&.href
+
     [collection.resources, next_uri]
   rescue => e
     logger.error e.inspect

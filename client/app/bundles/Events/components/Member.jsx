@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+
+import EmailLink from './EmailLink';
 import Tags from './Tags';
 import { membersPath, groupPath } from '../utils/Pathnames';
 
@@ -67,6 +69,8 @@ class Member extends Component {
 
     if(!member) { return null }
 
+    const email = this.props.member['primary-email-address']
+
     return(
       <tr>
         <td>{this.showEmailCheckbox()}</td>
@@ -80,7 +84,9 @@ class Member extends Component {
         {this.groupColumn()}
         <td>{this.showTags()}</td>
         <td>{role}</td>
-        <td>{this.emailAddressLink()}</td>
+        <td>
+          <EmailLink email={email} />
+        </td>
       </tr>
     );
   }

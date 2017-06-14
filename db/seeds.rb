@@ -16,18 +16,24 @@ member2 = Person.create(family_name: 'member', given_name: 'Test', password: 'pa
 member2_email_address = EmailAddress.create(address: 'member2@member.com', primary: true, person_id: member2.id)
 Membership.create(person: member2, group: group, role: 'organizer')
 
-organizer = Person.create(family_name: 'Organizer', given_name: 'Test', password: 'password')
+organizer = Person.create(family_name: 'Organizer', given_name: 'Local', password: 'password')
 organizer_email_address = EmailAddress.create(address: 'organizer@member.com', primary: true, person_id: organizer.id)
 Membership.create(person: organizer, group: group, role: 'organizer')
 
-national_organizer = Person.create(family_name: 'Organizer', given_name: 'National', password: 'password')
-organizer_email_address = EmailAddress.create(address: 'norganizer@member.com', primary: true, person_id: national_organizer.id)
-Membership.create(person: national_organizer, group: group, role: 'national_organizer')
+norganizer = Person.create(family_name: 'Organizer', given_name: 'National', password: 'password')
+norganizer_email_address = EmailAddress.create(address: 'norganizer@member.com', primary: true, person_id: norganizer.id)
+Membership.create(person: norganizer, group: group, role: 'organizer')
 
-affiliate = Group.create(name: 'Affiliate Group', an_api_key: '7697d3813267b9ea9550648064dbc90b', creator: organizer)
+affiliate_2 = Group.create(name: "Take Action SF", an_api_key: '65ae2539627779838af580a3ba4ba411', creator: organizer)
+affiliate_3 = Group.create(name: "Ariba Carajo", an_api_key: '88527d51a3911e403b8c978f3f7eb394', creator: organizer)
+affiliate = Group.create(name: 'Portland Commuinty Rising', an_api_key: '7697d3813267b9ea9550648064dbc90b', creator: organizer)
 
 group.sync_with_action_network
 
 Affiliation.create(affiliated: affiliate, group: group)
+Affiliation.create(affiliated: affiliate_2, group: group)
+Affiliation.create(affiliated: affiliate_3, group: group)
 
 affiliate.sync_with_action_network
+affiliate_2.sync_with_action_network
+affiliate_3.sync_with_action_network

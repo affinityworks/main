@@ -28,4 +28,12 @@ class MembersControllerTest < ActionDispatch::IntegrationTest
     get group_members_url(group_id: person.groups.first.id), as: :json
     assert_response 302
   end
+
+  test 'get #attendances' do
+    person = people(:organizer)
+    sign_in person
+
+    get attendances_group_member_url(group_id: person.groups.first.id, id: person.id), as: :json
+    assert_response :success
+  end
 end

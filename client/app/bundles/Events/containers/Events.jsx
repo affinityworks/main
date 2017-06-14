@@ -5,25 +5,28 @@ import { connect } from 'react-redux';
 import history from '../history';
 import GroupEvents from '../components/Events';
 import Breadcrumbs from '../components/Breadcrumbs';
-import { isNationalOrgnizer, managingCurrentGroup } from '../utils/Permissions'
+import { managingCurrentGroupWithAffiliates } from '../utils/Permissions'
 
 class Events extends Component {
   showGroupName() {
-    const { currentGroup, currentRole } = this.props;
-    return (isNationalOrgnizer(currentRole) && managingCurrentGroup(currentGroup))
+    const { currentGroup } = this.props;
+    return managingCurrentGroupWithAffiliates(currentGroup);
   }
 
   showPrintIcon() {
-    const { currentGroup, currentRole } = this.props;
-    return (!isNationalOrgnizer(currentRole) || !managingCurrentGroup(currentGroup))
+    const { currentGroup } = this.props;
+    return (!(managingCurrentGroupWithAffiliates(currentGroup)));
   }
 
   render() {
     const { currentGroup, location } = this.props;
+    const activeText = managingCurrentGroupWithAffiliates(currentGroup) 
+      ? 'All Events'
+      : 'Events';
 
     return (
       <div>
-        <Breadcrumbs active='All Events' location={location} />
+        <Breadcrumbs active={activeText} location={location} />
 
         <br />
 
@@ -37,8 +40,8 @@ class Events extends Component {
   }
 }
 
-const mapStateToProps = ({ currentGroup, currentRole }) => {
-  return { currentGroup, currentRole }
+const mapStateToProps = ({ currentGroup }) => {
+  return { currentGroup }
 };
 
 export default connect(mapStateToProps)(Events);

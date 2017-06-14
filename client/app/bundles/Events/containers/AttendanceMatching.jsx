@@ -18,14 +18,17 @@ class AttendanceMatching extends Component {
   }
 
   renderRows() {
-    const { matches } = this.state;
+    const { matches, anyMatch } = this.state;
     const { id } = this.props.match.params;
 
-    return matches.map((match) => {
-      return (
-        <AttendanceMatch match={match} key={match.fb_rsvp.id} remote_event_id={id} />
-      );
-    });
+    if (anyMatch)
+      return matches.map((match) => {
+        return (
+          <AttendanceMatch match={match} key={match.fb_rsvp.id} remote_event_id={id} />
+        );
+      });
+    else
+      return (<tr><td>No matches were found.</td></tr>)
   }
 
   renderNotMatchesMessage() {

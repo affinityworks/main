@@ -2,6 +2,7 @@ export const affiliatesPath = (id = null) => (`/groups/${id || groupId()}/affili
 export const membersPath = () => (`/groups/${groupId()}/members`);
 export const membershipPath = () => (`/groups/${groupId()}/memberships`);
 export const eventsPath = () => (`/groups/${groupId()}/events`);
+export const eventPath = (eventId) => (`/groups/${groupId()}/events/${eventId}`);
 export const attendancesPath = (eventId) => (`/groups/${groupId()}/events/${eventId}/attendances`);
 export const groupsPath = () => (`/groups/${groupId()}/dashboard`)
 export const dashboardPath = (id = null) => (`/groups/${id || groupId()}/dashboard`)
