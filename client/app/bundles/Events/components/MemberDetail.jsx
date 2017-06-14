@@ -37,6 +37,8 @@ class MemberDetail extends Component {
       return null;
 
     const { attributes } = membership.attributes.person.data;
+    const phone = attributes['primary-phone-number'];
+
     return (
       <div>
         <Nav activeTab='members'/>
@@ -45,15 +47,24 @@ class MemberDetail extends Component {
 
         <div className='row container'>
           <h1>{`${attributes['given-name']} ${attributes['family-name']} `}</h1>
-          <EmailLink
-            email={attributes['primary-email-address']}
-            style={{ marginLeft: '14px', alignSelf: 'center' }}
-          />
         </div>
-        <div style={{ textTransform: 'capitalize' }}>
-          {membership.attributes.role}
+
+        <div className='row container' style={{ marginTop: '10px' }}>
+          <span style={{ textTransform: 'capitalize', marginRight: '40px' }}>
+            {membership.attributes.role}
+          </span>
+
+          {phone && <span style={{ marginRight: '20px' }}> Phone: {phone} </span>}
+
+          <span>
+            Email:&nbsp;
+            <a href={`mailto:${attributes['primary-email-address']}`}>
+              {attributes['primary-email-address']}
+            </a>
+          </span>
         </div>
-        <div> {attributes['primary-phone-number']} </div>
+
+        <hr style={{ marginTop: '0.5rem' }} />
 
         <br/>
 
@@ -62,17 +73,11 @@ class MemberDetail extends Component {
             <ActionHistory attendances={this.state.attendances}/>
           </div>
           <div className='col-6'>
-            <h4>Notes</h4>
-            <Notes notes={membership.attributes.notes} membershipId={membership.id}/>
-          </div>
-        </div>
-
-        <br/>
-
-        <div className='row'>
-          <div className='col-6'>
             <h4 style={{ marginRight: '10px' }}>Tags</h4>
             <Tags tags={membership.attributes.tags} membershipId={membership.id} />
+            <br/>
+            <h4>Notes</h4>
+            <Notes notes={membership.attributes.notes} membershipId={membership.id}/>
           </div>
         </div>
 
