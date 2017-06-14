@@ -16,6 +16,9 @@
  // Custom bootstrap variables must be set or imported before bootstrap itself.
  @import "bootstrap";
 
+$red: #d9534f;
+$green: #5cb85c;
+
 .btn-facebook {
   background-color: #3b5998;
   border-color: #3b5998;
@@ -92,4 +95,26 @@
 
 a.fa {
   text-decoration: none;
+}
+
+.action-history-circle {
+  height: 120px;
+  width: 120px;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+
+  &--attended {
+    background-color: $green;
+    border: 1px solid $green;
+    color: white;
+  }
+
+  &--missed {
+    color: $red;
+    border: 1px solid #ccc;
+  }
 }

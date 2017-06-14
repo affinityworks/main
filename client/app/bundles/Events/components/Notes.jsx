@@ -50,13 +50,13 @@ class Notes extends Component {
           style={{ maxHeight: '500px', overflow: 'scroll', display: 'block' }}>
           {this.renderNotes()}
         </div>
-        <form onSubmit={this.handleSubmit.bind(this)}>
+        <form style={{ marginTop: '20px' }} onSubmit={this.handleSubmit.bind(this)}>
           <textarea
             rows={3}
             className='form-control'
             value={this.state.text}
             onChange={(e) => this.setState({ text: e.target.value })} />
-          <button className='btn btn-primary' style={{ marginTop: '5px' }}>
+          <button className='btn btn-primary' style={{ marginTop: '20px' }}>
             Save
           </button>
         </form>
