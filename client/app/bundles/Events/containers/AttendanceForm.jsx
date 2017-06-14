@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -13,6 +14,9 @@ import {
 
 class AttendanceForm extends Component {
   state = { showAddressForm: false };
+  debouncedLookUp = _.debounce(value => {
+    this.props.lookUpMember(value)
+  }, 250);
 
   componentWillUnmount() {
     this.props.resetAttendanceForm();
@@ -122,8 +126,15 @@ class AttendanceForm extends Component {
     )
   }
 
+  handleEmailChange(e) {
+    const { setAttendanceAttribute } = this.props;
+
+    setAttendanceAttribute('primary-email-address', e.target.value);
+    this.debouncedLookUp(e.target.value);
+  }
+
   render() {
-    const { lookUpMember, newAttendance, setAttendanceAttribute } = this.props;
+    const { newAttendance, setAttendanceAttribute } = this.props;
 
     return (
       <form onSubmit={this.handleSubmit.bind(this)}>
@@ -135,8 +146,8 @@ class AttendanceForm extends Component {
               <Input
                 label='Email'
                 classes='col-md-10'
-                onBlur={(e) => lookUpMember(e.target.value)}
-                onChange={(e) => setAttendanceAttribute('primary-email-address', e.target.value)}
+                onBlur={(e) => setAttendanceAttribute('loading', false)}
+                onChange={this.handleEmailChange.bind(this)}
                 value={newAttendance['primary-email-address']}
               />
 

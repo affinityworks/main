@@ -55,7 +55,7 @@ export default (state = INITIAL_STATE, action) => {
       }
     }
 
-    return { ...state, loading: false };
+    return state;
   case RESET_ATTENDANCE_FORM:
     return INITIAL_STATE;
   default:
