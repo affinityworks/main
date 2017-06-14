@@ -1,9 +1,11 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import FormGroup from '../components/FormGroup';
 import Input from '../components/Input';
+import Spinner from '../components/Spinner';
 
 import {
   lookUpMember, setAttendanceAttribute,
@@ -12,6 +14,9 @@ import {
 
 class AttendanceForm extends Component {
   state = { showAddressForm: false };
+  debouncedLookUp = _.debounce(value => {
+    this.props.lookUpMember(value)
+  }, 250);
 
   componentWillUnmount() {
     this.props.resetAttendanceForm();
@@ -93,6 +98,15 @@ class AttendanceForm extends Component {
       return <div className="alert alert-success">{successAlert} </div>
   }
 
+  renderSpinner() {
+    if (this.props.newAttendance.loading)
+      return (
+        <div className='col-md-2' style={{ marginTop: '40px' }}>
+          <Spinner />
+        </div>
+      );
+  }
+
   renderButtons() {
     const col = this.state.showAddressForm ? '5' : '3';
     return(
@@ -112,21 +126,34 @@ class AttendanceForm extends Component {
     )
   }
 
+  handleEmailChange(e) {
+    const { setAttendanceAttribute } = this.props;
+
+    setAttendanceAttribute('primary-email-address', e.target.value);
+    this.debouncedLookUp(e.target.value);
+  }
+
   render() {
-    const { lookUpMember, newAttendance, setAttendanceAttribute } = this.props;
+    const { newAttendance, setAttendanceAttribute } = this.props;
 
     return (
       <form onSubmit={this.handleSubmit.bind(this)}>
         {this.renderAlert()}
 
         <FormGroup row>
-          <Input
-            label='Email'
-            classes='col-md-3'
-            onBlur={(e) => lookUpMember(e.target.value)}
-            onChange={(e) => setAttendanceAttribute('primary-email-address', e.target.value)}
-            value={newAttendance['primary-email-address']}
-          />
+          <div className='col-md-3'>
+            <div className='row'>
+              <Input
+                label='Email'
+                classes='col-md-10'
+                onBlur={(e) => setAttendanceAttribute('loading', false)}
+                onChange={this.handleEmailChange.bind(this)}
+                value={newAttendance['primary-email-address']}
+              />
+
+              {this.renderSpinner()}
+            </div>
+          </div>
 
           <Input
             label='First Name:'

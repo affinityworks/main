@@ -4,6 +4,7 @@ import {
   FETCH_MEMBER,
   FETCH_MEMBERS,
   LOOK_UP_MEMBER,
+  LOOK_UP_MEMBER_START,
   FETCH_MEMBERS_EVENTS
 } from './types';
 
@@ -28,12 +29,14 @@ export const fetchMember = (id) => {
 };
 
 export const lookUpMember = (email = '') => {
-  const request = axios.get(`${membersPath()}.json?email=${email}`);
+  return (dispatch) => {
+    dispatch({ type: LOOK_UP_MEMBER_START })
+    axios.get(`${membersPath()}.json?email=${email}`)
+      .then(response => {
+        dispatch({ type: LOOK_UP_MEMBER, payload: response });
+      });
+  }
 
-  return {
-    type: LOOK_UP_MEMBER,
-    payload: request
-  };
 };
 
 export const fetchMembersEvents = (id) => {
