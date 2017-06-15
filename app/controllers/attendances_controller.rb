@@ -3,7 +3,7 @@ class AttendancesController < ApplicationController
   before_action :find_attendances
   before_action :authorize_group_access
 
-  protect_from_forgery except: [:update, :create] #TODO: Add the csrf token in react.
+  protect_from_forgery except: [:update, :create, :import_remote] #TODO: Add the csrf token in react.
 
   def index
     respond_to do |format|
@@ -57,6 +57,17 @@ class AttendancesController < ApplicationController
           render json: attendee.errors.full_messages, status: 422
         end
       end
+    end
+  end
+
+  def import_remote
+    group = Group.find(params[:group_id])
+    event = Event.find(params[:event_id])
+
+    Person.import_remote(params[:remote_attendances], group, event, current_user.id)
+    respond_to do |format|
+      format.html { redirect_to groups_url, notice: 'Remote attendances successfully imported' }
+      format.json { head :no_content }
     end
   end
 

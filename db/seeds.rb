@@ -1,4 +1,3 @@
-
 Origin.find_or_create_by(name: 'Action Network')
 Origin.find_or_create_by(name: 'Facebook')
 Origin.find_or_create_by(name: 'Affinity')

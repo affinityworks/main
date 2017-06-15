@@ -8,7 +8,7 @@ class Facebook::EventAttendance
 
   #NOTE we need to add API pagination
   def attendances
-    attending + interested + interested
+    (attending + interested + maybe).uniq
   end
 
   def attending
@@ -24,6 +24,6 @@ class Facebook::EventAttendance
   end
 
   def maybe
-    @api_agent.get("/#{@event_id}/maybe", @options)
+    @api_agent.get("/#{@event_id}/maybe", @options)['data']
   end
 end

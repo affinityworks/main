@@ -16,8 +16,8 @@ const ActionHistoryItem = ({ attendance }) => {
       <span style={{ marginRight: '10px' }}>
         {formatDay(event.attributes['start-date'])}
       </span>
-      {attended == false && <i className='fa fa-times fa-2x' style={{ color: '#d9534f' }} />}
-      {attended && <i className='fa fa-check fa-2x' style={{ color: '#5cb85c' }} />}
+      {attended == false && <span style={{ color: '#d9534f' }}> Missed </span>}
+      {attended && <span style={{ color: '#5cb85c' }}> Attended </span>}
     </div>
   )
 }
