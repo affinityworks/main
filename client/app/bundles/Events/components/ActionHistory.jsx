@@ -24,6 +24,8 @@ const ActionHistory = ({ attendances }) => {
       attendedCount += 1;
   });
 
+  console.log(attendances);
+
   return (
     <div>
       <h4>Action History</h4>
