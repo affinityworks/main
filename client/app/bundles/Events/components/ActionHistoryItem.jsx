@@ -6,6 +6,9 @@ import { eventPath } from '../utils/Pathnames';
 
 const ActionHistoryItem = ({ attendance }) => {
   const { attended } = attendance.attributes
+
+  if (!attendance.attributes.event) { return null }
+
   const event = attendance.attributes.event.data;
 
   return (

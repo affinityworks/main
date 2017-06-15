@@ -3,7 +3,7 @@ class Group < ApplicationRecord
 
   validates :an_api_key, uniqueness: true
 
-  has_many :memberships
+  has_many :memberships, dependent: :destroy
   has_many :members, through: :memberships, source: :person
 
   #this doesn't seem right...
@@ -15,7 +15,7 @@ class Group < ApplicationRecord
   has_many :affiliates, through: :affiliations, source: 'affiliated'
   has_many :affiliated_with, through: :affiliations_with, source: 'group'
 
-  has_and_belongs_to_many :events
+  has_and_belongs_to_many :events, dependent: :destroy
   has_and_belongs_to_many :advocacy_campaigns
   has_and_belongs_to_many :canvassing_efforts
   has_and_belongs_to_many :petitions
