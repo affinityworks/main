@@ -32,7 +32,7 @@ class MembershipsController < ApplicationController
   private
 
   def find_memberships
-    @memberships = Group.find(params[:group_id]).all_memberships.joins(:person).includes(
+    @memberships = Group.find(params[:group_id]).all_memberships.joins(:person, :group).includes(
       person: [:email_addresses, :personal_addresses, :phone_numbers]
     ).page(params[:page])
 
@@ -46,13 +46,19 @@ class MembershipsController < ApplicationController
     end
 
     if sort_param && direction_param
-      sort = sort_param == 'name' ? 'people.given_name' : sort_param
+      sort = if sort_param == 'name'
+        'people.given_name'
+      elsif sort_param == 'group_name'
+        'groups.name'
+      else
+        sort_param
+      end
 
       @memberships = @memberships.order("#{sort} #{direction_param}")
     end
   end
 
   def sort_param
-    @sort_param ||= ['name', 'role'].include?(params[:sort]) && params[:sort] || nil
+    @sort_param ||= ['name', 'role', 'group_name'].include?(params[:sort]) && params[:sort] || nil
   end
 end

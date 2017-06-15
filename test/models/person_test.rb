@@ -287,5 +287,38 @@ class PersonTest < ActiveSupport::TestCase
     attendance = matched_person.attendances.find_by(event_id: event.id)
     assert_includes attendance.origins, Origin.facebook
     assert_equal 'accepted', attendance.status
+
+
+    email = 'exampleemail@example.com'
+    remote_attendance_1 = { id: '123456', name: 'Jon Snow', email: email }
+
+    assert_difference 'Person.count', 1 do
+      assert_difference 'Membership.count', 1 do
+        assert_difference 'Attendance.count', 1 do
+          assert_difference 'EmailAddress.count', 1 do
+            Person.import_remote([remote_attendance_1], group, event, person.id)
+          end
+        end
+      end
+    end
+
+    new_person = Person.last
+    assert_equal '123456', new_person.identifier_id('facebook')
+    assert_equal 'Jon', new_person.given_name
+    assert_equal 'Snow', new_person.family_name
+
+    new_membership = Membership.last
+    assert_equal new_person.id, new_membership.person_id
+    assert_equal group.id, new_membership.group_id
+
+    new_attendance = Attendance.last
+    assert_equal new_person.id, new_attendance.person_id
+    assert_equal event.id, new_attendance.event_id
+    assert_equal person.id, new_attendance.invited_by_id
+    assert_equal 'accepted', new_attendance.status
+
+    new_email_address = EmailAddress.last
+    assert_equal email, new_email_address.address
+    assert_equal new_person.id, new_email_address.person_id
   end
 end

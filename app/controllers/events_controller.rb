@@ -36,7 +36,7 @@ class EventsController < ApplicationController
     #this is a bit clunky and could be cleaned up. --rabble
     return @events = Person.find(params[:member_id]).events.page(params[:page]) if params[:member_id]
 
-    @events = Group.find(params[:group_id]).all_events.includes(:location)
+    @events = Group.find(params[:group_id]).all_events.includes(:location, :groups)
 
     @events = @events.tagged_with(params[:tag]) if params[:tag]
 
@@ -45,7 +45,8 @@ class EventsController < ApplicationController
     end
 
     if sort_param && direction_param
-      @events = @events.order("#{sort_param} #{direction_param}")
+      sort = sort_param == 'group_name' ? 'groups.name' : sort_param
+      @events = @events.order("#{sort} #{direction_param}")
     end
 
     @events = @events.page(params[:page])
@@ -56,6 +57,6 @@ class EventsController < ApplicationController
   end
 
   def sort_param
-    @sort_param ||= ['title', 'start_date'].include?(params[:sort]) && params[:sort] || nil
+    @sort_param ||= ['title', 'start_date', 'group_name'].include?(params[:sort]) && params[:sort] || nil
   end
 end
