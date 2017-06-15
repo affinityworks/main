@@ -174,11 +174,12 @@ class Person < ApplicationRecord
       family_name = name_array.pop
       given_name = name_array.join(' ')
 
-      # byebug
-      person = remote_person[:email] ? Person.by_email(remote_person[:email]).first :
-        Person.new(synced: false, given_name: given_name,
+      person = Person.by_email(remote_person[:email]).first if remote_person[:email]
+      person ||= Person.new(synced: false, given_name: given_name,
           family_name: family_name
         )
+
+      person.email_addresses.find_or_initialize_by(address: remote_person[:email]) if remote_person[:email]
 
       person.add_identifier('facebook', remote_person[:id])
       person.memberships.find_or_initialize_by(group_id: group.id)

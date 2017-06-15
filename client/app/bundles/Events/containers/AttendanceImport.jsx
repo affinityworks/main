@@ -22,15 +22,15 @@ class AttendanceImport extends Component {
   }
 
   importAttendances() {
-    const { id } = this.props.match.params;
-    const { newAttendances } = this.state;
+    const { newAttendances, remote_event } = this.state;
+    const { event_id } = remote_event;
 
     if (!newAttendances.length) {
       this.setState({ noticeAlert: 'Please select attendees from the list' })
       return;
     }
 
-    axios.post(`${eventsPath()}/${id}/attendances/import_remote.json`, {
+    axios.post(`${eventsPath()}/${event_id}/attendances/import_remote.json`, {
       remote_attendances: newAttendances
     })
     .then((response) => {
