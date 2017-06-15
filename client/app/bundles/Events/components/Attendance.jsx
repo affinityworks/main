@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 
 import { updateAttendance } from '../actions';
 import FacebookLink from './FacebookLink';
+import { Link } from 'react-router-dom';
+import EmailLink from './EmailLink';
+import { membersPath } from '../utils/Pathnames';
 
 class Attendance extends Component {
   constructor(props) {
@@ -10,6 +13,13 @@ class Attendance extends Component {
 
     const { attended } = props.attendance.attributes;
     this.state = { attended }
+  }
+
+  emailAddressLink() {
+    const email = this.props.member['primary-email-address']
+
+    if (email)
+      return <a href={`mailto:${email}`} className='fa fa-envelope-o'/>
   }
 
   renderFacebookLink() {
@@ -37,14 +47,18 @@ class Attendance extends Component {
 
   render() {
     const attendee = this.props.attendance.attributes.person.data.attributes;
+    const person = this.props.attendance.attributes.person;
     const { attended } = this.state;
 
+    
     return (
       <div className='list-group-item'>
         <div className='col-8' style={{ display: 'flex', alignItems: 'center' }}>
           <div style={{ marginRight: '20px' }}>
             <div>
-              {`${attendee['given-name']} ${attendee['family-name']}`}
+              <Link to={`${membersPath()}/${person.data.id}`}>
+                {attendee['given-name']} {attendee['family-name']}
+              </Link>
             </div>
 
             <div>
