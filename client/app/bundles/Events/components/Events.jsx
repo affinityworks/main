@@ -45,7 +45,7 @@ class Events extends Component {
 
   groupColumn() {
     if (this.props.showGroupName)
-      return <th>Group Name</th>
+      return <SortableHeader title='Group Name' sortBy='group_name' />
   }
 
   printColumn() {
