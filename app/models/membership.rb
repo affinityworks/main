@@ -10,6 +10,14 @@ class Membership < ApplicationRecord
   enum role: [:member, :organizer]
 
   scope :by_name, -> (name) do
-    where("CONCAT_WS(' ', given_name, family_name) ILIKE ?", "%#{name}%")
+    where("CONCAT_WS(' ', people.given_name, people.family_name) ILIKE ?", "%#{name}%")
+  end
+
+  scope :by_email, -> (email) do
+    where("email_addresses.address ILIKE ?", "%#{email}%")
+  end
+
+  scope :by_location, -> (location) do
+    where("addresses.locality ILIKE ?", "%#{location}%")
   end
 end

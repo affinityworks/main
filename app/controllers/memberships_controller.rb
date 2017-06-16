@@ -32,14 +32,18 @@ class MembershipsController < ApplicationController
   private
 
   def find_memberships
-    @memberships = Group.find(params[:group_id]).all_memberships.joins(:person, :group).includes(
+    @memberships = Group.find(params[:group_id]).all_memberships.joins(:person, :group).eager_load(
       person: [:email_addresses, :personal_addresses, :phone_numbers]
     ).page(params[:page])
 
     @memberships = @memberships.tagged_with(params[:tag]) if params[:tag]
 
     if search_term = params[:filter]
-      @memberships = @memberships.by_name(search_term)
+      @memberships = @memberships.by_name(search_term).or(
+        @memberships.by_email(search_term)
+      ).or(
+        @memberships.by_location(search_term)
+      )
     end
 
     if sort_param && direction_param
