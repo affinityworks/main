@@ -4,7 +4,12 @@ class SearchFilter extends Component {
   constructor(props, _railsContext) {
     super(props);
 
-    this.state = { searchTerm: '' };
+    this.state = { searchTerm: props.filter || '' };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.filter !== nextProps.filter)
+      this.setState({ searchTerm: nextProps.filter || '' });
   }
 
   onInputSubmit(e, searchTerm) {
@@ -21,8 +26,9 @@ class SearchFilter extends Component {
             ref="searchInput"
             type='text'
             className='form-control'
-            defaultValue={this.props.filter}
-            placeholder={this.props.placeholder} />
+            value={this.state.searchTerm}
+            placeholder={this.props.placeholder}
+            onChange={e => this.setState({ searchTerm: e.target.value })}/>
             <span className='input-group-btn' type='submit'>
               <button className='btn btn-secondary'> Search </button>
             </span>
