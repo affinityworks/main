@@ -38,11 +38,8 @@ class MembershipsController < ApplicationController
 
     @memberships = @memberships.tagged_with(params[:tag]) if params[:tag]
 
-    if params[:filter]
-      @memberships = @memberships
-        .where('people.given_name ilike ? or people.family_name ilike ?',
-          "%#{params[:filter]}%","%#{params[:filter]}%"
-        )
+    if search_term = params[:filter]
+      @memberships = @memberships.by_name(search_term)
     end
 
     if sort_param && direction_param
