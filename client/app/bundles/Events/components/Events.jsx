@@ -4,7 +4,7 @@ import queryString from 'query-string';
 import { connect } from 'react-redux';
 
 import Event from './Event';
-import EventsFilter from './EventsFilter';
+import SearchFilter from './SearchFilter';
 import Pagination from './Pagination';
 import SortableHeader from './SortableHeader';
 
@@ -70,7 +70,10 @@ class Events extends Component {
         <div className='row'>
 
           <div className='col-6'>
-            <EventsFilter onSearchSubmit={this.filterEvents} filter={filter} />
+            <SearchFilter
+              onSearchSubmit={this.filterEvents}
+              filter={filter}
+              placeholder='Search for events' />
           </div>
           <div className='col-3 offset-3 text-right'>
             <a href='/admin/auth/facebook' className='btn btn-facebook'>
