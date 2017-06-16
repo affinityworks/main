@@ -5,16 +5,16 @@ import queryString from 'query-string';
 import GroupsList from '../components/Groups';
 import Nav from '../components/Nav';
 import Breadcrumbs from '../components/Breadcrumbs';
-import { fetchGroups } from '../actions';
+import { fetchAffiliates } from '../actions';
 
 class Groups extends Component {
   componentWillMount() {
-    this.props.fetchGroups(this.buildQuery(this.props));
+    this.props.fetchAffiliates(this.buildQuery(this.props));
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.location.search !== nextProps.location.search)
-      this.props.fetchGroups(this.buildQuery(nextProps));
+      this.props.fetchAffiliates(this.buildQuery(nextProps));
   }
 
   buildQuery(props) {
@@ -25,7 +25,7 @@ class Groups extends Component {
   }
 
   render() {
-    const { currentGroup, groups, total_pages, page } = this.props;
+    const { currentGroup, affiliates, total_pages, page } = this.props;
 
     return (
       <div>
@@ -37,7 +37,7 @@ class Groups extends Component {
 
         <GroupsList
           location={this.props.location}
-          groups={groups}
+          groups={affiliates}
           total_pages={total_pages}
           page={page} />
       </div>
@@ -46,10 +46,9 @@ class Groups extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { currentGroup } = state;
-  const { groups, total_pages, page } = state.groups;
+  const { affiliates, total_pages, page } = state.affiliates;
 
-  return { currentGroup, groups, total_pages, page }
+  return { affiliates, total_pages, page }
 };
 
-export default connect(mapStateToProps, { fetchGroups })(Groups);
+export default connect(mapStateToProps, { fetchAffiliates })(Groups);

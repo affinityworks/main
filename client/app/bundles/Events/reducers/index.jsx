@@ -5,6 +5,7 @@ import EventReducer from './EventReducer';
 import AttendancesReducer from './AttendancesReducer';
 import AttendanceFormReducer from './AttendanceFormReducer';
 import GroupsReducer from './GroupsReducer';
+import AffiliatesReducer from './AffiliatesReducer';
 import GroupReducer from './GroupReducer';
 import MembersReducer from './MembersReducer';
 import MemberReducer from './MemberReducer';
@@ -26,5 +27,6 @@ export default combineReducers({
   newAttendance: AttendanceFormReducer,
   currentGroup: CurrentGroupReducer,
   currentUser: CurrentUserReducer,
-  currentRole: CurrentRole
+  currentRole: CurrentRole,
+  affiliates: AffiliatesReducer
 });
