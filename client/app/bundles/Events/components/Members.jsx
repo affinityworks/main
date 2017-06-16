@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 
 import Member from './Member';
-import MembersFilter from './MembersFilter';
+import SearchFilter from './SearchFilter';
 import Pagination from './Pagination';
 import SortableHeader from './SortableHeader';
 import { fetchMemberships } from '../actions'
@@ -107,7 +107,10 @@ class Members extends Component {
       <div>
         <div className='row'>
           <div className='col-6'>
-            <MembersFilter onSearchSubmit={this.filterMembers} filter={filter} />
+            <SearchFilter
+              onSearchSubmit={this.filterMembers}
+              filter={filter}
+              placeholder='Search for your people' />
           </div>
         </div>
 

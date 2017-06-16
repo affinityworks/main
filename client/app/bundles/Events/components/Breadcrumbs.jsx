@@ -29,21 +29,21 @@ class Breadcrumbs extends Component {
   }
 
   renderTagBreadcrumb() {
-    const { tag } = queryString.parse(this.props.location.search);
+    const { tag, filter } = queryString.parse(this.props.location.search);
 
-    if (tag)
+    if (tag || filter)
       return (
         <li className='breadcrumb-item active'>
-          {tag}
+          {tag || filter}
         </li>
       );
   }
 
   renderActiveBreadcrumb() {
     const { active, location } = this.props;
-    const { tag } = queryString.parse(location.search);
+    const { tag, filter } = queryString.parse(location.search);
 
-    if (!tag)
+    if (!tag && !filter)
       return <li className='breadcrumb-item active'>{active}</li>
 
 
