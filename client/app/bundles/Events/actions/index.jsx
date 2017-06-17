@@ -3,3 +3,4 @@ export * from './AttendancesActions';
 export * from './GroupsActions';
 export * from './MembersActions';
 export * from './MembershipsActions';
+export * from './ProfileActions';
