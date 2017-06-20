@@ -20,6 +20,7 @@ module Api::ActionNetwork::Import
 
     [collection.resources, next_uri]
   rescue => e
+    NewRelic::Agent.notice_error(e)
     logger.error e.inspect
     retry if (retries += 1) < 3
     [[], nil]
