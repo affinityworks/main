@@ -24,8 +24,8 @@ class Alert extends Component {
   }
 
   render() {
-    const message = this.props.message;
-    const alertClassName = `alert ${ this.alertClass(message.type) } fade-in`;
+    const alert = this.props.alert;
+    const alertClassName = `alert ${ this.alertClass(alert.type) } fade-in`;
 
     return(
       <div className={ alertClassName }>
@@ -33,17 +33,11 @@ class Alert extends Component {
           onClick={ this.props.onClose }>
           &times;
         </button>
-        { message.text }
+        { alert.text }
       </div>
     );
   }
 }
-
-Alert.propTypes = {
-  onClose: PropTypes.func,
-  timeout: PropTypes.number,
-  message: PropTypes.object.isRequired
-};
 
 Alert.defaultProps = {
   timeout: 3000

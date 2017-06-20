@@ -1,3 +1,11 @@
 <div class="container">
-  <%= react_component('App', props: { current_user: current_person, current_group: current_group, current_role: current_role }) %>
+  <%= react_component(
+    'App',
+    props: {
+      current_user: current_person,
+      current_group: current_group,
+      current_role: current_role,
+      alerts: flash_messages
+    }
+  ) %>
 </div>
