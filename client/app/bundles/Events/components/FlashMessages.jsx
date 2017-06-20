@@ -7,7 +7,6 @@ class FlashMessages extends Component {
 
   constructor(props) {
     super(props);
-    console.log('messages', props);
     this.state = { messages: props.messages };
 
     window.flash_messages = this;
@@ -25,19 +24,17 @@ class FlashMessages extends Component {
   }
 
   render () {
-    return (
-      <div className='container'>
-        {this.state.messages.map(message => <Alert key={ message.id } message={ message } onClose={ () => this.removeMessage(message) } />)}
-      </div>
-    )
-    // return(
-    //   <CSSTransitionGroup
-    //     transitionName='alerts'
-    //     transitionEnter={false}
-    //     transitionLeaveTimeout={500}>
-    //     { alerts }
-    //   </CSSTransitionGroup>
-    // );
+    const alerts = this.state.messages.map(message => <Alert key={ message.id } message={ message }
+      onClose={ () => this.removeMessage(message)} />);
+
+    return(
+      <CSSTransitionGroup
+        transitionName='alerts'
+        transitionEnter={false}
+        transitionLeaveTimeout={500}>
+        { alerts }
+      </CSSTransitionGroup>
+    );
   }
 }
 

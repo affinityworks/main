@@ -11,7 +11,7 @@ class RemoteEventMatch extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { selectedEvent: '', errorAlert: '' };
+    this.state = { selectedEvent: '' };
     this.setActiveEvent = this.setActiveEvent.bind(this);
     this.createRemoteEvent = this.createRemoteEvent.bind(this);
   }
@@ -21,7 +21,7 @@ class RemoteEventMatch extends Component {
     const { selectedEvent } = this.state;
 
     if (!selectedEvent) {
-      this.setState({ errorAlert: 'Please select an event.' });
+      window.flash_messages.addMessage({ id: remoteEvent.id, text: 'Please select an event.', type: 'alert' });
       return;
     }
 
@@ -29,25 +29,12 @@ class RemoteEventMatch extends Component {
       .then((response) => {
         history.push(`${eventsPath()}/imports/${response.data.id}/attendances`);
       }).catch((err) => {
-        this.setState({ errorAlert: 'An error ocurred. Try again later.' })
+        window.flash_messages.addMessage({ id: selectedEvent, text: 'An error ocurred. Try again later.', type: 'error' });
       });
   }
 
   setActiveEvent(event_id) {
     this.setState({selectedEvent: event_id})
-  }
-
-  renderAlert() {
-    const { errorAlert } = this.state;
-
-    if (errorAlert.length)
-      return (
-        <div className='container'>
-          <div className="col-12 alert alert-danger">{errorAlert}</div>
-        </div>
-      )
-    else
-      return null;
   }
 
   render() {
@@ -60,7 +47,6 @@ class RemoteEventMatch extends Component {
 
     return (
       <div className='row'>
-        {this.renderAlert()}
         <div className='col-4'>
           <RemoteEvent event={remoteEvent} />
         </div>

@@ -8,8 +8,7 @@ import _ from 'lodash';
 import { Link } from 'react-router-dom';
 
 class AttendanceImport extends Component {
-  state = { attendances: [], remote_event: {}, newAttendances: [],
-    errorAlert: '', successAlert: '', noticeAlert: '', loading: true
+  state = { attendances: [], remote_event: {}, newAttendances: [], loading: true
   };
 
   componentWillMount() {
@@ -26,7 +25,7 @@ class AttendanceImport extends Component {
     const { event_id } = remote_event;
 
     if (!newAttendances.length) {
-      this.setState({ noticeAlert: 'Please select attendees from the list' })
+      window.flash_messages.addMessage({ id: event_id, text: 'Please select attendees from the list', type: 'alert' });
       return;
     }
 
@@ -37,9 +36,10 @@ class AttendanceImport extends Component {
       const { attendances, newAttendances} = this.state;
       const notImported = _.difference(attendances, newAttendances);
 
-      this.setState({ successAlert: 'Attendees successfully imported.', attendances: notImported, newAttendances: [] })
+      window.flash_messages.addMessage({ id: event_id, text: 'Attendees successfully imported.', type: 'success' });
+      this.setState({ attendances: notImported, newAttendances: [] })
     }).catch((err) => {
-      this.setState({ errorAlert: 'An error ocurred. Try again later.' })
+      window.flash_messages.addMessage({ id: event_id, text: 'An error ocurred. Try again later.', type: 'error' });
     });
   }
 
@@ -61,8 +61,6 @@ class AttendanceImport extends Component {
     const attendance = _.find(attendances, attendanceItem => (attendanceItem.id == id))
     attendance.email = attendanceEmail;
     this.setState({attendances: attendances, newAttendances: newAttendances});
-    console.log('attendance', attendance);
-    console.log(this.state);
   }
 
   addAttendanceToNewAttendances(attendance) {
@@ -78,31 +76,6 @@ class AttendanceImport extends Component {
   handleChange(ev) {
     const newAttendances = ev.target.checked ? this.state.attendances : [];
     this.setState({newAttendances})
-  }
-
-  renderAlert() {
-    const { errorAlert, successAlert, noticeAlert } = this.state;
-
-    if (errorAlert.length)
-      return (
-        <div className='row'>
-          <div className="col-12 alert alert-danger">{errorAlert}</div>
-        </div>
-      )
-
-    if(successAlert.length)
-      return (
-        <div className='row'>
-          <div className="col-12 alert alert-success">{successAlert}</div>
-        </div>
-      )
-
-    if(noticeAlert.length)
-      return (
-        <div className='row'>
-          <div className="col-12 alert alert-info">{noticeAlert}</div>
-        </div>
-      )
   }
 
   showActionButtons() {
@@ -155,7 +128,6 @@ class AttendanceImport extends Component {
     return (
       <div>
         <Nav activeTab='events'/>
-        {this.renderAlert()}
         <h2>Import new Facebook RSVP's</h2>
         <br/>
         <div className='row'>

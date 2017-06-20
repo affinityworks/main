@@ -92,10 +92,10 @@ class AttendanceForm extends Component {
     const { errorAlert, successAlert } = this.props.newAttendance;
 
     if (errorAlert.length)
-      return <div className="alert alert-danger">{errorAlert} </div>
+      window.flash_messages.addMessage({ id: errorAlert.length, text: errorAlert, type: 'error' });
 
     if (successAlert.length)
-      return <div className="alert alert-success">{successAlert} </div>
+      window.flash_messages.addMessage({ id: successAlert.length, text: successAlert, type: 'success' });
   }
 
   renderSpinner() {
@@ -135,11 +135,10 @@ class AttendanceForm extends Component {
 
   render() {
     const { newAttendance, setAttendanceAttribute } = this.props;
+    this.renderAlert();
 
     return (
       <form onSubmit={this.handleSubmit.bind(this)}>
-        {this.renderAlert()}
-
         <FormGroup row>
           <div className='col-md-3'>
             <div className='row'>

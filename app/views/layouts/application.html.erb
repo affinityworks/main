@@ -10,7 +10,7 @@
   </head>
 
   <body>
-    <%= react_component('FlashMessages', props: { messages: flash_messages }) %>
+    <%= render 'application/flash_messages' %>
     <%= yield %>
   </body>
 </html>

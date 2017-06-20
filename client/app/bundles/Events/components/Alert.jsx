@@ -2,16 +2,16 @@
 
 class Alert extends Component {
 
-  // componentDidMount() {
-  //   this.timer = setTimeout(
-  //     this.props.onClose,
-  //     // this.props.timeout
-  //   );
-  // }
+  componentDidMount() {
+    this.timer = setTimeout(
+      this.props.onClose,
+      this.props.timeout
+    );
+  }
 
-  // componentWillUnmount() {
-  //   clearTimeout(this.timer);
-  // }
+  componentWillUnmount() {
+    clearTimeout(this.timer);
+  }
 
   alertClass (type) {
     let classes = {
@@ -26,7 +26,6 @@ class Alert extends Component {
   render() {
     const message = this.props.message;
     const alertClassName = `alert ${ this.alertClass(message.type) } fade-in`;
-    console.log('message', message)
 
     return(
       <div className={ alertClassName }>
@@ -42,12 +41,12 @@ class Alert extends Component {
 
 Alert.propTypes = {
   onClose: PropTypes.func,
-  // timeout: PropTypes.number,
+  timeout: PropTypes.number,
   message: PropTypes.object.isRequired
 };
 
-// Alert.defaultProps = {
-//   timeout: 3000
-// };
+Alert.defaultProps = {
+  timeout: 3000
+};
 
 export default Alert;
