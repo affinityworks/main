@@ -3,12 +3,21 @@ import axios from 'axios';
 import {
   FETCH_CURRENT_USER_GROUPS
 } from './types';
+import { addAlert } from '../actions';
 
 export const fetchCurrentUserGroups = (queryString = '') => {
-  const request = axios.get(`/profile/groups.json${queryString}`);
+  return (dispatch) => {
+    axios.get(`/profile/groups.json${queryString}`)
+      .then(response => {
+        dispatch({
+          type: FETCH_CURRENT_USER_GROUPS,
+          payload: response
+        });
+      }).catch(err => {
+        let text = (err.response && err.response.status != 500) ? err.response.data.join(', ') : null;
+        let type = 'error';
 
-  return {
-    type: FETCH_CURRENT_USER_GROUPS,
-    payload: request
-  };
+        dispatch(addAlert({ text, type }));
+      });
+  }
 };

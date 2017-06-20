@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import RemoteEventMatches from './RemoteEventMatches';
 import RemoteEvent from './RemoteEvent';
 import history from '../history';
 import { eventsPath } from '../utils/Pathnames';
+import { addAlert } from '../actions';
 
 class RemoteEventMatch extends Component {
   constructor(props) {
@@ -21,7 +23,11 @@ class RemoteEventMatch extends Component {
     const { selectedEvent } = this.state;
 
     if (!selectedEvent) {
-      window.flash_messages.addMessage({ id: remoteEvent.id, text: 'Please select an event.', type: 'alert' });
+      console.log('jojojo');
+      let text = 'Please select an event.';
+      let type = 'alert';
+
+      this.props.addAlert({ text, type });
       return;
     }
 
@@ -29,7 +35,10 @@ class RemoteEventMatch extends Component {
       .then((response) => {
         history.push(`${eventsPath()}/imports/${response.data.id}/attendances`);
       }).catch((err) => {
-        window.flash_messages.addMessage({ id: selectedEvent, text: 'An error ocurred. Try again later.', type: 'error' });
+        let text = 'An error ocurred. Try again later.';
+        let type = 'error';
+
+        this.props.addAlert({ text, type });
       });
   }
 
@@ -41,7 +50,7 @@ class RemoteEventMatch extends Component {
     const { remoteEvent, events } = this.props;
 
     if (!remoteEvent)
-      return <div><h2>We could not find an Event for the given url.</h2></div>
+      return <div><h2>'We could not find an Event for the given url.'</h2></div>
     else if (!remoteEvent.name)
       return null;
 
@@ -81,4 +90,4 @@ class RemoteEventMatch extends Component {
   }
 }
 
-export default RemoteEventMatch;
+export default connect(null, { addAlert })(RemoteEventMatch);

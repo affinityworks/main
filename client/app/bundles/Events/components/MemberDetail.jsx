@@ -10,6 +10,7 @@ import Event from './Event';
 import { membersPath, membershipPath } from '../utils/Pathnames';
 import EmailLink from './EmailLink';
 import ActionHistory from './ActionHistory';
+import { addAlert } from '../actions';
 
 class MemberDetail extends Component {
   state = { attendances: [], membership: {} }
@@ -22,19 +23,42 @@ class MemberDetail extends Component {
 
   fetchAttendances(id) {
     axios.get(`${id}/attendances.json`)
-      .then(response => this.setState({ attendances: response.data.data }));
+      .then(response => this.setState({ attendances: response.data.data }))
+      .catch(err => {
+        let text = 'An error ocurred while retrieving the Attendances.';
+        let type = 'error';
+        this.props.addAlert({ text, type });
+      });
   }
 
   fetchMembership(id) {
     axios.get(`${membershipPath()}/${id}.json`)
-      .then(response => this.setState({ membership: response.data.data }));
+      .then(response => this.setState({ membership: response.data.data }))
+      .catch(err => {
+        let text = 'An error ocurred while retrieving the Membership.';
+        let type = 'error';
+        this.props.addAlert({ text, type });
+      });
+  }
+
+  renderBlankTemplate() {
+    return(
+      <div>
+        <Nav activeTab='members'/>
+        <br/>
+
+        <Link to={membersPath()}>
+          <button className='btn btn-primary'>Back to Members</button>
+        </Link>
+      </div>
+    )
   }
 
   render() {
     const { membership } = this.state;
 
     if (!membership.attributes)
-      return null;
+      return this.renderBlankTemplate();
 
     const { attributes } = membership.attributes.person.data;
     const phone = attributes['primary-phone-number'];
@@ -92,4 +116,4 @@ class MemberDetail extends Component {
   }
 }
 
-export default MemberDetail;
+export default connect(null, { addAlert })(MemberDetail);

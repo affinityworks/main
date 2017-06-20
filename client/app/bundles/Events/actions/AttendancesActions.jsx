@@ -12,12 +12,20 @@ import { attendancesPath } from '../utils/Pathnames';
 import { addAlert } from '../actions';
 
 export const fetchAttendances = (eventId, queryString = '') => {
-  const request = axios.get(`${attendancesPath(eventId)}.json${queryString}`);
+  return (dispatch) => {
+    axios.get(`${attendancesPath(eventId)}.json${queryString}`)
+      .then(response => {
+        dispatch({
+          type: FETCH_ATTENDANCES,
+          payload: response
+        });
+      }).catch(err => {
+        let text = (err.response && err.response.status != 500) ? err.response.data.join(', ') : null;
+        let type = 'error';
 
-  return {
-    type: FETCH_ATTENDANCES,
-    payload: request
-  };
+        dispatch(addAlert({ text, type }));
+      });
+  }
 }
 
 export const updateAttendance = ({ id, eventId, attended }) => {
@@ -41,7 +49,7 @@ export const createAttendance = (eventId, attributes) => {
     axios.post(`${attendancesPath(eventId)}.json`, { attendance: attributes })
       .then(response => {
         let type = 'success';
-        let text = 'Alert Successfully Created.';
+        let text = 'Attendance Successfully Created.';
 
         dispatch(addAlert({ text, type }));
         dispatch({ type: ATTENDANCE_CREATE_SUCCESS });

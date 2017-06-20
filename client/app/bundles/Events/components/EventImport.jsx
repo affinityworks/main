@@ -3,6 +3,8 @@ import Nav from './Nav';
 import RemoteEventSearch from './RemoteEventSearch';
 import RemoteEventMatch from './RemoteEventMatch';
 import axios from 'axios';
+import { addAlert } from '../actions';
+import { connect } from 'react-redux';
 
 import { eventsPath } from '../utils/Pathnames';
 
@@ -21,9 +23,15 @@ class EventImport extends Component {
       const remoteEvent = response.data.remote_event;
       this.setState({ remoteEvent, events })
     })
+    .catch(err => {
+      let text = 'An error ocurred while retrieving the Facebook Event.';
+      let type = 'error';
+      this.props.addAlert({ text, type });
+    });
   }
 
   render() {
+    const { remoteEvent, events } = this.state;
     return (
       <div>
         <Nav activeTab='events'/>
@@ -37,10 +45,10 @@ class EventImport extends Component {
           <RemoteEventSearch onSearchSubmit={this.searchEvent} />
         </div>
         <br />
-        <RemoteEventMatch remoteEvent={this.state.remoteEvent} events={this.state.events} />
+        <RemoteEventMatch remoteEvent={remoteEvent} events={events} />
       </div>
     );
   }
 }
 
-export default EventImport;
+export default connect(null, { addAlert })(EventImport);
