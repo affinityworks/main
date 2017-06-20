@@ -25,7 +25,7 @@ class Alert extends Component {
 
   render() {
     const message = this.props.message;
-    const alertClassName = `alert ${ this.alertClass(message.type) } fade in`;
+    const alertClassName = `alert ${ this.alertClass(message.type) } fade-in`;
     console.log('message', message)
 
     return(
