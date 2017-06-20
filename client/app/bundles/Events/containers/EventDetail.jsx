@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { connect } from 'react-redux';
 
-import Address from './Address';
+import Address from '../components/Address';
 import { fetchEvent, fetchGroup } from '../actions';
-import GoogleMap from './GoogleMap';
+import GoogleMap from '../components/GoogleMap';
 import { formatDay, formatTime } from '../utils';
 import { eventsPath, groupPath } from '../utils/Pathnames';
 
