@@ -19,7 +19,6 @@ class App extends Component {
     const currentGroup = current_group;
     const currentRole = current_role;
 
-    console.log('alerts', alerts);
     const storeWithMiddleware = createStore(reducers, {
       currentUser, currentGroup, currentRole, alerts
     }, applyMiddleware(ReduxPromise, thunk));
@@ -29,6 +28,7 @@ class App extends Component {
         <Router history={history}>
           <div className='container'>
             <FlashMessages />
+            <br />
             <Header/>
             {routes}
           </div>

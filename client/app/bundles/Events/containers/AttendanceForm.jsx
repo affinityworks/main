@@ -88,16 +88,6 @@ class AttendanceForm extends Component {
     );
   }
 
-  renderAlert() {
-    const { errorAlert, successAlert } = this.props.newAttendance;
-
-    if (errorAlert.length)
-      window.flash_messages.addMessage({ id: errorAlert.length, text: errorAlert, type: 'error' });
-
-    if (successAlert.length)
-      window.flash_messages.addMessage({ id: successAlert.length, text: successAlert, type: 'success' });
-  }
-
   renderSpinner() {
     if (this.props.newAttendance.loading)
       return (
@@ -135,7 +125,6 @@ class AttendanceForm extends Component {
 
   render() {
     const { newAttendance, setAttendanceAttribute } = this.props;
-    this.renderAlert();
 
     return (
       <form onSubmit={this.handleSubmit.bind(this)}>
