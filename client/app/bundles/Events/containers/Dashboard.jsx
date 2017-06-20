@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import Breadcrumbs from '../components/Breadcrumbs';
 import { connect } from 'react-redux';
-import { fetchGroup } from '../actions';
 
 import Nav from '../components/Nav';
+import { fetchGroup } from '../actions';
 
 class Dashboard extends Component {
   componentWillMount() {

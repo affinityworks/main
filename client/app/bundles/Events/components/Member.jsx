@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import EmailLink from './EmailLink';
 import Tags from './Tags';
-import { membersPath, groupPath } from '../utils/Pathnames';
+import { membersPath, groupPath } from '../utils';
 
 class Member extends Component {
   emailAddressLink() {

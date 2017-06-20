@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import Nav from '../components/Nav';
 import { connect } from 'react-redux';
 
 import history from '../history';
+import Nav from '../components/Nav';
 import GroupEvents from '../components/Events';
 import Breadcrumbs from '../components/Breadcrumbs';
-import { managingCurrentGroupWithAffiliates } from '../utils/Permissions'
+import { managingCurrentGroupWithAffiliates } from '../utils'
 
 class Events extends Component {
   showGroupName() {
@@ -20,7 +20,7 @@ class Events extends Component {
 
   render() {
     const { currentGroup, location } = this.props;
-    const activeText = managingCurrentGroupWithAffiliates(currentGroup) 
+    const activeText = managingCurrentGroupWithAffiliates(currentGroup)
       ? 'All Events'
       : 'Events';
 

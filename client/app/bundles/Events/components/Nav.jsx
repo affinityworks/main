@@ -2,13 +2,12 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import NavItem from './NavItem';
-
 import {
   membersPath,
   eventsPath,
   affiliatesPath,
   dashboardPath
-} from '../utils/Pathnames';
+} from '../utils';
 
 import { managingCurrentGroupWithAffiliates } from '../utils/Permissions'
 
