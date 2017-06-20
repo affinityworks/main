@@ -28,6 +28,8 @@ class Person < ApplicationRecord
   has_many :memberships, dependent: :destroy
   has_many :groups, through: :memberships
 
+  before_update :generate_update_events
+
   attr_accessor :attended_events_count #NOTE ROAR purpose
 
   scope :by_email, -> (email) do
@@ -190,5 +192,16 @@ class Person < ApplicationRecord
       end
       person.save
     end
+  end
+
+  private
+
+  def generate_update_events
+    record_update_event('PersonUpdated')
+    record_update_event('PersonPasswordUpdated') if encrypted_password_changed?
+  end
+
+  def record_update_event(name)
+    ::NewRelic::Agent.record_custom_event(name, id: id, email: primary_email_address)
   end
 end
