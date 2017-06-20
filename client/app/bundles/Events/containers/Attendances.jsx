@@ -8,8 +8,9 @@ import Nav from '../components/Nav';
 import Attendance from '../components/Attendance';
 import Pagination from '../components/Pagination';
 import AttendanceForm from './AttendanceForm';
-import { fetchEvent, fetchAttendances } from '../actions';
-import { eventsPath, attendancesPath } from '../utils/Pathnames';
+import { 
+  fetchEvent, fetchAttendances, eventsPath, attendancesPath
+} from '../actions';
 
 class Attendances extends Component {
   componentWillMount() {

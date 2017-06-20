@@ -1,10 +1,8 @@
 import moment from 'moment';
 import React, { Component } from 'react';
-
 import { Link } from 'react-router-dom';
-import { formatDate } from '../utils';
 
-import { eventsPath, attendancesPath, membersPath } from '../utils/Pathnames';
+import { formatDate, eventsPath, attendancesPath, membersPath } from '../utils';
 
 export default class AttendanceEvent extends Component {
   locationName() {

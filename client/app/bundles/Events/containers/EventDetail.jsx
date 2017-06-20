@@ -1,13 +1,12 @@
+import axios from 'axios';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import { connect } from 'react-redux';
 
 import Address from '../components/Address';
 import { fetchEvent, fetchGroup } from '../actions';
 import GoogleMap from '../components/GoogleMap';
-import { formatDay, formatTime } from '../utils';
-import { eventsPath, groupPath } from '../utils/Pathnames';
+import { formatDay, formatTime, eventsPath, groupPath } from '../utils';
 
 class EventDetail extends Component {
   componentWillMount() {

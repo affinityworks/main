@@ -7,9 +7,9 @@ import Nav from '../components/Nav';
 import Tags from '../components/Tags';
 import Notes from '../components/Notes';
 import Event from '../components/Event';
-import { membersPath, membershipPath } from '../utils/Pathnames';
 import EmailLink from '../components/EmailLink';
 import ActionHistory from '../components/ActionHistory';
+import { membersPath, membershipPath } from '../utils';
 
 class MemberDetail extends Component {
   state = { attendances: [], membership: {} }

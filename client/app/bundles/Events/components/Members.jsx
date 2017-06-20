@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import queryString from 'query-string';
-import { connect } from 'react-redux';
 import _ from 'lodash';
+import axios from 'axios';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import queryString from 'query-string';
 
 import Member from './Member';
 import SearchFilter from './SearchFilter';

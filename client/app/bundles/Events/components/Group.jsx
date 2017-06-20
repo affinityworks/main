@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+
 import Tags from './Tags';
-import { groupPath } from '../utils/Pathnames';
+import { groupPath } from '../utils';
 
 class Group extends Component {
   showAddress() {
