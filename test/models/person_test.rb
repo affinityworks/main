@@ -221,7 +221,7 @@ class PersonTest < ActiveSupport::TestCase
     person_1 = people(:admin)
     person_2 = people(:member1)
     remote_rsvps = [{ 'name' => person_1.name }, { 'name' => 'Test Example'}, { 'name' => person_2.name}]
-    result = Group.last.members.map_with_remote_rsvps(remote_rsvps)
+    result = groups(:test).members.map_with_remote_rsvps(remote_rsvps)
 
     assert_equal 2, result.count
     assert_includes result.map{ |mapping| mapping[:fb_rsvp] }, remote_rsvps.first
