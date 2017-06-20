@@ -42,9 +42,11 @@ class EventDetail extends Component {
   }
 
   showCreator() {
-    const { attributes } = this.props.event.attributes.creator.data;
+    const { creator } = this.props.event.attributes;
 
-    if (!attributes) { return null }
+    if (!creator || !creator.data) { return null }
+
+    const { attributes } = creator.data;
 
     return(
       <div>

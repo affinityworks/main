@@ -27,3 +27,7 @@ two:
 test:
   id: 3
   an_api_key: 7cc9eff8d105f3ff34c6bf7683abbec6
+
+fourth:
+  id: 4
+  an_api_key: 'test-token-4'

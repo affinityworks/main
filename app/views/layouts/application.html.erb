@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html>
   <head>
     <title>Affinity</title>
@@ -11,22 +11,24 @@
 
   <body>
     <p></p>
-    <% if notice then %>
-    <div class="alert alert-notice alert-dismissible fade show" role="alert">
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-      <%= notice %>
+    <div class="container">
+      <% if notice then %>
+      <div class="alert alert-notice alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <%= notice %>
+      </div>
+      <% end %>
+      <% if alert then %>
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <%= alert %>
+      </div>
+      <% end %>
     </div>
-    <% end %>
-    <% if alert then %>
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-      <%= alert %>
-    </div>
-    <% end %>
     <%= yield %>
   </body>
 </html>

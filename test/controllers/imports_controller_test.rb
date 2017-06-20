@@ -6,7 +6,7 @@ class ImportsControllerTest < ActionDispatch::IntegrationTest
 
   test 'get #find' do
     person = Person.create(given_name: 'example')
-    group = groups(:one)
+    group = groups(:test)
     person.groups.push(group)
     EmailAddress.create(address: 'example@example.com', person: person)
     sign_in person
@@ -15,7 +15,7 @@ class ImportsControllerTest < ActionDispatch::IntegrationTest
     get find_group_imports_url(remote_event_url: url, group_id: group.id), as: :json
     assert_redirected_to group_events_url(group_id: group.id)
 
-    person = Person.first
+    person = people(:organizer)
     sign_in person
 
     remote_event = { 'name' => 'Name', 'start_time' => Date.today.to_s }
@@ -23,7 +23,7 @@ class ImportsControllerTest < ActionDispatch::IntegrationTest
     facebook_agent.expect :find, remote_event, [url]
 
     event = Event.create(start_date: Date.today, status: 'MyString')
-    event.groups.push(Group.first)
+    event.groups.push(group)
 
     Facebook::Event.stub :new, facebook_agent do
       get find_group_imports_url(group_id: group.id, remote_event_url: url), as: :json

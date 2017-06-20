@@ -1,6 +1,8 @@
 class AffiliatesController < ApplicationController
   before_action :authenticate_person!
 
+  before_action :authorize_group_access
+
   def index
     group = current_person.groups.find(params[:group_id])
     affiliates = group.affiliates.includes(:creator).page(params[:page])

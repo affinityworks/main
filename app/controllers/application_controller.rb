@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_group, :current_role
 
+
   def current_user
     current_person
   end
@@ -35,12 +36,13 @@ class ApplicationController < ActionController::Base
   end
 
   def authorize_group_access
-    authorize! :manage, current_group
+    return true unless params[:group_id]
+    authorize! :manage, Group.find_by(id: params[:group_id])
   end
 
   rescue_from CanCan::AccessDenied do |exception|
     flash[:alert] = "Access denied. You are not authorized to access the requested page."
-    redirect_to root_path
+    redirect_to group_dashboard_path(group_id: current_group.id)
   end
 
   private
