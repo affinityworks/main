@@ -4,10 +4,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
 
-import Member from './Member';
 import SearchFilter from './SearchFilter';
+import MembersTable from './MembersTable';
 import Pagination from './Pagination';
-import SortableHeader from './SortableHeader';
 import { fetchMemberships } from '../actions'
 
 class Members extends Component {
@@ -15,8 +14,6 @@ class Members extends Component {
     super(props);
 
     this.filterMembers = this.filterMembers.bind(this);
-    this.renderMembers = this.renderMembers.bind(this);
-    this.state = { emails: [] };
   }
 
   componentWillMount() {
@@ -42,65 +39,9 @@ class Members extends Component {
     }
   }
 
-  renderMembers() {
-    return this.props.memberships.map(membership => {
-      const { tags } = membership.attributes;
-      const person = membership.attributes.person.data;
-      return <Member key={person.id} id={person.id}
-        member={person.attributes}
-        groups={person.relationships.groups.data}
-        role={membership.attributes.role}
-        onCheckboxChecked={this.addMemberEmail.bind(this)}
-        onCheckboxUnChecked={this.removeMemberEmail.bind(this)}
-        showGroupName={this.props.showGroupName}
-        membershipId={membership.id}
-        tags={tags}
-      />
-    })
-  }
-
-  addMemberEmail(email) {
-    const emails = this.state.emails.concat(email);
-    this.setState({ emails });
-  }
-
-  removeMemberEmail(memberEmail) {
-    const emails = _.filter(this.state.emails, (email) => (email !== memberEmail));
-    this.setState({ emails });
-  }
-
-  generateEmailsLink() {
-    const { emails } = this.state;
-    if (emails.length)
-      return (
-        <a href={`mailto:${emails.join(',')}`} className='fa fa-envelope-o'/>
-      );
-    else
-      return (<i className='fa fa-envelope-o'/>);
-  }
-
-  groupColumn() {
-    if (this.props.showGroupName)
-      return <SortableHeader title='Group Name' sortBy='group_name'  style={{ width: '20%' }}/>
-  }
-
-  locationColumn() {
-    const width = this.props.showGroupName ? '10%' : '20%'
-    return <th style={{ width: `${width}`}}>Location</th>
-  }
-
-  phoneColumn() {
-    const width = this.props.showGroupName ? '10%' : '15%'
-    return <th style={{ width: `${width}`}}>Phone</th>
-  }
-
-  nameColumn() {
-    const width = this.props.showGroupName ? '15%' : '20%'
-    return <SortableHeader title='Name' sortBy='name' style={{ width: `${width}`}} />
-  }
-
   render() {
-    const { search } = this.props.location;
+    const { memberships, showGroupName, location } = this.props
+    const { search } = location;
     const { filter } = queryString.parse(search);
 
     return (
@@ -115,24 +56,11 @@ class Members extends Component {
         </div>
 
         <br />
-        <table className='table'>
-          <thead>
-            <tr>
-              <th style={{ width: '5%'}}>{this.generateEmailsLink()}</th>
-              {this.nameColumn()}
-              {this.phoneColumn()}
-              {this.locationColumn()}
-              {this.groupColumn()}
-              <th style={{ width: '20%'}}>Tags</th>
-              <SortableHeader title='Role' sortBy='role' style={{ width: '15%'}} />
-              <th style={{ width: '5%'}}></th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.renderMembers()}
-          </tbody>
-        </table>
+
+        <MembersTable memberships={memberships} showGroupName={showGroupName} />
+
         <br />
+
         {this.renderPagination()}
       </div>
     );

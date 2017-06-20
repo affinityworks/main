@@ -1,7 +1,7 @@
 import { FETCH_MEMBERSHIPS } from '../actions/types';
 
 const INITIAL_STATE = {
-  memberships: [],
+  memberships: null,
   total_pages: null,
   page: null
 };
