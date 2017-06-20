@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import _ from 'lodash';
 import axios from 'axios';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import Nav from '../components/Nav';
 import RemoteAttendance from '../components/RemoteAttendance';
-import { eventsPath } from '../utils/Pathnames';
-import _ from 'lodash';
-import { Link } from 'react-router-dom';
+import { eventsPath } from '../utils';
 
 class AttendanceImport extends Component {
   state = { attendances: [], remote_event: {}, newAttendances: [],
