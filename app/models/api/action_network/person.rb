@@ -26,11 +26,12 @@ module Api::ActionNetwork::Person
 
   def self.after_import(resource, group)
     if Person.any_identifier(resource.identifier('action_network')).exists?
-      update_single_resource(resource)
+      byebug 
+      resource = update_single_resource(resource)
     elsif do_we_know_about_this_email(resource)
       resource = merge_person_with_resource(resource)
     else
-      create_single_resource(resource)
+      resource = create_single_resource(resource)
     end
 
     resource.groups.push(group) unless group.members.include?(resource)
