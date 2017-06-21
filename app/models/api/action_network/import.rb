@@ -56,7 +56,7 @@ module Api::ActionNetwork::Import
 
   def update_single_resource(resource)
     old_resource = resource_class.outdated_existing(resource, 'action_network').first
-
+    
     return unless old_resource
 
     merge_resources(old_resource, resource)
