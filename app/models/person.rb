@@ -204,4 +204,9 @@ class Person < ApplicationRecord
   def record_update_event(name)
     ::NewRelic::Agent.record_custom_event(name, id: id, email: primary_email_address)
   end
+  
+  def permitted_parameters
+    return [:family_name, :given_name, :additional_name, :honorific_prefix, :honorific_suffix, :gender, :gender_identity, :party_identification, :source, :ethnicities, :languages_spoken, :birthdate, :employer, :custom_fields, :created_at, :updated_at]
+  end
+
 end

@@ -54,7 +54,7 @@ module Api::ActionNetwork::Import
     updated_count
   end
 
-  def update_single_resource(resource)
+  def update_single_resource(resource, parameter_permission)
     old_resource = resource_class.outdated_existing(resource, 'action_network').first
     
     return unless old_resource
@@ -66,7 +66,12 @@ module Api::ActionNetwork::Import
     attributes = resource.attributes
     attributes.delete_if { |_, v| v.nil? }
 
-    old_resource.update_attributes! attributes
+    parameters = ActionController::Parameters.new(attributes)
+    
+    #person.update_attributes!(person_params)
+
+
+    old_resource.update_attributes! parameters.permit(old_resource.parameter_permission)
 
     old_resource
   end

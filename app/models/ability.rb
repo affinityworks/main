@@ -1,8 +1,8 @@
 class Ability
   include CanCan::Ability
 
-  def initialize(person, current_group=nil)
-    if person
+  def initialize(current_user, current_group=nil)
+    if current_user
       can :read, Event do |event|
         event.groups.include?(current_group)
       end
@@ -16,8 +16,7 @@ class Ability
       end
 
       can :manage, Group do |group|
-        person.admin? || (Membership.organizer.exists?(person: person, group: current_group) &&
-          (group == current_group || current_group.affiliates.include?(group)))
+        current_user.admin? ||  Membership.organizer.exists?(person: current_user, group: group) || (Membership.organizer.exists?(person: current_user, group: group)  && current_group.affiliates.include?(group))
       end
     end
   end

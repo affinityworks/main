@@ -23,9 +23,11 @@ class Api::ActionNetwork::PersonTest < ActiveSupport::TestCase
     person = Person.create(
       email_addresses: [
         EmailAddress.new(primary: true, address: 'evan@henshaw-plath.com'),
-      ]
+      ],
+      password: "password"
     )
-
+    encypted_password = person.encrypted_password
+   
     group = Group.first
     group.members << person
     person1_uuid = '06d13a33-6824-493b-a922-95e793f269d3'
@@ -47,6 +49,7 @@ class Api::ActionNetwork::PersonTest < ActiveSupport::TestCase
     person.reload
     assert_equal 'Henshaw', person.family_name
     assert_equal person1_uuid, person.identifier_id('action_network')
+    assert_equal encypted_password, person.encrypted_password
 
     assert_nothing_raised do
       Api::ActionNetwork::Person.import!(person2_uuid, group)
@@ -81,4 +84,7 @@ class Api::ActionNetwork::PersonTest < ActiveSupport::TestCase
     assert_includes person.groups, group, 'keeps the old group'
     assert_includes person.groups, other_group, 'adds the new group'
   end
+  
+
+
 end
