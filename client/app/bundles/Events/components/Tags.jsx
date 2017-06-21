@@ -15,6 +15,10 @@ class Tags extends Component {
     this.state = { tags: this.props.tags, isEditing: false, tagName: '' };
   }
 
+  componentDidUpdate() {
+    if(this.tagsInput) { this.tagsInput.focus() }
+  }
+
   showAddTagIcon() {
     if(!this.state.isEditing)
       return <i className="fa fa-plus tag-action" aria-hidden="true" onClick={this.addTagClick.bind(this)}/>
@@ -81,6 +85,7 @@ class Tags extends Component {
             <input className='tag-input' type='text'
               value={this.state.tagName}
               onChange={this.handleInputChange.bind(this)}
+              ref={(input) => { this.tagsInput = input }}
             />
             <button className="fa fa-plus tag-action tag-action--create" aria-hidden="true" />
           </form>
