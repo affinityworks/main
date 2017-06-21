@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import Nav from './Nav';
-import RemoteEventSearch from './RemoteEventSearch';
-import RemoteEventMatch from './RemoteEventMatch';
-import axios from 'axios';
-import { addAlert } from '../actions';
 import { connect } from 'react-redux';
+import axios from 'axios';
 
+import Nav from '../components/Nav';
+import RemoteEventSearch from '../components/RemoteEventSearch';
+import RemoteEventMatch from '../components/RemoteEventMatch';
 import { eventsPath } from '../utils/Pathnames';
+import { addAlert } from '../actions';
 
 class EventImport extends Component {
   constructor(props) {

@@ -1,11 +1,11 @@
 import moment from 'moment';
 import React, { Component } from 'react';
-
 import { Link } from 'react-router-dom';
-import { formatDate, formatTime } from '../utils';
 
-import { eventsPath, attendancesPath, membersPath } from '../utils/Pathnames';
 import Tags from './Tags';
+import {
+  formatDate, formatTime, eventsPath, attendancesPath, membersPath
+} from '../utils';
 
 export default class Event extends Component {
   constructor(props, _railsContext) {

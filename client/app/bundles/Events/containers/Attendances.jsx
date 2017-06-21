@@ -2,13 +2,14 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import AttendanceEvent from './AttendanceEvent';
-import Nav from './Nav';
-import Attendance from './Attendance';
-import Pagination from './Pagination';
-import AttendanceForm from '../containers/AttendanceForm';
-import { fetchEvent, fetchAttendances } from '../actions';
-import { eventsPath, attendancesPath } from '../utils/Pathnames';
+import AttendanceEvent from '../components/AttendanceEvent';
+import Nav from '../components/Nav';
+import Attendance from '../components/Attendance';
+import Pagination from '../components/Pagination';
+import AttendanceForm from './AttendanceForm';
+import { 
+  fetchEvent, fetchAttendances, eventsPath, attendancesPath
+} from '../actions';
 
 class Attendances extends Component {
   componentWillMount() {

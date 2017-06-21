@@ -44,4 +44,35 @@ class AbilityTest < ActiveSupport::TestCase
     ability = Ability.new(member, current_group)
     assert_not ability.can? :manage, current_group, 'the user can manage current group if has role member'
   end
+
+  test 'admin can manage ANY group' do
+    admin = people(:admin)
+    group = groups(:two)
+    current_group = groups(:test)
+    ability = Ability.new(admin, current_group)
+    assert ability.can? :manage, group, 'the user can manage the group'
+  end
+
+  test 'organizer can manage it\'s groups' do
+    organizer = people(:organizer)
+    current_group = groups(:test)
+    ability = Ability.new(organizer, current_group)
+    assert ability.can? :manage, current_group, 'the organizer can manage the group'
+  end
+
+  test 'organizer can manage affiliates groups' do
+    organizer = people(:organizer)
+    current_group = groups(:test)
+    group = groups(:fourth)
+    ability = Ability.new(organizer, current_group)
+    assert ability.can? :manage, group, 'the organizer can manage affiliate group'
+  end
+
+  test 'organizer can not manage not affiliate group' do
+    organizer = people(:organizer)
+    current_group = groups(:test)
+    group = groups(:two)
+    ability = Ability.new(organizer, current_group)
+    assert_not ability.can? :manage, group, 'the organizer can not manage not affiliate group'
+  end
 end

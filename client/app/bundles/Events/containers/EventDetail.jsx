@@ -1,12 +1,12 @@
+import axios from 'axios';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import Address from './Address';
+import Address from '../components/Address';
 import { fetchEvent, fetchGroup } from '../actions';
-import GoogleMap from './GoogleMap';
-import { formatDay, formatTime } from '../utils';
-import { eventsPath, groupPath } from '../utils/Pathnames';
+import GoogleMap from '../components/GoogleMap';
+import { formatDay, formatTime, eventsPath, groupPath } from '../utils';
 
 class EventDetail extends Component {
   componentWillMount() {
@@ -41,9 +41,11 @@ class EventDetail extends Component {
   }
 
   showCreator() {
-    const { attributes } = this.props.event.attributes.creator.data;
+    const { creator } = this.props.event.attributes;
 
-    if (!attributes) { return null }
+    if (!creator || !creator.data) { return null }
+
+    const { attributes } = creator.data;
 
     return(
       <div>

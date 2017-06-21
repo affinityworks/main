@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import queryString from 'query-string';
 
 import { fetchGroup } from '../actions';
-import { dashboardPath, groupId, affiliatesPath, groupsPath } from '../utils/Pathnames';
+import { dashboardPath, groupId, affiliatesPath, groupsPath } from '../utils';
 
 class Breadcrumbs extends Component {
   componentWillMount() {

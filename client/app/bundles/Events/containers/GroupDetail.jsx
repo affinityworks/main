@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import UpcomingEvent from './UpcomingEvent';
+
+import UpcomingEvent from '../components/UpcomingEvent';
 import { fetchGroup } from '../actions';
 
 class GroupDetail extends Component {

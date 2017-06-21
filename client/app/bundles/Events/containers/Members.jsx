@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import queryString from 'query-string';
-import Nav from '../components/Nav';
 import { connect } from 'react-redux';
 
 import history from '../history';
+import Nav from '../components/Nav';
 import GroupMembers from '../components/Members';
 import Breadcrumbs from '../components/Breadcrumbs';
-import { managingCurrentGroupWithAffiliates } from '../utils/Permissions'
+import { managingCurrentGroupWithAffiliates } from '../utils'
 
 class Members extends Component {
   showGroupName() {

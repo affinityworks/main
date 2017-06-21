@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import Nav from '../components/Nav';
 import { connect } from 'react-redux';
+
+import Nav from '../components/Nav';
 import AttendanceMatch from '../components/AttendanceMatch';
 import { eventsPath } from '../utils/Pathnames';
 import { addAlert } from '../actions';
+
 
 class AttendanceMatching extends Component {
   state = { matches: [], anyMatch: true };

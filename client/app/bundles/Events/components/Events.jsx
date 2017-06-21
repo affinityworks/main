@@ -6,7 +6,6 @@ import Event from './Event';
 import SearchFilter from './SearchFilter';
 import Pagination from './Pagination';
 import SortableHeader from './SortableHeader';
-
 import { fetchEvents } from '../actions';
 
 class Events extends Component {

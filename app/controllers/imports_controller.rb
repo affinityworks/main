@@ -1,6 +1,7 @@
 class ImportsController < ApplicationController
   before_action :authenticate_person!
   before_action :validate_facebook_auth
+  before_action :authorize_group_access
 
   protect_from_forgery except: [:create, :create_facebook_attendance, :delete_facebook_attendance] #TODO: Add the csrf token in react.
 

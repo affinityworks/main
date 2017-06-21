@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { formatDay } from '../utils';
-import { eventPath } from '../utils/Pathnames';
+import { formatDay, eventPath } from '../utils';
 
 const ActionHistoryItem = ({ attendance }) => {
   const { attended } = attendance.attributes

@@ -3,13 +3,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import Nav from './Nav';
-import Tags from './Tags';
-import Notes from './Notes';
-import Event from './Event';
+import Nav from '../components/Nav';
+import Tags from '../components/Tags';
+import Notes from '../components/Notes';
+import Event from '../components/Event';
+import EmailLink from '../components/EmailLink';
+import ActionHistory from '../components/ActionHistory';
 import { membersPath, membershipPath } from '../utils/Pathnames';
-import EmailLink from './EmailLink';
-import ActionHistory from './ActionHistory';
 import { addAlert } from '../actions';
 
 class MemberDetail extends Component {

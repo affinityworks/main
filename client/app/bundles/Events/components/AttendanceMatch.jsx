@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
 import axios from 'axios';
+import React, { Component } from 'react';
 
-import { eventsPath } from '../utils/Pathnames';
+import { eventsPath } from '../utils';
 import FacebookLink from './FacebookLink';
 
 class AttendanceMatch extends Component {

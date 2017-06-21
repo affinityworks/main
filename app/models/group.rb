@@ -8,7 +8,6 @@ class Group < ApplicationRecord
 
   #this doesn't seem right...
   has_many :attendances, through: :members
-
   has_many :affiliations, foreign_key: :group_id, class_name: 'Affiliation'
   has_many :affiliations_with, foreign_key: :affiliated_id, class_name: 'Affiliation'
 

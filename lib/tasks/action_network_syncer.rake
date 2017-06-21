@@ -31,6 +31,7 @@ namespace :action_network do
 
   task sync: :environment do
     Rake::Task["action_network_syncer:sync_groups"].execute
+    Rake::Task["action_network_syncer:export"].execute
   end
 
   task export: :environment do
