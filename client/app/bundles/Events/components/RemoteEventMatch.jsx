@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import RemoteEventMatches from './RemoteEventMatches';
 import RemoteEvent from './RemoteEvent';
 import history from '../history';
-import { eventsPath } from '../utils/Pathnames';
+import { eventsPath } from '../utils';
 
 class RemoteEventMatch extends Component {
   constructor(props) {

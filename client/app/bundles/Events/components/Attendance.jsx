@@ -1,10 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-
-import { updateAttendance } from '../actions';
-import FacebookLink from './FacebookLink';
 import { Link } from 'react-router-dom';
-import EmailLink from './EmailLink';
+
+import FacebookLink from './FacebookLink';
+import { updateAttendance } from '../actions';
 import { membersPath } from '../utils/Pathnames';
 
 class Attendance extends Component {
@@ -50,7 +49,7 @@ class Attendance extends Component {
     const person = this.props.attendance.attributes.person;
     const { attended } = this.state;
 
-    
+
     return (
       <div className='list-group-item'>
         <div className='col-8' style={{ display: 'flex', alignItems: 'center' }}>

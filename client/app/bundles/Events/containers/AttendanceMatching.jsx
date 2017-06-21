@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
 import axios from 'axios';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+
 import Nav from '../components/Nav';
 import AttendanceMatch from '../components/AttendanceMatch';
-import { eventsPath } from '../utils/Pathnames';
+import { eventsPath } from '../utils';
 
 class AttendanceMatching extends Component {
   state = { matches: [], anyMatch: true };
