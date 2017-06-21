@@ -27,7 +27,7 @@ module Api::ActionNetwork::Person
   def self.after_import(resource, group)
 
     person = Person.any_identifier(resource.identifier('action_network')).first
-    logger.debug "#{self.class.name}#after_import! resource: #{resource} person: #{person}"
+    logger.debug "#{self.class.name}#after_import! resource: #{resource} person: #{person}, :group #{group}"
 
     if !person.nil?
       update_single_resource(resource)
