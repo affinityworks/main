@@ -25,12 +25,14 @@ module Api::ActionNetwork::Person
   end
 
   def self.after_import(resource, group)
+
     person = Person.any_identifier(resource.identifier('action_network')).first
-    
+    logger.debug "#{self.class.name}#after_import! resource: #{resource} person: #{person}"
+
     if !person.nil?
       update_single_resource(resource)
 
-      membership.create!(:person => person, :group => group, :role => 'member') unless group.members.include?(person)
+      Membership.create!(:person => person, :group => group, :role => 'member') unless group.members.include?(person)
 
     elsif do_we_know_about_this_email(resource)
       resource = merge_person_with_resource(resource)
