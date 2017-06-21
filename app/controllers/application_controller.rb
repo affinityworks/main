@@ -1,8 +1,9 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
-  helper_method :current_group, :current_role
+  before_action :set_paper_trail_whodunnit
 
+  helper_method :current_group, :current_role
 
   def current_user
     current_person

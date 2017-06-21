@@ -1,6 +1,7 @@
 class Event < ApplicationRecord
   include Api::Identifiers
 
+  has_paper_trail
   acts_as_taggable
 
   default_scope { where.not(status: 'cancelled') }
