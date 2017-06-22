@@ -1,5 +1,6 @@
 class Attendance < ApplicationRecord
   include Api::Identifiers
+  has_paper_trail
 
   has_many :attendance_origins
   has_many :origins, through: :attendance_origins

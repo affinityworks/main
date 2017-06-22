@@ -1,5 +1,7 @@
 class Membership < ApplicationRecord
   acts_as_taggable
+  has_paper_trail
+  
   belongs_to :group
   belongs_to :person
   has_many :notes, as: :notable
