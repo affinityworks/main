@@ -17,7 +17,7 @@ export const fetchAttendances = (eventId, queryString = '') => {
           type: FETCH_ATTENDANCES,
           payload: response
         });
-      }).catch((error, alert) => {
+      }).catch(alert => {
         dispatch(addAlert(alert));
       });
   }
@@ -49,7 +49,7 @@ export const createAttendance = (eventId, attributes) => {
         dispatch(addAlert({ text, type }));
         dispatch({ type: ATTENDANCE_CREATE_SUCCESS });
         dispatch(fetchAttendances(eventId));
-      }).catch((error, alert) => {
+      }).catch(alert => {
         dispatch(addAlert(alert));
       });
   }

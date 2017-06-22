@@ -16,7 +16,7 @@ class AttendanceImport extends Component {
     client.get(`${eventsPath()}/imports/${id}/attendances/new.json`)
       .then((response) => {
         this.setState({ ...response.data });
-      }).catch((error, alert) => {
+      }).catch(alert => {
         this.props.addAlert(alert);
       });
   }

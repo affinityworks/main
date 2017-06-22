@@ -15,7 +15,7 @@ export const fetchMemberships = (queryString = '') => {
           type: FETCH_MEMBERSHIPS,
           payload: response
         });
-      }).catch((error, alert) => {
+      }).catch(alert => {
         dispatch(addAlert(alert));
       });
   }

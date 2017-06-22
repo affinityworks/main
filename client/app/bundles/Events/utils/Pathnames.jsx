@@ -6,7 +6,7 @@ export const eventPath = (eventId) => (`/groups/${groupId()}/events/${eventId}`)
 export const attendancesPath = (eventId) => (`/groups/${groupId()}/events/${eventId}/attendances`);
 export const groupsPath = () => (`/groups/${groupId()}/dashboard`)
 export const dashboardPath = (id = null) => (`/groups/${id || groupId()}/dashboard`)
-export const groupPath = (id) => (`/groups/${id}`)
+export const groupPath = (id = null) => (`/groups/${id || groupId()}`)
 export const eventWithoutGroupPath = (id) => (`/events/${id}`)
 export const membershipWithoutGroupPath = (id) => (`/memberships/${id}`);
 

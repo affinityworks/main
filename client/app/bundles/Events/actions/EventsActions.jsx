@@ -14,7 +14,7 @@ export const fetchEvents = (queryString = '') => {
           type: FETCH_EVENTS,
           payload: response
         });
-      }).catch((error, alert) => {
+      }).catch(alert => {
         dispatch(addAlert(alert));
       });
   }
@@ -28,7 +28,7 @@ export const fetchEvent = (eventId) => {
           type: FETCH_EVENT,
           payload: response
         });
-      }).catch((error, alert) => {
+      }).catch(alert => {
         dispatch(addAlert(alert));
       });
   }

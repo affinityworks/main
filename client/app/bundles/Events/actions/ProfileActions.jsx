@@ -13,7 +13,7 @@ export const fetchCurrentUserGroups = (queryString = '') => {
           type: FETCH_CURRENT_USER_GROUPS,
           payload: response
         });
-      }).catch((error, alert) => {
+      }).catch(alert => {
         dispatch(addAlert(alert));
       });
   }

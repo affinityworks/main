@@ -15,7 +15,7 @@ export const fetchGroups = (queryString = '') => {
           type: FETCH_GROUPS,
           payload: response
         });
-      }).catch((error, alert) => {
+      }).catch(alert => {
         dispatch(addAlert(alert));
       });
   }
@@ -29,7 +29,8 @@ export const fetchAffiliates = (queryString = '') => {
           type: FETCH_AFFILIATES,
           payload: response
         });
-      }).catch((error, alert) => {
+      }).catch(alert => {
+        console.log('ALERT', alert);
         dispatch(addAlert(alert));
       });
   }
@@ -44,7 +45,7 @@ export const fetchGroup = (groupId) => {
           type: FETCH_GROUP,
           payload: response
         });
-      }).catch((error, alert) => {
+      }).catch(alert => {
         dispatch(addAlert(alert));
       });
   }

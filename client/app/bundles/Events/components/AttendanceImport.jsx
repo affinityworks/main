@@ -42,7 +42,7 @@ class AttendanceImport extends Component {
       let type = 'success';
       this.props.addAlert({ text, type });
       this.setState({ attendances: notImported, newAttendances: [] })
-    }).catch((err, alert) => {
+    }).catch(alert => {
       this.props.addAlert(alert);
     });
   }
