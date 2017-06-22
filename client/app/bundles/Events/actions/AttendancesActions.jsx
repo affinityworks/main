@@ -5,19 +5,27 @@ import {
   UPDATE_ATTENDANCE,
   SET_ATTENDANCE_ATTRIBUTE,
   ATTENDANCE_CREATE_SUCCESS,
-  ATTENDANCE_CREATE_FAIL,
-  RESET_ATTENDANCE_FORM
+  RESET_ATTENDANCE_FORM,
 } from './types';
 
 import { attendancesPath } from '../utils/Pathnames';
+import { addAlert } from '../actions';
 
 export const fetchAttendances = (eventId, queryString = '') => {
-  const request = axios.get(`${attendancesPath(eventId)}.json${queryString}`);
+  return (dispatch) => {
+    axios.get(`${attendancesPath(eventId)}.json${queryString}`)
+      .then(response => {
+        dispatch({
+          type: FETCH_ATTENDANCES,
+          payload: response
+        });
+      }).catch(err => {
+        let text = (err.response && err.response.status != 500) ? err.response.data.join(', ') : null;
+        let type = 'error';
 
-  return {
-    type: FETCH_ATTENDANCES,
-    payload: request
-  };
+        dispatch(addAlert({ text, type }));
+      });
+  }
 }
 
 export const updateAttendance = ({ id, eventId, attended }) => {
@@ -39,12 +47,18 @@ export const setAttendanceAttribute = (prop, value) => (
 export const createAttendance = (eventId, attributes) => {
   return (dispatch) => {
     axios.post(`${attendancesPath(eventId)}.json`, { attendance: attributes })
-      .then((response) => {
-        dispatch({ type: ATTENDANCE_CREATE_SUCCESS, payload: response.data })
-        dispatch(fetchAttendances(eventId))
-      }).catch((err) => {
-        console.log('error', err);
-        dispatch({ type: ATTENDANCE_CREATE_FAIL, payload: err })
+      .then(response => {
+        let type = 'success';
+        let text = 'Attendance Successfully Created.';
+
+        dispatch(addAlert({ text, type }));
+        dispatch({ type: ATTENDANCE_CREATE_SUCCESS });
+        dispatch(fetchAttendances(eventId));
+      }).catch(err => {
+        let text = err.response ? err.response.data.join(', ') : null;
+        let type = 'error';
+
+        dispatch(addAlert({ text, type }));
       });
   }
 }

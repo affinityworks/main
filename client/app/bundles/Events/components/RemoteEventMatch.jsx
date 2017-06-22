@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import RemoteEventMatches from './RemoteEventMatches';
 import RemoteEvent from './RemoteEvent';
 import history from '../history';
-import { eventsPath } from '../utils';
+import { eventsPath } from '../utils/Pathnames';
+import { addAlert } from '../actions';
 
 class RemoteEventMatch extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { selectedEvent: '', errorAlert: '' };
+    this.state = { selectedEvent: '' };
     this.setActiveEvent = this.setActiveEvent.bind(this);
     this.createRemoteEvent = this.createRemoteEvent.bind(this);
   }
@@ -21,7 +23,11 @@ class RemoteEventMatch extends Component {
     const { selectedEvent } = this.state;
 
     if (!selectedEvent) {
-      this.setState({ errorAlert: 'Please select an event.' });
+      console.log('jojojo');
+      let text = 'Please select an event.';
+      let type = 'alert';
+
+      this.props.addAlert({ text, type });
       return;
     }
 
@@ -29,7 +35,10 @@ class RemoteEventMatch extends Component {
       .then((response) => {
         history.push(`${eventsPath()}/imports/${response.data.id}/attendances`);
       }).catch((err) => {
-        this.setState({ errorAlert: 'An error ocurred. Try again later.' })
+        let text = 'An error ocurred. Try again later.';
+        let type = 'error';
+
+        this.props.addAlert({ text, type });
       });
   }
 
@@ -37,30 +46,16 @@ class RemoteEventMatch extends Component {
     this.setState({selectedEvent: event_id})
   }
 
-  renderAlert() {
-    const { errorAlert } = this.state;
-
-    if (errorAlert.length)
-      return (
-        <div className='container'>
-          <div className="col-12 alert alert-danger">{errorAlert}</div>
-        </div>
-      )
-    else
-      return null;
-  }
-
   render() {
     const { remoteEvent, events } = this.props;
 
     if (!remoteEvent)
-      return <div><h2>We could not find an Event for the given url.</h2></div>
+      return <div><h2>'We could not find an Event for the given url.'</h2></div>
     else if (!remoteEvent.name)
       return null;
 
     return (
       <div className='row'>
-        {this.renderAlert()}
         <div className='col-4'>
           <RemoteEvent event={remoteEvent} />
         </div>
@@ -95,4 +90,4 @@ class RemoteEventMatch extends Component {
   }
 }
 
-export default RemoteEventMatch;
+export default connect(null, { addAlert })(RemoteEventMatch);
