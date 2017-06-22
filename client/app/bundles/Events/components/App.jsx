@@ -10,21 +10,25 @@ import reducers from '../reducers/';
 import history from '../history';
 
 import Header from './Header';
+import FlashMessages from './FlashMessages';
 
 class App extends Component {
   render() {
-    const currentUser = this.props.current_user;
-    const currentGroup = this.props.current_group;
-    const currentRole = this.props.current_role;
+    const { current_user, current_group, current_role, alerts } = this.props;
+    const currentUser = current_user;
+    const currentGroup = current_group;
+    const currentRole = current_role;
 
     const storeWithMiddleware = createStore(reducers, {
-      currentUser, currentGroup, currentRole
+      currentUser, currentGroup, currentRole, alerts
     }, applyMiddleware(ReduxPromise, thunk));
 
     return (
       <Provider store={storeWithMiddleware}>
         <Router history={history}>
           <div className='container'>
+            <FlashMessages />
+            <br />
             <Header/>
             {routes}
           </div>

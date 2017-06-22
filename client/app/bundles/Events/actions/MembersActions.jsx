@@ -9,23 +9,40 @@ import {
 } from './types';
 
 import { membersPath } from '../utils/Pathnames';
+import { addAlert } from '../actions';
 
 export const fetchMembers = (queryString = '') => {
-  const request = axios.get(`${membersPath()}.json${queryString}`);
+  return (dispatch) => {
+    axios.get(`${membersPath()}.json${queryString}`)
+      .then(response => {
+        dispatch({
+          type: FETCH_MEMBERS,
+          payload: response
+        });
+      }).catch(err => {
+        let text = (err.response && err.response.status != 500) ? err.response.data.join(', ') : null;
+        let type = 'error';
 
-  return {
-    type: FETCH_MEMBERS,
-    payload: request
-  };
+        dispatch(addAlert({ text, type }));
+      });
+  }
 };
 
 export const fetchMember = (id) => {
-  const request = axios.get(`${membersPath()}/${id}.json`);
+  return (dispatch) => {
+    axios.get(`${membersPath()}/${id}.json`)
+      .then(response => {
+        dispatch({
+          type: FETCH_MEMBER,
+          payload: response
+        });
+      }).catch(err => {
+        let text = (err.response && err.response.status != 500) ? err.response.data.join(', ') : null;
+        let type = 'error';
 
-  return {
-    type: FETCH_MEMBER,
-    payload: request
-  };
+        dispatch(addAlert({ text, type }));
+      });
+  }
 };
 
 export const lookUpMember = (email = '') => {
@@ -40,10 +57,18 @@ export const lookUpMember = (email = '') => {
 };
 
 export const fetchMembersEvents = (id) => {
-  const request = axios.get(`${membersPath()}/${id}/events.json`);
+  return (dispatch) => {
+    axios.get(`${membersPath()}/${id}/events.json`)
+      .then(response => {
+        dispatch({
+          type: FETCH_MEMBERS_EVENTS,
+          payload: response
+        });
+      }).catch(err => {
+        let text = (err.response && err.response.status != 500) ? err.response.data.join(', ') : null;
+        let type = 'error';
 
-  return {
-    type: FETCH_MEMBERS_EVENTS,
-    payload: request
-  };
+        dispatch(addAlert({ text, type }));
+      });
+  }
 };
