@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 import {
   FETCH_ATTENDANCES,
   UPDATE_ATTENDANCE,
@@ -8,18 +6,18 @@ import {
   RESET_ATTENDANCE_FORM,
 } from './types';
 
-import { attendancesPath } from '../utils/Pathnames';
+import { attendancesPath, client } from '../utils';
 import { addAlert } from '../actions';
 
 export const fetchAttendances = (eventId, queryString = '') => {
   return (dispatch) => {
-    axios.get(`${attendancesPath(eventId)}.json${queryString}`)
+    client.get(`${attendancesPath(eventId)}.json${queryString}`)
       .then(response => {
         dispatch({
           type: FETCH_ATTENDANCES,
           payload: response
         });
-      }).catch(err => {
+      }).catch(alert => {
         let text = (err.response && err.response.status != 500) ? err.response.data.join(', ') : null;
         let type = 'error';
 
@@ -29,7 +27,7 @@ export const fetchAttendances = (eventId, queryString = '') => {
 }
 
 export const updateAttendance = ({ id, eventId, attended }) => {
-  const request = axios.put(`${attendancesPath(eventId)}/${id}.json`, { attended });
+  const request = client.put(`${attendancesPath(eventId)}/${id}.json`, { attended });
 
   return {
     type: UPDATE_ATTENDANCE,
@@ -46,7 +44,7 @@ export const setAttendanceAttribute = (prop, value) => (
 
 export const createAttendance = (eventId, attributes) => {
   return (dispatch) => {
-    axios.post(`${attendancesPath(eventId)}.json`, { attendance: attributes })
+    client.post(`${attendancesPath(eventId)}.json`, { attendance: attributes })
       .then(response => {
         let type = 'success';
         let text = 'Attendance Successfully Created.';

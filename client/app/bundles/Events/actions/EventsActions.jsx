@@ -1,16 +1,14 @@
-import axios from 'axios';
-
 import {
   FETCH_EVENTS,
   FETCH_EVENT
 } from './types';
 
-import { eventsPath } from '../utils/Pathnames';
+import { eventsPath, client } from '../utils';
 import { addAlert } from '../actions';
 
 export const fetchEvents = (queryString = '') => {
   return (dispatch) => {
-    axios.get(`${eventsPath()}.json${queryString}`)
+    client.get(`${eventsPath()}.json${queryString}`)
       .then(response => {
         dispatch({
           type: FETCH_EVENTS,
@@ -27,7 +25,7 @@ export const fetchEvents = (queryString = '') => {
 
 export const fetchEvent = (eventId) => {
   return (dispatch) => {
-    axios.get(`${eventsPath()}/${eventId}.json`)
+    client.get(`${eventsPath()}/${eventId}.json`)
       .then(response => {
         dispatch({
           type: FETCH_EVENT,

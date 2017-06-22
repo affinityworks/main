@@ -1,7 +1,3 @@
-import axios from 'axios';
-
-import { affiliatesPath } from '../utils/Pathnames';
-
 import {
   FETCH_GROUPS,
   FETCH_AFFILIATES,
@@ -9,10 +5,11 @@ import {
 } from './types';
 
 import { addAlert } from '../actions';
+import { affiliatesPath, client } from '../utils';
 
 export const fetchGroups = (queryString = '') => {
   return (dispatch) => {
-    axios.get(`/groups.json${queryString}`)
+    client.get(`/groups.json${queryString}`)
       .then(response => {
         dispatch({
           type: FETCH_GROUPS,
@@ -29,7 +26,7 @@ export const fetchGroups = (queryString = '') => {
 
 export const fetchAffiliates = (queryString = '') => {
   return (dispatch) => {
-    axios.get(`${affiliatesPath()}.json${queryString}`)
+    client.get(`${affiliatesPath()}.json${queryString}`)
       .then(response => {
         dispatch({
           type: FETCH_AFFILIATES,
@@ -47,7 +44,7 @@ export const fetchAffiliates = (queryString = '') => {
 
 export const fetchGroup = (groupId) => {
   return (dispatch) => {
-    axios.get(`/groups/${groupId}.json`)
+    client.get(`/groups/${groupId}.json`)
       .then(response => {
         dispatch({
           type: FETCH_GROUP,

@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 import {
   FETCH_MEMBER,
   FETCH_MEMBERS,
@@ -8,12 +6,12 @@ import {
   FETCH_MEMBERS_EVENTS
 } from './types';
 
-import { membersPath } from '../utils/Pathnames';
+import { membersPath, client } from '../utils';
 import { addAlert } from '../actions';
 
 export const fetchMembers = (queryString = '') => {
   return (dispatch) => {
-    axios.get(`${membersPath()}.json${queryString}`)
+    client.get(`${membersPath()}.json${queryString}`)
       .then(response => {
         dispatch({
           type: FETCH_MEMBERS,
@@ -30,7 +28,7 @@ export const fetchMembers = (queryString = '') => {
 
 export const fetchMember = (id) => {
   return (dispatch) => {
-    axios.get(`${membersPath()}/${id}.json`)
+    client.get(`${membersPath()}/${id}.json`)
       .then(response => {
         dispatch({
           type: FETCH_MEMBER,
@@ -48,7 +46,7 @@ export const fetchMember = (id) => {
 export const lookUpMember = (email = '') => {
   return (dispatch) => {
     dispatch({ type: LOOK_UP_MEMBER_START })
-    axios.get(`${membersPath()}.json?email=${email}`)
+    client.get(`${membersPath()}.json?email=${email}`)
       .then(response => {
         dispatch({ type: LOOK_UP_MEMBER, payload: response });
       });
@@ -58,7 +56,7 @@ export const lookUpMember = (email = '') => {
 
 export const fetchMembersEvents = (id) => {
   return (dispatch) => {
-    axios.get(`${membersPath()}/${id}/events.json`)
+    client.get(`${membersPath()}/${id}/events.json`)
       .then(response => {
         dispatch({
           type: FETCH_MEMBERS_EVENTS,
