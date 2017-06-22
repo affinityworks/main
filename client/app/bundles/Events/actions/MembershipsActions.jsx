@@ -1,16 +1,27 @@
 import axios from 'axios';
 
 import {
-  FETCH_MEMBERSHIPS
+  FETCH_MEMBERSHIPS,
+  FETCHING_MEMBERSHIPS
 } from './types';
 
 import { membershipPath } from '../utils/Pathnames';
+import { addAlert } from '../actions';
 
 export const fetchMemberships = (queryString = '') => {
-  const request = axios.get(`${membershipPath()}.json${queryString}`);
+  return (dispatch) => {
+    dispatch({ type: FETCHING_MEMBERSHIPS })
+    axios.get(`${membershipPath()}.json${queryString}`)
+      .then(response => {
+        dispatch({
+          type: FETCH_MEMBERSHIPS,
+          payload: response
+        });
+      }).catch(err => {
+        let text = (err.response && err.response.status != 500) ? err.response.data.join(', ') : null;
+        let type = 'error';
 
-  return {
-    type: FETCH_MEMBERSHIPS,
-    payload: request
-  };
+        dispatch(addAlert({ text, type }));
+      });
+  }
 };

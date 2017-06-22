@@ -8,30 +8,56 @@ import {
   FETCH_GROUP
 } from './types';
 
-export const fetchGroups = (queryString = '') => {
-  const request = axios.get(`/groups.json${queryString}`);
+import { addAlert } from '../actions';
 
-  return {
-    type: FETCH_GROUPS,
-    payload: request
-  };
+export const fetchGroups = (queryString = '') => {
+  return (dispatch) => {
+    axios.get(`/groups.json${queryString}`)
+      .then(response => {
+        dispatch({
+          type: FETCH_GROUPS,
+          payload: response
+        });
+      }).catch(err => {
+        let text = (err.response && err.response.status != 500) ? err.response.data.join(', ') : null;
+        let type = 'error';
+
+        dispatch(addAlert({ text, type }));
+      });
+  }
 };
 
 export const fetchAffiliates = (queryString = '') => {
-  const request = axios.get(`${affiliatesPath()}.json${queryString}`);
+  return (dispatch) => {
+    axios.get(`${affiliatesPath()}.json${queryString}`)
+      .then(response => {
+        dispatch({
+          type: FETCH_AFFILIATES,
+          payload: response
+        });
+      }).catch(err => {
+        let text = (err.response && err.response.status != 500) ? err.response.data.join(', ') : null;
+        let type = 'error';
 
-  return {
-    type: FETCH_AFFILIATES,
-    payload: request
-  };
+        dispatch(addAlert({ text, type }));
+      });
+  }
 };
 
 
 export const fetchGroup = (groupId) => {
-  const request = axios.get(`/groups/${groupId}.json`);
+  return (dispatch) => {
+    axios.get(`/groups/${groupId}.json`)
+      .then(response => {
+        dispatch({
+          type: FETCH_GROUP,
+          payload: response
+        });
+      }).catch(err => {
+        let text = (err.response && err.response.status != 500) ? err.response.data.join(', ') : null;
+        let type = 'error';
 
-  return {
-    type: FETCH_GROUP,
-    payload: request
-  };
+        dispatch(addAlert({ text, type }));
+      });
+  }
 };

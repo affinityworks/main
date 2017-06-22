@@ -1,10 +1,13 @@
-import axios from 'axios';
 import React, { Component } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import Nav from '../components/Nav';
 import AttendanceMatch from '../components/AttendanceMatch';
-import { eventsPath } from '../utils';
+import { eventsPath } from '../utils/Pathnames';
+import { addAlert } from '../actions';
+
 
 class AttendanceMatching extends Component {
   state = { matches: [], anyMatch: true };
@@ -15,6 +18,11 @@ class AttendanceMatching extends Component {
     axios.get(`${eventsPath()}/imports/${id}/attendances.json`)
       .then((response) => {
         this.setState({ matches: response.data, anyMatch: !!response.data.length  });
+      }).catch(err => {
+        let text = 'An error ocurred while retrieving the Attendances.'
+        let type = 'error'
+        this.props.addAlert({ text, type });
+        this.setState({ anyMatch: false  });
       });
   }
 
@@ -28,8 +36,6 @@ class AttendanceMatching extends Component {
           <AttendanceMatch match={match} key={match.fb_rsvp.id} remote_event_id={id} />
         );
       });
-    else
-      return (<tr><td>No matches were found.</td></tr>)
   }
 
   renderNotMatchesMessage() {
@@ -77,4 +83,4 @@ class AttendanceMatching extends Component {
   }
 }
 
-export default AttendanceMatching;
+export default connect(null, { addAlert })(AttendanceMatching);

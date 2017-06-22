@@ -1,34 +1,36 @@
 import { combineReducers } from 'redux';
 
-import EventsReducer from './EventsReducer';
-import EventReducer from './EventReducer';
-import AttendancesReducer from './AttendancesReducer';
-import AttendanceFormReducer from './AttendanceFormReducer';
-import GroupsReducer from './GroupsReducer';
-import AffiliatesReducer from './AffiliatesReducer';
-import GroupReducer from './GroupReducer';
-import MembersReducer from './MembersReducer';
-import MemberReducer from './MemberReducer';
-import MembershipsReducer from './MembershipsReducer';
-import ProfileReducer from './ProfileReducer';
+import events from './EventsReducer';
+import event from './EventReducer';
+import attendances from './AttendancesReducer';
+import newAttendance from './AttendanceFormReducer';
+import groups from './GroupsReducer';
+import group from './GroupReducer';
+import affiliates from './AffiliatesReducer';
+import members from './MembersReducer';
+import member from './MemberReducer';
+import memberships from './MembershipsReducer';
+import profile from './ProfileReducer';
+import alerts from './AlertsReducer';
 
-const CurrentGroupReducer = (state = {}) => ( state );
-const CurrentUserReducer = (state = {}) => ( state );
-const CurrentRole = (state = {}) => ( state );
+const currentGroup = (state = {}) => ( state );
+const currentUser = (state = {}) => ( state );
+const currentRole = (state = {}) => ( state );
 
 export default combineReducers({
-  events: EventsReducer,
-  event: EventReducer,
-  groups: GroupsReducer,
-  group: GroupReducer,
-  members: MembersReducer,
-  member: MemberReducer,
-  memberships: MembershipsReducer,
-  attendances: AttendancesReducer,
-  newAttendance: AttendanceFormReducer,
-  profile: ProfileReducer,
-  currentGroup: CurrentGroupReducer,
-  currentUser: CurrentUserReducer,
-  currentRole: CurrentRole,
-  affiliates: AffiliatesReducer
+  events,
+  event,
+  groups,
+  group,
+  members,
+  member,
+  memberships,
+  attendances,
+  newAttendance,
+  profile,
+  currentGroup,
+  currentUser,
+  currentRole,
+  affiliates,
+  alerts,
 });

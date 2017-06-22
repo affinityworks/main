@@ -2,8 +2,7 @@ import _ from 'lodash';
 
 import {
   LOOK_UP_MEMBER, LOOK_UP_MEMBER_START, SET_ATTENDANCE_ATTRIBUTE,
-  ATTENDANCE_CREATE_FAIL, ATTENDANCE_CREATE_SUCCESS,
-  RESET_ATTENDANCE_FORM
+  ATTENDANCE_CREATE_SUCCESS, RESET_ATTENDANCE_FORM
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -15,8 +14,6 @@ const INITIAL_STATE = {
   'postal_code': '',
   'locality': '',
   'address_lines': [],
-  'successAlert': '',
-  'errorAlert': '',
   'loading': false
 };
 
@@ -26,15 +23,7 @@ export default (state = INITIAL_STATE, action) => {
     const { prop, value } = action.payload;
     return { ...state, [prop]: value };
   case ATTENDANCE_CREATE_SUCCESS:
-    return { ...INITIAL_STATE, successAlert: 'Attendee Successfully Created',  errorAlert: '' }
-  case ATTENDANCE_CREATE_FAIL:
-    const { response } = action.payload;
-
-    if (response) {
-      return { ...state, errorAlert: response.data.join(', '), successAlert: '' };
-    }
-
-    return state
+    return INITIAL_STATE;
   case LOOK_UP_MEMBER_START:
     return { ...state, loading: true }
   case LOOK_UP_MEMBER:

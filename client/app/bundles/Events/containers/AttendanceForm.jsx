@@ -88,16 +88,6 @@ class AttendanceForm extends Component {
     );
   }
 
-  renderAlert() {
-    const { errorAlert, successAlert } = this.props.newAttendance;
-
-    if (errorAlert.length)
-      return <div className="alert alert-danger">{errorAlert} </div>
-
-    if (successAlert.length)
-      return <div className="alert alert-success">{successAlert} </div>
-  }
-
   renderSpinner() {
     if (this.props.newAttendance.loading)
       return (
@@ -138,8 +128,6 @@ class AttendanceForm extends Component {
 
     return (
       <form onSubmit={this.handleSubmit.bind(this)}>
-        {this.renderAlert()}
-
         <FormGroup row>
           <div className='col-md-3'>
             <div className='row'>
