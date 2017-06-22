@@ -1,7 +1,7 @@
 class Event < ApplicationRecord
   include Api::Identifiers
 
-  has_paper_trail
+  has_paper_trail ignore: [:created_at, :updated_at]
   acts_as_taggable
 
   default_scope { where.not(status: 'cancelled') }
@@ -40,7 +40,21 @@ class Event < ApplicationRecord
     order(start_date: direction)
   end
 
+  def self.activity_feed(group, date=Date.today)
+    events = group.all_events.where(updated_at: date.beginning_of_day...date.end_of_day)
+    {}.tap do |feed|
+      # as_json(only: [:title, :id, :created_at, :updated_at], include: {group: {only:[:name] }})
+      created, updated = events.partition { |event| event.updated_at == event.created_at }
+      feed[:created] = created.map(&:to_activity_json)
+      feed[:updated] = updated.map(&:to_activity_json)
+    end
+  end
+
   def group #TODO Change relation to 1 to Many
     groups.first
+  end
+
+  def to_activity_json
+    as_json(only: [:title, :id, :created_at, :updated_at], include: { group: { only:[:name] } })
   end
 end
