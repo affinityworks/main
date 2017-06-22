@@ -30,7 +30,6 @@ export const fetchAffiliates = (queryString = '') => {
           payload: response
         });
       }).catch(alert => {
-        console.log('ALERT', alert);
         dispatch(addAlert(alert));
       });
   }
