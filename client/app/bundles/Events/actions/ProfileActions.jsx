@@ -7,17 +7,14 @@ import { client } from '../utils';
 
 export const fetchCurrentUserGroups = (queryString = '') => {
   return (dispatch) => {
-    axios.get(`/profile/groups.json${queryString}`)
+    client.get(`/profile/groups.json${queryString}`)
       .then(response => {
         dispatch({
           type: FETCH_CURRENT_USER_GROUPS,
           payload: response
         });
-      }).catch(err => {
-        let text = (err.response && err.response.status != 500) ? err.response.data.join(', ') : null;
-        let type = 'error';
-
-        dispatch(addAlert({ text, type }));
+      }).catch((error, alert) => {
+        dispatch(addAlert(alert));
       });
   }
 };

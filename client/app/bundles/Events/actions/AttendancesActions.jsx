@@ -17,11 +17,8 @@ export const fetchAttendances = (eventId, queryString = '') => {
           type: FETCH_ATTENDANCES,
           payload: response
         });
-      }).catch(alert => {
-        let text = (err.response && err.response.status != 500) ? err.response.data.join(', ') : null;
-        let type = 'error';
-
-        dispatch(addAlert({ text, type }));
+      }).catch((error, alert) => {
+        dispatch(addAlert(alert));
       });
   }
 }
@@ -52,11 +49,8 @@ export const createAttendance = (eventId, attributes) => {
         dispatch(addAlert({ text, type }));
         dispatch({ type: ATTENDANCE_CREATE_SUCCESS });
         dispatch(fetchAttendances(eventId));
-      }).catch(err => {
-        let text = err.response ? err.response.data.join(', ') : null;
-        let type = 'error';
-
-        dispatch(addAlert({ text, type }));
+      }).catch((error, alert) => {
+        dispatch(addAlert(alert));
       });
   }
 }

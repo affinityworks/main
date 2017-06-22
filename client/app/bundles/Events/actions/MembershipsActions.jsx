@@ -15,11 +15,8 @@ export const fetchMemberships = (queryString = '') => {
           type: FETCH_MEMBERSHIPS,
           payload: response
         });
-      }).catch(err => {
-        let text = (err.response && err.response.status != 500) ? err.response.data.join(', ') : null;
-        let type = 'error';
-
-        dispatch(addAlert({ text, type }));
+      }).catch((error, alert) => {
+        dispatch(addAlert(alert));
       });
   }
 };

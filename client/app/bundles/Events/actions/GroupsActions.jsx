@@ -15,11 +15,8 @@ export const fetchGroups = (queryString = '') => {
           type: FETCH_GROUPS,
           payload: response
         });
-      }).catch(err => {
-        let text = (err.response && err.response.status != 500) ? err.response.data.join(', ') : null;
-        let type = 'error';
-
-        dispatch(addAlert({ text, type }));
+      }).catch((error, alert) => {
+        dispatch(addAlert(alert));
       });
   }
 };
@@ -32,11 +29,8 @@ export const fetchAffiliates = (queryString = '') => {
           type: FETCH_AFFILIATES,
           payload: response
         });
-      }).catch(err => {
-        let text = (err.response && err.response.status != 500) ? err.response.data.join(', ') : null;
-        let type = 'error';
-
-        dispatch(addAlert({ text, type }));
+      }).catch((error, alert) => {
+        dispatch(addAlert(alert));
       });
   }
 };
@@ -50,11 +44,8 @@ export const fetchGroup = (groupId) => {
           type: FETCH_GROUP,
           payload: response
         });
-      }).catch(err => {
-        let text = (err.response && err.response.status != 500) ? err.response.data.join(', ') : null;
-        let type = 'error';
-
-        dispatch(addAlert({ text, type }));
+      }).catch((error, alert) => {
+        dispatch(addAlert(alert));
       });
   }
 };

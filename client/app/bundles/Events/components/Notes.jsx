@@ -1,5 +1,6 @@
-import axios from 'axios';
 import React, { Component } from 'react';
+
+import { client } from '../utils';
 
 class Notes extends Component {
   state = { text: '', notes: [] }
@@ -18,7 +19,7 @@ class Notes extends Component {
       resource_id: this.props.membershipId
     }
 
-    axios.post('/notes.json', { note })
+    client.post('/notes.json', { note })
       .then(response => {
         const notes = this.state.notes.concat(response.data);
         this.setState({ notes, text: '' })

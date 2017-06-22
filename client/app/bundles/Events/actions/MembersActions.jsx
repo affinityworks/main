@@ -17,11 +17,8 @@ export const fetchMembers = (queryString = '') => {
           type: FETCH_MEMBERS,
           payload: response
         });
-      }).catch(err => {
-        let text = (err.response && err.response.status != 500) ? err.response.data.join(', ') : null;
-        let type = 'error';
-
-        dispatch(addAlert({ text, type }));
+      }).catch((error, alert) => {
+        dispatch(addAlert(alert));
       });
   }
 };
@@ -34,11 +31,8 @@ export const fetchMember = (id) => {
           type: FETCH_MEMBER,
           payload: response
         });
-      }).catch(err => {
-        let text = (err.response && err.response.status != 500) ? err.response.data.join(', ') : null;
-        let type = 'error';
-
-        dispatch(addAlert({ text, type }));
+      }).catch((error, alert) => {
+        dispatch(addAlert(alert));
       });
   }
 };
@@ -62,11 +56,8 @@ export const fetchMembersEvents = (id) => {
           type: FETCH_MEMBERS_EVENTS,
           payload: response
         });
-      }).catch(err => {
-        let text = (err.response && err.response.status != 500) ? err.response.data.join(', ') : null;
-        let type = 'error';
-
-        dispatch(addAlert({ text, type }));
+      }).catch((error, alert) => {
+        dispatch(addAlert(alert));
       });
   }
 };
