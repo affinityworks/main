@@ -217,7 +217,7 @@ class Person < ApplicationRecord
       changed_fields: version.changeset.keys,
       whodunnit: version.whodunnit,
       name: version.item.name
-    }
+    } if version
   end
 
   #we dont' use permitted but do use rejected
