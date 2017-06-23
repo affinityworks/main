@@ -49,6 +49,7 @@ class Api::ActionNetwork::PersonTest < ActiveSupport::TestCase
     person.reload
     assert_equal 'Henshaw', person.family_name
     assert_equal person1_uuid, person.identifier_id('action_network')
+
     assert_equal encypted_password, person.encrypted_password
 
     assert_nothing_raised do

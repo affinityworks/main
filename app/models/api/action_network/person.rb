@@ -24,13 +24,12 @@ module Api::ActionNetwork::Person
     "https://actionnetwork.org/api/v2/#{resource.pluralize}"
   end
 
-
   def self.after_import(resource, group)
     person = Person.any_identifier(resource.identifier('action_network')).first
-    logger.debug "#{self.class.name}#after_import! resource: #{resource} person: #{person}, :group #{group}"
-
+    logger.debug "#{self.class.name}#after_import! resource: #{resource.to_json} person: #{person.to_json}, :group #{group.to_json}"
+    
     if !person.nil?
-      update_single_resource(resource, permitted_parameters)
+      update_single_resource(resource)
 
       Membership.create!(:person => person, :group => group, :role => 'member') unless group.members.include?(person)
 
@@ -44,10 +43,11 @@ module Api::ActionNetwork::Person
   end
 
   def self.merge_person_with_resource(resource)
+    
     resource.email_addresses.each do |email_address_obj|
       old_person = Person.by_email(email_address_obj.address)
       unless old_person.empty?
-        return merge_resources(old_person.first, resource, permitted_parameters)
+        return merge_resources(old_person.first, resource)
       end
     end
   end

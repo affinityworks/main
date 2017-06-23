@@ -16,7 +16,8 @@ class Ability
       end
 
       can :manage, Group do |group|
-        current_user.admin? ||  Membership.organizer.exists?(person: current_user, group: group) || (Membership.organizer.exists?(person: current_user, group: group)  && current_group.affiliates.include?(group))
+        current_user.admin? ||  Membership.organizer.exists?(person: current_user, group: group) || 
+          (Membership.organizer.exists?(person: current_user, group: current_group) && current_group.affiliates.include?(group))
       end
     end
   end
