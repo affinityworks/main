@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import { formatDay, eventsPath } from '../utils';
+import { formatDay, formatTime, eventsPath } from '../utils';
 
 class EventActivityFeed extends Component {
   renderEvent(event) {
@@ -11,7 +11,7 @@ class EventActivityFeed extends Component {
       <div href="#" key={event.id} className="list-group-item list-group-item-action flex-column align-items-start">
         <div className="d-flex w-100 justify-content-between">
           <Link to={`${eventsPath()}/${event.id}`}><h5 className="mb-1">{event.title}</h5></Link>
-          <small>{formatDay(event.updated_at)}</small>
+          <small>{formatDay(event.updated_at)} {formatTime(event.updated_at)}</small>
         </div>
         <p className="mb-1">{event.group.name}</p>
         <small>{type}</small>

@@ -66,8 +66,8 @@ class Dashboard extends Component {
 
         <h3>Events</h3>
         <div className='list-group'>
-          <EventActivityFeed events={events.updated} type='Update'/>
-          <EventActivityFeed events={events.created} type='Create'/>
+          <EventActivityFeed events={events.updated} type='Updated'/>
+          <EventActivityFeed events={events.created} type='Created'/>
         </div>
 
         {this.showAttendancesActivity()}
