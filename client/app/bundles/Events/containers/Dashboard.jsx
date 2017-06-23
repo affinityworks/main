@@ -73,10 +73,10 @@ class Dashboard extends Component {
         {this.showAttendancesActivity()}
 
         <br />
-        <h3>People</h3>
-        <PersonActivityFeed people={people.updated} type='Update'/>
+        {(!!people.updated.length || !!people.created.length) && <h3>People</h3>}
+        <PersonActivityFeed people={people.updated} type='Updated'/>
         <br />
-        <PersonActivityFeed people={people.created} type='Create'/>
+        <PersonActivityFeed people={people.created} type='Created'/>
       </div>
     );
   }
