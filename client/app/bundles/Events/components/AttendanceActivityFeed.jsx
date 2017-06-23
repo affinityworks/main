@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import _ from 'lodash';
 
-import { formatDay, formatTime } from '../utils';
+import { formatDay, formatTime, eventPath } from '../utils';
 
 class AttendanceActivityFeed extends Component {
   showAttendedInfo({ attended, missed, unknown }) {
@@ -22,7 +23,9 @@ class AttendanceActivityFeed extends Component {
       return(
         <div className='list-group-item' key={event_id} style={{ flexDirection: 'column', alignItems: 'start' }}>
           <div className="d-flex w-100 justify-content-between">
-            <h5 className="mb-1">{event_title}</h5>
+            <Link to={`${eventPath(event_id)}`}>
+              <h5 className="mb-1">{event_title}</h5>
+            </Link>
             <small>{formatDay(updated_at)} {formatTime(updated_at)}</small>
           </div>
           <div>{`${group_name}`}</div>
