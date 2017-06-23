@@ -41,6 +41,15 @@ class Dashboard extends Component {
     )
   }
 
+  hasActivity() {
+    const { people, events, attendances } = this.state;
+    return people.updated.length
+      || people.created.length
+      || events.created.length
+      || events.updated.length
+      || attendances.length
+  }
+
   render() {
     const { attributes } = this.props.group;
     const { events, attendances, people } = this.state;
@@ -61,10 +70,10 @@ class Dashboard extends Component {
 
         {attributes.description && <br />}
 
-        <h2>Activity Feed</h2>
-        <hr />
+        {this.hasActivity() && <h2>Activity Feed</h2> || <h4> There's no recent activity for this group.</h4>}
+        {this.hasActivity() && <hr />}
 
-        <h3>Events</h3>
+        {(!!events.updated.length || !!events.created.length) && <h3>Events</h3>}
         <div className='list-group'>
           <EventActivityFeed events={events.updated} type='Updated'/>
           <EventActivityFeed events={events.created} type='Created'/>
