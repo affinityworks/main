@@ -10,6 +10,7 @@ module Api::ActionNetwork::Attendances
   end
 
   def self.import!(event, group)
+    errors_count = 0
     existing_count = 0
     new_count = 0
     updated_count = 0
@@ -36,6 +37,7 @@ module Api::ActionNetwork::Attendances
           begin
             attendance.save!
           rescue ActiveRecord::RecordInvalid
+            errors_count += 1
             logger.debug "FAILED TO IMPORT DUPLICATE ATTENDANCE - event_id: #{attendance.event_id} person_id: #{attendance.person_id} an_uuid: #{attendance.person_uuid}"
           end
         end
@@ -76,9 +78,5 @@ module Api::ActionNetwork::Attendances
   def self.first_uri(params={})
     uri = "https://actionnetwork.org/api/v2/events/#{params[:action_network_event_id]}/attendances"
     add_uri_filter(uri, params[:synced_at])
-  end
-
-  def self.errors_count
-    0
   end
 end
