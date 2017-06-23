@@ -6,12 +6,13 @@ import Nav from '../components/Nav';
 import EventActivityFeed from '../components/EventActivityFeed';
 import AttendanceActivityFeed from '../components/AttendanceActivityFeed';
 import PersonActivityFeed from '../components/PersonActivityFeed';
+import SyncActivityFeed from '../components/SyncActivityFeed';
 import { fetchGroup, addAlert } from '../actions';
 import { client, dashboardPath } from '../utils';
 
 class Dashboard extends Component {
   state = { events: { updated: [], created: [] }, attendances: [],
-    people: { updated: [], created: [] }
+    people: { updated: [], created: [] }, sync: {}
   }
 
   componentWillMount() {
@@ -42,17 +43,18 @@ class Dashboard extends Component {
   }
 
   hasActivity() {
-    const { people, events, attendances } = this.state;
+    const { people, events, attendances, sync } = this.state;
     return !! people.updated.length
       || !! people.created.length
       || !! events.created.length
       || !! events.updated.length
       || !! attendances.length
+      || !! (sync && sync.data)
   }
 
   render() {
     const { attributes } = this.props.group;
-    const { events, attendances, people } = this.state;
+    const { events, attendances, people, sync } = this.state;
 
     if(!attributes) { return null }
 
@@ -72,6 +74,8 @@ class Dashboard extends Component {
 
         {this.hasActivity() && <h2>Activity Feed</h2> || <h4> There's no recent activity for this group.</h4>}
         {this.hasActivity() && <hr />}
+
+        { !!sync && !!sync.data && <SyncActivityFeed sync={sync} />}
 
         {(!!events.updated.length || !!events.created.length) && <h3>Events</h3>}
         <div className='list-group'>

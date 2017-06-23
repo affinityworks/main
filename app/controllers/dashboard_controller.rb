@@ -8,6 +8,7 @@ class DashboardController < ApplicationController
       format.html
       format.json do
         render json: {
+          sync: @group.sync_logs.last,
           events: Event.activity_feed(@group),
           attendances: Attendance.activity_feed(@group),
           people: Person.activity_feed(@group)
