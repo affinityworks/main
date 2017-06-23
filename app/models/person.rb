@@ -196,6 +196,19 @@ class Person < ApplicationRecord
     end
   end
 
+  #we dont' use permitted but do use rejected
+
+  def permitted_import_parameters
+    return [:family_name, :given_name, :additional_name, :honorific_prefix, 
+            :honorific_suffix, :gender, :gender_identity, :party_identification, 
+            :source, {:ethnicities => []}, {:languages_spoken => []}, :birthdate, :employer, 
+            {:custom_fields => {}}, :created_at, :updated_at]
+  end
+
+  def rejected_import_parameters
+    return [:encrypted_password]
+  end
+
   private
 
   def generate_update_events
@@ -206,4 +219,6 @@ class Person < ApplicationRecord
   def record_update_event(name)
     ::NewRelic::Agent.record_custom_event(name, id: id, email: primary_email_address)
   end
+  
+
 end

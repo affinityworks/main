@@ -25,10 +25,9 @@ module Api::ActionNetwork::Person
   end
 
   def self.after_import(resource, group)
-
     person = Person.any_identifier(resource.identifier('action_network')).first
-    logger.debug "#{self.class.name}#after_import! resource: #{resource} person: #{person}, :group #{group}"
-
+    #logger.debug "#{self.class.name}#after_import! resource: #{resource.identifiers.to_json} person: #{person.identifiers.to_json}, :group #{group.id}"
+    
     if !person.nil?
       update_single_resource(resource)
 
@@ -44,6 +43,7 @@ module Api::ActionNetwork::Person
   end
 
   def self.merge_person_with_resource(resource)
+    
     resource.email_addresses.each do |email_address_obj|
       old_person = Person.by_email(email_address_obj.address)
       unless old_person.empty?

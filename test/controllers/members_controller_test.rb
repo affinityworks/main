@@ -26,7 +26,7 @@ class MembersControllerTest < ActionDispatch::IntegrationTest
     person = people(:member1)
     sign_in person
     get group_members_url(group_id: person.groups.first.id), as: :json
-    assert_response 302
+    assert_response 403
   end
 
   test 'get #attendances' do

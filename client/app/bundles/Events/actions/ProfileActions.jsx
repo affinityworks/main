@@ -1,7 +1,6 @@
 import {
   FETCH_CURRENT_USER_GROUPS
 } from './types';
-
 import { addAlert } from '../actions';
 import { client } from '../utils';
 
