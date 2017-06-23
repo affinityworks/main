@@ -11,7 +11,9 @@ class PersonActivityFeed extends Component {
     return (
       <div href="#" key={person.version_id} className="list-group-item list-group-item-action flex-column align-items-start">
         <div className="d-flex w-100 justify-content-between">
-          <h5 className="mb-1">{person.name}</h5>
+          <Link to={`${membersPath()}/${person.id}`}>
+            <h5 className="mb-1">{person.name}</h5>
+          </Link>
           <small>{formatDay(timestamp)} {formatTime(timestamp)}</small>
         </div>
         <div>{person.changed_fields.join(', ')}</div>

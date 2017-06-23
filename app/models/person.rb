@@ -213,6 +213,7 @@ class Person < ApplicationRecord
   def self.to_activity_json(version)
     {
       version_id: version.id,
+      id: version.item_id,
       timestamp: version.created_at,
       changed_fields: version.changeset.keys,
       whodunnit: version.whodunnit,
