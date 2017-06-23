@@ -42,6 +42,13 @@ module Api::ActionNetwork::Attendances
       end
       logger.debug "Api::ActionNetwork::Attendances#import! new: #{new_count} existing: #{existing_count} updated: #{updated_count}"
     end
+
+    {
+      created: new_count,
+      updated: updated_count,
+      existing: existing_count,
+      errors: errors_count
+    }
   end
 
   def self.associate_with_person(new_attendances, event_id, group)
@@ -70,5 +77,9 @@ module Api::ActionNetwork::Attendances
   def self.first_uri(params={})
     uri = "https://actionnetwork.org/api/v2/events/#{params[:action_network_event_id]}/attendances"
     add_uri_filter(uri, params[:synced_at])
+  end
+
+  def self.errors_count
+    0
   end
 end

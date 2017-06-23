@@ -29,6 +29,13 @@ module Api::ActionNetwork::Events
       end
       logger.debug "Api::ActionNetwork::Events#import! new: #{new_count} existing: #{existing_count} updated: #{updated_count}"
     end
+
+    {
+      created: new_count,
+      updated: updated_count,
+      existing: existing_count,
+      errors: errors_count
+    }
   end
 
   def self.create_single_resource(event)
@@ -38,6 +45,7 @@ module Api::ActionNetwork::Events
     event.tap(&:save!)
   rescue StandardError => e
     logger.error resource
+    errors_count += 1
     raise e
   end
 
@@ -74,5 +82,13 @@ module Api::ActionNetwork::Events
     old_resource.update_attributes! attributes
 
     old_resource
+  end
+
+  def self.errors_count
+    @errors_count ||= 0
+  end
+
+  def self.errors_count=(errors)
+    @errors_count = errros
   end
 end

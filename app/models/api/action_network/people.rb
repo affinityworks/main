@@ -30,5 +30,16 @@ module Api::ActionNetwork::People
       end
       logger.debug "Api::ActionNetwork::People#import! new: #{new_count} existing: #{existing_count} updated: #{updated_count}"
     end
+
+    {
+      created: new_count,
+      updated: updated_count,
+      existing: existing_count,
+      errors: errors_count
+    }
+  end
+
+  def self.errors_count
+    0
   end
 end
