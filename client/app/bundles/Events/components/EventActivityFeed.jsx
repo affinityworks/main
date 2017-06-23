@@ -1,20 +1,29 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
-import { formatDateTime } from '../utils';
+import { formatDay, eventsPath } from '../utils';
 
 class EventActivityFeed extends Component {
-  render() {
-    const { events, type } = this.props;
+  renderEvent(event) {
+    const { type } = this.props;
+
     return (
-      <div>
-        {events.map(event => {
-          return (<div key={event.id}>
-            <div>{`Change type: ${type}`}</div>
-            <div>{`Date: ${formatDateTime(event.updated_at)}`}</div>
-            <div>{`Name: ${event.title}`}</div>
-            <div>{`Group: ${event.group.name}`}</div>
-          </div>);
-        })}
+      <div href="#" key={event.id} className="list-group-item list-group-item-action flex-column align-items-start">
+        <div className="d-flex w-100 justify-content-between">
+          <Link to={`${eventsPath()}/${event.id}`}><h5 className="mb-1">{event.title}</h5></Link>
+          <small>{formatDay(event.updated_at)}</small>
+        </div>
+        <p className="mb-1">{event.group.name}</p>
+        <small>{type}</small>
+      </div>
+    )
+  }
+
+  render() {
+    const { events } = this.props;
+    return (
+      <div style={{marginBottom: '-1px' }}>
+        {events.map(this.renderEvent.bind(this))}
       </div>
     );
   }
