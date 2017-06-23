@@ -16,7 +16,7 @@ class PersonActivityFeed extends Component {
           </Link>
           <small>{formatDay(timestamp)} {formatTime(timestamp)}</small>
         </div>
-        <div>{person.changed_fields.join(', ')}</div>
+        <p>{person.changed_fields.join(', ')}</p>
         { whodunnit && <small> by {whodunnit} </small>}
         <i style={{ color: '#5cb85c' }}>{type}</i>
       </div>

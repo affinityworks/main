@@ -83,8 +83,10 @@ class Dashboard extends Component {
 
         <br />
         {(!!people.updated.length || !!people.created.length) && <h3>People</h3>}
-        <PersonActivityFeed people={people.updated} type='Updated'/>
-        <PersonActivityFeed people={people.created} type='Created'/>
+        <div className='list-group'>
+          <PersonActivityFeed people={people.updated} type='Updated'/>
+          <PersonActivityFeed people={people.created} type='Created'/>
+        </div>
       </div>
     );
   }

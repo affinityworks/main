@@ -28,7 +28,7 @@ class AttendanceActivityFeed extends Component {
             </Link>
             <small>{formatDay(updated_at)} {formatTime(updated_at)}</small>
           </div>
-          <div>{`${group_name}`}</div>
+          <p>{`${group_name}`}</p>
           { whodunnit && <small> by {whodunnit} </small>}
           {this.showAttendedInfo(attendances)}
         </div>
