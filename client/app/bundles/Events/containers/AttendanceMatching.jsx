@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Nav from '../components/Nav';
 import AttendanceMatch from '../components/AttendanceMatch';
-import { eventsPath } from '../utils/Pathnames';
+import { eventsPath, client } from '../utils';
 import { addAlert } from '../actions';
 
 
@@ -15,7 +14,7 @@ class AttendanceMatching extends Component {
   componentWillMount() {
     const { id } = this.props.match.params;
 
-    axios.get(`${eventsPath()}/imports/${id}/attendances.json`)
+    client.get(`${eventsPath()}/imports/${id}/attendances.json`)
       .then((response) => {
         this.setState({ matches: response.data, anyMatch: !!response.data.length  });
       }).catch(err => {
