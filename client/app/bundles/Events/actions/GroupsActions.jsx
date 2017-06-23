@@ -1,7 +1,3 @@
-import axios from 'axios';
-
-import { affiliatesPath } from '../utils/Pathnames';
-
 import {
   FETCH_GROUPS,
   FETCH_AFFILIATES,
@@ -9,37 +5,33 @@ import {
 } from './types';
 
 import { addAlert } from '../actions';
+import { affiliatesPath, client } from '../utils';
 
 export const fetchGroups = (queryString = '') => {
   return (dispatch) => {
-    axios.get(`/groups.json${queryString}`)
+    client.get(`/groups.json${queryString}`)
       .then(response => {
         dispatch({
           type: FETCH_GROUPS,
           payload: response
         });
-      }).catch(err => {
-        let text = (err.response && err.response.status != 500) ? err.response.data.join(', ') : null;
-        let type = 'error';
-
-        dispatch(addAlert({ text, type }));
+      }).catch(alert => {
+        dispatch(addAlert(alert));
       });
   }
 };
 
 export const fetchAffiliates = (queryString = '') => {
   return (dispatch) => {
-    axios.get(`${affiliatesPath()}.json${queryString}`)
+    client.get(`${affiliatesPath()}.json${queryString}`)
       .then(response => {
         dispatch({
           type: FETCH_AFFILIATES,
           payload: response
         });
-      }).catch(err => {
-        let text = (err.response && err.response.status != 500) ? err.response.data.join(', ') : null;
-        let type = 'error';
-
-        dispatch(addAlert({ text, type }));
+      }).catch(alert => {
+        console.log('ALERT', alert);
+        dispatch(addAlert(alert));
       });
   }
 };
@@ -47,17 +39,14 @@ export const fetchAffiliates = (queryString = '') => {
 
 export const fetchGroup = (groupId) => {
   return (dispatch) => {
-    axios.get(`/groups/${groupId}.json`)
+    client.get(`/groups/${groupId}.json`)
       .then(response => {
         dispatch({
           type: FETCH_GROUP,
           payload: response
         });
-      }).catch(err => {
-        let text = (err.response && err.response.status != 500) ? err.response.data.join(', ') : null;
-        let type = 'error';
-
-        dispatch(addAlert({ text, type }));
+      }).catch(alert => {
+        dispatch(addAlert(alert));
       });
   }
 };

@@ -10,6 +10,8 @@ export default (state = INITIAL_STATE, { type, payload }) => {
 
   switch (type) {
   case ADD_ALERT:
+    if (!alert) { return state };
+
     if (!alert.id)
       alert.id = _.uniqueId('alert_');
 

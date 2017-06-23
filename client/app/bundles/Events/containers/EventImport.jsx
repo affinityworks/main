@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
 
 import Nav from '../components/Nav';
 import RemoteEventSearch from '../components/RemoteEventSearch';
 import RemoteEventMatch from '../components/RemoteEventMatch';
-import { eventsPath } from '../utils/Pathnames';
+import { eventsPath, client } from '../utils';
 import { addAlert } from '../actions';
 
 class EventImport extends Component {
@@ -18,16 +17,16 @@ class EventImport extends Component {
   }
 
   searchEvent(eventUrl) {
-    axios.get(`${eventsPath()}/imports/find.json?remote_event_url=${eventUrl}`).then(response => {
-      const { events } = response.data;
-      const remoteEvent = response.data.remote_event;
-      this.setState({ remoteEvent, events })
-    })
-    .catch(err => {
-      let text = 'An error ocurred while retrieving the Facebook Event.';
-      let type = 'error';
-      this.props.addAlert({ text, type });
-    });
+    client.get(`${eventsPath()}/imports/find.json?remote_event_url=${eventUrl}`).
+      then(response => {
+        const { events } = response.data;
+        const remoteEvent = response.data.remote_event;
+        this.setState({ remoteEvent, events })
+      }).catch(err => {
+        let text = 'An error ocurred while retrieving the Facebook Event.';
+        let type = 'error';
+        this.props.addAlert({ text, type });
+      });
   }
 
   render() {

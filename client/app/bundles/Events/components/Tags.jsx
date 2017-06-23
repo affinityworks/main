@@ -1,11 +1,10 @@
 import _ from 'lodash';
-import axios from 'axios';
 import React, { Component } from 'react';
 import queryString from 'query-string';
 import { withRouter } from 'react-router';
 
 import {
-  groupPath, eventWithoutGroupPath, membershipWithoutGroupPath
+  groupPath, eventWithoutGroupPath, membershipWithoutGroupPath, client
 } from '../utils';
 
 class Tags extends Component {
@@ -13,6 +12,10 @@ class Tags extends Component {
     super(props);
 
     this.state = { tags: this.props.tags, isEditing: false, tagName: '' };
+  }
+
+  componentDidUpdate() {
+    if(this.tagsInput) { this.tagsInput.focus() }
   }
 
   showAddTagIcon() {
@@ -49,7 +52,7 @@ class Tags extends Component {
     const tag_name = this.state.tagName;
     const { resource_type, resource_id } = this.tagResourceData();
 
-    axios.post(`/tags.json`, { tag_name, resource_type, resource_id })
+    client.post(`/tags.json`, { tag_name, resource_type, resource_id })
       .then(response => {
         const tags = this.state.tags.concat(response.data);
         this.setState({ tags, isEditing: false, tagName: '' })
@@ -57,7 +60,7 @@ class Tags extends Component {
   }
 
   removeTag(id) {
-    axios.delete(`/tags/${id}.json`, { params: this.tagResourceData() })
+    client.delete(`/tags/${id}.json`, { params: this.tagResourceData() })
       .then(response => {
         const tags = _.filter(this.state.tags, (tag) => (tag.id != id));
         this.setState({ tags })
@@ -81,6 +84,7 @@ class Tags extends Component {
             <input className='tag-input' type='text'
               value={this.state.tagName}
               onChange={this.handleInputChange.bind(this)}
+              ref={(input) => { this.tagsInput = input }}
             />
             <button className="fa fa-plus tag-action tag-action--create" aria-hidden="true" />
           </form>
