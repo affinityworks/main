@@ -18,7 +18,7 @@ class PersonActivityFeed extends Component {
         </div>
         <div>{person.changed_fields.join(', ')}</div>
         { whodunnit && <small> by {whodunnit} </small>}
-        <small>{type}</small>
+        <i style={{ color: '#5cb85c' }}>{type}</i>
       </div>
     )
   }
