@@ -59,7 +59,7 @@ class Group < ApplicationRecord
         data: {
           events: events_logs,
           members: members_logs,
-          attendances: attendances_logs
+          attendances: attendances_logs.inject{|memo, el| memo.merge( el ){|k, old_v, new_v| old_v + new_v}}
         },
         origin: Origin.action_network
       )

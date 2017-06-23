@@ -46,7 +46,6 @@ module Api::ActionNetwork::Attendances
     {
       created: new_count,
       updated: updated_count,
-      existing: existing_count,
       errors: errors_count
     }
   end
