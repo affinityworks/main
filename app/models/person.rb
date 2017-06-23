@@ -202,7 +202,7 @@ class Person < ApplicationRecord
     return [:family_name, :given_name, :additional_name, :honorific_prefix, 
             :honorific_suffix, :gender, :gender_identity, :party_identification, 
             :source, {:ethnicities => []}, {:languages_spoken => []}, :birthdate, :employer, 
-            {:custom_fields => {}}, :created_at, :updated_at]
+            {:custom_fields => {}}, :created_at, :updated_at, {:identifiers => []}]
   end
 
   def rejected_import_parameters
