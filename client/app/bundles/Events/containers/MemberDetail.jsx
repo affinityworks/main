@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -9,7 +8,7 @@ import Notes from '../components/Notes';
 import Event from '../components/Event';
 import EmailLink from '../components/EmailLink';
 import ActionHistory from '../components/ActionHistory';
-import { membersPath, membershipPath } from '../utils/Pathnames';
+import { membersPath, membershipPath, client } from '../utils';
 import { addAlert } from '../actions';
 
 class MemberDetail extends Component {
@@ -22,7 +21,7 @@ class MemberDetail extends Component {
   }
 
   fetchAttendances(id) {
-    axios.get(`${id}/attendances.json`)
+    client.get(`${id}/attendances.json`)
       .then(response => this.setState({ attendances: response.data.data }))
       .catch(err => {
         let text = 'An error ocurred while retrieving the Attendances.';
@@ -32,10 +31,10 @@ class MemberDetail extends Component {
   }
 
   fetchMembership(id) {
-    axios.get(`${membershipPath()}/${id}.json`)
+    client.get(`${membershipPath()}/${id}.json`)
       .then(response => this.setState({ membership: response.data.data }))
       .catch(err => {
-        let text = 'An error ocurred while retrieving the Membership.';
+        let text = 'An error ocurred while retrieving the Members.';
         let type = 'error';
         this.props.addAlert({ text, type });
       });

@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
 
 import Nav from '../components/Nav';
 import AttendanceImportComponent from '../components/AttendanceImport';
-import { eventsPath } from '../utils/Pathnames';
+import { eventsPath, client } from '../utils';
 import { Link } from 'react-router-dom';
 import { addAlert } from '../actions';
 
@@ -14,14 +13,11 @@ class AttendanceImport extends Component {
   componentWillMount() {
     const { id } = this.props.match.params;
 
-    axios.get(`${eventsPath()}/imports/${id}/attendances/new.json`)
+    client.get(`${eventsPath()}/imports/${id}/attendances/new.json`)
       .then((response) => {
         this.setState({ ...response.data });
-      }).catch(err => {
-        let text = 'An error ocurred while retrieving the Attendances.';
-        let type = 'error';
-
-        this.props.addAlert({ text, type });
+      }).catch(alert => {
+        this.props.addAlert(alert);
       });
   }
 
