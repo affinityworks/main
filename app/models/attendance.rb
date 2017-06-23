@@ -28,9 +28,9 @@ class Attendance < ApplicationRecord
     self.update_attribute(:synced, true)
   end
 
-  def self.activity_feed(group, date=Date.today)
+  def self.activity_feed(group, date=Date.today-1.days)
     grouped_attendances = group.attendances.includes(event: :groups).includes(:versions).where(
-      updated_at: date.beginning_of_day...date.end_of_day
+      updated_at: date.beginning_of_day...Date.today.end_of_day
     ).group_by do |att|
       {
         event_title: att.event.title,

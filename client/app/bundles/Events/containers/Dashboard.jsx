@@ -43,11 +43,11 @@ class Dashboard extends Component {
 
   hasActivity() {
     const { people, events, attendances } = this.state;
-    return people.updated.length
-      || people.created.length
-      || events.created.length
-      || events.updated.length
-      || attendances.length
+    return !!people.updated.length
+      || !!people.created.length
+      || !!events.created.length
+      || !!events.updated.length
+      || !!attendances.length
   }
 
   render() {

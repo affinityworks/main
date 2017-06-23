@@ -196,11 +196,10 @@ class Person < ApplicationRecord
     end
   end
 
-  def self.activity_feed(group, date=Date.today)
-    # people = group.members.where(updated_at: date.beginning_of_day...date.end_of_day)
+  def self.activity_feed(group, date=Date.today-1.days)
     people_version =  PaperTrail::Version.where(item_type: 'Person').
       where.not(event: 'destroy').
-      where(created_at: date.beginning_of_day...date.end_of_day)
+      where(created_at: date.beginning_of_day...Date.today.end_of_day)
 
     {}.tap do |feed|
       created, updated = people_version.partition { |version| version.event == 'create' }
