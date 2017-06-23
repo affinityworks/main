@@ -26,6 +26,21 @@ class Dashboard extends Component {
     });
   }
 
+  showAttendancesActivity() {
+    const { attendances } = this.state;
+
+    if (!attendances.length)
+      return null
+
+    return (
+      <div>
+        <br />
+        <h3>New Recorded Attendances</h3>
+        <AttendanceActivityFeed attendances={attendances} />
+      </div>
+    )
+  }
+
   render() {
     const { attributes } = this.props.group;
     const { events, attendances, people } = this.state;
@@ -42,20 +57,20 @@ class Dashboard extends Component {
 
         <br />
 
-        { attributes.description && <div dangerouslySetInnerHTML={{ __html: attributes.description }} /> }
+        {attributes.description && <div dangerouslySetInnerHTML={{ __html: attributes.description }} />}
 
-        { attributes.description && <br /> }
+        {attributes.description && <br />}
 
         <h2>Activity Feed</h2>
         <hr />
+
         <h3>Events</h3>
         <div className='list-group'>
           <EventActivityFeed events={events.updated} type='Update'/>
           <EventActivityFeed events={events.created} type='Create'/>
         </div>
-        <br />
-        <h3>New Recorded Attendances</h3>
-        <AttendanceActivityFeed attendances={attendances} />
+
+        {this.showAttendancesActivity()}
 
         <br />
         <h3>People</h3>
