@@ -14,7 +14,7 @@ class EventActivityFeed extends Component {
           <small>{formatDay(event.updated_at)} {formatTime(event.updated_at)}</small>
         </div>
         <p className="mb-1">{event.group.name}</p>
-        <small>{type}</small>
+        <i style={{ color: '#5cb85c' }}>{type}</i>
       </div>
     )
   }

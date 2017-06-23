@@ -9,7 +9,7 @@ class AttendanceActivityFeed extends Component {
     return(
       <div>
         { !!attended && <div className='badge badge-primary attendance-badge'>{`${attended} Attended`}</div>}
-        { !!unknown && <div className='badge badge-primary attendance-badge'>{`${unknown} Unknown`}</div>}
+        { !!unknown && <div className='badge badge-primary attendance-badge'>{`${unknown} RSPVs`}</div>}
         { !!missed && <div className='badge badge-primary attendance-badge'>{`${missed} Missed`}</div>}
       </div>
     )
