@@ -10,7 +10,7 @@ import { fetchGroup, addAlert } from '../actions';
 import { client, dashboardPath } from '../utils';
 
 class Dashboard extends Component {
-  state = { events: { updated: [], created: [] }, attendances: {},
+  state = { events: { updated: [], created: [] }, attendances: [],
     people: { updated: [], created: [] }
   }
 
