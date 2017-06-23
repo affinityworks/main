@@ -1,45 +1,33 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 
-import { formatDateTime } from '../utils';
+import { formatDay, formatTime } from '../utils';
 
 class AttendanceActivityFeed extends Component {
-  showAttendedInfo(attendances) {
-    let [attended, missed, unknown] = [0,0,0];
-
-    attendances.forEach(attendance => {
-      switch (attendance.attended) {
-      case true:
-        attended += 1;
-        break;
-      case false:
-        missed += 1;
-        break;
-      default:
-        unknown += 1;
-      }
-    });
-
+  showAttendedInfo({ attended, missed, unknown }) {
     return(
       <div>
-        { !!attended && <div>{`Attended: ${attended}`}</div>}
-        { !!unknown && <div>{`Unknown: ${unknown}`}</div>}
-        { !!missed && <div>{`Missed: ${missed}`}</div>}
+        { !!attended && <div className='badge badge-primary attendance-badge'>{`${attended} Attended`}</div>}
+        { !!unknown && <div className='badge badge-primary attendance-badge'>{`${unknown} Unknown`}</div>}
+        { !!missed && <div className='badge badge-primary attendance-badge'>{`${missed} Missed`}</div>}
       </div>
     )
   }
 
   showAttendances() {
-    const groupedAttendances = this.props.attendances;
-    const events = Object.keys(groupedAttendances)
+    const eventAttendances = this.props.attendances;
 
-    return (events.map(event => {
-      const [eventName, eventId] = event.split('-');
+    return (eventAttendances.map(attendances => {
+      const { event_id, event_title, group_name, whodunnit, updated_at } = attendances;
       return(
-        <div key={eventId}>
-          <div>{`Event: ${eventName}`}</div>
-          {this.showAttendedInfo(groupedAttendances[event])}
-          <br />
+        <div className='list-group-item' key={event_id} style={{ flexDirection: 'column', alignItems: 'start' }}>
+          <div className="d-flex w-100 justify-content-between">
+            <h5 className="mb-1">{event_title}</h5>
+            <small>{formatDay(updated_at)} {formatTime(updated_at)}</small>
+          </div>
+          <div>{`${group_name}`}</div>
+          { whodunnit && <small> by {whodunnit} </small>}
+          {this.showAttendedInfo(attendances)}
         </div>
       )
     }))
@@ -47,7 +35,7 @@ class AttendanceActivityFeed extends Component {
 
   render() {
     return (
-      <div>
+      <div className="list-group">
         {this.showAttendances()}
       </div>
     );

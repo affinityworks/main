@@ -51,9 +51,8 @@ class Dashboard extends Component {
         <EventActivityFeed events={events.created} type='Create'/>
 
         <br />
-        <h3>Attendances</h3>
+        <h3>New Recorded Attendances</h3>
         <AttendanceActivityFeed attendances={attendances} />
-
 
         <br />
         <h3>People</h3>
