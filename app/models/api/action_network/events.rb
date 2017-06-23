@@ -33,7 +33,6 @@ module Api::ActionNetwork::Events
     {
       created: new_count,
       updated: updated_count,
-      existing: existing_count,
       errors: errors_count
     }
   end
@@ -45,8 +44,7 @@ module Api::ActionNetwork::Events
     event.tap(&:save!)
   rescue StandardError => e
     logger.error resource
-    errors_count += 1
-    raise e
+    self.errors_count = self.errors_count + 1
   end
 
   def self.associate_with_group(new_events, group)
@@ -89,6 +87,6 @@ module Api::ActionNetwork::Events
   end
 
   def self.errors_count=(errors)
-    @errors_count = errros
+    @errors_count = errors
   end
 end

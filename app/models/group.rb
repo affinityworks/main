@@ -52,7 +52,11 @@ class Group < ApplicationRecord
       synced_time = Time.now
       events_logs = import_events
       members_logs = import_members
-      attendances_logs = events.map { |event| import_attendances(event) }
+
+      attendances_logs = events.map do |event|
+        import_attendances(event)
+      end
+
       import_tags
       self.update_attribute(:synced_at, synced_time)
       self.sync_logs.create(
