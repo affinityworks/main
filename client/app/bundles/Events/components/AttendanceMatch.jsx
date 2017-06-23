@@ -1,7 +1,6 @@
-import axios from 'axios';
 import React, { Component } from 'react';
 
-import { eventsPath } from '../utils';
+import { eventsPath, client } from '../utils';
 import FacebookLink from './FacebookLink';
 
 class AttendanceMatch extends Component {
@@ -23,13 +22,13 @@ class AttendanceMatch extends Component {
     const person_id = person.data.id
 
     if (this.state.checked) {
-      axios.delete(
+      client.delete(
         `${eventsPath()}/imports/${remote_event_id}/attendances`,
         { params: { person_id } });
     } else {
       const facebook_id = fb_rsvp.id;
 
-      axios.post(`${eventsPath()}/imports/${remote_event_id}/attendances`, { facebook_id, person_id })
+      client.post(`${eventsPath()}/imports/${remote_event_id}/attendances`, { facebook_id, person_id })
     }
 
     this.setState({ checked: !this.state.checked });

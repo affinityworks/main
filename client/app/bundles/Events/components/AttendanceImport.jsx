@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
 
 import Nav from '../components/Nav';
 import RemoteAttendance from '../components/RemoteAttendance';
-import { eventsPath } from '../utils/Pathnames';
+import { eventsPath, client } from '../utils';
 import _ from 'lodash';
 import { Link } from 'react-router-dom';
 import { addAlert } from '../actions';
@@ -33,10 +32,9 @@ class AttendanceImport extends Component {
       return;
     }
 
-    axios.post(`${eventsPath()}/${event_id}/attendances/import_remote.json`, {
+    client.post(`${eventsPath()}/${event_id}/attendances/import_remote.json`, {
       remote_attendances: newAttendances
-    })
-    .then((response) => {
+    }).then((response) => {
       const { attendances, newAttendances} = this.state;
       const notImported = _.difference(attendances, newAttendances);
 
@@ -44,10 +42,8 @@ class AttendanceImport extends Component {
       let type = 'success';
       this.props.addAlert({ text, type });
       this.setState({ attendances: notImported, newAttendances: [] })
-    }).catch((err) => {
-      let text = 'An error ocurred. Try again later.';
-      let type = 'error';
-      this.props.addAlert({ text, type });
+    }).catch(alert => {
+      this.props.addAlert(alert);
     });
   }
 

@@ -42,8 +42,13 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from CanCan::AccessDenied do |exception|
-    flash[:alert] = "Access denied. You are not authorized to access the requested page."
-    redirect_to group_dashboard_path(group_id: current_group.id)
+    respond_to do |format|
+      format.html do
+        flash[:alert] = "Access denied. You are not authorized to access the requested page."
+        redirect_to group_path(id: current_group.id)
+      end
+      format.json { head :forbidden }
+    end
   end
 
   private
