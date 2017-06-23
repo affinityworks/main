@@ -39,10 +39,13 @@ class Dashboard extends Component {
         <br />
 
         <Nav activeTab='dashboard' />
-        <br />
-        <div dangerouslySetInnerHTML={{ __html: attributes.description }} />
 
         <br />
+
+        { attributes.description && <div dangerouslySetInnerHTML={{ __html: attributes.description }} /> }
+
+        { attributes.description && <br /> }
+
         <h2>Activity Feed</h2>
         <hr />
         <h3>Events</h3>
