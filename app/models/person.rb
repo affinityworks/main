@@ -6,7 +6,7 @@ class Person < ApplicationRecord
   include Api::Identifiers
 
   acts_as_taggable
-  has_paper_trail
+  has_paper_trail ignore: [:created_at, :updated_at]
 
   devise :database_authenticatable,
          :recoverable, :rememberable, :trackable, :validatable,
@@ -196,12 +196,35 @@ class Person < ApplicationRecord
     end
   end
 
-  #we dont' use permitted but do use rejected
+  def self.activity_feed(group, date=Date.today-1.days)
+    people_version =  PaperTrail::Version.where(item_type: 'Person').
+      where.not(event: 'destroy').
+      where(created_at: date.beginning_of_day...Date.today.end_of_day)
 
+    {}.tap do |feed|
+      created, updated = people_version.partition { |version| version.event == 'create' }
+
+      feed[:created] = created.map { |version| to_activity_json(version) }
+      feed[:updated] = updated.map { |version| to_activity_json(version) }
+    end
+  end
+
+  def self.to_activity_json(version)
+    {
+      version_id: version.id,
+      id: version.item_id,
+      timestamp: version.created_at,
+      changed_fields: version.changeset.keys,
+      whodunnit: version.whodunnit,
+      name: version.item.name
+    }
+  end
+
+  #we dont' use permitted but do use rejected
   def permitted_import_parameters
-    return [:family_name, :given_name, :additional_name, :honorific_prefix, 
-            :honorific_suffix, :gender, :gender_identity, :party_identification, 
-            :source, {:ethnicities => []}, {:languages_spoken => []}, :birthdate, :employer, 
+    return [:family_name, :given_name, :additional_name, :honorific_prefix,
+            :honorific_suffix, :gender, :gender_identity, :party_identification,
+            :source, {:ethnicities => []}, {:languages_spoken => []}, :birthdate, :employer,
             {:custom_fields => {}}, :created_at, :updated_at]
   end
 
@@ -219,6 +242,6 @@ class Person < ApplicationRecord
   def record_update_event(name)
     ::NewRelic::Agent.record_custom_event(name, id: id, email: primary_email_address)
   end
-  
+
 
 end
