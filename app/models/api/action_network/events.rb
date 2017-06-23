@@ -33,7 +33,6 @@ module Api::ActionNetwork::Events
     {
       created: new_count,
       updated: updated_count,
-      existing: existing_count,
       errors: errors_count
     }
   end
