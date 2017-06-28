@@ -15,6 +15,8 @@ class Group < ApplicationRecord
   has_many :affiliates, through: :affiliations, source: 'affiliated'
   has_many :affiliated_with, through: :affiliations_with, source: 'group'
 
+  has_many :sync_logs
+
   has_and_belongs_to_many :events, dependent: :destroy
   has_and_belongs_to_many :advocacy_campaigns
   has_and_belongs_to_many :canvassing_efforts
@@ -48,11 +50,23 @@ class Group < ApplicationRecord
   def sync_with_action_network
     Group.transaction do
       synced_time = Time.now
-      import_events
-      import_members
-      events.each { |event| import_attendances(event) }
+      events_logs = import_events
+      members_logs = import_members
+
+      attendances_logs = events.map do |event|
+        import_attendances(event)
+      end
+
       import_tags
       self.update_attribute(:synced_at, synced_time)
+      self.sync_logs.create(
+        data: {
+          events: events_logs,
+          members: members_logs,
+          attendances: attendances_logs.compact.inject{|memo, el| memo.merge( el ){|k, old_v, new_v| old_v + new_v}}
+        },
+        origin: Origin.action_network
+      )
     end
   end
 

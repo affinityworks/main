@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170622195706) do
+ActiveRecord::Schema.define(version: 20170623203342) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -744,6 +744,16 @@ ActiveRecord::Schema.define(version: 20170622195706) do
     t.index ["form_id"], name: "index_submissions_on_form_id", using: :btree
     t.index ["person_id"], name: "index_submissions_on_person_id", using: :btree
     t.index ["referrer_data_id"], name: "index_submissions_on_referrer_data_id", using: :btree
+  end
+
+  create_table "sync_logs", force: :cascade do |t|
+    t.integer  "group_id"
+    t.integer  "origin_id"
+    t.jsonb    "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_sync_logs_on_group_id", using: :btree
+    t.index ["origin_id"], name: "index_sync_logs_on_origin_id", using: :btree
   end
 
   create_table "tag_origins", force: :cascade do |t|
