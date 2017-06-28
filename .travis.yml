@@ -3,6 +3,8 @@ rvm:
   - 2.3.3
 sudo: required
 dist: trusty
+addons:
+  postgresql: "9.5"
 env:
   - TRAVIS_NODE_VERSION="7.7.3"
 install:

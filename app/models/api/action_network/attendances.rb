@@ -10,6 +10,7 @@ module Api::ActionNetwork::Attendances
   end
 
   def self.import!(event, group)
+    errors_count = 0
     existing_count = 0
     new_count = 0
     updated_count = 0
@@ -36,12 +37,19 @@ module Api::ActionNetwork::Attendances
           begin
             attendance.save!
           rescue ActiveRecord::RecordInvalid
+            errors_count += 1
             logger.debug "FAILED TO IMPORT DUPLICATE ATTENDANCE - event_id: #{attendance.event_id} person_id: #{attendance.person_id} an_uuid: #{attendance.person_uuid}"
           end
         end
       end
       logger.debug "Api::ActionNetwork::Attendances#import! new: #{new_count} existing: #{existing_count} updated: #{updated_count}"
     end
+
+    {
+      created: new_count,
+      updated: updated_count,
+      errors: errors_count
+    }
   end
 
   def self.associate_with_person(new_attendances, event_id, group)

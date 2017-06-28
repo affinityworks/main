@@ -63,7 +63,8 @@ class EventTest < ActiveSupport::TestCase
     upcoming_event_2 = Event.create(start_date: Date.today + 2.days)
     future_event = Event.create(start_date: Date.today + (Event::UPCOMING_EVENTS_DAYS + 1).days)
 
-    assert_equal Event.upcoming, [upcoming_event_1, upcoming_event_2]
+    assert_includes Event.upcoming, upcoming_event_1
+    assert_includes Event.upcoming, upcoming_event_2
   end
 
   test '.start' do
