@@ -30,6 +30,8 @@ gem 'graphql'
 gem 'graphql-rails-resolver'
 gem 'graphiql-rails'
 
+gem 'koala'
+
 #pretty layout for console
 gem 'hirb'
 

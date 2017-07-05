@@ -205,9 +205,7 @@ class Person < ApplicationRecord
       
       created, updated = people_version.partition { |version| version.event == 'create' }
 
-      feed[:created] = created.map { |version|
-         to_activity_json(version) 
-       }
+      feed[:created] = created.map { |version| to_activity_json(version) }
       feed[:updated] = updated.map { |version| to_activity_json(version) }
     end
   end
