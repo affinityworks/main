@@ -20,6 +20,7 @@ module Api::ActionNetwork::Events
         existing_events, new_events = partition(events)
 
         new_count += new_events.size
+        
         existing_count += existing_count.size
         updated_count = update_resources(existing_events)
 
