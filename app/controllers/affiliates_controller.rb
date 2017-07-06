@@ -27,6 +27,26 @@ class AffiliatesController < ApplicationController
     end
   end
 
+    # POST /affiliates
+  # POST /affiliates.json
+  def create
+    @affiliates = Affiliation.new({
+      affiliated_id: params["affiliation"]["affiliated_id"],
+      group_id: params[:group_id]
+    })
+# todo check to see if duplicate entry exists before saving
+    respond_to do |format|
+      if @affiliates.save
+        format.html { redirect_to groups_url, notice: 'Affilation was successfully created.' }
+        format.json { render :show, status: :created, location: @affiliates }
+      else
+        format.html { redirect_back(fallback_location: root_path), notice: 'Affliation not Saved' }
+        format.json { render json: @affiliates.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+
   private
 
   def sort_param

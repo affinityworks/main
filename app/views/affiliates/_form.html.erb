@@ -1,0 +1,12 @@
+<%= form_tag("affiliates", method: "post") do %>
+
+  <div class="field">
+    <%= label_tag "Add Affiliation" %>
+    <%= collection_select(:affiliation, :affiliated_id, @groups.all, :id, :name) %>
+  </div>
+
+
+  <div class="actions">
+    <%= submit_tag("Add Affiliation") %>
+  </div>
+<% end %>
