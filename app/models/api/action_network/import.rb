@@ -68,7 +68,10 @@ module Api::ActionNetwork::Import
     attributes.delete_if { |_, v| v.nil? }
     parameters = ActionController::Parameters.new(attributes)
     if resource.respond_to? :permitted_import_parameters
-      old_resource.update_attributes! parameters.permit(old_resource.permitted_import_parameters)
+      old_resource.attributes= parameters.permit(old_resource.permitted_import_parameters)
+      old_resource.custom_fields= old_resource["custom_fields"].merge(attributes["custom_fields"]) if old_resource["custom_fields"]
+      old_resource.identifiers= old_resource[:identifiers] |= attributes['identifiers']
+      old_resource.save!
     else
       old_resource.update_attributes! attributes
     end

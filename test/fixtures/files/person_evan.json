@@ -1,13 +1,13 @@
 {
   "given_name": "Evan",
-  "family_name": "Henshaw",
+  "family_name": "Jones",
   "identifiers": [
     "action_network:06d13a33-6824-493b-a922-95e793f269d3"
   ],
   "email_addresses": [
     {
       "primary": true,
-      "address": "evan@henshaw-plath.com",
+      "address": "evan@anonymous.com",
       "status": "subscribed"
     }
   ],
