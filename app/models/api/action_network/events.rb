@@ -13,7 +13,7 @@ module Api::ActionNetwork::Events
 
     logger.info "Api::ActionNetwork::Events#import! from #{next_uri}"
 
-    Event.transaction do
+    #Event.transaction do
       while next_uri
         events, next_uri = request_resources_from_action_network(next_uri, group)
 
@@ -29,7 +29,7 @@ module Api::ActionNetwork::Events
         create new_events
       end
       logger.debug "Api::ActionNetwork::Events#import! new: #{new_count} existing: #{existing_count} updated: #{updated_count}"
-    end
+    #end
 
     {
       created: new_count,

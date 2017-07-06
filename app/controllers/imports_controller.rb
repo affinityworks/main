@@ -21,6 +21,21 @@ class ImportsController < ApplicationController
     end
   end
 
+  def new
+    identity = current_person.identities.facebook.first
+ 
+    respond_to do |format|
+      format.html
+      format.json do
+        render json: {
+          remote_events: remote_events,
+          events: JsonApi::EventsRepresenter.for_collection.new(current_group.events.start(start_date))
+        }.to_json
+      end
+    end
+
+  end
+
   def create
     facebook_event = FacebookEvent.find_or_initialize_for_event(params[:event_id], params[:remote_event])
     respond_to do |format|

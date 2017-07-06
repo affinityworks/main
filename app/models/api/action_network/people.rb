@@ -15,7 +15,7 @@ module Api::ActionNetwork::People
 
     logs = []
 
-    ::Person.transaction do
+    #::Person.transaction do
       while next_uri
         people, next_uri = request_resources_from_action_network(next_uri, group)
 
@@ -31,7 +31,7 @@ module Api::ActionNetwork::People
         end
       end
       logger.debug "Api::ActionNetwork::People#import! new: #{new_count} existing: #{existing_count} updated: #{updated_count}"
-    end
+    #end
 
     {
       created: logs.map { |log| log[:created] || 0 }.sum,

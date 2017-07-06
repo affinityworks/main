@@ -11,6 +11,11 @@ class Membership < ApplicationRecord
 
   enum role: [:member, :organizer]
 
+  #this doesn't do what i'd hoped - rabble
+    # still need to work to be able to do group.organizers
+  scope :member, -> { where(:role => :member) }
+  scope :organizer, -> { where(:role => :organizer) }
+
   scope :by_name, -> (name) do
     where("CONCAT_WS(' ', people.given_name, people.family_name) ILIKE ?", "%#{name}%")
   end
