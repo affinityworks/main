@@ -40,7 +40,7 @@ class AffiliatesController < ApplicationController
         format.html { redirect_to groups_url, notice: 'Affilation was successfully created.' }
         format.json { render :show, status: :created, location: @affiliates }
       else
-        format.html { redirect_back(fallback_location: root_path), notice: 'Affliation not Saved' }
+        format.html { redirect_back(fallback_location: root_path) }
         format.json { render json: @affiliates.errors, status: :unprocessable_entity }
       end
     end
