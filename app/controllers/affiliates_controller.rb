@@ -30,10 +30,13 @@ class AffiliatesController < ApplicationController
     # POST /affiliates
   # POST /affiliates.json
   def create
-    @affiliates = Affiliation.new({
-      affiliated_id: params["affiliation"]["affiliated_id"],
-      group_id: params[:group_id]
-    })
+    unless params[:object] && !params[:object].empty
+      @affiliates = Affiliation.new({
+        affiliated_id: params["affiliation"]["affiliated_id"],
+        group_id: params[:group_id]
+      })
+    end
+    
 # todo check to see if duplicate entry exists before saving
     respond_to do |format|
       if @affiliates.save
