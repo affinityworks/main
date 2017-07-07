@@ -24,17 +24,17 @@ module Api::ActionNetwork::People
 
           people.each(&:sanitize_email_addresses)
 
-          existing_people, new_people = partition(people)
+          #existing_people, new_people = partition(people)
 
-          new_count += new_people.size
-          existing_count += existing_count.size
+          #new_count += new_people.size
+          #existing_count += existing_count.size
 
           people.each do |new_person|
             logs << Api::ActionNetwork::Person.after_import(new_person, group)
           end
         #end
       end
-      logger.debug "Api::ActionNetwork::People#import! new: #{new_count} existing: #{existing_count} updated: #{updated_count}"
+      #logger.debug "Api::ActionNetwork::People#import! new: #{new_count} existing: #{existing_count} updated: #{updated_count}"
     end
 
     logger.debug report.pretty_print
