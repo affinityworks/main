@@ -52,7 +52,6 @@ class Group < ApplicationRecord
   end
 
   def sync_with_action_network
-    Group.transaction do
       synced_time = Time.now
       events_logs = import_events
       members_logs = import_members
@@ -71,7 +70,6 @@ class Group < ApplicationRecord
         },
         origin: Origin.action_network
       )
-    end
   end
 
   def all_events
