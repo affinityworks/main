@@ -71,7 +71,7 @@ module Api::ActionNetwork::Import
       old_resource.attributes= parameters.permit(old_resource.permitted_import_parameters)
       old_resource.custom_fields= old_resource["custom_fields"].merge(attributes["custom_fields"]) if old_resource["custom_fields"]
       old_resource.identifiers= old_resource[:identifiers] |= attributes['identifiers']
-      old_resource.save!
+      old_resource.save! if old_resource.changed?
     else
       old_resource.update_attributes! attributes
     end
