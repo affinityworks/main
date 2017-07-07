@@ -29,6 +29,16 @@ class MembershipsController < ApplicationController
     end
   end
 
+  # def update_role
+  #   @membership = Membership.find_by!(group_id: params[:group_id],  person_id:[:id])
+   
+  #   if @membership.role == "member"
+  #     @membership.update(role: 1)
+  #   else 
+  #     @membership.update(role: 0)
+  #   end   
+  # end
+
   private
 
   def find_memberships
