@@ -1,3 +1,6 @@
+require 'memory_profiler'
+
+
 module Api::ActionNetwork::People
   extend Api::ActionNetwork::Import
 
@@ -14,24 +17,28 @@ module Api::ActionNetwork::People
     logger.info "Api::ActionNetwork::People#import! from #{next_uri}"
 
     logs = []
-
-    #::Person.transaction do
+    report = MemoryProfiler.report do
       while next_uri
-        people, next_uri = request_resources_from_action_network(next_uri, group)
+        ::Person.transaction do
+          people, next_uri = request_resources_from_action_network(next_uri, group)
 
-        people.each(&:sanitize_email_addresses)
+          people.each(&:sanitize_email_addresses)
 
-        existing_people, new_people = partition(people)
+          existing_people, new_people = partition(people)
 
-        new_count += new_people.size
-        existing_count += existing_count.size
+          new_count += new_people.size
+          existing_count += existing_count.size
 
-        people.each do |new_person|
-          logs << Api::ActionNetwork::Person.after_import(new_person, group)
+          people.each do |new_person|
+            logs << Api::ActionNetwork::Person.after_import(new_person, group)
+          end
         end
       end
       logger.debug "Api::ActionNetwork::People#import! new: #{new_count} existing: #{existing_count} updated: #{updated_count}"
-    #end
+    end
+
+    logger.debug report.pretty_print
+
 
     {
       created: logs.map { |log| log[:created] || 0 }.sum,
