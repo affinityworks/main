@@ -45,16 +45,19 @@ class GroupsController < ApplicationController
   # GET /groups/1/edit
   def edit
     @groups = Group.all
-  end
-
-  #gathers a hash of all members and organizers of current_group, with names, roles 
-  def group_members
-    @memberships = Membership.where(group_id: current_group.id)
-    people_roles = []
-    memberships.each do |i|
+    current_group_members(current_group.id)
+    #gathers a hash of all members and organizers of current_group, with names, roles, no affiliates 
+    @group_members = []
+    @group_organizers = []
+    group_memberships.each do |i|
       family_name = Person.find(i.person_id).family_name
       given_name = Person.find(i.person_id).given_name
-      people_roles << { person_id: i.person_id, role: i.role, family_name: family_name, given_name: given_name}
+      full_name = "#{ family_name }, #{ given_name }"
+      if i.role == "0"
+        @group_members << { person_id: i.person_id, full_name: full_name }
+      elsif i.role == "1"
+        @group_organizers << { person_id: i.person_id, full_name: full_name }
+      end
     end
   end 
 
