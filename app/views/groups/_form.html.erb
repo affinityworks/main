@@ -1,33 +1,44 @@
-<%= form_for(group) do |f| %>
-  <% if group.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(group.errors.count, "error") %> prohibited this group from being saved:</h2>
+<!DOCTYPE html>
+<html>
+	<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
 
-      <ul>
-      <% group.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+    <%= form_for(group) do |f| %>
+      <% if group.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(group.errors.count, "error") %> prohibited this group from being saved:</h2>
+          <ul>
+          <% group.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
       <% end %>
-      </ul>
-    </div>
-  <% end %>
 
 
-  <div class="field">
-    <%= f.label :name %>
-    <%= f.text_field :name %>
-  </div>
+      <div class="field">
+        <%= f.label :name %>
+        <%= f.text_field :name %>
+      </div>
 
-  <div class="field">
-    <%= f.label :description %>
-    <%= f.text_field :description %>
-  </div>
+      <div class="field">
+        <%= f.label :description %>
+        <%= f.text_field :description %>
+      </div>
 
-  <div class="field">
-    <%= f.label :summary %>
-    <%= f.text_field :summary %>
-  </div>
+      <div class="field">
+        <%= f.label :summary %>
+        <%= f.text_field :summary %>
+      </div>
 
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+      <div class="actions">
+        <%= f.submit %>
+      </div>
+    <% end %>
+
+  </body>
+</html>

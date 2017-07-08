@@ -1,6 +1,19 @@
-<h1>Editing Group</h1>
+<!DOCTYPE html>
+<html>
+	<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
 
-<%= render 'form', group: @group %>
-<%= render :partial => "affiliates/form", :locals => {:affiliates => @affiliates} %>
-<%= link_to 'Show', @group %> |
-<%= link_to 'Back', groups_path %>
+  <body>
+    <div class = "group-edit">
+  
+      <h1>Editing Group</h1>
+      <%= render 'form', group: @group %>
+      <%= render :partial => "affiliates/form", :locals => {:affiliates => @affiliates} %>
+      <%= link_to 'Back', groups_path %>
+  
+    </div>
+  </body>
+</html>
