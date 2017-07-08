@@ -157,4 +157,20 @@ class GroupTest < ActiveSupport::TestCase
     assert_includes group.all_members, affiliated_member
     assert_equal group.all_members.count, group.members.count + affiliated.members.count
   end
+
+  test 'current_group_members' do
+    group = Group.first
+    affiliated = Group.last
+    Affiliation.create(group: group, afilliated: affiliated)
+
+    group_member = Person.create
+    group.members.push(group_member)
+    affiliated_member = Person.create
+    affiliated.members.push(affiliated_member)
+
+    assert_includes group.current_group_members, group_member
+    assert_not group.current_group_members, affiliated_member
+    assert_not_equal group.current_group_members.count, group.members.count + affiliated.members.count
+  end
+
 end

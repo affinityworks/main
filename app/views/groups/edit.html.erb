@@ -11,8 +11,9 @@
   
       <h1>Editing Group</h1>
       <%= render 'form', group: @group %>
-      <%= render :partial => "affiliates/form", :locals => {:affiliates => @affiliates} %>
+      <%= render :partial => "affiliates/form", :locals => { :affiliates => @affiliates } %>
       <br/>
+      <%= render :partial => "memberships/form", :locals => { :member_collection => @group_members } %>
       <%= link_to 'Back', groups_path %>
   
     </div>

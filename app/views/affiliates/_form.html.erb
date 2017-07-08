@@ -2,21 +2,19 @@
 <html>
 	<head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
 
   <body>
     <%= form_tag("affiliates", method: "post") do %>
 
       <div class="field">
-        <%= label_tag "Add Affiliation" %>
+        <%= label_tag "Add Affiliate" %>
         <%= collection_select(:affiliation, :affiliated_id, @groups.all, :id, :name) %>
       </div>
 
 
       <div class="actions">
-        <%= submit_tag("Add Affiliation") %>
+        <%= submit_tag("Add Affiliate") %>
       </div>
     <% end %>
   </body>
