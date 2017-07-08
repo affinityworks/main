@@ -1,12 +1,23 @@
-<%= form_tag("affiliates", method: "post") do %>
+<!DOCTYPE html>
+<html>
+	<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
 
-  <div class="field">
-    <%= label_tag "Add Affiliation" %>
-    <%= collection_select(:affiliation, :affiliated_id, @groups.all, :id, :name) %>
-  </div>
+  <body>
+    <%= form_tag("affiliates", method: "post") do %>
+
+      <div class="field">
+        <%= label_tag "Add Affiliation" %>
+        <%= collection_select(:affiliation, :affiliated_id, @groups.all, :id, :name) %>
+      </div>
 
 
-  <div class="actions">
-    <%= submit_tag("Add Affiliation") %>
-  </div>
-<% end %>
+      <div class="actions">
+        <%= submit_tag("Add Affiliation") %>
+      </div>
+    <% end %>
+  </body>
+</html>
