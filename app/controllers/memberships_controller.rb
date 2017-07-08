@@ -29,6 +29,7 @@ class MembershipsController < ApplicationController
     end
   end
 
+
   # def update_role
   #   @membership = Membership.find_by!(group_id: params[:group_id],  person_id:[:id])
    

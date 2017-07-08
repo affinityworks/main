@@ -47,6 +47,17 @@ class GroupsController < ApplicationController
     @groups = Group.all
   end
 
+  #gathers a hash of all members and organizers of current_group, with names, roles 
+  def group_members
+    @memberships = Membership.where(group_id: current_group.id)
+    people_roles = []
+    memberships.each do |i|
+      family_name = Person.find(i.person_id).family_name
+      given_name = Person.find(i.person_id).given_name
+      people_roles << { person_id: i.person_id, role: i.role, family_name: family_name, given_name: given_name}
+    end
+  end 
+
   # POST /groups
   # POST /groups.json
   def create
