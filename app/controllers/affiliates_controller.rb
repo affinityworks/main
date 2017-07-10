@@ -31,7 +31,7 @@ class AffiliatesController < ApplicationController
   # POST /affiliates.json
   def create
     unless params[:object] && !params[:object].empty
-      #switched variables as the permissions are backwards for implementation.
+      #hack: switched variables as the permissions are backwards for implementation.
       @affiliates = Affiliation.new({
         group_id: params["affiliation"]["affiliated_id"],
         affiliated_id: params[:group_id]
