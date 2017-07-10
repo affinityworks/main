@@ -13,7 +13,7 @@
       <%= render 'form', group: @group %>
       <%= render :partial => "affiliates/form", :locals => { :affiliates => @affiliates } %>
       <br/>
-      <%= render :partial => "memberships/form", :locals => { :member_collection => @group_members } %>
+      <%= render :partial => "memberships/form", :locals => { :current_members => @current_members } %>
       <%= link_to 'Back', groups_path %>
   
     </div>
