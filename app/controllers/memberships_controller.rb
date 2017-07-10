@@ -30,8 +30,7 @@ class MembershipsController < ApplicationController
   end
 
   def update
-    unless params[:object] && !params[:object].empty
-    @membership = Membership.find_by!(person_id:[:id])
+    @membership = Membership.find(:id)
     respond_to do |format|
     if @membership.role == "member"
       @membership.update(role: 1)

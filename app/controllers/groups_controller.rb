@@ -48,7 +48,7 @@ class GroupsController < ApplicationController
     @groups = Group.all
     #for memberships
     set_group
-    @current_members = @group.all_members
+    @current_memberships = @group.all_memberships
   end 
 
   # POST /groups
@@ -58,7 +58,7 @@ class GroupsController < ApplicationController
 
     respond_to do |format|
       if @group.save
-        format.html { redirect_to @group, notice: 'Group was successfully created.' }
+        format.html { redirect_to group_dashboard_path, notice: 'Group was successfully created.' }
         format.json { render :show, status: :created, location: @group }
       else
         format.html { render :new }

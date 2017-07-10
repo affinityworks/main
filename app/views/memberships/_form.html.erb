@@ -9,7 +9,8 @@
       <div class="field">
         <%= label_tag "Add Organizer Permissions:" %>
 
-        <%= collection_select(:person, :id, @current_members, :id, :name) %>
+        <%= collection_select(:memberships, :id, @current_memberships, :id, :person) %>
+
       </div>
 
 
