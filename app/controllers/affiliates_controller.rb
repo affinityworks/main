@@ -27,7 +27,7 @@ class AffiliatesController < ApplicationController
     end
   end
 
-    # POST /affiliates
+  # POST /affiliates
   # POST /affiliates.json
   def create
     unless params[:object] && !params[:object].empty
