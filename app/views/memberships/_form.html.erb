@@ -4,20 +4,22 @@
     <meta charset="utf-8">
      </head>
   <body>
-    <%= form_tag("memberships", method: "patch") do %>
+  <form role="form">
+    <%= form_tag("memberships", method: "post") do %>
 
       <div class="field">
         <%= label_tag "Add Organizer Permissions:" %>
 
-        <%= collection_select(:memberships, :id, @current_memberships, :id, :person) %>
+        <%= collection_select(:memberships, :membership_id, @current_memberships, :person_id, :person_id) %>
 
       </div>
 
 
       <div class="actions">
-        <%= submit_tag("Update Role") %>
+        <%= submit_tag("Update") %>
       </div>
     <% end %>
+  </form>
       
 
   </body>
