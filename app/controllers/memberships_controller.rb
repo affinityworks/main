@@ -30,11 +30,11 @@ class MembershipsController < ApplicationController
   end
 
   def update
-    @membership = Membership.find(:id)
+    @membership = Membership.find(:id).role
     respond_to do |format|
     if @membership.role == "member"
       @membership.update(role: 1)
-      format.html { redirect_to groups_url, notice: 'Member is now an Organizer.' }
+      format.html { redirect_to group_dashboard_path, notice: 'Member is now an Organizer.' }
       format.json { render :show, status: :created, location: @membership }
     else 
       @membership.update(role: 0)
