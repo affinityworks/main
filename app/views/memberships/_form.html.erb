@@ -4,7 +4,7 @@
     <meta charset="utf-8">
      </head>
   <body>
-    <%= form_tag("memberships", method: "post") do %>
+    <%= form_tag("memberships", method: "patch") do %>
 
       <div class="field">
         <%= label_tag "Add Organizer Permissions:" %>
@@ -14,7 +14,7 @@
 
 
       <div class="actions">
-        <%= submit_tag("Add Permissions") %>
+        <%= submit_tag("Update Role") %>
       </div>
     <% end %>
       

@@ -29,13 +29,19 @@ class MembershipsController < ApplicationController
     end
   end
 
-  def update_role
-    @membership = Membership.find_by!(group_id: params[:group_id],  person_id:[:id])
-   
+  def update
+    unless params[:object] && !params[:object].empty
+    @membership = Membership.find_by!(person_id:[:id])
+    respond_to do |format|
     if @membership.role == "member"
       @membership.update(role: 1)
+      format.html { redirect_to groups_url, notice: 'Member is now an Organizer.' }
+      format.json { render :show, status: :created, location: @membership }
     else 
       @membership.update(role: 0)
+      format.html { redirect_back(fallback_location: root_path) }
+      format.json { render json: @membership.errors, status: :unprocessable_entity }
+      end
     end   
   end
 
