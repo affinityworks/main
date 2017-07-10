@@ -31,14 +31,13 @@ class AffiliatesController < ApplicationController
   # POST /affiliates.json
   def create
     unless params[:object] && !params[:object].empty
-      #hack: switched variables as the permissions are backwards for implementation.
+      #hack: switched variables as the affiliation logic is backwards in the table.
       @affiliates = Affiliation.new({
         group_id: params["affiliation"]["affiliated_id"],
         affiliated_id: params[:group_id]
       })
     end
-    
-# todo check to see if duplicate entry exists before saving
+    #check if there is an affiliation present
     respond_to do |format|
       if @affiliates.save
         format.html { redirect_to groups_url, notice: 'Affilation was successfully created.' }
