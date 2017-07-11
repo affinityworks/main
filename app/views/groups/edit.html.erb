@@ -11,10 +11,10 @@
   
       <h1>Editing Group</h1>
       <%= render 'form', group: @group %>
-      <%= render :partial => "affiliates/form", :locals => { :affiliates => @affiliates } %>
-      <br/>
       <%= render :partial => "memberships/form", :locals => { :current_members => @current_members } %>
+      <br/>
       <%= link_to 'Back', groups_path %>
+
   
     </div>
   </body>

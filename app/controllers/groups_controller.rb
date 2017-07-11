@@ -44,11 +44,11 @@ class GroupsController < ApplicationController
 
   # GET /groups/1/edit
   def edit
-    #for affiliates
     @groups = Group.all
-    #for memberships
     set_group
     @current_memberships = @group.all_memberships
+    # cancan is not allowing organizers to manage group
+    # authorize! :manage, @groups
   end 
 
   # POST /groups
@@ -99,7 +99,7 @@ class GroupsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def group_params
-    params.require(:group).permit(:origin_system, :name, :description, :summary, :browser_url, :featured_image_url, :creator_id)
+    params.require(:group).permit(:origin_system, :name, :description, :summary, :creator_id, :person_id, :memberships, :current_members, :role)
   end
 
   def sort_param
