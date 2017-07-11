@@ -1,18 +1,5 @@
 <body>
   <form role="form">
-    <%= form_tag("memberships", method: "post") do %>
 
-      <div class="field">
-        <%= label_tag "Add Organizer Permissions:" %>
-
-        <%= collection_select(:memberships, :membership_id, @current_memberships, :person_id, :person_id) %>
-
-      </div>
-
-
-      <div class="actions">
-        <%= submit_tag("Update") %>
-      </div>
-    <% end %>
   </form>
 </body>
