@@ -38,6 +38,7 @@ module Api::ActionNetwork::Import
     yield(resource) if block_given?
     resource
   rescue => e
+    NewRelic::Agent.notice_error(e)
     logger.error e.inspect
     retry if (retries += 1) < 3
     nil
@@ -82,6 +83,7 @@ module Api::ActionNetwork::Import
     begin
       resource.tap(&:save!)
     rescue Exception => e
+      NewRelic::Agent.notice_error(e)
       logger.error resource
       logger.error e
       raise e

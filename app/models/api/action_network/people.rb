@@ -17,7 +17,7 @@ module Api::ActionNetwork::People
     logger.info "Api::ActionNetwork::People#import! from #{next_uri}"
 
     logs = []
-    report = MemoryProfiler.report do
+    #report = MemoryProfiler.report do
       while next_uri
         #::Person.transaction do
           people, next_uri = request_resources_from_action_network(next_uri, group)
@@ -35,9 +35,9 @@ module Api::ActionNetwork::People
         #end
       end
       #logger.debug "Api::ActionNetwork::People#import! new: #{new_count} existing: #{existing_count} updated: #{updated_count}"
-    end
+    #end
 
-    logger.debug report.pretty_print
+    #logger.debug report.pretty_print
 
 
     {
