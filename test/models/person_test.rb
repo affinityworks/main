@@ -21,9 +21,9 @@ class PersonTest < ActiveSupport::TestCase
 
   test '#name' do
     assert_equal '', Person.new.name, '""'
-    assert_equal 'Frank', Person.new(given_name: 'Frank').name, 'given_name only'
-    assert_equal 'Ko', Person.new(family_name: 'Ko').name, 'family_name only'
-    assert_equal 'Francis Ko', Person.new(given_name: 'Francis', family_name: 'Ko').name, 'name'
+    assert_equal 'José', Person.new(given_name: 'José').name, 'given_name only'
+    assert_equal 'Mejía', Person.new(family_name: 'Mejía').name, 'family_name only'
+    assert_equal 'Jo Mejía', Person.new(given_name: 'Jo', family_name: 'Mejía').name, 'name'
   end
 
   test 'membership in groups' do

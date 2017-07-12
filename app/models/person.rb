@@ -200,11 +200,14 @@ class Person < ApplicationRecord
     people_version =  PaperTrail::Version.where(item_type: 'Person').
       where.not(event: 'destroy').
       where(created_at: date.beginning_of_day...Date.today.end_of_day)
-
+    
     {}.tap do |feed|
+      
       created, updated = people_version.partition { |version| version.event == 'create' }
 
-      feed[:created] = created.map { |version| to_activity_json(version) }
+      feed[:created] = created.map { |version|
+         to_activity_json(version) 
+       }
       feed[:updated] = updated.map { |version| to_activity_json(version) }
     end
   end

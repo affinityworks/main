@@ -22,7 +22,7 @@ class Api::ActionNetwork::PersonTest < ActiveSupport::TestCase
 
     person = Person.create(
       email_addresses: [
-        EmailAddress.new(primary: true, address: 'evan@henshaw-plath.com'),
+        EmailAddress.new(primary: true, address: 'evan@anonymous.com'),
       ],
       password: "password"
     )
@@ -35,11 +35,11 @@ class Api::ActionNetwork::PersonTest < ActiveSupport::TestCase
 
     stub_request(:get, "https://actionnetwork.org/api/v2/people/#{person1_uuid}")
       .with(:headers => {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'Osdi-Api-Token'=>'test-token', 'User-Agent'=>'Ruby'})
-      .to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'person.json')))
+      .to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'person_evan.json')))
 
     stub_request(:get, "https://actionnetwork.org/api/v2/people/#{person2_uuid}")
       .with(:headers => {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'Osdi-Api-Token'=>'test-token', 'User-Agent'=>'Ruby'})
-      .to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'person2.json')))
+      .to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'person_robert.json')))
 
 
     assert_nothing_raised do
@@ -47,8 +47,8 @@ class Api::ActionNetwork::PersonTest < ActiveSupport::TestCase
     end
 
     person.reload
-    assert_equal 'Henshaw', person.family_name
-    assert_equal person1_uuid, person.identifier_id('action_network')
+    assert_equal 'Jones', person.family_name
+    assert person.identifiers.include?("action_network:#{person1_uuid}")
 
     assert_equal encypted_password, person.encrypted_password
 
@@ -58,8 +58,8 @@ class Api::ActionNetwork::PersonTest < ActiveSupport::TestCase
 
     person.reload
     assert_equal 'Plath', person.family_name
-    assert_equal person2_uuid, person.identifier_id('action_network')
-  end
+    assert person.identifiers.include?("action_network:#{person2_uuid}")
+ end
 
   test 'when the person is member of another group' do
     person = Person.create(

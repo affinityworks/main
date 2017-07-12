@@ -1,5 +1,5 @@
 {
-  "given_name": "Evan",
+  "given_name": "Tim",
   "family_name": "Plath",
   "identifiers": [
     "action_network:06d13a33-6824-413b-a922-95e793f269d3"
@@ -7,7 +7,7 @@
   "email_addresses": [
     {
       "primary": true,
-      "address": "evan@henshaw-plath.com",
+      "address": "tim@henshaw-plath.com",
       "status": "subscribed"
     }
   ],
@@ -15,9 +15,9 @@
     {
       "primary": true,
       "address_lines": [
-        "3903 SE Ivon St"
+        "asdf 324 thstreet"
       ],
-      "locality": "Portland",
+      "locality": "Arcata",
       "region": "OR",
       "postal_code": "97215",
       "country": "US",

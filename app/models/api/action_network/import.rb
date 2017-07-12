@@ -38,6 +38,7 @@ module Api::ActionNetwork::Import
     yield(resource) if block_given?
     resource
   rescue => e
+    NewRelic::Agent.notice_error(e)
     logger.error e.inspect
     retry if (retries += 1) < 3
     nil
@@ -68,7 +69,10 @@ module Api::ActionNetwork::Import
     attributes.delete_if { |_, v| v.nil? }
     parameters = ActionController::Parameters.new(attributes)
     if resource.respond_to? :permitted_import_parameters
-      old_resource.update_attributes! parameters.permit(old_resource.permitted_import_parameters)
+      old_resource.attributes= parameters.permit(old_resource.permitted_import_parameters)
+      old_resource.custom_fields= old_resource["custom_fields"].merge(attributes["custom_fields"]) if old_resource["custom_fields"]
+      old_resource.identifiers= old_resource[:identifiers] |= attributes['identifiers']
+      old_resource.save! if old_resource.changed?
     else
       old_resource.update_attributes! attributes
     end
@@ -79,6 +83,7 @@ module Api::ActionNetwork::Import
     begin
       resource.tap(&:save!)
     rescue Exception => e
+      NewRelic::Agent.notice_error(e)
       logger.error resource
       logger.error e
       raise e
