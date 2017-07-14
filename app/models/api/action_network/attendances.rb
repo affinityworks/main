@@ -20,7 +20,7 @@ module Api::ActionNetwork::Attendances
 
     logger.info "Api::ActionNetwork::Attendances#import! from #{next_uri}"
 
-    ::Attendance.transaction do
+    #::Attendance.transaction do
       while next_uri
         attendances, next_uri = request_resources_from_action_network(next_uri, group)
 
@@ -43,7 +43,7 @@ module Api::ActionNetwork::Attendances
         end
       end
       logger.debug "Api::ActionNetwork::Attendances#import! new: #{new_count} existing: #{existing_count} updated: #{updated_count}"
-    end
+    #end
 
     {
       created: new_count,
