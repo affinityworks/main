@@ -15,6 +15,6 @@ module AdvocacyCommons
     config.eager_load_paths << Rails.root.join('app', 'graph', 'fields')
 
     config.eager_load_paths << Rails.root.join('lib')
-
+    config.active_job.queue_adapter = :resque
   end
 end

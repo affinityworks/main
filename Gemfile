@@ -83,6 +83,11 @@ gem 'newrelic_rpm'
 gem 'paper_trail'
 gem 'derailed'
 gem 'memory_profiler'
+gem 'resque'
+gem 'hiredis'
+gem 'redis'
+gem 'resque-scheduler'
+gem 'rb-fsevent'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
