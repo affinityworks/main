@@ -1,5 +1,5 @@
 class Group < ApplicationRecord
-  has_paper_trail
+  #has_paper_trail
   acts_as_taggable
 
   validates :an_api_key, uniqueness: true

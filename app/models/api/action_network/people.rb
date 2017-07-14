@@ -18,8 +18,14 @@ module Api::ActionNetwork::People
 
     logs = []
     #report = MemoryProfiler.report do
-      while next_uri
+    ActionNetworkRequestJob.perform_later(next_uri, group)
+    
+    
+=begin      while next_uri
         #::Person.transaction do
+          #push to queue system:
+          
+          
           people, next_uri = request_resources_from_action_network(next_uri, group)
 
           people.each(&:sanitize_email_addresses)
@@ -34,7 +40,8 @@ module Api::ActionNetwork::People
           end
         #end
       end
-      #logger.debug "Api::ActionNetwork::People#import! new: #{new_count} existing: #{existing_count} updated: #{updated_count}"
+=end      
+#logger.debug "Api::ActionNetwork::People#import! new: #{new_count} existing: #{existing_count} updated: #{updated_count}"
     #end
 
     #logger.debug report.pretty_print
