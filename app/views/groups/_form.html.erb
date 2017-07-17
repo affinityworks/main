@@ -1,12 +1,3 @@
-<!DOCTYPE html>
-<html>
-	<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-  </head>
-  <body>
-
     <%= form_for(group) do |f| %>
       <% if group.errors.any? %>
         <div id="error_explanation">
@@ -47,19 +38,6 @@
         <%= collection_select(:affiliation, :affiliated_id, @groups.all, :id, :name) %>
       </div>
       <div class="actions">
-        <%= submit_tag("Add Affiliate") %>
+        <%= submit_tag("Add Affiliate")%>
       </div>
     <% end %>
-
-    <%= form_tag("memberships", method: "PATCH") do %>
-      <div class="field">
-        <%= label_tag "Add Organizer Permissions:" %>
-        <%= collection_select(:memberships, :membership_id, @current_memberships, :id, :person_id) %>
-      </div>
-      <div class="actions">
-      <%= submit_tag("Update Role") %>
-      </div>
-    <% end %>
-
-  </body>
-</html>
