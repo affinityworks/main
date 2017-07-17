@@ -1,11 +1,12 @@
 class GroupsController < ApplicationController
   before_action :set_group, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_person!
+  before_action :authorize_group_access, only: [:show, :edit, :update, :destroy]
 
   # GET /groups
   # GET /groups.json
   def index
-    @groups = params[:tag] ? Group.tagged_with(params[:tag]) : Group.all
+    @groups = params[:tag] ? current_user.groups.tagged_with(params[:tag]) : current_user.groups.all
     @groups = @groups.includes(:creator).page(params[:page])
 
     if sort_param && direction_param

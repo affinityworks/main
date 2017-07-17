@@ -39,6 +39,9 @@ class MembersController < ApplicationController
     end
   end
 
+
+
+
   private
 
   def set_members
