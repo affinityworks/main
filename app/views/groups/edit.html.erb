@@ -1,29 +1,17 @@
-<!DOCTYPE html>
-<html>
-	<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-  </head>
+<div class = "group-edit">
+<div class = "heading">
+  <h2>
+    <a href="/" className="affinity-logo"><img src="/images/affinity-logo.svg" width="230" /></a>
+    <small style={{ position: 'relative', bottom: '-5px', marginLeft: '5px' }}>
+        <h1>Edit Group</h1>
+        <a className="dropdown-item" href="/admin/logout">Logout</a>
+    </small>
+  </h2>
+  </div>
+  <br />
 
-  <body>
-  
-    <div class = "group-edit">
-    <div class = "heading">
-      <h2>
-        <a href="/" className="affinity-logo"><img src="/images/affinity-logo.svg" width="230" /></a>
-        <small style={{ position: 'relative', bottom: '-5px', marginLeft: '5px' }}>
-            <h1>Edit Group</h1>
-            <a className="dropdown-item" href="/admin/logout">Logout</a>
-        </small>
-      </h2>
-      </div>
-      <br />
-
-      <%= render 'form', group: @group %>
-      <%= render :partial => "memberships/form", :locals => { :current_memberships => @current_memberships } %>
-      <br/>
-      <%= link_to 'Back', groups_path %>
-    </div>
-  </body>
-</html>
+  <%= render 'form', group: @group %>
+  <%= render :partial => "memberships/form", :locals => { :current_memberships => @current_memberships } %>
+  <br/>
+  <%= link_to 'Back', groups_path %>
+</div>
