@@ -26,25 +26,14 @@
         <%= f.text_field :summary %>
       </div>
 
-      <div class="actions">
+        <%= form_tag("affiliates", method: "POST") do %>
+          <div class="field">
+            <%= label_tag "Add Affiliate" %>
+            <%= collection_select(:affiliation, :affiliated_id, @groups.all, :id, :name, :prompt => true) %>
+          </div>
+
+    <div class="actions">
         <%= f.submit %>
       </div>
     <% end %>
-
-    <%= f.fields_for :membership do |ff| %>
-      <div class="field">  
-        <%= ff.collection_select(:membership_id, People.all, :id, :name) %>
-      </div>
-    <% end %>
-
-
-    <%= form_tag("affiliates", method: "POST") do %>
-      <div class="field">
-        <%= label_tag "Add Affiliate" %>
-        <%= collection_select(:affiliation, :affiliated_id, @groups.all, :id, :name) %>
-      </div>
-      <div class="actions">
-        <%= submit_tag("Add Affiliate")%>
-      </div>
-
     <% end %>

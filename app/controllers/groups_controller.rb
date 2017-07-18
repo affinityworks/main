@@ -47,6 +47,7 @@ class GroupsController < ApplicationController
     @groups = Group.all
     set_group
     @current_members = @group.all_members
+    @current_memberships = @group.all_memberships
     # cancan is not allowing organizers to manage group
     # authorize! :manage, @groups
   end 
@@ -55,7 +56,6 @@ class GroupsController < ApplicationController
   # POST /groups.json
   def create
     @group = Group.new(group_params)
-
     respond_to do |format|
       if @group.save
         format.html { redirect_to group_dashboard_path, notice: 'Group was successfully created.' }
@@ -70,6 +70,7 @@ class GroupsController < ApplicationController
   # PATCH/PUT /groups/1
   # PATCH/PUT /groups/1.json
   def update
+    if affiliation
     respond_to do |format|
       if @group.update(group_params)
         format.html { redirect_to @group, notice: 'Group was successfully updated.' }

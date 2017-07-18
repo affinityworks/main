@@ -68,9 +68,9 @@ Rails.application.routes.draw do
       resources :events
     end
 
-    resources :memberships
+    resources :memberships, only: [:new, :create, :edit, :delete]
 
-    resources :affiliates
+    resources :affiliates, only: [:new, :create, :edit, :delete]
 
     resources :events do
       collection do
