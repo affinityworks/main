@@ -31,6 +31,12 @@
       </div>
     <% end %>
 
+    <%= f.fields_for :membership do |ff| %>
+      <div class="field">  
+        <%= ff.collection_select(:membership_id, People.all, :id, :name) %>
+      </div>
+    <% end %>
+
 
     <%= form_tag("affiliates", method: "POST") do %>
       <div class="field">
@@ -40,4 +46,5 @@
       <div class="actions">
         <%= submit_tag("Add Affiliate")%>
       </div>
+
     <% end %>
