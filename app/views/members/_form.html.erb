@@ -1,4 +1,4 @@
-<%= form_for(@member, as: Person, url: group_members_path([@group, @member])) do |f| %>
+<%= form_for(@member, as: :person, url: group_members_path([@group, @member])) do |f| %>
   <% if @member.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@member.errors.count, "error") %> prohibited this person from being saved:</h2>
@@ -11,50 +11,54 @@
     </div>
   <% end %>
 
+#this allows :person to be editted within members form as a nested object
+
+<%= f.fields_for :person do |ff| %>
   <div class="field">
-    <%= f.label :family_name %>
-    <%= f.text_field :family_name %>
+    <%= ff.label :family_name %>
+    <%= ff.text_field :family_name %>
   </div>
 
   <div class="field">
-    <%= f.label :family_name %>
-    <%= f.text_field :family_name %>
+    <%= ff.label :family_name %>
+    <%= ff.text_field :family_name %>
   </div>
 
   <div class="field">
-    <%= f.label :gender %>
-    <%= f.text_field :gender %>
+    <%= ff.label :gender %>
+    <%= ff.text_field :gender %>
   </div>
 
   <div class="field">
-    <%= f.label :gender_identity %>
-    <%= f.text_field :gender_identity %>
+    <%= ff.label :gender_identity %>
+    <%= ff.text_field :gender_identity %>
   </div>
 
   <div class="field">
-    <%= f.label :party_identification %>
-    <%= f.text_field :party_identification %>
+    <%= ff.label :party_identification %>
+    <%= ff.text_field :party_identification %>
   </div>
 
   <div class="field">
-    <%= f.label :ethnicities %>
-    <%= f.text_field :ethnicities %>
+    <%= ff.label :ethnicities %>
+    <%= ff.text_field :ethnicities %>
   </div>
 
   <div class="field">
-    <%= f.label :languages_spoken %>
-    <%= f.text_field :languages_spoken %>
+    <%= ff.label :languages_spoken %>
+    <%= ff.text_field :languages_spoken %>
   </div>
 
   <div class="field">
-    <%= f.label :birthdate %>
-    <%= f.text_field :birthdate %>
+    <%= ff.label :birthdate %>
+    <%= ff.text_field :birthdate %>
   </div>
 
   <div class="field">
-    <%= f.label :employer %>
-    <%= f.text_field :employer %>
+    <%= ff.label :employer %>
+    <%= ff.text_field :employer %>
   </div>
+  <% end %>
 
   <div class="actions">
     <%= f.submit %>

@@ -50,7 +50,8 @@ class MembersController < ApplicationController
   def edit
     @groups = Group.all
     set_group
-    @current_memberships = @group.all_memberships
+    @current_members = @group.all_members
+    # def all_members seemed way more useful for rendering people
     # cancan is not allowing organizers to manage group
     # authorize! :manage, @groups
   end 

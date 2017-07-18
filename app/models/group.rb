@@ -6,6 +6,7 @@ class Group < ApplicationRecord
 
   has_many :memberships, dependent: :destroy
   has_many :members, through: :memberships, source: :person
+  # accepts_nested_attributes_for :memberships
   #has_many :organizers, -> { where(role: 'organizer') },
   #                             :through => :memberships,
   #                             :source => :person

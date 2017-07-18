@@ -29,6 +29,7 @@ class Person < ApplicationRecord
   has_many :events, through: :attendances
   has_many :memberships, dependent: :destroy
   has_many :groups, through: :memberships
+  # accepts_nested_attributes_for :memberships
 
   before_update :generate_update_events
 
