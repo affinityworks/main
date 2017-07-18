@@ -1,7 +1,7 @@
 class MembershipsController < ApplicationController
   before_action :authenticate_person!
   before_action :authorize_group_access
-  before_action :find_memberships, only :index
+  before_action :find_memberships, only: :index
 
   def index
     respond_to do |format|
@@ -30,7 +30,6 @@ class MembershipsController < ApplicationController
   end
 
   def update
-
     @membership = Membership.find(:id).role
     respond_to do |format|
     if @membership.role == "member"

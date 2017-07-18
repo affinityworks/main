@@ -2,12 +2,15 @@ class Membership < ApplicationRecord
   acts_as_taggable
   has_paper_trail
   
-  belongs_to :group
-  belongs_to :person
+  #inversions allow back and forth permissions within forms
+  belongs_to :group, inverse_of: :group
+  belongs_to :person, inverse_of: :person
   has_many :notes, as: :notable
 
   validates :person_id, uniqueness: { scope: :group_id }
   validates :group_id, uniqueness: { scope: :person_id }
+  #for form helpers
+  accepts_nested_attributes_for :group
 
   enum role: [:member, :organizer]
 

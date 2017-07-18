@@ -46,7 +46,9 @@ class GroupsController < ApplicationController
   def edit
     @groups = Group.all
     set_group
-    @current_memberships = @group.all_memberships
+    @current_members = @group.all_members
+    membership = @groups.member.build_person
+    membership.build_person
     # cancan is not allowing organizers to manage group
     # authorize! :manage, @groups
   end 
