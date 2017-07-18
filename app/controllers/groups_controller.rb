@@ -1,12 +1,12 @@
 class GroupsController < ApplicationController
   before_action :set_group, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_person!
-  before_action :authorize_group_access, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_group_access, except: [:new]
 
   # GET /groups
   # GET /groups.json
   def index
-    @groups = params[:tag] ? current_user.groups.tagged_with(params[:tag]) : current_user.groups.all
+    @groups = params[:tag] ? Group.tagged_with(params[:tag]) : Group.all
     @groups = @groups.includes(:creator).page(params[:page])
 
     if sort_param && direction_param
@@ -45,7 +45,12 @@ class GroupsController < ApplicationController
 
   # GET /groups/1/edit
   def edit
-  end
+    @groups = Group.all
+    set_group
+    @current_memberships = @group.all_memberships
+    # cancan is not allowing organizers to manage group
+    # authorize! :manage, @groups
+  end 
 
   # POST /groups
   # POST /groups.json
@@ -54,7 +59,7 @@ class GroupsController < ApplicationController
 
     respond_to do |format|
       if @group.save
-        format.html { redirect_to @group, notice: 'Group was successfully created.' }
+        format.html { redirect_to group_dashboard_path, notice: 'Group was successfully created.' }
         format.json { render :show, status: :created, location: @group }
       else
         format.html { render :new }
@@ -95,7 +100,7 @@ class GroupsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def group_params
-    params.require(:group).permit(:origin_system, :name, :description, :summary, :browser_url, :featured_image_url, :creator_id)
+    params.require(:group).permit(:origin_system, :name, :description, :summary, :creator_id, :person_id, :memberships, :current_members, :role)
   end
 
   def sort_param

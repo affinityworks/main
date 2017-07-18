@@ -1,6 +1,6 @@
-<h1>Editing person</h1>
+<h1>Editing Person</h1>
 
-<%= render 'form', person: @person %>
+<%= render 'form', member: @member %>
 
-<%= link_to 'Show', @person %> |
-<%= link_to 'Back', persons_path %>
+<%= link_to 'Show', group_member_path(@group,@member) %> |
+<%= link_to 'Back', group_member_path(@group,@member) %>
