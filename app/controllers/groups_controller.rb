@@ -71,7 +71,7 @@ class GroupsController < ApplicationController
   # PATCH/PUT /groups/1.json
   def update
     #this should work, but need a second set of eyes
-    @affiliates = Affiliation.create_with(affiliate_id: params["affiliation"]["affiliated_id"]).find_or_create_by(affiliated_id: params[:group_id])
+    @affiliates = Affiliation.create_with(affiliated_id: params[:group_id]).find_or_create_by(affiliated_id: params["affiliation"]["affiliated_id"])
     respond_to do |format|
       if @group.update(group_params)
         format.html { redirect_to @group, notice: 'Group was successfully updated.' }
