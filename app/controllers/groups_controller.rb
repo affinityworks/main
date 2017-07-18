@@ -70,6 +70,9 @@ class GroupsController < ApplicationController
   # PATCH/PUT /groups/1
   # PATCH/PUT /groups/1.json
   def update
+    #find_or_create_by sends 1 arg to model, currently have affiliate_id being saved to model, but not group_id
+    #this is also slowing down the view
+    @affiliates = Affiliation.find_or_create_by({ affiliated_id: params["affiliation"]["affiliated_id"], group_id: params[:group_id] })
     respond_to do |format|
       if @group.update(group_params)
         format.html { redirect_to @group, notice: 'Group was successfully updated.' }
