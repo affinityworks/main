@@ -26,6 +26,8 @@
         <%= f.text_field :summary %>
       </div>
 
+      <%= f.hidden_field :id %>
+
         <%= form_tag("affiliates", method: "POST") do %>
           <div class="field">
             <%= label_tag "Add Affiliate" %>
