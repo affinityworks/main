@@ -1,18 +1,18 @@
-<div class = "group-edit">
-<div class = "heading">
-<%= stylesheet_link_tag 'bootstrap_and_overrides', 'application' %>
-<%= render 'groups/nav' %>
-  <h2>
-    <a href="/" className="affinity-logo"><img src="/images/affinity-logo.svg" width="230" /></a>
-    <small style={{ position: 'relative', bottom: '-5px', marginLeft: '5px' }}>
-        <h1>Edit Group</h1>
-        <a className="dropdown-item" href="/admin/logout">Logout</a>
-    </small>
-  </h2>
-  </div>
-  <br />
 
-  <%= render 'form', group: @group %>
-  <%= link_to 'Dashboard', group_dashboard_path(@group) %> |
-  <%= link_to 'Groups', group_affiliates_path(@group) %>
-</div>
+    <%= render 'groups/navigation' %>
+
+    <div class = "group-edit">
+    <div class = "heading">
+      <h2>
+        <small style={{ position: 'relative', bottom: '-5px', marginLeft: '5px' }}>
+            <h1>Edit Group</h1>
+            <a className="dropdown-item" href="/admin/logout">Logout</a>
+        </small>
+      </h2>
+      </div>
+      <br />
+
+      <%= render 'form', group: @group %>
+      <%= link_to 'Dashboard', group_dashboard_path(@group) %> |
+      <%= link_to 'Groups', group_affiliates_path(@group) %>
+    </div>
