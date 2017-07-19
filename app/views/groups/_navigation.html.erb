@@ -32,6 +32,7 @@
       </div>
       <br />
     </div>
+    <header class="navbar navbar-fixed-top navbar-inverse">
     <nav class="navbar navbar-trans navbar-default navbar-fixed-top" role="navigation" id="topnavbar">
       <ul className="nav nav-tabs">
         <div class="container-fluid">
@@ -41,19 +42,20 @@
             </a>
 
             <li>
-              <a href="/dashboard">Dashboard</a>
+              <%= link_to "Dashboard", 'dashboard' %>
             </li>
             <li>
-              <a href="/affiliates">Groups</a>
+              <%= link_to "Groups", 'affiliates' %>
             </li>
             <li>
-              <a href="/members">All Members</a>
+              <%= link_to "All Members", 'members' %>
             </li>
             <li>
-              <a href="/events">All Events</a>
+              <%= link_to "All Events", 'events' %>
             </li>
         </div> <!-- /.container-fluid -->
       </ul>
     </nav>
+    </header>
   </body>
   </html>
