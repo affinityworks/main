@@ -59,7 +59,7 @@ class MembersController < ApplicationController
   # POST /groups/:id/members/
   # POST /groups/:id/members/.json
   def create
-    @member = @group.member.new(member_params)
+    @member = @group.members.new(params['person'])
     
     respond_to do |format|
       if @member.save
@@ -126,4 +126,9 @@ class MembersController < ApplicationController
       @members = @members.order(params[:sort] => params[:direction])
     end
   end
+
+  def person_params
+    params.require(:person).permit(:family_name, :given_name, :gender, :gender_identity, :party_identification, :ethnicities, :languages_spoken, :birthdate, :employer)
+  end
 end
+
