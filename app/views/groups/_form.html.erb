@@ -9,33 +9,33 @@
           </ul>
         </div>
       <% end %>
-
-
-      <div class="field">
+    <tbody>
+      <tr><td>
         <%= f.label :name %>
         <%= f.text_field :name %>
-      </div>
+      </td></tr>
 
-      <div class="field">
+      <tr><td>
         <%= f.label :description %>
         <%= f.text_field :description %>
-      </div>
-
-      <div class="field">
+      </td></tr>
+      
+      <tr><td>
         <%= f.label :summary %>
         <%= f.text_field :summary %>
-      </div>
+      </td></tr>
 
       <%= f.hidden_field :id %>
 
         <%= form_tag("affiliates", method: "POST") do %>
-          <div class="field">
+          <tr><td>
             <%= label_tag "Add Affiliate" %>
             <%= collection_select(:affiliation, :affiliated_id, @groups.all, :id, :name, :prompt => true) %>
-          </div>
-
+          </td></tr>
+    <tr><td>
     <div class="actions">
         <%= f.submit %>
       </div>
+    </td></tr>
          <% end %>
     <% end %>
