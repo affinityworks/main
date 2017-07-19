@@ -11,6 +11,6 @@ class ActionNetworkRequestJob < ApplicationJob
       logs << Api::ActionNetwork::Person.after_import(new_person, group)
     end
 
-    ActionNetworkRequestJob.perform_later(next_uri, group)
+    ActionNetworkRequestJob.perform_later(next_uri, group) if (next_url && group)
   end
 end
