@@ -2,11 +2,6 @@
 <html>
   <head>
     <title>Affinity</title>
-    <%= csrf_meta_tags %>
-
-    <%= stylesheet_link_tag 'application', media: 'all' %>
-    <%= javascript_include_tag 'application' %>
-    <script src="https://use.fontawesome.com/9913cefd51.js"></script>
   </head>  
   <body>
     <div className='page-header'>
@@ -32,30 +27,21 @@
       </div>
       <br />
     </div>
-    <header class="navbar navbar-fixed-top navbar-inverse">
-    <nav class="navbar navbar-trans navbar-default navbar-fixed-top" role="navigation" id="topnavbar">
-      <ul className="nav nav-tabs">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <a class="navbar-brand" href="/groups#dashboard">
-              <span></span>
-            </a>
-
-            <li>
-              <%= link_to "Dashboard", 'dashboard' %>
+    <div>
+      <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <%= link_to "Dashboard", 'dashboard', class: "nav-link" %>
             </li>
-            <li>
-              <%= link_to "Groups", 'affiliates' %>
+            <li class="nav-item">
+              <%= link_to "Groups", 'affiliates', class: "nav-link" %>
             </li>
-            <li>
-              <%= link_to "All Members", 'members' %>
+            <li class="nav-item">
+              <%= link_to "All Members", 'members', class: "nav-link" %>
             </li>
-            <li>
-              <%= link_to "All Events", 'events' %>
+            <li class="nav-item">
+              <%= link_to "All Events", 'events', class: "nav-link" %>
             </li>
-        </div> <!-- /.container-fluid -->
       </ul>
-    </nav>
-    </header>
+    </div>
   </body>
   </html>
