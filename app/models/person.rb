@@ -28,10 +28,7 @@ class Person < ApplicationRecord
   has_many :attendances, dependent: :destroy
   has_many :events, through: :attendances
   has_many :memberships, dependent: :destroy
-#i think maybe adding an inversion here might make sense???
   has_many :groups, through: :memberships
-    #adds nested attributes
-  accepts_nested_attributes_for :memberships
 
   before_update :generate_update_events
 

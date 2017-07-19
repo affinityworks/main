@@ -5,8 +5,6 @@ class Group < ApplicationRecord
   validates :an_api_key, uniqueness: true
 
   has_many :memberships, dependent: :destroy
-  #adds nested attributes
-  accepts_nested_attributes_for :memberships
   has_many :members, through: :memberships, source: :person
   #has_many :organizers, -> { where(role: 'organizer') },
   #                             :through => :memberships,

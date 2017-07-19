@@ -3,8 +3,8 @@ class Membership < ApplicationRecord
   has_paper_trail
   
   #inversions allow back and forth permissions within forms
-  belongs_to :group, inverse_of: :group
-  belongs_to :person, inverse_of: :person
+  belongs_to :group
+  belongs_to :person
   has_many :notes, as: :notable
 
   validates :person_id, uniqueness: { scope: :group_id }
