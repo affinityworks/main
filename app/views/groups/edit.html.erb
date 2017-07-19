@@ -11,5 +11,6 @@
   <br />
 
   <%= render 'form', group: @group %>
-  <%= link_to 'Back', groups_path %>
+  <%= link_to 'Dashboard', group_dashboard_path(@group) %> |
+  <%= link_to 'Groups', group_affiliates_path(@group) %>
 </div>
