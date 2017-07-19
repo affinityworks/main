@@ -30,9 +30,9 @@ class AffiliatesController < ApplicationController
   # POST /affiliates
   # POST /affiliates.json
   def create
-      #hack: switched variables as the affiliation logic is backwards in the table.
+  #hack: switched variables as the affiliation logic is backwards in the table.
     @affiliates = Affiliation.new({
-      group_id: params["affiliation"]["affiliated_id"],
+      group_id: params[:affiliated_id],
       affiliated_id: params[:group_id]
     })
   #check if there is an affiliation present
