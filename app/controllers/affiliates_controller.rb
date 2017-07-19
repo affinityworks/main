@@ -45,6 +45,7 @@ class AffiliatesController < ApplicationController
       format.json { render json: @affiliates.errors, status: :unprocessable_entity }
     end
   end
+end
 
 
   private

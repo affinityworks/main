@@ -70,7 +70,7 @@ Rails.application.routes.draw do
 
     resources :memberships, only: [:new, :create, :edit, :delete]
 
-    resources :affiliates, only: [:new, :create, :edit, :delete]
+    resources :affiliates
 
     resources :events do
       collection do
