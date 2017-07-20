@@ -79,7 +79,6 @@ class AbilityTest < ActiveSupport::TestCase
   end
 
 #this should return truthy, permissions error seems to be a reality
-byebug
   test 'organizer can manage own groups membership roles' do
     organizer = people(:organizer)
     current_group = groups(:test)

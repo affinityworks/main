@@ -9,35 +9,41 @@
           </ul>
         </div>
       <% end %>
+    <tbody>
+      <tr><td>
+        <div class="field">
+          <%= f.label :name %>
+          <%= f.text_field :name %>
+        </div>
+      </td></tr>
 
+      <tr><td>
+        <div class="field">
+          <%= f.label :description %>
+          <%= f.text_field :description %>
+        </div>
+      </td></tr>
+      
+      <tr><td>
+        <div class="field">
+          <%= f.label :summary %>
+          <%= f.text_field :summary %>
+        </div>
+      </td></tr>
 
-      <div class="field">
-        <%= f.label :name %>
-        <%= f.text_field :name %>
+      <%= f.hidden_field :id %>
+
+        <%= form_tag("affiliates", method: "POST") do %>
+          <tr><td>
+            <div class="field">
+              <%= label_tag "Add Affiliate" %>
+              <%= collection_select(:affiliation, :affiliated_id, @groups.all, :id, :name, :prompt => true) %>
+            </div>
+          </td></tr>
+    <tr><td>
+    <div class="actions">
+        <%= f.submit "Update Group", class: "btn btn-primary"%>
       </div>
-
-      <div class="field">
-        <%= f.label :description %>
-        <%= f.text_field :description %>
-      </div>
-
-      <div class="field">
-        <%= f.label :summary %>
-        <%= f.text_field :summary %>
-      </div>
-
-      <div class="actions">
-        <%= f.submit %>
-      </div>
-    <% end %>
-
-
-    <%= form_tag("affiliates", method: "POST") do %>
-      <div class="field">
-        <%= label_tag "Add Affiliate" %>
-        <%= collection_select(:affiliation, :affiliated_id, @groups.all, :id, :name) %>
-      </div>
-      <div class="actions">
-        <%= submit_tag("Add Affiliate")%>
-      </div>
+    </td></tr>
+         <% end %>
     <% end %>

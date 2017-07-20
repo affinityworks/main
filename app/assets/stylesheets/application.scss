@@ -123,55 +123,20 @@ a.fa {
   margin-right: 10px;
 }
 
-.group-edit {
-  width:80%;
-  border:0px solid gray;
-  border-radius: 8px;
-  margin: 15px auto;
-  padding: 10px;
-  background-color: #fff;
-  color: #333;
-  font-family: verdana, arial, helvetica, sans-serif;
-  font-size: 16px;
-  line-height: 18px;
-  margin: 33px;
+
+.container-html {
+  width: 1140px;
+  max-width: 100%;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 2%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.actions {
-  color: $brand-primary;
-  padding: 5px 10px;
-  margin: 0px 5px 15px 5px;
-  cursor: pointer;
-}
-
-.field {
-  padding: 5px 10px;
-  margin: 0 5px;
-  background-color: #fff;
-  background-image: none;
-  background-clip: padding-box;
-  width: 100%;
-}
-
-.edit-group {
-  width:80%;
-  border:0px solid gray;
-  border-radius: 8px;
-  margin: 15px auto;
-  padding: 10px;
-}
-
-.input {
-  padding: 5px 10px;
-  margin: 0 5px;
-  padding: 5px 10px;
-  background-color: #fff;
-  background-image: none;
-  background-clip: padding-box;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  width: 250px;
-}
-
-.heading {
-  display: inline !important;
+.small {
+  position: relative; 
+  bottom: -5px; 
+  margin-left: 5px;
+  display: inline;
 }

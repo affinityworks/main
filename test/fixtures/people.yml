@@ -66,13 +66,6 @@ member1:
   given_name: Test
   encrypted_password: $2a$11$08m64awvoVFg4sLOu.zA6e70E98bWC2VNewFWUNYjtnvutb/K68xK
 
-member3:
-  id: 7
-  identifiers: ['advocacycommons:4']
-  family_name: Member
-  given_name: Test
-  encrypted_password: $2a$11$08m64awvoVFg4sLOu.zA6e70E98bWC2VNewFWUNYjtnvutb/K68xK
-
 member2:
   id: 5
   identifiers: ['advocacycommons:6']
