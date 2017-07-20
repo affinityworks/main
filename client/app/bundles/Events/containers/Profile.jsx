@@ -39,10 +39,6 @@ class Profile extends Component {
             groups={groups}
             total_pages={total_pages}
             page={page} />
-            <br/>
-            <a href="edit">
-          <button className='btn btn-primary'>Edit</button>
-        </a>
         </div>
       </div>
     )

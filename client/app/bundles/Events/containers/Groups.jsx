@@ -29,21 +29,24 @@ class Groups extends Component {
 
     return (
       <div>
-        <Breadcrumbs active='All Groups' location={this.props.location} />
+        <div>
+          <Breadcrumbs active='All Groups' location={this.props.location} />
 
-        <br/>
+          <br/>
 
-        <Nav activeTab='groups' />
+          <Nav activeTab='groups' />
 
-        <GroupsList
-          location={this.props.location}
-          groups={affiliates}
-          total_pages={total_pages}
-          page={page} />
-
-        <a href="edit">
-          <button className='btn btn-primary'>Edit</button>
-        </a>
+          <GroupsList
+            location={this.props.location}
+            groups={affiliates}
+            total_pages={total_pages}
+            page={page} />
+        </div>
+        <div>
+          <a href="edit">
+            <button className='btn btn-primary'>Edit</button>
+          </a>
+        </div>
       </div>
     );
   }
