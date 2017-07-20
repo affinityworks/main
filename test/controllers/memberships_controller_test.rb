@@ -44,4 +44,20 @@ class MembershipsControllerTest < ActionDispatch::IntegrationTest
     get group_membership_url(group_id: groups(:test).id, id: person.id), as: :json
     assert_response :success
   end
+
+  test 'update_role' do
+    person = people(:member2)
+    group = groups(:two)
+    sign_in person
+    membership = memberships(:member2)
+
+    if membership.role == "member"
+      membership.update(role: 1)
+    else 
+      membership.update(role: 0)
+    end
+    assert people(:organizer)  
+  end
+   
+
 end

@@ -40,6 +40,10 @@ class Groups extends Component {
           groups={affiliates}
           total_pages={total_pages}
           page={page} />
+
+        <a href="edit">
+          <button className='btn btn-primary'>Edit</button>
+        </a>
       </div>
     );
   }

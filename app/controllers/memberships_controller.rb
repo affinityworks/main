@@ -29,6 +29,21 @@ class MembershipsController < ApplicationController
     end
   end
 
+  def update
+    @membership = Membership.find(:id).role
+    respond_to do |format|
+    if @membership.role == "member"
+      @membership.update(role: 'organizer')
+      format.html { redirect_to group_dashboard_path, notice: 'Member is now an Organizer.' }
+      format.json { render :show, status: :created, location: @membership }
+    else 
+      @membership.update(role: 'member')
+      format.html { redirect_back(fallback_location: root_path) }
+      format.json { render json: @membership.errors, status: :unprocessable_entity }
+      end
+    end   
+  end
+
   private
 
   def find_memberships
