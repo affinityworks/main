@@ -22,8 +22,8 @@
               <%= current_person.name %> </span>
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <%= link_to 'Account', profile_index_url %>
-              <%= link_to 'Logout', destroy_person_session_path %>
+              <%= link_to 'Account', profile_index_url, class: "dropdown-item" %>
+              <%= link_to 'Logout', destroy_person_session_path, class: "dropdown-item" %>
             </div>
           </div>
         </div>

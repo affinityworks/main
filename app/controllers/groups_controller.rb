@@ -48,8 +48,7 @@ class GroupsController < ApplicationController
     set_group
     @current_members = @group.all_members
     @current_memberships = @group.all_memberships
-    # cancan is not allowing organizers to manage group
-    # authorize! :manage, @groups
+    authorize! :manage, @group
   end 
 
   # POST /groups
