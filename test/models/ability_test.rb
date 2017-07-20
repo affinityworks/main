@@ -68,6 +68,34 @@ class AbilityTest < ActiveSupport::TestCase
     assert ability.can? :manage, group, 'the organizer can manage affiliate group'
   end
 
+ #changed to cannot, because this is really what we should be hoping for
+ #this is passing as cannot, was passing as can prior to permissions update
+  test 'organizer can not manage other groups membership roles' do
+    organizer = people(:organizer)
+    current_group = groups(:test)
+    member = memberships(:member1)
+    ability = Ability.new(organizer, current_group)
+    assert ability.cannot?(:update, member.update(role: 1))
+  end
+
+#this should return truthy, permissions error seems to be a reality
+  test 'organizer can manage own groups membership roles' do
+    organizer = people(:organizer)
+    current_group = groups(:test)
+    member = memberships(:member1)
+    ability = Ability.new(organizer, current_group)
+    assert ability.can?(:update, member.update(role: 1))
+  end
+
+#this should return truthy
+  test 'admin can manage other groups membership roles' do
+    admin = people(:admin)
+    current_group = groups(:one)
+    member = memberships(:member3)
+    ability = Ability.new(admin, current_group)
+    assert ability.can?(:update, member.update(role: 1))
+  end
+
   test 'organizer can not manage not affiliate group' do
     organizer = people(:organizer)
     current_group = groups(:test)

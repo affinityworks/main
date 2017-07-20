@@ -15,7 +15,7 @@ class GroupDetail extends Component {
     const groupRelationships = this.props.group.relationships;
 
     if (!groupRelationships || !groupRelationships['upcoming-events'].data.length)
-      return (<div>The group has not incoming events</div>);
+      return (<div>The group has no incoming events</div>);
     else {
       const events = groupRelationships['upcoming-events'].data;
       return events.map(event => <UpcomingEvent key={event.id} event={event} />)
