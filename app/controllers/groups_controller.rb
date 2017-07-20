@@ -47,8 +47,6 @@ class GroupsController < ApplicationController
   def edit
     @groups = Group.all
     set_group
-    @current_members = @group.all_members
-    @current_memberships = @group.all_memberships
     authorize! :manage, @group
   end 
 
@@ -74,7 +72,7 @@ class GroupsController < ApplicationController
     @affiliates = Affiliation.find_or_create_by!({affiliated_id: params[:id], group_id: params["affiliation"]["affiliated_id"]})
     respond_to do |format|
       if @group.update(group_params)
-        format.html { redirect_to @group, notice: 'Group was successfully updated.' }
+        format.html { redirect_to group_dashboard_path(@group), notice: 'Group was successfully updated.' }
         format.json { render :show, status: :ok, location: @group }
       else
         format.html { render :edit }
