@@ -14,7 +14,7 @@ class Event < ApplicationRecord
   scope :upcoming, ->() { where('start_date BETWEEN ? AND ?', Date.today, Date.today + UPCOMING_EVENTS_DAYS.days) }
   scope :start, ->(start) { where("DATE(start_date) = ?", start) }
 
-  has_many :ticket_levels, dependent: :destroy
+  has_many :ticket_levels#, dependent: :destroy
 
   belongs_to :location, class_name: 'Address', foreign_key: :address_id
   belongs_to :creator, class_name: 'Person'

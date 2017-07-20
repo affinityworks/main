@@ -25,8 +25,8 @@ module Api::ActionNetwork::Taggings
 
   def self.associate_person(tagging, tag_name, group)
     person = find_or_import_person(person_identifier(tagging), group)
-    person.tag_list.push(tag_name)
-    person.save
+    person.tag_list.push(tag_name) unless person.nil?
+    #person.save #not needed because tag push saves
   end
 
   def self.find_or_import_person(person_uid, group)
