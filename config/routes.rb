@@ -72,6 +72,8 @@ Rails.application.routes.draw do
 
     resources :affiliates
 
+    resources :people
+
     resources :events do
       collection do
         resources :imports, only: [:new, :create] do
