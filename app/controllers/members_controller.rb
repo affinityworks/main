@@ -59,7 +59,8 @@ class MembersController < ApplicationController
   # POST /groups/:id/members/
   # POST /groups/:id/members/.json
   def create
-    @member = @group.member.new(member_params)
+    @person = Person.find_or_create_by!({given_name: params["person"]["given_name"], family_name: params["person"]["family_name"]})
+    @member = Membership.new(person_id: @person.id, group_id: params[:group_id])
     
     respond_to do |format|
       if @member.save
