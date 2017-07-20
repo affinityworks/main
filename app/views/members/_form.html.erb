@@ -11,12 +11,10 @@
     </div>
   <% end %>
 
-#this allows :person to be editted within members form as a nested object
-
 <%= f.fields_for :person do |ff| %>
   <div class="field">
-    <%= ff.label :family_name %>
-    <%= ff.text_field :family_name %>
+    <%= ff.label :given_name %>
+    <%= ff.text_field :given_name %>
   </div>
 
   <div class="field">
