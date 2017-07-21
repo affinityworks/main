@@ -36,8 +36,8 @@
         <%= form_tag("affiliates", method: "POST") do %>
           <tr><td>
             <div class="field">
-              <%= label_tag "Add Affiliate" %>
-              <%= collection_select(:affiliation, :affiliated_id, @groups.all, :id, :name, :prompt => true) %>
+              <%= label_tag "Share your data and management with another group" %>
+              <%= collection_select(:affiliation, :affiliated_id, Group.all, :id, :name, :prompt => true) %>
             </div>
           </td></tr>
     <tr><td>
