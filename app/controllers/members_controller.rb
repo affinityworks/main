@@ -51,6 +51,7 @@ class MembersController < ApplicationController
     @groups = Group.all
     set_group
     @current_members = @group.all_members
+    @member = @group.members.new
     # def all_members seemed way more useful for rendering people
     # cancan is not allowing organizers to manage group
     # authorize! :manage, @groups
@@ -59,8 +60,11 @@ class MembersController < ApplicationController
   # POST /groups/:id/members/
   # POST /groups/:id/members/.json
   def create
-    @person = Person.find_or_create_by!({given_name: params["person"]["given_name"], family_name: params["person"]["family_name"]})
-    @member = Membership.new(person_id: @person.id, group_id: params["person"]["group_id"])
+    #need to clean up this post from view.
+    #write validation for params (some are arrays, some are integers)
+    params_person = params["person"]
+    @person = Person.find_or_create_by!({given_name: params_person["person"]["given_name"], family_name: params_person["person"]["family_name"], gender_indentity: params_person["person"]["gender_identity"], party_identification: params_person["person"]["party_identification"], ethnicities: params_person["person"]["ethnicities"], languages_spoken: params_person["person"]["languages_spoken"], birthdate: params_person["person"]["birthdate"], employer: params_person["person"]["employer"] })
+    @member = Membership.new(person_id: @person.id, group_id: params["group_id"])
     
     respond_to do |format|
       if @member.save
