@@ -62,8 +62,15 @@
   
   <%= f.fields_for :email_address do |ff| %>
     <div class="field">
-      <%= ff.label :email_addresses %>
-      <%= ff.text_field :email_addresses %>
+      <%= ff.label :email_address %>
+      <%= ff.text_field :email_address %>
+    </div>
+  <% end %>
+
+  <%= f.fields_for :phone_number do |ff| %>
+    <div class="field">
+      <%= ff.label :phone_number %>
+      <%= ff.text_field :phone_number %>
     </div>
   <% end %>
 
