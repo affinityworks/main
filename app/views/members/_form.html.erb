@@ -11,52 +11,60 @@
     </div>
   <% end %>
 
-<%= f.fields_for :person do |ff| %>
-  <div class="field">
-    <%= ff.label :given_name %>
-    <%= ff.text_field :given_name %>
-  </div>
+  <%= f.fields_for :person do |ff| %>
+    <div class="field">
+      <%= ff.label :given_name %>
+      <%= ff.text_field :given_name %>
+    </div>
 
-  <div class="field">
-    <%= ff.label :family_name %>
-    <%= ff.text_field :family_name %>
-  </div>
+    <div class="field">
+      <%= ff.label :family_name %>
+      <%= ff.text_field :family_name %>
+    </div>
 
-  <div class="field">
-    <%= ff.label :gender %>
-    <%= ff.text_field :gender %>
-  </div>
+    <div class="field">
+      <%= ff.label :gender %>
+      <%= ff.text_field :gender %>
+    </div>
 
-  <div class="field">
-    <%= ff.label :gender_identity %>
-    <%= ff.text_field :gender_identity %>
-  </div>
+    <div class="field">
+      <%= ff.label :gender_identity %>
+      <%= ff.text_field :gender_identity %>
+    </div>
 
-  <div class="field">
-    <%= ff.label :party_identification %>
-    <%= ff.text_field :party_identification %>
-  </div>
+    <div class="field">
+      <%= ff.label :party_identification %>
+      <%= ff.text_field :party_identification %>
+    </div>
 
-  <div class="field">
-    <%= ff.label :ethnicities %>
-    <%= ff.text_field :ethnicities %>
-  </div>
+    <div class="field">
+      <%= ff.label :ethnicities %>
+      <%= ff.text_field :ethnicities %>
+    </div>
 
-  <div class="field">
-    <%= ff.label :languages_spoken %>
-    <%= ff.text_field :languages_spoken %>
-  </div>
+    <div class="field">
+      <%= ff.label :languages_spoken %>
+      <%= ff.text_field :languages_spoken %>
+    </div>
 
-  <div class="field">
-    <%= ff.label :birthdate %>
-    <%= ff.text_field :birthdate %>
-  </div>
+    <div class="field">
+      <%= ff.label :birthdate %>
+      <%= ff.text_field :birthdate %>
+    </div>
 
-  <div class="field">
-    <%= ff.label :employer %>
-    <%= ff.text_field :employer %>
-  </div>
+    <div class="field">
+      <%= ff.label :employer %>
+      <%= ff.text_field :employer %>
+    </div>
+
   <% end %>
+
+    <!-- something here about emails and phone numbers -->
+    <!-- f.fields_for :email_address do |ff|  -->
+      <!-- <div class="field">  -->
+        <!-- ff.label :email_addresses -->
+        <!-- ff.text_field :email_addresses -->
+      <!-- </div> -->
 
   <div class="actions">
     <%= f.submit %>

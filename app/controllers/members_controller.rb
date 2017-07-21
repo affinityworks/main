@@ -65,6 +65,7 @@ class MembersController < ApplicationController
   def create
     #need to clean up this post from view.
     #need to add whitelist!!!
+    #write a method for email / phone number saving
     params_person = params["person"]["person"]
     attr = {}
     params_person.each do |k, v| 
