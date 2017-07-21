@@ -99,7 +99,7 @@ class MembersController < ApplicationController
   def update
     respond_to do |format|
       if @member.update(member_params)
-        format.html { redirect_to @membergroup, notice: 'Member was successfully updated.' }
+        format.html { redirect_to group_dashboard_path, notice: 'Member was successfully updated.' }
         format.json { render :show, status: :ok, location: @member }
       else
         format.html { render :edit }
