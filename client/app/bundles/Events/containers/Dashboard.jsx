@@ -77,6 +77,13 @@ class Dashboard extends Component {
 
         { !!sync && !!sync.data && <SyncActivityFeed sync={sync} />}
 
+        <div className="edit-button">
+          <a href="edit">
+            <button className='btn btn-primary'>Edit Group</button>
+          </a>
+          <br />
+        </div>
+
         {(!!events.updated.length || !!events.created.length) && <h3>Events</h3>}
         <div className='list-group'>
           <EventActivityFeed events={events.updated} type='Updated'/>

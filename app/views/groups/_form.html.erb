@@ -40,10 +40,11 @@
               <%= collection_select(:affiliation, :affiliated_id, Group.all, :id, :name, :prompt => true) %>
             </div>
           </td></tr>
-    <tr><td>
-    <div class="actions">
-        <%= f.submit "Update Group", class: "btn btn-primary"%>
-      </div>
-    </td></tr>
+
+      <tr><td>
+      <div class="actions">
+          <%= f.submit "Update Group", class: "btn btn-primary"%>
+        </div>
+      </td></tr>
          <% end %>
     <% end %>
