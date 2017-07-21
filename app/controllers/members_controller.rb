@@ -67,6 +67,7 @@ class MembersController < ApplicationController
     #need to add whitelist!!!
     #write a method for email / phone number saving
     params_person = params["person"]["person"]
+    email_params = params["person"]["email_address"]
     attr = {}
     params_person.each do |k, v| 
       if v.present? 
@@ -74,6 +75,10 @@ class MembersController < ApplicationController
       end
     end
     @person = Person.create!(attr)
+    if email_params["email_addresses"].present?
+      EmailAddress.create!(person_id: @person.id, address: email_params["email_addresses"], primary: :true)
+    end
+
     @member = Membership.new(person_id: @person.id, group_id: params["group_id"])
     
     respond_to do |format|
