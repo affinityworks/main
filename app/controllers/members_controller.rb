@@ -57,13 +57,22 @@ class MembersController < ApplicationController
     # authorize! :manage, @groups
   end 
 
+
+
+
   # POST /groups/:id/members/
   # POST /groups/:id/members/.json
   def create
     #need to clean up this post from view.
-    #write validation for params (some are arrays, some are integers)
-    params_person = params["person"]
-    @person = Person.find_or_create_by!({given_name: params_person["person"]["given_name"], family_name: params_person["person"]["family_name"], gender_indentity: params_person["person"]["gender_identity"], party_identification: params_person["person"]["party_identification"], ethnicities: params_person["person"]["ethnicities"], languages_spoken: params_person["person"]["languages_spoken"], birthdate: params_person["person"]["birthdate"], employer: params_person["person"]["employer"] })
+    #need to add whitelist!!!
+    params_person = params["person"]["person"]
+    attr = {}
+    params_person.each do |k, v| 
+      if v.present? 
+        attr[k] = v
+      end
+    end
+    @person = Person.create!(attr)
     @member = Membership.new(person_id: @person.id, group_id: params["group_id"])
     
     respond_to do |format|
