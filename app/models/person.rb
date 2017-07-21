@@ -40,14 +40,6 @@ class Person < ApplicationRecord
 
   scope :unsynced, -> { where(synced: false) }
 
-  before_save :normalize_blank_values
-
-  def normalize_blank_values
-    attributes.each do |column, value|
-      self[column].present? || self[column] = nil
-    end
-  end
-
   def name
     [ given_name, family_name ].compact.join(' ')
   end

@@ -59,12 +59,15 @@
 
   <% end %>
 
-    <!-- something here about emails and phone numbers -->
-    <!-- f.fields_for :email_address do |ff|  -->
-      <!-- <div class="field">  -->
-        <!-- ff.label :email_addresses -->
-        <!-- ff.text_field :email_addresses -->
-      <!-- </div> -->
+  
+  <%= f.fields_for :email_address do |ff| %>
+    <div class="field">
+      <%= ff.label :email_addresses %>
+      <%= ff.text_field :email_addresses %>
+    </div>
+  <% end %>
+
+
 
   <div class="actions">
     <%= f.submit %>
