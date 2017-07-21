@@ -57,18 +57,14 @@ class MembersController < ApplicationController
     # authorize! :manage, @groups
   end 
 
-
-
-
   # POST /groups/:id/members/
   # POST /groups/:id/members/.json
   def create
-    #need to clean up this post from view.
-    #need to add whitelist!!!
-    #write a method for email / phone number saving
+    #below is due to nesting of values
     params_person = params["person"]["person"]
     email_params = params["person"]["email_address"]
     phone_params = params["person"]["phone_number"]
+    #this removes strings that are empty from hash
     attr = {}
     params_person.each do |k, v| 
       if v.present? 
@@ -123,6 +119,11 @@ class MembersController < ApplicationController
   end
 
   private
+
+  def member_params
+    #need to implement in create method
+    params.require(:person).permit(:id, :group_id, :person_id, :family_name, :given_name, :gender, :gender_identity, :party_identification, :ethnicities, :languages_spoken, :birthdate, :employer, :email_address, :phone_number)
+  end
 
   def set_member
     @member = @group.members.where(:id => params[:id])

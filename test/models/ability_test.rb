@@ -90,8 +90,8 @@ class AbilityTest < ActiveSupport::TestCase
 #this should return truthy
   test 'admin can manage other groups membership roles' do
     admin = people(:admin)
-    current_group = groups(:one)
-    member = memberships(:member3)
+    current_group = groups(:two)
+    member = memberships(:member2)
     ability = Ability.new(admin, current_group)
     assert ability.can?(:update, member.update(role: 1))
   end
