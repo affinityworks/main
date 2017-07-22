@@ -25,6 +25,11 @@ member2:
   person_id: 5
   role: 0
 
+member3:
+  group_id: 1
+  person_id: 5
+  role: 0
+
 organizer:
   group_id: 3
   person_id: 6

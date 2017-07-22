@@ -1,7 +1,8 @@
 class MembershipsController < ApplicationController
   before_action :authenticate_person!
   before_action :authorize_group_access
-  before_action :find_memberships, only: :index
+  before_action :find_memberships, only: [:index]
+  #before_action :authorize_and_load_membership, only: [:show]
 
   def index
     respond_to do |format|
@@ -17,9 +18,10 @@ class MembershipsController < ApplicationController
   end
 
   def show
-    @membership = Membership.find_by!(
+    @membership = Membership.find_by(
       person_id: params[:id], group_id: params[:group_id]
     )
+    authorize! :manage, @membership #Group.find(params[:group_id])
 
     respond_to do |format|
       format.html
@@ -76,5 +78,9 @@ class MembershipsController < ApplicationController
 
   def sort_param
     @sort_param ||= ['name', 'role', 'group_name'].include?(params[:sort]) && params[:sort] || nil
+  end
+
+  def authorize_and_load_membership
+    return true
   end
 end

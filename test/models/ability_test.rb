@@ -84,6 +84,7 @@ class AbilityTest < ActiveSupport::TestCase
     current_group = groups(:test)
     member = memberships(:member1)
     ability = Ability.new(organizer, current_group)
+    assert ability.can?(:manage, member.update(role: 1))
     assert ability.can?(:update, member.update(role: 1))
   end
 
@@ -93,6 +94,7 @@ class AbilityTest < ActiveSupport::TestCase
     current_group = groups(:one)
     member = memberships(:member3)
     ability = Ability.new(admin, current_group)
+    assert ability.can?(:manage, member.update(role: 1))
     assert ability.can?(:update, member.update(role: 1))
   end
 

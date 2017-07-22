@@ -45,6 +45,21 @@ class MembershipsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test 'get #show on affiliated' do
+    person = people(:organizer)
+    sign_in person
+    affiliate = Group.create(an_api_key: rand(1_000_000).to_s)
+    affiliate_membership = Membership.create(person: person, group: affiliate)
+    Affiliation.create(affiliated: affiliate, group: groups(:test))
+
+    get group_membership_url(group_id: groups(:test).id, id: person.id), as: :json
+    assert_response :success
+
+    get group_membership_url(group_id: affiliate.id, id: person.id), as: :json
+    assert_response :success
+  end
+ 
+
   test 'update_role' do
     person = people(:member2)
     group = groups(:two)
