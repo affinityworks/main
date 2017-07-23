@@ -39,9 +39,18 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
     assert_equal @group.name, json['data']['attributes']['name']
   end
 
-  test "should get edit" do
+  test "should get redirect" do
     get edit_group_url(@group)
-    assert_response :success
+    assert_response :redirect
+  end
+
+  test "organizer should get redirect" do
+    @person = people(:organizer)
+    @group = @person.groups.first
+
+    sign_in people(:one)
+    get edit_group_url(@group)
+    assert_response :redirect
   end
 
   #this was failing and we weren't using groups so i commented it out.
