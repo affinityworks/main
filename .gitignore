@@ -12,15 +12,11 @@ capybara-*.html
 rerun.txt
 pickle-email-*.html
 .DS_Store
-
+.vscode
 #webpack is generated so we ignore it
 /app/assets/webpack/webpack-bundle.js
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 9b59839f8a759a70bec47ba0eda38957a484409f
 # TODO Comment out these rules if you are OK with secrets being uploaded to the repo
 config/initializers/secret_token.rb
 #config/secrets.yml

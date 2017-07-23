@@ -1,12 +1,15 @@
 class Group < ApplicationRecord
-  has_paper_trail
+  #has_paper_trail
   acts_as_taggable
 
   validates :an_api_key, uniqueness: true
 
   has_many :memberships, dependent: :destroy
   has_many :members, through: :memberships, source: :person
-
+  #has_many :organizers, -> { where(role: 'organizer') },
+  #                             :through => :memberships,
+  #                             :source => :person
+  
   #this doesn't seem right...
   has_many :attendances, through: :members
   has_many :affiliations, foreign_key: :group_id, class_name: 'Affiliation'
@@ -26,6 +29,7 @@ class Group < ApplicationRecord
   belongs_to :creator, class_name: "Person"
   belongs_to :modified_by, class_name: "Person"
   belongs_to :location, class_name: 'GroupAddress', foreign_key: :address_id
+
 
   def before_create
     self.modified_by = self.creator
@@ -48,7 +52,6 @@ class Group < ApplicationRecord
   end
 
   def sync_with_action_network
-    Group.transaction do
       synced_time = Time.now
       events_logs = import_events
       members_logs = import_members
@@ -67,7 +70,6 @@ class Group < ApplicationRecord
         },
         origin: Origin.action_network
       )
-    end
   end
 
   def all_events

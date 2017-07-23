@@ -1,6 +1,7 @@
 class GroupsController < ApplicationController
   before_action :set_group, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_person!
+  before_action :authorize_group_access, except: [:new]
 
   # GET /groups
   # GET /groups.json
@@ -44,16 +45,18 @@ class GroupsController < ApplicationController
 
   # GET /groups/1/edit
   def edit
-  end
+    @groups = Group.all
+    set_group
+    authorize! :manage, @group
+  end 
 
   # POST /groups
   # POST /groups.json
   def create
     @group = Group.new(group_params)
-
     respond_to do |format|
       if @group.save
-        format.html { redirect_to @group, notice: 'Group was successfully created.' }
+        format.html { redirect_to group_dashboard_path, notice: 'Group was successfully created.' }
         format.json { render :show, status: :created, location: @group }
       else
         format.html { render :new }
@@ -65,9 +68,11 @@ class GroupsController < ApplicationController
   # PATCH/PUT /groups/1
   # PATCH/PUT /groups/1.json
   def update
+    #affiliated_id and group_id are switched due to table being backwards. refactor upon completion
+    @affiliates = Affiliation.find_or_create_by!({affiliated_id: params[:id], group_id: params["affiliation"]["affiliated_id"]})
     respond_to do |format|
       if @group.update(group_params)
-        format.html { redirect_to @group, notice: 'Group was successfully updated.' }
+        format.html { redirect_to group_dashboard_path(@group), notice: 'Group was successfully updated.' }
         format.json { render :show, status: :ok, location: @group }
       else
         format.html { render :edit }
@@ -94,7 +99,7 @@ class GroupsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def group_params
-    params.require(:group).permit(:origin_system, :name, :description, :summary, :browser_url, :featured_image_url, :creator_id)
+    params.require(:group).permit(:origin_system, :name, :description, :summary, :creator_id, :person_id, :memberships, :current_members, :role)
   end
 
   def sort_param

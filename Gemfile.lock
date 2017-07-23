@@ -79,6 +79,7 @@ GEM
       execjs
     awesome_print (1.7.0)
     bcrypt (3.1.11)
+    benchmark-ips (2.7.2)
     bootstrap (4.0.0.alpha6)
       autoprefixer-rails (>= 6.0.3)
       sass (>= 3.4.19)
@@ -108,6 +109,16 @@ GEM
     debug_inspector (0.0.2)
     declarative (0.0.9)
     declarative-option (0.1.0)
+    derailed (0.1.0)
+      derailed_benchmarks
+    derailed_benchmarks (1.3.2)
+      benchmark-ips (~> 2)
+      get_process_mem (~> 0)
+      heapy (~> 0)
+      memory_profiler (~> 0)
+      rack (>= 1)
+      rake (> 10, < 13)
+      thor (~> 0.19)
     devise (4.2.0)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -130,6 +141,7 @@ GEM
     geokit-rails (2.2.0)
       geokit (~> 1.5)
       rails (>= 3.0)
+    get_process_mem (0.2.1)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
     graphiql-rails (1.4.1)
@@ -142,7 +154,9 @@ GEM
       activesupport (>= 4.1, < 5.1)
     hashdiff (0.3.2)
     hashie (3.5.5)
+    heapy (0.1.2)
     hirb (0.7.3)
+    hiredis (0.6.1)
     httparty (0.15.5)
       multi_xml (>= 0.5.2)
     i18n (0.7.0)
@@ -177,6 +191,7 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.4)
       mime-types (>= 1.16, < 4)
+    memory_profiler (0.9.8)
     method_source (0.8.2)
     mime-types (3.1)
       mime-types-data (~> 3.2015)
@@ -188,6 +203,7 @@ GEM
     multi_json (1.12.1)
     multi_xml (0.6.0)
     multipart-post (2.0.0)
+    mustermann (1.0.0)
     newrelic_rpm (3.18.1.330)
     nio4r (1.2.1)
     nokogiri (1.7.0.1)
@@ -216,6 +232,8 @@ GEM
     public_suffix (2.0.5)
     puma (3.6.2)
     rack (2.0.1)
+    rack-protection (2.0.0)
+      rack
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (5.0.1)
@@ -259,6 +277,9 @@ GEM
       execjs (~> 2.5)
       rails (>= 3.2)
       rainbow (~> 2.1)
+    redis (3.3.3)
+    redis-namespace (1.5.3)
+      redis (~> 3.0, >= 3.0.4)
     representable (3.0.3)
       declarative (< 0.1.0)
       declarative-option (< 0.2.0)
@@ -266,11 +287,22 @@ GEM
     request_store (1.3.2)
     responders (2.3.0)
       railties (>= 4.2.0, < 5.1)
+    resque (1.22.0)
+      multi_json (~> 1.0)
+      redis-namespace (~> 1.0)
+      sinatra (>= 0.9.2)
+      vegas (~> 0.1.2)
+    resque-scheduler (2.2.0)
+      redis (>= 3.0.0)
+      resque (>= 1.20.0, < 1.25)
+      rufus-scheduler (~> 2.0)
     roar (1.1.0)
       representable (~> 3.0.0)
     roar-jsonapi (0.0.3)
       representable (~> 3.0, >= 3.0.3)
       roar (~> 1.1)
+    rufus-scheduler (2.0.24)
+      tzinfo (>= 0.3.22)
     safe_yaml (1.0.4)
     sass (3.4.23)
     sass-rails (5.0.6)
@@ -279,6 +311,11 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
+    sinatra (2.0.0)
+      mustermann (~> 1.0)
+      rack (~> 2.0)
+      rack-protection (= 2.0.0)
+      tilt (~> 2.0)
     spring (2.0.1)
       activesupport (>= 4.2)
     spring-watcher-listen (2.0.1)
@@ -299,6 +336,8 @@ GEM
     uber (0.1.0)
     uglifier (3.0.4)
       execjs (>= 0.3.0, < 3)
+    vegas (0.1.11)
+      rack (>= 1.0.0)
     warden (1.2.6)
       rack (>= 1.0)
     web-console (3.4.0)
@@ -330,6 +369,7 @@ DEPENDENCIES
   byebug
   cancancan
   coffee-rails (~> 4.2)
+  derailed
   devise
   doorkeeper
   foreman
@@ -338,6 +378,7 @@ DEPENDENCIES
   graphql
   graphql-rails-resolver
   hirb
+  hiredis
   httparty
   inherited_resources!
   jbuilder (~> 2.5)
@@ -346,6 +387,7 @@ DEPENDENCIES
   kaminari
   koala
   listen (~> 3.0.5)
+  memory_profiler
   mini_racer
   newrelic_rpm
   omniauth
@@ -355,7 +397,11 @@ DEPENDENCIES
   puma (~> 3.0)
   rails
   rails-assets-tether (>= 1.3.3)!
+  rb-fsevent
   react_on_rails
+  redis
+  resque
+  resque-scheduler
   roar
   roar-jsonapi
   sass-rails (~> 5.0)

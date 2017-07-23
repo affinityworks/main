@@ -2,7 +2,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_action :set_paper_trail_whodunnit
-
   helper_method :current_group, :current_role
 
   def current_user
@@ -10,7 +9,8 @@ class ApplicationController < ActionController::Base
   end
 
   def current_group
-    return current_person.groups.first
+    group = Group.find(params[:group_id]) if params[:group_id]
+    return group || current_user.groups.first
   end
 
   def current_role
@@ -37,9 +37,10 @@ class ApplicationController < ActionController::Base
   end
 
   def authorize_group_access
-    return true unless params[:group_id]
+    return false unless params[:group_id]
     authorize! :manage, Group.find_by(id: params[:group_id])
   end
+
 
   rescue_from CanCan::AccessDenied do |exception|
     respond_to do |format|

@@ -8,10 +8,12 @@ default: &default
   adapter: postgresql
   pool: 5
   timeout: 5000
+  host: localhost
 
 development:
   <<: *default
   database: advocacyccommons_development
+  host: localhost
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -19,6 +21,7 @@ development:
 test:
   <<: *default
   database: advocacyccommons_test
+  host: localhost
 
 production:
   <<: *default

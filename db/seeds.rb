@@ -37,3 +37,11 @@ Affiliation.create(affiliated: affiliate_3, group: group)
 affiliate.sync_with_action_network
 affiliate_2.sync_with_action_network
 affiliate_3.sync_with_action_network
+
+
+# test facebook users:
+# nkarntbiax_1498782998@tfbnw.net - mnm8;yDbzzsRuxvY
+# ekcuwfbljf_1498782997@tfbnw.net - mnm8;yDbzzsRuxvY
+# wbylbikbki_1498782996@tfbnw.net - mnm8;yDbzzsRuxvY
+# mbuczyxbve_1498783000@tfbnw.net - mnm8;yDbzzsRuxvY
+# quahayinav_1498782922@tfbnw.net - mnm8;yDbzzsRuxvY

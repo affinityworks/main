@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Affinity</title>
+  </head>  
+  <body>
+  <div class="container-html">
+    <div class='page-header'>
+      <div class="row container">
+        <div class="col-10">
+          <h2>
+            <a href="/" class="affinity-logo"><img src="/images/affinity-logo.svg" width="230" /></a>
+            <div class="small">
+              <%= @group.name %>
+            </div>
+          </h2>
+        </div>
+        <div class="col-2 text-right">
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span>
+              <%= current_person.name %> </span>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <%= link_to 'Account', profile_index_url, class: "dropdown-item" %>
+              <%= link_to 'Logout', destroy_person_session_path, class: "dropdown-item" %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
+    </div>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <%= link_to @group.name, group_dashboard_path(@group) %>
+      </li>
+      <li class="breadcrumb-item active">
+        Edit
+      </li>
+    </ol>
+    <br>
+    <div>
+      <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <%= link_to "Dashboard", 'dashboard', class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "Groups", 'affiliates', class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "All Members", 'members', class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "All Events", 'events', class: "nav-link" %>
+            </li>
+      </ul>
+    </div>
+  </div>
+  </body>
+  </html>

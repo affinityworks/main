@@ -1,6 +1,21 @@
-<h1>Editing Group</h1>
 
-<%= render 'form', group: @group %>
+    <%= render 'groups/navigation' %>
 
-<%= link_to 'Show', @group %> |
-<%= link_to 'Back', groups_path %>
+    <div class = "container-html">
+      <div class="list-group-item">
+        <table class="table table--fixed">
+          <thead>
+            <tr>
+            <h3>
+              <small style={{ position: 'relative', bottom: '-5px', marginLeft: '5px' }}>
+                  <h1>Edit Group</h1>
+              </small>
+            </h3>
+            </tr>
+          </thead>
+          <%= render 'form', group: @group %>
+        </table>
+        <%= link_to 'Dashboard', group_dashboard_path(@group) %> |
+        <%= link_to 'Groups', group_affiliates_path(@group) %>
+      </div>
+    </div>

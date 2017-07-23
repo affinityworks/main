@@ -68,6 +68,8 @@ class EventTest < ActiveSupport::TestCase
   end
 
   test '.start' do
+    Event.all.each {|event| event.destroy}
+    
     ended_event = Event.create(start_date: 2.days.ago, status: 'status')
     event_1 = Event.create(start_date: Date.today, status: 'status')
     event_2 = Event.create(start_date: Date.today + 1.days, status: 'status')
