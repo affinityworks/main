@@ -33,7 +33,6 @@ class Ability
       end
 
       can :manage, Membership do |membership|
-         
         group = membership.group
         permitted_flag = false
         permitted_flag = true if current_user.admin? 
