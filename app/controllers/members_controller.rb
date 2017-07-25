@@ -57,9 +57,9 @@ class MembersController < ApplicationController
   # POST /groups/:id/members/
   # POST /groups/:id/members/.json
   def create
-    params_person = member_params["person"]["person"]
-    email_params = member_params["person"]["email_address"]
-    phone_params = member_params["person"]["phone_number"]
+    params_person = params["person"]["person"]
+    email_params = params["person"]["email_address"]
+    phone_params = params["person"]["phone_number"]
     attr = {}
     params_person.each do |k, v| 
       if v.present? 
@@ -115,7 +115,7 @@ class MembersController < ApplicationController
 
   private
 
-  #only returns nil / empty symbol
+  # only returns nil / empty symbol
   # def member_params
   #   params.permit(:person => [:person => [:family_name, :given_name, :gender, :gender_identity, :party_identification, :ethnicities, :languages_spoken, :birthdate, :employer]] )
   #   params.permit(:person => { :email_address } )
