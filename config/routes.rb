@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :facebook_pages
   root to: 'static#index'
 
   use_doorkeeper do

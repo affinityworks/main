@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Facebook Pages</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @facebook_pages.each do |facebook_page| %>
+      <tr>
+        <td><%= link_to 'Show', facebook_page %></td>
+        <td><%= link_to 'Edit', edit_facebook_page_path(facebook_page) %></td>
+        <td><%= link_to 'Destroy', facebook_page, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Facebook Page', new_facebook_page_path %>

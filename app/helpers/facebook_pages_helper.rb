@@ -1,0 +1,2 @@
+module FacebookPagesHelper
+end

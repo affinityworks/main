@@ -1,12 +1,13 @@
 class ImportsController < ApplicationController
   before_action :authenticate_person!
-  before_action :validate_facebook_auth
   before_action :authorize_group_access
-
+  before_action :load_group
+  before_action :validate_facebook_auth
   protect_from_forgery except: [:create, :create_facebook_attendance, :delete_facebook_attendance] #TODO: Add the csrf token in react.
 
   def find
     identity = current_person.identities.facebook.first
+    byebug
     remote_event = Facebook::Event.new(identity).find(params[:remote_event_url])
     start_date = remote_event['start_time'] if remote_event
 
@@ -15,7 +16,7 @@ class ImportsController < ApplicationController
       format.json do
         render json: {
           remote_event: remote_event,
-          events: JsonApi::EventsRepresenter.for_collection.new(current_group.events.start(start_date))
+          events: JsonApi::EventsRepresenter.for_collection.new(@group.events.start(start_date))
         }.to_json
       end
     end
@@ -23,13 +24,17 @@ class ImportsController < ApplicationController
 
   def new
     identity = current_person.identities.facebook.first
- 
+
+    #@graph = Koala::Facebook::API.new(identity.access_token)
+    
+
+
     respond_to do |format|
       format.html
       format.json do
         render json: {
           remote_events: remote_events,
-          events: JsonApi::EventsRepresenter.for_collection.new(current_group.events.start(start_date))
+          events: JsonApi::EventsRepresenter.for_collection.new(@group.events.start(start_date))
         }.to_json
       end
     end
@@ -54,7 +59,7 @@ class ImportsController < ApplicationController
   def attendances
     remote_event = RemoteEvent.find(params[:remote_event_id])
     remote_attendances = remote_event.attendances(current_person.identities.facebook.first)
-    matches = current_group.members.map_with_remote_rsvps(remote_attendances)
+    matches = @group.members.map_with_remote_rsvps(remote_attendances)
 
     respond_to do |format|
       format.html
@@ -67,7 +72,7 @@ class ImportsController < ApplicationController
   def new_facebook_attendance
     remote_event = RemoteEvent.find(params[:remote_event_id])
     remote_attendances = remote_event.attendances(current_person.identities.facebook.first)
-    unmatched = current_group.members.unmatched_remote_rsvps(remote_attendances)
+    unmatched = @group.members.unmatched_remote_rsvps(remote_attendances)
 
     respond_to do |format|
       format.html
@@ -82,7 +87,7 @@ class ImportsController < ApplicationController
 
   def create_facebook_attendance
     event = FacebookEvent.find(params[:remote_event_id]).event
-    member = current_group.members.find(params[:person_id])
+    member = @group.members.find(params[:person_id])
     member.add_identifier('facebook', params[:facebook_id])
 
     attendance = member.attendances.find_or_initialize_by(event_id: event.id).tap do |attendance|
@@ -95,8 +100,9 @@ class ImportsController < ApplicationController
   end
 
   def delete_facebook_attendance
+    
     event = FacebookEvent.find(params[:remote_event_id]).event
-    member = current_group.members.find(params[:person_id])
+    member = @group.members.find(params[:person_id])
     member.remove_identifier('facebook')
     attendance = member.attendances.find_by(event_id: event.id)
     attendance.origins.delete(Origin.facebook)
@@ -109,6 +115,10 @@ class ImportsController < ApplicationController
   private
 
   def validate_facebook_auth
-    redirect_to group_events_url(current_group.id) unless current_person.identities.facebook.any?
+    redirect_to group_events_url(@group.id) unless current_person.identities.facebook.any?
+  end
+
+  def load_group
+    @group = params[:group_id] ? Group.find(params[:group_id]) : false
   end
 end

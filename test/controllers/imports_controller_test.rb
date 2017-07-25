@@ -5,18 +5,15 @@ class ImportsControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   test 'get #find' do
-    person = Person.create(given_name: 'example')
+    person = people(:organizer)
     group = groups(:test)
-    person.groups.push(group)
+    Membership.create(:person => person, :group => group, :role => 'organizer')
     EmailAddress.create(address: 'example@example.com', person: person)
     sign_in person
     url = 'https://www.facebook.com/123465'
 
     get find_group_imports_url(remote_event_url: url, group_id: group.id), as: :json
     assert_redirected_to group_events_url(group_id: group.id)
-
-    person = people(:organizer)
-    sign_in person
 
     remote_event = { 'name' => 'Name', 'start_time' => Date.today.to_s }
     facebook_agent = Minitest::Mock.new
@@ -36,7 +33,7 @@ class ImportsControllerTest < ActionDispatch::IntegrationTest
 
   test 'post #create when Event not found' do
     current_user = people(:organizer)
-    group = current_user.groups.first
+    group = groups(:test)
     sign_in current_user
 
     remote_event_count_before = RemoteEvent.count
@@ -57,7 +54,7 @@ class ImportsControllerTest < ActionDispatch::IntegrationTest
 
   test 'post #create when missing id' do
     current_user = people(:organizer)
-    group = current_user.groups.first
+    group = groups(:test)
     sign_in current_user
 
     remote_event_count_before = RemoteEvent.count
@@ -78,7 +75,7 @@ class ImportsControllerTest < ActionDispatch::IntegrationTest
 
   test 'post #create' do
     current_user = people(:organizer)
-    group = current_user.groups.first
+    group = groups(:test)
     sign_in current_user
 
     remote_event_count_before = RemoteEvent.count
@@ -100,7 +97,7 @@ class ImportsControllerTest < ActionDispatch::IntegrationTest
   test 'get #attendances' do
     current_user = people(:organizer)
     remote_event = remote_events(:facebook)
-    group = current_user.groups.first
+    group = groups(:test)
     sign_in current_user
 
     remote_attendances = [{ 'name' => 'Test Admin', 'id' => '12345' }]
@@ -122,7 +119,8 @@ class ImportsControllerTest < ActionDispatch::IntegrationTest
     current_user = people(:organizer)
     remote_event = remote_events(:facebook)
     person = people(:member2)
-    group = current_user.groups.first
+    group = groups(:test)
+    Membership.create(:person => person, :group => group, :role => 'member')
     facebook_id = '1232345'
     sign_in current_user
 
@@ -138,7 +136,7 @@ class ImportsControllerTest < ActionDispatch::IntegrationTest
 
   test 'post #create_facebook_attendance without existing attendance' do
     current_user = people(:organizer)
-    group = current_user.groups.first
+    group = groups(:test)
     remote_event = remote_events(:facebook)
     person = Person.create(groups: current_user.groups)
     facebook_id = '1232345'
@@ -162,11 +160,12 @@ class ImportsControllerTest < ActionDispatch::IntegrationTest
   test 'delete #delete_facebook_attendance with only origin' do
     current_user = people(:organizer)
     remote_event = remote_events(:facebook)
-    group = current_user.groups.first
+    group = groups(:test)
     person = people(:member2)
     facebook_id = '1232345'
     person.add_identifier('facebook', facebook_id)
     person.attendances.first.origins.push(Origin.facebook)
+    Membership.create(:person => person, :group => group, :role => 'member')
     person.save
     sign_in current_user
 
@@ -186,14 +185,15 @@ class ImportsControllerTest < ActionDispatch::IntegrationTest
   test 'delete #delete_facebook_attendance with multiple origins' do
     current_user = people(:organizer)
     remote_event = remote_events(:facebook)
-    group = current_user.groups.first
+    group = groups(:test)
     person = people(:member2)
     facebook_id = '1232345'
     person.add_identifier('facebook', facebook_id)
     person.attendances.first.origins.push(Origin.facebook)
     person.attendances.first.origins.push(Origin.action_network)
     person.save
-    sign_in current_user
+    Membership.create(:person => person, :group => group, :role => 'member')
+   sign_in current_user
 
     assert_difference 'person.attendances.count', 0 do
       delete delete_attendance_group_imports_url(
