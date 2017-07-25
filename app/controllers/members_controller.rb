@@ -60,7 +60,7 @@ class MembersController < ApplicationController
     params_person = params["person"]["person"]
     email_params = params["person"]["email_address"]
     phone_params = params["person"]["phone_number"]
-    attr = {}
+        attr = {}
     params_person.each do |k, v| 
       if v.present? 
         attr[k] = v
@@ -116,12 +116,12 @@ class MembersController < ApplicationController
   private
 
   # only returns nil / empty symbol
-  # def member_params
-  #   params.permit(:person => [:person => [:family_name, :given_name, :gender, :gender_identity, :party_identification, :ethnicities, :languages_spoken, :birthdate, :employer]] )
+  def member_params
+    params.permit(person: [:family_name, :given_name, :gender, :gender_identity, :party_identification, :ethnicities, :languages_spoken, :birthdate, :employer])
   #   params.permit(:person => { :email_address } )
   #   params.permit{ :phone_number }
   #   params.permit{ :group_id }
-  # end
+  end
 
   def set_member
     @member = @group.members.where(:id => params[:id])
