@@ -57,7 +57,13 @@ class MembersController < ApplicationController
   # POST /groups/:id/members/
   # POST /groups/:id/members/.json
   def create
-    @person = Person.create!(person_params[:person][:person])
+    attr = {}
+    person_params[:person].each do |k, v| 
+      if v.present? 
+        attr[k] = v
+      end
+    end
+    @person = Person.create!(attr)
     if email_params[:email_address][:email_address].present?
       unless EmailAddress.exists?(address: email_params[:email_address][:email_address])
         EmailAddress.create!(person_id: @person.id, address: email_params[:email_address][:email_address], primary: :true)
