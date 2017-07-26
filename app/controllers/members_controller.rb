@@ -57,26 +57,17 @@ class MembersController < ApplicationController
   # POST /groups/:id/members/
   # POST /groups/:id/members/.json
   def create
-    params_person = params["person"]["person"]
-    email_params = params["person"]["email_address"]
-    phone_params = params["person"]["phone_number"]
-        attr = {}
-    params_person.each do |k, v| 
-      if v.present? 
-        attr[k] = v
+    @person = Person.create!(person_params[:person][:person])
+    if email_params[:email_address][:email_address].present?
+      unless EmailAddress.exists?(address: email_params[:email_address][:email_address])
+        EmailAddress.create!(person_id: @person.id, address: email_params[:email_address][:email_address], primary: :true)
       end
     end
-    @person = Person.create!(attr)
-    if email_params["email_address"].present?
-      unless EmailAddress.exists?(address: email_params["email_address"])
-        EmailAddress.create!(person_id: @person.id, address: email_params["email_address"], primary: :true)
-      end
-    end
-    if phone_params["phone_number"].present?
-      PhoneNumber.create!(person_id: @person.id, number: phone_params["phone_number"], primary: :true)
+    if phone_params[:phone_number][:phone_number].present?
+      PhoneNumber.create!(person_id: @person.id, number: phone_params[:phone_number][:phone_number], primary: :true)
     end
 
-    @member = Membership.new(person_id: @person.id, group_id: params["group_id"])
+    @member = Membership.new(person_id: @person.id, group_id: @group.id)
     
     respond_to do |format|
       if @member.save
@@ -116,10 +107,16 @@ class MembersController < ApplicationController
   private
 
   # only returns nil / empty symbol
-  def member_params
-    params.require(:person).permit(:group_id, person: [:family_name, :given_name, :gender, :gender_identity, :party_identification, :ethnicities, :languages_spoken, :birthdate, :employer])
-    params.permit(person: [email_address: :email_address])
-    params.permit(person: [phone_number: :phone_number])
+  def person_params
+    params.require(:person).permit(person: [:family_name, :given_name, :gender, :gender_identity, :party_identification, :ethnicities, :languages_spoken, :birthdate, :employer])
+  end
+
+  def email_params
+    params.require(:person).permit(email_address: :email_address)
+  end
+
+  def phone_params
+    params.require(:person).permit(phone_number: :phone_number)
   end
 
   def set_member
