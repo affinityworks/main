@@ -117,10 +117,7 @@ class MembersController < ApplicationController
 
   # only returns nil / empty symbol
   def member_params
-    params.permit(person: [:family_name, :given_name, :gender, :gender_identity, :party_identification, :ethnicities, :languages_spoken, :birthdate, :employer])
-  #   params.permit(:person => { :email_address } )
-  #   params.permit{ :phone_number }
-  #   params.permit{ :group_id }
+    params.require(:person).permit(:group_id, person: [:family_name, :given_name, :gender, :gender_identity, :party_identification, :ethnicities, :languages_spoken, :birthdate, :employer])
   end
 
   def set_member
