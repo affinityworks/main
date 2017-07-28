@@ -91,7 +91,13 @@ class Person < ApplicationRecord
   end
 
   def primary_phone_number
-    phone_numbers.detect(&:primary?)&.number
+    phone_number = phone_numbers.detect(&:primary?)&.number
+    
+    if phone_numbers.any?
+      phone_number = phone_numbers.first.number unless phone_number 
+    end
+
+    return phone_number || ''
   end
 
   def primary_phone_number=(number)

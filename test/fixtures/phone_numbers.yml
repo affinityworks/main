@@ -3,7 +3,7 @@
 one:
   id: 1
   primary: false
-  number: MyString
+  number: '098-765-4321'
   extension: MyString
   description: MyString
   number_type: MyString
@@ -16,7 +16,7 @@ one:
 two:
   id: 2
   primary: false
-  number: MyString
+  number: '123-456-7890'
   extension: MyString
   description: MyString
   number_type: MyString
@@ -25,3 +25,16 @@ two:
   sms_capable: false
   do_not_call: false
   person_id: 2
+
+three:
+  id: 3
+  primary: false
+  number: '234-203-2342'
+  extension: MyString
+  description: MyString
+  number_type: MyString
+  operator: MyString
+  country: MyString
+  sms_capable: false
+  do_not_call: false
+  person_id: 1

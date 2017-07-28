@@ -148,7 +148,7 @@ class PersonTest < ActiveSupport::TestCase
 
   end
 
-  test '#primary_phone_address=' do
+  test '#primary_phone_number=' do
     person = Person.create
 
     person.primary_phone_number = '12341234'
@@ -162,6 +162,12 @@ class PersonTest < ActiveSupport::TestCase
     person.reload
 
     assert_equal person.phone_numbers.count, 1
+  end
+
+  test 'look up primary and non primary phone number' do
+    assert_equal '098-765-4321', people(:one).primary_phone_number
+    assert_equal '123-456-7890', people(:two).primary_phone_number
+    assert_equal '', people(:organizer).primary_phone_number
   end
 
   test '#from_omniauth' do
