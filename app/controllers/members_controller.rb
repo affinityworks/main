@@ -57,22 +57,26 @@ class MembersController < ApplicationController
   # POST /groups/:id/members/
   # POST /groups/:id/members/.json
   def create
+    #removes empty attributes, un-nests hash
     attr = {}
     person_params[:person].each do |k, v| 
       if v.present? 
         attr[k] = v
       end
     end
+    #creates new person from params
     @person = Person.create!(attr)
+    #checks if attribute is present, if yes, saves attribute
     if email_params[:email_address][:email_address].present?
       unless EmailAddress.exists?(address: email_params[:email_address][:email_address])
         EmailAddress.create!(person_id: @person.id, address: email_params[:email_address][:email_address], primary: :true)
       end
     end
+    #checks if attribute is present, if yes, saves attribute
     if phone_params[:phone_number][:phone_number].present?
       PhoneNumber.create!(person_id: @person.id, number: phone_params[:phone_number][:phone_number], primary: :true)
     end
-
+    #new member from attributes
     @member = Membership.new(person_id: @person.id, group_id: @group.id)
     
     respond_to do |format|
