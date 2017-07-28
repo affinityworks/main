@@ -245,7 +245,7 @@ class Person < ApplicationRecord
 
 
   def custom_field_to_phone_number
-    potential_fields = [ 'Phone Number', 'phone', "2 Phone"]
+    potential_fields = [ 'Phone Number', 'Phone', 'phone', "2 Phone"]
 
     potential_fields.each do |field_name|
       unless custom_fields[field_name].nil?  
