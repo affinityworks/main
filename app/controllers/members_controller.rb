@@ -59,24 +59,11 @@ class MembersController < ApplicationController
   # POST /groups/:id/members/.json
   def create
     @person = Person.new(person_params)
-    
-    #checks if attribute is present, if yes, saves attribute
-    if email_params[:email_address][:email_address].present?
-      unless EmailAddress.exists?(address: email_params[:email_address][:email_address])
-        @person.primary_email_address= email_params[:email_address][:email_address]
-      end
-    end
-    
-    #checks if attribute is present, if yes, saves attribute
-    if phone_params[:phone_number][:phone_number].present?
-      @person.primary_phone_number=phone_params[:phone_number][:phone_number]
-    end 
 
-    
     respond_to do |format|
       if @person.save
         @group.memberships.create(:person => @person, :role => 'member')
-        format.html { redirect_to group_dashboard_path(@group), notice: 'Member was successfully created.' }
+        format.html { redirect_to group_member_path(@group, @person), notice: 'Member was successfully created.' }
         format.json { render json: @person, status: :created, location: group_members_path(@group) }
       else
         format.html { render :new }
@@ -167,7 +154,8 @@ class MembersController < ApplicationController
   end
 
   def set_member
-    @member = @group.members.where(:id => params[:id])
+    members = @group.members.where(:id => params[:id])
+    @member = members.first if members.any?
   end
 
   def set_group
