@@ -27,6 +27,27 @@ class AffiliatesController < ApplicationController
     end
   end
 
+  # POST /affiliates
+  # POST /affiliates.json
+  def create
+  #hack: switched variables as the affiliation logic is backwards in the table.
+    @affiliates = Affiliation.new({
+      group_id: params[:affiliated_id],
+      affiliated_id: params[:group_id]
+    })
+  #check if there is an affiliation present
+  respond_to do |format|
+    if @affiliates.save
+      format.html { redirect_to groups_url, notice: 'Affilation was successfully created.' }
+      format.json { render :show, status: :created, location: @affiliates }
+    else
+      format.html { redirect_back(fallback_location: root_path) }
+      format.json { render json: @affiliates.errors, status: :unprocessable_entity }
+    end
+  end
+end
+
+
   private
 
   def sort_param

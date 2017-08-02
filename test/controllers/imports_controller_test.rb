@@ -124,6 +124,7 @@ class ImportsControllerTest < ActionDispatch::IntegrationTest
     person = people(:member2)
     group = current_user.groups.first
     facebook_id = '1232345'
+    person.memberships.create(:group => group, :role =>'member')
     sign_in current_user
 
     post create_attendance_group_imports_url(group_id: group.id, remote_event_id: remote_event.id,
@@ -167,6 +168,7 @@ class ImportsControllerTest < ActionDispatch::IntegrationTest
     facebook_id = '1232345'
     person.add_identifier('facebook', facebook_id)
     person.attendances.first.origins.push(Origin.facebook)
+    person.memberships.create(:group => group, :role =>'member')
     person.save
     sign_in current_user
 
@@ -192,6 +194,7 @@ class ImportsControllerTest < ActionDispatch::IntegrationTest
     person.add_identifier('facebook', facebook_id)
     person.attendances.first.origins.push(Origin.facebook)
     person.attendances.first.origins.push(Origin.action_network)
+    person.memberships.create(:group => group, :role =>'member')
     person.save
     sign_in current_user
 

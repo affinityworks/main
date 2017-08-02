@@ -1,7 +1,8 @@
 class MembershipsController < ApplicationController
   before_action :authenticate_person!
   before_action :authorize_group_access
-  before_action :find_memberships, only: :index
+  before_action :find_memberships, only: [:index]
+  #before_action :authorize_and_load_membership, only: [:show]
 
   def index
     respond_to do |format|
@@ -17,9 +18,10 @@ class MembershipsController < ApplicationController
   end
 
   def show
-    @membership = Membership.find_by!(
+    @membership = Membership.find_by(
       person_id: params[:id], group_id: params[:group_id]
     )
+    authorize! :manage, @membership #Group.find(params[:group_id])
 
     respond_to do |format|
       format.html
@@ -27,6 +29,21 @@ class MembershipsController < ApplicationController
         render json: JsonApi::MembershipRepresenter.new(@membership)
       end
     end
+  end
+
+  def update
+    @membership = Membership.find(:id).role
+    respond_to do |format|
+    if @membership.role == "member"
+      @membership.update(role: 'organizer')
+      format.html { redirect_to group_dashboard_path, notice: 'Member is now an Organizer.' }
+      format.json { render :show, status: :created, location: @membership }
+    else 
+      @membership.update(role: 'member')
+      format.html { redirect_back(fallback_location: root_path) }
+      format.json { render json: @membership.errors, status: :unprocessable_entity }
+      end
+    end   
   end
 
   private
@@ -61,5 +78,9 @@ class MembershipsController < ApplicationController
 
   def sort_param
     @sort_param ||= ['name', 'role', 'group_name'].include?(params[:sort]) && params[:sort] || nil
+  end
+
+  def authorize_and_load_membership
+    return true
   end
 end

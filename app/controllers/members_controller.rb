@@ -44,22 +44,77 @@ class MembersController < ApplicationController
   # GET /groups/:id/members/new
   def new
     @member = @group.members.new
+    authorize! :manage, @group
   end
 
   # GET /groups/:id/members/1/edit
   def edit
     @groups = Group.all
     set_group
-    @current_members = @group.all_members
-    # def all_members seemed way more useful for rendering people
-    # cancan is not allowing organizers to manage group
-    # authorize! :manage, @groups
+    authorize! :manage, @group
   end 
+
 
   # POST /groups/:id/members/
   # POST /groups/:id/members/.json
   def create
-    @member = @group.members.new(params['person'])
+    @person = Person.new(person_params)
+    
+    #checks if attribute is present, if yes, saves attribute
+    if email_params[:email_address][:email_address].present?
+      unless EmailAddress.exists?(address: email_params[:email_address][:email_address])
+        @person.primary_email_address= email_params[:email_address][:email_address]
+      end
+    end
+    
+    #checks if attribute is present, if yes, saves attribute
+    if phone_params[:phone_number][:phone_number].present?
+      @person.primary_phone_number=phone_params[:phone_number][:phone_number]
+    end 
+
+    
+    respond_to do |format|
+      if @person.save
+        @group.memberships.create(:person => @person, :role => 'member')
+        format.html { redirect_to group_dashboard_path(@group), notice: 'Member was successfully created.' }
+        format.json { render json: @person, status: :created, location: group_members_path(@group) }
+      else
+        format.html { render :new }
+        format.json { render json: @group.errors, status: :unprocessable_entity }
+      end
+    end
+
+  end
+
+  # POST /groups/:id/members/
+  # POST /groups/:id/members/.json
+  def borked_create
+    byebug
+    
+    #removes empty attributes, un-nests hash
+    #attr = {}
+    #person_params[:person].each do |k, v| 
+    #  if v.present? 
+    #    attr[k] = v
+    #  end
+    #end
+
+    #creates new person from params
+    @person = Person.create!(attr)
+    #checks if attribute is present, if yes, saves attribute
+    if email_params[:email_address][:email_address].present?
+      unless EmailAddress.exists?(address: email_params[:email_address][:email_address])
+        EmailAddress.create!(person_id: @person.id, address: email_params[:email_address][:email_address], primary: :true)
+      end
+    end
+
+    #checks if attribute is present, if yes, saves attribute
+    if phone_params[:phone_number][:phone_number].present?
+      PhoneNumber.create!(person_id: @person.id, number: phone_params[:phone_number][:phone_number], primary: :true)
+    end
+
+    #new member from attributes
+    @member = Membership.new(person_id: @person.id, group_id: @group.id)
     
     respond_to do |format|
       if @member.save
@@ -77,7 +132,7 @@ class MembersController < ApplicationController
   def update
     respond_to do |format|
       if @member.update(member_params)
-        format.html { redirect_to @membergroup, notice: 'Member was successfully updated.' }
+        format.html { redirect_to group_dashboard_path, notice: 'Member was successfully updated.' }
         format.json { render :show, status: :ok, location: @member }
       else
         format.html { render :edit }
@@ -97,6 +152,19 @@ class MembersController < ApplicationController
   end
 
   private
+
+  # only returns nil / empty symbol
+  def person_params
+    params.require(:person).permit(person: [:family_name, :given_name, :gender, :gender_identity, :party_identification, :ethnicities, :languages_spoken, :birthdate, :employer])
+  end
+
+  def email_params
+    params.require(:person).permit(email_address: :email_address)
+  end
+
+  def phone_params
+    params.require(:person).permit(phone_number: :phone_number)
+  end
 
   def set_member
     @member = @group.members.where(:id => params[:id])

@@ -15,4 +15,20 @@ class AffiliatesControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
   end
+
+
+  test 'create affiliation' do
+    person = people(:organizer)
+    group = person.groups.first
+    sign_in person
+
+    affiliate = Group.new(an_api_key: rand(1_000_000))
+    Affiliation.create(group: group, affiliated: affiliate)
+    
+    assert Affiliation.where(group_id: group.id)
+  end
+  
+
+
+
 end

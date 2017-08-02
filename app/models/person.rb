@@ -197,14 +197,16 @@ class Person < ApplicationRecord
   end
 
   def self.activity_feed(group, date=Date.today-1.days)
+
+    #need to fix this so it's only showing data you can see
     people_version =  PaperTrail::Version.where(item_type: 'Person').
       where.not(event: 'destroy').
       where(created_at: date.beginning_of_day...Date.today.end_of_day)
     
-    {}.tap do |feed|
+      {}.tap do |feed|
       
       created, updated = people_version.partition { |version| version.event == 'create' }
-
+      
       feed[:created] = created.map { |version|
          to_activity_json(version) 
        }

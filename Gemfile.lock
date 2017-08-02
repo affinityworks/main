@@ -380,7 +380,6 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails (~> 5.0.4)
   kaminari
-  listen (~> 3.0.5)
   memory_profiler
   mini_racer
   newrelic_rpm

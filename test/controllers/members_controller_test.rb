@@ -22,6 +22,45 @@ class MembersControllerTest < ActionDispatch::IntegrationTest
     assert_includes response_members_ids, affiliate_member.id
   end
 
+# having issues with posting params for this 
+#No route matches {:action=>"new", :controller=>"members"} missing required keys: [:group_id]
+
+  test 'create member' do
+    person = people(:organizer)
+    group_id = groups(:test).id
+    sign_in person
+    get new_group_member_url(:group_id => group_id)
+    assert_response :success
+
+    assert_difference -> { Person.count } do
+      post group_members_path(group_id), params: { person: { person: { given_name: "Test", family_name: "TestFamily", gender: "", gender_identity: "", party_identification: "", ethnicities: "", languages_spoken: "", birthdate: "", employer: ""}, email_address: {email_address: "yes@email.com"}, phone_number: {phone_number: "555-555-5555"}}, group_id: group_id }, as: :json
+    end
+    assert_response :success
+    assert EmailAddress.find_by_address("yes@email.com")
+    assert EmailAddress.find_by_address("yes@email.com").person.groups.include? groups(:test)
+    assert groups(:test).members.include? EmailAddress.find_by_address("yes@email.com").person
+  end 
+
+
+  test 'create member with real form data' do
+    person = people(:organizer)
+    group_id = groups(:test).id
+    sign_in person
+    get new_group_member_url(:group_id => group_id)
+    assert_response :success
+
+    assert_difference -> { Person.count } do
+      post group_members_path(group_id), params:  {"utf8"=>"✓", "authenticity_token"=>"GKguJhvn3caFTDOQdBrCSAXzyt+1f5ww24odtrSlXfGMjmL7NX/vAv0n39ryEdNwJXQ6IdJjDMcdymCmpOrNUg==", "person"=>{"person"=>{"given_name"=>"asdfasdf", "family_name"=>"asdlfkjas", "gender"=>"asldkf", "gender_identity"=>"alsdkdfj", "party_identification"=>"sdlfkj", "ethnicities"=>"asldfj", "languages_spoken"=>"asdf", "birthdate"=>"asdf", "employer"=>"asdf"}, "email_address"=>{"email_address"=>"asdf@sadf.com"}, "phone_number"=>{"phone_number"=>"502340234"}}, "commit"=>"Add Member", "group_id"=>"1"}, as: :json
+    end
+    assert_response :success
+
+    assert EmailAddress.find_by_address("asdf@sadf.com")
+    assert EmailAddress.find_by_address("asdf@sadf.com").person.groups.include? groups(:test)
+    assert groups(:test).members.include? EmailAddress.find_by_address("asdf@sadf.com").person
+
+  end 
+
+ 
   test 'members shouldnt be able to see list' do
     person = people(:member1)
     sign_in person

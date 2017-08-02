@@ -52,6 +52,12 @@ class Members extends Component {
               placeholder='Search for your people' />
           </div>
         </div>
+        <br />
+        <div>
+          <a href="members/new">
+            <button className='btn btn-primary'>Add Member</button>
+          </a>
+        </div>
 
         <br />
 

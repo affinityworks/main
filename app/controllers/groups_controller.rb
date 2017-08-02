@@ -47,16 +47,13 @@ class GroupsController < ApplicationController
   def edit
     @groups = Group.all
     set_group
-    @current_memberships = @group.all_memberships
-    # cancan is not allowing organizers to manage group
-    # authorize! :manage, @groups
+    authorize! :manage, @group
   end 
 
   # POST /groups
   # POST /groups.json
   def create
     @group = Group.new(group_params)
-
     respond_to do |format|
       if @group.save
         format.html { redirect_to group_dashboard_path, notice: 'Group was successfully created.' }
@@ -71,9 +68,11 @@ class GroupsController < ApplicationController
   # PATCH/PUT /groups/1
   # PATCH/PUT /groups/1.json
   def update
+    #affiliated_id and group_id are switched due to table being backwards. refactor upon completion
+    @affiliates = Affiliation.find_or_create_by!({affiliated_id: params[:id], group_id: params["affiliation"]["affiliated_id"]})
     respond_to do |format|
       if @group.update(group_params)
-        format.html { redirect_to @group, notice: 'Group was successfully updated.' }
+        format.html { redirect_to group_dashboard_path(@group), notice: 'Group was successfully updated.' }
         format.json { render :show, status: :ok, location: @group }
       else
         format.html { render :edit }
