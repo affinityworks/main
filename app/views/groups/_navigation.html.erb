@@ -30,28 +30,19 @@
       </div>
       <br />
     </div>
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item">
-        <%= link_to @group.name, group_dashboard_path(@group) %>
-      </li>
-      <li class="breadcrumb-item active">
-        Edit
-      </li>
-    </ol>
-    <br>
     <div>
       <ul class="nav nav-tabs">
             <li class="nav-item">
-              <%= link_to "Dashboard", 'dashboard', class: "nav-link" %>
+              <%= link_to "Dashboard", group_dashboard_path(@group), class: "nav-link" %>
             </li>
             <li class="nav-item">
-              <%= link_to "Groups", 'affiliates', class: "nav-link" %>
+              <%= link_to "Groups", group_affiliates_path(@group), class: "nav-link" %>
             </li>
             <li class="nav-item">
-              <%= link_to "All Members", 'members', class: "nav-link" %>
+              <%= link_to "All Members", group_members_path(@group), class: "nav-link" %>
             </li>
             <li class="nav-item">
-              <%= link_to "All Events", 'events', class: "nav-link" %>
+              <%= link_to "All Events", group_events_path(@group), class: "nav-link" %>
             </li>
       </ul>
     </div>

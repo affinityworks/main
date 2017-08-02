@@ -40,6 +40,14 @@ class Person < ApplicationRecord
 
   scope :unsynced, -> { where(synced: false) }
 
+  validates_inclusion_of :gender, :in => :gender_options
+  serialize :languages_spoken, Array
+  serialize :ethnicities, Array
+
+  def gender_options
+    ["Other", "Male", "Female"]
+  end
+
   def name
     [ given_name, family_name ].compact.join(' ')
   end
@@ -235,6 +243,7 @@ class Person < ApplicationRecord
   def permitted_import_parameters
     return [:family_name, :given_name, :additional_name, :honorific_prefix,
             :honorific_suffix, :gender, :gender_identity, :party_identification,
+            :primary_email_address, :primary_phone_number,
             :source, {:ethnicities => []}, {:languages_spoken => []}, :birthdate, :employer,
             {:custom_fields => {}}, :created_at, :updated_at]
   end
