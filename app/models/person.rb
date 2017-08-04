@@ -33,6 +33,8 @@ class Person < ApplicationRecord
   before_update :generate_update_events
 
   attr_accessor :attended_events_count #NOTE ROAR purpose
+  
+  after_create :custom_field_to_phone_number
 
   scope :by_email, -> (email) do
     includes(:email_addresses).where(email_addresses: { address: email })
@@ -40,7 +42,7 @@ class Person < ApplicationRecord
 
   scope :unsynced, -> { where(synced: false) }
 
-  validates_inclusion_of :gender, :in => :gender_options
+  #validates_inclusion_of :gender, :in => :gender_options
   serialize :languages_spoken, Array
   serialize :ethnicities, Array
 

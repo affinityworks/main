@@ -20,7 +20,7 @@ class EmailAddress < ApplicationRecord
   def update_person_identifier
     if address_changed? && primary?
       hashed_address = Digest::SHA256.base64digest address
-      self.person.add_identifier('affinity_id', hashed_address)
+      self.person.add_identifier('affinity_id', hashed_address) if self.person
     end
   end
 end
