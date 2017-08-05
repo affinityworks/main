@@ -34,3 +34,8 @@ organizer:
   group_id: 3
   person_id: 6
   role: 1
+
+forth:
+  group_id: 4
+  person_id: 1
+  role: 0

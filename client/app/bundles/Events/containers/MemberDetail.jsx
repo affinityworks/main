@@ -110,7 +110,7 @@ class MemberDetail extends Component {
         <Link to={membersPath()}>
           <button className='btn btn-primary'>Back to Members</button>
         </Link>
-        <a href="/edit">
+        <a href={`${membersPath()}/${id}/edit`}>
           <button className='btn btn-primary'>Edit</button>
         </a>
       </div>

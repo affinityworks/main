@@ -60,6 +60,39 @@ class MembersControllerTest < ActionDispatch::IntegrationTest
 
   end 
 
+
+  test "affiliated organizer can view member" do
+    organizer = people(:organizer)
+    group = groups(:fourth)
+    member = people(:one)
+
+    sign_in organizer
+
+    get group_member_url(group_id: group.id, id: member.id), as: :json
+    assert_response :success   
+  end
+
+  test "non-affiliatd organizer cant view member" do
+    organizer = people(:two)
+    group = groups(:fourth)
+    member = people(:one)
+
+    sign_in organizer
+
+    get group_member_url(group_id: group.id, id: member.id), as: :json
+    assert_response 403
+  end
+  
+  test "member cant view other members of a group" do
+    organizer = people(:member2)
+    group = groups(:fourth)
+    member = people(:one)
+
+    sign_in organizer
+
+    get group_member_url(group_id: group.id, id: member.id), as: :json
+    assert_response 403
+  end
  
   test 'members shouldnt be able to see list' do
     person = people(:member1)

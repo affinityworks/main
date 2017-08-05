@@ -154,8 +154,7 @@ class MembersController < ApplicationController
   end
 
   def set_member
-    members = @group.members.where(:id => params[:id])
-    @member = members.first if members.any?
+    @member = @group.members.find(params[:id])
   end
 
   def set_group
