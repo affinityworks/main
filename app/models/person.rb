@@ -245,7 +245,7 @@ class Person < ApplicationRecord
   def permitted_import_parameters
     return [:family_name, :given_name, :additional_name, :honorific_prefix,
             :honorific_suffix, :gender, :gender_identity, :party_identification,
-            :primary_email_address, :primary_phone_number,
+            :primary_email_address, :primary_phone_number, :person, :email_address, :phone_number,
             :source, {:ethnicities => []}, {:languages_spoken => []}, :birthdate, :employer,
             {:custom_fields => {}}, :created_at, :updated_at]
   end

@@ -3,7 +3,7 @@ class MembersController < ApplicationController
   before_action :authorize_group_access
   before_action :set_group
   before_action :set_members, only: :index
-  before_action :set_member, only: [:show, :edit, :update, :destroy]
+  before_action :set_member, only: [:show, :edit, :update, :destroy, :attendances]
 
   protect_from_forgery except: [:update, :create] #TODO: Add the csrf token in react.
 
@@ -24,19 +24,17 @@ class MembersController < ApplicationController
     respond_to do |format|
       format.html
       format.json do
-        person = Person.find(params[:id])
-        render json: JsonApi::PeopleRepresenter.new(person).to_json
+        render json: JsonApi::PeopleRepresenter.new(@member).to_json
       end
     end
   end
 
   def attendances
-    person = Person.find(params[:id])
-    attendances = person.attendances.includes(:event).order('events.start_date')
+    @attendances = @member.attendances.includes(:event).order('events.start_date')
     respond_to do |format|
       format.html
       format.json do
-        render json: JsonApi::AttendanceWithEventsRepresenter.for_collection.new(attendances).to_json
+        render json: JsonApi::AttendanceWithEventsRepresenter.for_collection.new(@attendances).to_json
       end
     end
   end
@@ -73,46 +71,6 @@ class MembersController < ApplicationController
 
   end
 
-  # POST /groups/:id/members/
-  # POST /groups/:id/members/.json
-  def borked_create
-    byebug
-    
-    #removes empty attributes, un-nests hash
-    #attr = {}
-    #person_params[:person].each do |k, v| 
-    #  if v.present? 
-    #    attr[k] = v
-    #  end
-    #end
-
-    #creates new person from params
-    @person = Person.create!(attr)
-    #checks if attribute is present, if yes, saves attribute
-    if email_params[:email_address][:email_address].present?
-      unless EmailAddress.exists?(address: email_params[:email_address][:email_address])
-        EmailAddress.create!(person_id: @person.id, address: email_params[:email_address][:email_address], primary: :true)
-      end
-    end
-
-    #checks if attribute is present, if yes, saves attribute
-    if phone_params[:phone_number][:phone_number].present?
-      PhoneNumber.create!(person_id: @person.id, number: phone_params[:phone_number][:phone_number], primary: :true)
-    end
-
-    #new member from attributes
-    @member = Membership.new(person_id: @person.id, group_id: @group.id)
-    
-    respond_to do |format|
-      if @member.save
-        format.html { redirect_to group_dashboard_path, notice: 'Member was added to your group.' }
-        format.json { render :show, status: :created, location: @member }
-      else
-        format.html { render :new }
-        format.json { render json: @member.errors, status: :unprocessable_entity }
-      end
-    end
-  end
 
   # PATCH/PUT /groups/1
   # PATCH/PUT /groups/1.json
@@ -142,7 +100,20 @@ class MembersController < ApplicationController
 
   # only returns nil / empty symbol
   def person_params
-    params.require(:person).permit(person: [:family_name, :given_name, :gender, :gender_identity, :party_identification, :ethnicities, :languages_spoken, :birthdate, :employer])
+    params.require(:person).permit(person: { 
+        person: [
+          :family_name,
+          :given_name, 
+          :gender, 
+          :gender_identity, 
+          :party_identification, 
+          :birthdate, 
+          :employer,
+          { :ethnicities => []}, 
+          {:languages_spoken => []},
+          {:custom_fields => {}}]
+        }
+      )
   end
 
   def email_params
@@ -162,9 +133,12 @@ class MembersController < ApplicationController
   end
 
   def set_members
-    @members = @group.all_members.includes(
-      [:email_addresses, :personal_addresses, :phone_numbers]
-    ).page(params[:page])
+    
+    member_ids = Membership.where(:group_id =>@group.affiliates.pluck(:id).push(@group.id) ).pluck(:person_id)
+    
+    @members = Person.where(:id => member_ids).includes(
+        [:email_addresses, :personal_addresses, :phone_numbers]
+      ).page(params[:page])
 
     if params[:filter]
       #in the future we might want ot search all fields like address, town, city, state... etc....
@@ -182,8 +156,5 @@ class MembersController < ApplicationController
     end
   end
 
-  def person_params
-    params.require(:person).permit(:family_name, :given_name, :gender, :gender_identity, :party_identification, :ethnicities, :languages_spoken, :birthdate, :employer)
-  end
 end
 
