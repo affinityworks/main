@@ -125,7 +125,10 @@ class MembersController < ApplicationController
   end
 
   def set_member
-    @member = @group.members.find(params[:id])
+    #@membership = Membership.where(:group_id =>@group.affiliates.pluck(:id).push(@group.id) )
+    group_ids = Membership.where(:group_id =>@group.affiliates.pluck(:id).push(@group.id) ).pluck(:group_id)
+    @memberships = Membership.where(:group_id => group_ids, :person_id => params[:id])
+    @member = @memberships.first.person if @memberships.any?
   end
 
   def set_group
