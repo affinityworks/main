@@ -20,7 +20,11 @@ class Api::ActionNetwork::TaggingsTest < ActiveSupport::TestCase
     end
 
     person = Person.last
+    
+    assert_includes group.members, person
 
-    assert_includes person.tag_list, tag.name
+    membership = person.memberships.first
+
+    assert_includes membership.tag_list, tag.name
   end
 end

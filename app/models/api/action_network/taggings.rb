@@ -25,8 +25,14 @@ module Api::ActionNetwork::Taggings
 
   def self.associate_person(tagging, tag_name, group)
     person = find_or_import_person(person_identifier(tagging), group)
-    person.tag_list.push(tag_name) unless person.nil?
-    #person.save #not needed because tag push saves
+    if person.nil?
+      logger.debug("Failed to find person for #{tagging}")
+    else
+      #we should update this to a cleaner non-depricated way of loading
+      membership = person.memberships(:group => group).first
+      membership.tag_list.push(tag_name) unless membership.nil?
+      membership.save
+    end
   end
 
   def self.find_or_import_person(person_uid, group)
