@@ -8,12 +8,13 @@ module Api::ActionNetwork::Import
 
   def request_resources_from_action_network(uri, group)
     retries ||= 0
-
+    #byebug
     collection = collection_class.new
     client = representer_class.new(collection)
     client.get(uri: uri, as: 'application/json') do |request|
       request['OSDI-API-TOKEN'] = group.an_api_key
     end
+
     logger.debug "#{self.class.name}#import! resources: #{collection.resources.size} page: #{collection.page}"
 
     next_uri = client.links && client.links['next']&.href
