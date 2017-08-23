@@ -13,6 +13,8 @@ import Header from './Header';
 import FlashMessages from './FlashMessages';
 
 class App extends Component {
+
+
   render() {
     const { current_user, current_group, current_role, alerts } = this.props;
     const currentUser = current_user;
@@ -23,9 +25,13 @@ class App extends Component {
       currentUser, currentGroup, currentRole, alerts
     }, applyMiddleware(ReduxPromise, thunk));
 
+    function fireTracking() {
+      ReactGA.pageview(window.location.hash);
+    }
+
     return (
       <Provider store={storeWithMiddleware}>
-        <Router history={history}>
+        <Router onUpdate={fireTracking} history={history}>
           <div className='container'>
             <FlashMessages />
             <br />
