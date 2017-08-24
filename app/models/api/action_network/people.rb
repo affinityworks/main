@@ -18,7 +18,7 @@ module Api::ActionNetwork::People
 
     logs = []
     #report = MemoryProfiler.report do
-    ActionNetworkRequestJob.perform_later(next_uri, group) if (next_uri && group)
+    ActionNetworkRequestPersonJob.perform_later(next_uri, group) if (next_uri && group)
     
     
 =begin      while next_uri

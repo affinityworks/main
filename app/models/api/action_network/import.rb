@@ -18,7 +18,7 @@ module Api::ActionNetwork::Import
     logger.debug "#{self.class.name}#import! resources: #{collection.resources.size} page: #{collection.page}"
 
     next_uri = client.links && client.links['next']&.href
-
+    byebug
     [collection.resources, next_uri]
   rescue => e
     NewRelic::Agent.notice_error(e)
@@ -28,21 +28,28 @@ module Api::ActionNetwork::Import
   end
 
   def request_single_resource_from_action_network(uri, group)
-    retries ||= 0
-
     resource = resource_class.new
     client = representer_class.new(resource)
-    client.get(uri: uri, as: 'application/json') do |request|
-      request['OSDI-API-TOKEN'] = group.an_api_key
+    if (uri = add_uri_filter && group)
+      ActionNetworkRequestResourceJob.perform_later(client, uri, group) 
     end
 
-    yield(resource) if block_given?
-    resource
-  rescue => e
-    NewRelic::Agent.notice_error(e)
-    logger.error e.inspect
-    retry if (retries += 1) < 3
-    nil
+
+#    retries ||= 0
+#
+#    resource = resource_class.new
+#    client = representer_class.new(resource)
+#    client.get(uri: uri, as: 'application/json') do |request|
+#      request['OSDI-API-TOKEN'] = group.an_api_key
+#    end
+#
+#    yield(resource) if block_given?
+#    resource
+#  rescue => e
+#    NewRelic::Agent.notice_error(e)
+#    logger.error e.inspect
+#    retry if (retries += 1) < 3
+#    nil
   end
 
   # Update all attributes for resources that already exist and have not been modified after import

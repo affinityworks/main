@@ -8,6 +8,5 @@ class JsonApi::PersonRepresenter < Roar::Decorator
     property :name
     property :primary_email_address
     property :identifiers
-    property :created_at
   end
 end
