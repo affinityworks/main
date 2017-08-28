@@ -37,7 +37,9 @@ gem 'wicked_pdf'
 gem 'wkhtmltopdf-heroku'
 gem 'wkhtmltopdf-binary-edge', '~> 0.12.4.0'
 
-
+gem 'ruby-debug-ide'
+#gem 'rdebug-ide'
+gem 'debase', '0.2.2.beta10'
 # This is an optional gem. When included, GraphQL will use a parser written in C
 # instead of the Ruby parser shipped with graphql-ruby.
 #gem 'graphql-libgraphqlparser', '~> 0.2'
@@ -115,7 +117,7 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 
-ruby "2.3.3"
+ruby ">=2.3.3"
 
 gem 'mini_racer', platforms: :ruby
 

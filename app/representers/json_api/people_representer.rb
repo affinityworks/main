@@ -10,7 +10,6 @@ class JsonApi::PeopleRepresenter < Roar::Decorator
     property :primary_email_address
     property :primary_phone_number
     property :attended_events_count
-    property :created_at
     property :primary_personal_address, decorator: Api::Resources::AddressRepresenter, class: PersonalAddress
   end
 end

@@ -1,24 +1,12 @@
 class ActionNetworkRequestResourceJob < ApplicationJob
+  #extend Api::ActionNetwork
+  #extend Api::ActionNetwork::Person
   queue_as :default
 
-  def perform(client,group,resource_class)
-    puts "in perform #{next_uri}"
-    logs = []
-    logger.info "Api::ActionNetwork::Resource Delayed Job#import! from #{next_uri}"
+  def perform(uri, group)
     
-    retries ||= 0
-
-    
-    client.get(uri: uri, as: 'application/json') do |request|
-      request['OSDI-API-TOKEN'] = group.an_api_key
+    Api::ActionNetwork::Person.request_single_resource_from_action_network(uri, group) do |resource|
+      person = Api::ActionNetwork::Person.after_import(resource, group)
     end
-
-    yield(resource) if block_given?
-      resource
-    rescue => e
-    NewRelic::Agent.notice_error(e)
-    logger.error e.inspect
-    retry if (retries += 1) < 3
-    nil
   end
 end

@@ -3,9 +3,7 @@ module Api::ActionNetwork::Person
   extend Api::ActionNetwork::Export
 
   def self.import!(uuid, group)
-    request_single_resource_from_action_network(first_uri(uuid: uuid), group) do |resource|
-      after_import(resource, group)
-    end
+    ActionNetworkRequestResourceJob.perform_later(first_uri(uuid: uuid), group)
   end
 
   def self.export!(person, group)

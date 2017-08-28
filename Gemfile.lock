@@ -106,6 +106,9 @@ GEM
     connection_pool (2.2.1)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
+    debase (0.2.2.beta10)
+      debase-ruby_core_source
+    debase-ruby_core_source (0.9.9)
     debug_inspector (0.0.2)
     declarative (0.0.9)
     declarative-option (0.1.0)
@@ -296,6 +299,8 @@ GEM
     roar-jsonapi (0.0.3)
       representable (~> 3.0, >= 3.0.3)
       roar (~> 1.1)
+    ruby-debug-ide (0.6.0)
+      rake (>= 0.8.1)
     rufus-scheduler (2.0.24)
       tzinfo (>= 0.3.22)
     safe_yaml (1.0.4)
@@ -364,6 +369,7 @@ DEPENDENCIES
   byebug
   cancancan
   coffee-rails (~> 4.2)
+  debase (= 0.2.2.beta10)
   derailed
   devise
   doorkeeper
@@ -397,6 +403,7 @@ DEPENDENCIES
   resque-scheduler
   roar
   roar-jsonapi
+  ruby-debug-ide
   sass-rails (~> 5.0)
   spring
   spring-watcher-listen (~> 2.0.0)

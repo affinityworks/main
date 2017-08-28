@@ -31,3 +31,13 @@ test:
 fourth:
   id: 4
   an_api_key: 'test-token-4'
+
+
+five:
+  id: 5
+  an_api_key: 'test-token-5'
+
+
+six:
+  id: 6
+  an_api_key: 'test-token-6'

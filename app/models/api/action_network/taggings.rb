@@ -27,6 +27,8 @@ module Api::ActionNetwork::Taggings
     person = find_or_import_person(person_identifier(tagging), group)
     if person.nil?
       logger.debug("Failed to find person for #{tagging}")
+    elsif person.class == ActionNetworkRequestResourceJob
+      logger.debug("triggered person import for #{tagging}")
     else
       #we should update this to a cleaner non-depricated way of loading
       membership = person.memberships(:group => group).first

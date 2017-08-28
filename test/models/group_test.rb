@@ -76,8 +76,8 @@ class GroupTest < ActiveSupport::TestCase
   end
 
   test '#upcoming_events' do
-    group = Group.first
-    other_group = Group.last
+    group = groups(:five)
+    other_group = groups(:six)
 
     ended_event = Event.create(start_date: 2.days.ago)
     group.events<<ended_event
@@ -111,8 +111,8 @@ class GroupTest < ActiveSupport::TestCase
   end
 
   test '#all_events' do
-    group = Group.first
-    affiliated = Group.last
+    group = groups(:one)
+    affiliated = groups(:two)
 
     Affiliation.create(group: group, affiliated: affiliated)
 
@@ -127,8 +127,8 @@ class GroupTest < ActiveSupport::TestCase
   end
 
   test '#all_memberships' do
-    group = Group.first
-    affiliated = Group.last
+    group = Group.create(:an_api_key => "asdfasdf")
+    affiliated = Group.create(:an_api_key => 'fdafdafda')
 
     Affiliation.create(group: group, affiliated: affiliated)
 
@@ -143,8 +143,8 @@ class GroupTest < ActiveSupport::TestCase
   end
 
   test '#all_members' do
-    group = Group.first
-    affiliated = Group.last
+    group = Group.create(:an_api_key => "asdfasdf")
+    affiliated = Group.create(:an_api_key => 'fdafdafda')
 
     Affiliation.create(group: group, affiliated: affiliated)
 
@@ -155,7 +155,7 @@ class GroupTest < ActiveSupport::TestCase
 
     assert_includes group.all_members, group_member
     assert_includes group.all_members, affiliated_member
-    assert_equal group.all_members.count, group.members.count + affiliated.members.count
+    assert_equal group.all_members.count, (affiliated.members.pluck(:id) + group.members.pluck(:id)).uniq.count
   end
 
   #test for model method to be written - is failing
