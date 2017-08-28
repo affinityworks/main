@@ -16,6 +16,8 @@ This project is a work in progress and nothing which is useable by end users is 
 * Install & run bundler
 * Install & run yarn
 * Build webpack -  rake react_on_rails:assets:webpack 
+* Install & run redis
+* Run Resque:  RUN_AT_EXIT_HOOKS=yes rake environment resque:work QUEUE=*
 * cd client && yarn install
 * Ubuntu: `sudo -u postgres createuser $USER -s`
 * `rake db:setup`
