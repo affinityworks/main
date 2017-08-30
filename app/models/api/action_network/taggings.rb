@@ -33,8 +33,8 @@ module Api::ActionNetwork::Taggings
       #we should update this to a cleaner non-depricated way of loading
       membership = person.memberships(:group => group).first
       unless membership.nil?
-        membership.tag_list.push(tag_name)
-        membership.save unless membership
+        membership.tag_list.add(tag_name)
+        membership.save
       end
     end
   end

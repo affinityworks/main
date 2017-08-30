@@ -23,7 +23,7 @@ class Api::ActionNetwork::TaggingsTest < ActiveSupport::TestCase
     
     assert_includes group.members, person
 
-    membership = person.memberships.first
+    membership = Membership.where(:person => person, :group => group).first
 
     assert_includes membership.tag_list, tag.name
   end
