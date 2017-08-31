@@ -49,9 +49,25 @@ class MembershipsController < ApplicationController
   private
 
   def find_memberships
-    @memberships = Group.find(params[:group_id]).all_memberships.joins(:person, :group).eager_load(
-      person: [:email_addresses, :personal_addresses, :phone_numbers]
-    ).page(params[:page])
+    
+    member_ids = Membership.where(:group_id =>@group.affiliates.pluck(:id).push(@group.id) ).pluck(:id)
+    #byebug 
+
+    @memberships = Membership.distinct.where(:id => member_ids).
+      joins(:person).
+      joins(ArelHelpers.join_association(Person, [:email_addresses, :personal_addresses, :phone_numbers], Arel::Nodes::OuterJoin) ).
+      page(params[:page])
+
+    #@memberships = Membership.where(:id => member_ids).
+    #joins([:email_addresses, :personal_addresses, :phone_numbers] ).page(params[:page])
+    #@memberships = Membership.where(:id => member_ids).includes([:email_addresses, :personal_addresses, :phone_numbers] ).page(params[:page])
+    
+    #@memberships = Membership.where(:id => member_ids).join([:email_addresses, :personal_addresses, :phone_numbers] ).page(params[:page])
+    #  @memberships = Membership.where(:person_id => member_ids).joins(:person).page(params[:page])
+
+    #@memberships = Group.find(params[:group_id]).all_memberships.joins(:person, :group).eager_load(
+    #  person: [:email_addresses, :personal_addresses, :phone_numbers]
+    #).page(params[:page])
 
     @memberships = @memberships.tagged_with(params[:tag]) if params[:tag]
 

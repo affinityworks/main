@@ -38,7 +38,8 @@ class ApplicationController < ActionController::Base
 
   def authorize_group_access
     return false unless params[:group_id]
-    authorize! :manage, Group.find_by(id: params[:group_id])
+    @group =  Group.find_by(id: params[:group_id])
+    authorize! :manage, @group
   end
 
 

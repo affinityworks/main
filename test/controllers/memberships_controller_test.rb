@@ -4,8 +4,8 @@ class MembershipsControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   test 'get #index' do
-    person = people(:organizer)
-    group = person.groups.first
+    person = people(:two)
+    group = groups(:two)
     sign_in person
 
     affiliate = Group.create(an_api_key: rand(1_000_000).to_s)
@@ -17,12 +17,13 @@ class MembershipsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     json = JSON.parse(response.body)
 
-    assert_equal  group.memberships.count + affiliate.memberships.count,
-                  json['memberships']['data'].count
-
     response_members_ids = json['memberships']['data'].map { |m| m['id'].to_i }
     assert_includes response_members_ids, group.memberships.first.id
     assert_includes response_members_ids, affiliate_membership.id
+
+    assert_equal  group.memberships.count + affiliate.memberships.count,
+    json['memberships']['data'].count
+
   end
 
   test 'get #index with filter' do

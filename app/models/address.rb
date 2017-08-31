@@ -1,4 +1,5 @@
 class Address < ApplicationRecord
+  include ArelHelpers::ArelTable
   serialize :address_lines, Array
   belongs_to :person
   acts_as_mappable default_units: :miles,

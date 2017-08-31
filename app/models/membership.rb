@@ -1,4 +1,5 @@
 class Membership < ApplicationRecord
+  include ArelHelpers::ArelTable
   acts_as_taggable
   has_paper_trail
   
@@ -6,6 +7,9 @@ class Membership < ApplicationRecord
   belongs_to :group
   belongs_to :person
   has_many :notes, as: :notable
+  has_many :email_addresses, :through => :person
+  has_many :personal_addresses, :through => :person
+  has_many :phone_numbers, :through => :person
 
   validates :person_id, uniqueness: { scope: :group_id }
   validates :group_id, uniqueness: { scope: :person_id }

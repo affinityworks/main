@@ -1,6 +1,7 @@
 class Event < ApplicationRecord
   include Api::Identifiers
-
+  include ArelHelpers::ArelTable
+  
   has_paper_trail ignore: [:created_at, :updated_at]
   acts_as_taggable
 
