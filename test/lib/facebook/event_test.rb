@@ -18,8 +18,8 @@ class Facebook::EventTest < ActiveSupport::TestCase
 
     #i'm really not sure waht's going on here - rabble
     Facebook::ApiAgent.stub :new, api_agent do
-      assert Facebook::Event.new(:identity => organizer_identity).find_by_url(url)
-      assert Facebook::Event.new(:identity => organizer_identity).find_by_event_id(event_id)
+      assert Facebook::Event.new(organizer_identity).find(url)
+      assert Facebook::Event.new(organizer_identity).find(event_id)
     end
   end
 end
