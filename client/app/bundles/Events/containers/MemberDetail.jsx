@@ -106,13 +106,15 @@ class MemberDetail extends Component {
 
         <br/>
         <br/>
-
-        <Link to={membersPath()}>
-          <button className='btn btn-primary'>Back to Members</button>
-        </Link>
-        <a href="">
-          <button className='btn btn-primary'>Edit</button>
-        </a>
+        
+        <div className='btn-toolbar'>
+          <Link to={membersPath()} className='btn btn-primary' role='button'>
+            Back to Members
+          </Link>&nbsp;
+          <a href={membership.id+"/edit"} className='btn btn-primary' role='button'>
+            Edit
+          </a>
+        </div>
       </div>
     );
   }
