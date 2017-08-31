@@ -31,7 +31,7 @@ module Api::ActionNetwork::Taggings
       logger.debug("triggered person import for #{tagging}")
     else
       #we should update this to a cleaner non-depricated way of loading
-      membership = person.memberships(:group => group).first
+      membership = Membership.where(:group => group, :person => person).first
       unless membership.nil?
         membership.tag_list.add(tag_name)
         membership.save
