@@ -72,7 +72,13 @@ class Tags extends Component {
   }
 
   addTagFilter(tag) {
-    this.props.history.push(`?${queryString.stringify({ tag })}`);
+    if (this.props.match.params.id) {
+      // we are in the MemberDetail view, need to go up a level
+    this.props.history.push(`./?${queryString.stringify({ tag })}`);
+    } else {
+      // we are in the MembersTable view, just add filter
+      this.props.history.push(`?${queryString.stringify({ tag })}`);
+    }
   }
 
   showAddTagInput() {
