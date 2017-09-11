@@ -7,11 +7,11 @@ class Group < ApplicationRecord
 
   has_many :memberships, dependent: :destroy
   has_many :members, through: :memberships, source: :person
-  #has_many :organizers, -> { where(role: 'organizer') },
-  #                             :through => :memberships,
-  #                             :source => :person
   
-  #this doesn't seem right...
+  has_many :organizer_memerships, -> { organizer }, :class_name => 'Membership'
+  has_many :organizers, :source => :person, :through => :organizer_memerships
+
+
   has_many :attendances, through: :members
   has_many :affiliations, foreign_key: :group_id, class_name: 'Affiliation'
   has_many :affiliations_with, foreign_key: :affiliated_id, class_name: 'Affiliation'

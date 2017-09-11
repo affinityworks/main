@@ -16,6 +16,9 @@ class Membership < ApplicationRecord
   #for form helpers
   accepts_nested_attributes_for :group
 
+  scope :member, -> { where(:role => :organizer) }
+  scope :organizer, -> { where(:role => :member) }
+
   enum role: [:member, :organizer]
 
   #this doesn't do what i'd hoped - rabble
