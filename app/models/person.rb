@@ -31,6 +31,9 @@ class Person < ApplicationRecord
   has_many :memberships, dependent: :destroy
   has_many :groups, through: :memberships
 
+  has_many :organizer_memerships, -> { organizer }, :class_name => 'Membership'
+  has_many :organized_groups, :source => :group, :through => :organizer_memerships
+
   before_update :generate_update_events
 
   attr_accessor :attended_events_count #NOTE ROAR purpose

@@ -9,7 +9,8 @@ module Api::ActionNetwork::Events
     existing_count = 0
     new_count = 0
     updated_count = 0
-    next_uri = first_uri(synced_at: group.synced_at)
+    synced_at = group.synced_at ? group.synced_at - 1.week : nil
+    next_uri = first_uri(synced_at: synced_at)
 
     logger.info "Api::ActionNetwork::Events#import! from #{next_uri}"
 

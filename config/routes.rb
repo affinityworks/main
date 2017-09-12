@@ -112,6 +112,7 @@ Rails.application.routes.draw do
 
   #mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/queries"
   resources :queries
+  resources :members
   resource :sha, only: :show
   resources :zipcodes, only: :show
   get '/.well-known/acme-challenge/:id', to: 'wellknown#show'

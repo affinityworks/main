@@ -126,13 +126,19 @@ class MembersController < ApplicationController
 
   def set_member
     #@membership = Membership.where(:group_id =>@group.affiliates.pluck(:id).push(@group.id) )
-    group_ids = Membership.where(:group_id =>@group.affiliates.pluck(:id).push(@group.id) ).pluck(:group_id)
+    if @group 
+      #are we looking at the person in the context of a specific group, then what groups can we see
+      group_ids = @group.affiliates.pluck(:id).push(@group.id)
+    else  #or did we not get any group
+      organized_groups_ids = current_user.organized_groups.pluck(:id)
+      group_ids = Affilation.where(:group_id =>organized_groups_ids).pluck(:group_id).push(organized_groups_ids)
+    end
     @memberships = Membership.where(:group_id => group_ids, :person_id => params[:id])
     @member = @memberships.first.person if @memberships.any?
   end
 
   def set_group
-    @group = Group.find(params[:group_id])
+    @group = Group.find(params[:group_id]) if params[:group_id]
   end
 
   def set_members

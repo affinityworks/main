@@ -15,12 +15,12 @@ module Api::ActionNetwork::Attendances
     new_count = 0
     updated_count = 0
     action_network_event_id = event.identifier_id('action_network') || return
-
-    next_uri = first_uri(action_network_event_id: action_network_event_id, synced_at: group.synced_at)
+    synced_at = group.synced_at ? group.synced_at - 1.week : nil
+    next_uri = first_uri(action_network_event_id: action_network_event_id, synced_at: synced_at)
 
     logger.info "Api::ActionNetwork::Attendances#import! from #{next_uri}"
 
-    #::Attendance.transaction do
+    #::Attendance.transaction do  
       while next_uri
         attendances, next_uri = request_resources_from_action_network(next_uri, group)
 
