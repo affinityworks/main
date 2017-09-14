@@ -65,7 +65,7 @@ class Member extends Component {
   }
 
   render() {
-    const { member, role, id } = this.props;
+    const { member, role, id, groups } = this.props;
 
     if(!member) { return null }
 
@@ -75,7 +75,7 @@ class Member extends Component {
       <tr>
         <td>{this.showEmailCheckbox()}</td>
         <td>
-          <Link to={`${membersPath()}/${id}`}>
+          <Link to={`${membersPath(groups[0]['id'])}/${id}`}>
             {member['given-name']} {member['family-name']}
           </Link>
         </td>

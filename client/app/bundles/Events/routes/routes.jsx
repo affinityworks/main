@@ -31,6 +31,7 @@ export default (
 
     <Route path='/groups/:groupId/members/:id' component={MemberDetail} />
     <Route path='/groups/:groupId/members' component={Members} />
+    <Route path='/members/:id' component={MemberDetail} />
 
     <Route path='/profile' component={Profile} />
 

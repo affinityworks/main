@@ -131,7 +131,7 @@ class MembersController < ApplicationController
       group_ids = @group.affiliates.pluck(:id).push(@group.id)
     else  #or did we not get any group
       organized_groups_ids = current_user.organized_groups.pluck(:id)
-      group_ids = Affilation.where(:group_id =>organized_groups_ids).pluck(:group_id).push(organized_groups_ids)
+      group_ids = Affiliation.where(:group_id =>organized_groups_ids).pluck(:affiliated_id).concat(organized_groups_ids).uniq
     end
     @memberships = Membership.where(:group_id => group_ids, :person_id => params[:id])
     @member = @memberships.first.person if @memberships.any?

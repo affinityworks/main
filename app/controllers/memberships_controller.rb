@@ -49,25 +49,20 @@ class MembershipsController < ApplicationController
   private
 
   def find_memberships
-    
-    member_ids = Membership.where(:group_id =>@group.affiliates.pluck(:id).push(@group.id) ).pluck(:id)
-    #byebug 
+
+    if @group 
+      #are we looking at the person in the context of a specific group, then what groups can we see
+      member_ids = Membership.where(:group_id =>@group.affiliates.pluck(:id).push(@group.id) ).pluck(:id)
+    else  #or did we not get any group
+      organized_groups_ids = current_user.organized_groups.pluck(:id)
+      group_ids = Membership.where(:group_id =>organized_groups_ids.concat(organized_groups_ids).uniq).pluck(:id)
+    end
+
 
     @memberships = Membership.distinct.where(:id => member_ids).
       joins(:person).
       joins(ArelHelpers.join_association(Person, [:email_addresses, :personal_addresses, :phone_numbers], Arel::Nodes::OuterJoin) ).
       page(params[:page])
-
-    #@memberships = Membership.where(:id => member_ids).
-    #joins([:email_addresses, :personal_addresses, :phone_numbers] ).page(params[:page])
-    #@memberships = Membership.where(:id => member_ids).includes([:email_addresses, :personal_addresses, :phone_numbers] ).page(params[:page])
-    
-    #@memberships = Membership.where(:id => member_ids).join([:email_addresses, :personal_addresses, :phone_numbers] ).page(params[:page])
-    #  @memberships = Membership.where(:person_id => member_ids).joins(:person).page(params[:page])
-
-    #@memberships = Group.find(params[:group_id]).all_memberships.joins(:person, :group).eager_load(
-    #  person: [:email_addresses, :personal_addresses, :phone_numbers]
-    #).page(params[:page])
 
     @memberships = @memberships.tagged_with(params[:tag]) if params[:tag]
 

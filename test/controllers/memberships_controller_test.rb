@@ -46,6 +46,15 @@ class MembershipsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+
+  test 'get #show no group' do
+    person = people(:organizer)
+    sign_in person
+
+    get membership_url( id: person.id), as: :json
+    assert_response :success
+  end
+
   test 'get #show on affiliated' do
     person = people(:organizer)
     sign_in person

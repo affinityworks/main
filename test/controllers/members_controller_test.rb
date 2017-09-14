@@ -85,6 +85,17 @@ class MembersControllerTest < ActionDispatch::IntegrationTest
     get group_member_url(group_id: group.id, id: member.id), as: :json
     assert_response :success   
   end
+  
+  test "affiliated organizer can directly view member" do
+    organizer = people(:organizer)
+    group = groups(:fourth)
+    member = people(:one)
+
+    sign_in organizer
+
+    get member_url(id: member.id), as: :json
+    assert_response :success   
+  end
 
   test "non-affiliatd organizer cant view member" do
     organizer = people(:two)
