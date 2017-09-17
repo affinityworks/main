@@ -100,8 +100,7 @@ class MembersController < ApplicationController
 
   # only returns nil / empty symbol
   def person_params
-    params.require(:person).permit(person: { 
-        person: [
+    params.require(:person).permit([
           :family_name,
           :given_name, 
           :gender, 
@@ -109,10 +108,12 @@ class MembersController < ApplicationController
           :party_identification, 
           :birthdate, 
           :employer,
+          :primary_email_address,
+          :primary_phone_number,   
           { :ethnicities => []}, 
           {:languages_spoken => []},
-          {:custom_fields => {}}]
-        }
+          {:custom_fields => {}}
+     ]
       )
   end
 
