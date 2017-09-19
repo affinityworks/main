@@ -64,7 +64,7 @@ class MembersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
 
     assert_difference -> { Person.count } do
-      post group_members_path(group_id), params:  {"utf8"=>"✓", "authenticity_token"=>"GKguJhvn3caFTDOQdBrCSAXzyt+1f5ww24odtrSlXfGMjmL7NX/vAv0n39ryEdNwJXQ6IdJjDMcdymCmpOrNUg==", person=>{"given_name"=>"asdfasdf", "family_name"=>"asdlfkjas", "gender"=>"asldkf", "gender_identity"=>"alsdkdfj", "party_identification"=>"sdlfkj", "ethnicities"=>"asldfj", "languages_spoken"=>"asdf", "birthdate"=>"asdf", "employer"=>"asdf"}, "email_address"=>{"email_address"=>"asdf@sadf.com"}, "phone_number"=>{"phone_number"=>"502340234"}, "commit"=>"Add Member", "group_id"=>"1"}, as: :json
+      post group_members_path(group_id), params:  {"utf8"=>"✓", "authenticity_token"=>"GKguJhvn3caFTDOQdBrCSAXzyt+1f5ww24odtrSlXfGMjmL7NX/vAv0n39ryEdNwJXQ6IdJjDMcdymCmpOrNUg==", "person"=>{"given_name"=>"asdfasdf", "family_name"=>"asdlfkjas", "gender"=>"asldkf", "gender_identity"=>"alsdkdfj", "party_identification"=>"sdlfkj", "ethnicities"=>"asldfj", "languages_spoken"=>"asdf", "birthdate"=>"asdf", "employer"=>"asdf"}, "email_address"=>{"email_address"=>"asdf@sadf.com"}, "phone_number"=>{"phone_number"=>"502340234"}, "commit"=>"Add Member", "group_id"=>"1"}, as: :json
     end
     assert_response :success
 
