@@ -111,7 +111,7 @@ class MemberDetail extends Component {
           <Link to={membersPath()} className='btn btn-primary' role='button'>
             Back to Members
           </Link>&nbsp;
-          <a href={membership.id+"/edit"} className='btn btn-primary' role='button'>
+          <a href={attributes['id']+"/edit"} className='btn btn-primary' role='button'>
             Edit
           </a>
         </div>
