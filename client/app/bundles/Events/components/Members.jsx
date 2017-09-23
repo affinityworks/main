@@ -41,8 +41,6 @@ class Members extends Component {
     const { memberships, showGroupName, location } = this.props
     const { search } = location;
     const { filter } = queryString.parse(search);
-    const { empty } = ''; 
-
 
     return (
       <div>
