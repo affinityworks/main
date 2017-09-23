@@ -99,7 +99,7 @@ class MemberDetail extends Component {
             <h4 style={{ marginRight: '10px' }}>Tags</h4>
             <Tags tags={membership.attributes.tags} membershipId={membership.id} />
             <br/>
-            <h4>Notes</h4>
+            <h4>Notes </h4>
             <Notes notes={membership.attributes.notes} membershipId={membership.id}/>
           </div>
         </div>
