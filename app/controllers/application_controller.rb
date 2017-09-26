@@ -9,14 +9,13 @@ class ApplicationController < ActionController::Base
   end
 
   def current_group
-    group = Group.find(params[:group_id]) if params[:group_id]
-    return group || current_user.groups.first
+    Group.find(params[:group_id]) if params[:group_id]
   end
 
   def current_role
     Membership.where(
       person_id: current_person.id, group_id: current_group.id
-    ).first.role
+    ).first.role if current_person && current_group
   end
 
   def validate_admin_permission
@@ -32,7 +31,7 @@ class ApplicationController < ActionController::Base
     elsif can? :manage, current_group
       group_dashboard_path(current_group.id)
     else
-      group_url(current_group.id)
+      profile_index_path
     end
   end
 
@@ -50,7 +49,7 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       format.html do
         flash[:alert] = "Access denied. You are not authorized to access the requested page."
-        redirect_to group_path(id: current_group.id)
+        redirect_to profile_index_path
       end
       format.json { head :forbidden }
     end
