@@ -9,7 +9,8 @@ class ApplicationController < ActionController::Base
   end
 
   def current_group
-    Group.find(params[:group_id]) if params[:group_id]
+    group_id = controller_name == 'groups' ? params[:id] : params[:group_id] 
+    Group.find(group_id) if group_id
   end
 
   def current_role

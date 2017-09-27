@@ -1,1 +1,37 @@
-<%= render 'application/client' %>
+
+
+    <%= render 'navigation' %>
+    <div class = "container-html">
+      <div class="list-group-item">
+        <table class="table table--fixed">
+          <thead>
+            <tr>
+            <h3>
+              <small style={{ position: 'relative', bottom: '-5px', marginLeft: '5px' }}>
+                  <h1>Welcome to Affinity</h1>
+              </small>
+            </h3>
+            </tr>
+            <tr>
+              <td colspan="2">
+                Group:
+              </td>
+              <td>
+                Members
+              </td>
+              <td>
+                Events
+              </td>
+            </tr>
+            <% current_person.groups.each do |group| %>
+              <%= render 'group_list_item', :locals => {group: group, affiliate: false}  %>
+              <% if group.affiliates.size > 0 %>
+                <% group.affiliates.each do |affilited_group| %>
+                  <%= render 'group_list_item', :locals => {group: affilited_group, affiliate: true}  %>
+                <% end %>
+              <% end %>
+            <% end %>
+          </thead>
+        </table>
+      </div>
+    </div>
