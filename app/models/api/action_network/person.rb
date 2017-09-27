@@ -36,14 +36,16 @@ module Api::ActionNetwork::Person
       { updated: 1 }
     elsif do_we_know_about_this_email(resource)
       resource = merge_person_with_resource(resource)
+      Membership.create!(person: resource, group: group, role: 'member') unless group.members.include?(resource)      
       { updated: 1 }
     else
       resource = create_single_resource(resource)
+      Membership.create!(person: resource, group: group, role: 'member') unless group.members.include?(resource)
       { created: 1 }
     end
 
-    resource.groups.push(group) unless group.members.include?(resource)
-
+    #resource.groups.push(group) unless group.members.include?(resource)
+    
     log
   rescue => e
     { errors: 1 }

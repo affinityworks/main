@@ -3,6 +3,14 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 class Header extends Component {
+  currentGroupName() {
+    if (this.props.currentGroup)
+      return this.props.currentGroup.name
+    else
+      return ''
+    end
+  }
+
   render() {
     const { currentUser, currentGroup } = this.props;
 
@@ -13,7 +21,7 @@ class Header extends Component {
             <h2>
               <a href="/" className="affinity-logo"><img src="/images/affinity-logo.svg" width="230" /></a>
               <small style={{ position: 'relative', bottom: '-5px', marginLeft: '5px' }}>
-                {this.props.currentGroup.name}
+                {this.currentGroupName()}
               </small>
             </h2>
           </div>

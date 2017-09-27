@@ -1,0 +1,16 @@
+               <tr>
+                <% if local_assigns[:locals][:affiliate] %>
+                  <td></td>
+                  <td>
+                <% else %>
+                  <td colspan="2">
+                <% end %>
+                  <a href="<%= group_link_helper(local_assigns[:locals][:group]) %>"><%= local_assigns[:locals][:group].name %></a>
+                </td>
+                <td>
+                  <%= local_assigns[:locals][:group].memberships.size %>
+                </td>
+                <td>
+                  <%= local_assigns[:locals][:group].events.size %>
+                </td>
+               </tr>
