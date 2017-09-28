@@ -14,17 +14,34 @@ class ApplicationController < ActionController::Base
   end
 
   def current_role
+    role = ''
+
     if current_person && current_group
       if current_group.members.include?(current_person)
-        return Membership.where(
-            person_id: current_person.id, group_id: current_group.id
-          ).first.role
+        role = user_group_to_role(current_person, current_group)
       else
-        return 'member'
+        role = 'member' 
       end
+
+      current_group.affiliates.each do |affiliated_group|
+        affilited_role = user_group_to_role(current_person, affiliated_group)
+        role = 'organizer' if affilited_role == 'organizer'
+      end
+
     end
-    
+
+    return role
   end
+
+  def user_group_to_role(person, group)
+    role = nil
+    membership = Membership.where(
+      person_id: person.id, group_id: group.id
+    ).first
+    role = membership.role if membership
+    return role
+  end
+
 
   def validate_admin_permission
     return if controller_name == 'sessions' || current_person.nil?
