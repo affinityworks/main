@@ -26,27 +26,32 @@ module Api::ActionNetwork::Person
   end
 
   def self.after_import(resource, group)
-    person = Person.any_identifier(resource.identifier('action_network')).first
-    #logger.debug "#{self.class.name}#after_import! resource: #{resource.identifiers.to_json} person: #{person.identifiers.to_json}, :group #{group.id}"
-
-    log = if !person.nil?
-      update_single_resource(resource)
-
-      Membership.create!(person: person, group: group, role: 'member') unless group.members.include?(person)
-      { updated: 1 }
-    elsif do_we_know_about_this_email(resource)
-      resource = merge_person_with_resource(resource)
-      Membership.create!(person: resource, group: group, role: 'member') unless group.members.include?(resource)      
-      { updated: 1 }
+    if resource[:custom_fields] && resource[:custom_fields][:affinity_block_syncing] == true
+      logger.info "Not syncing #{resource}"
     else
-      resource = create_single_resource(resource)
-      Membership.create!(person: resource, group: group, role: 'member') unless group.members.include?(resource)
-      { created: 1 }
-    end
 
-    #resource.groups.push(group) unless group.members.include?(resource)
-    
-    log
+      person = Person.any_identifier(resource.identifier('action_network')).first
+      #logger.debug "#{self.class.name}#after_import! resource: #{resource.identifiers.to_json} person: #{person.identifiers.to_json}, :group #{group.id}"
+
+      log = if !person.nil?
+        update_single_resource(resource)
+
+        Membership.create!(person: person, group: group, role: 'member') unless group.members.include?(person)
+        { updated: 1 }
+      elsif do_we_know_about_this_email(resource)
+        resource = merge_person_with_resource(resource)
+        Membership.create!(person: resource, group: group, role: 'member') unless group.members.include?(resource)      
+        { updated: 1 }
+      else
+        resource = create_single_resource(resource)
+        Membership.create!(person: resource, group: group, role: 'member') unless group.members.include?(resource)
+        { created: 1 }
+      end
+
+      #resource.groups.push(group) unless group.members.include?(resource)
+      
+      log
+    end
   rescue => e
     { errors: 1 }
   end

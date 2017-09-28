@@ -14,9 +14,16 @@ class ApplicationController < ActionController::Base
   end
 
   def current_role
-    Membership.where(
-      person_id: current_person.id, group_id: current_group.id
-    ).first.role if current_person && current_group
+    if current_person && current_group
+      if current_group.members.include?(current_person)
+        return Membership.where(
+            person_id: current_person.id, group_id: current_group.id
+          ).first.role
+      else
+        return 'member'
+      end
+    end
+    
   end
 
   def validate_admin_permission
