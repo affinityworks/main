@@ -32,7 +32,7 @@ class Header extends Component {
                 <span> {`${currentUser.given_name} ${currentUser.family_name}`} </span>
               </button>
               <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <Link className="dropdown-item" to={`/profile/`}>Account</Link>
+                <a className="dropdown-item" href='/profile/'>Account</a>
                 <a className="dropdown-item" href="/admin/logout">Logout</a>
               </div>
             </div>
