@@ -39,3 +39,28 @@ forth:
   group_id: 4
   person_id: 1
   role: 0
+
+national:
+  group_id: 7
+  person_id: 7
+  role: 1
+
+regional:
+  group_id: 8
+  person_id: 8
+  role: 1
+
+state:
+  group_id: 9
+  person_id: 9
+  role: 1
+
+district:
+  group_id: 10
+  person_id: 1
+  role: 1
+
+city:
+  group_id: 11
+  person_id: 11
+  role: 1

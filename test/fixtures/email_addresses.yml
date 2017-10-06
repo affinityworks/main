@@ -47,3 +47,34 @@ admin:
   primary: true
   address: organizer@admin.com
   person_id: 6
+
+nantional:
+  id: 8
+  primary: true
+  address: national@organizer.com
+  person_id: 7
+
+regional:
+  id: 9
+  primary: true
+  address: regional@organizer.com
+  person_id: 8
+
+state:
+  id: 10
+  primary: true
+  address: state@organizer.com
+  person_id: 9
+
+district:
+  id: 11
+  primary: true
+  address: district@organizer.com
+  person_id: 10
+
+city:
+  id: 12
+  primary: true
+  address: city@organizer.com
+  person_id: 11
+

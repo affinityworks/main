@@ -1,3 +1,19 @@
 test:
   group_id: 3 #Test group
   affiliated_id: 4 # Fourth group
+
+national_region:
+  group_id: 7
+  affiliated_id: 8
+
+regional_state:
+  group_id: 8
+  affiliated_id: 9
+
+state_district:
+  group_id: 9
+  affiliated_id: 10
+
+district_city:
+  group_id: 10
+  affiliated_id: 11

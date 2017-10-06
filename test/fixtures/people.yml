@@ -79,3 +79,31 @@ organizer:
   family_name: Organizer
   given_name: Test
   encrypted_password: $2a$11$08m64awvoVFg4sLOu.zA6e70E98bWC2VNewFWUNYjtnvutb/K68xK
+
+national_organizer:
+  id: 7
+  identifiers: ['advocacycommons:7']
+  family_name: Organizer
+  given_name: National
+  encrypted_password: $2a$11$08m64awvoVFg4sLOu.zA6e70E98bWC2VNewFWUNYjtnvutb/K68xK
+
+regional_organizer:
+  id: 8
+  identifiers: ['advocacycommons:8']
+  family_name: Organizer
+  given_name: Regional
+  encrypted_password: $2a$11$08m64awvoVFg4sLOu.zA6e70E98bWC2VNewFWUNYjtnvutb/K68xK
+
+state_organizer:
+  id: 9
+  identifiers: ['advocacycommons:9']
+  family_name: Organizer
+  given_name: State
+  encrypted_password: $2a$11$08m64awvoVFg4sLOu.zA6e70E98bWC2VNewFWUNYjtnvutb/K68xK
+
+city_organizer:
+  id: 10
+  identifiers: ['advocacycommons:10']
+  family_name: Organizer
+  given_name: City
+  encrypted_password: $2a$11$08m64awvoVFg4sLOu.zA6e70E98bWC2VNewFWUNYjtnvutb/K68xK

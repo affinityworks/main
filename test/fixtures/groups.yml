@@ -41,3 +41,29 @@ five:
 six:
   id: 6
   an_api_key: 'test-token-6'
+
+
+national:
+  id: 7
+  an_api_key: 'national-group-token'
+  name: national network
+
+regional:
+  id: 8
+  an_api_key: 'regional group token'
+  name: regional group
+
+state:
+  id: 9
+  an_api_key: 'state group token'
+  name: state group
+
+district:
+  id: 10
+  an_api_key: 'district group token'
+  name: district group
+
+city:
+  id: 11
+  an_api_key: 'city group token'
+  name: city group
