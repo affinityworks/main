@@ -27,12 +27,14 @@ Membership.create(person: norganizer, group: group, role: 'organizer')
 affiliate_2 = Group.create(name: "Take Action SF", an_api_key: '65ae2539627779838af580a3ba4ba411', creator: organizer)
 affiliate_3 = Group.create(name: "Ariba Carajo", an_api_key: '88527d51a3911e403b8c978f3f7eb394', creator: organizer)
 affiliate = Group.create(name: 'Portland Commuinty Rising', an_api_key: '7697d3813267b9ea9550648064dbc90b', creator: organizer)
+affiliate_4 = Group.create(name: 'Awesome Foundation', an_api_key: 'c07db6f0bed44ca4537a62207d6f5207', creator: organizer)
 
 group.sync_with_action_network
 
 Affiliation.create(affiliated: affiliate, group: group)
 Affiliation.create(affiliated: affiliate_2, group: group)
 Affiliation.create(affiliated: affiliate_3, group: group)
+Affiliation.create(affiliated: affiliate_4, group: affiliate_3)
 
 affiliate.sync_with_action_network
 affiliate_2.sync_with_action_network

@@ -16,7 +16,7 @@ class GroupTest < ActiveSupport::TestCase
   end
 
   test "sync_with_action_network" do
-    group = Group.first
+    group = groups(:one)
 
     stub_request(:get, 'https://actionnetwork.org/api/v2/events')
       .with(headers: { 'OSDI-API-TOKEN' => group.an_api_key })
@@ -67,7 +67,7 @@ class GroupTest < ActiveSupport::TestCase
       .to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'person.json')))
 
     assert_difference 'group.events.count', 3, 'Imports the events' do
-      assert_difference 'group.members.count', 6, 'Imports the membmers' do
+      assert_difference 'group.members.count', 4, 'Imports the membmers' do
         assert_difference 'Attendance.count', 2, 'Imports the attendances' do
           group.sync_with_action_network
         end

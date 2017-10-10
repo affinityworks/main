@@ -26,9 +26,8 @@
             <% current_person.groups.each do |group| %>
               <%= render 'group_list_item', :locals => {group: group, affiliate: false}  %>
               <% if group.affiliates.size > 0 %>
-                <% group.affiliates.each do |affilited_group| %>
-                  <%= render 'group_list_item', :locals => {group: affilited_group, affiliate: true}  %>
-                <% end %>
+                <%= render 'affiliated_groups', :locals => {group: group}  %>
+              
               <% end %>
             <% end %>
           </thead>

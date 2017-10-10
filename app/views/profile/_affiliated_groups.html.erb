@@ -1,0 +1,6 @@
+<% local_assigns[:locals][:group].affiliates.each do |affiliated_group| %>
+  <%= render 'group_list_item', :locals => {group: affiliated_group, affiliate: true}  %>
+  <% if affiliated_group.affiliates.size > 0 %>
+    <%= render 'affiliated_groups', :locals => {group: affiliated_group}  %>
+  <% end %>
+<% end %>
