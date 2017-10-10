@@ -68,6 +68,21 @@ class AbilityTest < ActiveSupport::TestCase
     assert ability.can? :manage, group, 'the organizer can manage affiliate group'
   end
 
+  test 'organizer can managed multi level affiliated group' do
+    national_organizer = people(:national_organizer)
+
+    ability = Ability.new(national_organizer, groups(:national))
+    assert ability.can?( :manage, groups(:national)), 'the organizer can manage affiliate group'
+    assert ability.can?( :manage, groups(:state)), 'the organizer can manage affiliate group'
+    assert ability.can?( :manage, groups(:district)), 'the organizer can manage affiliate group'
+    assert ability.can?( :manage, groups(:regional)), 'the organizer can manage affiliate group'
+    assert ability.can?( :manage, groups(:city)), 'the organizer can manage affiliate group'
+    assert ability.can?(:manage, groups(:national).memberships.first)
+    assert ability.can?(:manage, groups(:state).memberships.first)
+    assert ability.can?(:manage, groups(:district).memberships.first)
+    assert ability.can?(:manage, groups(:regional).memberships.first)
+    assert ability.can?(:manage, groups(:city).memberships.first)
+  end
 
   test 'organizer can not manage other groups membership roles' do
     person = people(:one)
