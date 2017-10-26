@@ -50,20 +50,20 @@ national:
 
 regional:
   id: 8
-  an_api_key: 'regional group token'
+  an_api_key: '8891b5a7cf0700617dbab31192b8baaa'
   name: regional group
 
 state:
   id: 9
-  an_api_key: 'state group token'
+  an_api_key: 'fbaa784ee4c9c74de9caffeb1be36f1e'
   name: state group
 
 district:
   id: 10
-  an_api_key: 'district group token'
+  an_api_key: '13cf865e04a7ef26db45f4f39602b731'
   name: district group
 
 city:
   id: 11
-  an_api_key: 'city group token'
+  an_api_key: '23f5e71c2a74b66397a7ebff9d4fcb70'
   name: city group

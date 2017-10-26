@@ -2,7 +2,8 @@ require 'test_helper'
 
 class Api::ActionNetwork::PeopleTest < ActiveSupport::TestCase
   test '.import!' do
-    group = groups(:one)
+    group = groups(:city)
+    original_synced_at = group.synced_at
 
     person_not_from_action_network = group.members.create!(updated_at: Time.zone.local(2016))
 
@@ -36,7 +37,7 @@ class Api::ActionNetwork::PeopleTest < ActiveSupport::TestCase
       with(:headers => {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'Osdi-Api-Token'=>'c96dc7a808ed80fca8bb4953f8ac10bf', 'User-Agent'=>'Ruby'}).
       to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'people_page_2.json')))
 
-    assert_difference 'Person.count', 2 do
+    assert_difference 'group.members.count', 3 do
       Api::ActionNetwork::People.import!(group)
     end
 
@@ -93,5 +94,7 @@ class Api::ActionNetwork::PeopleTest < ActiveSupport::TestCase
 
     assert another_group.members.any_identifier('action_network:1efc3644-af25-4253-90b8-a0baf12dbd1e').exists?, "confirm the alredy imported user gets added to the new group"
     assert another_group.members.any_identifier('action_network:d91b4b2e-ae0e-4cd3-9ed7-d0ec501b0bc3').exists?, "confirm the alredy imported user gets added to the new group"
+    
+    assert origina_syned_at < group.reload.synced_at
   end
 end

@@ -68,6 +68,18 @@ class MembershipsControllerTest < ActionDispatch::IntegrationTest
     get group_membership_url(group_id: affiliate.id, id: person.id), as: :json
     assert_response :success
   end
+
+  test 'get #show on nested affiliated' do
+    person = people(:national_organizer)
+    sign_in person
+    
+    city_person = Person.create(:given_name => "City", :family_name => "Dweller")
+
+    affiliate_membership = Membership.create(person: Person.create, group: groups(:city))
+
+    get group_membership_url(group_id: groups(:city).id, id: city_person.id), as: :json
+    assert_response :success
+  end
  
 
   test 'update_role' do

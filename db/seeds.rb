@@ -29,12 +29,22 @@ affiliate_3 = Group.create(name: "Ariba Carajo", an_api_key: '88527d51a3911e403b
 affiliate = Group.create(name: 'Portland Commuinty Rising', an_api_key: '7697d3813267b9ea9550648064dbc90b', creator: organizer)
 affiliate_4 = Group.create(name: 'Awesome Foundation', an_api_key: 'c07db6f0bed44ca4537a62207d6f5207', creator: organizer)
 
+affiliate_regional = Group.create(name: "Regional Group", an_api_key: '8891b5a7cf0700617dbab31192b8baaa')
+affiliate_state = Group.create(name: "State Group", an_api_key: 'fbaa784ee4c9c74de9caffeb1be36f1e')
+affiliate_district = Group.create(name: "district Group", an_api_key: '13cf865e04a7ef26db45f4f39602b731')
+affiliate_city = Group.create(name: "city Group", an_api_key: '23f5e71c2a74b66397a7ebff9d4fcb70')
+
+
 group.sync_with_action_network
 
 Affiliation.create(affiliated: affiliate, group: group)
 Affiliation.create(affiliated: affiliate_2, group: group)
 Affiliation.create(affiliated: affiliate_3, group: group)
 Affiliation.create(affiliated: affiliate_4, group: affiliate_3)
+Affiliation.create(affiliated: affiliate_regional, group: group)
+Affiliation.create(affiliated: affiliate_state, group: affiliate_regional)
+Affiliation.create(affiliated: affiliate_district, group: affiliate_state)
+Affiliation.create(affiliated: affiliate_city, group: affiliate_district)
 
 affiliate.sync_with_action_network
 affiliate_2.sync_with_action_network

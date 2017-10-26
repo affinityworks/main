@@ -16,6 +16,15 @@ class AffiliatesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test 'get #index for affiliated group' do
+    person = people(:national_organizer)
+    group = groups(:state)
+    sign_in person
+
+    get group_affiliates_url(group.id), as: :json
+
+    assert_response :success
+  end
 
   test 'create affiliation' do
     person = people(:organizer)

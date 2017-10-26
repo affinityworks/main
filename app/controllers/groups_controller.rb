@@ -6,6 +6,7 @@ class GroupsController < ApplicationController
   # GET /groups
   # GET /groups.json
   def index
+    #this semems very wrong.
     @groups = params[:tag] ? Group.tagged_with(params[:tag]) : Group.all
     @groups = @groups.includes(:creator).page(params[:page])
 

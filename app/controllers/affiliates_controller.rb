@@ -4,7 +4,8 @@ class AffiliatesController < ApplicationController
   before_action :authorize_group_access
 
   def index
-    group = current_person.groups.find(params[:group_id])
+    #we already know the user can see this group. 
+    group = Group.find(params[:group_id])
     affiliates = group.affiliates.includes(:creator).page(params[:page])
 
     affiliates = affiliates.tagged_with(params[:tag]) if params[:tag]

@@ -39,6 +39,30 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
     assert_equal @group.name, json['data']['attributes']['name']
   end
 
+  test 'get #show self group' do
+    sign_in people(:national_organizer)
+    get group_url(id: groups(:national).id), as: :json
+    assert_response :success
+    json = JSON.parse(@response.body)
+    assert_equal groups(:national).name, json['data']['attributes']['name']
+  end
+  
+  test 'get #show affiliated' do
+    sign_in people(:national_organizer)
+    get group_url(id: groups(:regional).id), as: :json
+    assert_response :success
+    json = JSON.parse(@response.body)
+    assert_equal groups(:regional).name, json['data']['attributes']['name']
+  end
+ 
+  test 'get #show affiliated second level' do
+    sign_in people(:national_organizer)
+    get group_url(id: groups(:city).id), as: :json
+    assert_response :success
+    json = JSON.parse(@response.body)
+    assert_equal groups(:city).name, json['data']['attributes']['name']
+  end
+
   test "should get redirect" do
     get edit_group_url(@group)
     assert_response :redirect

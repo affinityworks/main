@@ -33,8 +33,10 @@ class Ability
     permitted_flag = true if Membership.organizer.exists?(person: current_user, group: group)
     permitted_flag = true if (Membership.organizer.exists?(person: current_user, group: current_group) && current_group.affiliates.include?(group))
     
-    group.affiliated_with.each do |affiliated_group|
-      permitted_flag ||= check_affiliated_group(current_user, affiliated_group)
+    if permitted_flag == false
+      group.affiliated_with.each do |affiliated_group|
+        permitted_flag ||= check_affiliated_group(current_user, affiliated_group)
+      end
     end
     return permitted_flag
   end
