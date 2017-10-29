@@ -39,6 +39,9 @@ body.logged_out {
         background-color: transparent;
         font-weight: normal;
       }
+      #error_explanation {
+        display: none;
+      }
 
       .action input[type="submit"] {
         font-size: 1.3em;
