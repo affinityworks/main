@@ -20,7 +20,6 @@ export default class Event extends Component {
 
   locationName() {
     const { location } = this.props.event.attributes;
-
     if (location)
       return `${location.venue}`;
     else

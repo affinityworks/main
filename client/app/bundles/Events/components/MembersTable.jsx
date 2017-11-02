@@ -14,7 +14,7 @@ class MembersTable extends Component {
 
   locationColumn() {
     const width = this.props.showGroupName ? '10%' : '20%'
-    return <th style={{ width: `${width}`}}>Location</th>
+    return <SortableHeader title='Location' sortBy='location' style={{ width: `${width}`}} />
   }
 
   phoneColumn() {
