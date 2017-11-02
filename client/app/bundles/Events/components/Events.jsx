@@ -86,7 +86,7 @@ class Events extends Component {
             <tr>
               <SortableHeader title='Event Name' sortBy='title' />
               <SortableHeader title='Date' sortBy='start_date' />
-              <th>Location</th>
+              <SortableHeader title='Location' sortBy='addresses.venue' />
               { this.groupColumn() }
               <th>Tags</th>
               <th>RSVPs</th>
