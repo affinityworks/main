@@ -1,20 +1,11 @@
  <%= render 'groups/navigation' %>
-
-    <div class = "container-html">
-      <div class="list-group-item">
-        <table class="table table--fixed">
-          <thead>
-            <tr>
-            <h3>
-              <small style={{ position: 'relative', bottom: '-5px', marginLeft: '5px' }}>
-                  <h1>Add Member</h1>
-              </small>
-            </h3>
-            </tr>
-          </thead>
-          <%= render 'form', person: @person %>
-        </table>
-        <%= link_to 'Dashboard', group_dashboard_path(@group) %> |
-        <%= link_to 'Groups', group_affiliates_path(@group) %>
+<div class = "container-html">
+  <div class="card">
+    <div class="card-block">
+      <h3>Add Member</h3>
+      <div>
+        <%= render 'form', person: @person, url: group_members_path(@group, @member) %>
       </div>
     </div>
+  </div>
+</div>

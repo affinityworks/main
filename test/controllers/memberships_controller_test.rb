@@ -9,7 +9,8 @@ class MembershipsControllerTest < ActionDispatch::IntegrationTest
     sign_in person
 
     affiliate = Group.create(an_api_key: rand(1_000_000).to_s)
-    affiliate_membership = Membership.create(person: Person.create)
+    membership = Person.create(given_name: 'given_name', family_name: 'family_name')
+    affiliate_membership = Membership.create(person: membership)
     affiliate.memberships.push(affiliate_membership)
     Affiliation.create(affiliated: affiliate, group: group)
 
@@ -68,7 +69,7 @@ class MembershipsControllerTest < ActionDispatch::IntegrationTest
     get group_membership_url(group_id: affiliate.id, id: person.id), as: :json
     assert_response :success
   end
- 
+
 
   test 'update_role' do
     person = people(:member2)
@@ -78,11 +79,11 @@ class MembershipsControllerTest < ActionDispatch::IntegrationTest
 
     if membership.role == "member"
       membership.update(role: 1)
-    else 
+    else
       membership.update(role: 0)
     end
-    assert people(:organizer)  
+    assert people(:organizer)
   end
-   
+
 
 end

@@ -92,6 +92,7 @@ gem 'resque-scheduler'
 gem 'rb-fsevent', '~> 0.10.2'
 gem 'arel-helpers'
 gem 'koala'
+gem "cocoon"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

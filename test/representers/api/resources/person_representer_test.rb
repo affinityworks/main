@@ -29,6 +29,8 @@ class Api::Resources::PersonRepresenterTest < ActiveSupport::TestCase
 
   test 'custom_fields' do
     person = Person.create!(
+      family_name: 'family_name',
+      given_name: 'given_name',
       custom_fields: { foo: 'bar', baz: 'bat' },
       password: 'secret'
     )

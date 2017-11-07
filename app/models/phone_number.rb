@@ -2,6 +2,8 @@ class PhoneNumber < ApplicationRecord
   include ArelHelpers::ArelTable
   belongs_to :person
 
-  validates_presence_of :number
+  validates :number, :presence => true, :numericality => true
   validates_uniqueness_of :number, scope: :person_id
+
+  scope :primary, -> { where(primary: true) }
 end

@@ -8,7 +8,6 @@ module Api::ActionNetwork::Import
 
   def request_resources_from_action_network(uri, group)
     retries ||= 0
-    #byebug
     collection = collection_class.new
     client = representer_class.new(collection)
     client.get(uri: uri, as: 'application/json') do |request|
@@ -30,7 +29,7 @@ module Api::ActionNetwork::Import
     #resource = resource_class.new
     #client = representer_class.new(resource)
     #if (uri = add_uri_filter && group)
-    #  ActionNetworkRequestResourceJob.perform_later(client, uri, group) 
+    #  ActionNetworkRequestResourceJob.perform_later(client, uri, group)
     #end
 
 
@@ -65,14 +64,14 @@ module Api::ActionNetwork::Import
 
   def update_single_resource(resource)
     old_resource = resource_class.outdated_existing(resource, 'action_network').first
-    
+
     return unless old_resource
 
     merge_resources(old_resource, resource)
   end
 
   def merge_resources(old_resource, resource)
-    
+
     attributes = resource.attributes
     attributes.delete_if { |_, v| v.nil? }
     parameters = ActionController::Parameters.new(attributes)
@@ -89,7 +88,10 @@ module Api::ActionNetwork::Import
 
   def create_single_resource(resource)
     begin
+      updated_at_time = resource.updated_at
       resource.tap(&:save!)
+      resource.update_column(:updated_at, updated_at_time) if updated_at_time
+      resource
     rescue Exception => e
       NewRelic::Agent.notice_error(e)
       logger.error resource
