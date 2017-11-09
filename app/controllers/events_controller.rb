@@ -42,7 +42,7 @@ class EventsController < ApplicationController
 
     if params[:filter] then
       @events = Event.joins(:location).where(
-        'addresses.venue LIKE ? or title ilike ?', "%#{params[:filter]}%","%#{params[:filter]}%"
+        'addresses.venue ilike ? or title ilike ?', "%#{params[:filter]}%","%#{params[:filter]}%"
       )
     end
 
