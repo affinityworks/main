@@ -4,7 +4,11 @@ class Api::ActionNetwork::PeopleTest < ActiveSupport::TestCase
   test '.import!' do
     group = groups(:one)
 
-    person_not_from_action_network = group.members.create!(updated_at: Time.zone.local(2016))
+    local_time = Time.zone.local(2016)
+    person_not_from_action_network = group.members.create!(
+      updated_at: local_time,
+      given_name: 'John',
+      family_name: 'Smith')
 
     unchanged_person = group.members.create!(
       identifiers: ['action_network:d91b4b2e-ae0e-4cd3-9ed7-d0ec501b0bc3'],
@@ -40,7 +44,7 @@ class Api::ActionNetwork::PeopleTest < ActiveSupport::TestCase
       Api::ActionNetwork::People.import!(group)
     end
 
-    assert_equal Time.zone.local(2016), person_not_from_action_network.reload.updated_at
+    assert_equal local_time, person_not_from_action_network.reload.updated_at
 
     new_person = group.members.any_identifier('action_network:1efc3644-af25-4253-90b8-a0baf12dbd1e').first!
     assert_equal 'Jane', new_person.given_name

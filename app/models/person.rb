@@ -5,7 +5,7 @@
 class Person < ApplicationRecord
   include Api::Identifiers
   include ArelHelpers::ArelTable
-  
+
   acts_as_taggable
   has_paper_trail ignore: [:created_at, :updated_at]
 
@@ -31,13 +31,18 @@ class Person < ApplicationRecord
   has_many :memberships, dependent: :destroy
   has_many :groups, through: :memberships
 
+  accepts_nested_attributes_for :email_addresses, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :phone_numbers, reject_if: :all_blank, allow_destroy: true
+
   has_many :organizer_memerships, -> { organizer }, :class_name => 'Membership'
   has_many :organized_groups, :source => :group, :through => :organizer_memerships
+
+  validates :family_name, :given_name, presence: true
 
   before_update :generate_update_events
 
   attr_accessor :attended_events_count #NOTE ROAR purpose
-  
+
   after_create :custom_field_to_phone_number
 
   scope :by_email, -> (email) do
@@ -106,9 +111,9 @@ class Person < ApplicationRecord
 
   def primary_phone_number
     phone_number = phone_numbers.detect(&:primary?)&.number
-    
+
     if phone_numbers.any?
-      phone_number = phone_numbers.first.number unless phone_number 
+      phone_number = phone_numbers.first.number unless phone_number
     end
 
     return phone_number || ''
@@ -222,13 +227,13 @@ class Person < ApplicationRecord
     people_version =  PaperTrail::Version.where(item_type: 'Person').
       where.not(event: 'destroy').
       where(created_at: date.beginning_of_day...Date.today.end_of_day)
-    
+
       {}.tap do |feed|
-      
+
       created, updated = people_version.partition { |version| version.event == 'create' }
-      
+
       feed[:created] = created.map { |version|
-         to_activity_json(version) 
+         to_activity_json(version)
        }
       feed[:updated] = updated.map { |version| to_activity_json(version) }
     end
@@ -263,7 +268,7 @@ class Person < ApplicationRecord
     potential_fields = [ 'Phone Number', 'Phone', 'phone', "2 Phone"]
 
     potential_fields.each do |field_name|
-      unless custom_fields[field_name].nil?  
+      unless custom_fields[field_name].nil?
         phone_numbers.create(:number => custom_fields[field_name])
       end
     end
@@ -279,6 +284,6 @@ class Person < ApplicationRecord
   def record_update_event(name)
     ::NewRelic::Agent.record_custom_event(name, id: id, email: primary_email_address)
   end
-  
+
 
 end

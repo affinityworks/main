@@ -9,7 +9,7 @@ class MembersControllerTest < ActionDispatch::IntegrationTest
     sign_in person
 
     affiliate = Group.create(an_api_key: rand(1_000_000).to_s)
-    affiliate_member = Person.create
+    affiliate_member = Person.create(given_name: 'given_name', family_name: 'family_name')
     affiliate.members.push(affiliate_member)
     Affiliation.create(affiliated: affiliate, group: group)
 
@@ -43,11 +43,10 @@ class MembersControllerTest < ActionDispatch::IntegrationTest
           family_name: "TestFamily",
           party_identification: "",
           birthdate: "",
-          employer: ""},
-        email_address: {email_address: "yes@email.com"},
+          employer: "",
+          primary_email_address: "yes@email.com"},
         phone_number: {phone_number: "555-555-5555"}, group_id: group_id }  , as: :json
     end
-
 
     assert_response :success
     assert EmailAddress.find_by_address("yes@email.com")
@@ -62,9 +61,25 @@ class MembersControllerTest < ActionDispatch::IntegrationTest
     sign_in person
     get new_group_member_url(:group_id => group_id)
     assert_response :success
-
+    params = {
+      "utf8"=>"✓",
+      "authenticity_token"=>"GKguJhvn3caFTDOQdBrCSAXzyt+1f5ww24odtrSlXfGMjmL7NX/vAv0n39ryEdNwJXQ6IdJjDMcdymCmpOrNUg==",
+      "person"=>{
+                  "given_name"=>"asdfasdf",
+                  "family_name"=>"asdlfkjas",
+                  "gender"=>"asldkf",
+                  "gender_identity"=>"alsdkdfj",
+                  "party_identification"=>"sdlfkj",
+                  "ethnicities"=>"asldfj",
+                  "languages_spoken"=>"asdf",
+                  "birthdate"=>"asdf",
+                  "employer"=>"asdf",
+                  "primary_email_address" => "asdf@sadf.com"},
+      "phone_number"=>{"phone_number"=>"502340234"},
+      "commit"=>"Add Member",
+      "group_id"=>"1"}
     assert_difference -> { Person.count } do
-      post group_members_path(group_id), params:  {"utf8"=>"✓", "authenticity_token"=>"GKguJhvn3caFTDOQdBrCSAXzyt+1f5ww24odtrSlXfGMjmL7NX/vAv0n39ryEdNwJXQ6IdJjDMcdymCmpOrNUg==", "person"=>{"given_name"=>"asdfasdf", "family_name"=>"asdlfkjas", "gender"=>"asldkf", "gender_identity"=>"alsdkdfj", "party_identification"=>"sdlfkj", "ethnicities"=>"asldfj", "languages_spoken"=>"asdf", "birthdate"=>"asdf", "employer"=>"asdf"}, "email_address"=>{"email_address"=>"asdf@sadf.com"}, "phone_number"=>{"phone_number"=>"502340234"}, "commit"=>"Add Member", "group_id"=>"1"}, as: :json
+      post group_members_path(group_id), params:  params, as: :json
     end
     assert_response :success
 

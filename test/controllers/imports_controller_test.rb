@@ -5,7 +5,7 @@ class ImportsControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   test 'get #find' do
-    person = Person.create(given_name: 'example')
+    person = Person.create(given_name: 'given_name', family_name: 'family_name')
     group = groups(:test)
     person.groups.push(group)
     EmailAddress.create(address: 'example@example.com', person: person)
@@ -141,7 +141,7 @@ class ImportsControllerTest < ActionDispatch::IntegrationTest
     current_user = people(:organizer)
     group = current_user.groups.first
     remote_event = remote_events(:facebook)
-    person = Person.create(groups: current_user.groups)
+    person = Person.create(groups: current_user.groups, given_name: 'given_name', family_name: 'family_name')
     facebook_id = '1232345'
     sign_in current_user
 

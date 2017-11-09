@@ -35,7 +35,7 @@ class Api::V1::PeopleControllerTest < ActionController::TestCase
     token.expect(:acceptable?, true, [Doorkeeper::OAuth::Scopes])
 
     6.times do |i|
-      Person.create!(password: 'topsecret')
+      Person.create!(password: 'topsecret', given_name: 'given_name', family_name: 'family_name')
     end
 
     @controller.stub(:doorkeeper_token, token) do

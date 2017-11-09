@@ -1,8 +1,7 @@
-<%= form_for(@member, as: :person, url: group_members_path(@group, @member)) do |f| %>
+<%= form_for @member, as: :person, class: 'form-inline', url: url  do |f| %>
   <% if @member.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@member.errors.count, "error") %> prevented this person from being saved:</h2>
-
+    <div id="error_explanation" class="alert alert-danger" role="alert">
+      <strong><%= pluralize(@member.errors.count, "error") %> prevented this person from being saved:</strong>
       <ul>
       <% @member.errors.full_messages.each do |message| %>
         <li><%= message %></li>
@@ -10,65 +9,58 @@
       </ul>
     </div>
   <% end %>
-  <tbody>
-      <tr><td>
-        <div class="field">
-          <%= f.label :given_name %>
-          <%= f.text_field :given_name %>
-          <%= f.label :family_name %>
-          <%= f.text_field :family_name %>
-        </div>
-      </td></tr>
+  <div class="field form-group mt-5">
+      <%= f.label :given_name, class: 'col-2 col-form-label float-left'%>
+      <%= f.text_field :given_name, class: 'form-control col-5' %>
+  </div>
 
-      <tr><td>
-        <div class="field">
-          <%= f.label :gender %>
-          <%= f.select :gender, @member.gender_options %>
-          <%= f.label :gender_identity %>
-          <%= f.text_field :gender_identity %>
+  <div class="field form-group">
+    <%= f.label :family_name, class: 'col-2 col-form-label float-left' %>
+    <%= f.text_field :family_name, class: 'form-control col-5' %>
+  </div>
+  <div class="field form-group">
+    <%= f.label :gender, class: 'col-2 col-form-label float-left' %>
+    <%= f.select :gender, @member.gender_options, {}, class: 'form-control col-5' %>
+  </div>
+  <div class="field form-group">
+    <%= f.label :gender_identity, class: 'col-2 col-form-label float-left' %>
+    <%= f.text_field :gender_identity, class: 'form-control col-5' %>
+  </div>
+  <div class="field form-group">
+    <%= f.label :party_identification, class: 'col-2 col-form-label float-left' %>
+    <%= f.text_field :party_identification, class: 'form-control col-5' %>
+  </div>
+  <div class="field form-group">
+    <%= f.label :birthdate, class: 'col-2 col-form-label float-left' %>
+    <%= f.text_field :birthdate, class: 'form-control col-5' %>
+  </div>
+  <div class="field form-group">
+    <%= f.label :employer, class: 'col-2 col-form-label float-left' %>
+    <%= f.text_field :employer, class: 'form-control col-5' %>
+  </div>
+  <section class="pb-4">
+    <h4 class="pb-2">Email Addreses</h4>
+    <div class="js-email_addresses">
+        <%= f.fields_for :email_addresses do |email_address| %>
+        <%= render 'email_address_fields', f: email_address %>
+        <% end %>
+        <div class="links">
+          <%= link_to_add_association 'Add Email Address', f, :email_addresses, class: 'email-field' %>
         </div>
-      </td></tr>
-
-      <tr><td>
-        <div class="field">
-          <%= f.label :party_identification %>
-          <%= f.text_field :party_identification %>
-        </div>
-      </td></tr>
-
-
-      <tr><td>
-        <div class="field">
-          <%= f.label :birthdate %>
-          <%= f.text_field :birthdate %>
-        </div>
-      </td></tr>
-
-      <tr><td>
-        <div class="field">
-          <%= f.label :employer %>
-          <%= f.text_field :employer %>
-        </div>
-      </td></tr>
-
-    <tr><td>
-        <div class="field">
-          <%= f.label :email_address %>
-          <%= f.text_field :primary_email_address %>
-        </div>
-      </td></tr>
-    
-      <tr><td>
-        <div class="field">
-          <%= f.label :phone_number %>
-          <%= f.text_field :primary_phone_number %>
-        </div>
-      </td></tr>
-      
-    
-  <tr><td>
-    <div class="actions">
-      <%= f.submit "Submit", class: "btn btn-primary" %>
       </div>
-  </td></tr>
+  </section>
+  <section class="pb-4">
+    <h4 class="pb-2">Phone Numbers</h4>
+    <div class="js-phone_numbers">
+        <%= f.fields_for :phone_numbers do |phone_number| %>
+          <%= render 'phone_number_fields', f: phone_number %>
+        <% end %>
+        <div class="links">
+          <%= link_to_add_association 'Add Phone Number', f, :phone_numbers %>
+        </div>
+      </div>
+  </section>
+  <div class="actions">
+    <%= f.submit "Submit", class: "btn btn-primary" %>
+  </div>
 <% end %>

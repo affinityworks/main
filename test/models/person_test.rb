@@ -15,8 +15,8 @@ class PersonTest < ActiveSupport::TestCase
     assert_kind_of Address, one.employer_address
   end
 
-  test 'should save person without name' do
-    Person.create!
+  test 'should not save person without given_name or family_name' do
+    Person.create!(given_name: 'José', family_name: 'Mejía')
   end
 
   test '#name' do
@@ -35,6 +35,8 @@ class PersonTest < ActiveSupport::TestCase
     # Need to rename PersonalAddress to PostalAddress
     assert_raise(NoMethodError) do
       Person.create!(
+        given_name: 'José',
+        family_name: 'Mejía',
         employer_address: EmployerAddress.new,
         personal_addresses: PersonalAddress.new
       )
@@ -45,6 +47,8 @@ class PersonTest < ActiveSupport::TestCase
     Person.new.sanitize_email_addresses
 
     person = Person.new(
+      given_name: 'José',
+      family_name: 'Mejía',
       email_addresses: [
         EmailAddress.new(primary: true, address: ''),
         EmailAddress.new(primary: false, address: 'good.one@example.com'),
@@ -57,6 +61,8 @@ class PersonTest < ActiveSupport::TestCase
 
   test 'email addresses' do
     Person.create!(
+      given_name: 'José',
+      family_name: 'Mejía',
       password: 'secret123',
       email_addresses: [
         EmailAddress.new(primary: true, address: 'lisa@example.com'),
@@ -81,13 +87,14 @@ class PersonTest < ActiveSupport::TestCase
 
 
   test 'create with identifiers' do
-    person = Person.create!(identifiers: ['sncc:123'])
+    person = Person.create!(given_name: 'José', family_name: 'Mejía',
+      identifiers: ['sncc:123'])
     person.reload
     assert_equal ["advocacycommons:#{person.id}", 'sncc:123'], person.identifiers.sort, 'identifiers'
   end
 
   test 'attended_group_events' do
-    person = Person.create(:given_name=>"Random person")
+    person = Person.create(given_name: 'José', family_name: 'Mejía',)
     group_event_attended = Attendance.create(attended: true, person: person, event: Event.first)
     Attendance.create(attended: true, person: person, event: Event.last)
     assert_equal person.attended_group_events(Group.first), [group_event_attended]
@@ -149,7 +156,7 @@ class PersonTest < ActiveSupport::TestCase
   end
 
   test '#primary_phone_number=' do
-    person = Person.create
+    person = Person.create(given_name: 'José', family_name: 'Mejía',)
 
     person.primary_phone_number = '12341234'
     person.save
@@ -278,10 +285,11 @@ class PersonTest < ActiveSupport::TestCase
     event = events(:test)
 
     email = email_addresses(:member2)
+
     remote_attendance_1 = { id: '123456', name: 'Jon Snow', email: email.address }
 
     assert_difference 'Person.count', 0 do
-      assert_difference 'Membership.count', 0 do
+      assert_difference 'Membership.count', 1 do
         assert_difference 'Attendance.count', 0 do
           Person.import_remote([remote_attendance_1], group, event, person.id)
         end

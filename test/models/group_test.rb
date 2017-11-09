@@ -131,8 +131,8 @@ class GroupTest < ActiveSupport::TestCase
     affiliated = Group.create(:an_api_key => 'fdafdafda')
 
     Affiliation.create(group: group, affiliated: affiliated)
-
-    group_membership = Membership.create(person: Person.create)
+    membership = Person.create(given_name: 'given_name', family_name: 'family_name')
+    group_membership = Membership.create(person: membership)
     group.memberships.push(group_membership)
     affiliated_membership = Membership.create(person: Person.create)
     affiliated.memberships.push(affiliated_membership)
@@ -148,9 +148,9 @@ class GroupTest < ActiveSupport::TestCase
 
     Affiliation.create(group: group, affiliated: affiliated)
 
-    group_member = Person.create
+    group_member = Person.create(given_name: 'given_name', family_name: 'family_name')
     group.members.push(group_member)
-    affiliated_member = Person.create
+    affiliated_member = Person.create(given_name: 'given_name', family_name: 'family_name')
     affiliated.members.push(affiliated_member)
 
     assert_includes group.all_members, group_member
