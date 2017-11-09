@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import Nav from '../components/Nav';
 import Tags from '../components/Tags';
 import Notes from '../components/Notes';
+import CustomFields from '../components/CustomFields';
 import Event from '../components/Event';
 import EmailLink from '../components/EmailLink';
 import ActionHistory from '../components/ActionHistory';
@@ -98,6 +99,9 @@ class MemberDetail extends Component {
           <div className='col-6'>
             <h4 style={{ marginRight: '10px' }}>Tags</h4>
             <Tags tags={membership.attributes.tags} membershipId={membership.id} />
+            <br/>
+            <h4>Custom Fields</h4>
+            <CustomFields customFields={attributes['custom-fields']} />
             <br/>
             <h4>Notes</h4>
             <Notes notes={membership.attributes.notes} membershipId={membership.id}/>
