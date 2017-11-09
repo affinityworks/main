@@ -49,7 +49,7 @@ class Members extends Component {
             <SearchFilter
               onSearchSubmit={this.filterMembers}
               filter={filter}
-              placeholder='Search for your people' />
+              placeholder='Search by name or location' />
           </div>
         </div>
         <br />

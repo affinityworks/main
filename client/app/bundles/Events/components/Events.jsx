@@ -71,7 +71,7 @@ class Events extends Component {
             <SearchFilter
               onSearchSubmit={this.filterEvents}
               filter={filter}
-              placeholder='Search for events' />
+              placeholder='Search by event name or location' />
           </div>
           <div className='col-3 offset-3 text-right'>
             <a href='/admin/auth/facebook' className='btn btn-facebook'>
