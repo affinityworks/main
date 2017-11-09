@@ -41,7 +41,9 @@ class EventsController < ApplicationController
     @events = @events.tagged_with(params[:tag]) if params[:tag]
 
     if params[:filter] then
-      @events = @events.where('title ilike ?',"%#{params[:filter]}%")
+      @events = Event.joins(:location).where(
+        'addresses.venue LIKE ? or title ilike ?', "%#{params[:filter]}%","%#{params[:filter]}%"
+      )
     end
 
     if sort_param && direction_param
