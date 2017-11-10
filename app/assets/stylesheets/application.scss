@@ -135,8 +135,16 @@ a.fa {
 }
 
 .small {
-  position: relative; 
-  bottom: -5px; 
+  position: relative;
+  bottom: -5px;
   margin-left: 5px;
   display: inline;
+}
+
+.search__clear-button {
+  position: absolute;
+  align-self: center;
+  left: calc(100% - 7em);
+  z-index: 3;
+  cursor: pointer;
 }
