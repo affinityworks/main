@@ -514,6 +514,7 @@ ActiveRecord::Schema.define(version: 20170623203342) do
     t.boolean  "admin",                  default: false
     t.boolean  "synced",                 default: true
     t.integer  "attendances_count",      default: 0
+    t.string   "unconfirmed_email"
     t.index ["reset_password_token"], name: "index_people_on_reset_password_token", unique: true, using: :btree
   end
 

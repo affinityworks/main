@@ -62,6 +62,7 @@ class Events extends Component {
   render() {
     const { search } = this.props.location;
     const { filter, direction } = queryString.parse(search);
+    const { id } = this.props.currentGroup
 
     return (
       <div>
@@ -74,7 +75,7 @@ class Events extends Component {
               placeholder='Search by event name or location' />
           </div>
           <div className='col-3 offset-3 text-right'>
-            <a href='/admin/auth/facebook' className='btn btn-facebook'>
+            <a href={`/admin/auth/facebook?group_id=${id}`} className='btn btn-facebook'>
               Import Event From Facebook
             </a>
           </div>

@@ -7,7 +7,7 @@ class Group < ApplicationRecord
 
   has_many :memberships, dependent: :destroy
   has_many :members, through: :memberships, source: :person
-  
+
   has_many :organizer_memerships, -> { organizer }, :class_name => 'Membership'
   has_many :organizers, :source => :person, :through => :organizer_memerships
 
