@@ -33,7 +33,8 @@ class Person < ApplicationRecord
 
   accepts_nested_attributes_for :email_addresses, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :phone_numbers, reject_if: :all_blank, allow_destroy: true
-
+  accepts_nested_attributes_for :memberships, reject_if: :all_blank, allow_destroy: true
+  
   has_many :organizer_memerships, -> { organizer }, :class_name => 'Membership'
   has_many :organized_groups, :source => :group, :through => :organizer_memerships
 

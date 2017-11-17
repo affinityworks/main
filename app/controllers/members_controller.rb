@@ -79,7 +79,7 @@ class MembersController < ApplicationController
     respond_to do |format|
       if @member.update(person_params)
         format.html { redirect_to group_member_path(@group, @member), notice: 'Member was successfully updated.' }
-        format.json { render :show, status: :ok, location: @member }
+        format.json { render :show, status: :ok, location: group_member_path(@group, @member) }
       else
         format.html { render :edit }
         format.json { render json: @member.errors, status: :unprocessable_entity }
@@ -114,6 +114,7 @@ class MembersController < ApplicationController
           ethnicities: [],
           languages_spoken: [],
           custom_fields: {},
+          memberships_attributes: [:id, :role],
           phone_numbers_attributes: [:id, :number, :primary, :_destroy],
           email_addresses_attributes: [:id, :address, :primary, :_destroy]
       )
