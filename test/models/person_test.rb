@@ -186,17 +186,8 @@ class PersonTest < ActiveSupport::TestCase
 
     auth.expect :provider, 'facebook'
     auth.expect :uid, uid
-    credentials.expect :token, 'access_token'
-    auth.expect :credentials, credentials
-    facebook_auth.expect :request_long_lived_token, 'new_token'
-    Facebook::Authorization.stub :new, facebook_auth do
-      assert_equal Person.first, Person.from_omniauth(auth)
-    end
-
-    info.expect :email, EmailAddress.first.address
-    auth.expect :provider, 'facebook'
-    auth.expect :uid, "#{uid}example2"
     auth.expect :info, info
+    info.expect :email, EmailAddress.first.address
     credentials.expect :token, 'access_token'
     auth.expect :credentials, credentials
     facebook_auth.expect :request_long_lived_token, 'new_token'
@@ -205,12 +196,26 @@ class PersonTest < ActiveSupport::TestCase
     end
 
     auth.expect :provider, 'facebook'
-    auth.expect :uid, "#{uid}example2"
+    auth.expect :uid, Identity.first.uid
+    auth.expect :info, info
+    info.expect :email, EmailAddress.first.address
+    credentials.expect :token, 'access_token'
+    auth.expect :credentials, credentials
+    facebook_auth.expect :request_long_lived_token, 'new_token'
+    Facebook::Authorization.stub :new, facebook_auth do
+      assert_equal Person.first, Person.from_omniauth(auth)
+    end
+
+    auth.expect :provider, 'facebook'
+    auth.expect :uid, Person.last.identities.take.uid
+    auth.expect :info, info
+    info.expect :email, Person.last.email_addresses.take.address
     credentials.expect :token, 'access_token'
     auth.expect :credentials, credentials
     facebook_auth.expect :request_long_lived_token, 'new_token'
 
     old_identity_count = Identity.count
+
     Facebook::Authorization.stub :new, facebook_auth do
       person = Person.from_omniauth(auth, Person.last)
       assert_equal Person.last, person
