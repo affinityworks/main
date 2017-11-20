@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Nav from '../components/Nav';
 import EventActivityFeed from '../components/EventActivityFeed';
 import AttendanceActivityFeed from '../components/AttendanceActivityFeed';
+import TextEditor from '../components/TextEditor';
 import PersonActivityFeed from '../components/PersonActivityFeed';
 import SyncActivityFeed from '../components/SyncActivityFeed';
 import { fetchGroup, addAlert } from '../actions';
@@ -52,9 +53,23 @@ class Dashboard extends Component {
       || !! (sync && sync.data)
   }
 
+  renderTextEditor () {
+    const { attributes } = this.props.group;
+    
+    return (
+      <section>
+        <TextEditor
+          hideTextEdit={this.hideTextEdit}
+          textDescription={attributes.description}
+          addAlert={this.props.addAlert}
+        />
+      </section>
+    )
+  }
+
   render() {
     const { attributes } = this.props.group;
-    const { events, attendances, people, sync } = this.state;
+    const { events, attendances, people, sync, editText } = this.state;
 
     if(!attributes) { return null }
 
@@ -68,10 +83,9 @@ class Dashboard extends Component {
 
         <br />
 
-        {attributes.description && <div dangerouslySetInnerHTML={{ __html: attributes.description }} />}
+        {this.renderTextEditor()}
 
-        {attributes.description && <br />}
-
+        <hr/>
         {this.hasActivity() && <h2>Activity Feed</h2> || <h4> There's no recent activity for this group.</h4>}
         {this.hasActivity() && <hr />}
 
