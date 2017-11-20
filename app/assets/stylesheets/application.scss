@@ -206,3 +206,25 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+
+.btn-edit {
+  cursor: pointer;
+  opacity: 0;
+}
+.btn-delete {
+  span {
+    color: #d9534f;
+  }
+}
+.text-preview {
+  p {
+    margin: 0;
+  }
+}
+.text-view {
+  &:hover {
+    .btn-edit {
+      opacity: 1;
+    }
+  }
+}
