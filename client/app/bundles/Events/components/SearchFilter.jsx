@@ -35,10 +35,12 @@ class SearchFilter extends Component {
             value={this.state.searchTerm}
             placeholder={this.props.placeholder}
             onChange={e => this.setState({ searchTerm: e.target.value })}/>
-            <span
-              className="fa fa-times-circle search__clear-button"
-              onClick={this.onClearSearch}
-            />
+            {this.state.searchTerm && (
+              <span
+                className="fa fa-times-circle search__clear-button"
+                onClick={this.onClearSearch}
+              />
+            )}
             <span className='input-group-btn' type='submit'>
               <button className='btn btn-secondary'> Search </button>
             </span>
