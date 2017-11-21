@@ -48,4 +48,18 @@ class Attendance < ApplicationRecord
       event[:missed] = (grouped_by_attended[false] || []).size
     end.keys
   end
+
+  def send_to_att_event_action_network
+    return if attended.nil?
+    attended ? send_to_action_network_att_event : send_to_action_network_no_att_event
+  end
+
+  def send_to_action_network_att_event
+    event.attendance_event&.export_attendace(self)
+  end
+
+  def send_to_action_network_no_att_event
+    event.no_attendance_event&.export_attendace(self)
+  end
+
 end

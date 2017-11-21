@@ -41,6 +41,7 @@ class AttendancesControllerTest < ActionDispatch::IntegrationTest
     assert attendance.attended, 'Sets the attendance to true.'
 
     new_attendance_status = false
+
     set_attendance_status(group.id, event.id, attendance.id, new_attendance_status)
 
     attendance.reload
@@ -51,6 +52,7 @@ class AttendancesControllerTest < ActionDispatch::IntegrationTest
     assert_equal json['attributes']['status'], attendance.status
 
     new_attendance_status = nil
+
     set_attendance_status(group.id, event.id, attendance.id, new_attendance_status)
 
     attendance.reload
@@ -113,7 +115,7 @@ class AttendancesControllerTest < ActionDispatch::IntegrationTest
     sign_in current_user
 
     email = 'test@test.com'
-    phone = rand(1_000_000).to_s
+    phone = '(123) 456-7890'
 
     assert_difference 'Person.count', 1 do
       post group_event_attendances_url(

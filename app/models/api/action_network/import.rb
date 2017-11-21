@@ -128,8 +128,17 @@ module Api::ActionNetwork::Import
 
   def first_uri(params={})
     uri = "https://actionnetwork.org/api/v2/#{resource.pluralize}#{'/' + params[:uuid] if params[:uuid]}"
+    uri = add_uri_filter(uri, params[:synced_at])
+    return uri unless resource == 'event'
+    origin_system_filter(uri)
+  end
 
-    add_uri_filter(uri, params[:synced_at])
+  def origin_system_filter(uri)
+    uri = URI.parse(uri)
+    filter = "origin_system eq 'Action Network'"
+    query = uri.query
+    uri.query =  query.nil? ? "filter=#{filter}" : query + " and #{filter}"
+    uri.to_s
   end
 
   def logger

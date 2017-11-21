@@ -18,12 +18,12 @@ class GroupTest < ActiveSupport::TestCase
   test "sync_with_action_network" do
     group = Group.first
 
-    stub_request(:get, 'https://actionnetwork.org/api/v2/events')
-      .with(headers: { 'OSDI-API-TOKEN' => group.an_api_key })
+    stub_request(:get, "https://actionnetwork.org/api/v2/events?filter=origin_system%20eq%20'Action%20Network'")
+      .with(:headers => {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'Osdi-Api-Token'=>'test-token', 'User-Agent'=>'Ruby'})
       .to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'events.json')))
 
-    stub_request(:get, 'https://actionnetwork.org/api/v2/events?page=2')
-      .with(headers: { 'OSDI-API-TOKEN' => group.an_api_key })
+    stub_request(:get, "https://actionnetwork.org/api/v2/events?page=2")
+      .with(:headers => {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'Osdi-Api-Token'=>'test-token', 'User-Agent'=>'Ruby'})
       .to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'events_page_2.json')))
 
     stub_request(:get, 'https://actionnetwork.org/api/v2/people')
@@ -34,7 +34,10 @@ class GroupTest < ActiveSupport::TestCase
       .with(headers: { 'OSDI-API-TOKEN' => group.an_api_key })
       .to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'people_page_2.json')))
 
+    stub_request(:post, url).to_return(status: 200)
+
     %w(
+      bc82a374-fba9-4f47-8e6b-96fdd8350ca2
       1efc3644-af25-4253-90b8-a0baf12dbd1e
       a3c724db-2799-49a6-970a-7c3c0844645d
       d91b4b2e-ae0e-4cd3-9ed7-d0ec501b0bc3
@@ -190,5 +193,9 @@ class GroupTest < ActiveSupport::TestCase
     #   assert_not group.current_group_members, affiliated_member
     #   assert_not_equal group.current_group_members.count, group.members.count + affiliated.members.count
     # end
+
+  def url
+    "https://actionnetwork.org/api/v2/events?filter=origin_system eq 'Affinity'"
+  end
 
 end

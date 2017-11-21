@@ -29,7 +29,7 @@ one:
   creator_id: 1
   organizer_id: 1
   modified_by_id: 1
-  identifiers: ['advocacycommons:1']
+  identifiers: ['action_network:bc82a374-fba9-4f47-8e6b-96fdd8350ca2', 'advocacycommons:1']
 
 two:
   id: 2

@@ -19,6 +19,17 @@ two:
   comment: MyString
   person_id: 2
   event_id: 1
+  synced: false
+
+seven:
+  id: 7
+  origin_system: MyString
+  action_date: 2016-12-21 23:40:11
+  status: accepted
+  attended: false
+  comment: MyString
+  person_id: 2
+  event_id: 1
 
 admin:
   id: 3

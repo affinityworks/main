@@ -4,12 +4,12 @@ class Api::ActionNetwork::EventsTest < ActiveSupport::TestCase
   test '.import!' do
     group = Group.first
 
-    stub_request(:get, 'https://actionnetwork.org/api/v2/events')
-      .with(headers: { 'OSDI-API-TOKEN' => group.an_api_key })
+    stub_request(:get, "https://actionnetwork.org/api/v2/events?filter=origin_system%20eq%20'Action%20Network'")
+      .with(:headers => {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'Osdi-Api-Token'=>'test-token', 'User-Agent'=>'Ruby'})
       .to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'events.json')))
 
-    stub_request(:get, 'https://actionnetwork.org/api/v2/events?page=2')
-      .with(headers: { 'OSDI-API-TOKEN' => group.an_api_key })
+    stub_request(:get, "https://actionnetwork.org/api/v2/events?page=2")
+      .with(:headers => {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'Osdi-Api-Token'=>'test-token', 'User-Agent'=>'Ruby'})
       .to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'events_page_2.json')))
 
     travel_to Time.zone.local(2001) do
@@ -61,7 +61,7 @@ class Api::ActionNetwork::EventsTest < ActiveSupport::TestCase
 
     new_event.reload
 
-    assert_equal 'March 16th Rally', new_event.name
-    assert_equal 'Lafayette Circle', new_event.location.venue
+    assert_equal 'March 14th Rally', new_event.name
+    assert_equal 'Lafayette Square', new_event.location.venue
   end
 end

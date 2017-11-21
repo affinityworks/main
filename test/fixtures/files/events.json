@@ -31,7 +31,7 @@
                     "action_network:d91b4b2e-ae0e-4cd3-9ed7-d0ec501b0bc3",
                     "foreign_system:1"
                 ],
-                "origin_system": "OSDI Sample System",
+                "origin_system": "Action Network",
                 "created_date": "2014-03-20T21:04:31Z",
                 "modified_date": "2014-03-20T21:04:31Z",
                 "name": "March 14th Rally",
@@ -152,7 +152,7 @@
                 "identifiers": [
                     "action_network:1efc3644-af25-4253-90b8-a0baf12dbd1e"
                 ],
-                "origin_system": "OSDI Sample System",
+                "origin_system": "Action Network",
                 "created_date": "2014-03-20T20:44:13Z",
                 "modified_date": "2014-03-20T20:44:13Z",
                 "title": "House Party for Progress",
@@ -268,7 +268,7 @@
                 "identifiers": [
                     "action_network:a3c724db-2799-49a6-970a-7c3c0844645d"
                 ],
-                "origin_system": "OSDI Sample System",
+                "origin_system": "Action Network",
                 "created_date": "2014-03-20T20:44:13Z",
                 "modified_date": "2015-04-20T20:19:09Z",
                 "title": "Teach in",
