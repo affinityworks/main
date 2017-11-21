@@ -203,13 +203,20 @@ input:checked + .slider:before {
   border-radius: 34px;
 }
 
+.text-source {
+  width: 100%;
+  border: 1px solid #ddd;
+  padding: 15px 10px;
+  background: #fbfbfb;
+  min-height: 250px;
+}
+
 .slider.round:before {
   border-radius: 50%;
 }
 
 .btn-edit {
   cursor: pointer;
-  opacity: 0;
 }
 .btn-delete {
   span {
@@ -219,12 +226,5 @@ input:checked + .slider:before {
 .text-preview {
   p {
     margin: 0;
-  }
-}
-.text-view {
-  &:hover {
-    .btn-edit {
-      opacity: 1;
-    }
   }
 }

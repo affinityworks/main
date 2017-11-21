@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import RichTextEditor from 'react-rte';
 import {convertToRaw} from 'draft-js';
-import ReactMarkdown from 'react-markdown';
 import { client, groupPath } from '../utils';
 
 class TextEditor extends Component {
@@ -69,6 +68,15 @@ class TextEditor extends Component {
     }
   }
 
+  onChangeSource = (event: Object) => {
+    let source = event.target.value;
+    let oldValue = this.state.value;
+
+    this.setState({
+      value: oldValue.setContentFromString(source, this.state.format),
+    });
+  }
+
   saveDescription = () => {
     const { textDescription } = this.props
     const {
@@ -79,7 +87,7 @@ class TextEditor extends Component {
     const textValue = value.toString(format)
 
     this.updateDescription(textValue)
-    this.handleHideEditor()  
+    this.handleHideEditor()
   }
 
   renderDescription () {
@@ -92,18 +100,18 @@ class TextEditor extends Component {
             <div className="col-md-3">
                 <h4>Aditional Description</h4>
             </div>
-            <div className='col-md-1'>
+            <div className='col-md-12 mb-3'>
               <button
                 className='btn btn-primary btn-sm btn-edit'
                 onClick={this.handleShowEditor.bind(this)}
               >
-                <span className='fa fa-pencil-square-o'></span> Edit
+                <span className='fa fa-pencil-square-o'></span> Edit description
               </button>
             </div>
           </div>
 
           <div className='text-preview'>
-            <ReactMarkdown source={textValue} />
+            <div dangerouslySetInnerHTML={{ __html: textValue }} />
           </div>
       </div>
     )
@@ -139,7 +147,9 @@ class TextEditor extends Component {
       ],
       BLOCK_TYPE_DROPDOWN: [
         {label: 'Normal', style: 'unstyled'},
-        {label: 'Heading Large', style: 'header-one'}
+        {label: 'Heading Large', style: 'header-one'},
+        {label: 'Heading Medium', style: 'header-two'},
+        {label: 'Heading Small', style: 'header-three'}
       ],
       BLOCK_TYPE_BUTTONS: [
         {label: 'UL', style: 'unordered-list-item'},
@@ -157,30 +167,34 @@ class TextEditor extends Component {
               className={`btn ${preview ? 'btn-primary' : 'btn-secondary'}  btn-sm mr-2`}
               onClick={handleShowWrite.bind(this)}
             >
-              Write
+              <span className='fa fa-code'></span>
             </button>
             <button
               className={`btn ${!preview ? 'btn-primary' : 'btn-secondary'} btn-sm`}
               onClick={handleShowPreview.bind(this)}
             >
-              Preview
+              Write
             </button>
           </div>
         </div>
 
         <div className='Text-editor'>
           { preview
-            ? <RichTextEditor
+            ? <div className='col-md-12 px-0'>
+                <textarea
+                  className="text-source mb-3"
+                  placeholder="Editor Source"
+                  onChange={this.onChangeSource}
+                  value={this.state.value.toString('html')}
+                />
+              </div>
+            : <RichTextEditor
               className='mb-3'
               toolbarConfig={toolbarConfig}
               onChange={this.onChange}
               value={this.state.value}
             />
-            : <div className='text-preview mt-3 mb-3'>
-                <ReactMarkdown source={textValue} />
-              </div>
           }
-
           <button
             className='btn btn-primary btn-sm mr-2'
             onClick={saveDescription.bind(this)}
@@ -195,7 +209,6 @@ class TextEditor extends Component {
             <span className='fa fa-close'></span>
             <span> Cancel</span>
           </button>
-              
         </div>
       </div>
     )
