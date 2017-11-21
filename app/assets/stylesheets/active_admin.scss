@@ -8,8 +8,8 @@
 // $sidebar-width: 242px;
 
 // Active Admin's got SASS!
+@import "bootstrap";
 @import "active_admin/mixins";
-@import "active_admin/base";
 
 // Overriding any non-variable SASS must be done after the fact.
 // For example, to change the default status-tag color:
@@ -18,11 +18,37 @@
 
 body.logged_out {
   background-color: white;
+  .flash {
+    margin: 0 auto;
+    position: relative;
+    width: 450px;
+  }
+  .login-content {
+    max-width: 450px;
+    position: relative;
+    margin: 0 auto;
+  }
+  .btn-facebook {
+    background: #4267b2;
+    color: white;
 
+    .facebook-icon {
+      width: 20px;
+      margin-bottom: 1px;
+      margin-right: 2px;
+    }
+  }
+
+  .login-tag {
+    color: grey;
+    font-size: 13px;
+    margin-bottom: 0;
+    position: relative;
+    top: 8px;
+  }
   #content_wrapper {
     #active_admin_content {
       box-shadow: none;
-
       h2 {
         font-size: 0;
         box-shadow: none;
