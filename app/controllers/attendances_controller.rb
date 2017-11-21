@@ -75,8 +75,7 @@ class AttendancesController < ApplicationController
 
   def attendance_params
     attrs = params.permit(:attended)
-
-    return attrs unless attrs.empty?
+    return attrs.merge(synced: false) unless attrs.empty?
 
     { attended: nil } #NOTE Axios ommits the params if its value is nil.
   end

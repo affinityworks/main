@@ -15,7 +15,10 @@ namespace :action_network_syncer do
         Rails.logger.debug "### EXPORTING #{group.name} MEMBERS ###"
         group.members.unsynced.each { |member| member.export(group) }
         Rails.logger.debug "### EXPORTING #{group.name} ATTENDANCES ###"
-        group.attendances.unsynced.each { |attendance| attendance.export(group) }
+        group.attendances.unsynced.each do |attendance|
+          attendance.export(group)
+          attendance.send_to_att_event_action_network
+        end
       end
     end
     Rails.logger.debug '### EXPORT FINISHED ###'

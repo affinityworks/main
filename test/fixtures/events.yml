@@ -29,7 +29,7 @@ one:
   creator_id: 1
   organizer_id: 1
   modified_by_id: 1
-  identifiers: ['advocacycommons:1']
+  identifiers: ['action_network:bc82a374-fba9-4f47-8e6b-96fdd8350ca2', 'advocacycommons:1']
 
 two:
   id: 2
@@ -64,7 +64,7 @@ two:
 
 test:
   id: 3
-  origin_system: MyString
+  origin_system: Action Network
   name: MyString
   title: Event Title
   description: MyString
@@ -91,4 +91,4 @@ test:
   creator_id: 5
   organizer_id: 6
   modified_by_id: 4
-  identifiers: ['action_network:1efc3644-af25-4253-90b8-a0baf1ddbd1e', 'advocacycommons:2']
+  identifiers: ['action_network:9bbc8d08-a921-4b19-aadf-6cd8a3d09461', 'advocacycommons:3']

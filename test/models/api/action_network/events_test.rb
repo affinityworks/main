@@ -4,13 +4,19 @@ class Api::ActionNetwork::EventsTest < ActiveSupport::TestCase
   test '.import!' do
     group = Group.first
 
-    stub_request(:get, 'https://actionnetwork.org/api/v2/events')
+    # first request. It should return another page in the next section
+    stub_request(:get, "https://actionnetwork.org/api/v2/events?filter=origin_system eq 'Action Network'")
       .with(headers: { 'OSDI-API-TOKEN' => group.an_api_key })
       .to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'events.json')))
 
-    stub_request(:get, 'https://actionnetwork.org/api/v2/events?page=2')
+
+    # # second request. It should not return another page in the next section
+    stub_request(:get, "https://actionnetwork.org/api/v2/events?filter=origin_system eq 'Action Network'&page=2")
       .with(headers: { 'OSDI-API-TOKEN' => group.an_api_key })
       .to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'events_page_2.json')))
+
+
+    stub_request(:post, 'https://actionnetwork.org/api/v2/events').to_return(status: 200)
 
     travel_to Time.zone.local(2001) do
       group.events.create!(
@@ -48,7 +54,7 @@ class Api::ActionNetwork::EventsTest < ActiveSupport::TestCase
     updated_event = Event.any_identifier('action_network:a3c724db-2799-49a6-970a-7c3c0844645d').first!
     assert_equal 'Teach in', updated_event.title, 'Should update title'
 
-    stub_request(:get, 'https://actionnetwork.org/api/v2/events')
+    stub_request(:get, "https://actionnetwork.org/api/v2/events?filter=origin_system eq 'Action Network'")
       .with(headers: { 'OSDI-API-TOKEN' => group.an_api_key })
       .to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'events2.json')))
 

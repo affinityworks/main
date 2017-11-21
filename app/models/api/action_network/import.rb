@@ -10,6 +10,7 @@ module Api::ActionNetwork::Import
     retries ||= 0
     collection = collection_class.new
     client = representer_class.new(collection)
+
     client.get(uri: uri, as: 'application/json') do |request|
       request['OSDI-API-TOKEN'] = group.an_api_key
     end
@@ -128,8 +129,17 @@ module Api::ActionNetwork::Import
 
   def first_uri(params={})
     uri = "https://actionnetwork.org/api/v2/#{resource.pluralize}#{'/' + params[:uuid] if params[:uuid]}"
+    uri = add_uri_filter(uri, params[:synced_at])
+    uri = origin_system_filter(uri)
+  end
 
-    add_uri_filter(uri, params[:synced_at])
+  def origin_system_filter(uri, system_filter = 'Action Network')
+    return uri unless resource == 'event'
+    uri = URI.parse(uri)
+    filter = "origin_system eq '#{system_filter}'"
+    query = uri.query
+    uri.query =  query.nil? ? "filter=#{filter}" : query + " and #{filter}"
+    uri.to_s
   end
 
   def logger
