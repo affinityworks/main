@@ -95,7 +95,7 @@ class MemberDetail extends Component {
     const { membership, isOrganizer } = this.state;
 
     return (
-      <div className='check-member col-md-7 text-right'>
+      <div className='check-member mb-3'>
         <span className='mr-3'>{`Is organizer of ${membership.attributes.group.data.attributes.name}`}</span>
         <label className='switch'>
         <input
@@ -141,7 +141,6 @@ class MemberDetail extends Component {
               {attributes['primary-email-address']}
             </a>
           </span>
-          {this.inputCheckMember()}
         </div>
 
         <hr style={{ marginTop: '0.5rem' }} />
@@ -153,6 +152,7 @@ class MemberDetail extends Component {
             <ActionHistory attendances={this.state.attendances}/>
           </div>
           <div className='col-6'>
+            {this.inputCheckMember()}
             <h4 style={{ marginRight: '10px' }}>Tags</h4>
             <Tags tags={membership.attributes.tags} membershipId={membership.id} />
             <br/>
