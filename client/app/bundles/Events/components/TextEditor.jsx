@@ -45,6 +45,7 @@ class TextEditor extends Component {
 
   handleShowEditor = () => {
     this.setState({ editor: true })
+    this.setState({ preview: true })
   }
 
   handleHideEditor = () => {
@@ -86,8 +87,8 @@ class TextEditor extends Component {
 
     const textValue = value.toString(format)
 
-    this.updateDescription(textValue)
-    this.handleHideEditor()
+    this.updateDescription(textValue);
+    this.handleHideEditor();
   }
 
   renderDescription () {
@@ -167,20 +168,26 @@ class TextEditor extends Component {
               className={`btn ${preview ? 'btn-primary' : 'btn-secondary'}  btn-sm mr-2`}
               onClick={handleShowWrite.bind(this)}
             >
-              <span className='fa fa-code'></span>
+              Write
             </button>
             <button
               className={`btn ${!preview ? 'btn-primary' : 'btn-secondary'} btn-sm`}
               onClick={handleShowPreview.bind(this)}
             >
-              Write
+              <span className='fa fa-code'></span>
             </button>
           </div>
         </div>
 
         <div className='Text-editor'>
           { preview
-            ? <div className='col-md-12 px-0'>
+            ? <RichTextEditor
+                className='mb-3'
+                toolbarConfig={toolbarConfig}
+                onChange={this.onChange}
+                value={this.state.value}
+              />
+            : <div className='col-md-12 px-0'>
                 <textarea
                   className="text-source mb-3"
                   placeholder="Editor Source"
@@ -188,12 +195,6 @@ class TextEditor extends Component {
                   value={this.state.value.toString('html')}
                 />
               </div>
-            : <RichTextEditor
-              className='mb-3'
-              toolbarConfig={toolbarConfig}
-              onChange={this.onChange}
-              value={this.state.value}
-            />
           }
           <button
             className='btn btn-primary btn-sm mr-2'
