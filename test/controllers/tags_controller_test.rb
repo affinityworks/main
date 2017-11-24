@@ -34,9 +34,13 @@ class TagsControllerTest < ActionDispatch::IntegrationTest
     group.tag_list.add('example')
     group.save
 
-    assert_difference 'group.tags.count', -1 do
+    assert_equal group.reload.tag_list, ['example']
+    assert_difference 'Tag.count', 0 do
       delete tag_url(resource_type: 'group', resource_id: group.id, id: group.tags.first.id), as: :json
+      assert_empty group.reload.tag_list
     end
+
+
 
     assert_response :success
   end
