@@ -61,7 +61,7 @@ class Member extends Component {
     const { tags, membershipId } = this.props;
 
     if (tags)
-      return <Tags tags={tags} membershipId={membershipId} />
+      return <Tags tags={tags} membershipId={membershipId} tagList={this.props.memberTagList}/>
   }
 
   render() {

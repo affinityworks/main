@@ -60,6 +60,7 @@ class MembersTable extends Component {
         showGroupName={this.props.showGroupName}
         membershipId={membership.id}
         tags={tags}
+        memberTagList={this.props.memberTagList}
       />
     })
   }

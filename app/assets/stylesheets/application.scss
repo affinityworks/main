@@ -87,6 +87,30 @@ $green: #5cb85c;
 
 .add-tag-container {
   margin-bottom: 15px;
+  position: relative;
+}
+
+.tag-list {
+  padding: 0;
+  background: white;
+  position: absolute;
+  margin-top: -1px;
+  width: 100%;
+
+  &__item {
+    padding: 8px;
+    border: 1px solid #d5d5d5;
+    list-style: none;
+    cursor: pointer;
+    margin-bottom: -1px;
+    font-size: 15px;
+    color: #797878;
+
+    &:hover {
+      color: white;
+      background: #1584df;
+    }
+  }
 }
 
 .group-list {

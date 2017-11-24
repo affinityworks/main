@@ -76,7 +76,7 @@ export default class Event extends Component {
     const { id } = this.props.event;
 
     if (tags)
-      return <Tags tags={tags} eventId={id} />
+      return <Tags tags={tags} eventId={id} tagList={this.props.tagsEventList}/>
   }
 
   render() {
