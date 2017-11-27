@@ -64,8 +64,31 @@ class Member extends Component {
       return <Tags tags={tags} membershipId={membershipId} tagList={this.props.memberTagList}/>
   }
 
+  renderNameLink () {
+    const { member, id, groups, currentUser } = this.props;
+
+    if (currentUser === 'member') {
+      return (
+        <td>
+          <strong>
+            {member['given-name']} {member['family-name']}  
+          </strong>
+        </td>
+      )
+    }
+
+    return (
+      <td>
+        <Link to={`${membersPath(groups[0]['id'])}/${id}`}>
+          {member['given-name']} {member['family-name']}
+        </Link>
+      </td>
+    )
+  }
+
   render() {
-    const { member, role, id, groups } = this.props;
+    const { member, role, currentUser} = this.props;
+    const isMember = currentUser !== 'member';
 
     if(!member) { return null }
 
@@ -74,15 +97,11 @@ class Member extends Component {
     return(
       <tr>
         <td>{this.showEmailCheckbox()}</td>
-        <td>
-          <Link to={`${membersPath(groups[0]['id'])}/${id}`}>
-            {member['given-name']} {member['family-name']}
-          </Link>
-        </td>
+        {this.renderNameLink()}
         <td>{member['primary-phone-number']}</td>
         <td>{this.localityAndRegion()}</td>
-        {this.groupColumn()}
-        <td>{this.showTags()}</td>
+        {isMember ? this.groupColumn() : <th/>}
+        {isMember ? <td>{this.showTags()}</td> : <th/>}
         <td>{role}</td>
         <td>
           <EmailLink email={email} />

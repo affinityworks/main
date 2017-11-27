@@ -5,6 +5,7 @@ import history from '../history';
 import Nav from '../components/Nav';
 import GroupEvents from '../components/Events';
 import Breadcrumbs from '../components/Breadcrumbs';
+import { fetchCurrentUserGroups } from '../actions';
 import { managingCurrentGroupWithAffiliates } from '../utils'
 
 class Events extends Component {
@@ -19,29 +20,43 @@ class Events extends Component {
   }
 
   render() {
-    const { currentGroup, location } = this.props;
+    const { currentGroup, location, currentRole } = this.props;
     const activeText = managingCurrentGroupWithAffiliates(currentGroup)
       ? 'All Events'
       : 'Events';
 
     return (
       <div>
-        <Breadcrumbs active={activeText} location={location} />
+        <Breadcrumbs
+          active={activeText}
+          location={location}
+          currentUser={currentRole}
+        />
 
         <br />
 
-        <Nav activeTab='events'/>
+        <Nav
+          activeTab='events'
+          currentUser={currentRole}
+        />
 
-        <GroupEvents currentGroup={this.props.currentGroup} location={this.props.location} history={this.props.history}
-          showGroupName={this.showGroupName()} showPrintIcon={this.showPrintIcon()}
+        <GroupEvents
+          currentGroup={this.props.currentGroup}
+          location={this.props.location}
+          history={this.props.history}
+          showGroupName={this.showGroupName()}
+          showPrintIcon={this.showPrintIcon()}
+          currentUser={currentRole}
         />
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ currentGroup }) => {
-  return { currentGroup }
+const mapStateToProps = (state) => {
+  const {currentGroup, currentRole} = state;
+
+  return { currentGroup, currentRole }
 };
 
-export default connect(mapStateToProps)(Events);
+export default connect(mapStateToProps, { fetchCurrentUserGroups })(Events);

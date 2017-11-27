@@ -38,8 +38,18 @@ class Members extends Component {
     }
   }
 
+  renderAddButton () {
+    return (
+      <div>
+        <a href="members/new">
+          <button className='btn btn-primary'>Add Member</button>
+        </a>
+      </div>
+    )
+  }
+
   render() {
-    const { memberships, showGroupName, location } = this.props
+    const { memberships, showGroupName, location, currentUser } = this.props
     const { search } = location;
     const { filter } = queryString.parse(search);
 
@@ -54,15 +64,15 @@ class Members extends Component {
           </div>
         </div>
         <br />
-        <div>
-          <a href="members/new">
-            <button className='btn btn-primary'>Add Member</button>
-          </a>
-        </div>
-
+          {currentUser !== 'member' ? this.renderAddButton() : '' }
         <br />
 
-        <MembersTable memberships={memberships} showGroupName={showGroupName} memberTagList={this.props.tags}/>
+        <MembersTable
+          memberships={memberships}
+          showGroupName={showGroupName}
+          memberTagList={this.props.tags}
+          currentUser={currentUser}
+        />
 
         <br />
 
