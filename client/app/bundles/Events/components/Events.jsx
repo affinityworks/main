@@ -56,6 +56,7 @@ class Events extends Component {
       key={event.id} event={event}
       showGroupName={this.props.showGroupName}
       showPrintIcon={this.props.showPrintIcon}
+      tagsEventList={this.props.tags}
     />))
   }
 
@@ -106,9 +107,9 @@ class Events extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { events, total_pages, page } = state.events;
+  const { events, total_pages, page, tags } = state.events;
 
-  return { events, total_pages, page };
+  return { events, total_pages, page, tags };
 }
 
 export default connect(mapStateToProps, { fetchEvents })(Events);

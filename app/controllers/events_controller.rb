@@ -10,6 +10,7 @@ class EventsController < ApplicationController
       format.json do
         render json: {
           events: JsonApi::EventsRepresenter.for_collection.new(Event.add_attendance_counts(@events)),
+          tags: JsonApi::TagsRepresenter.for_collection.new(Tag.type_event),
           total_pages: @events.total_pages,
           page: @events.current_page
         }.to_json

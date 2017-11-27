@@ -10,6 +10,7 @@ class MembershipsController < ApplicationController
       format.json do
         render json: {
           memberships: JsonApi::MembershipRepresenter.for_collection.new(@memberships),
+          tags: JsonApi::TagsRepresenter.for_collection.new(Tag.type_membership),
           total_pages: @memberships.total_pages,
           page: @memberships.current_page
         }.to_json
@@ -38,19 +39,19 @@ class MembershipsController < ApplicationController
       @membership.update(role: 'organizer')
       format.html { redirect_to group_dashboard_path, notice: 'Member is now an Organizer.' }
       format.json { render :show, status: :created, location: @membership }
-    else 
+    else
       @membership.update(role: 'member')
       format.html { redirect_back(fallback_location: root_path) }
       format.json { render json: @membership.errors, status: :unprocessable_entity }
       end
-    end   
+    end
   end
 
   private
 
   def find_memberships
 
-    if @group 
+    if @group
       #are we looking at the person in the context of a specific group, then what groups can we see
       member_ids = Membership.where(:group_id =>@group.affiliates.pluck(:id).push(@group.id) ).pluck(:id)
     else  #or did we not get any group

@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { filter, map, flatten, uniq } from 'lodash';
 import React, { Component } from 'react';
 import queryString from 'query-string';
 import { withRouter } from 'react-router';
@@ -11,7 +11,16 @@ class Tags extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { tags: this.props.tags, isEditing: false, tagName: '' };
+    this.state = { tags: this.props.tags, isEditing: false, tagName: '', initialItems: [], items: []};
+  }
+
+  componentWillMount() {
+    const { tagList } = this.props
+    const values = map(tagList, (item) => {
+      return item.name
+    });
+
+    this.setState({ initialItems: values })
   }
 
   componentDidUpdate() {
@@ -56,31 +65,63 @@ class Tags extends Component {
       .then(response => {
         const tags = this.state.tags.concat(response.data);
         this.setState({ tags, isEditing: false, tagName: '' })
+        this.state.initialItems.push(`${tag_name}`)
       });
   }
 
   removeTag(id) {
     client.delete(`/tags/${id}.json`, { params: this.tagResourceData() })
       .then(response => {
-        const tags = _.filter(this.state.tags, (tag) => (tag.id != id));
+        const tags = filter(this.state.tags, (tag) => (tag.id != id));
         this.setState({ tags })
       });
   }
 
+  updateList (e) {
+    const { initialItems } = this.state;
+    const value = e.target.value
+
+    return initialItems.filter((item) => {
+      return item.toLowerCase().search(
+        value.toLowerCase()) !== -1
+    })
+  }
+
+  addTagName (name) {
+    this.setState({ tagName: name })
+    this.setState({ item: [] })
+  }
+
+  searchList () {
+    const { item } = this.state
+
+    return map(uniq(item), (items, idx) => {
+      return (
+        <li
+          key={idx}
+          className='tag-list__item' 
+          onClick={() => (this.addTagName(items))}>
+          {items}
+        </li>
+      )
+    })
+  }
+
   handleInputChange(ev) {
     this.setState({ tagName: ev.target.value });
+    this.setState({ item: ev.target.value ? this.updateList(ev) : [] })
   }
 
   addTagFilter(tag) {
     if (this.props.match.params.id) {
       // we are in the MemberDetail view, need to go up a level
-    this.props.history.push(`./?${queryString.stringify({ tag })}`);
+      this.props.history.push(`./?${queryString.stringify({ tag })}`);
     } else {
       // we are in the MembersTable view, just add filter
       this.props.history.push(`?${queryString.stringify({ tag })}`);
     }
   }
-
+  
   showAddTagInput() {
     if(this.state.isEditing) {
       return(
@@ -92,6 +133,9 @@ class Tags extends Component {
               onChange={this.handleInputChange.bind(this)}
               ref={(input) => { this.tagsInput = input }}
             />
+            <ul className='tag-list'>
+              {this.searchList()}
+            </ul>
             <button className="fa fa-plus tag-action tag-action--create" aria-hidden="true" />
           </form>
         </div>
@@ -111,7 +155,6 @@ class Tags extends Component {
           key={id}
           onClick={() => (this.addTagFilter(name))}>
           {name}
-
           <span
             className='tag-action--remove'
             onClick={(e) => { e.stopPropagation(); this.removeTag(id); }}>

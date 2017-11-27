@@ -6,6 +6,7 @@ import SearchFilter from './SearchFilter';
 import MembersTable from './MembersTable';
 import Pagination from './Pagination';
 import { fetchMemberships } from '../actions'
+import { map } from 'lodash'
 
 class Members extends Component {
   constructor(props, _railsContext) {
@@ -61,7 +62,7 @@ class Members extends Component {
 
         <br />
 
-        <MembersTable memberships={memberships} showGroupName={showGroupName} />
+        <MembersTable memberships={memberships} showGroupName={showGroupName} memberTagList={this.props.tags}/>
 
         <br />
 
@@ -72,8 +73,8 @@ class Members extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { memberships, total_pages, page } = state.memberships;
-  return { memberships, total_pages, page };
+  const { memberships, total_pages, page, tags } = state.memberships;
+  return { memberships, total_pages, page, tags };
 };
 
 export default connect(mapStateToProps, { fetchMemberships })(Members);

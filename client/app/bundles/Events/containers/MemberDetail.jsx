@@ -11,6 +11,7 @@ import EmailLink from '../components/EmailLink';
 import ActionHistory from '../components/ActionHistory';
 import { membersPath, membershipPath, client } from '../utils';
 import { addAlert } from '../actions';
+import { map } from 'lodash';
 
 function isOrganizer (membership) {
   return membership.attributes.role === 'organizer';
