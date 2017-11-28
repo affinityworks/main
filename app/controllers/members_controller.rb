@@ -42,27 +42,28 @@ class MembersController < ApplicationController
   # GET /groups/:id/members/new
   def new
     @member = @group.members.new
+    @member.email_addresses.build(primary: true)
+    @member.phone_numbers.build(primary: true)
     authorize! :manage, @group
   end
 
   # GET /groups/:id/members/1/edit
   def edit
     @groups = Group.all
-    set_group
     authorize! :manage, @group
-  end 
+  end
 
 
   # POST /groups/:id/members/
   # POST /groups/:id/members/.json
   def create
-    @person = Person.new(person_params)
+    @member = @group.members.new(person_params)
 
     respond_to do |format|
-      if @person.save
-        @group.memberships.create(:person => @person, :role => 'member')
-        format.html { redirect_to group_member_path(@group, @person), notice: 'Member was successfully created.' }
-        format.json { render json: @person, status: :created, location: group_members_path(@group) }
+      if @member.save
+        @group.memberships.create(:person => @member, :role => 'member')
+        format.html { redirect_to group_member_path(@group, @member), notice: 'Member was successfully created.' }
+        format.json { render json: @member, status: :created, location: group_members_path(@group) }
       else
         format.html { render :new }
         format.json { render json: @group.errors, status: :unprocessable_entity }
@@ -76,9 +77,9 @@ class MembersController < ApplicationController
   # PATCH/PUT /groups/1.json
   def update
     respond_to do |format|
-      if @member.update(member_params)
-        format.html { redirect_to group_dashboard_path, notice: 'Member was successfully updated.' }
-        format.json { render :show, status: :ok, location: @member }
+      if @member.update(person_params)
+        format.html { redirect_to group_member_path(@group, @member), notice: 'Member was successfully updated.' }
+        format.json { render :show, status: :ok, location: group_member_path(@group, @member) }
       else
         format.html { render :edit }
         format.json { render json: @member.errors, status: :unprocessable_entity }
@@ -100,34 +101,28 @@ class MembersController < ApplicationController
 
   # only returns nil / empty symbol
   def person_params
-    params.require(:person).permit([
+    params.require(:person).permit(
           :family_name,
-          :given_name, 
-          :gender, 
-          :gender_identity, 
-          :party_identification, 
-          :birthdate, 
+          :given_name,
+          :gender,
+          :gender_identity,
+          :party_identification,
+          :birthdate,
           :employer,
           :primary_email_address,
-          :primary_phone_number,   
-          { :ethnicities => []}, 
-          {:languages_spoken => []},
-          {:custom_fields => {}}
-     ]
+          :primary_phone_number,
+          ethnicities: [],
+          languages_spoken: [],
+          custom_fields: {},
+          memberships_attributes: [:id, :role],
+          phone_numbers_attributes: [:id, :number, :primary, :_destroy],
+          email_addresses_attributes: [:id, :address, :primary, :_destroy]
       )
-  end
-
-  def email_params
-    params.require(:person).permit(email_address: :email_address)
-  end
-
-  def phone_params
-    params.require(:person).permit(phone_number: :phone_number)
   end
 
   def set_member
     #@membership = Membership.where(:group_id =>@group.affiliates.pluck(:id).push(@group.id) )
-    if @group 
+    if @group
       #are we looking at the person in the context of a specific group, then what groups can we see
       group_ids = @group.affiliates.pluck(:id).push(@group.id)
     else  #or did we not get any group
@@ -143,9 +138,9 @@ class MembersController < ApplicationController
   end
 
   def set_members
-    
+
     member_ids = Membership.where(:group_id =>@group.affiliates.pluck(:id).push(@group.id) ).pluck(:person_id)
-    
+
     @members = Person.where(:id => member_ids).includes(
         [:email_addresses, :personal_addresses, :phone_numbers]
       ).page(params[:page])

@@ -56,12 +56,14 @@ class Events extends Component {
       key={event.id} event={event}
       showGroupName={this.props.showGroupName}
       showPrintIcon={this.props.showPrintIcon}
+      tagsEventList={this.props.tags}
     />))
   }
 
   render() {
     const { search } = this.props.location;
     const { filter, direction } = queryString.parse(search);
+    const { id } = this.props.currentGroup
 
     return (
       <div>
@@ -71,10 +73,10 @@ class Events extends Component {
             <SearchFilter
               onSearchSubmit={this.filterEvents}
               filter={filter}
-              placeholder='Search for events' />
+              placeholder='Search by event name or location' />
           </div>
           <div className='col-3 offset-3 text-right'>
-            <a href='/admin/auth/facebook' className='btn btn-facebook'>
+            <a href={`/admin/auth/facebook?group_id=${id}`} className='btn btn-facebook'>
               Import Event From Facebook
             </a>
           </div>
@@ -105,9 +107,9 @@ class Events extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { events, total_pages, page } = state.events;
+  const { events, total_pages, page, tags } = state.events;
 
-  return { events, total_pages, page };
+  return { events, total_pages, page, tags };
 }
 
 export default connect(mapStateToProps, { fetchEvents })(Events);

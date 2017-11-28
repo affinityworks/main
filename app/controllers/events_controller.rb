@@ -10,6 +10,7 @@ class EventsController < ApplicationController
       format.json do
         render json: {
           events: JsonApi::EventsRepresenter.for_collection.new(Event.add_attendance_counts(@events)),
+          tags: JsonApi::TagsRepresenter.for_collection.new(Tag.type_event),
           total_pages: @events.total_pages,
           page: @events.current_page
         }.to_json
@@ -41,7 +42,9 @@ class EventsController < ApplicationController
     @events = @events.tagged_with(params[:tag]) if params[:tag]
 
     if params[:filter] then
-      @events = @events.where('title ilike ?',"%#{params[:filter]}%")
+      @events = Event.joins(:location).where(
+        'addresses.venue ilike ? or title ilike ?', "%#{params[:filter]}%","%#{params[:filter]}%"
+      )
     end
 
     if sort_param && direction_param

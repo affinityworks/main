@@ -24,8 +24,8 @@ class TagsController < ApplicationController
     render_not_found and return unless resource
 
     tag = resource.tags.find(params[:id])
-    tag.destroy
-
+    resource.tag_list.remove(tag.name)
+    resource.save
     respond_to do |format|
       format.json { head :no_content }
     end

@@ -1,6 +1,6 @@
 class EmailAddress < ApplicationRecord
   has_paper_trail
-  
+
   ADDRESS_FORMAT = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
 
   validates :address, uniqueness: true

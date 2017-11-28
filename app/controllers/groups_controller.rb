@@ -3,6 +3,8 @@ class GroupsController < ApplicationController
   before_action :set_group, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_person!
 
+  protect_from_forgery except: [:update] #TODO: Add the csrf token in react.
+  
   # GET /groups
   # GET /groups.json
   def index
@@ -69,8 +71,9 @@ class GroupsController < ApplicationController
   # PATCH/PUT /groups/1
   # PATCH/PUT /groups/1.json
   def update
-    #affiliated_id and group_id are switched due to table being backwards. refactor upon completion
-    @affiliates = Affiliation.find_or_create_by!({affiliated_id: params[:id], group_id: params["affiliation"]["affiliated_id"]})
+    #affiliated_id and group_id are switched due to table being backwards. refactor upon completion    
+    affiliated_id = params.dig(:affiliation, :affiliated_id)    
+    @affiliates = Affiliation.find_or_create_by!({affiliated_id: params[:id], group_id: affiliated_id }) if affiliated_id
     respond_to do |format|
       if @group.update(group_params)
         format.html { redirect_to group_dashboard_path(@group), notice: 'Group was successfully updated.' }

@@ -6,6 +6,8 @@ class Identity < ActiveRecord::Base
   validates_uniqueness_of :uid, :scope => :provider
 
   scope :facebook, -> { where(provider: 'facebook') }
+  scope :twitter, -> { where(provider: 'twitter') }
+  scope :google_oauth2, -> { where(provider: 'google_oauth2') }
 
   def self.find_for_oauth(auth)
     find_or_initialize_by(uid: auth.uid, provider: auth.provider) do |identity|

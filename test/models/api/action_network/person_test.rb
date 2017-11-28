@@ -21,13 +21,15 @@ class Api::ActionNetwork::PersonTest < ActiveSupport::TestCase
   test 'duplicate import merge correctly' do
 
     person = Person.create(
+      given_name: 'given_name',
+      family_name: 'family_name',
       email_addresses: [
         EmailAddress.new(primary: true, address: 'evan@anonymous.com'),
       ],
       password: "password"
     )
     encypted_password = person.encrypted_password
-   
+
     group = Group.first
     group.members << person
     person1_uuid = '06d13a33-6824-493b-a922-95e793f269d3'
@@ -63,6 +65,8 @@ class Api::ActionNetwork::PersonTest < ActiveSupport::TestCase
 
   test 'when the person is member of another group' do
     person = Person.create(
+      given_name: 'given_name',
+      family_name: 'family_name',
       email_addresses: [
         EmailAddress.new(primary: true, address: 'evan@henshaw-plath.com'),
       ]
@@ -85,7 +89,7 @@ class Api::ActionNetwork::PersonTest < ActiveSupport::TestCase
     assert_includes person.groups, group, 'keeps the old group'
     assert_includes person.groups, other_group, 'adds the new group'
   end
-  
+
 
 
 end

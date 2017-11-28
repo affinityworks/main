@@ -252,7 +252,9 @@ Devise.setup do |config|
 
 
   config.omniauth :facebook, ENV['FACEBOOK_APP_ID'], ENV['FACEBOOK_APP_SECRET'],
-                  scope: 'user_events,rsvp_event'
+                  scope: 'user_events,rsvp_event,email'
+  config.omniauth :twitter, ENV['TWITTER_APP_ID'], ENV['TWITTER_APP_SECRET']
+  config.omniauth :google_oauth2, ENV['GOOGLE_APP_ID'], ENV['GOOGLE_APP_SECRET']
 
 
   # ==> Warden configuration
@@ -277,9 +279,9 @@ Devise.setup do |config|
   # When using OmniAuth, Devise cannot automatically set OmniAuth path,
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
-  
-  config.mailer.class_eval do 
-    helper :subdomain 
+
+  config.mailer.class_eval do
+    helper :subdomain
   end
 
 end

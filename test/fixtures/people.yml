@@ -26,9 +26,9 @@ one:
 two:
   id: 2
   identifiers: ['advocacycommons:2', 'foreign_system:473298']
-  family_name: 
+  family_name:
     - Mejía
-  given_name: 
+  given_name:
     - José
   additional_name: MyString
   honorific_prefix: MyString

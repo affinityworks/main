@@ -14,7 +14,8 @@ class Api::ActionNetwork::AttendancesTest < ActiveSupport::TestCase
       with(:headers => {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'Osdi-Api-Token'=>'test-token', 'User-Agent'=>'Ruby'}).
       to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'person.json')))
 
-    Person.create!(identifiers: ['action_network:ceef7e23-4617-4af8-bd0f-60029299d8cd'])
+    Person.create!(identifiers: ['action_network:ceef7e23-4617-4af8-bd0f-60029299d8cd'],
+      given_name: 'given_name', family_name: 'family_name')
     event = Event.any_identifier('action_network:1efc3644-af25-4253-90b8-a0baf12dbd1e').first!
 
     action_network_attendances = JSON.parse(attendances_response)['_embedded']['osdi:attendances']

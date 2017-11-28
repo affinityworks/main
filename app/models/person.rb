@@ -5,12 +5,12 @@
 class Person < ApplicationRecord
   include Api::Identifiers
   include ArelHelpers::ArelTable
-  
+
   acts_as_taggable
   has_paper_trail ignore: [:created_at, :updated_at]
 
-  devise :database_authenticatable,
-         :recoverable, :rememberable, :trackable, :validatable,
+  devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable,
+         :registerable,
          :omniauthable, omniauth_providers: [:facebook]
 
   serialize :custom_fields, Hash
@@ -20,7 +20,7 @@ class Person < ApplicationRecord
   has_one :employer_address, class_name: 'EmployerAddress'
 
   has_many :email_addresses, dependent: :destroy
-  has_many :identities
+  has_many :identities, dependent: :destroy
   has_many :personal_addresses, class_name: 'PersonalAddress'
   has_many :phone_numbers, dependent: :destroy
   has_many :profiles, dependent: :destroy
@@ -31,13 +31,19 @@ class Person < ApplicationRecord
   has_many :memberships, dependent: :destroy
   has_many :groups, through: :memberships
 
+  accepts_nested_attributes_for :email_addresses, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :phone_numbers, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :memberships, reject_if: :all_blank, allow_destroy: true
+  
   has_many :organizer_memerships, -> { organizer }, :class_name => 'Membership'
   has_many :organized_groups, :source => :group, :through => :organizer_memerships
+
+  validates :family_name, :given_name, presence: true
 
   before_update :generate_update_events
 
   attr_accessor :attended_events_count #NOTE ROAR purpose
-  
+
   after_create :custom_field_to_phone_number
 
   scope :by_email, -> (email) do
@@ -45,6 +51,7 @@ class Person < ApplicationRecord
   end
 
   scope :unsynced, -> { where(synced: false) }
+  scope :family_name_like, ->(family_name) { where('family_name ILIKE ?', "%#{family_name}%") }
 
   #validates_inclusion_of :gender, :in => :gender_options
   serialize :languages_spoken, Array
@@ -106,9 +113,9 @@ class Person < ApplicationRecord
 
   def primary_phone_number
     phone_number = phone_numbers.detect(&:primary?)&.number
-    
+
     if phone_numbers.any?
-      phone_number = phone_numbers.first.number unless phone_number 
+      phone_number = phone_numbers.first.number unless phone_number
     end
 
     return phone_number || ''
@@ -152,23 +159,13 @@ class Person < ApplicationRecord
   end
 
   def self.from_omniauth(auth, signed_in_resource = nil)
+    email = auth.info.email
+    return unless email
+    email = EmailAddress.find_by(address: email)
+    return unless email
     identity = Identity.find_for_oauth(auth)
-
-    person = signed_in_resource ? signed_in_resource : identity.person
-
-    #NOTE This should never happen, because only signed in people can connect with Omniauth
-    if person.nil?
-      email = auth.info.email
-      person = EmailAddress.where(:address => email).first.try(:person) if email
-
-      return if person.nil?
-    end
-
-    if identity.person != person
-      identity.person = person
-      identity.save!
-    end
-    person
+    person = signed_in_resource || email.person
+    omniauth_signed_in_resource(email, identity, person)
   end
 
   def self.add_event_attended(people, current_group)
@@ -222,13 +219,13 @@ class Person < ApplicationRecord
     people_version =  PaperTrail::Version.where(item_type: 'Person').
       where.not(event: 'destroy').
       where(created_at: date.beginning_of_day...Date.today.end_of_day)
-    
+
       {}.tap do |feed|
-      
+
       created, updated = people_version.partition { |version| version.event == 'create' }
-      
+
       feed[:created] = created.map { |version|
-         to_activity_json(version) 
+         to_activity_json(version)
        }
       feed[:updated] = updated.map { |version| to_activity_json(version) }
     end
@@ -263,13 +260,29 @@ class Person < ApplicationRecord
     potential_fields = [ 'Phone Number', 'Phone', 'phone', "2 Phone"]
 
     potential_fields.each do |field_name|
-      unless custom_fields[field_name].nil?  
+      unless custom_fields[field_name].nil?
         phone_numbers.create(:number => custom_fields[field_name])
       end
     end
   end
 
   private
+
+  class << self
+    def omniauth_signed_in_resource(email, identity, person)
+      return nil if email.person != person
+      return nil if identity.persisted? && identity.person != person
+      return nil if email.new_record? && person.nil?
+      save_omniauth(email, identity, person)
+    end
+
+    def save_omniauth(email, identity, person)
+      person.email_addresses << email if email.new_record?
+      person.identities << identity if identity.new_record?
+      person.save if email.new_record? || identity.new_record?
+      person
+    end
+  end
 
   def generate_update_events
     record_update_event('PersonUpdated')
@@ -279,6 +292,6 @@ class Person < ApplicationRecord
   def record_update_event(name)
     ::NewRelic::Agent.record_custom_event(name, id: id, email: primary_email_address)
   end
-  
+
 
 end

@@ -1,22 +1,15 @@
- <%= render 'groups/navigation' %>
-
-    <div class = "container-html">
-      <div class="list-group-item">
-        <table class="table table--fixed">
-          <thead>
-            <tr>
-            <h3>
-              <small style={{ position: 'relative', bottom: '-5px', marginLeft: '5px' }}>
-                  <h1>Editing Person</h1>
-              </small>
-            </h3>
-            </tr>
-          </thead>
-          <%= render 'form', member: @member %>
-
-        </table>
+<%= render 'groups/navigation' %>
+<div class = "container-html">
+  <div class="card">
+    <div class="card-block">
+      <h3>Editing Person</h3>
+      <div>
+        <%= render 'form', member: @member, url: group_member_path(@group) %>
       </div>
     </div>
-    
-    
+  </div>
+</div>
+
+
+
 

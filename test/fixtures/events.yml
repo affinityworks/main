@@ -66,7 +66,7 @@ test:
   id: 3
   origin_system: MyString
   name: MyString
-  title: House Party for Progress
+  title: Event Title
   description: MyString
   summary: MyString
   browser_url: MyString

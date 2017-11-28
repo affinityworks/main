@@ -14,10 +14,13 @@ gem 'coffee-rails', '~> 4.2'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
+gem 'rake', '12.1.0'
 gem 'cancancan'
 gem 'devise'
 gem 'omniauth'
 gem 'omniauth-facebook'
+gem 'omniauth-twitter'
+gem 'omniauth-google-oauth2'
 gem 'bootstrap', '~> 4.0.0.alpha5'
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.3.3'
@@ -92,9 +95,11 @@ gem 'resque-scheduler'
 gem 'rb-fsevent', '~> 0.10.2'
 gem 'arel-helpers'
 gem 'koala'
+gem "cocoon"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'dotenv-rails'
   gem 'byebug', platform: :mri
   gem 'awesome_print'
 end

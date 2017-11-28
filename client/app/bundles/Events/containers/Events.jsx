@@ -32,7 +32,7 @@ class Events extends Component {
 
         <Nav activeTab='events'/>
 
-        <GroupEvents location={this.props.location} history={this.props.history}
+        <GroupEvents currentGroup={this.props.currentGroup} location={this.props.location} history={this.props.history}
           showGroupName={this.showGroupName()} showPrintIcon={this.showPrintIcon()}
         />
       </div>
