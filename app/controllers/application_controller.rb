@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_group
-    group_id = controller_name == 'groups' ? params[:id] : params[:group_id] 
+    group_id = controller_name == 'groups' ? params[:id] : params[:group_id]
     Group.find(group_id) if group_id
   end
 
@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
       if current_group.members.include?(current_person)
         role = user_group_to_role(current_person, current_group)
       else
-        role = 'member' 
+        role = 'member'
       end
 
       current_group.affiliates.each do |affiliated_group|
@@ -61,19 +61,20 @@ class ApplicationController < ActionController::Base
   end
 
   def authorize_group_access
-    if params[:group_id]
-      @group =  Group.find_by(id: params[:group_id])
-      authorize! :manage, @group
-    else
-      true
-    end
+    return unless current_group
+    authorize! :read, current_group && return if authorized_controllers_and_actions?
+    authorize! :manage, current_group
   end
 
+  def authorized_controllers_and_actions?
+    controller_names = %w(members memberships events)
+    controller_names.include?(controller_name) && action_name == 'index'
+  end
 
-  rescue_from CanCan::AccessDenied do |exception|
+  rescue_from CanCan::AccessDenied do |_exception|
     respond_to do |format|
       format.html do
-        flash[:alert] = "Access denied. You are not authorized to access the requested page."
+        flash[:alert] = 'Access denied. You are not authorized to access the requested page.'
         redirect_to profile_index_path
       end
       format.json { head :forbidden }

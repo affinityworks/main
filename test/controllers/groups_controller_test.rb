@@ -4,15 +4,13 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   setup do
-    @person = people(:one)
+    @person = people(:two)
     @group = @person.groups.first
 
-    sign_in people(:one)
+    sign_in @person
   end
 
   test "should get index" do
-    sign_in @person
-
     get groups_url
     assert_response :success
   end
@@ -40,6 +38,10 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get redirect" do
+    @person = people(:one)
+    @group = @person.groups.first
+
+    sign_in @person
     get edit_group_url(@group)
     assert_response :redirect
   end

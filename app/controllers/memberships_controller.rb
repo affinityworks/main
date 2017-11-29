@@ -51,9 +51,9 @@ class MembershipsController < ApplicationController
 
   def find_memberships
 
-    if @group
+    if current_group
       #are we looking at the person in the context of a specific group, then what groups can we see
-      member_ids = Membership.where(:group_id =>@group.affiliates.pluck(:id).push(@group.id) ).pluck(:id)
+      member_ids = Membership.where(:group_id =>current_group.affiliates.pluck(:id).push(current_group.id) ).pluck(:id)
     else  #or did we not get any group
       organized_groups_ids = current_user.organized_groups.pluck(:id)
       group_ids = Membership.where(:group_id =>organized_groups_ids.concat(organized_groups_ids).uniq).pluck(:id)

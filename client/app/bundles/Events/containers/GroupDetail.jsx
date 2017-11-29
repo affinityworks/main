@@ -50,6 +50,7 @@ class GroupDetail extends Component {
 }
 
 const mapStateToProps = ({ group }) => {
+
   return { group }
 };
 

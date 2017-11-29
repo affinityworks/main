@@ -7,6 +7,9 @@ import SearchFilter from './SearchFilter';
 import Pagination from './Pagination';
 import SortableHeader from './SortableHeader';
 import { fetchEvents } from '../actions';
+import UpcomingEvent from '../components/UpcomingEvent';
+import { fetchGroup } from '../actions';
+
 
 class Events extends Component {
   constructor(props, _railsContext) {
@@ -19,7 +22,10 @@ class Events extends Component {
   }
 
   componentWillMount() {
-    this.props.fetchEvents(this.props.location.search);
+    const { fetchGroup, fetchEvents, location, currentGroup, currentUser } = this.props
+    const groupId = currentGroup.id
+
+    currentUser === 'member' ? fetchGroup(groupId) : fetchEvents(location.search)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -51,6 +57,17 @@ class Events extends Component {
       return <th></th>
   }
 
+  upcoming_events() {
+    const groupRelationships = this.props.group.relationships;
+
+    if (!groupRelationships || !groupRelationships['upcoming-events'].data.length)
+      return (<div>The group has no incoming events</div>);
+    else {
+      const events = groupRelationships['upcoming-events'].data;
+      return events.map(event => <UpcomingEvent key={event.id} event={event} />)
+    }
+  }
+
   renderEvents() {
     return this.props.events.map(event => (<Event
       key={event.id} event={event}
@@ -64,11 +81,21 @@ class Events extends Component {
     const { search } = this.props.location;
     const { filter, direction } = queryString.parse(search);
     const { id } = this.props.currentGroup
+    const { currentUser } = this.props
+  
+    if (currentUser === 'member') {
+      return (
+        <div className='col-md-12 mb-4 mt-5'>
+          <h3><i className='fa fa-calendar'/> Upcoming Events</h3>
+          <br/>
+          {this.upcoming_events()}
+        </div>
+      )
+    }
 
     return (
       <div>
         <div className='row'>
-
           <div className='col-6'>
             <SearchFilter
               onSearchSubmit={this.filterEvents}
@@ -83,6 +110,7 @@ class Events extends Component {
         </div>
 
         <br />
+
         <table className={`table ${this.props.showPrintIcon ? '' : 'table--fixed'}`}>
           <thead>
             <tr>
@@ -107,9 +135,10 @@ class Events extends Component {
 }
 
 const mapStateToProps = (state) => {
+  const { group } = state
   const { events, total_pages, page, tags } = state.events;
 
-  return { events, total_pages, page, tags };
+  return { events, total_pages, page, tags, group };
 }
 
-export default connect(mapStateToProps, { fetchEvents })(Events);
+export default connect(mapStateToProps, { fetchEvents, fetchGroup })(Events);
