@@ -28,7 +28,27 @@ class Nav extends Component {
   }
 
   render() {
-    const { activeTab } = this.props;
+    const { activeTab, currentUser } = this.props;
+
+    if (currentUser === 'member') {
+      return (
+        <div>
+          <ul className="nav nav-tabs">
+            <NavItem
+              title='Members'
+              path={membersPath()}
+              active={activeTab === 'members'}
+            />
+            <NavItem
+              title='Events'
+              path={eventsPath()}
+              active={activeTab === 'events'}
+            />
+          </ul>
+          <br />
+        </div>
+      )
+    }
 
     return (
       <div>
@@ -39,7 +59,7 @@ class Nav extends Component {
             active={activeTab === 'dashboard'}
           />
 
-          {this.renderGroupsTab()}
+          { this.renderGroupsTab() }
 
           <NavItem
             title={`${this.isRootNav() ? 'All' : ''} Members`}

@@ -51,8 +51,10 @@ class MembersTable extends Component {
     return this.props.memberships.map(membership => {
       const { tags } = membership.attributes;
       const person = membership.attributes.person.data;
+
       return <Member key={person.id} id={person.id}
         member={person.attributes}
+        currentUser={this.props.currentUser}
         groups={person.relationships.groups.data}
         role={membership.attributes.role}
         onCheckboxChecked={this.addMemberEmail.bind(this)}
@@ -66,8 +68,9 @@ class MembersTable extends Component {
   }
 
   render() {
-    const { memberships } = this.props;
-
+    const { memberships, currentUser } = this.props;
+    const isMember = currentUser !== 'member';
+    
     if (!memberships)
       return (
         <div style={{ alignItems: 'center', height: '150px', display: 'flex', justifyContent: 'center' }}>
@@ -92,8 +95,8 @@ class MembersTable extends Component {
             {this.nameColumn()}
             {this.phoneColumn()}
             {this.locationColumn()}
-            {this.groupColumn()}
-            <th style={{ width: '20%'}}>Tags</th>
+            { isMember ? this.groupColumn() : <th/>}
+            { isMember ? <th style={{ width: '20%'}}>Tags</th> : <th/>}
             <SortableHeader title='Role' sortBy='role' style={{ width: '15%'}} />
             <th style={{ width: '5%'}}></th>
           </tr>

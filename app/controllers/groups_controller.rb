@@ -4,7 +4,7 @@ class GroupsController < ApplicationController
   before_action :authenticate_person!
 
   protect_from_forgery except: [:update] #TODO: Add the csrf token in react.
-  
+
   # GET /groups
   # GET /groups.json
   def index
@@ -50,7 +50,7 @@ class GroupsController < ApplicationController
     @groups = Group.all
     set_group
     authorize! :manage, @group
-  end 
+  end
 
   # POST /groups
   # POST /groups.json
@@ -70,8 +70,8 @@ class GroupsController < ApplicationController
   # PATCH/PUT /groups/1
   # PATCH/PUT /groups/1.json
   def update
-    #affiliated_id and group_id are switched due to table being backwards. refactor upon completion    
-    affiliated_id = params.dig(:affiliation, :affiliated_id)    
+    #affiliated_id and group_id are switched due to table being backwards. refactor upon completion
+    affiliated_id = params.dig(:affiliation, :affiliated_id)
     @affiliates = Affiliation.find_or_create_by!({affiliated_id: params[:id], group_id: affiliated_id }) if affiliated_id
     respond_to do |format|
       if @group.update(group_params)
@@ -98,6 +98,10 @@ class GroupsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_group
     @group = Group.find(params[:id])
+  end
+
+  def authorized_controllers_and_actions?
+    action_name == 'show'
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
