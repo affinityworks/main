@@ -14,4 +14,15 @@ $( document ).ready(function() {
     selectOrUnselectCheckbox($(".js-phone-primary"), target);
   });
 
+  $(".phone-input").on("input", function (e) {
+    const val = e.currentTarget.value
+    switch (val) {
+      case "+":
+        $(this).mask("+9-999-999-9999");
+        break;
+      case "(":
+        $(this).mask("(999) 999-9999");
+        break;
+    }
+  })
 });
