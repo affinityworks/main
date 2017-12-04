@@ -15,6 +15,10 @@ class Ability
         attendance.person.groups.include?(current_group)
       end
 
+      can :read, Group do |group|
+        group.member?(current_user) || group.affiliated_member?(current_user)
+      end
+
       can :manage, Group do |group|
         check_manage_for_group(current_user, group)
       end
@@ -23,7 +27,7 @@ class Ability
         group = membership.group
         check_manage_for_group(current_user, group)
       end
-        
+
     end
   end
 

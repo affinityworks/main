@@ -119,4 +119,31 @@ class AbilityTest < ActiveSupport::TestCase
     ability = Ability.new(organizer, current_group)
     assert_not ability.can? :manage, group, 'the organizer can not manage not affiliate group'
   end
+
+  test 'members can read current group' do
+    person = people(:one)
+    current_group = person.groups.first
+
+    ability = Ability.new(person, current_group)
+    assert ability.can?(:read, current_group)
+    assert ability.cannot?(:manage, current_group)
+  end
+
+  test 'members cannot read others groups' do
+    person = people(:one)
+    current_group = groups(:two)
+
+    ability = Ability.new(person, current_group)
+    assert ability.cannot?(:read, current_group)
+  end
+
+  test 'members can read affiliates groups' do
+    current_group = groups(:test)
+    group = groups(:fourth)
+    person = people(:member1)
+
+    ability = Ability.new(person, current_group)
+    assert ability.can? :read, group
+    assert ability.cannot?(:manage, current_group)
+  end
 end

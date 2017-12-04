@@ -52,9 +52,9 @@ class MembershipsController < ApplicationController
 
   def find_memberships
 
-    if @group
+    if current_group
       #are we looking at the person in the context of a specific group, then what groups can we see
-      member_ids = get_affiliated_group_ids(@group)
+      member_ids = get_affiliated_group_ids(current_group)
     else  #or did we not get any group
       organized_groups_ids = current_user.organized_groups.pluck(:id)
       group_ids = Membership.where(:group_id =>organized_groups_ids.concat(organized_groups_ids).uniq).pluck(:id)
@@ -99,7 +99,11 @@ class MembershipsController < ApplicationController
   end
 
   def _get_memeber_ids(group)
-    Membership.where(:group_id =>group.affiliates.pluck(:id).push(group.id) ).pluck(:id)
+    if group && group.affiliates.any?
+      return Membership.where(:group_id =>group.affiliates.pluck(:id).push(group.id) ).pluck(:id)
+    else 
+      return []
+    end
   end
 
   def sort_param

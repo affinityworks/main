@@ -68,12 +68,15 @@ class Breadcrumbs extends Component {
   }
 
   render() {
-    const { currentGroup, active } = this.props;
+    const { currentGroup, active, currentUser } = this.props;
 
     return (
       <ol className='breadcrumb'>
         <li className='breadcrumb-item'>
-          <Link to={dashboardPath(currentGroup.id)}>{currentGroup.name}</Link>
+          { currentUser === 'member'
+            ? <a href='/profile/'>{currentGroup.name}</a>
+            : <Link to={ dashboardPath(currentGroup.id) }>{currentGroup.name}</Link>
+          }
         </li>
 
         {this.renderAffiliatesBreadcrumb()}

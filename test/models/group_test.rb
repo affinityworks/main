@@ -158,6 +158,23 @@ class GroupTest < ActiveSupport::TestCase
     assert_equal group.all_members.count, (affiliated.members.pluck(:id) + group.members.pluck(:id)).uniq.count
   end
 
+  test '#member?' do
+    group = Group.create(:an_api_key => "asdfasdf")
+
+    group_member = Person.create(given_name: 'given_name', family_name: 'family_name')
+    no_group_member = Person.create(given_name: 'no_member', family_name: 'no_member')
+    organizer = Person.create(given_name: 'organizer', family_name: 'organizer')
+
+    group_membership = Membership.create(person: organizer, role: 'organizer')
+    group.members.push(group_member)
+    group.memberships.push(group_membership)
+
+    assert group.member?(group_member)
+    assert_not group.member?(no_group_member)
+    assert_not group.member?(organizer)
+
+  end
+
   #test for model method to be written - is failing
     # test 'current_group_members' do
     #   group = Group.first

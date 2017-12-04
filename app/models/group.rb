@@ -101,4 +101,13 @@ class Group < ApplicationRecord
       methods: :has_affiliates
     }.merge(options))
   end
+
+  def member?(person)
+    memberships.find_by(person_id: person.id, role: 'member')
+  end
+
+  def affiliated_member?(person)
+    affiliated_with.joins(:memberships)
+                   .where('person_id = ? and role = ?', person.id, '0').any?
+  end
 end

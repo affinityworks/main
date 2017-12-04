@@ -1,5 +1,6 @@
 class TagsController < ApplicationController
   protect_from_forgery except: [:create]
+  before_action :authorize_group_access
 
   TYPE_MAPPING = {
     'event' => Event,

@@ -134,11 +134,11 @@ class MembersControllerTest < ActionDispatch::IntegrationTest
     assert_response 403
   end
 
-  test 'members shouldnt be able to see list' do
+  test 'members should be able to see list' do
     person = people(:member1)
     sign_in person
     get group_members_url(group_id: person.groups.first.id), as: :json
-    assert_response 403
+    assert_response 200
   end
 
   test 'get #attendances' do

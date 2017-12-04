@@ -12,7 +12,6 @@ class ProfileController < ApplicationController
 
   def groups
     @groups = current_user.groups.page(params[:page])
-
     respond_to do |format|
       format.html
       format.json do
