@@ -59,7 +59,6 @@ class Dashboard extends Component {
     return (
       <section>
         <TextEditor
-          hideTextEdit={this.hideTextEdit}
           textDescription={attributes.description}
           addAlert={this.props.addAlert}
         />

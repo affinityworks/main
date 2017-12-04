@@ -28,6 +28,10 @@ class Event < ApplicationRecord
   has_one :attendance_event, dependent: :destroy
   has_one :no_attendance_event, dependent: :destroy
 
+  validates :title, :origin_system,  presence: true
+
+  accepts_nested_attributes_for :location
+
   #My suspicion is that it's better to do this in sql and not sore all this in memory
   def self.add_attendance_counts(events)
     rsvps = Attendance.group(:event_id, :status).count
@@ -49,6 +53,10 @@ class Event < ApplicationRecord
       feed[:created] = created.map(&:to_activity_json)
       feed[:updated] = updated.map(&:to_activity_json)
     end
+  end
+
+  def origin_system_is_action_network?
+    origin_system == 'Action Network'
   end
 
   def group #TODO Change relation to 1 to Many

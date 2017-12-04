@@ -6,13 +6,19 @@ import Event from './Event';
 import SearchFilter from './SearchFilter';
 import Pagination from './Pagination';
 import SortableHeader from './SortableHeader';
-import { fetchEvents } from '../actions';
+import { fetchEvents, createEvent } from '../actions';
 import UpcomingEvent from '../components/UpcomingEvent';
 import DateRange from '../components/DateRange';
+import EventCreate from '../components/EventCreate';
 import { fetchGroup } from '../actions';
+import { eventsPath } from "../utils";
 
 
 class Events extends Component {
+  state = {
+    showCreateEvent: false
+  }
+
   constructor(props, _railsContext) {
     super(props);
 
@@ -20,6 +26,8 @@ class Events extends Component {
     this.renderEvents = this.renderEvents.bind(this);
     this.groupColumn = this.groupColumn.bind(this);
     this.printColumn = this.printColumn.bind(this);
+    this.displayEventCreate = this.displayEventCreate.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
   }
 
   componentWillMount() {
@@ -46,6 +54,14 @@ class Events extends Component {
         totalPages={total_pages}
         currentSearch={location.search} />
     }
+  }
+
+  displayEventCreate = () => {
+    this.setState({ showCreateEvent: true });
+  }
+
+  handleCancel = () => {
+    this.setState({ showCreateEvent: false })
   }
 
   groupColumn() {
@@ -82,7 +98,7 @@ class Events extends Component {
     const { search } = this.props.location;
     const { filter, direction } = queryString.parse(search);
     const { id } = this.props.currentGroup
-    const { currentUser } = this.props
+    const { currentUser, currentGroup, location, createEvent } = this.props
 
     if (currentUser === 'member') {
       return (
@@ -94,15 +110,37 @@ class Events extends Component {
       )
     }
 
+    if (this.state.showCreateEvent) {
+      return (
+        <div className='row'>
+          <div className='col-md-12'>
+            <EventCreate
+              handleCancel={this.handleCancel}
+              currentGroup={currentGroup}
+              location={location}
+              history={this.props.history}
+              createEvent={createEvent}
+            />
+          </div>
+        </div>
+      )
+    }
+
     return (
       <div>
         <div className='row'>
-          <div className='col-6'>
+          <div className='col-5'>
             <SearchFilter
               onSearchSubmit={this.filterEvents}
               filter={filter}
               placeholder='Search by event name or location' />
           </div>
+          <button
+            className='btn btn-primary mr-2'
+            onClick={this.displayEventCreate}
+          >
+            Add Event
+          </button>
           <DateRange history={this.props.history} />
           <div className='col-3 text-right'>
             <a href={`/admin/auth/facebook?group_id=${id}`} className='btn btn-facebook'>
@@ -110,9 +148,7 @@ class Events extends Component {
             </a>
           </div>
         </div>
-
-        <br />
-
+        <br/>
         <table className={`table ${this.props.showPrintIcon ? '' : 'table--fixed'}`}>
           <thead>
             <tr>
@@ -143,4 +179,4 @@ const mapStateToProps = (state) => {
   return { events, total_pages, page, tags, group };
 }
 
-export default connect(mapStateToProps, { fetchEvents, fetchGroup })(Events);
+export default connect(mapStateToProps, { fetchEvents, fetchGroup, createEvent })(Events);

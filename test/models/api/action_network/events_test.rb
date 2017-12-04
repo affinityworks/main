@@ -22,7 +22,8 @@ class Api::ActionNetwork::EventsTest < ActiveSupport::TestCase
       group.events.create!(
         title: 'TBD',
         status: 'confirmed',
-        identifiers: ['action_network:a3c724db-2799-49a6-970a-7c3c0844645d']
+        identifiers: ['action_network:a3c724db-2799-49a6-970a-7c3c0844645d'],
+        origin_system: 'Action Network'
       )
     end
 

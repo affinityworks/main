@@ -90,19 +90,19 @@ class GroupTest < ActiveSupport::TestCase
     group = groups(:five)
     other_group = groups(:six)
 
-    ended_event = Event.create(start_date: 2.days.ago)
+    ended_event = Event.create(origin_system: 'origin_system', title: 'title', start_date: 2.days.ago)
     group.events<<ended_event
 
-    upcoming_event_1 = Event.create(start_date: Date.today)
+    upcoming_event_1 = Event.create(origin_system: 'origin_system', title: 'title', start_date: Date.today)
     group.events<<upcoming_event_1
 
-    other_group_event = Event.create(start_date: Date.today)
+    other_group_event = Event.create(origin_system: 'origin_system', title: 'title', start_date: Date.today)
     other_group.events<<upcoming_event_1
 
-    upcoming_event_2 = Event.create(start_date: Date.today + 2.days)
+    upcoming_event_2 = Event.create(origin_system: 'origin_system', title: 'title', start_date: Date.today + 2.days)
     group.events<<upcoming_event_2
 
-    future_event = Event.create(start_date: Date.today + (Event::UPCOMING_EVENTS_DAYS + 1).days)
+    future_event = Event.create(origin_system: 'origin_system', title: 'title', start_date: Date.today + (Event::UPCOMING_EVENTS_DAYS + 1).days)
     group.events<<future_event
 
     group.events = [ended_event, upcoming_event_1, upcoming_event_2, future_event]
@@ -127,9 +127,9 @@ class GroupTest < ActiveSupport::TestCase
 
     Affiliation.create(group: group, affiliated: affiliated)
 
-    group_event = Event.create
+    group_event = Event.create(origin_system: 'origin_system', title: 'title')
     group.events.push(group_event)
-    affiliated_event = Event.create
+    affiliated_event = Event.create(origin_system: 'origin_system', title: 'title')
     affiliated.events.push(affiliated_event)
 
     assert_includes group.all_events, group_event

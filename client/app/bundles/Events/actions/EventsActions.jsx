@@ -1,6 +1,7 @@
 import {
   FETCH_EVENTS,
-  FETCH_EVENT
+  FETCH_EVENT,
+  CREATE_EVENT
 } from './types';
 
 import { eventsPath, client } from '../utils';
@@ -33,3 +34,21 @@ export const fetchEvent = (eventId) => {
       });
   }
 };
+
+export const createEvent = (attributes, location) => {
+  return (dispatch) => {
+    client.post(`${eventsPath()}.json`, { event: attributes })
+      .then(response => {
+        let type = 'success';
+        let text = 'Event Successfully Created.';
+
+        dispatch({ type: CREATE_EVENT });
+        dispatch(fetchEvents(location));
+
+        dispatch(addAlert({ text, type }));
+      })
+      .catch(alert => {
+        dispatch(addAlert(alert));
+      })
+  }
+}

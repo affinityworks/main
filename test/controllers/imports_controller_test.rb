@@ -22,7 +22,7 @@ class ImportsControllerTest < ActionDispatch::IntegrationTest
     facebook_agent = Minitest::Mock.new
     facebook_agent.expect :find, remote_event, [url]
 
-    event = Event.create(start_date: Date.today, status: 'MyString')
+    event = Event.create(origin_system: 'Facebook', title: 'title', start_date: Date.today, status: 'MyString')
     event.groups.push(group)
 
     Facebook::Event.stub :new, facebook_agent do
