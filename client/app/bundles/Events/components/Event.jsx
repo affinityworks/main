@@ -1,6 +1,7 @@
 import moment from 'moment';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import UserAuth from '../components/UserAuth';
 
 import Tags from './Tags';
 import {
@@ -75,8 +76,13 @@ export default class Event extends Component {
     const { tags } = this.props.event.attributes;
     const { id } = this.props.event;
 
-    if (tags)
-      return <Tags tags={tags} eventId={id} tagList={this.props.tagsEventList}/>
+    return (
+      <td>
+        <UserAuth allowed={['organizer']}>
+          {tags ? <Tags tags={tags} eventId={id} tagList={this.props.tagsEventList}/> : ''}
+        </UserAuth>
+      </td>
+    )
   }
 
   render() {
@@ -90,7 +96,7 @@ export default class Event extends Component {
         <td>{this.date()}</td>
         <td>{this.locationName()}</td>
         {this.groupColumn()}
-        <td>{this.showTags()}</td>
+        {this.showTags()}
         <td>{this.rsvps()}</td>
         {this.printColumn()}
       </tr>

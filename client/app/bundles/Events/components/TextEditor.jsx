@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import RichTextEditor from 'react-rte';
 import {convertToRaw} from 'draft-js';
+import UserAuth from '../components/UserAuth';
 import { client, groupPath } from '../utils';
 
 class TextEditor extends Component {
@@ -101,14 +102,16 @@ class TextEditor extends Component {
             <div className="col-md-3">
                 <h4>Aditional Description</h4>
             </div>
-            <div className='col-md-12 mb-3'>
-              <button
-                className='btn btn-primary btn-sm btn-edit'
-                onClick={this.handleShowEditor.bind(this)}
-              >
-                <span className='fa fa-pencil-square-o'></span> Edit description
-              </button>
-            </div>
+            <UserAuth allowed={['organizer']}>
+              <div className='col-md-12 mb-3'>
+                <button
+                  className='btn btn-primary btn-sm btn-edit'
+                  onClick={this.handleShowEditor.bind(this)}
+                >
+                  <span className='fa fa-pencil-square-o'></span> Edit description
+                </button>
+              </div>
+            </UserAuth>
           </div>
 
           <div className='text-preview'>

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import Tags from './Tags';
 import { groupPath } from '../utils';
+import UserAuth from '../components/UserAuth';
 
 class Group extends Component {
   showAddress() {
@@ -17,8 +18,13 @@ class Group extends Component {
     const { tags } = this.props.group.attributes;
     const { id } = this.props.group;
 
-    if (tags)
-      return <Tags tags={tags} groupId={id} />
+    return (
+      <td>
+        <UserAuth allowed={['organizer']}>
+          { tags ? <Tags tags={tags} groupId={id} /> : '' }
+        </UserAuth>
+      </td>
+    )
   }
 
   showOwner() {
@@ -39,7 +45,7 @@ class Group extends Component {
           <Link to={linkTo}>{attributes.name}</Link>
         </th>
         <td>{this.showAddress()}</td>
-        <td>{this.showTags()}</td>
+        {this.showTags()}
         <td>{this.showOwner()}</td>
       </tr>
     );

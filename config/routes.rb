@@ -117,7 +117,7 @@ Rails.application.routes.draw do
     resources :events
   end
   resources :memberships, only: [:index, :show]
-  
+
   resource :sha, only: :show
   resources :zipcodes, only: :show
   get '/.well-known/acme-challenge/:id', to: 'wellknown#show'

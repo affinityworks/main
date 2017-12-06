@@ -3,6 +3,9 @@ import React, { Component } from 'react';
 import Member from './Member';
 import SortableHeader from './SortableHeader';
 import Spinner from './Spinner';
+import { isAllowed } from '../utils';
+import UserAuth from '../components/UserAuth';
+
 
 class MembersTable extends Component {
   state = { emails: [] };
@@ -42,6 +45,16 @@ class MembersTable extends Component {
     this.setState({ emails });
   }
 
+  showTags() {
+    return (
+      <td style={{ width: '20%'}}>
+        <UserAuth allowed={['organizer']}>
+          <strong>Tags</strong>
+        </UserAuth>
+      </td>
+    )
+  }
+
   removeMemberEmail(memberEmail) {
     const emails = _.filter(this.state.emails, (email) => (email !== memberEmail));
     this.setState({ emails });
@@ -54,7 +67,7 @@ class MembersTable extends Component {
 
       return <Member key={person.id} id={person.id}
         member={person.attributes}
-        currentUser={this.props.currentUser}
+        currentRole={this.props.currentRole}
         groups={person.relationships.groups.data}
         role={membership.attributes.role}
         onCheckboxChecked={this.addMemberEmail.bind(this)}
@@ -69,8 +82,7 @@ class MembersTable extends Component {
   }
 
   render() {
-    const { memberships, currentUser } = this.props;
-    const isMember = currentUser !== 'member';
+    const { memberships, currentRole } = this.props;
 
     if (!memberships)
       return (
@@ -96,8 +108,10 @@ class MembersTable extends Component {
             {this.nameColumn()}
             {this.phoneColumn()}
             {this.locationColumn()}
-            { isMember ? this.groupColumn() : <th/>}
-            { isMember ? <th style={{ width: '20%'}}>Tags</th> : <th/>}
+            {isAllowed(['member', 'volunteer'], currentRole)
+              ? <th/>
+              : this.groupColumn() }
+            {this.showTags()}
             <SortableHeader title='Role' sortBy='role' style={{ width: '15%'}} />
             <th style={{ width: '5%'}}></th>
           </tr>

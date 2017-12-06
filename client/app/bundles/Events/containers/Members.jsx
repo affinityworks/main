@@ -26,21 +26,17 @@ class Members extends Component {
         <Breadcrumbs
           active={activeText}
           location={location}
-          currentUser={currentRole}
         />
 
         <br />
 
-        <Nav
-          activeTab='members'
-          currentUser={currentRole}
-        />
+        <Nav activeTab='members' />
 
         <GroupMembers
           location={this.props.location}
           history={this.props.history}
           showGroupName={this.showGroupName()}
-          currentUser={currentRole}
+          currentRole={currentRole}
         />
       </div>
     );

@@ -25,11 +25,11 @@ class ApplicationController < ActionController::Base
 
       current_group.affiliates.each do |affiliated_group|
         affilited_role = user_group_to_role(current_person, affiliated_group)
-        role = 'organizer' if affilited_role == 'organizer'
+        return 'organizer' if affilited_role == 'organizer'
+        role = affilited_role if affilited_role == 'volunteer'
       end
 
     end
-
     return role
   end
 
@@ -62,8 +62,14 @@ class ApplicationController < ActionController::Base
 
   def authorize_group_access
     return unless current_group
+    authorize! :read, current_group && return if volunteer_permission?
     authorize! :read, current_group && return if authorized_controllers_and_actions?
     authorize! :manage, current_group
+  end
+
+  def volunteer_permission?
+    current_group.volunteer?(current_person) ||
+      current_group.affiliated_volunteer?(current_person)
   end
 
   def authorized_controllers_and_actions?

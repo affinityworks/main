@@ -30,15 +30,11 @@ class Events extends Component {
         <Breadcrumbs
           active={activeText}
           location={location}
-          currentUser={currentRole}
         />
 
         <br />
 
-        <Nav
-          activeTab='events'
-          currentUser={currentRole}
-        />
+        <Nav activeTab='events' />
 
         <GroupEvents
           currentGroup={this.props.currentGroup}
@@ -46,7 +42,6 @@ class Events extends Component {
           history={this.props.history}
           showGroupName={this.showGroupName()}
           showPrintIcon={this.showPrintIcon()}
-          currentUser={currentRole}
         />
       </div>
     );

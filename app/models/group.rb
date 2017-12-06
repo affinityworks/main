@@ -8,9 +8,14 @@ class Group < ApplicationRecord
   has_many :memberships, dependent: :destroy
   has_many :members, through: :memberships, source: :person
 
+  has_many :member_memberships, -> { member }, :class_name => 'Membership'
+  has_many :member_members, through: :member_memberships, source: :person
+
   has_many :organizer_memerships, -> { organizer }, :class_name => 'Membership'
   has_many :organizers, :source => :person, :through => :organizer_memerships
 
+  has_many :volunteer_memerships, -> { volunteer }, :class_name => 'Membership'
+  has_many :volunteers, :source => :person, :through => :volunteer_memerships
 
   has_many :attendances, through: :members
   has_many :affiliations, foreign_key: :group_id, class_name: 'Affiliation'
@@ -103,11 +108,20 @@ class Group < ApplicationRecord
   end
 
   def member?(person)
-    memberships.find_by(person_id: person.id, role: 'member')
+    member_members.include?(person)
+  end
+
+  def volunteer?(person)
+    volunteers.include?(person)
   end
 
   def affiliated_member?(person)
     affiliated_with.joins(:memberships)
                    .where('person_id = ? and role = ?', person.id, '0').any?
+  end
+
+  def affiliated_volunteer?(person)
+    affiliated_with.joins(:memberships)
+                   .where('person_id = ? and role = ?', person.id, '2').any?
   end
 end

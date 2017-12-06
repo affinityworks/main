@@ -4,6 +4,7 @@ import queryString from 'query-string';
 
 import GroupsList from '../components/Groups';
 import Nav from '../components/Nav';
+import UserAuth from '../components/UserAuth';
 import Breadcrumbs from '../components/Breadcrumbs';
 import { fetchAffiliates } from '../actions';
 
@@ -43,9 +44,11 @@ class Groups extends Component {
             page={page} />
         </div>
         <div>
-          <a href="edit">
-            <button className='btn btn-primary'>Edit</button>
-          </a>
+          <UserAuth allowed={['organizer']}>
+            <a href="edit">
+              <button className='btn btn-primary'>Edit</button>
+            </a>
+          </UserAuth>
         </div>
       </div>
     );

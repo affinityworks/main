@@ -6,6 +6,7 @@ import Nav from '../components/Nav';
 import Tags from '../components/Tags';
 import Notes from '../components/Notes';
 import CustomFields from '../components/CustomFields';
+import UserAuth from '../components/UserAuth';
 import Event from '../components/Event';
 import EmailLink from '../components/EmailLink';
 import ActionHistory from '../components/ActionHistory';
@@ -154,9 +155,13 @@ class MemberDetail extends Component {
             <ActionHistory attendances={this.state.attendances}/>
           </div>
           <div className='col-6'>
-            {this.inputCheckMember()}
-            <h4 style={{ marginRight: '10px' }}>Tags</h4>
-            <Tags tags={membership.attributes.tags} membershipId={membership.id} />
+            <UserAuth allowed={['organizer']}>
+              <div>
+                {this.inputCheckMember()}
+                <h4 style={{ marginRight: '10px' }}>Tags</h4>
+                <Tags tags={membership.attributes.tags} membershipId={membership.id} />
+              </div>
+            </UserAuth>
             <br/>
             <h4>Custom Fields</h4>
             <CustomFields customFields={attributes['custom-fields']} />
@@ -173,9 +178,11 @@ class MemberDetail extends Component {
           <Link to={membersPath()} className='btn btn-primary' role='button'>
             Back to Members
           </Link>&nbsp;
-          <a href={attributes['id']+"/edit"} className='btn btn-primary' role='button'>
-            Edit
-          </a>
+          <UserAuth allowed={['organizer']}>
+            <a href={attributes['id']+"/edit"} className='btn btn-primary' role='button'>
+              Edit
+            </a>
+          </UserAuth>
         </div>
       </div>
     );

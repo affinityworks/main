@@ -7,6 +7,7 @@ import MembersTable from './MembersTable';
 import Pagination from './Pagination';
 import { fetchMemberships } from '../actions'
 import { map } from 'lodash'
+import UserAuth from './UserAuth'
 
 class Members extends Component {
   constructor(props, _railsContext) {
@@ -38,16 +39,6 @@ class Members extends Component {
     }
   }
 
-  renderAddButton () {
-    return (
-      <div>
-        <a href="members/new">
-          <button className='btn btn-primary'>Add Member</button>
-        </a>
-      </div>
-    )
-  }
-
   render() {
     const { memberships, showGroupName, location, currentUser, currentGroup } = this.props
     const { search } = location;
@@ -64,7 +55,13 @@ class Members extends Component {
           </div>
         </div>
         <br />
-          {currentUser !== 'member' ? this.renderAddButton() : '' }
+        <UserAuth allowed={['organizer']}>
+          <div>
+            <a href="members/new">
+              <button className='btn btn-primary'>Add Member</button>
+            </a>
+          </div>
+        </UserAuth>
         <br />
 
         <MembersTable

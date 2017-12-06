@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 
 import EmailLink from './EmailLink';
 import Tags from './Tags';
-import { membersPath, groupPath } from '../utils';
 import { pickBy, map } from 'lodash'
+import UserAuth from '../components/UserAuth';
+import { membersPath, groupPath, isAllowed } from '../utils';
 
 class Member extends Component {
   emailAddressLink() {
@@ -66,8 +67,13 @@ class Member extends Component {
   showTags() {
     const { tags, membershipId } = this.props;
 
-    if (tags)
-      return <Tags tags={tags} membershipId={membershipId} tagList={this.props.memberTagList}/>
+  return (
+      <td>
+        <UserAuth allowed={['organizer']}>
+          {tags ? <Tags tags={tags} membershipId={membershipId} tagList={this.props.memberTagList}/> : null} 
+        </UserAuth>
+      </td>
+    )
   }
 
   getGroupId () {
@@ -79,62 +85,64 @@ class Member extends Component {
     })
   }
 
-  renderNameLink () {
-    const { member, id, groups, currentUser, currentGroup } = this.props;
+  renderMemberProfileLink () {
+    const { member, id, groups, currentGroup } = this.props;    
     const groupPath = this.getGroupId()
     const groupId = groupPath.indexOf(currentGroup.id) >= 0 
       ? currentGroup.id : groups[0]['id']
-    
-    if ( currentUser === 'member' ) {
-      return (
-        <td>
-          <strong>
-            {member['given-name']} {member['family-name']}
-          </strong>
-        </td>
-      )
-    }
-    
+
     if (groupId === currentGroup.id) {
       return (
-        <td>
+        <span>
           <Link to={`${membersPath(groupId)}/${id}`}>
             {member['given-name']} {member['family-name']}
           </Link>
-        </td>
+        </span>
       )
     } else {
       return (
-        <td>
-          <p>
-            {member['given-name']} {member['family-name']}
-          </p>
-        </td>
+        <span>{member['given-name']} {member['family-name']}</span>
       )
     }
   }
 
-  render() {
-    const { member, role, currentUser} = this.props;
-    const isMember = currentUser !== 'member';
+  renderNameLink () {
+    const { member } = this.props;
 
+    return (
+      <td>
+        <UserAuth allowed={['member']}>
+          <strong>{member['given-name']} {member['family-name']}</strong>
+        </UserAuth>
+        <UserAuth allowed={['organizer', 'volunteer']}>
+          {this.renderMemberProfileLink()}
+        </UserAuth>   
+      </td>   
+    )
+  }
+
+  render() {
+    const { member, role, currentRole} = this.props
+    
     if(!member) { return null }
 
     const email = this.props.member['primary-email-address']
 
     return(
-      <tr>
-        <td>{this.showEmailCheckbox()}</td>
-        {this.renderNameLink()}
-        <td>{member['primary-phone-number']}</td>
-        <td>{this.localityAndRegion()}</td>
-        {isMember ? this.groupColumn() : <th/>}
-        {isMember ? <td>{this.showTags()}</td> : <th/>}
-        <td>{role}</td>
-        <td>
-          <EmailLink email={email} />
-        </td>
-      </tr>
+        <tr>
+          <td>{this.showEmailCheckbox()}</td>
+          {this.renderNameLink()}
+          <td>{member['primary-phone-number']}</td>
+          <td>{this.localityAndRegion()}</td>
+          {isAllowed(['member', 'volunteer'], currentRole)
+            ? <td/>
+            : <td>{this.groupColumn()}</td>}
+          {this.showTags()}
+          <td>{role}</td>
+          <td>
+            <EmailLink email={email} />
+          </td>
+        </tr>
     );
   }
 }

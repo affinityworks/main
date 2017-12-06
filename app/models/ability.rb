@@ -16,10 +16,17 @@ class Ability
       end
 
       can :read, Group do |group|
-        group.member?(current_user) || group.affiliated_member?(current_user)
+        current_group&.member?(current_user) || group.affiliated_member?(current_user) ||
+          current_group&.volunteer?(current_user) || group.affiliated_volunteer?(current_user)
+      end
+
+      can :read, Membership do |membership|
+        group = membership.group
+        group.volunteer?(current_user) || group.affiliated_volunteer?(current_user)
       end
 
       can :manage, Group do |group|
+
         permitted_flag = false
         permitted_flag = true if current_user.admin?
         permitted_flag = true if Membership.organizer.exists?(person: current_user, group: group)

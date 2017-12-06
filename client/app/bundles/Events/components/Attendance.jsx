@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+import UserAuth from './UserAuth';
 import FacebookLink from './FacebookLink';
 import { updateAttendance } from '../actions';
 import { membersPath } from '../utils/Pathnames';
@@ -72,28 +73,30 @@ class Attendance extends Component {
         </div>
 
         <div className='col-4'>
-          <div className='btn-group' role='group'>
-            <button
-              type='button'
-              className={`btn ${attended === true ? 'btn-success' : 'btn-secondary'}`}
-              onClick={() => this.updateAttended(true)}>
-              Y
-            </button>
+          <UserAuth allowed={['organizer']}>
+            <div className='btn-group' role='group'>
+              <button
+                type='button'
+                className={`btn ${attended === true ? 'btn-success' : 'btn-secondary'}`}
+                onClick={() => this.updateAttended(true)}>
+                Y
+              </button>
 
-            <button
-              type='button'
-              className={`btn ${attended === undefined ? 'btn-warning' : 'btn-secondary'}`}
-              onClick={() => this.updateAttended(undefined)}>
-              ?
-            </button>
+              <button
+                type='button'
+                className={`btn ${attended === undefined ? 'btn-warning' : 'btn-secondary'}`}
+                onClick={() => this.updateAttended(undefined)}>
+                ?
+              </button>
 
-            <button
-              type='button'
-              className={`btn ${attended === false ? 'btn-danger' : 'btn-secondary'}`}
-              onClick={() => this.updateAttended(false)}>
-              N
-            </button>
-          </div>
+              <button
+                type='button'
+                className={`btn ${attended === false ? 'btn-danger' : 'btn-secondary'}`}
+                onClick={() => this.updateAttended(false)}>
+                N
+              </button>
+            </div>
+          </UserAuth>
         </div>
       </div>
     );

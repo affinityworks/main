@@ -22,7 +22,8 @@ class MembershipsController < ApplicationController
     @membership = Membership.find_by(
       person_id: params[:id], group_id: params[:group_id]
     )
-    authorize! :manage, @membership #Group.find(params[:group_id])
+
+    authorize! :read, @membership #Group.find(params[:group_id])
 
     respond_to do |format|
       format.html

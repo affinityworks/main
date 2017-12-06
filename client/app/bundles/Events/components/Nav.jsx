@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
+import UserAuth from '../components/UserAuth';
 import NavItem from './NavItem';
 import {
   membersPath,
@@ -26,54 +27,55 @@ class Nav extends Component {
   isRootNav() {
     return managingCurrentGroupWithAffiliates(this.props.currentGroup);
   }
-
+  
   render() {
-    const { activeTab, currentUser } = this.props;
-
-    if (currentUser === 'member') {
-      return (
-        <div>
-          <ul className="nav nav-tabs">
-            <NavItem
-              title='Members'
-              path={membersPath()}
-              active={activeTab === 'members'}
-            />
-            <NavItem
-              title='Events'
-              path={eventsPath()}
-              active={activeTab === 'events'}
-            />
-          </ul>
-          <br />
-        </div>
-      )
-    }
+    const { activeTab } = this.props;
 
     return (
       <div>
-        <ul className="nav nav-tabs">
-          <NavItem
-            title='Dashboard'
-            path={dashboardPath()}
-            active={activeTab === 'dashboard'}
-          />
+        <UserAuth allowed={['member']}>
+          <div>
+            <ul className="nav nav-tabs">
+              <NavItem
+                title='Members'
+                path={membersPath()}
+                active={activeTab === 'members'}
+              />
+              <NavItem
+                title='Events'
+                path={eventsPath()}
+                active={activeTab === 'events'}
+              />
+            </ul>
+            <br />
+          </div>
+        </UserAuth>
+        <UserAuth allowed={['organizer', 'volunteer']}>
+          <div>
+            <ul className="nav nav-tabs">
+              <NavItem
+                title='Dashboard'
+                path={dashboardPath()}
+                active={activeTab === 'dashboard'}
+              />
 
-          { this.renderGroupsTab() }
+              { this.renderGroupsTab() }
 
-          <NavItem
-            title={`${this.isRootNav() ? 'All' : ''} Members`}
-            path={membersPath()}
-            active={activeTab === 'members'}
-          />
+              <NavItem
+                title={`${this.isRootNav() ? 'All' : ''} Members`}
+                path={membersPath()}
+                active={activeTab === 'members'}
+              />
 
-          <NavItem
-            title={`${this.isRootNav() ? 'All' : ''} Events`}
-            path={eventsPath()}
-            active={activeTab === 'events'}
-          />
-        </ul>
-        <br />
+              <NavItem
+                title={`${this.isRootNav() ? 'All' : ''} Events`}
+                path={eventsPath()}
+                active={activeTab === 'events'}
+              />
+            </ul>
+            <br />
+          </div>
+        </UserAuth>
       </div>
     );
   }
