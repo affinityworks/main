@@ -45,7 +45,7 @@ class EventTest < ActiveSupport::TestCase
     Event.add_attendance_counts(events)
 
     #assert_equal 2, events.detect { |e| e.id == 1 }.invited_count
-    assert_equal 2, events.detect { |e| e.id == 1 }.rsvp_count
+    assert_equal 3, events.detect { |e| e.id == 1 }.rsvp_count
     assert_equal 0, events.detect { |e| e.id == 1 }.attended_count
 
     #assert_equal 4, events.detect { |e| e.id == 2 }.invited_count
@@ -69,7 +69,7 @@ class EventTest < ActiveSupport::TestCase
 
   test '.start' do
     Event.all.each {|event| event.destroy}
-    
+
     ended_event = Event.create(start_date: 2.days.ago, status: 'status')
     event_1 = Event.create(start_date: Date.today, status: 'status')
     event_2 = Event.create(start_date: Date.today + 1.days, status: 'status')

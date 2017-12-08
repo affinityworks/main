@@ -16,3 +16,25 @@ not_associated:
   uid: "439761533049554"
   start_date: "2017-06-03 04:00:00"
   end_date: "2017-06-03 04:00:00"
+
+attendance_event:
+  id: 3
+  type: "AttendanceEvent"
+  name: "ATT Event"
+  event_id: 1
+  description: "Please join us for a night of dancing and communit..."
+  uid: "cc5501be-f92c-4387-9827-63d2eee65e5b"
+  start_date: "2017-12-07 04:00:00"
+  end_date: "2017-12-07 05:00:00"
+  identifiers: ['action_network:cc5501be-f92c-4387-9827-63d2eee65e5b', 'advocacycommons:3']
+
+no_attendance_event:
+  id: 4
+  type: "NoAttendanceEvent"
+  name: "NO_ATT Event"
+  event_id: 1
+  description: "Please join us for a night of dancing and communit..."
+  uid: "6a9454b5-56d5-49ad-ae10-cc2d9506dd8b"
+  start_date: "2017-12-07 04:00:00"
+  end_date: "2017-12-07 05:00:00"
+  identifiers: ['action_network:6a9454b5-56d5-49ad-ae10-cc2d9506dd8b', 'advocacycommons:4']
