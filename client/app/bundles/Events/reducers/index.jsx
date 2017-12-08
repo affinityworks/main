@@ -12,7 +12,6 @@ import member from './MemberReducer';
 import memberships from './MembershipsReducer';
 import profile from './ProfileReducer';
 import alerts from './AlertsReducer';
-import { reducer as form } from "redux-form";
 
 const currentGroup = (state = {}) => ( state );
 const currentUser = (state = {}) => ( state );
@@ -34,5 +33,4 @@ export default combineReducers({
   currentRole,
   affiliates,
   alerts,
-  form
 });
