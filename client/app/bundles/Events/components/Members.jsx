@@ -49,7 +49,7 @@ class Members extends Component {
   }
 
   render() {
-    const { memberships, showGroupName, location, currentUser } = this.props
+    const { memberships, showGroupName, location, currentUser, currentGroup } = this.props
     const { search } = location;
     const { filter } = queryString.parse(search);
 
@@ -72,6 +72,7 @@ class Members extends Component {
           showGroupName={showGroupName}
           memberTagList={this.props.tags}
           currentUser={currentUser}
+          currentGroup={currentGroup}
         />
 
         <br />
@@ -83,8 +84,9 @@ class Members extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { memberships, total_pages, page, tags } = state.memberships;
-  return { memberships, total_pages, page, tags };
+  const { currentGroup, memberships: { memberships, total_pages, page, tags } } = state
+
+  return { currentGroup, memberships, total_pages, page, tags };
 };
 
 export default connect(mapStateToProps, { fetchMemberships })(Members);

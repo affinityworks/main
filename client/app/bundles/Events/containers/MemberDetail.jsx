@@ -75,6 +75,7 @@ class MemberDetail extends Component {
 
   setRole () {
     const { id } =  this.state.membership;
+ 
     if (!this.state.isOrganizer) {
       return this.createChangeRole(id, 'organizer') 
     } else {

@@ -63,6 +63,7 @@ class MembersTable extends Component {
         membershipId={membership.id}
         tags={tags}
         memberTagList={this.props.memberTagList}
+        currentGroup={this.props.currentGroup}
       />
     })
   }
