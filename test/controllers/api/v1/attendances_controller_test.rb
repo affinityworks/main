@@ -13,7 +13,7 @@ class Api::V1::AttendancesControllerTest < ActionController::TestCase
 
     assert_not attendance.attended
 
-    set_attendance_status(event.id, attendance.id, new_attendance_status)
+    set_attendance_status(event, attendance.id, new_attendance_status)
     assert_response :unauthorized
 
     token = Minitest::Mock.new
@@ -23,14 +23,14 @@ class Api::V1::AttendancesControllerTest < ActionController::TestCase
 
     @controller.stub(:doorkeeper_token, token) do
 
-      set_attendance_status(event.id, attendance.id, new_attendance_status)
+      set_attendance_status(event, attendance.id, new_attendance_status)
       assert_response :success
 
       attendance.reload
       assert attendance.attended, 'Sets the attendance to true.'
 
       new_attendance_status = false
-      set_attendance_status(event.id, attendance.id, new_attendance_status)
+      set_attendance_status(event, attendance.id, new_attendance_status)
 
       attendance.reload
       assert_not attendance.attended, 'Sets the attendance to true.'
@@ -40,14 +40,18 @@ class Api::V1::AttendancesControllerTest < ActionController::TestCase
       assert_equal json['attributes']['status'], attendance.status
 
       new_attendance_status = nil
-      set_attendance_status(event.id, attendance.id, new_attendance_status)
+      set_attendance_status(event, attendance.id, new_attendance_status)
 
       attendance.reload
       assert_nil attendance.attended, 'Sets the attendance to nil.'
     end
   end
 
-  def set_attendance_status(event_id, attendance_id, status)
-    put(:update, params: { event_id: event_id, id: attendance_id, attended: status })
+  def set_attendance_status(event, attendance_id, status)
+    put(:update, params: { event_id: event.id, id: attendance_id, attended: status })
+  end
+
+  def url(event_id)
+    "https://actionnetwork.org/api/v2/events/#{event_id}/attendances"
   end
 end

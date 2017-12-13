@@ -1,0 +1,214 @@
+{
+    "identifiers": [
+        "action_network:bb75d46b-3f86-4a39-9193-b9d5bd873eae"
+    ],
+    "created_date": "2017-12-06T11:06:37Z",
+    "description": "<p>description</p>",
+    "start_date": "2017-12-31T06:00:00Z",
+    "reminders": [
+        {
+            "method": "email",
+            "minutes": 1440
+        }
+    ],
+    "total_accepted": 7,
+    "action_network:sponsor": {
+        "title": "Affinity Test",
+        "browser_url": "https://actionnetwork.org/api/v2/groups/affinity-test"
+    },
+    "location": {
+        "venue": "Metropolitano",
+        "address_lines": [
+            "1601 NW 82 Avenue FLY (18760), "
+        ],
+        "locality": "Doral",
+        "region": "FL",
+        "postal_code": "33126",
+        "country": "US",
+        "location": {
+            "latitude": 25.788796734240996,
+            "longitude": -80.3285917910888,
+            "accuracy": "Rooftop"
+        }
+    },
+    "_links": {
+        "self": {
+            "href": "https://actionnetwork.org/api/v2/events/3f556381-7c3b-40dc-92bc-034adc62bcd5"
+        },
+        "osdi:organizer": {
+            "href": "https://actionnetwork.org/api/v2/people/b0b4a1cb-00fc-4677-8ce4-70d9ebbc6184"
+        },
+        "osdi:creator": {
+            "href": "https://actionnetwork.org/api/v2/people/b0b4a1cb-00fc-4677-8ce4-70d9ebbc6184"
+        },
+        "curies": [
+            {
+                "name": "osdi",
+                "href": "https://actionnetwork.org/docs/v2/{rel}",
+                "templated": true
+            },
+            {
+                "name": "action_network",
+                "href": "https://actionnetwork.org/docs/v2/{rel}",
+                "templated": true
+            }
+        ],
+        "osdi:attendances": {
+            "href": "https://actionnetwork.org/api/v2/events/3f556381-7c3b-40dc-92bc-034adc62bcd5/attendances"
+        },
+        "record_attendance_helper": {
+            "href": "https://actionnetwork.org/api/v2/events/3f556381-7c3b-40dc-92bc-034adc62bcd5/attendances"
+        },
+        "osdi:record_attendance_helper": {
+            "href": "https://actionnetwork.org/api/v2/events/3f556381-7c3b-40dc-92bc-034adc62bcd5/attendances"
+        }
+    },
+    "modified_date": "2017-12-07T15:44:12Z",
+    "status": "confirmed",
+    "transparence": "opaque",
+    "visibility": "public",
+    "guests_can_invite_others": true,
+    "origin_system": "Affinity",
+    "title": "Original_ATT",
+    "name": "Original_ATT",
+    "instructions": "<h3>Instructions For Your Attendees</h3><div><div><div><ul><li></li></ul></div></div></div>",
+    "_embedded": {
+        "osdi:creator": {
+            "given_name": "Arnol",
+            "family_name": "Fontalvo",
+            "identifiers": [
+                "action_network:b0b4a1cb-00fc-4677-8ce4-70d9ebbc6184"
+            ],
+            "email_addresses": [
+                {
+                    "primary": true,
+                    "address": "arnol.fontalvo@koombea.com",
+                    "status": "subscribed"
+                }
+            ],
+            "postal_addresses": [
+                {
+                    "primary": true,
+                    "locality": "Barranquilla",
+                    "postal_code": "080010",
+                    "country": "US",
+                    "location": {
+                        "latitude": 10.9322,
+                        "longitude": -74.8071,
+                        "accuracy": "Approximate"
+                    }
+                }
+            ],
+            "_links": {
+                "self": {
+                    "href": "https://actionnetwork.org/api/v2/people/b0b4a1cb-00fc-4677-8ce4-70d9ebbc6184"
+                },
+                "osdi:signatures": {
+                    "href": "https://actionnetwork.org/api/v2/people/b0b4a1cb-00fc-4677-8ce4-70d9ebbc6184/signatures"
+                },
+                "osdi:submissions": {
+                    "href": "https://actionnetwork.org/api/v2/people/b0b4a1cb-00fc-4677-8ce4-70d9ebbc6184/submissions"
+                },
+                "osdi:donations": {
+                    "href": "https://actionnetwork.org/api/v2/people/b0b4a1cb-00fc-4677-8ce4-70d9ebbc6184/donations"
+                },
+                "curies": [
+                    {
+                        "name": "osdi",
+                        "href": "https://actionnetwork.org/docs/v2/{rel}",
+                        "templated": true
+                    },
+                    {
+                        "name": "action_network",
+                        "href": "https://actionnetwork.org/docs/v2/{rel}",
+                        "templated": true
+                    }
+                ],
+                "osdi:taggings": {
+                    "href": "https://actionnetwork.org/api/v2/people/b0b4a1cb-00fc-4677-8ce4-70d9ebbc6184/taggings"
+                },
+                "osdi:outreaches": {
+                    "href": "https://actionnetwork.org/api/v2/people/b0b4a1cb-00fc-4677-8ce4-70d9ebbc6184/outreaches"
+                },
+                "osdi:attendances": {
+                    "href": "https://actionnetwork.org/api/v2/people/b0b4a1cb-00fc-4677-8ce4-70d9ebbc6184/attendances"
+                }
+            },
+            "custom_fields": {},
+            "created_date": "2017-11-10T15:56:35Z",
+            "modified_date": "2017-11-30T16:22:47Z",
+            "languages_spoken": [
+                "en"
+            ]
+        },
+        "osdi:organizer": {
+            "given_name": "Arnol",
+            "family_name": "Fontalvo",
+            "identifiers": [
+                "action_network:b0b4a1cb-00fc-4677-8ce4-70d9ebbc6184"
+            ],
+            "email_addresses": [
+                {
+                    "primary": true,
+                    "address": "arnol.fontalvo@koombea.com",
+                    "status": "subscribed"
+                }
+            ],
+            "postal_addresses": [
+                {
+                    "primary": true,
+                    "locality": "Barranquilla",
+                    "postal_code": "080010",
+                    "country": "US",
+                    "location": {
+                        "latitude": 10.9322,
+                        "longitude": -74.8071,
+                        "accuracy": "Approximate"
+                    }
+                }
+            ],
+            "_links": {
+                "self": {
+                    "href": "https://actionnetwork.org/api/v2/people/b0b4a1cb-00fc-4677-8ce4-70d9ebbc6184"
+                },
+                "osdi:signatures": {
+                    "href": "https://actionnetwork.org/api/v2/people/b0b4a1cb-00fc-4677-8ce4-70d9ebbc6184/signatures"
+                },
+                "osdi:submissions": {
+                    "href": "https://actionnetwork.org/api/v2/people/b0b4a1cb-00fc-4677-8ce4-70d9ebbc6184/submissions"
+                },
+                "osdi:donations": {
+                    "href": "https://actionnetwork.org/api/v2/people/b0b4a1cb-00fc-4677-8ce4-70d9ebbc6184/donations"
+                },
+                "curies": [
+                    {
+                        "name": "osdi",
+                        "href": "https://actionnetwork.org/docs/v2/{rel}",
+                        "templated": true
+                    },
+                    {
+                        "name": "action_network",
+                        "href": "https://actionnetwork.org/docs/v2/{rel}",
+                        "templated": true
+                    }
+                ],
+                "osdi:taggings": {
+                    "href": "https://actionnetwork.org/api/v2/people/b0b4a1cb-00fc-4677-8ce4-70d9ebbc6184/taggings"
+                },
+                "osdi:outreaches": {
+                    "href": "https://actionnetwork.org/api/v2/people/b0b4a1cb-00fc-4677-8ce4-70d9ebbc6184/outreaches"
+                },
+                "osdi:attendances": {
+                    "href": "https://actionnetwork.org/api/v2/people/b0b4a1cb-00fc-4677-8ce4-70d9ebbc6184/attendances"
+                }
+            },
+            "custom_fields": {},
+            "created_date": "2017-11-10T15:56:35Z",
+            "modified_date": "2017-11-30T16:22:47Z",
+            "languages_spoken": [
+                "en"
+            ]
+        }
+    },
+    "action_network:hidden": false
+}

@@ -1,11 +1,10 @@
 class Event < ApplicationRecord
   include Api::Identifiers
   include ArelHelpers::ArelTable
-  
+  include HasRemoteEvent
+
   has_paper_trail ignore: [:created_at, :updated_at]
   acts_as_taggable
-
-  default_scope { where.not(status: 'cancelled') }
 
   attr_accessor :attended_count
   attr_accessor :rsvp_count
@@ -26,6 +25,8 @@ class Event < ApplicationRecord
   has_many :reminders, dependent: :destroy
   has_and_belongs_to_many :groups
   has_many :facebook_events, dependent: :destroy
+  has_one :attendance_event, dependent: :destroy
+  has_one :no_attendance_event, dependent: :destroy
 
   #My suspicion is that it's better to do this in sql and not sore all this in memory
   def self.add_attendance_counts(events)
@@ -57,4 +58,5 @@ class Event < ApplicationRecord
   def to_activity_json
     as_json(only: [:title, :id, :created_at, :updated_at], include: { group: { only:[:name] } })
   end
+
 end

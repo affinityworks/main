@@ -94,7 +94,7 @@ class PersonTest < ActiveSupport::TestCase
   end
 
   test 'attended_group_events' do
-    person = Person.create(given_name: 'José', family_name: 'Mejía',)
+    person = Person.create(given_name: 'José', family_name: 'Mejía')
     group_event_attended = Attendance.create(attended: true, person: person, event: Event.first)
     Attendance.create(attended: true, person: person, event: Event.last)
     assert_equal person.attended_group_events(Group.first), [group_event_attended]
@@ -158,11 +158,11 @@ class PersonTest < ActiveSupport::TestCase
   test '#primary_phone_number=' do
     person = Person.create(given_name: 'José', family_name: 'Mejía',)
 
-    person.primary_phone_number = '12341234'
+    person.primary_phone_number = '1234123485'
     person.save
     person.reload
 
-    assert_equal person.primary_phone_number, '12341234'
+    assert_equal person.primary_phone_number, '1234123485'
 
     person.primary_phone_number = ''
     person.save
@@ -339,5 +339,9 @@ class PersonTest < ActiveSupport::TestCase
     new_email_address = EmailAddress.last
     assert_equal email, new_email_address.address
     assert_equal new_person.id, new_email_address.person_id
+  end
+
+  def url(event_id)
+    "https://actionnetwork.org/api/v2/events/#{event_id}/attendances"
   end
 end

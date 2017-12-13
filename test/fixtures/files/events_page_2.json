@@ -1,9 +1,9 @@
 {
     "per_page": 25,
-    "page": 1,
+    "page": 2,
     "_links": {
         "previous": {
-            "href": "https://actionnetwork.org/api/v2/events?page=1"
+            "href": "https://actionnetwork.org/api/v2/events?filter=origin_system eq 'Action Network'&page=1"
         },
         "osdi:forms": [
             {
@@ -28,10 +28,9 @@
         "osdi:events": [
             {
                 "identifiers": [
-                    "action_network:d91b4b2e-ae0e-4cd3-9ed7-d0ec501b0bd4",
-                    "foreign_system:1"
+                    "action_network:a01e94bf-f132-41c1-a1be-358cc7757119"
                 ],
-                "origin_system": "OSDI Sample System",
+                "origin_system": "Action Network",
                 "created_date": "2014-03-20T21:04:31Z",
                 "modified_date": "2017-03-20T21:04:31Z",
                 "name": "March 15th Rally",

@@ -53,8 +53,8 @@ class EventTest < ActiveSupport::TestCase
     assert_equal 0, events.detect { |e| e.id == 2 }.attended_count
 
     #assert_equal 4, events.detect { |e| e.id == 2 }.invited_count
-    assert_equal 4, events.detect { |e| e.id == 3 }.rsvp_count
-    assert_equal 2, events.detect { |e| e.id == 3 }.attended_count
+    assert_equal 5, events.detect { |e| e.id == 3 }.rsvp_count
+    assert_equal 3, events.detect { |e| e.id == 3 }.attended_count
   end
 
   test '.upcoming' do
@@ -69,11 +69,47 @@ class EventTest < ActiveSupport::TestCase
 
   test '.start' do
     Event.all.each {|event| event.destroy}
-    
+
     ended_event = Event.create(start_date: 2.days.ago, status: 'status')
     event_1 = Event.create(start_date: Date.today, status: 'status')
     event_2 = Event.create(start_date: Date.today + 1.days, status: 'status')
 
     assert_equal [event_1], Event.start(Date.today)
+  end
+
+  test 'create_remote_events' do
+    event = Event.new(status: 'status', title: 'Original')
+    event.groups << Group.first
+
+    stub_request(:post, "https://actionnetwork.org/api/v2/events").
+      with(:body => {"identifiers"=>[], "title"=>"Original_ATT", "origin_system"=>"Affinity", "_links"=>{}},
+           :headers => {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'Osdi-Api-Token'=>'test-token', 'User-Agent'=>'Ruby'}).
+      to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'events', 'att_event.json')))
+
+    stub_request(:post, "https://actionnetwork.org/api/v2/events").
+      with(:body => {"identifiers"=>[], "title"=>"Original_NO_ATT", "origin_system"=>"Affinity", "_links"=>{}} ,
+           :headers => {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'Osdi-Api-Token'=>'test-token', 'User-Agent'=>'Ruby'})
+      .to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'events', 'no_att_event.json')))
+
+    assert_difference 'Event.count', 1 do
+      assert_difference 'AttendanceEvent.count', 1 do
+        assert_difference 'NoAttendanceEvent.count', 1 do
+          event.save
+          assert_equal event.attendance_event.identifier_id('action_network'), 'bb75d46b-3f86-4a39-9193-b9d5bd873eae'
+          assert_equal event.no_attendance_event.identifier_id('action_network'), '4f11250f-4bdc-4358-b839-dac9d18cd8c8'
+          assert_equal event.attendance_event.name, "#{event.title}_ATT"
+          assert_equal event.no_attendance_event.name, "#{event.title}_NO_ATT"
+        end
+      end
+    end
+
+    assert_difference 'Event.count', 0 do
+      assert_difference 'AttendanceEvent.count', 0 do
+        assert_difference 'NoAttendanceEvent.count', 0 do
+          event.update(title: 'original edited')
+        end
+      end
+    end
+
   end
 end

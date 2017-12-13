@@ -12,16 +12,17 @@ module Api::ActionNetwork::Events
     synced_at = group.synced_at ? group.synced_at - 1.week : nil
     next_uri = first_uri(synced_at: synced_at)
 
-    logger.info "Api::ActionNetwork::Events#import! from #{next_uri}"
-
     #Event.transaction do
       while next_uri
+
+        logger.info "info: Api::ActionNetwork::Events#import! from #{next_uri}"
+
         events, next_uri = request_resources_from_action_network(next_uri, group)
 
         existing_events, new_events = partition(events)
 
         new_count += new_events.size
-        
+
         existing_count += existing_count.size
         updated_count = update_resources(existing_events)
 
@@ -29,7 +30,7 @@ module Api::ActionNetwork::Events
 
         create new_events
       end
-      logger.debug "Api::ActionNetwork::Events#import! new: #{new_count} existing: #{existing_count} updated: #{updated_count}"
+      logger.debug "info: Api::ActionNetwork::Events#import! new: #{new_count} existing: #{existing_count} updated: #{updated_count}"
     #end
 
     {
@@ -91,4 +92,5 @@ module Api::ActionNetwork::Events
   def self.errors_count=(errors)
     @errors_count = errors
   end
+
 end

@@ -19,6 +19,8 @@ two:
   comment: MyString
   person_id: 2
   event_id: 1
+  identifiers: ['action_network:8b4a7a09-51ef-40dc-9120-48b8e3e3c7e7', 'advocacycommons:2']
+  synced: false
 
 admin:
   id: 3
@@ -46,4 +48,15 @@ organizer:
   status: accepted
   attended: false
   person_id: 6
+  event_id: 3
+
+seven:
+  id: 7
+  origin_system: MyString
+  identifiers: ['action_network:6216ce97-d826-46fc-a670-a3c3c0d5783f', 'advocacycommons:7']
+  action_date: 2016-12-21 23:40:11
+  status: accepted
+  attended: true
+  comment: MyString
+  person_id: 2
   event_id: 3

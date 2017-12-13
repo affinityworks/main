@@ -1,0 +1,38 @@
+{
+  "identifiers": [
+    "action_network:f0266b45-1ff1-4680-8221-5f9e1f3046ec"
+  ],
+  "created_date": "2017-12-06T11:13:01Z",
+  "modified_date": "2017-12-11T19:12:36Z",
+  "status": "accepted",
+  "action_network:person_id": "af902ad6-7d15-4bde-a096-92d581d442af",
+  "action_network:event_id": "6a9454b5-56d5-49ad-ae10-cc2d9506dd8b",
+  "action_network:referrer_data": {
+    "source": "none",
+    "referrer": "affinity-test",
+    "website": "api"
+  },
+  "_links": {
+    "self": {
+      "href": "https://actionnetwork.org/api/v2/events/6a9454b5-56d5-49ad-ae10-cc2d9506dd8b/attendances/f0266b45-1ff1-4680-8221-5f9e1f3046ec"
+    },
+    "osdi:event": {
+      "href": "https://actionnetwork.org/api/v2/events/6a9454b5-56d5-49ad-ae10-cc2d9506dd8b"
+    },
+    "curies": [
+      {
+        "name": "osdi",
+        "href": "https://actionnetwork.org/docs/v2/{rel}",
+        "templated": true
+      },
+      {
+        "name": "action_network",
+        "href": "https://actionnetwork.org/docs/v2/{rel}",
+        "templated": true
+      }
+    ],
+    "osdi:person": {
+      "href": "https://actionnetwork.org/api/v2/people/af902ad6-7d15-4bde-a096-92d581d442af"
+    }
+  }
+}

@@ -82,6 +82,7 @@ class ImportsControllerTest < ActionDispatch::IntegrationTest
     sign_in current_user
 
     remote_event_count_before = RemoteEvent.count
+    facebook_event_count_before  = FacebookEvent.count
 
     post group_imports_url(
       group_id: group.id,
@@ -94,7 +95,7 @@ class ImportsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_equal remote_event_count_before + 1, RemoteEvent.count
-    assert_equal remote_event_count_before + 1, FacebookEvent.count
+    assert_equal facebook_event_count_before + 1, FacebookEvent.count
   end
 
   test 'get #attendances' do
