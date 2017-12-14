@@ -28,9 +28,12 @@ class EventsControllerTest < ActionDispatch::IntegrationTest
   test 'get #index with filter' do
     organizer = people(:organizer)
     group = organizer.groups.first
-    sign_in organizer
+    group.events.update(start_date: Time.now - 1.day)
 
-    get group_events_url(group_id: group.id, filter: organizer.events.first.title.first(4)), as: :json
+    sign_in organizer
+    filter = { filter: { name: organizer.events.first.title.first(4),
+                         start_date: Date.today - 10.day, end_date: Date.today  } }
+    get group_events_url(group_id: group.id), params: filter, as: :json
     assert_response :success
     json = JSON.parse(@response.body)
     assert_equal 1, json['events']['data'].size
