@@ -41,9 +41,11 @@ class EventsController < ApplicationController
 
     @events = @events.tagged_with(params[:tag]) if params[:tag]
 
-    if params[:filter] then
+    filter = params.fetch(:filter) { nil }
+
+    if filter_by_key(filter, :name)
       @events = Event.joins(:location).where(
-        'addresses.venue ilike ? or title ilike ?', "%#{params[:filter]}%","%#{params[:filter]}%"
+        'addresses.venue ilike ? or title ilike ?', "%#{params[:filter][:name]}%","%#{params[:filter][:name]}%"
       )
     end
 
@@ -52,7 +54,20 @@ class EventsController < ApplicationController
       @events = @events.order("#{sort} #{direction_param}")
     end
 
+    start_date = filter_by_key(filter, :start_date)
+    end_date = filter_by_key(filter, :end_date)
+
+    if start_date && end_date
+      start_date = Date.parse(start_date).beginning_of_day
+      end_date =  Date.parse(end_date).end_of_day
+      @events = @events.where('start_date BETWEEN ? AND ?', start_date, end_date)
+    end
+
     @events = @events.page(params[:page])
+  end
+
+  def filter_by_key(filter, key)
+    filter&.fetch(key) { nil }
   end
 
   def set_event

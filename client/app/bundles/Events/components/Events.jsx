@@ -8,6 +8,7 @@ import Pagination from './Pagination';
 import SortableHeader from './SortableHeader';
 import { fetchEvents } from '../actions';
 import UpcomingEvent from '../components/UpcomingEvent';
+import DateRange from '../components/DateRange';
 import { fetchGroup } from '../actions';
 
 
@@ -34,7 +35,7 @@ class Events extends Component {
   }
 
   filterEvents(filter) {
-    this.props.history.push(`?${queryString.stringify({ filter })}`);
+    this.props.history.push(`?filter[name]=${filter}`);
   }
 
   renderPagination() {
@@ -82,7 +83,7 @@ class Events extends Component {
     const { filter, direction } = queryString.parse(search);
     const { id } = this.props.currentGroup
     const { currentUser } = this.props
-  
+
     if (currentUser === 'member') {
       return (
         <div className='col-md-12 mb-4 mt-5'>
@@ -102,7 +103,8 @@ class Events extends Component {
               filter={filter}
               placeholder='Search by event name or location' />
           </div>
-          <div className='col-3 offset-3 text-right'>
+          <DateRange history={this.props.history} />
+          <div className='col-3 text-right'>
             <a href={`/admin/auth/facebook?group_id=${id}`} className='btn btn-facebook'>
               Import Event From Facebook
             </a>
