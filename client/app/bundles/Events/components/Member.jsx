@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import EmailLink from './EmailLink';
 import Tags from './Tags';
 import { membersPath, groupPath } from '../utils';
+import { pickBy, map } from 'lodash'
 
 class Member extends Component {
   emailAddressLink() {
@@ -52,7 +53,12 @@ class Member extends Component {
     if (groups.length && this.props.showGroupName){
       return <td>{groups.map(group => {
         const { id, name } = group;
-        return <Link className='group-list' to={`${groupPath(id)}/dashboard`} key={id} >{name}</Link>
+        return (
+          <div>
+            <Link className='group-list' to={`${groupPath(id)}/dashboard`} key={id} >{name}</Link>
+            <br/>
+          </div>
+          )
       })}</td>
     }
   }
@@ -64,26 +70,48 @@ class Member extends Component {
       return <Tags tags={tags} membershipId={membershipId} tagList={this.props.memberTagList}/>
   }
 
-  renderNameLink () {
-    const { member, id, groups, currentUser } = this.props;
+  getGroupId () {
+    const { groups, currentGroup } = this.props;
 
-    if (currentUser === 'member') {
+    return map(groups, (item) => {
+      const groupId = item.id;
+      return groupId
+    })
+  }
+
+  renderNameLink () {
+    const { member, id, groups, currentUser, currentGroup } = this.props;
+    const groupPath = this.getGroupId()
+    const groupId = groupPath.indexOf(currentGroup.id) >= 0 
+      ? currentGroup.id : groups[0]['id']
+    
+    if ( currentUser === 'member' ) {
       return (
         <td>
           <strong>
-            {member['given-name']} {member['family-name']}  
+            {member['given-name']} {member['family-name']}
           </strong>
         </td>
       )
     }
-
-    return (
-      <td>
-        <Link to={`${membersPath(groups[0]['id'])}/${id}`}>
-          {member['given-name']} {member['family-name']}
-        </Link>
-      </td>
-    )
+    
+    if (groupId === currentGroup.id) {
+      return (
+        <td>
+          <Link to={`${membersPath(groupId)}/${id}`}>
+            {member['given-name']} {member['family-name']}
+          </Link>
+        </td>
+      )
+    } else {
+      return (
+        <td>
+          <p>
+            {member['given-name']} {member['family-name']}
+          </p>
+        </td>
+      )
+    }
   }
 
   render() {
