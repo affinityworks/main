@@ -58,10 +58,10 @@ class EventTest < ActiveSupport::TestCase
   end
 
   test '.upcoming' do
-    ended_event = Event.create(start_date: 2.days.ago)
-    upcoming_event_1 = Event.create(start_date: Date.today)
-    upcoming_event_2 = Event.create(start_date: Date.today + 2.days)
-    future_event = Event.create(start_date: Date.today + (Event::UPCOMING_EVENTS_DAYS + 1).days)
+    ended_event = Event.create(origin_system: 'Action Network', title: 'title', start_date: 2.days.ago)
+    upcoming_event_1 = Event.create(origin_system: 'Action Network', title: 'title', start_date: Date.today)
+    upcoming_event_2 = Event.create(origin_system: 'Action Network', title: 'title', start_date: Date.today + 2.days)
+    future_event = Event.create(origin_system: 'Action Network', title: 'title', start_date: Date.today + (Event::UPCOMING_EVENTS_DAYS + 1).days)
 
     assert_includes Event.upcoming, upcoming_event_1
     assert_includes Event.upcoming, upcoming_event_2
@@ -70,15 +70,31 @@ class EventTest < ActiveSupport::TestCase
   test '.start' do
     Event.all.each {|event| event.destroy}
 
-    ended_event = Event.create(start_date: 2.days.ago, status: 'status')
-    event_1 = Event.create(start_date: Date.today, status: 'status')
-    event_2 = Event.create(start_date: Date.today + 1.days, status: 'status')
+    ended_event = Event.create(origin_system: 'Action Network', title: 'title', start_date: 2.days.ago, status: 'status')
+    event_1 = Event.create(origin_system: 'Action Network', title: 'title', start_date: Date.today, status: 'status')
+    event_2 = Event.create(origin_system: 'Action Network', title: 'title', start_date: Date.today + 1.days, status: 'status')
 
     assert_equal [event_1], Event.start(Date.today)
   end
 
+  test '.origin_system_is_action_network?' do
+    event = Event.create(origin_system: 'Action Network', title: 'title', origin_system: 'Action Network', title: 'title',
+                               start_date: 2.days.ago, status: 'status')
+
+    assert event.origin_system_is_action_network?
+  end
+
+  test '.origin_system_is_action_network? is not' do
+    event = Event.create(origin_system: 'Affinity', title: 'title',
+                               start_date: 2.days.ago, status: 'status')
+
+    assert_not event.origin_system_is_action_network?
+  end
+
+
+
   test 'create_remote_events' do
-    event = Event.new(status: 'status', title: 'Original')
+    event = Event.new(origin_system: 'Action Network', title: 'title', status: 'status', title: 'Original')
     event.groups << Group.first
 
     stub_request(:post, "https://actionnetwork.org/api/v2/events").
@@ -107,6 +123,20 @@ class EventTest < ActiveSupport::TestCase
       assert_difference 'AttendanceEvent.count', 0 do
         assert_difference 'NoAttendanceEvent.count', 0 do
           event.update(title: 'original edited')
+        end
+      end
+    end
+
+  end
+
+  test 'create_remote_events, origin_system isn\'t Action Network' do
+    event = Event.new(origin_system: 'Affinity', title: 'title', status: 'status', title: 'Original')
+    event.groups << Group.first
+
+    assert_difference 'Event.count', 1 do
+      assert_difference 'AttendanceEvent.count', 0 do
+        assert_difference 'NoAttendanceEvent.count', 0 do
+          event.save
         end
       end
     end

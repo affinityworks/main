@@ -45,7 +45,7 @@ class DateRange extends Component {
         <div className='btn-group'>
           <button className='btn btn-secondary'>
             { isEmpty(dateValue)
-              ? 'Filter by Date'
+              ? '--- Filter by Date ---'
               : `${moment(this.state.startDate).format('YYYY-DD-MM')} / ${moment(this.state.endDate).format('YYYY-DD-MM')}`}
           </button>
           <button

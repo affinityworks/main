@@ -2,7 +2,7 @@ module HasRemoteEvent
   extend ActiveSupport::Concern
 
   included do
-    after_create :create_remote_events
+    after_create :create_remote_events, if: :origin_system_is_action_network?
   end
 
   private

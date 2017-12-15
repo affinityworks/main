@@ -4,6 +4,8 @@ class EventsController < ApplicationController
   before_action :set_event, only: :show
   before_action :authorize_group_access
 
+  protect_from_forgery except: [:create] #TODO: Add the csrf token in react.
+
   def index
     respond_to do |format|
       format.html
@@ -25,6 +27,20 @@ class EventsController < ApplicationController
       format.html
       format.json do
         render json: JsonApi::EventRepresenter.new(event_with_attendance).to_json
+      end
+    end
+  end
+
+  def create
+    @event = Event.new(events_params)
+    @event.groups << current_group
+    respond_to do |format|
+      if @event.save
+        format.json do
+          render json: JsonApi::EventRepresenter.new(@event).to_json
+        end
+      else
+        format.json { render json: @event.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -66,8 +82,19 @@ class EventsController < ApplicationController
     @events = @events.page(params[:page])
   end
 
+
   def filter_by_key(filter, key)
     filter&.fetch(key) { nil }
+  end
+
+  def events_params
+    params.require(:event).permit(:start_date, :title, :description, :origin_system,
+                                  :description, location_attributes: [:locality,
+                                                                      { address_lines: [] },
+                                                                      :postal_code,
+                                                                      :venue,
+                                                                      :region ])
+
   end
 
   def set_event
