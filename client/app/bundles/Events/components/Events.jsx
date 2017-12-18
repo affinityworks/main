@@ -143,7 +143,7 @@ class Events extends Component {
           </button>
           <DateRange history={this.props.history} />
           <div className='col-3 text-right'>
-            <a href={`/admin/auth/facebook?group_id=${id}`} className='btn btn-facebook'>
+            <a href={`/admin/auth/facebook?group_id=${id}`} className='btn btn-facebook d-none'>
               Import Event From Facebook
             </a>
           </div>
