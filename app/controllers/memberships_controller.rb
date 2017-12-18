@@ -60,7 +60,7 @@ class MembershipsController < ApplicationController
     end
 
 
-    @memberships = Membership.distinct.where(:id => member_ids).
+    @memberships = Membership.select("memberships.*, people.given_name").distinct.where(:id => member_ids).
       joins(:person).
       joins(ArelHelpers.join_association(Person, [:email_addresses, :personal_addresses, :phone_numbers], Arel::Nodes::OuterJoin) ).
       page(params[:page])

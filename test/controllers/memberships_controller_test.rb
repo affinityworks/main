@@ -39,6 +39,16 @@ class MembershipsControllerTest < ActionDispatch::IntegrationTest
     assert_equal people(:admin).memberships.first.id, json['memberships']['data'].first['id'].to_i
   end
 
+  test 'get #index with sort name' do
+    person = people(:organizer)
+    sign_in person
+    params = { sort: 'name', direction: 'asc'}
+
+    get group_memberships_url(group_id: groups(:test).id), params: params, as: :json
+    assert_response :success
+  end
+
+
   test 'get #show' do
     person = people(:organizer)
     sign_in person
