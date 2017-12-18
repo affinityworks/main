@@ -65,11 +65,6 @@ class EventsController < ApplicationController
       )
     end
 
-    if sort_param && direction_param
-      sort = sort_param == 'group_name' ? 'groups.name' : sort_param
-      @events = @events.order("#{sort} #{direction_param}")
-    end
-
     start_date = filter_by_key(filter, :start_date)
     end_date = filter_by_key(filter, :end_date)
 
@@ -79,7 +74,7 @@ class EventsController < ApplicationController
       @events = @events.where('start_date BETWEEN ? AND ?', start_date, end_date)
     end
 
-    @events = @events.page(params[:page])
+    @events = @events.order("#{sort_param} #{direction_param || 'desc'}").page(params[:page])
   end
 
 
@@ -102,6 +97,7 @@ class EventsController < ApplicationController
   end
 
   def sort_param
-    @sort_param ||= ['title', 'start_date', 'group_name'].include?(params[:sort]) && params[:sort] || nil
+    return 'start_date' unless params[:sort]
+    @sort_param ||= ['title', 'start_date', 'groups.name'].delete(params[:sort])
   end
 end

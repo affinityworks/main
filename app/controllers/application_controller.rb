@@ -100,6 +100,7 @@ class ApplicationController < ActionController::Base
   end
 
   def direction_param
-    @direction_param ||= ['asc', 'desc'].include?(params[:direction]) && params[:direction] || nil
+    return unless params[:direction]
+    @direction_param ||= ['asc', 'desc'].delete(params[:direction])
   end
 end
