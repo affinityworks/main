@@ -66,7 +66,7 @@ class Events extends Component {
 
   groupColumn() {
     if (this.props.showGroupName)
-      return <SortableHeader title='Group Name' sortBy='group_name' />
+      return <SortableHeader title='Group Name' sortBy='groups.name' />
   }
 
   printColumn() {
@@ -143,7 +143,7 @@ class Events extends Component {
           </button>
           <DateRange history={this.props.history} />
           <div className='col-3 text-right'>
-            <a href={`/admin/auth/facebook?group_id=${id}`} className='btn btn-facebook'>
+            <a href={`/admin/auth/facebook?group_id=${id}`} className='btn btn-facebook d-none'>
               Import Event From Facebook
             </a>
           </div>

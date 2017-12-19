@@ -78,12 +78,9 @@ class MembershipsController < ApplicationController
     if sort_param && direction_param
       sort = if sort_param == 'name'
         'people.given_name'
-      elsif sort_param == 'group_name'
-        'groups.name'
       else
         sort_param
       end
-
       @memberships = @memberships.order("#{sort} #{direction_param}")
     end
   end

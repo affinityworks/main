@@ -9,7 +9,7 @@ class MembersTable extends Component {
 
   groupColumn() {
     if (this.props.showGroupName)
-      return <SortableHeader title='Group Name' sortBy='group_name'  style={{ width: '20%' }}/>
+      return <SortableHeader title='Group Name' sortBy='groups.name'  style={{ width: '20%' }}/>
   }
 
   locationColumn() {
