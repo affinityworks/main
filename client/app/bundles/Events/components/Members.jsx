@@ -40,7 +40,7 @@ class Members extends Component {
   }
 
   render() {
-    const { memberships, showGroupName, location, currentUser, currentGroup } = this.props
+    const { memberships, showGroupName, location, currentRole, currentGroup } = this.props
     const { search } = location;
     const { filter } = queryString.parse(search);
 
@@ -68,8 +68,9 @@ class Members extends Component {
           memberships={memberships}
           showGroupName={showGroupName}
           memberTagList={this.props.tags}
-          currentUser={currentUser}
+          currentRole={currentRole}
           currentGroup={currentGroup}
+          location={location}
         />
 
         <br />

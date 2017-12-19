@@ -99,7 +99,7 @@ class MemberDetail extends Component {
 
     return (
       <div className='check-member mb-3'>
-        <span className='mr-3'>{`Is organizer of ${membership.attributes.group.data.attributes.name}`}</span>
+        <span className='mr-3'>{`Is ${isOrganizer ? 'organizer' : 'member'} of ${membership.attributes.group.data.attributes.name}`}</span>
         <label className='switch'>
         <input
           name='isOrganizer'
@@ -115,7 +115,7 @@ class MemberDetail extends Component {
   }
 
   render() {
-    const { membership } = this.state;
+    const { membership, isOrganizer } = this.state;
     if (!membership.attributes)
       return this.renderBlankTemplate();
     const { attributes } = membership.attributes.person.data;
@@ -133,7 +133,7 @@ class MemberDetail extends Component {
 
         <div className='row container' style={{ marginTop: '10px' }}>
           <span style={{ textTransform: 'capitalize', marginRight: '40px' }}>
-            {this.state.isOrganizer ? 'Organizer' : 'Member'}
+            {isOrganizer ? 'Organizer' : 'Member'}
           </span>
 
           {phone && <span style={{ marginRight: '20px' }}> Phone: {phone} </span>}

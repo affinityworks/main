@@ -186,6 +186,40 @@ class GroupTest < ActiveSupport::TestCase
 
   end
 
+  test '#affiliation_with_role?' do
+    membership = memberships(:forth)
+    membership_admin = memberships(:admin)
+
+    group = groups(:test)
+    group_fourth = groups(:fourth)
+
+    person = people(:one)
+    person_admin = people(:admin)
+
+    member_role = Membership.roles[:member]
+    organizer_role = Membership.roles[:organizer]
+    volunteer_role = Membership.roles[:volunteer]
+
+    membership.update(role: member_role)
+    membership_admin.update(role: member_role)
+
+    assert group.affiliation_with_role(person, member_role), group
+    assert group_fourth.affiliation_with_role(person_admin, member_role), group
+
+    membership.update(role: organizer_role)
+    membership_admin.update(role: organizer_role)
+
+    assert group.affiliation_with_role(person, organizer_role), group
+    assert group_fourth.affiliation_with_role(person_admin, organizer_role), group
+
+    membership.update(role: volunteer_role)
+    membership_admin.update(role: volunteer_role)
+
+    assert group.affiliation_with_role(person, volunteer_role), group
+    assert group_fourth.affiliation_with_role(person_admin, volunteer_role), group
+
+  end
+
   #test for model method to be written - is failing
     # test 'current_group_members' do
     #   group = Group.first

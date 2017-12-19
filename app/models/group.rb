@@ -115,13 +115,19 @@ class Group < ApplicationRecord
     volunteers.include?(person)
   end
 
-  def affiliated_member?(person)
+  def affiliated_with_role(person, role)
     affiliated_with.joins(:memberships)
-                   .where('person_id = ? and role = ?', person.id, '0').any?
+                   .where('person_id = ? and role = ?', person.id, role).take
   end
 
-  def affiliated_volunteer?(person)
-    affiliated_with.joins(:memberships)
-                   .where('person_id = ? and role = ?', person.id, '2').any?
+  def affiliates_with_role(person, role)
+    affiliates.joins(:memberships)
+              .where('person_id = ? and role = ?', person.id, role).take
   end
+
+  def affiliation_with_role(person, role)
+    affiliated_with_role(person, role) || affiliates_with_role(person, role)
+  end
+
+
 end

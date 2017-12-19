@@ -14,34 +14,13 @@ class ApplicationController < ActionController::Base
   end
 
   def current_role
-    role = ''
-
-    if current_person && current_group
-      if current_group.members.include?(current_person)
-        role = user_group_to_role(current_person, current_group)
-      else
-        role = 'member'
-      end
-
-      current_group.affiliates.each do |affiliated_group|
-        affilited_role = user_group_to_role(current_person, affiliated_group)
-        return 'organizer' if affilited_role == 'organizer'
-        role = affilited_role if affilited_role == 'volunteer'
-      end
-
-    end
-    return role
+    return '' unless current_person && current_group
+    organizer = Membership.roles[:organizer]
+    return 'organizer' if current_group.affiliation_with_role(current_user, organizer)
+    volunteer = Membership.roles[:organizer]
+    return 'volunteer' if current_group.affiliation_with_role(current_user, volunteer)
+    current_person.role_in_group(current_group) || 'member'
   end
-
-  def user_group_to_role(person, group)
-    role = nil
-    membership = Membership.where(
-      person_id: person.id, group_id: group.id
-    ).first
-    role = membership.role if membership
-    return role
-  end
-
 
   def validate_admin_permission
     return if controller_name == 'sessions' || current_person.nil?
@@ -69,7 +48,7 @@ class ApplicationController < ActionController::Base
 
   def volunteer_permission?
     current_group.volunteer?(current_person) ||
-      current_group.affiliated_volunteer?(current_person)
+    current_group.affiliation_with_role(current_user, Membership.roles[:volunteer])
   end
 
   def authorized_controllers_and_actions?

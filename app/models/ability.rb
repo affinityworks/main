@@ -16,13 +16,14 @@ class Ability
       end
 
       can :read, Group do |group|
-        current_group&.member?(current_user) || group.affiliated_member?(current_user) ||
-          current_group&.volunteer?(current_user) || group.affiliated_volunteer?(current_user)
+        group&.member?(current_user) || group&.volunteer?(current_user) ||
+        group.affiliation_with_role(current_user, Membership.roles[:member]) ||
+        group.affiliation_with_role(current_user, Membership.roles[:volunteer])
       end
 
       can :read, Membership do |membership|
-        group = membership.group
-        group.volunteer?(current_user) || group.affiliated_volunteer?(current_user)
+        current_group&.volunteer?(current_user) ||
+        current_group.affiliation_with_role(current_user, Membership.roles[:volunteer])
       end
 
       can :manage, Group do |group|

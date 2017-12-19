@@ -11,7 +11,8 @@ module ProfileHelper
   end
 
   def volunteer_permission?(group)
-    group.volunteer?(current_person) || group.affiliated_volunteer?(current_person)
+    group.volunteer?(current_person) ||
+    group.affiliation_with_role(current_person, Membership.roles[:volunteer])
   end
 end
 

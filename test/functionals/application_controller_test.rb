@@ -18,8 +18,6 @@ end
 class ApplicationControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
-
-
   setup do
     Rails.application.routes.draw do
       controller :test do
@@ -69,13 +67,23 @@ class ApplicationControllerTest < ActionDispatch::IntegrationTest
     assert_equal assigns(:current_role), 'member'
   end
 
-  test 'current_role, if person is volunteer in affliate group' do
+  test 'current_role, if person is member in affliates group should return the role' do
 
     membership = memberships(:forth)
-    membership.update(role: 2)
+    membership.update(role: 0)
 
     set_role_and_sign_in(membership.person, groups(:test))
 
+    assert_equal assigns(:current_role), 'member'
+
+    membership.update(role: 1)
+
+    set_role_and_sign_in(membership.person, membership.group)
+    assert_equal assigns(:current_role), 'organizer'
+
+    membership.update(role: 2)
+
+    set_role_and_sign_in(membership.person, membership.group)
     assert_equal assigns(:current_role), 'volunteer'
   end
 

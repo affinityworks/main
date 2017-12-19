@@ -75,8 +75,8 @@ class MembersTable extends Component {
         showGroupName={this.props.showGroupName}
         membershipId={membership.id}
         tags={tags}
+        location={this.props.location}
         memberTagList={this.props.memberTagList}
-        currentGroup={this.props.currentGroup}
       />
     })
   }

@@ -77,33 +77,31 @@ class Member extends Component {
   }
 
   getGroupId () {
-    const { groups, currentGroup } = this.props;
+    const { groups } = this.props;
 
     return map(groups, (item) => {
       const groupId = item.id;
-      return groupId
+      return `/groups/${groupId}/members`
     })
   }
 
   renderMemberProfileLink () {
-    const { member, id, groups, currentGroup } = this.props;    
+    const { member, id, groups, location } = this.props;    
     const groupPath = this.getGroupId()
-    const groupId = groupPath.indexOf(currentGroup.id) >= 0 
-      ? currentGroup.id : groups[0]['id']
+    const groupId = groupPath.indexOf(location.pathname) >= 0 
+      ? location.pathname : membersPath(groups[0]['id']) 
 
-    if (groupId === currentGroup.id) {
+    if (groupId === location.pathname) {
       return (
         <span>
-          <Link to={`${membersPath(groupId)}/${id}`}>
+          <Link to={`${location.pathname}/${id}`}>
             {member['given-name']} {member['family-name']}
           </Link>
         </span>
       )
-    } else {
-      return (
-        <span>{member['given-name']} {member['family-name']}</span>
-      )
     }
+
+    return <span>{member['given-name']} {member['family-name']}</span>
   }
 
   renderNameLink () {
@@ -134,7 +132,7 @@ class Member extends Component {
           {this.renderNameLink()}
           <td>{member['primary-phone-number']}</td>
           <td>{this.localityAndRegion()}</td>
-          {isAllowed(['member', 'volunteer'], currentRole)
+          {isAllowed(['member'], currentRole)
             ? <td/>
             : <td>{this.groupColumn()}</td>}
           {this.showTags()}
