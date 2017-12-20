@@ -2,10 +2,13 @@ class EmailAddress < ApplicationRecord
   has_paper_trail
 
   ADDRESS_FORMAT = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
+  FORMAT = {with: ADDRESS_FORMAT, message: "'%{value}' does not match #{ADDRESS_FORMAT}" }
 
   validates :address, uniqueness: true
   validates :address, presence: true
-  validates :address, format: { with: ADDRESS_FORMAT, message: "'%{value}' does not match #{ADDRESS_FORMAT}" }
+  validates :address, format: FORMAT, if: :validate_address
+
+  attr_accessor :validate_address
 
   belongs_to :person
 

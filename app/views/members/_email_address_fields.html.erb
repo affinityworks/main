@@ -4,6 +4,7 @@
   <%= f.check_box :primary , class: 'js-email-primary'%>
   <%= f.label :primary %>
   <%= link_to_remove_association 'Remove', f, class: 'btn btn-danger btn-sm' %>
+  <%= f.hidden_field :validate_address, value: true %>
 </div>
 
 
