@@ -9,12 +9,12 @@ class MembersTable extends Component {
 
   groupColumn() {
     if (this.props.showGroupName)
-      return <SortableHeader title='Group Name' sortBy='group_name'  style={{ width: '20%' }}/>
+      return <SortableHeader title='Group Name' sortBy='groups.name'  style={{ width: '20%' }}/>
   }
 
   locationColumn() {
-    const width = this.props.showGroupName ? '10%' : '20%'
-    return <th style={{ width: `${width}`}}>Location</th>
+    const width = this.props.showGroupName ? '12%' : '20%'
+      return <SortableHeader title='Location' sortBy='addresses.locality' style={{ width: `${width}`}} />
   }
 
   phoneColumn() {
@@ -71,7 +71,7 @@ class MembersTable extends Component {
   render() {
     const { memberships, currentUser } = this.props;
     const isMember = currentUser !== 'member';
-    
+
     if (!memberships)
       return (
         <div style={{ alignItems: 'center', height: '150px', display: 'flex', justifyContent: 'center' }}>

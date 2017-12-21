@@ -60,7 +60,7 @@ class MembershipsController < ApplicationController
     end
 
 
-    @memberships = Membership.select("memberships.*, people.given_name").distinct.where(:id => member_ids).
+    @memberships = Membership.select("memberships.*, people.given_name, addresses.locality").distinct.where(:id => member_ids).
       joins(:person).
       joins(ArelHelpers.join_association(Person, [:email_addresses, :personal_addresses, :phone_numbers], Arel::Nodes::OuterJoin) ).
       page(params[:page])
@@ -78,18 +78,16 @@ class MembershipsController < ApplicationController
     if sort_param && direction_param
       sort = if sort_param == 'name'
         'people.given_name'
-      elsif sort_param == 'group_name'
-        'groups.name'
       else
         sort_param
       end
-
       @memberships = @memberships.order("#{sort} #{direction_param}")
     end
   end
 
   def sort_param
-    @sort_param ||= ['name', 'role', 'group_name'].include?(params[:sort]) && params[:sort] || nil
+     return unless params[:sort] || nil
+    @sort_param ||= ['name', 'role', 'group_name', 'addresses.locality'].delete(params[:sort])
   end
 
   def authorize_and_load_membership
