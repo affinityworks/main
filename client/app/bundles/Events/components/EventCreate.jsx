@@ -1,29 +1,36 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import FormGroup from '../components/FormGroup';
-import Input from '../components/Input';
-import RichTextEditor from 'react-rte';
 import { Field, reduxForm } from 'redux-form';
 import moment from 'moment';
 
 class EventCreate extends Component {
   state = {
-    showCreateEvent: false,
-    value: RichTextEditor.createEmptyValue()
+    showCreateEvent: false
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { location, history } = this.props
+    const eventId = nextProps.event.id;
+
+    if (eventId)
+      history.push(`${location.pathname}/${eventId}`);
   }
 
   renderButtons () {
     return (
       <div className='col-md-12'>
-        <button type='submit' className='btn btn-success mr-2'>Save</button>
-        <button type='button' className='btn btn-danger' onClick={this.props.handleCancel}>Cancel</button>
+        <button type='button' className='btn btn-danger mr-2' onClick={this.props.handleCancel}>Cancel</button>
+        <button type='submit' className='btn btn-success'>
+          Create
+        </button>
       </div>
     )
   }
 
   handleSubmit (values) {
-
     const { title, startDate, locationName, adress, postal, city, region, startTime, description } = values;
-    const { handleCancel, location, createEvent, history } = this.props;
+    const { createEvent } = this.props;
     const dateTime = `${startDate} ${startTime}`;
 
     const attributes = {
@@ -40,11 +47,9 @@ class EventCreate extends Component {
       }
     }
 
-    createEvent(attributes, location.search);
-    this.props.history.push();
-    handleCancel();
+    createEvent(attributes);
   }
-
+  
   render() {
     const {
       fields: {
@@ -82,7 +87,6 @@ class EventCreate extends Component {
                     {...title}
                   />
                 </div>
-
                 <div className='form-group col-md-5'>
                   <label>Start date</label>
                   <Field
@@ -94,7 +98,6 @@ class EventCreate extends Component {
                     {...startDate}
                   />
                 </div>
-
                 <div className='form-group col-md-7'>
                   <label>Start time</label>
                   <Field
@@ -106,7 +109,6 @@ class EventCreate extends Component {
                     {...startTime}
                   />
                 </div>
-
                 <div className='form-group col-md-7'>
                   <label>Location Name</label>
                   <Field
@@ -117,7 +119,6 @@ class EventCreate extends Component {
                     {...locationName}
                   />
                 </div>
-
                 <div className='form-group col-md-5'>
                   <label>Adress</label>
                   <Field
@@ -128,7 +129,6 @@ class EventCreate extends Component {
                     {...adress}
                   />
                 </div>
-
                 <div className='form-group col-md-4'>
                   <label>City</label>
                   <Field
@@ -139,7 +139,6 @@ class EventCreate extends Component {
                     {...city}
                   />
                 </div>
-
                 <div className='form-group col-md-4'>
                   <label>State</label>
                   <Field
@@ -150,7 +149,6 @@ class EventCreate extends Component {
                     {...region}
                   />
                 </div>
-
                 <div className='form-group col-md-4'>
                   <label>Zip/Postal Code</label>
                   <Field
@@ -161,7 +159,6 @@ class EventCreate extends Component {
                     {...postal}
                   />
                 </div>
-
                 <div className='form-group col-md-12'>
                   <label>Description</label>
                   <Field
@@ -171,7 +168,6 @@ class EventCreate extends Component {
                     type='text'
                     {...description}
                   />
-
                 </div>
                 {this.renderButtons()}
               </div>
@@ -182,6 +178,12 @@ class EventCreate extends Component {
     );
   }
 }
+
+const mapStateToProps = ({ event }) => {
+  return { event }
+};
+
+EventCreate = connect(mapStateToProps)(EventCreate)
 
 export default reduxForm({
   form: 'eventCreate',

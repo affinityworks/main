@@ -35,16 +35,17 @@ export const fetchEvent = (eventId) => {
   }
 };
 
-export const createEvent = (attributes, location) => {
+export const createEvent = (attributes) => {
   return (dispatch) => {
     client.post(`${eventsPath()}.json`, { event: attributes })
       .then(response => {
         let type = 'success';
         let text = 'Event Successfully Created.';
 
-        dispatch({ type: CREATE_EVENT });
-        dispatch(fetchEvents(location));
-
+        dispatch({
+          type: CREATE_EVENT,
+          payload: response
+        });
         dispatch(addAlert({ text, type }));
       })
       .catch(alert => {
