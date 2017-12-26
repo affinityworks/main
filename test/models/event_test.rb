@@ -97,6 +97,8 @@ class EventTest < ActiveSupport::TestCase
     event = Event.new(origin_system: 'Action Network', title: 'title', status: 'status', title: 'Original')
     event.groups << Group.first
 
+    stub_request(:post, "https://actionnetwork.org/api/v2/events").to_return(:status => 200, :body => "", :headers => {}).times(1)
+
     stub_request(:post, "https://actionnetwork.org/api/v2/events").
       with(:body => {"identifiers"=>[], "title"=>"Original_ATT", "origin_system"=>"Affinity", "_links"=>{}},
            :headers => {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'Osdi-Api-Token'=>'test-token', 'User-Agent'=>'Ruby'}).
