@@ -6,7 +6,7 @@ import Event from './Event';
 import SearchFilter from './SearchFilter';
 import Pagination from './Pagination';
 import SortableHeader from './SortableHeader';
-import { fetchEvents, fetchGroup, createEvent, fetchGroup } from '../actions';
+import { fetchEvents, fetchGroup, createEvent } from '../actions';
 import UpcomingEvent from '../components/UpcomingEvent';
 import DateRange from '../components/DateRange';
 import EventCreate from '../components/EventCreate';
