@@ -6,6 +6,7 @@ import Nav from '../components/Nav';
 import Tags from '../components/Tags';
 import Notes from '../components/Notes';
 import CustomFields from '../components/CustomFields';
+import UserAuth from '../components/UserAuth';
 import Event from '../components/Event';
 import EmailLink from '../components/EmailLink';
 import ActionHistory from '../components/ActionHistory';
@@ -98,7 +99,7 @@ class MemberDetail extends Component {
 
     return (
       <div className='check-member mb-3'>
-        <span className='mr-3'>{`Is organizer of ${membership.attributes.group.data.attributes.name}`}</span>
+        <span className='mr-3'>{`Is ${isOrganizer ? 'organizer' : 'member'} of ${membership.attributes.group.data.attributes.name}`}</span>
         <label className='switch'>
         <input
           name='isOrganizer'
@@ -114,7 +115,7 @@ class MemberDetail extends Component {
   }
 
   render() {
-    const { membership } = this.state;
+    const { membership, isOrganizer } = this.state;
     if (!membership.attributes)
       return this.renderBlankTemplate();
     const { attributes } = membership.attributes.person.data;
@@ -132,7 +133,7 @@ class MemberDetail extends Component {
 
         <div className='row container' style={{ marginTop: '10px' }}>
           <span style={{ textTransform: 'capitalize', marginRight: '40px' }}>
-            {this.state.isOrganizer ? 'Organizer' : 'Member'}
+            {isOrganizer ? 'Organizer' : 'Member'}
           </span>
 
           {phone && <span style={{ marginRight: '20px' }}> Phone: {phone} </span>}
@@ -154,9 +155,13 @@ class MemberDetail extends Component {
             <ActionHistory attendances={this.state.attendances}/>
           </div>
           <div className='col-6'>
-            {this.inputCheckMember()}
-            <h4 style={{ marginRight: '10px' }}>Tags</h4>
-            <Tags tags={membership.attributes.tags} membershipId={membership.id} />
+            <UserAuth allowed={['organizer']}>
+              <div>
+                {this.inputCheckMember()}
+                <h4 style={{ marginRight: '10px' }}>Tags</h4>
+                <Tags tags={membership.attributes.tags} membershipId={membership.id} />
+              </div>
+            </UserAuth>
             <br/>
             <h4>Custom Fields</h4>
             <CustomFields customFields={attributes['custom-fields']} />
@@ -173,9 +178,11 @@ class MemberDetail extends Component {
           <Link to={membersPath()} className='btn btn-primary' role='button'>
             Back to Members
           </Link>&nbsp;
-          <a href={attributes['id']+"/edit"} className='btn btn-primary' role='button'>
-            Edit
-          </a>
+          <UserAuth allowed={['organizer']}>
+            <a href={attributes['id']+"/edit"} className='btn btn-primary' role='button'>
+              Edit
+            </a>
+          </UserAuth>
         </div>
       </div>
     );

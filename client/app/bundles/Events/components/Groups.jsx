@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Group from './Group';
 import SortableHeader from './SortableHeader';
 import Pagination from './Pagination';
+import UserAuth from '../components/UserAuth';
 
 class Groups extends Component {
   renderPagination() {
@@ -25,7 +26,11 @@ class Groups extends Component {
             <tr>
               <SortableHeader title='Group Name' sortBy='name' />
               <th>Location</th>
-              <th>Tags</th>
+              <th>
+                <UserAuth allowed={['organizer']}>
+                  <span>Tags</span>
+                </UserAuth>
+              </th>
               <SortableHeader title='Owner' sortBy='owner' />
             </tr>
           </thead>

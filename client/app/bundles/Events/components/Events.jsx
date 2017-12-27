@@ -6,11 +6,13 @@ import Event from './Event';
 import SearchFilter from './SearchFilter';
 import Pagination from './Pagination';
 import SortableHeader from './SortableHeader';
-import { fetchEvents, fetchGroup, createEvent } from '../actions';
+import { fetchEvents, fetchGroup, createEvent, fetchGroup } from '../actions';
 import UpcomingEvent from '../components/UpcomingEvent';
 import DateRange from '../components/DateRange';
 import EventCreate from '../components/EventCreate';
-import { eventsPath } from "../utils";
+
+import UserAuth from '../components/UserAuth';
+import { isAllowed, eventsPath } from "../utils";
 
 
 class Events extends Component {
@@ -30,10 +32,12 @@ class Events extends Component {
   }
 
   componentWillMount() {
-    const { fetchGroup, fetchEvents, location, currentGroup, currentUser } = this.props
+    const { fetchGroup, fetchEvents, location, currentGroup, currentRole } = this.props
     const groupId = currentGroup.id
 
-    currentUser === 'member' ? fetchGroup(groupId) : fetchEvents(location.search)
+    isAllowed(['member'], currentRole)
+      ? fetchGroup(groupId)
+      : fetchEvents(location.search)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -65,7 +69,7 @@ class Events extends Component {
 
   groupColumn() {
     if (this.props.showGroupName)
-      return <SortableHeader title='Group Name' sortBy='groups.name' />
+      return <SortableHeader title='Group Name' sortBy='group_name' />
   }
 
   printColumn() {
@@ -99,82 +103,93 @@ class Events extends Component {
     const { id } = this.props.currentGroup
     const { currentUser, currentGroup, location, createEvent } = this.props
 
-    if (currentUser === 'member') {
-      return (
-        <div className='col-md-12 mb-4 mt-5'>
-          <h3><i className='fa fa-calendar'/> Upcoming Events</h3>
-          <br/>
-          {this.upcoming_events()}
-        </div>
-      )
-    }
-
     if (this.state.showCreateEvent) {
       return (
         <div className='row'>
-          <div className='col-md-12'>
-            <EventCreate
-              handleCancel={this.handleCancel}
-              currentGroup={currentGroup}
-              location={location}
-              history={this.props.history}
-              createEvent={createEvent}
-            />
-          </div>
+          <UserAuth allowed={['organizer']}>
+            <div className='col-md-12'>
+              <EventCreate
+                handleCancel={this.handleCancel}
+                currentGroup={currentGroup}
+                location={location}
+                history={this.props.history}
+                createEvent={createEvent}
+              />
+            </div>
+          </UserAuth>
         </div>
       )
     }
 
     return (
       <div>
-        <div className='row'>
-          <div className='col-5'>
-            <SearchFilter
-              onSearchSubmit={this.filterEvents}
-              filter={filter}
-              placeholder='Search by event name or location' />
-          </div>
-          <button
-            className='btn btn-primary mr-2'
-            onClick={this.displayEventCreate}
-          >
-            Add Event
-          </button>
-          <DateRange history={this.props.history} />
-          <div className='col-3 text-right'>
-            <a href={`/admin/auth/facebook?group_id=${id}`} className='btn btn-facebook d-none'>
-              Import Event From Facebook
-            </a>
-          </div>
+      <UserAuth allowed={['member']}>
+        <div className='col-md-12 mb-4 mt-5'>
+          <h3><i className='fa fa-calendar'/> Upcoming Events</h3>
+          <br/>
+          {this.upcoming_events()}
         </div>
-        <br/>
-        <table className={`table ${this.props.showPrintIcon ? '' : 'table--fixed'}`}>
-          <thead>
-            <tr>
-              <SortableHeader title='Event Name' sortBy='title' />
-              <SortableHeader title='Date' sortBy='start_date' />
-              <th>Location</th>
-              { this.groupColumn() }
-              <th>Tags</th>
-              <th>RSVPs</th>
-              { this.printColumn() }
-            </tr>
-          </thead>
-          <tbody>
-            {this.renderEvents()}
-          </tbody>
-        </table>
-        <br />
-        {this.renderPagination()}
+      </UserAuth>
+       <UserAuth allowed={['organizer', 'volunteer']}>
+        <div>
+          <div className='row'>
+            <div className='col-5'>
+              <SearchFilter
+                onSearchSubmit={this.filterEvents}
+                filter={filter}
+                placeholder='Search by event name or location' />
+            </div>
+            <UserAuth allowed={['organizer']}>
+              <button
+                className='btn btn-primary mr-2'
+                onClick={this.displayEventCreate}
+              >
+                Add Event
+              </button>
+            </UserAuth>
+            <DateRange history={this.props.history} />
+            <UserAuth allowed={['organizer']}>
+              <div className='col-3 text-right'>
+                <a href={`/admin/auth/facebook?group_id=${id}`} className='btn btn-facebook'>
+                  Import Event From Facebook
+                </a>
+              </div>
+            </UserAuth>
+          </div>
+          <br/>
+          <table className={`table ${this.props.showPrintIcon ? '' : 'table--fixed'}`}>
+            <thead>
+              <tr>
+                <SortableHeader title='Event Name' sortBy='title' />
+                <SortableHeader title='Date' sortBy='start_date' />
+                <th>Location</th>
+                { this.groupColumn() }
+                <th>
+                  <UserAuth allowed={['organizer']}>
+                    <span>Tags</span>
+                  </UserAuth>
+                </th>
+                <th>RSVPs</th>
+                { this.printColumn() }
+              </tr>
+            </thead>
+            <tbody>
+              {this.renderEvents()}
+            </tbody>
+          </table>
+          <br />
+          {this.renderPagination()}
+          </div>
+       </UserAuth>        
       </div>
     );
   }
 }
 
 const mapStateToProps = (state) => {
-  const { group, events: {events, total_pages, page, tags} } = state;
+  const { group, currentRole, events: { events, total_pages, page, tags } } = state
 
-  return { events, total_pages, page, tags, group };
+  return { events, total_pages, page, tags, group, currentRole };
 }
 
 export default connect(mapStateToProps, { fetchEvents, createEvent, fetchGroup })(Events);

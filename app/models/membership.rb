@@ -2,7 +2,7 @@ class Membership < ApplicationRecord
   include ArelHelpers::ArelTable
   acts_as_taggable
   has_paper_trail
-  
+
   #inversions allow back and forth permissions within forms
   belongs_to :group
   belongs_to :person
@@ -16,15 +16,13 @@ class Membership < ApplicationRecord
   #for form helpers
   accepts_nested_attributes_for :group
 
-  scope :member, -> { where(:role => :organizer) }
-  scope :organizer, -> { where(:role => :member) }
+  enum role: [:member, :organizer, :volunteer]
 
-  enum role: [:member, :organizer]
-
-  #this doesn't do what i'd hoped - rabble
-    # still need to work to be able to do group.organizers
+  # this doesn't do what i'd hoped - rabble
+  # still need to work to be able to do group.organizers
   scope :member, -> { where(:role => :member) }
   scope :organizer, -> { where(:role => :organizer) }
+  scope :volunteer, -> { where(:role => :volunteer) }
 
   scope :by_name, -> (name) do
     where("CONCAT_WS(' ', people.given_name, people.family_name) ILIKE ?", "%#{name}%")

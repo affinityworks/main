@@ -272,6 +272,10 @@ class Person < ApplicationRecord
     end
   end
 
+  def role_in_group(group)
+    memberships.find_by(group: group)&.role
+  end
+
   private
 
   class << self

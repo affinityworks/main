@@ -8,9 +8,14 @@ class Group < ApplicationRecord
   has_many :memberships, dependent: :destroy
   has_many :members, through: :memberships, source: :person
 
+  has_many :member_memberships, -> { member }, :class_name => 'Membership'
+  has_many :member_members, through: :member_memberships, source: :person
+
   has_many :organizer_memerships, -> { organizer }, :class_name => 'Membership'
   has_many :organizers, :source => :person, :through => :organizer_memerships
 
+  has_many :volunteer_memerships, -> { volunteer }, :class_name => 'Membership'
+  has_many :volunteers, :source => :person, :through => :volunteer_memerships
 
   has_many :attendances, through: :members
   has_many :affiliations, foreign_key: :group_id, class_name: 'Affiliation'
@@ -103,11 +108,26 @@ class Group < ApplicationRecord
   end
 
   def member?(person)
-    memberships.find_by(person_id: person.id, role: 'member')
+    member_members.include?(person)
   end
 
-  def affiliated_member?(person)
-    affiliated_with.joins(:memberships)
-                   .where('person_id = ? and role = ?', person.id, '0').any?
+  def volunteer?(person)
+    volunteers.include?(person)
   end
+
+  def affiliated_with_role(person, role)
+    affiliated_with.joins(:memberships)
+                   .where('person_id = ? and role = ?', person.id, role).take
+  end
+
+  def affiliates_with_role(person, role)
+    affiliates.joins(:memberships)
+              .where('person_id = ? and role = ?', person.id, role).take
+  end
+
+  def affiliation_with_role(person, role)
+    affiliated_with_role(person, role) || affiliates_with_role(person, role)
+  end
+
+
 end

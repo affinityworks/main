@@ -98,6 +98,7 @@ gem 'koala'
 gem 'cocoon'
 gem 'nokogiri', '~> 1.8'
 
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'dotenv-rails'
@@ -118,6 +119,7 @@ group :development do
 end
 
 group :test do
+  gem 'rails-controller-testing'
   gem 'webmock'
 end
 

@@ -9,6 +9,7 @@ import TextEditor from '../components/TextEditor';
 import PersonActivityFeed from '../components/PersonActivityFeed';
 import SyncActivityFeed from '../components/SyncActivityFeed';
 import { fetchGroup, addAlert } from '../actions';
+import UserAuth from '../components/UserAuth';
 import { client, dashboardPath } from '../utils';
 
 class Dashboard extends Component {
@@ -91,9 +92,11 @@ class Dashboard extends Component {
         { !!sync && !!sync.data && <SyncActivityFeed sync={sync} />}
 
         <div className="edit-button">
+        <UserAuth allowed={['organizer']}>
           <a href="edit">
-            <button className='btn btn-primary'>Edit Group</button>
-          </a>
+              <button className='btn btn-primary'>Edit Group</button>
+            </a>
+        </UserAuth>
           <br />
         </div>
 

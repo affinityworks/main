@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import UserAuth from '../components/UserAuth';
 import FormGroup from '../components/FormGroup';
 import Input from '../components/Input';
 import Spinner from '../components/Spinner';
@@ -127,55 +128,57 @@ class AttendanceForm extends Component {
     const { newAttendance, setAttendanceAttribute } = this.props;
 
     return (
-      <form onSubmit={this.handleSubmit.bind(this)}>
-        <FormGroup row>
-          <div className='col-md-3'>
-            <div className='row'>
+      <div>
+        <UserAuth allowed={['organizer']}>
+          <form onSubmit={this.handleSubmit.bind(this)}>
+            <FormGroup row>
+              <div className='col-md-3'>
+                <div className='row'>
+                  <Input
+                    label='Email'
+                    classes='col-md-10'
+                    onBlur={(e) => setAttendanceAttribute('loading', false)}
+                    onChange={this.handleEmailChange.bind(this)}
+                    value={newAttendance['primary-email-address']}
+                  />
+
+                  {this.renderSpinner()}
+                </div>
+              </div>
+
               <Input
-                label='Email'
-                classes='col-md-10'
-                onBlur={(e) => setAttendanceAttribute('loading', false)}
-                onChange={this.handleEmailChange.bind(this)}
-                value={newAttendance['primary-email-address']}
+                label='First Name:'
+                classes='col-md-2'
+                onChange={(e) => setAttendanceAttribute('given-name', e.target.value)}
+                value={newAttendance['given-name']}
+                disabled={newAttendance.disabled}
               />
 
-              {this.renderSpinner()}
-            </div>
-          </div>
+              <Input
+                label='Last Name:'
+                classes='col-md-2'
+                onChange={(e) => setAttendanceAttribute('family-name', e.target.value)}
+                value={newAttendance['family-name']}
+                disabled={newAttendance.disabled}
+              />
 
-          <Input
-            label='First Name:'
-            classes='col-md-2'
-            onChange={(e) => setAttendanceAttribute('given-name', e.target.value)}
-            value={newAttendance['given-name']}
-            disabled={newAttendance.disabled}
-          />
+              <Input
+                label='Phone:'
+                classes='col-md-2'
+                onChange={(e) => setAttendanceAttribute('primary-phone-number', e.target.value)}
+                value={newAttendance['primary-phone-number']}
+                disabled={newAttendance.disabled}
+              />
 
-          <Input
-            label='Last Name:'
-            classes='col-md-2'
-            onChange={(e) => setAttendanceAttribute('family-name', e.target.value)}
-            value={newAttendance['family-name']}
-            disabled={newAttendance.disabled}
-          />
+              {!this.state.showAddressForm && this.renderButtons()}
 
-          <Input
-            label='Phone:'
-            classes='col-md-2'
-            onChange={(e) => setAttendanceAttribute('primary-phone-number', e.target.value)}
-            value={newAttendance['primary-phone-number']}
-            disabled={newAttendance.disabled}
-          />
+            </FormGroup>
 
-          {!this.state.showAddressForm && this.renderButtons()}
-
-        </FormGroup>
-
-        {this.renderAddressForm()}
-
-        <br />
-
-      </form>
+            {this.renderAddressForm()}
+            <br />
+          </form>
+        </UserAuth>
+      </div>
     );
   }
 }

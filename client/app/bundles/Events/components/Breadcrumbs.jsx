@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import queryString from 'query-string';
 
 import { fetchGroup } from '../actions';
+import UserAuth from '../components/UserAuth';
 import { dashboardPath, groupId, affiliatesPath, groupsPath } from '../utils';
 
 class Breadcrumbs extends Component {
@@ -68,15 +69,17 @@ class Breadcrumbs extends Component {
   }
 
   render() {
-    const { currentGroup, active, currentUser } = this.props;
+    const { currentGroup, active } = this.props;
 
     return (
       <ol className='breadcrumb'>
         <li className='breadcrumb-item'>
-          { currentUser === 'member'
-            ? <a href='/profile/'>{currentGroup.name}</a>
-            : <Link to={ dashboardPath(currentGroup.id) }>{currentGroup.name}</Link>
-          }
+          <UserAuth allowed={['member']}>
+            <a href='/profile/'>{currentGroup.name}</a>
+          </UserAuth>
+          <UserAuth allowed={['organizer', 'volunteer']}>
+            <Link to={ dashboardPath(currentGroup.id) }>{currentGroup.name}</Link>
+          </UserAuth>
         </li>
 
         {this.renderAffiliatesBreadcrumb()}

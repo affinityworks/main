@@ -28,7 +28,7 @@ class AbilityTest < ActiveSupport::TestCase
     ability = Ability.new(current_person, current_group)
 
     assert ability.can? :read, group_attendance, 'current person is able to read current group\'s attendances'
-    assert_not ability.can? :read, Attendance.last, 'current person is not able to read current group\'s attendances'
+    assert ability.cannot? :read, Attendance.last, 'current person is not able to read current group\'s attendances'
   end
 
   test 'can manage current group' do
@@ -123,6 +123,42 @@ class AbilityTest < ActiveSupport::TestCase
   end
 
   test 'members can read affiliates groups' do
+    current_group = groups(:test)
+    group = groups(:fourth)
+    person = people(:member1)
+
+    ability = Ability.new(person, current_group)
+    assert ability.can? :read, group
+    assert ability.cannot?(:manage, current_group)
+  end
+
+  test 'volunteers can read current group' do
+    membership = memberships(:one)
+    membership.update(role: 2)
+
+    person = membership.person
+    current_group = membership.group
+
+    ability = Ability.new(person, current_group)
+    assert ability.can?(:read, current_group)
+    assert ability.cannot?(:manage, current_group)
+  end
+
+  test 'volunteers cannot read others groups' do
+    membership = memberships(:forth)
+    membership.update(role: 2)
+
+    person = membership.person
+    current_group = groups(:two)
+
+    ability = Ability.new(person, current_group)
+    assert ability.cannot?(:read, current_group)
+    assert ability.cannot?(:manage, current_group)
+  end
+
+  test 'volunteers can read affiliates groups' do
+    membership = memberships(:one)
+    membership.update(role: 2)
     current_group = groups(:test)
     group = groups(:fourth)
     person = people(:member1)
