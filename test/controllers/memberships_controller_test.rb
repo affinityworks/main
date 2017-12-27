@@ -52,10 +52,13 @@ class MembershipsControllerTest < ActionDispatch::IntegrationTest
     person = people(:organizer)
     sign_in person
     params = { sort: 'name', direction: 'asc'}
+    get group_memberships_url(group_id: groups(:test).id), params: params, as: :json
+    assert_response :success
 
     get group_memberships_url(group_id: groups(:test).id), params: params, as: :json
     assert_response :success
   end
+
   test 'get #show' do
     person = people(:organizer)
     sign_in person

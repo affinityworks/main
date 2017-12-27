@@ -6,15 +6,13 @@ import Event from './Event';
 import SearchFilter from './SearchFilter';
 import Pagination from './Pagination';
 import SortableHeader from './SortableHeader';
-import { fetchEvents, createEvent } from '../actions';
+import { fetchEvents, fetchGroup, createEvent, fetchGroup } from '../actions';
 import UpcomingEvent from '../components/UpcomingEvent';
 import DateRange from '../components/DateRange';
 import EventCreate from '../components/EventCreate';
-import { fetchGroup } from '../actions';
 
 import UserAuth from '../components/UserAuth';
-import { isAllowed } from '../utils';
-
+import { isAllowed, eventsPath } from "../utils";
 
 
 class Events extends Component {
@@ -194,4 +192,4 @@ const mapStateToProps = (state) => {
   return { events, total_pages, page, tags, group, currentRole };
 }
 
-export default connect(mapStateToProps, { fetchEvents, fetchGroup, createEvent })(Events);
+export default connect(mapStateToProps, { fetchEvents, createEvent, fetchGroup })(Events);
