@@ -24,7 +24,7 @@ class Api::ActionNetwork::PersonTest < ActiveSupport::TestCase
       given_name: 'given_name',
       family_name: 'family_name',
       email_addresses: [
-        EmailAddress.new(primary: true, address: 'evan@anonymous.com'),
+        EmailAddress.new(primary: true, address: 'evan@anonymous.com-584'),
       ],
       password: "password"
     )
@@ -68,7 +68,7 @@ class Api::ActionNetwork::PersonTest < ActiveSupport::TestCase
       given_name: 'given_name',
       family_name: 'family_name',
       email_addresses: [
-        EmailAddress.new(primary: true, address: 'evan@henshaw-plath.com'),
+        EmailAddress.new(primary: true, address: 'evan@henshaw-plath.com-584'),
       ]
     )
 

@@ -116,7 +116,7 @@ class MembersController < ApplicationController
           custom_fields: {},
           memberships_attributes: [:id, :role],
           phone_numbers_attributes: [:id, :number, :primary, :_destroy],
-          email_addresses_attributes: [:id, :address, :primary, :_destroy]
+          email_addresses_attributes: [:id, :address, :primary, :_destroy, :validate_address]
       )
   end
 
