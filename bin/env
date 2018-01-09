@@ -1,0 +1,6 @@
+# NOTE (aguestuserTue 09 Jan 2018):
+# i am leaving this file unencrypted as it contains no sensitive info ATM
+# should it start to contain sensitive info,
+# let's consider something like pass or vault or blackbox or...
+
+export AFFINITY_DEV_DB_PASSWORD="x4RIy4H.jW.^w%$L:;Pt"
