@@ -1,0 +1,89 @@
+#!/usr/bin/env bash
+
+# save directories
+pushd `pwd`
+scriptpath="$( cd "$(dirname "$0")" ; pwd -P )"
+projectroot=`pwd`
+
+# declare colors
+
+pink='\033[0;35m'
+green='\033[0;32m'
+nc='\033[0m' # No Color
+
+# read env
+
+echo -e "${pink}Reading environment variables...${nc}"
+
+source ./bin/env
+echo "  RUBY_VERSION=${AFFINITY_RUBY_VERSION}"
+echo "  NODE_VERSION=${AFFINITY_NODE_VERSION}"
+
+echo -e "${green}...read environment variables!${nc}"
+
+# install-o-rama!
+
+echo -e "${pink}Installing system dependencies...${nc}"
+
+if [ `uname` == 'Darwin' ]; then
+  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  brew tap homebrew/services
+  brew install yarn --without-node
+  brew install postgresql redis
+  sudo initdb /usr/local/var/postgres -E utf8 # initialise postgres db
+elif [ `uname` == "Linux" ]; then # assume debian. sorry!
+  sudo su
+  apt remove -y cmdtest # uses same command name as `yarn`
+  apt update
+  curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+  echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+  apt update -y
+  apt install -y yarn redis-server postgresql postgresql-client postgresql-all
+  exit
+fi
+
+echo -e "${green}...system dependencies installed!${nc}"
+
+echo -e "${pink}Installing RVM and ruby dependencies...${nc}"
+
+curl -sSL https://get.rvm.io | bash -s stable --ruby
+curl -sSL https://rvm.io/mpapis.asc | gpg --import -
+source ~/.rvm/scripts/rvm # init rvm on mac and old linux
+source /etc/profile.d/rvm.sh # init rvm on new linux
+rvm install ${AFFINITY_RUBY_VERSION}
+rvm use "ruby-${AFFINITY_RUBY_VERSION}@${AFFINITY_GEMSET_NAME} --create"
+gem install bundler
+bundle install
+
+echo -e "${green}...ruby dependencies installed!${nc}"
+
+echo -e "${pink}Installing NVM and javascript dependencies...${nc}"
+
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash
+echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc
+echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"' >> ~/.bashrc
+echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"' >> ~/.bashrc
+source ~/.bashrc
+nvm install ${AFFINITY_NODE_VERSION}
+nvm use ${AFFINITY_NODE_VERSION}
+yarn install
+
+echo -e "${green}...javascript dependencies installed.${nc}"
+
+echo -e "${pink}Configuring the development database...${nc}"
+
+source ./bin/affinity/env
+sudo -u postgres createuser affinity -s
+sudo -u postgres psql -c  "alter user affinity with encrypted password '${AFFINITY_DEV_DB_PASSWORD}';"
+rake db:setup
+
+echo -e "${green}...development dabase configured!"
+
+echo -e "${pink}"
+echo -e "=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)"
+echo -e "=)        Installation complete!        =)"
+echo -e "=)      Run the app with ./bin/run      =)"
+echo -e "=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)"
+echo -e "${nc}"
+
+popd

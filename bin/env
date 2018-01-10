@@ -3,4 +3,7 @@
 # should it start to contain sensitive info,
 # let's consider something like pass or vault or blackbox or...
 
+export AFFINITY_GEMSET_NAME="advocacycommons"
+export AFFINITY_RUBY_VERSION="2.3.3"
+export AFFINITY_NODE_VERSION="6.9.0"
 export AFFINITY_DEV_DB_PASSWORD="x4RIy4H.jW.^w%$L:;Pt"

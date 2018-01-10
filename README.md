@@ -28,129 +28,27 @@ The project requires the following system-level dependencies:
 * `bundler` v 1.x: the package manager for ruby
 * `yarn` v 1.x: yet another javacript package manager
 
-We strongly recommend using the `rvm` and `nvm` version management systems for `ruby`, and `nodejs`, respectively, and our guide will assume you use them.
+Below are some scripts for installing and running those dependencies from a bash shell. If you want to see what's going on under the hood, feel free to peek at the scripts!
 
-You could install the above dependencies manually or use Docker to do that for you. We'll show both ways...
+### Install Application from shell
 
-### Install and Run With Docker
-
-TK-TODO
-
-### Installing Manually
-
-#### System Dependencies on Debian-flavored GNU/Linux
-
-Install packages (also get some pgp keys we'll need to verify yarn package):
+From `path/to/this/repo`, run:
 
 ``` shell
-$ sudo su
-# apt remove cmdtest # uses same command name as `yarn`
-# curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-# echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-# apt update && apt upgrade
-# apt install -y redis postgresql postgresql-client postgresql-all yarn
-# exit # done w/ root privileges for now :)
+$ ./bin/install
 ```
 
-#### System Dependencies on MacOS
+### Run Application from shell
 
-Install Homebrew (package manager for Mac) and `brew services` (which lets you run Homebrew packages as long-running background daemons):
-
-``` shell
-$ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-$ brew tap homebrew/services
-```
-
-Install packages:
+From `path/to/this/repo`, run:
 
 ``` shell
-$ brew install postgresql redis
-$ brew install yarn --without-node
-```
-
-### Application Dependencies
-
-Install rvm and ruby:
-
-``` shell
-$ curl -sSL https://get.rvm.io | bash -s stable --ruby
-$ source ~/.rvm/scripts/rvm
-$ rvm install 2.3.3
-$ rvm use 2.3.3
-$ gem install bundler
-```
-
-Install ruby dependencies:
-
-``` shell
-$ ./bin/bundle install
-```
-
-Install nvm and node:
-
-``` shell
-$ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash
-$ echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc
-$ echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"' >> ~/.bashrc
-$ nvm install 6.9.0
-$ nvm use 6.9.0
-```
-
-Install javascript dependencies:
-
-``` shell
-$ yarn install
-```
-
-Configure the development database:
-
-``` shell
-$ source ./bin/env
-$ sudo -u postgres createuser affinity -s
-$ sudo -u postgres psql -c  "alter user affinity with encrypted password '${AFFINITY_DEV_DB_PASSWORD}';"
-$ rake db:setup
-```
-
-### Run Application
-
-Start long-running background services that support the app:
-
-On Debian:
-
-``` shell
-$ systemctl start postgresql
-$ systemctl start redis-server
-$ npm run resqueue
-```
-
-On Mac:
-
-``` shell
-$ brew services start postgresql
-$ brew services start redis
-$ npm run resqueue
-```
-
-Run the app:
-
-``` shell
-$ npm start
-```
-
-**BEGIN!!**
-
-Open http://localhost:3000/ and login as `organizer@member.com` with password `password`.
-
-**GOTCHAS:**
-
-You might need some secrets that are stored in environment variables! Read those environment variables into memory with:
-
-``` shell
-$ cd path/to/this/repo
-$ source ./bin/env
+$ ./bin/run
 ```
 
 ## Run Tests
+
+From `path/to/this/repo`, run:
 
 ``` shell
 $ rails test
