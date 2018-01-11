@@ -1,0 +1,4 @@
+#!/bin/bash -l
+
+. ./bin/prepare
+bundle exec rake db:setup

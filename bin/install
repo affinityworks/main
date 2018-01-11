@@ -3,6 +3,7 @@
 # save directories
 pushd `pwd`
 scriptpath="$( cd "$(dirname "$0")" ; pwd -P )"
+cd $scriptpath && cd ..
 projectroot=`pwd`
 
 # declare colors
@@ -46,12 +47,13 @@ echo -e "${green}...system dependencies installed!${nc}"
 
 echo -e "${pink}Installing RVM and ruby dependencies...${nc}"
 
+curl -sSL https://rvm.io/mpapis.asc | gpg --import - # signing key
 curl -sSL https://get.rvm.io | bash -s stable --ruby
-curl -sSL https://rvm.io/mpapis.asc | gpg --import -
-source ~/.rvm/scripts/rvm # init rvm on mac and old linux
-source /etc/profile.d/rvm.sh # init rvm on new linux
+source ~/.rvm/scripts/rvm # init rvm on mac
+source /etc/profile.d/rvm.sh # init rvm on debian
+source /usr/local/rvm/scripts/rvm # init rvm on ubuntu
 rvm install ${AFFINITY_RUBY_VERSION}
-rvm use "ruby-${AFFINITY_RUBY_VERSION}@${AFFINITY_GEMSET_NAME} --create"
+rvm use "ruby-${AFFINITY_RUBY_VERSION}"
 gem install bundler
 bundle install
 

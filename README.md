@@ -28,30 +28,68 @@ The project requires the following system-level dependencies:
 * `bundler` v 1.x: the package manager for ruby
 * `yarn` v 1.x: yet another javacript package manager
 
-Below are some scripts for installing and running those dependencies from a bash shell. If you want to see what's going on under the hood, feel free to peek at the scripts!
+Below are some scripts for installing and running those dependencies using either Docker or plain old bash scripts. Feel free to take a look at `Dockerfile`, `dockercompose-yml` file, or the `run` and `install` scripts in the `bin` directory to get a sense of what's going on under the hood!
 
-### Install Application from shell
+All commands assume you are located in `path/to/this/repo`.
 
-From `path/to/this/repo`, run:
+## Docker Setup
+
+Run with:
+
+``` shell
+$ docker-compose up
+```
+
+Run as a background daemon with:
+
+``` shell
+$ docker-compose up -d
+```
+
+On first run, setup the database with:
+
+``` shell
+$ docker-compose exec ./bin/setup-db
+```
+
+Shut down with:
+
+``` shell
+$ docker-compose down && rm tmp/pids/server.pid
+```
+
+## Bash setup
+
+**Note:** our bash scripts only work for Mac OSX and Debian-flavored GNU/Linus. They also enforce use of both NVM and RVM. If those constraints don't work for you, please feel free to either:
+
+1. Use the Dockerized dev env described above.
+2. Adapt the comands in our bash scripts to your liking.
+3. Open an issue or pull request to help us improve the scripts! :)
+
+### Install the App
 
 ``` shell
 $ ./bin/install
 ```
 
-### Run Application from shell
+### Run the App
 
-From `path/to/this/repo`, run:
+On first run, setup the database with:
+
+```shell
+$ ./bin/setup-db
+```
+
+Then start the app with:
 
 ``` shell
 $ ./bin/run
 ```
 
-## Run Tests
-
-From `path/to/this/repo`, run:
+### Run Tests
 
 ``` shell
-$ rails test
+$ bundle exec rails test
 ```
 
 ## Build Javascript in Production Configuration
@@ -59,5 +97,5 @@ $ rails test
 Webpack will automatically rebuild the dev javascript bundles on changes according to the development configuration in `client/webpack.config.js`. So it is not necessary to rebuild manually. That said, if you want to spit out a static build of the frontend that matches the production build, you can run:
 
 ``` shell
-rake react_on_rails:assets:webpack
+$ bundle exec rake react_on_rails:assets:webpack
 ```

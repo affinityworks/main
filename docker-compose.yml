@@ -1,0 +1,26 @@
+version: '3' # specifies version of `docker-compose`
+
+services:
+  db:
+    image: postgres:9.6.6
+    ports:
+      - "5432:5432"
+    env_file:
+      - ./bin/docker.env
+  redis:
+    image: redis:4.0.6
+    ports:
+      - "6379:6379"
+  web:
+    image: affinityworks/web:latest
+    entrypoint: ./bin/run-web
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/affinity
+    depends_on:
+      - db
+      - redis
+    env_file:
+      - ./bin/docker.env
+    network_mode: "host"
