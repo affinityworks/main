@@ -4,9 +4,6 @@ Affinity.works is supporting the surge of resistance against Trump. It's coming 
 
 Concretely, the tool is a SaaS and has components for managing a network of groups, a crm, task management for volunteers, outreach, and a reputation marketplace between campaigns, activists, and groups.
 
-# Status:
-This project is a work in progress and nothing which is useable by end users is available. We welcome developer / designer / activist collaboration.
-
 # Developers
 
 ## Getting Started
@@ -14,9 +11,17 @@ This project is a work in progress and nothing which is useable by end users is 
 Clone the project:
 
 ``` shell
-$ git clone https://github.com/advocacycommons/advocacycommons
-$ cd advocacycommons
+$ git clone https://github.com/affinityworks/main
+$ cd main
 ```
+
+Or (via ssh):
+
+``` shell
+$ git clone git@github.com:affinityworks/main.git
+$ cd main
+```
+
 The project requires the following system-level dependencies:
 
 * `postgresql` v 9.6: our database!
