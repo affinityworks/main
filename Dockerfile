@@ -2,7 +2,8 @@ FROM ubuntu:trusty
 # 4 versions old, but it's what we use on prod ¯\_(ツ)_/¯
 
 MAINTAINER austin <austin@affinity.works>
-LABEL Description="Base image for running affinity.works web app."
+LABEL description="Base image for running affinity.works web app."
+LABEL version="0.0.3"
 
 # ------------------------------------------------------
 # --- Configure System
@@ -13,7 +14,7 @@ WORKDIR /affinity
 EXPOSE 3000
 
 # install system dependencies
-RUN apt-get update -qq
+RUN apt-get update -q
 RUN apt-get install -y \
     apt-transport-https \
     build-essential \
@@ -35,7 +36,8 @@ ENV LC_ALL en_US.UTF-8
 # ------------------------------------------------------
 # --- Install Javascript Dependencies
 
-ENV NODE_VERSION "6.9.0"
+ARG node_version
+ENV NODE_VERSION $node_version
 ENV NVM_DIR "$HOME/.nvm"
 
 # install node
@@ -48,7 +50,7 @@ RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh
 # install yarn
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
     echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
-    apt-get update -qq && \
+    apt-get update -q && \
     apt-get install -y yarn
 
 # install javascript dependencies
@@ -62,7 +64,8 @@ RUN bash -lc 'nvm use ${NODE_VERSION} && yarn install'
 # ------------------------------------------------------
 # --- Install Ruby Dependencies
 
-ENV RUBY_VERSION "2.3.3"
+ARG ruby_version
+ENV RUBY_VERSION $ruby_version
 ENV GEMSET_NAME "affinity"
 
 # install ruby
