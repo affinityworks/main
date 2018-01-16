@@ -60,7 +60,7 @@ $ docker-compose down && rm tmp/pids/server.pid
 
 ## Bash setup
 
-**Note:** our bash scripts only work for Mac OSX and Debian-flavored GNU/Linus. They also enforce use of both NVM and RVM. If those constraints don't work for you, please feel free to either:
+**Note:** our bash scripts only work for Mac OSX and Debian-flavored GNU/Linux. They also enforce use of both NVM and RVM. If those constraints don't work for you, please feel free to either:
 
 1. Use the Dockerized dev env described above.
 2. Adapt the comands in our bash scripts to your liking.
@@ -74,16 +74,15 @@ $ ./bin/install
 
 ### Run the App
 
-On first run, setup the database with:
-
-```shell
-$ ./bin/setup-db
+``` shell
+$ ./bin/run-services
+$ ./bin/run-web
 ```
 
-Then start the app with:
+To shut down cleanly:
 
-``` shell
-$ ./bin/run
+```shell
+$ kill -9 `cat tmp/pids/server/pid`
 ```
 
 ### Run Tests

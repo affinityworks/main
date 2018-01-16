@@ -2,13 +2,14 @@ version: '3' # specifies version of `docker-compose`
 
 services:
   db:
-    image: postgres:9.6.6
+    image: postgres:${AFFINITY_POSTGRES_VERSION}
     ports:
       - "5432:5432"
-    env_file:
-      - ./bin/docker.env
+    environment:
+      - POSTGRES_USER=${AFFINITY_DEV_DB_USER}
+      - POSTGRES_PASSWORD=${AFFINITY_DEV_DB_PASSWORD}
   redis:
-    image: redis:4.0.6
+    image: redis:${AFFINITY_REDIS_VERSION}
     ports:
       - "6379:6379"
   web:
@@ -21,6 +22,6 @@ services:
     depends_on:
       - db
       - redis
-    env_file:
-      - ./bin/docker.env
+    environment:
+      - AFFINITY_DEV_DB_PASSWORD=${AFFINITY_DEV_DB_PASSWORD}
     network_mode: "host"

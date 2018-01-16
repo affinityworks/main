@@ -3,28 +3,22 @@
 # save directories
 pushd `pwd`
 scriptpath="$( cd "$(dirname "$0")" ; pwd -P )"
-cd $scriptpath && cd ..
+cd $scriptpath
+source ./env
+
+cd ..
 projectroot=`pwd`
-
-# declare colors
-
-pink='\033[0;35m'
-green='\033[0;32m'
-nc='\033[0m' # No Color
 
 # read env
 
-echo -e "${pink}Reading environment variables...${nc}"
-
-source ./bin/env
+echo -e "${ANSI_PINK}Reading environment variables...${ANSI_NC}"
 echo "  RUBY_VERSION=${AFFINITY_RUBY_VERSION}"
 echo "  NODE_VERSION=${AFFINITY_NODE_VERSION}"
-
-echo -e "${green}...read environment variables!${nc}"
+echo -e "${ANSI_GREEN}...read environment variables!${ANSI_NC}"
 
 # install-o-rama!
 
-echo -e "${pink}Installing system dependencies...${nc}"
+echo -e "${ANSI_PINK}Installing system dependencies...${ANSI_NC}"
 
 if [ `uname` == 'Darwin' ]; then
   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -33,19 +27,17 @@ if [ `uname` == 'Darwin' ]; then
   brew install postgresql redis
   sudo initdb /usr/local/var/postgres -E utf8 # initialise postgres db
 elif [ `uname` == "Linux" ]; then # assume debian. sorry!
-  sudo su
-  apt remove -y cmdtest # uses same command name as `yarn`
-  apt update
-  curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-  echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-  apt update -y
-  apt install -y yarn redis-server postgresql postgresql-client postgresql-all
-  exit
+  sudo apt remove cmdtest # uses same command name as `yarn`
+  sudo apt update -qq
+  curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+  echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+  sudo apt update -qq
+  sudo apt install -y yarn redis-server postgresql postgresql-client postgresql-all
 fi
 
-echo -e "${green}...system dependencies installed!${nc}"
+echo -e "${ANSI_GREEN}...system dependencies installed!${ANSI_NC}"
 
-echo -e "${pink}Installing RVM and ruby dependencies...${nc}"
+echo -e "${ANSI_PINK}Installing RVM and ruby dependencies...${ANSI_NC}"
 
 curl -sSL https://rvm.io/mpapis.asc | gpg --import - # signing key
 curl -sSL https://get.rvm.io | bash -s stable --ruby
@@ -57,9 +49,9 @@ rvm use "ruby-${AFFINITY_RUBY_VERSION}"
 gem install bundler
 bundle install
 
-echo -e "${green}...ruby dependencies installed!${nc}"
+echo -e "${ANSI_GREEN}...ruby dependencies installed!${ANSI_NC}"
 
-echo -e "${pink}Installing NVM and javascript dependencies...${nc}"
+echo -e "${ANSI_PINK}Installing NVM and javascript dependencies...${ANSI_NC}"
 
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash
 echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc
@@ -70,22 +62,26 @@ nvm install ${AFFINITY_NODE_VERSION}
 nvm use ${AFFINITY_NODE_VERSION}
 yarn install
 
-echo -e "${green}...javascript dependencies installed.${nc}"
+echo -e "${ANSI_GREEN}...javascript dependencies installed.${ANSI_NC}"
 
-echo -e "${pink}Configuring the development database...${nc}"
+echo -e "${ANSI_PINK}Configuring the development database...${ANSI_NC}"
 
-source ./bin/affinity/env
-sudo -u postgres createuser affinity -s
-sudo -u postgres psql -c  "alter user affinity with encrypted password '${AFFINITY_DEV_DB_PASSWORD}';"
-rake db:setup
+sudo -u postgres createuser affinity -s &
+  psql -c  "alter user affinity with encrypted password '${AFFINITY_DEV_DB_PASSWORD}';"
 
-echo -e "${green}...development dabase configured!"
+echo -e "${ANSI_GREEN}...development dabase configured!"
 
-echo -e "${pink}"
-echo -e "=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)"
-echo -e "=)        Installation complete!        =)"
-echo -e "=)      Run the app with ./bin/run      =)"
-echo -e "=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)"
-echo -e "${nc}"
+echo -e "${ANSI_PINK}"
+echo "=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)"
+echo "=)              ----------              =)"
+echo "=)        Installation complete!        =)"
+echo "=)              ----------              =)"
+echo "=)           Run the app with:          =)"
+echo "=)              ----------              =)"
+echo "=)         $ ./bin/run-services         =)"
+echo "=)           $ ./bin/run-web            =)"
+echo "=)              ----------              =)"
+echo "=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)"
+echo -e "${ANSI_NC}"
 
 popd

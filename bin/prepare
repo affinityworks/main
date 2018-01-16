@@ -1,3 +1,0 @@
-. ./env
-rvm use ruby-${RUBY_VERSION}
-nvm use ${NODE_VERSION}

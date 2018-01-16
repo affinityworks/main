@@ -1,13 +1,10 @@
-#!/bin/bash -l
+#!/usr/bin/env bash
 
 pushd `pwd`
-
 scriptpath="$( cd "$(dirname "$0")" ; pwd -P )"
 
 cd $scriptpath
-. ./env
+source ./env
 
 cd ..
-bundle exec rake db:setup
-
-popd
+docker-compose up ${@}

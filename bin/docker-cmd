@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+pushd `pwd`
+scriptpath="$( cd "$(dirname "$0")" ; pwd -P )"
+
+cd $scriptpath
+source ./env
+
+cd ..
+docker-compose exec web /bin/bash -lc "rvm use ${AFFINITY_RUBY_VERSION} && \
+                                       nvm use ${AFFINITY_NODE_VERSION} && \
+                                       ${@}"
+
+popd

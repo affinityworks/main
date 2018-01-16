@@ -1,8 +1,14 @@
-# NOTE (aguestuser|Tue 09 Jan 2018):
-# i am leaving this file unencrypted as it contains no sensitive info ATM
-# should it start to contain sensitive info,
-# let's consider something like pass or vault or blackbox or...
-
+# versions
 export AFFINITY_RUBY_VERSION="2.3.3"
 export AFFINITY_NODE_VERSION="6.9.0"
+export AFFINITY_POSTGRES_VERSION="9.6.6"
+export AFFINITY_REDIS_VERSION="4.0.6"
+
+# credentials (local dev credentials only!)
 export AFFINITY_DEV_DB_PASSWORD="x4RIy4H.jW.^w%$L:;Pt"
+export AFFINITY_DEV_DB_USER="affinity"
+
+# ANSI terminal colors
+export ANSI_PINK='\033[0;35m'
+export ANSI_GREEN='\033[0;32m'
+export ANSI_NC='\033[0m' # No Color

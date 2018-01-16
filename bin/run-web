@@ -1,18 +1,21 @@
 #!/bin/bash -l
 
-. ./prepare
-foreman start -f ./Procfile.dev &&
-  RUN_AT_EXIT_HOOKS=yes rake environment resque:work QUEUE=* &&
-  echo -e "${pink}"
-  echo "=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)"
-  echo "=)           Affinity works is running!         =)"
-  echo "=)                     ...                      =)"
-  echo "=)           Open http://localhost:3000         =)"
-  echo "=)         login as: organizer@member.com       =)"
-  echo "=)              password: password              =)"
-  echo "=)                     ...                      =)"
-  echo "=)                 to shutdown:                 =)"
-  echo "=)          run 'docker-compose down'           =)"
-  echo "=)         run 'rm tmp/pids/server.pid'         =)"
-  echo "=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)=)"
-  echo -e "${nc}"
+pushd `pwd`
+scriptpath="$( cd "$(dirname "$0")" ; pwd -P )"
+
+cd $scriptpath
+source ./env
+rvm use ${AFFINITY_RUBY_VERSION}
+nvm use ${AFFINITY_NODE_VERSION}
+
+cd ..
+./bin/setup-db &
+  foreman start -f ./Procfile.dev &
+  RUN_AT_EXIT_HOOKS=yes rake environment resque:work QUEUE=*
+
+  # TODO: (aguestuser|Tue 16 Jan 2018)
+  # * we use foreman to run 3 processes, then we fork 2 more
+  # * it might be nice to run each process in its own container (and drop foreman)
+  # * it might also me nice to not bootstrap the db on every run.
+  
+popd
