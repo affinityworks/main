@@ -13,8 +13,6 @@ This project is a work in progress and nothing which is useable by end users is 
 
 Clone the project:
 
-*(the rest of guide assumes you are in `path/to/this/repo`)*
-
 ``` shell
 $ git clone https://github.com/advocacycommons/advocacycommons
 $ cd advocacycommons
@@ -34,28 +32,43 @@ All commands assume you are located in `path/to/this/repo`.
 
 ## Docker Setup
 
-Run with:
+Install [docker](https://docs.docker.com/engine/installation/) and [docker-compose](https://docs.docker.com/compose/install/), then...
+
+**Run app:**
 
 ``` shell
-$ docker-compose up
+$ ./bin/docker-up
 ```
 
-Run as a background daemon with:
+**Run in background:**
 
 ``` shell
-$ docker-compose up -d
+$ ./bin/docker-up -d
 ```
 
-On first run, setup the database with:
+**Shut down:**
 
 ``` shell
-$ docker-compose exec ./bin/setup-db
+$ ./bin/docker-down
 ```
 
-Shut down with:
+**Run tests:**
 
 ``` shell
-$ docker-compose down && rm tmp/pids/server.pid
+$ ./bin/docker-cmd "bundle exec rails test"
+```
+
+**Run arbitrary bash commands:**
+
+``` shell
+$ ./bin/docker-cmd "bundle exec rake routes"
+```
+
+**Rebuild docker container:**
+
+``` shell
+$ ./bin/docker-build "latest"
+$ docker push affinityworks/web:latest
 ```
 
 ## Bash setup
@@ -66,26 +79,26 @@ $ docker-compose down && rm tmp/pids/server.pid
 2. Adapt the comands in our bash scripts to your liking.
 3. Open an issue or pull request to help us improve the scripts! :)
 
-### Install the App
+**Install:**
 
 ``` shell
 $ ./bin/install
 ```
 
-### Run the App
+**Run:**
 
 ``` shell
 $ ./bin/run-services
 $ ./bin/run-web
 ```
 
-To shut down cleanly:
+**Shut down cleanly:**
 
 ```shell
 $ kill -9 `cat tmp/pids/server/pid`
 ```
 
-### Run Tests
+**Run tests:**
 
 ``` shell
 $ bundle exec rails test
