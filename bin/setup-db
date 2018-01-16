@@ -1,0 +1,13 @@
+#!/bin/bash -l
+
+pushd `pwd`
+
+scriptpath="$( cd "$(dirname "$0")" ; pwd -P )"
+
+cd $scriptpath
+. ./env
+
+cd ..
+bundle exec rake db:setup
+
+popd

@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+pushd `pwd`
+scriptpath="$( cd "$(dirname "$0")" ; pwd -P )"
+cd $scriptpath
+source ./env
+
+echo -e "${ANSI_PINK}Starting background services...${ANSI_NC}"
+
+if [ `uname` == 'Darwin' ]; then # OSX
+  brew services start postgresql
+  echo "...postgres is running!"
+  brew services start redis
+  echo "..redis is running!"
+elif [ `uname` == "Linux" ]; then # assume debian. sorry!
+  systemctl start postgresql
+  echo "...postgres is running!"
+  systemctl start redis-server
+  echo "..redis is running!"
+fi
+
+popd

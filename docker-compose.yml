@@ -1,0 +1,27 @@
+version: '3' # specifies version of `docker-compose`
+
+services:
+  db:
+    image: postgres:${AFFINITY_POSTGRES_VERSION}
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=${AFFINITY_DEV_DB_USER}
+      - POSTGRES_PASSWORD=${AFFINITY_DEV_DB_PASSWORD}
+  redis:
+    image: redis:${AFFINITY_REDIS_VERSION}
+    ports:
+      - "6379:6379"
+  web:
+    image: affinityworks/web:latest
+    entrypoint: ./bin/run-web
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/affinity
+    depends_on:
+      - db
+      - redis
+    environment:
+      - AFFINITY_DEV_DB_PASSWORD=${AFFINITY_DEV_DB_PASSWORD}
+    network_mode: "host"

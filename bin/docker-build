@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+pushd `pwd`
+scriptpath="$( cd "$(dirname "$0")" ; pwd -P )"
+
+cd $scriptpath
+source ./env
+
+cd ..
+echo "building image with tag affinityworks/web:${1}..."
+
+docker build \
+       --build-arg ruby_version=${AFFINITY_RUBY_VERSION} \
+       --build-arg node_version=${AFFINITY_NODE_VERSION} \
+       -t affinityworks/web:${1} .
+
+popd;

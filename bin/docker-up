@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+pushd `pwd`
+scriptpath="$( cd "$(dirname "$0")" ; pwd -P )"
+
+cd $scriptpath
+source ./env
+
+cd ..
+docker-compose up ${@}

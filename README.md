@@ -13,8 +13,6 @@ This project is a work in progress and nothing which is useable by end users is 
 
 Clone the project:
 
-*(the rest of guide assumes you are in `path/to/this/repo`)*
-
 ``` shell
 $ git clone https://github.com/advocacycommons/advocacycommons
 $ cd advocacycommons
@@ -28,132 +26,82 @@ The project requires the following system-level dependencies:
 * `bundler` v 1.x: the package manager for ruby
 * `yarn` v 1.x: yet another javacript package manager
 
-We strongly recommend using the `rvm` and `nvm` version management systems for `ruby`, and `nodejs`, respectively, and our guide will assume you use them.
+Below are some scripts for installing and running those dependencies using either Docker or plain old bash scripts. Feel free to take a look at `Dockerfile`, `dockercompose-yml` file, or the `run` and `install` scripts in the `bin` directory to get a sense of what's going on under the hood!
 
-You could install the above dependencies manually or use Docker to do that for you. We'll show both ways...
+All commands assume you are located in `path/to/this/repo`.
 
-### Install and Run With Docker
+## Docker Setup
 
-TK-TODO
+Install [docker](https://docs.docker.com/engine/installation/) and [docker-compose](https://docs.docker.com/compose/install/), then...
 
-### Installing Manually
-
-#### System Dependencies on Debian-flavored GNU/Linux
-
-Install packages (also get some pgp keys we'll need to verify yarn package):
+**Run app:**
 
 ``` shell
-$ sudo su
-# apt remove cmdtest # uses same command name as `yarn`
-# curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-# echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-# apt update && apt upgrade
-# apt install -y redis postgresql postgresql-client postgresql-all yarn
-# exit # done w/ root privileges for now :)
+$ ./bin/docker-up
 ```
 
-#### System Dependencies on MacOS
-
-Install Homebrew (package manager for Mac) and `brew services` (which lets you run Homebrew packages as long-running background daemons):
+**Run in background:**
 
 ``` shell
-$ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-$ brew tap homebrew/services
+$ ./bin/docker-up -d
 ```
 
-Install packages:
+**Shut down:**
 
 ``` shell
-$ brew install postgresql redis
-$ brew install yarn --without-node
+$ ./bin/docker-down
 ```
 
-### Application Dependencies
-
-Install rvm and ruby:
+**Run tests:**
 
 ``` shell
-$ curl -sSL https://get.rvm.io | bash -s stable --ruby
-$ source ~/.rvm/scripts/rvm
-$ rvm install 2.3.3
-$ rvm use 2.3.3
-$ gem install bundler
+$ ./bin/docker-cmd "bundle exec rails test"
 ```
 
-Install ruby dependencies:
+**Run arbitrary bash commands:**
 
 ``` shell
-$ ./bin/bundle install
+$ ./bin/docker-cmd "bundle exec rake routes"
 ```
 
-Install nvm and node:
+**Rebuild docker container:**
 
 ``` shell
-$ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash
-$ echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc
-$ echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"' >> ~/.bashrc
-$ nvm install 6.9.0
-$ nvm use 6.9.0
+$ ./bin/docker-build "latest"
+$ docker push affinityworks/web:latest
 ```
 
-Install javascript dependencies:
+## Bash setup
+
+**Note:** our bash scripts only work for Mac OSX and Debian-flavored GNU/Linux. They also enforce use of both NVM and RVM. If those constraints don't work for you, please feel free to either:
+
+1. Use the Dockerized dev env described above.
+2. Adapt the comands in our bash scripts to your liking.
+3. Open an issue or pull request to help us improve the scripts! :)
+
+**Install:**
 
 ``` shell
-$ yarn install
+$ ./bin/install
 ```
 
-Configure the development database:
+**Run:**
 
 ``` shell
-$ source ./bin/env
-$ sudo -u postgres createuser affinity -s
-$ sudo -u postgres psql -c  "alter user affinity with encrypted password '${AFFINITY_DEV_DB_PASSWORD}';"
-$ rake db:setup
+$ ./bin/run-services
+$ ./bin/run-web
 ```
 
-### Run Application
+**Shut down cleanly:**
 
-Start long-running background services that support the app:
-
-On Debian:
-
-``` shell
-$ systemctl start postgresql
-$ systemctl start redis-server
-$ npm run resqueue
+```shell
+$ kill -9 `cat tmp/pids/server/pid`
 ```
 
-On Mac:
+**Run tests:**
 
 ``` shell
-$ brew services start postgresql
-$ brew services start redis
-$ npm run resqueue
-```
-
-Run the app:
-
-``` shell
-$ npm start
-```
-
-**BEGIN!!**
-
-Open http://localhost:3000/ and login as `organizer@member.com` with password `password`.
-
-**GOTCHAS:**
-
-You might need some secrets that are stored in environment variables! Read those environment variables into memory with:
-
-``` shell
-$ cd path/to/this/repo
-$ source ./bin/env
-```
-
-## Run Tests
-
-``` shell
-$ rails test
+$ bundle exec rails test
 ```
 
 ## Build Javascript in Production Configuration
@@ -161,5 +109,5 @@ $ rails test
 Webpack will automatically rebuild the dev javascript bundles on changes according to the development configuration in `client/webpack.config.js`. So it is not necessary to rebuild manually. That said, if you want to spit out a static build of the frontend that matches the production build, you can run:
 
 ``` shell
-rake react_on_rails:assets:webpack
+$ bundle exec rake react_on_rails:assets:webpack
 ```
