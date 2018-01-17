@@ -6,6 +6,7 @@ scriptpath="$( cd "$(dirname "$0")" ; pwd -P )"
 
 cd $scriptpath
 . ./env
+rvm use ${AFFINITY_RUBY_VERSION}
 
 cd ..
 bundle exec rake db:setup

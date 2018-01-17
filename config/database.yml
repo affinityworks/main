@@ -12,7 +12,7 @@ default: &default
 
 development:
   <<: *default
-  database: advocacycommons_development
+  database: affinity_development
   host: localhost
   username: affinity
   password: <%= ENV['AFFINITY_DEV_DB_PASSWORD'] %>
@@ -22,7 +22,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: advocacycommons_test
+  database: affinity_test
   host: localhost
   username: affinity
   password: <%= ENV['AFFINITY_DEV_DB_PASSWORD'] %>

@@ -14,7 +14,7 @@ services:
       - "6379:6379"
   web:
     image: affinityworks/web:latest
-    entrypoint: ./bin/run-web
+    entrypoint: ./bin/run-web-docker
     ports:
       - "3000:3000"
     volumes:
