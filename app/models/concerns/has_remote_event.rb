@@ -8,7 +8,7 @@ module HasRemoteEvent
   private
 
   def create_remote_events
-    AttendanceEvent.create_and_sync(self)
-    NoAttendanceEvent.create_and_sync(self)
+    AttendanceEvent.replicate_and_export(self)
+    NoAttendanceEvent.replicate_and_export(self)
   end
 end

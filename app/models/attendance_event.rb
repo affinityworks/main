@@ -5,5 +5,8 @@ class AttendanceEvent < RemoteEvent
     "#{event_title}_ATT"
   end
 
+  # may be applied to event title, name, or identifier strings
+  def self.replicate_attr(attribute)
+    "#{attribute}_ATT"
+  end
 end
-

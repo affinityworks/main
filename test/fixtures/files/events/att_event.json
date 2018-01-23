@@ -1,6 +1,7 @@
 {
     "identifiers": [
-        "action_network:bb75d46b-3f86-4a39-9193-b9d5bd873eae"
+      "action_network:bb75d46b-3f86-4a39-9193-b9d5bd873eae",
+      "advocacycommons:aaa-bbb-ccc-123_ATT"
     ],
     "created_date": "2017-12-06T11:06:37Z",
     "description": "<p>description</p>",

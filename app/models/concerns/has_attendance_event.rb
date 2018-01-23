@@ -5,23 +5,38 @@ module HasAttendanceEvent
   included do
     belongs_to :event
 
-    def self.create_and_sync(event)
-      event_dup = event.dup
-      event_dup.origin_system = 'Affinity'
-      event_dup.title = att_event_name(event.title)
-      event_dup.name = att_event_name(event.title)
-      event_dup.identifiers = []
-      event_dup = Api::ActionNetwork::Event.export!(event_dup, event.group, false)
-      create_att_event(event_dup, event) if event_dup
+    def self.replicate_and_export(event)
+      return unless should_replicate? event
+      if replica = Api::ActionNetwork::Event.
+                     export!(parse_replica(event), event.group, false)
+        create(name:        replica.title,
+               uid:         replica.identifier('action_network'),
+               identifiers: replica.identifiers,
+               event_id:    event.id)
+      end
     end
 
-    def self.create_att_event(event_dup, event)
-      create(name: event_dup.title,
-             uid: event_dup.identifier('action_network'),
-             identifiers: event_dup.identifiers, event_id: event.id)
+    private
+
+    def self.should_replicate?(event)
+      event.origin_system_is_action_network? && event.identifier('action_network')
+    end
+
+    def self.parse_replica(event)
+      replica = event.dup
+      replica.assign_attributes(
+        origin_system: 'Affinity',
+        title:         replicate_attr(event.title),
+        name:          replicate_attr(event.title), # not sure why we copy title
+        identifiers:   replicate_identifiers(event))
+      replica
+    end
+
+    def self.replicate_identifiers(event)
+      id = event.identifier_id("action_network")
+      ["advocacycommons:#{replicate_attr(id)}"]
     end
   end
-
 
   def export_attendace(attendance)
     group = attendance.event.group
