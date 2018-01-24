@@ -15,7 +15,7 @@ development:
   database: affinity_development
   host: localhost
   username: affinity
-  password: <%= ENV['AFFINITY_DEV_DB_PASSWORD'] %>
+  password: r1Zih6bEiyu7pdu
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -25,7 +25,7 @@ test:
   database: affinity_test
   host: localhost
   username: affinity
-  password: <%= ENV['AFFINITY_DEV_DB_PASSWORD'] %>
+  password: r1Zih6bEiyu7pdu
 
 production:
   <<: *default
