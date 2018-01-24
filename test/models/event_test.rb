@@ -91,55 +91,93 @@ class EventTest < ActiveSupport::TestCase
     assert_not event.origin_system_is_action_network?
   end
 
+  test 'replicating an imported event' do
+    # create an event
+    event = Event.new(origin_system: 'Action Network',
+                      status:        'status',
+                      identifiers:   ['action_network:aaa-bbb-ccc-123'],
+                      title:         'Original')
 
-
-  test 'create_remote_events' do
-    event = Event.new(origin_system: 'Action Network', title: 'title', status: 'status', title: 'Original')
+    # associate it with a group
     event.groups << Group.first
 
-    stub_request(:post, "https://actionnetwork.org/api/v2/events").
-      with(:body => {"identifiers"=>[], "title"=>"Original_ATT", "origin_system"=>"Affinity", "_links"=>{}},
-           :headers => {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'Osdi-Api-Token'=>'test-token', 'User-Agent'=>'Ruby'}).
-      to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'events', 'att_event.json')))
+    # export the ATT replica
+    stub_request(:post, "https://actionnetwork.org/api/v2/events")
+      .with(
+        body:    { "identifiers"     => ["advocacycommons:aaa-bbb-ccc-123_ATT"],
+                   "title"           => "Original_ATT",
+                   "origin_system"   => "Affinity",
+                   "_links"          => {} },
+        headers: { 'Accept'          => 'application/json',
+                   'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+                   'Content-Type'    => 'application/json',
+                   'Osdi-Api-Token'  => 'test-token',
+                   'User-Agent'      => 'Ruby' })
+      .to_return(
+        body: File.read(Rails.root.join('test', 'fixtures', 'files', 'events', 'att_event.json')))
 
-    stub_request(:post, "https://actionnetwork.org/api/v2/events").
-      with(:body => {"identifiers"=>[], "title"=>"Original_NO_ATT", "origin_system"=>"Affinity", "_links"=>{}} ,
-           :headers => {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'Osdi-Api-Token'=>'test-token', 'User-Agent'=>'Ruby'})
-      .to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'events', 'no_att_event.json')))
+    # export the NO_ATT replica
+    stub_request(:post, "https://actionnetwork.org/api/v2/events")
+      .with(
+        body:    { "identifiers"     => ["advocacycommons:aaa-bbb-ccc-123_NO_ATT"],
+                   "title"           => "Original_NO_ATT",
+                   "origin_system"   => "Affinity",
+                   "_links"          =>  {} } ,
+
+        headers: { 'Accept'          => 'application/json',
+                   'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+                   'Content-Type'    =>'application/json',
+                   'Osdi-Api-Token'  =>'test-token',
+                   'User-Agent'      =>'Ruby' })
+      .to_return(
+        body: File.read(Rails.root.join('test', 'fixtures', 'files', 'events', 'no_att_event.json')))
 
     assert_difference 'Event.count', 1 do
       assert_difference 'AttendanceEvent.count', 1 do
         assert_difference 'NoAttendanceEvent.count', 1 do
-          event.save
-          assert_equal event.attendance_event.identifier_id('action_network'), 'bb75d46b-3f86-4a39-9193-b9d5bd873eae'
-          assert_equal event.no_attendance_event.identifier_id('action_network'), '4f11250f-4bdc-4358-b839-dac9d18cd8c8'
-          assert_equal event.attendance_event.name, "#{event.title}_ATT"
-          assert_equal event.no_attendance_event.name, "#{event.title}_NO_ATT"
+          event.save # should...
+
+          # persist the ATT replica
+          ae = event.attendance_event
+          assert_equal ae.name, "Original_ATT"
+          assert_equal ae.identifiers,
+                       ["action_network:bb75d46b-3f86-4a39-9193-b9d5bd873eae",
+                        "advocacycommons:aaa-bbb-ccc-123_ATT"]
+
+          # persist the NO_ATT replica
+          nae = event.no_attendance_event
+          assert_equal nae.name, "Original_NO_ATT"
+          assert_equal nae.identifiers,
+                       ["action_network:4f11250f-4bdc-4358-b839-dac9d18cd8c8",
+                        "advocacycommons:aaa-bbb-ccc-123_NO_ATT"]
         end
       end
     end
 
-    assert_difference 'Event.count', 0 do
-      assert_difference 'AttendanceEvent.count', 0 do
-        assert_difference 'NoAttendanceEvent.count', 0 do
+    # not really sure what this is testing
+    assert_no_difference 'Event.count' do
+      assert_no_difference 'AttendanceEvent.count' do
+        assert_no_difference 'NoAttendanceEvent.count' do
           event.update(title: 'original edited')
         end
       end
     end
-
   end
 
-  test 'create_remote_events, origin_system isn\'t Action Network' do
-    event = Event.new(origin_system: 'Affinity', title: 'title', status: 'status', title: 'Original')
+  test 'not replicating an affinity-native event' do
+    event = Event.new(origin_system: 'Affinity',
+                      status:        'status',
+                      identifiers:   [],
+                      title:         'Original')
+
     event.groups << Group.first
 
     assert_difference 'Event.count', 1 do
-      assert_difference 'AttendanceEvent.count', 0 do
-        assert_difference 'NoAttendanceEvent.count', 0 do
+      assert_no_difference 'AttendanceEvent.count' do
+        assert_no_difference 'NoAttendanceEvent.count' do
           event.save
         end
       end
     end
-
   end
 end

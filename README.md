@@ -93,7 +93,8 @@ $ ./bin/install
 **Run:**
 
 ``` shell
-$ ./bin/run-services
+$ ./bin/run-services # first run only: start redis & postgres
+$ ./bin/seed-db # first run only: seed db
 $ ./bin/run-web
 ```
 
@@ -109,7 +110,30 @@ $ kill -9 `cat tmp/pids/server/pid`
 $ bundle exec rails test
 ```
 
-## Build Javascript in Production Configuration
+## Gotchas
+
+**Switching btw/ docker and bash**
+
+If you are switching between docker and bash setups, you might run into odd Devise authentication errors on login. If this happens:
+
+Delete all caches:
+
+``` shell
+$ cd path/to/this/repo
+$ rm -rf tmp/caches/
+```
+
+If that doesn't fix it, try removing the local dbs and re-seeding:
+
+``` shell
+$ psql
+# drop database affinity_development;
+# drop database affinity_test;
+# \q
+$ ./bin/seed-db
+```
+
+## Bnuild Javascript in Production Configuration
 
 Webpack will automatically rebuild the dev javascript bundles on changes according to the development configuration in `client/webpack.config.js`. So it is not necessary to rebuild manually. That said, if you want to spit out a static build of the frontend that matches the production build, you can run:
 

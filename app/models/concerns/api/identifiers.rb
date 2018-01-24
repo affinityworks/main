@@ -14,15 +14,9 @@ module Api::Identifiers
 
   # Add or update the given identifier
   def add_identifier(system_prefix='advocacycommons', value=id)
-    identifier_to_add = "#{system_prefix}:#{value}"
-
-    if identifiers.nil?
-      self.identifiers = [identifier_to_add]
-    elsif identifiers.include?(identifier_to_add)
-      identifiers.delete(identifier(system_prefix))
-      identifiers << identifier_to_add
-    else
-      identifiers << identifier_to_add
+    self.identifiers ||= []
+    if identifiers.empty? || !identifier(system_prefix)
+      identifiers << "#{system_prefix}:#{value}"
     end
     save
   end

@@ -3,7 +3,7 @@ FROM ubuntu:trusty
 
 MAINTAINER austin <austin@affinity.works>
 LABEL description="Base image for running affinity.works web app."
-LABEL version="0.0.3"
+LABEL version="0.0.4"
 
 # ------------------------------------------------------
 # --- Configure System
@@ -14,7 +14,7 @@ WORKDIR /affinity
 EXPOSE 3000
 
 # install system dependencies
-RUN apt-get update -q
+RUN apt-get update -qq
 RUN apt-get install -y \
     apt-transport-https \
     build-essential \

@@ -1,3 +1,4 @@
+
 #!/usr/bin/env bash
 
 pushd `pwd`
@@ -16,7 +17,9 @@ elif [ `uname` == "Linux" ]; then # assume debian. sorry!
   systemctl start postgresql
   echo "...postgres is running!"
   systemctl start redis-server
-  echo "..redis is running!"
+  echo "...redis is running!"
 fi
+
+echo -e "${ANSI_GREEN}... all background services running!${ANSI_NC}"
 
 popd
