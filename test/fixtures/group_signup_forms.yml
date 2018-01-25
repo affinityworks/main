@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  group_id: 1
+  person_fields: ['given_name', 'family_name', 'email', 'zip']
+  required_fields: ['email']
+  page_text: '<div><p><strong>Hello!</strong></p><em>World!</em></div>'
+  button_text: 'submit'
+  prompt_text: 'Join our group!'
+
+# two:
+#   group: two
+#   person_fields:
+#   required_fields: MyString
+#   page_text: MyString
+#   button_text: MyString
+#   prompt_text: MyString

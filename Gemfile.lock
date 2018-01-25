@@ -8,6 +8,15 @@ GIT
       railties (>= 3.2, < 5.1)
       responders
 
+GIT
+  remote: https://github.com/ctran/annotate_models.git
+  revision: e3e0bbe9fdcc23db49862cb1f9ce239e765e63b1
+  branch: develop
+  specs:
+    annotate (2.7.2)
+      activerecord (>= 3.2, < 6.0)
+      rake (>= 10.4, < 13.0)
+
 GEM
   remote: https://rubygems.org/
   remote: https://rails-assets.org/
@@ -211,6 +220,11 @@ GEM
     mini_racer (0.1.9)
       libv8 (~> 5.3)
     minitest (5.10.3)
+    minitest-matchers (1.4.1)
+      minitest (~> 5.0)
+    minitest-spec-rails (5.4.0)
+      minitest (~> 5.0)
+      rails (>= 4.1)
     multi_json (1.12.1)
     multi_xml (0.6.0)
     multipart-post (2.0.0)
@@ -370,6 +384,7 @@ GEM
     uber (0.1.0)
     uglifier (3.0.4)
       execjs (>= 0.3.0, < 3)
+    valid_attribute (2.0.0)
     vegas (0.1.11)
       rack (>= 1.0.0)
     warden (1.2.6)
@@ -397,6 +412,7 @@ DEPENDENCIES
   active_model_serializers
   activeadmin (~> 1.0.0.pre4)
   acts-as-taggable-on (~> 4.0)
+  annotate!
   arel-helpers
   awesome_print
   bootstrap (~> 4.0.0.alpha5)
@@ -426,6 +442,8 @@ DEPENDENCIES
   koala
   memory_profiler
   mini_racer
+  minitest-matchers
+  minitest-spec-rails
   newrelic_rpm
   nokogiri (~> 1.8)
   omniauth
@@ -454,6 +472,7 @@ DEPENDENCIES
   spring-watcher-listen (~> 2.0.0)
   tzinfo-data
   uglifier (>= 1.3.0)
+  valid_attribute
   web-console
   webmock
   wicked_pdf

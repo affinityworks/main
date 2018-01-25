@@ -1,3 +1,40 @@
+# == Schema Information
+#
+# Table name: people
+#
+#  id                     :integer          not null, primary key
+#  array                  :string
+#  family_name            :string
+#  given_name             :string
+#  additional_name        :string
+#  honorific_prefix       :string
+#  honorific_suffix       :string
+#  gender                 :string
+#  gender_identity        :string
+#  party_identification   :string
+#  source                 :string
+#  ethnicities            :string
+#  languages_spoken       :string
+#  birthdate              :date
+#  employer               :string
+#  custom_fields          :text
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  encrypted_password     :string           default(""), not null
+#  reset_password_token   :string
+#  reset_password_sent_at :datetime
+#  remember_created_at    :datetime
+#  sign_in_count          :integer          default(0), not null
+#  current_sign_in_at     :datetime
+#  last_sign_in_at        :datetime
+#  current_sign_in_ip     :inet
+#  last_sign_in_ip        :inet
+#  identifiers            :text             default([]), is an Array
+#  admin                  :boolean          default(FALSE)
+#  synced                 :boolean          default(TRUE)
+#  attendances_count      :integer          default(0)
+#
+
 # Devise assumes each Person has a single `email` attribute/DB column in people table. OSDI data model has multiple email_addresses.
 # The `email` attribute is used for authentication. The `email_addresses` association is for mailing list subscriptions, event attendances,
 # etc., and never used for authentication. People may have a different`email` than their primary `email_address`. This isn't intuitive,

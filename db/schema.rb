@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171205142709) do
+ActiveRecord::Schema.define(version: 20180124231119) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -342,6 +342,18 @@ ActiveRecord::Schema.define(version: 20171205142709) do
     t.text     "identifiers",        default: [],              array: true
     t.index ["creator_id"], name: "index_fundraising_pages_on_creator_id", using: :btree
     t.index ["modified_by_id"], name: "index_fundraising_pages_on_modified_by_id", using: :btree
+  end
+
+  create_table "group_signup_forms", force: :cascade do |t|
+    t.integer  "group_id"
+    t.string   "person_fields",   default: [],              array: true
+    t.string   "required_fields", default: [],              array: true
+    t.string   "page_text",                    null: false
+    t.string   "button_text",                  null: false
+    t.string   "prompt_text",                  null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.index ["group_id"], name: "index_group_signup_forms_on_group_id", using: :btree
   end
 
   create_table "groups", force: :cascade do |t|
@@ -875,6 +887,7 @@ ActiveRecord::Schema.define(version: 20171205142709) do
   add_foreign_key "facebook_shares", "share_pages"
   add_foreign_key "forms", "people"
   add_foreign_key "forms", "submissions", column: "submissions_id"
+  add_foreign_key "group_signup_forms", "groups"
   add_foreign_key "memberships", "groups"
   add_foreign_key "memberships", "people"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"

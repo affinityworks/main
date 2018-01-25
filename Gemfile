@@ -118,11 +118,17 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   # lightweight profiling tool: https://github.com/MiniProfiler/rack-mini-profiler
   gem 'rack-mini-profiler', require: false
+  # until 4.7.3, we need develop branch b/c: https://github.com/ctran/annotate_models/pull/514
+  gem 'annotate', git: 'https://github.com/ctran/annotate_models.git', branch: "develop"
 end
 
 group :test do
   gem 'rails-controller-testing'
   gem 'webmock'
+  #gem 'minitest-spec'
+  gem 'minitest-spec-rails'
+  gem 'minitest-matchers'
+  gem 'valid_attribute'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
