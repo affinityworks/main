@@ -128,6 +128,7 @@ group :test do
   #gem 'minitest-spec'
   gem 'minitest-spec-rails'
   gem 'minitest-matchers'
+  gem 'minitest-focus'
   gem 'valid_attribute'
 end
 

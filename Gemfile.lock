@@ -220,6 +220,8 @@ GEM
     mini_racer (0.1.9)
       libv8 (~> 5.3)
     minitest (5.10.3)
+    minitest-focus (1.1.2)
+      minitest (>= 4, < 6)
     minitest-matchers (1.4.1)
       minitest (~> 5.0)
     minitest-spec-rails (5.4.0)
@@ -442,6 +444,7 @@ DEPENDENCIES
   koala
   memory_profiler
   mini_racer
+  minitest-focus
   minitest-matchers
   minitest-spec-rails
   newrelic_rpm
