@@ -91,6 +91,8 @@ Rails.application.routes.draw do
         post :import_remote, on: :collection
       end
     end
+
+    resources :signup_forms, controller: :group_signup_forms, only: :show
   end
 
   resources :dashboard, only: [:index]

@@ -1,0 +1,50 @@
+$lightgray: rgba(0, 0, 0, 0.05);
+
+#signup_container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    .content {
+        display: flex;
+        max-width: 75%;
+        flex-grow: 4;
+        flex-direction: column;
+        padding: 1em;
+        div {
+            display: flex;
+        }
+    }
+    .right-aside {
+        @extend .card;
+        display: flex;
+        flex-grow: 1;
+        flex-direction: column;
+        align-items: center;
+        padding: .5em;
+        background-color: $lightgray;
+        .call-to-action {
+            font-size: 1.5em;
+            /* text-transform: uppercase; */
+            margin-top: .5em;
+            font-weight: bold;
+            color: $blue;
+        }
+        .entry {
+            display: flex;
+            flex-direction: column;
+            margin-top: .75em;
+            label {
+                font-weight: bold;
+            }
+        }
+        .submit {
+            @extend .btn, .btn-primary;
+            display: flex;
+            align-self: center;
+            margin: 1em auto 1em auto;
+            width: 100%;
+        }
+
+    }
+}
+

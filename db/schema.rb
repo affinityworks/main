@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180124231119) do
+ActiveRecord::Schema.define(version: 20180125225154) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -353,6 +353,8 @@ ActiveRecord::Schema.define(version: 20180124231119) do
     t.string   "prompt_text",                  null: false
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
+    t.string   "display_title",                null: false
+    t.string   "admin_title",                  null: false
     t.index ["group_id"], name: "index_group_signup_forms_on_group_id", using: :btree
   end
 

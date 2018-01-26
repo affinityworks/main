@@ -25,18 +25,20 @@ class GroupSignupForm < ApplicationRecord
   # VALIDATIONS
   #
 
-  validates_presence_of [:group_id,
-                         :person_fields,
-                         :required_fields,
+  validates_presence_of [:admin_title,
+                         :button_text,
+                         :display_title,
+                         :group_id,
                          :page_text,
-                         :prompt_text,
-                         :button_text]
+                         :person_fields,
+                         :prompt_text]
 
   VALID_PERSON_FIELDS = ['address_lines', # nested field on Address
                          'address_type', # nested field on Address
                          'birthdate',
                          'country', # nested field on Address
                          'email_address', # nested field on EmailAddress
+                         # 'email_addresses', # what `form_for` expects
                          'employer',
                          'ethnicities',
                          'family_name',
@@ -50,6 +52,7 @@ class GroupSignupForm < ApplicationRecord
                          'occupation', # nested field on Address
                          'party_identification',
                          'phone_number', # nested field on PhoneNumber
+                         # 'phone_numbers', # what `form_for` expects
                          'postal_code', # nested field on Address
                          'region', # nested field on Address
                          'additional_name'].freeze
@@ -60,7 +63,7 @@ class GroupSignupForm < ApplicationRecord
     if person_fields.present?
       person_fields.each do |field|
         unless VALID_PERSON_FIELDS.include? field
-          errors.add(:person_fields, "must be one of: #{VALID_PERSON_FIELDS}" )
+          errors.add(:person_fields, "must be one of: #{VALID_PERSON_FIELDS}.join(', ')" )
         end
       end
     end
