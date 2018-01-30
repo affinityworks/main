@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180125225154) do
+ActiveRecord::Schema.define(version: 20180130232141) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -311,6 +311,7 @@ ActiveRecord::Schema.define(version: 20180125225154) do
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
     t.text     "identifiers",        default: [],              array: true
+    t.string   "submit_text"
     t.index ["creator_id"], name: "index_forms_on_creator_id", using: :btree
     t.index ["modified_by_id"], name: "index_forms_on_modified_by_id", using: :btree
     t.index ["person_id"], name: "index_forms_on_person_id", using: :btree
@@ -345,16 +346,13 @@ ActiveRecord::Schema.define(version: 20180125225154) do
   end
 
   create_table "group_signup_forms", force: :cascade do |t|
-    t.integer  "group_id"
-    t.string   "person_fields",   default: [],              array: true
-    t.string   "required_fields", default: [],              array: true
-    t.string   "page_text",                    null: false
-    t.string   "button_text",                  null: false
-    t.string   "prompt_text",                  null: false
+    t.integer  "group_id",                     null: false
+    t.string   "inputs",          default: [],              array: true
+    t.string   "required_inputs", default: [],              array: true
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
-    t.string   "display_title",                null: false
-    t.string   "admin_title",                  null: false
+    t.integer  "form_id",                      null: false
+    t.index ["form_id"], name: "index_group_signup_forms_on_form_id", using: :btree
     t.index ["group_id"], name: "index_group_signup_forms_on_group_id", using: :btree
   end
 
@@ -889,6 +887,7 @@ ActiveRecord::Schema.define(version: 20180125225154) do
   add_foreign_key "facebook_shares", "share_pages"
   add_foreign_key "forms", "people"
   add_foreign_key "forms", "submissions", column: "submissions_id"
+  add_foreign_key "group_signup_forms", "forms"
   add_foreign_key "group_signup_forms", "groups"
   add_foreign_key "memberships", "groups"
   add_foreign_key "memberships", "people"

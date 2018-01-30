@@ -1,11 +1,8 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  id: 1
   group_id: 1
-  display_title: 'Best Group Ever Wants you!'
-  admin_title: 'basic_signup_form_1'
-  person_fields: ['given_name', 'family_name', 'email', 'zip']
-  required_fields: ['email']
-  page_text: '<div><p><strong>Hello!</strong></p><em>World!</em></div>'
-  button_text: 'submit'
-  prompt_text: 'Join our group!'
+  form_id: 3
+  inputs: ['given_name', 'family_name', 'email_address', 'postal_code']
+  required_inputs: ['email_address']

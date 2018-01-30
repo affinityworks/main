@@ -1,30 +1,12 @@
-require 'test_helper'
-
-# == Schema Information
-#
-# Table name: group_signup_forms
-#
-#  id              :integer          not null, primary key
-#  group_id        :integer
-#  person_fields   :string           default([]), is an Array
-#  required_fields :string           default([]), is an Array
-#  page_text       :string           not null
-#  button_text     :string           not null
-#  prompt_text     :string           not null
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#
-
+require_relative '../test_helper'
 
 class GroupSignupFormTest < ActiveSupport::TestCase
 
-  describe "associations" do
+  let(:signup_form){ group_signup_forms(:one) }
 
-    let(:signup_form){ group_signup_forms(:one) }
-
-    it "belongs to a group" do
-      signup_form.group.must_be_instance_of Group
-    end
+  specify "associations" do
+    signup_form.group.must_be_instance_of Group
+    signup_form.form.must_be_instance_of Form
   end
 
   describe "validations" do
@@ -32,34 +14,86 @@ class GroupSignupFormTest < ActiveSupport::TestCase
     let(:signup_form) { GroupSignupForm.new }
 
     it "validates presence of required fields" do
-      [:admin_title,
-       :button_text,
-       :display_title,
-       :group_id,
-       :page_text,
-       :person_fields,
-       :prompt_text].each{|field| signup_form.wont have_valid(field).when(nil)}
+      [:group_id, :inputs].each{ |attr| signup_form.wont have_valid(attr).when(nil) }
     end
 
-    it "validates `person_fields` are subset of `Person` fields" do
-      signup_form.wont have_valid(:person_fields).when(['foobar'])
-      signup_form.must have_valid(:person_fields).when(GroupSignupForm::VALID_PERSON_FIELDS)
+    it "validates inputs are subset of `Person` fields" do
+      signup_form.wont have_valid(:inputs).when(['foobar'])
+      signup_form.must have_valid(:inputs).when(GroupSignupForm::VALID_INPUTS)
     end
 
-    it "validates `required_fields` are subset of `person_fields`" do
-      signup_form.person_fields = ['given_name', 'email_address', 'phone_number']
+    it "validates required inputs are subset of inputs" do
+      signup_form.inputs = ['given_name', 'email_address', 'phone_number']
 
-      signup_form.must have_valid(:required_fields).when(['given_name'])
-      signup_form.wont have_valid(:required_fields).when(['postal_code'])
+      signup_form.must have_valid(:required_inputs).when(['given_name'])
+      signup_form.wont have_valid(:required_inputs).when(['postal_code'])
+    end
+  end
+
+  describe "accessors" do
+
+    let(:all_inputs){ GroupSignupForm::VALID_INPUTS.dup }
+
+    it "provides statically ordered inputs" do
+      signup_form.inputs = all_inputs.reverse
+      signup_form.ordered_inputs.must_equal GroupSignupForm::VALID_INPUTS
+    end
+  end
+
+  describe "nested attributes" do
+
+    let(:signup_form) { group_signup_forms(:one) }
+
+    it "creates a nested form from attributes hash" do
+      assert_difference 'Form.count', 1 do
+        GroupSignupForm.create!(
+          group: groups(:one),
+          inputs: ['given_name'],
+          required_inputs: ['given_name'],
+          form_attributes: {
+            title: "foo",
+            description: "bar",
+            call_to_action: "baz",
+          }
+        )
+      end
     end
 
-    it "validates that `page_text` is valid html" do
-      signup_form.must have_valid(:page_text).when('<a href="foobar">Hi!</a>')
-      signup_form.wont have_valid(:page_text).when('</div><div>')
+    it "creates a nested form from object" do
+      assert_difference 'Form.count', 1 do
+        GroupSignupForm.create!(
+          group: groups(:one),
+          inputs: ['given_name'],
+          required_inputs: ['given_name'],
+          form: Form.create!(
+            title: "foo",
+            description: "bar",
+            call_to_action: "baz",
+          )
+        )
+      end
     end
 
-    it "does not allow javascript in the `page_text`" do
-      signup_form.wont have_valid(:page_text).when('<script>alert("pwned!")</script>')
+    it "delegates to form attribute accessors" do
+      [:description, :title, :name, :call_to_action].each do |method|
+        signup_form.send(method).must_equal signup_form.form.send(method)
+      end
+    end
+
+    it "validates nested form attributes" do
+      signup_form.form.stub :valid?, false do
+        signup_form.form.errors.stub :each, [] do
+          signup_form.wont_be :valid?
+        end
+      end
+    end
+
+    it "displays error messages for nested form attributes" do
+      signup_form.form.description = "<//dev>invalid html<dev//>"
+      signup_form.valid?
+
+      signup_form.errors.first.
+        must_equal [:"form.description","must be valid HTML with no JavaScript"]
     end
   end
 end
