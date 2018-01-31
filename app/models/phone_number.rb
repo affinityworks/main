@@ -1,3 +1,22 @@
+# == Schema Information
+#
+# Table name: phone_numbers
+#
+#  id          :integer          not null, primary key
+#  primary     :boolean
+#  number      :string
+#  extension   :string
+#  description :string
+#  number_type :string
+#  operator    :string
+#  country     :string
+#  sms_capable :boolean
+#  do_not_call :boolean
+#  person_id   :integer
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
 class PhoneNumber < ApplicationRecord
   include ArelHelpers::ArelTable
   belongs_to :person

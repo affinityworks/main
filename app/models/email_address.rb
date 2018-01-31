@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: email_addresses
+#
+#  id           :integer          not null, primary key
+#  primary      :boolean
+#  address      :string
+#  address_type :string
+#  status       :string
+#  person_id    :integer
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#
+
 class EmailAddress < ApplicationRecord
   has_paper_trail
 
