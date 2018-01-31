@@ -29,7 +29,8 @@ two:
   creator_id: 2
 
 group_signup:
-  id: 3
+  #id: 3
+  # ^-- (so we can reference this as `form: group_signup_form`, not `form_id: 3`
   origin_system: "Affinity"
   name: "signup_page_1"
   title: "Our group is great"
@@ -45,5 +46,5 @@ group_signup:
   browser_url: MyString
   featured_image_url: MyString
   total_submissions: 0
-  person_id: 1
-  creator_id: 1
+  person_id: 1 # `person: one` would be better!
+  creator_id: 1 # `creator: one` would be better!

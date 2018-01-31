@@ -1,0 +1,4 @@
+abstract:
+  type: FakeCustomForm
+  form_id: 1 # grrr... i'd rather user names, like `group: one`
+  group_id: 1 # grrr...

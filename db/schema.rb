@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180130232141) do
+ActiveRecord::Schema.define(version: 20180131182107) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -190,6 +190,14 @@ ActiveRecord::Schema.define(version: 20180130232141) do
     t.index ["question_id"], name: "index_canvassing_efforts_questions_on_question_id", using: :btree
   end
 
+  create_table "custom_forms", force: :cascade do |t|
+    t.string  "type",     null: false
+    t.integer "form_id"
+    t.integer "group_id"
+    t.index ["form_id"], name: "index_custom_forms_on_form_id", using: :btree
+    t.index ["group_id"], name: "index_custom_forms_on_group_id", using: :btree
+  end
+
   create_table "donations", force: :cascade do |t|
     t.string   "origin_system"
     t.datetime "action_date"
@@ -292,6 +300,16 @@ ActiveRecord::Schema.define(version: 20180130232141) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.index ["share_page_id"], name: "index_facebook_shares_on_share_page_id", using: :btree
+  end
+
+  create_table "form_input_groups", force: :cascade do |t|
+    t.string   "type",                        null: false
+    t.integer  "custom_form_id"
+    t.string   "inputs",         default: [],              array: true
+    t.string   "required",       default: [],              array: true
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.index ["custom_form_id"], name: "index_form_input_groups_on_custom_form_id", using: :btree
   end
 
   create_table "forms", force: :cascade do |t|
@@ -878,6 +896,8 @@ ActiveRecord::Schema.define(version: 20180130232141) do
   add_foreign_key "answers", "canvasses"
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "responses", column: "responses_id"
+  add_foreign_key "custom_forms", "forms"
+  add_foreign_key "custom_forms", "groups"
   add_foreign_key "donations", "fundraising_pages"
   add_foreign_key "donations", "people"
   add_foreign_key "donations", "referrer_data"
@@ -885,6 +905,7 @@ ActiveRecord::Schema.define(version: 20180130232141) do
   add_foreign_key "events", "addresses"
   add_foreign_key "events", "ticket_levels", column: "ticket_levels_id"
   add_foreign_key "facebook_shares", "share_pages"
+  add_foreign_key "form_input_groups", "custom_forms"
   add_foreign_key "forms", "people"
   add_foreign_key "forms", "submissions", column: "submissions_id"
   add_foreign_key "group_signup_forms", "forms"

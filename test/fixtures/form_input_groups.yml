@@ -1,0 +1,7 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+abstract:
+  type: FakeInputGroup
+  custom_form: abstract
+  inputs: ['foo']
+  required: ['bar']
