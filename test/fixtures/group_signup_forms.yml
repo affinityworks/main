@@ -1,7 +1,6 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  type: GroupSignupForm
   group_id: 1
   form: group_signup
-  inputs: ['given_name', 'family_name', 'email_address', 'postal_code']
-  required_inputs: ['email_address']
