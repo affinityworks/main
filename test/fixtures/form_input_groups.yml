@@ -3,5 +3,29 @@
 abstract:
   type: FakeInputGroup
   custom_form: abstract
-  inputs: ['foo']
+  inputs: ['foo', 'bar']
   required: ['bar']
+
+person:
+  type: PersonInputGroup
+  custom_form: abstract
+  inputs: <%= PersonInputGroup::VALID_INPUTS.take 2 %>
+  required: <%= PersonInputGroup::VALID_INPUTS.take 1 %>
+
+email:
+  type: EmailInputGroup
+  custom_form: abstract
+  inputs: <%= EmailInputGroup::VALID_INPUTS.take 2 %>
+  required: <%= EmailInputGroup::VALID_INPUTS.take 1 %>
+
+phone:
+  type: PhoneInputGroup
+  custom_form: abstract
+  inputs: <%= PhoneInputGroup::VALID_INPUTS.take 2 %>
+  required: <%= PhoneInputGroup::VALID_INPUTS.take 1 %>
+
+address:
+  type: AddressInputGroup
+  custom_form: abstract
+  inputs: <%= AddressInputGroup::VALID_INPUTS.take 2 %>
+  required: <%= AddressInputGroup::VALID_INPUTS.take 1 %>

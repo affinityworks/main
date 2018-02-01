@@ -27,16 +27,16 @@ class Form < ApplicationRecord
   # CONSTANTS
 
   REQUIRED_ATTRIBUTES = [
-    :name,
     :title,
     :description,
     :call_to_action,
-    :submit_text,
+    :name, # has default
+    :submit_text, # has default
   ]
 
   DEFAULTS_BY_ATTRIBUTE = {
+    name: ->(obj){ obj.name || obj.title },
     submit_text: ->(obj){ obj.submit_text || 'submit' },
-    name: ->(obj){ obj.name || obj.title }
   }
 
   #

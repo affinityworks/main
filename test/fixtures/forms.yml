@@ -29,7 +29,7 @@ two:
   creator_id: 2
 
 group_signup:
-  #id: 3
+  # id: 3
   # ^-- (so we can reference this as `form: group_signup_form`, not `form_id: 3`
   origin_system: "Affinity"
   name: "signup_page_1"
