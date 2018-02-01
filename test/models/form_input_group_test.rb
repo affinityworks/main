@@ -29,6 +29,10 @@ class FormInputGroupTest < ActiveSupport::TestCase
     it "has an array of required inputes" do
       input_group.required.must_be_kind_of Array
     end
+
+    it "derrives a set of requried inputs" do
+      input_group.required_set.must_equal input_group.required.to_set
+    end
   end
 
   describe "interface" do
