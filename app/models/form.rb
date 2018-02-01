@@ -24,6 +24,21 @@
 
 class Form < ApplicationRecord
 
+  # CONSTANTS
+
+  REQUIRED_ATTRIBUTES = [
+    :name,
+    :title,
+    :description,
+    :call_to_action,
+    :submit_text,
+  ]
+
+  DEFAULTS_BY_ATTRIBUTE = {
+    submit_text: ->(obj){ obj.submit_text || 'submit' },
+    name: ->(obj){ obj.name || obj.title }
+  }
+
   #
   # ASSOCIATIONS
   #
@@ -40,21 +55,14 @@ class Form < ApplicationRecord
   before_validation :set_defaults
 
   def set_defaults
-    self.submit_text ||= "submit"
-    self.name ||= self.title
+    self.assign_attributes DEFAULTS_BY_ATTRIBUTE
+                             .transform_values{|v| v.call(self)}
   end
 
   #
   # VALIDATIONS
   #
 
-  REQUIRED_ATTRIBUTES = [
-    :name,
-    :title,
-    :description,
-    :call_to_action,
-    :submit_text,
-  ]
   validates_presence_of REQUIRED_ATTRIBUTES
 
   validate :description_valid

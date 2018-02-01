@@ -15,9 +15,8 @@ class FormTest < ActiveSupport::TestCase
     let(:form) { Form.new }
 
     it "validates presence of required fields" do
-      Form::REQUIRED_ATTRIBUTES.each do |attr|
-        form.wont have_valid(attr).when(nil)
-      end
+      no_defaults = Form::REQUIRED_ATTRIBUTES - Form::DEFAULTS_BY_ATTRIBUTE.keys
+      no_defaults.each{ |attr| form.wont have_valid(attr).when(nil) }
     end
 
     it "validates description is valid html" do
