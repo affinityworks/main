@@ -32,7 +32,13 @@ class FormInputGroup < ApplicationRecord
 
   # ABSTRACT METHODS
 
+  # () -> Array<String>
   def self.valid_inputs
+    raise NotImplementedError
+  end
+
+  # () -> Symbol
+  def resource
     raise NotImplementedError
   end
 

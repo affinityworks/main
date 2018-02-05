@@ -13,6 +13,7 @@ one:
   total_submissions: 1
   person_id: 1
   creator_id: 1
+  submit_text: "Submit"
 
 two:
   id: 2
@@ -42,7 +43,7 @@ group_signup:
     </ul>"
   summary: MyString
   call_to_action: "join our group!"
-  submit_text: 'submit'
+  submit_text: 'Submit'
   browser_url: MyString
   featured_image_url: MyString
   total_submissions: 0

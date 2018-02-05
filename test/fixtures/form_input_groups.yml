@@ -6,26 +6,54 @@ abstract:
   inputs: ['foo', 'bar']
   required: ['bar']
 
+# input groups for abstract custom form
+
 person:
   type: PersonInputGroup
   custom_form: abstract
-  inputs: <%= PersonInputGroup::VALID_INPUTS.take 2 %>
-  required: <%= PersonInputGroup::VALID_INPUTS.take 1 %>
+  inputs: <%= PersonInputGroup::VALID_INPUTS %>
+  required: <%= PersonInputGroup::VALID_INPUTS.take(1) %>
 
 email:
   type: EmailInputGroup
   custom_form: abstract
-  inputs: <%= EmailInputGroup::VALID_INPUTS.take 2 %>
-  required: <%= EmailInputGroup::VALID_INPUTS.take 1 %>
+  inputs: <%= EmailInputGroup::VALID_INPUTS %>
+  required: <%= EmailInputGroup::VALID_INPUTS.take(1) %>
 
 phone:
   type: PhoneInputGroup
   custom_form: abstract
-  inputs: <%= PhoneInputGroup::VALID_INPUTS.take 2 %>
-  required: <%= PhoneInputGroup::VALID_INPUTS.take 1 %>
+  inputs: <%= PhoneInputGroup::VALID_INPUTS %>
+  required: <%= PhoneInputGroup::VALID_INPUTS.take(1) %>
 
 address:
   type: AddressInputGroup
   custom_form: abstract
-  inputs: <%= AddressInputGroup::VALID_INPUTS.take 2 %>
-  required: <%= AddressInputGroup::VALID_INPUTS.take 1 %>
+  inputs: <%= AddressInputGroup::VALID_INPUTS %>
+  required: <%= AddressInputGroup::VALID_INPUTS.take(1) %>
+
+# input groups for group signup form
+
+person_group_signup:
+  type: PersonInputGroup
+  custom_form: group_signup
+  inputs: <%= PersonInputGroup::VALID_INPUTS %>
+  required: <%= PersonInputGroup::VALID_INPUTS.take(1) %>
+
+email_group_signup:
+  type: EmailInputGroup
+  custom_form: group_signup
+  inputs: <%= EmailInputGroup::VALID_INPUTS %>
+  required: <%= EmailInputGroup::VALID_INPUTS.take(1) %>
+
+phone_group_signup:
+  type: PhoneInputGroup
+  custom_form: group_signup
+  inputs: <%= PhoneInputGroup::VALID_INPUTS %>
+  required: <%= PhoneInputGroup::VALID_INPUTS.take(1) %>
+
+address_group_signup:
+  type: AddressInputGroup
+  custom_form: group_signup
+  inputs: <%= AddressInputGroup::VALID_INPUTS %>
+  required: <%= AddressInputGroup::VALID_INPUTS.take(1) %>

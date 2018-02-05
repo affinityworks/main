@@ -2,3 +2,9 @@ abstract:
   type: FakeCustomForm
   form_id: 1 # grrr... i'd rather user names, like `group: one`
   group_id: 1 # grrr...
+
+group_signup:
+  type: GroupSignupForm
+  group_id: 1
+  form: group_signup
+  # has_many :form_input_groups

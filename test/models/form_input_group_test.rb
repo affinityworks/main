@@ -16,8 +16,11 @@ class FormInputGroupTest < ActiveSupport::TestCase
     input_group.must_be_kind_of FormInputGroup
   end
 
-  specify "associations" do
-    input_group.custom_form.must_be_kind_of CustomForm
+  describe "associations" do
+
+    it "belongs to a custom form" do
+      input_group.custom_form.must_be_kind_of CustomForm
+    end
   end
 
   describe "attributes" do
@@ -37,8 +40,12 @@ class FormInputGroupTest < ActiveSupport::TestCase
 
   describe "interface" do
 
-    it "requires subclasses to implement .valid_inputs" do
+    it "has an abstract .valid_inputs method" do
       ->{ FormInputGroup.valid_inputs }.must_raise NotImplementedError
+    end
+
+    it "has an abstract #resource method" do
+      ->{ input_group.resource }.must_raise NotImplementedError
     end
   end
 

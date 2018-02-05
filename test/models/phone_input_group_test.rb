@@ -21,5 +21,9 @@ class PhoneInputGroupTest < ActiveSupport::TestCase
     it "implements .valid_inputs" do
       PhoneInputGroup.valid_inputs.must_equal PhoneInputGroup::VALID_INPUTS
     end
+
+    it "implements #resource" do
+      phone_input_group.resource.must_equal :phone_numbers
+    end
   end
 end

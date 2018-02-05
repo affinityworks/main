@@ -13,5 +13,5 @@ class AddressInputGroup < FormInputGroup
   ].freeze
 
   def self.valid_inputs; VALID_INPUTS; end
-
+  def resource; :personal_addresses; end
 end

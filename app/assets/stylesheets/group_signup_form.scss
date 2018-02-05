@@ -6,7 +6,7 @@ $lightgray: rgba(0, 0, 0, 0.05);
     flex-wrap: wrap;
     .content {
         display: flex;
-        max-width: 75%;
+        max-width: 66%;
         flex-grow: 4;
         flex-direction: column;
         padding: 1em;
@@ -41,6 +41,8 @@ $lightgray: rgba(0, 0, 0, 0.05);
             @extend .btn, .btn-primary;
             display: flex;
             align-self: center;
+            text-transform: uppercase;
+            font-weight: bold;
             margin: 1em auto 1em auto;
             width: 100%;
         }

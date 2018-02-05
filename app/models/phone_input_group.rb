@@ -12,5 +12,6 @@ class PhoneInputGroup < FormInputGroup
   ].freeze
 
   def self.valid_inputs; VALID_INPUTS; end
+  def resource; :phone_numbers; end
 
 end

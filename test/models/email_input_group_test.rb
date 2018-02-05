@@ -21,5 +21,9 @@ class EmailInputGroupTest < ActiveSupport::TestCase
     it "implements .valid_inputs" do
       EmailInputGroup.valid_inputs.must_equal EmailInputGroup::VALID_INPUTS
     end
+
+    it "implements #resource" do
+      email_input_group.resource.must_equal :email_addresses
+    end
   end
 end

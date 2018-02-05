@@ -21,5 +21,9 @@ class AddressInputGroupTest < ActiveSupport::TestCase
     it "implements .valid_inputs" do
       AddressInputGroup.valid_inputs.must_equal AddressInputGroup::VALID_INPUTS
     end
+
+    it "implements #resource" do
+      address_input_group.resource.must_equal :personal_addresses
+    end
   end
 end

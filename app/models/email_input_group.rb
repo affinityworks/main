@@ -7,5 +7,5 @@ class EmailInputGroup < FormInputGroup
   ].freeze
 
   def self.valid_inputs; VALID_INPUTS; end
-
+  def resource; :email_addresses; end
 end

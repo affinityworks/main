@@ -10,6 +10,21 @@ class CustomFormTest < ActiveSupport::TestCase
 
   let(:custom_form){ custom_forms(:abstract) }
 
+  def create_form
+    FakeCustomForm.create!(
+      form_attributes: {
+        name: 'foo',
+        title: 'bar',
+        description: 'baz',
+        call_to_action: 'bam',
+      },
+      person_input_group_attributes: { inputs: [] },
+      phone_input_group_attributes: { inputs: [] },
+      email_input_group_attributes: { inputs: [] },
+      address_input_group_attributes: { inputs: [] }
+    )
+  end
+
   specify "inheritance" do
     custom_form.must_be_instance_of FakeCustomForm
     custom_form.must_be_kind_of CustomForm
@@ -24,6 +39,18 @@ class CustomFormTest < ActiveSupport::TestCase
     custom_form.address_input_group.must_be_kind_of AddressInputGroup
   end
 
+  describe "dependencies" do
+
+    it "destroys associatited input groups when destroyed" do
+      decrement = CustomForm::INPUT_GROUP_ASSOCIATIONS.count * -1
+      form = create_form
+
+      assert_difference "FormInputGroup.count", decrement do
+        form.destroy
+      end
+    end
+  end
+
   describe "validations" do
 
     let(:custom_form){ CustomForm.new }
@@ -33,7 +60,6 @@ class CustomFormTest < ActiveSupport::TestCase
       custom_form.must have_valid(:type).when('FakeCustomForm')
     end
   end
-
 
   describe "nested attributes" do
 
@@ -91,15 +117,14 @@ class CustomFormTest < ActiveSupport::TestCase
   describe "accessors" do
 
     it "delegates to nested form accessors" do
-      [:description, :title, :name, :call_to_action].each do |method|
+      [:description, :title, :name, :call_to_action, :submit_text].each do |method|
         custom_form.send(method).must_equal custom_form.form.send(method)
       end
     end
 
-    it "provides a list of sorted input groups" do
-      custom_form.sorted_input_groups
-        .must_equal([custom_form.person_input_group,
-                     custom_form.email_input_group,
+    it "provides a list of input groups for nested attributes" do
+      custom_form.nested_input_groups
+        .must_equal([custom_form.email_input_group,
                      custom_form.phone_input_group,
                      custom_form.address_input_group])
     end

@@ -17,5 +17,9 @@ class PersonInputGroupTest < ActiveSupport::TestCase
     it "implements .valid_inputs" do
       PersonInputGroup.valid_inputs.must_equal PersonInputGroup::VALID_INPUTS
     end
+
+    it "implements #resource" do
+      person_input_group.resource.must_equal :person
+    end
   end
 end

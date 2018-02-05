@@ -20,5 +20,5 @@ class PersonInputGroup < FormInputGroup
   # CLASS METHODS
 
   def self.valid_inputs; VALID_INPUTS; end
-
+  def resource; :person; end
 end
