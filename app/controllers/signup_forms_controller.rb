@@ -1,4 +1,4 @@
-class GroupSignupFormsController < ApplicationController
+class SignupFormsController < ApplicationController
 
   before_action :set_form, only: :show
   before_action :set_group, only: :show
@@ -10,7 +10,7 @@ class GroupSignupFormsController < ApplicationController
   private
 
   def set_form
-    @form = GroupSignupForm.find(params.require(:id).to_i)
+    @form = SignupForm.find(params.require(:id).to_i)
   end
 
   def set_group

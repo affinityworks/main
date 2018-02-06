@@ -64,3 +64,17 @@ four:
   occupation: MyString
   person_id: 2
   type: PersonalAddress
+
+new_signup:
+  type: PersonalAddress
+  venue: personal address venue
+  address_lines: ['MyString']
+  locality: Brooklyn
+  region: NY
+  postal_code: 11238
+  country: USA
+  status: active
+  primary: true
+  address_type: Personal
+  occupation: busker
+  person: new_signup

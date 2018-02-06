@@ -63,6 +63,10 @@ Rails.application.routes.draw do
   resources :groups do
     get '/dashboard', to: 'dashboard#show', as: 'dashboard'
 
+    resources :signup_forms, only: :show do
+      resources :signups, only: :create
+    end
+
     resources :members do
       get :attendances, on: :member
       resources :events
@@ -92,7 +96,6 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :signup_forms, controller: :group_signup_forms, only: :show
   end
 
   resources :dashboard, only: [:index]

@@ -19,7 +19,9 @@
           <%= @form.call_to_action.titleize %>
         </div>
 
-        <%= form_for @member, as: :person, url: group_members_path(@group, @member) do |f| %>
+        <%= form_for @member,
+          as: :person,
+          url: group_signup_form_signups_path(@group, @form) do |f| %>
 
           <% @form.person_input_group.inputs.each do |input| %>
             <div class="entry">

@@ -47,3 +47,10 @@ admin:
   primary: true
   address: organizer@admin.com
   person_id: 6
+
+new_signup:
+  primary: true
+  address: alice@riseup.net
+  address_type: work
+  status: unsubscribed
+  person: new_signup

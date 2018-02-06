@@ -1,8 +1,8 @@
 class EmailInputGroup < FormInputGroup
 
   VALID_INPUTS = [
-    'primary',
-    'address_type',
+    # 'primary',
+    # 'address_type',
     'address',
   ].freeze
 

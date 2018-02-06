@@ -42,7 +42,7 @@ class CustomFormTest < ActiveSupport::TestCase
   describe "dependencies" do
 
     it "destroys associatited input groups when destroyed" do
-      decrement = CustomForm::INPUT_GROUP_ASSOCIATIONS.count * -1
+      decrement = CustomForm::INPUT_GROUPS.count * -1
       form = create_form
 
       assert_difference "FormInputGroup.count", decrement do
@@ -93,7 +93,7 @@ class CustomFormTest < ActiveSupport::TestCase
     describe "for input groups" do
 
       it "creates input groups" do
-        CustomForm::INPUT_GROUP_ASSOCIATIONS.each do |assn|
+        CustomForm::INPUT_GROUPS.each do |assn|
           klass_name = assn.to_s.camelize
           attrs = "#{assn}_attributes".to_sym
           assert_difference "#{klass_name}.count", 1 do

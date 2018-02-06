@@ -6,6 +6,7 @@ require "minitest/matchers"
 require "minitest/autorun"
 require 'minitest/focus'
 require 'valid_attribute'
+require_relative "./helpers/feature_test_helper"
 
 OmniAuth.config.test_mode = true
 
@@ -19,5 +20,5 @@ end
 
 
 class ActionDispatch::IntegrationTest
-    include Devise::Test::IntegrationHelpers
+  include Devise::Test::IntegrationHelpers
 end

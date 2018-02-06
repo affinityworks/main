@@ -8,7 +8,7 @@
 #  group_id :integer
 #
 
-class GroupSignupForm < CustomForm
+class SignupForm < CustomForm
   # VAlIDATIONS
   validates_presence_of :group_id
 end

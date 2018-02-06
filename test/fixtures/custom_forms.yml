@@ -4,7 +4,7 @@ abstract:
   group_id: 1 # grrr...
 
 group_signup:
-  type: GroupSignupForm
+  type: SignupForm
   group_id: 1
   form: group_signup
   # has_many :form_input_groups

@@ -12,15 +12,13 @@ class CustomForm < ApplicationRecord
 
   # CONSTANTS
 
-  NESTED_INPUT_GROUP_ASSOCIATIONS = [
+  NESTED_INPUT_GROUPS = [
     :email_input_group,
     :phone_input_group,
     :address_input_group,
   ]
 
-  INPUT_GROUP_ASSOCIATIONS = [
-    :person_input_group
-  ] + NESTED_INPUT_GROUP_ASSOCIATIONS
+  INPUT_GROUPS = [:person_input_group] + NESTED_INPUT_GROUPS
 
   # ASSOCIATIONS
 
@@ -30,12 +28,12 @@ class CustomForm < ApplicationRecord
 
   belongs_to :group
 
-  INPUT_GROUP_ASSOCIATIONS.each do |association|
-    has_one association,
+  INPUT_GROUPS.each do |input_group|
+    has_one input_group,
             foreign_key: 'custom_form_id',
-            class_name: association.to_s.camelize,
+            class_name: input_group.to_s.camelize,
             dependent: :destroy
-    accepts_nested_attributes_for association
+    accepts_nested_attributes_for input_group
   end
 
   # VALIDATIONS
@@ -45,6 +43,6 @@ class CustomForm < ApplicationRecord
   # ACCESSORS
 
   def nested_input_groups
-    NESTED_INPUT_GROUP_ASSOCIATIONS.map { |a| send(a) }
+    NESTED_INPUT_GROUPS.map { |a| send(a) }
   end
 end

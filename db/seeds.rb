@@ -102,7 +102,7 @@ affiliate = Group.create(name: 'Portland Commuinty Rising',
 
 # CUSTOM SIGNUP FORM
 
-GroupSignupForm.create(
+SignupForm.create(
   group: group,
   form_attributes: {
     name: 'signup_form_1',

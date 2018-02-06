@@ -38,3 +38,15 @@ three:
   sms_capable: false
   do_not_call: false
   person_id: 1
+
+new_signup:
+  primary: true
+  number: 718-203-2342
+  extension: 123
+  description: landline
+  number_type: Personal
+  operator: Verizon
+  country: USA
+  sms_capable: true
+  do_not_call: false
+  person: new_signup
