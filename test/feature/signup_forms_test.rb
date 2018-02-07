@@ -34,38 +34,63 @@ class SignupForms < FeatureTest
   end
 
   describe "submitting form" do
-
     let(:input_groups){ CustomForm::INPUT_GROUPS.map{ |ig| form.send(ig) } }
     let(:person_count){ Person.count }
     let(:membership_count){ Membership.count }
-    let(:contact_info_count){ count_contact_infos }
     let(:new_member){ Person.last }
 
     before do
       # because minitest won't allow `let!`
       person_count
       membership_count
-      contact_info_count
-
-      fill_out_form values_by_input(input_groups)
-      click_button form.submit_text
     end
 
-    it "creates a new person" do
-      Person.count.must_equal person_count + 1
+    describe "with no errors" do
+      before do
+        fill_out_form values_by_input(input_groups)
+        click_button form.submit_text
+      end
+
+      it "creates a new person" do
+        Person.count.must_equal person_count + 1
+      end
+
+      it "creates a new membership" do
+        Membership.count.must_equal membership_count + 1
+      end
+
+      it "stores persons's contact info" do
+        [:email_addresses, :phone_numbers, :personal_addresses].each do |msg|
+          new_member.reload.send(msg).first.primary?.must_equal true
+        end
+      end
     end
 
-    it "creates a new membership" do
-      Membership.count.must_equal membership_count + 1
-    end
+    describe "with errors" do
+      before do
+        fill_out_form(
+          person_email_addresses_attributes_0_address: 'invalid',
+          person_phone_numbers_attributes_0_number: 'invalid'
+        )
+        click_button form.submit_text
+      end
 
-    it "saves the new member's contact info" do
-      count_contact_infos.must_equal contact_info_count + 3
-    end
+      # TODO (aguestuser|07-Feb-2018)
+      # these error messages are T.R.A.S.H.
 
-    it "stores the email address as primary" do
-      [:email_addresses, :phone_numbers, :personal_addresses].each do |msg|
-        new_member.send(msg).first.primary?.must_equal true
+      it "shows an error for missing fields" do
+        page.must_have_content "Family name can't be blank"
+      end
+
+      it "shows an error for invalid email address" do
+        page.must_have_content
+        "Email addresses address 'invalid' does not match" +
+          "(?i-mx:\\A([^@\\s]+)@((?:[-a-z0-9]+\\.)+[a-z]{2,})\\z)"
+      end
+
+      it "shows an error for invalid phone number" do
+        page.must_have_content
+        "Phone numbers number Only numbers format are allowed"
       end
     end
 

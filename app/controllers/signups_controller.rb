@@ -8,8 +8,7 @@ class SignupsController < ApplicationController
   def create
     @member = Person.create_from_signup(@form, @group, person_params)
     if @member.errors.any?
-      # TODO: render signup_form with errors
-      raise "Error creating member."
+      render template: 'signup_forms/show'
     else
       redirect_to group_member_path(@group, @member), notice: "You joined #{@group.name}"
     end

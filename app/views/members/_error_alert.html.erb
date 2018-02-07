@@ -1,0 +1,10 @@
+<% if @member.errors.any? %>
+  <div id="error_explanation" class="alert alert-danger" role="alert">
+    <strong><%= pluralize(@member.errors.count, "error") %> prevented this person from being saved:</strong>
+    <ul>
+      <% @member.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

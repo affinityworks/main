@@ -7,7 +7,7 @@ $lightgray: rgba(0, 0, 0, 0.05);
     .content {
         display: flex;
         max-width: 66%;
-        flex-grow: 4;
+        flex-grow: 2;
         flex-direction: column;
         padding: 1em;
         div {
@@ -17,6 +17,7 @@ $lightgray: rgba(0, 0, 0, 0.05);
     .right-aside {
         @extend .card;
         display: flex;
+        max-width: 33%;
         flex-grow: 1;
         flex-direction: column;
         align-items: center;
@@ -24,7 +25,6 @@ $lightgray: rgba(0, 0, 0, 0.05);
         background-color: $lightgray;
         .call-to-action {
             font-size: 1.5em;
-            /* text-transform: uppercase; */
             margin-top: .5em;
             font-weight: bold;
             color: $blue;
