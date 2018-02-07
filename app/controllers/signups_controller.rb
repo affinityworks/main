@@ -6,17 +6,13 @@ class SignupsController < ApplicationController
   # POST /groups/:group_id/signup_forms/:signup_form_id/signup/
 
   def create
-    # TODO move all persistence logic to Group.create_member_from_signup
-    @member = @group.members.new(person_params)
-    if @member.save # if @member.create_from_signup(person_params)
-      @group.memberships.create(:person => @member, :role => 'member')
-      # @group.signup.create(membership: membership, source: params.require(signup_form_id))
-      redirect_to group_member_path(@group, @member), notice: "You joined #{@group.name}"
+    @member = Person.create_from_signup(@form, @group, person_params)
+    if @member.errors.any?
+      # TODO: render signup_form with errors
+      raise "Error creating member."
     else
-      raise Exception.new(@member.errors.full_messages)
+      redirect_to group_member_path(@group, @member), notice: "You joined #{@group.name}"
     end
-  # rescue Exception => e
-  #   binding.pry
   end
 
   private

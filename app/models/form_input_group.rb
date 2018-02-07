@@ -25,17 +25,12 @@ class FormInputGroup < ApplicationRecord
   after_initialize :parse_sets
 
   def parse_sets
-    @valid_input_set = self.class.valid_inputs.to_set
+    @valid_input_set = self.class::VALID_INPUTS.to_set
     @input_set = self.inputs.to_set
     @required_set = self.required.to_set
   end
 
   # ABSTRACT METHODS
-
-  # () -> Array<String>
-  def self.valid_inputs
-    raise NotImplementedError
-  end
 
   # () -> Symbol
   def resource
@@ -48,7 +43,7 @@ class FormInputGroup < ApplicationRecord
 
   def inputs_valid
     if inputs.present? && !@input_set.subset?(@valid_input_set)
-      errors.add :inputs,"must be one of: #{self.class.valid_inputs}.join(', ')"
+      errors.add :inputs,"must be one of: #{@valid_input_set}.join(', ')"
     end
   end
 
@@ -63,6 +58,6 @@ class FormInputGroup < ApplicationRecord
   # ACCESSORS
 
   def sorted_inputs
-    self.class.valid_inputs & inputs
+    self.class::VALID_INPUTS & inputs
   end
 end

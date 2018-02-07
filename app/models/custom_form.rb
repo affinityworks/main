@@ -45,4 +45,9 @@ class CustomForm < ApplicationRecord
   def nested_input_groups
     NESTED_INPUT_GROUPS.map { |a| send(a) }
   end
+
+  # Person -> Array<EmailAddress|PhoneNumber|Address>
+  def nested_resources_for(person)
+    nested_input_groups.map { |input_group| person.send(input_group.resource) }
+  end
 end

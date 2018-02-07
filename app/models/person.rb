@@ -42,6 +42,7 @@
 class Person < ApplicationRecord
   include Api::Identifiers
   include ArelHelpers::ArelTable
+  include CanSignup
 
   acts_as_taggable
   has_paper_trail ignore: [:created_at, :updated_at]

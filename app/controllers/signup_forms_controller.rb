@@ -18,11 +18,6 @@ class SignupFormsController < ApplicationController
   end
 
   def set_member
-    @member = Person.new
-    @form.nested_input_groups.each do |input_group|
-      @member.send(input_group.resource).build
-    end
-    # TODO: accomplish the building above with:
-    # @member = Person.from_signup @form
+    @member = Person.build_for_signup(@form)
   end
 end
