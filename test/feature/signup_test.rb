@@ -1,11 +1,11 @@
 require_relative "../test_helper"
 
-class SignupForms < FeatureTest
+class Signup < FeatureTest
 
   let(:form){ custom_forms(:group_signup) }
   before { visit "/groups/#{form.group.id}/signup_forms/#{form.id}/signups/new" }
 
-  describe "viewing form" do
+  describe "viewing signup form" do
 
     it "has a title" do
       page.must_have_content form.title
@@ -35,7 +35,7 @@ class SignupForms < FeatureTest
     end
   end
 
-  describe "submitting form" do
+  describe "submitting signup form" do
     let(:input_groups){ CustomForm::INPUT_GROUPS.map{ |ig| form.send(ig) } }
     let(:person_count){ Person.count }
     let(:membership_count){ Membership.count }
@@ -73,7 +73,8 @@ class SignupForms < FeatureTest
         fill_out_form(
           person_email_addresses_attributes_0_address: 'invalid',
           person_phone_numbers_attributes_0_number: 'invalid',
-          person_personal_addresses_attributes_0_region: 'invalid'
+          person_personal_addresses_attributes_0_region: 'invalid',
+          person_personal_addresses_attributes_0_postal_code: 'invalid'
         )
         click_button form.submit_text
       end
@@ -86,19 +87,25 @@ class SignupForms < FeatureTest
       end
 
       it "shows an error for invalid email address" do
-        page.must_have_content
-        "Email address 'invalid' does not match" +
-          "(?i-mx:\\A([^@\\s]+)@((?:[-a-z0-9]+\\.)+[a-z]{2,})\\z)"
+        page.must_have_content(
+          "Email address 'invalid' is not a valid email address"
+        )
       end
 
       it "shows an error for invalid phone number" do
-        page.must_have_content
-        "Phone number only numbers format are allowed"
+        page.must_have_content(
+          "Phone number invalid is not a valid phone number"
+        )
+      end
+
+      it "shows an error for invalid postal code" do
+        page.must_have_content(
+          "Postal code invalid is not a valid postal code"
+        )
       end
 
       it "shows an error for invalid state" do
-        page.must_have_content
-        "State must"
+        page.must_have_content("State invalid must be one of:")
       end
     end
 

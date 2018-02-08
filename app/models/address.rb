@@ -31,6 +31,8 @@ class Address < ApplicationRecord
                      NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV
                      WI WY AS DC FM GU MH MP PW PR VI ]
 
+  POSTAL_CODE_FORMAT = /\A[0-9|-]*\z/
+
   include ArelHelpers::ArelTable
 
   serialize :address_lines, Array
@@ -38,10 +40,12 @@ class Address < ApplicationRecord
   belongs_to :person
 
   validates :region,
-            inclusion: {
-              in: VALID_STATES + [nil, ""],
-              message: "%{value} must be one of: #{VALID_STATES.join(', ')}",
-            }
+            inclusion: { in: VALID_STATES + [nil, ""],
+                         message: "%{value} must be one of: #{VALID_STATES.join(', ')}", }
+
+  validates :postal_code,
+            format: { with: POSTAL_CODE_FORMAT,
+                      message: "%{value} is not a valid postal code" }
 
 
   acts_as_mappable default_units: :miles,

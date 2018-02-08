@@ -19,7 +19,9 @@ class EmailAddress < ApplicationRecord
 
   validates :address, uniqueness: true
   validates :address, presence: true
-  validates :address, format: { with: ADDRESS_FORMAT, message: "'%{value}' does not match #{ADDRESS_FORMAT}" }
+  validates :address,
+            format: { with: ADDRESS_FORMAT,
+                      message: "'%{value}' is not a valid email address" }
 
   belongs_to :person
 
