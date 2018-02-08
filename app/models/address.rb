@@ -37,9 +37,10 @@ class Address < ApplicationRecord
 
   belongs_to :person
 
-  validates :region, inclusion: {
-              in: VALID_STATES,
-              message: "%{value} must be one of: #{VALID_STATES.join(', ')}"
+  validates :region,
+            inclusion: {
+              in: VALID_STATES + [nil, ""],
+              message: "%{value} must be one of: #{VALID_STATES.join(', ')}",
             }
 
 

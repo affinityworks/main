@@ -9,7 +9,7 @@ module CanSignup
 
     def build_signup_resources_for(form)
       signup_resources_for(form).each do |resources|
-        resources.build(primary: true)
+        resources.build(primary: true) if resources.empty?
       end
     end
   end

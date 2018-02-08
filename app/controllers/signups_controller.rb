@@ -48,7 +48,7 @@ class SignupsController < ApplicationController
 
   def arrayify_address_lines(p)
     p.dig(:personal_addresses_attributes, '0').tap do |h|
-      h.merge!(address_lines: [h.fetch(:address_lines)])
+      h.merge!(address_lines: [h.fetch(:address_lines, nil)])
     end
   end
 
