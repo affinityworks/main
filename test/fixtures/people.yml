@@ -73,6 +73,7 @@ member2:
   given_name: Test
   encrypted_password: $2a$11$08m64awvoVFg4sLOu.zA6e70E98bWC2VNewFWUNYjtnvutb/K68xK
 
+
 organizer:
   id: 6
   identifiers: ['advocacycommons:6']
@@ -81,7 +82,7 @@ organizer:
   encrypted_password: $2a$11$08m64awvoVFg4sLOu.zA6e70E98bWC2VNewFWUNYjtnvutb/K68xK
 
 new_signup:
-  #identifiers: ['advocacycommons:2', 'foreign_system:473298']
+  identifiers: ['advocacycommons:473298', 'foreign_system:473298']
   given_name: Alice
   family_name: Wonderland
   additional_name: Sr.
@@ -100,6 +101,6 @@ new_signup:
   encrypted_password: $2a$11$08m64awvoVFg4sLOu.zA6e70E98bWC2VNewFWUNYjtnvutb/K68xK
   custom_fields:
     phone: iPhone
-  #created_at: 2016-12-18 19:30:05
-  #updated_at: 2016-12-18 19:30:05
+  created_at: 2016-12-18 19:30:05
+  updated_at: 2016-12-18 19:30:05
   employer: Aspiration Tech

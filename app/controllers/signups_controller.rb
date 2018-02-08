@@ -1,27 +1,38 @@
 class SignupsController < ApplicationController
 
-  before_action :set_group, only: [:create]
-  before_action :set_form, only: [:create]
+  before_action :set_form, only: %i[new create]
+  before_action :set_group, only: %i[new create]
+  before_action :set_member, only: %i[new]
 
-  # POST /groups/:group_id/signup_forms/:signup_form_id/signup/
+  # GET /groups/:group_id/signup_forms/:signup_form_id/new
+  def new; end
 
+  # POST /groups/:group_id/signup_forms/:signup_form_id/signup
   def create
     @member = Person.create_from_signup(@form, @group, person_params)
     if @member.errors.any?
-      render template: 'signup_forms/show'
+      @member.build_signup_resources_for(@form)
+      render :new
     else
-      redirect_to group_member_path(@group, @member), notice: "You joined #{@group.name}"
+      redirect_to group_member_path(@group, @member),
+                  notice: "You joined #{@group.name}"
     end
   end
 
   private
 
-  def set_group
-    @group = Group.find(params.require(:group_id).to_i)
+  def set_form
+    @form = SignupForm
+              .includes(:group)
+              .find(params.require(:signup_form_id).to_i)
   end
 
-  def set_form
-    @form = SignupForm.find(params.require(:signup_form_id).to_i)
+  def set_group
+    @group = @form.group
+  end
+
+  def set_member
+    @member = Person.build_for_signup(@form)
   end
 
   def person_params
@@ -33,23 +44,5 @@ class SignupsController < ApplicationController
       email_addresses_attributes: EmailInputGroup::VALID_INPUTS,
       personal_addresses_attributes: AddressInputGroup::VALID_INPUTS]
     )
-  end
-
-  def email_addresses_attributes_params
-    [:primary,
-     :address_type,
-     :address]
-  end
-
-  def personal_addresses_attributes_params
-    [:address_type,
-     :primary,
-     :address_lines,
-     :locality,
-     :region,
-     :postal_code,
-     :country,
-     :occupation,
-     :venue]
   end
 end

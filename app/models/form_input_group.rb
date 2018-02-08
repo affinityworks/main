@@ -15,6 +15,13 @@ class FormInputGroup < ApplicationRecord
 
   attr_reader :required_set
 
+  # CONSTANTS
+
+  # subclasses should override these
+  RESOURCE = nil
+  VALID_INPUTS = []
+  ALIASES = {}
+
   # ASSOCIATIONS
 
   belongs_to :custom_form
@@ -30,11 +37,32 @@ class FormInputGroup < ApplicationRecord
     @required_set = self.required.to_set
   end
 
+  # CLASS METHODS
+
+  def self.label_for(input)
+    self::ALIASES.fetch(input, input).titleize
+  end
+
+  def self.error_for(msg)
+    self::ALIASES.keys.reduce(msg) do |acc, aliased_str|
+      acc
+        .sub(self::RESOURCE.to_s.gsub("_", " "), '')
+        .sub(aliased_str.gsub("_", " "), self::ALIASES.fetch(aliased_str))
+    end
+  end
+
+  def self.error_for_many(input_groups, msg)
+    input_groups.reduce(msg.downcase){ |acc, ig| ig.class.error_for(acc) }
+      .lstrip
+      .capitalize
+  end
+
   # ABSTRACT METHODS
 
   # () -> Symbol
   def resource
-    raise NotImplementedError
+    raise NotImplementedError unless self.class::RESOURCE
+    self.class::RESOURCE
   end
 
   # VALIDATIONS
@@ -55,9 +83,11 @@ class FormInputGroup < ApplicationRecord
     end
   end
 
-  # ACCESSORS
+  # INSTANCE METHODS
 
   def sorted_inputs
     self.class::VALID_INPUTS & inputs
   end
+
+
 end

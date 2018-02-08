@@ -18,12 +18,23 @@ class EmailInputGroupTest < ActiveSupport::TestCase
       EmailInputGroup::VALID_INPUTS.wont_be_empty
     end
 
-    it "implements .valid_inputs" do
-      EmailInputGroup.valid_inputs.must_equal EmailInputGroup::VALID_INPUTS
+    it "provides RESOURCE" do
+      EmailInputGroup::RESOURCE.wont_be_nil
     end
 
-    it "implements #resource" do
+    it "provides ALIASES" do
+      EmailInputGroup::ALIASES.wont_be_nil
+    end
+
+
+    it "provides a message for accessing its nested resources" do
       email_input_group.resource.must_equal :email_addresses
+    end
+
+    it "provides aliases for field labels" do
+      EmailInputGroup.label_for('primary').must_equal 'Primary'
+      EmailInputGroup.label_for('address_type').must_equal 'Email Address Type'
+      EmailInputGroup.label_for('address').must_equal 'Email Address'
     end
   end
 end

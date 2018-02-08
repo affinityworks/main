@@ -2,9 +2,21 @@ require_relative '../test_helper'
 
 class FormInputGroupTest < ActiveSupport::TestCase
 
+  class ::AbstractInputGroup < FormInputGroup
+  end
+
   class ::FakeInputGroup < FormInputGroup
+    RESOURCE = :fakes
     VALID_INPUTS = ['foo', 'bar', 'baz']
-    def self.valid_inputs; VALID_INPUTS; end
+    ALIASES = HashWithIndifferentAccess.new(
+      foo: "proper foo",
+      bar: "barrr"
+    )
+  end
+
+  class ::AnotherFakeInputGroup < FormInputGroup
+    RESOURCE = :more_fakes
+    ALIASES = HashWithIndifferentAccess.new(baz_bam: 'bazinga!')
   end
 
   class ::FakeCustomForm < CustomForm; end
@@ -40,12 +52,46 @@ class FormInputGroupTest < ActiveSupport::TestCase
 
   describe "interface" do
 
-    it "has an abstract .valid_inputs method" do
-      ->{ FormInputGroup.valid_inputs }.must_raise NotImplementedError
+    it "has nil RESOURCE" do
+      FormInputGroup::RESOURCE.must_be_nil
+    end
+
+    it "has empty VALID_INPUTS" do
+      FormInputGroup::VALID_INPUTS.must_be_empty
+    end
+
+    it "has empty ALIASES" do
+      FormInputGroup::ALIASES.must_be_empty
     end
 
     it "has an abstract #resource method" do
-      ->{ input_group.resource }.must_raise NotImplementedError
+      ->{ FormInputGroup.new.resource }.must_raise NotImplementedError
+    end
+
+    describe "a concrete instance" do
+
+      it "provides a message for accessing nested resources" do
+        input_group.resource.must_equal :fakes
+      end
+
+      it "provides aliases for field labels" do
+        FakeInputGroup.label_for('foo').must_equal "Proper Foo"
+      end
+
+      it "provides aliases for error emssages" do
+        FakeInputGroup.error_for("hi there").must_equal "hi there"
+        FakeInputGroup.error_for("hi foo bar").must_equal "hi proper foo barrr"
+        FakeInputGroup.error_for("foo foo bar bar").must_equal "proper foo foo barrr bar"
+      end
+
+      it "replaces field names with aliases for many input groups" do
+        FormInputGroup.error_for_many(
+          [FakeInputGroup.new, AnotherFakeInputGroup.new],
+          "Baz bam Foo",
+        ).must_equal(
+          "Bazinga! proper foo"
+        )
+      end
     end
   end
 

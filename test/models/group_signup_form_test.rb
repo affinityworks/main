@@ -2,7 +2,7 @@ require_relative '../test_helper'
 
 class SignupFormTest < ActiveSupport::TestCase
 
-  let(:signup_form){ group_signup_forms(:one) }
+  let(:signup_form){ signup_forms(:one) }
 
   specify "inheritance" do
     signup_form.must_be_kind_of CustomForm

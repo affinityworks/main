@@ -3,11 +3,11 @@ require_relative "../test_helper"
 class SignupForms < FeatureTest
 
   let(:form){ custom_forms(:group_signup) }
-  before { visit "/groups/#{form.group.id}/signup_forms/#{form.id}" }
+  before { visit "/groups/#{form.group.id}/signup_forms/#{form.id}/signups/new" }
 
   describe "viewing form" do
 
-    it "has a " do
+    it "has a title" do
       page.must_have_content form.title
     end
 
@@ -26,8 +26,10 @@ class SignupForms < FeatureTest
     it "has inputs for creating a member" do
       CustomForm::INPUT_GROUPS.each do |input_group|
         form.send(input_group).inputs.each do |input|
-          selector = input_selector_for(form.send(input_group), input)
-          page.find(selector)['placeholder'].must_equal input.titleize
+          ig = form.send(input_group)
+          page
+            .find(input_selector_for(ig, input))['placeholder']
+            .must_equal(ig.class.label_for(input))
         end
       end
     end
@@ -78,8 +80,12 @@ class SignupForms < FeatureTest
       # TODO (aguestuser|07-Feb-2018)
       # these error messages are T.R.A.S.H.
 
+      it "uses field name aliases in error messages" do
+        page.must_have_content "First name"
+      end
+
       it "shows an error for missing fields" do
-        page.must_have_content "Family name can't be blank"
+        page.must_have_content "can't be blank"
       end
 
       it "shows an error for invalid email address" do

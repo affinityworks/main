@@ -1,6 +1,6 @@
 class PersonInputGroup < FormInputGroup
 
-  # CONSTANTS
+  RESOURCE = :person
 
   VALID_INPUTS = [
     'given_name',
@@ -14,7 +14,8 @@ class PersonInputGroup < FormInputGroup
     #'party_identification' dropdown?
   ].freeze
 
-  # CLASS METHODS
-
-  def resource; :person; end
+  ALIASES = HashWithIndifferentAccess.new(
+    given_name: 'first name',
+    family_name: 'last name'
+  ).freeze
 end

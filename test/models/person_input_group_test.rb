@@ -14,12 +14,27 @@ class PersonInputGroupTest < ActiveSupport::TestCase
 
   describe "interface" do
 
-    it "implements .valid_inputs" do
-      PersonInputGroup.valid_inputs.must_equal PersonInputGroup::VALID_INPUTS
+    it "provides VALID_INPUTS" do
+      PersonInputGroup::VALID_INPUTS.wont_be_empty
     end
 
-    it "implements #resource" do
+    it "provides RESOURCE" do
+      PersonInputGroup::RESOURCE.wont_be_nil
+    end
+
+    it "provides ALIASES" do
+      PersonInputGroup::ALIASES.wont_be_nil
+    end
+
+
+    it "provides a message for accessing its nested resoruces" do
       person_input_group.resource.must_equal :person
+    end
+
+    it "provides aliases for field labels" do
+      PersonInputGroup.label_for('birthdate').must_equal 'Birthdate'
+      PersonInputGroup.label_for('given_name').must_equal 'First Name'
+      PersonInputGroup.label_for('family_name').must_equal 'Last Name'
     end
   end
 end

@@ -1,5 +1,7 @@
 class PhoneInputGroup < FormInputGroup
 
+  RESOURCE = :phone_numbers
+
   VALID_INPUTS = [
     'number_type',
     'primary',
@@ -11,6 +13,9 @@ class PhoneInputGroup < FormInputGroup
     'description',
   ].freeze
 
-  def resource; :phone_numbers; end
+  ALIASES = HashWithIndifferentAccess.new(
+    number_type: 'phone number type',
+    number: 'phone number'
+  ).freeze
 
 end

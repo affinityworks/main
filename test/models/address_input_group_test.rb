@@ -18,12 +18,23 @@ class AddressInputGroupTest < ActiveSupport::TestCase
       AddressInputGroup::VALID_INPUTS.wont_be_empty
     end
 
-    it "implements .valid_inputs" do
-      AddressInputGroup.valid_inputs.must_equal AddressInputGroup::VALID_INPUTS
+    it "provides RESOURCE" do
+      AddressInputGroup::RESOURCE.wont_be_nil
     end
 
-    it "implements #resource" do
+    it "provides ALIASES" do
+      AddressInputGroup::ALIASES.wont_be_empty
+    end
+
+    it "provides a message for accessing its nested resoruces" do
       address_input_group.resource.must_equal :personal_addresses
+    end
+
+    it "provides aliases for field labels" do
+      AddressInputGroup.label_for('primary').must_equal('Primary')
+      AddressInputGroup.label_for('address_lines').must_equal('Address')
+      AddressInputGroup.label_for('locality').must_equal('City')
+      AddressInputGroup.label_for('region').must_equal('State')
     end
   end
 end

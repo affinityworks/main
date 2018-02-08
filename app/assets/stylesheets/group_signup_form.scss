@@ -4,6 +4,12 @@ $lightgray: rgba(0, 0, 0, 0.05);
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    .field_with_errors {
+        @extend .alert;
+        padding: inherit;
+        margin: 0;
+        background-color: red;
+    }
     .content {
         display: flex;
         max-width: 66%;

@@ -18,12 +18,22 @@ class PhoneInputGroupTest < ActiveSupport::TestCase
       PhoneInputGroup::VALID_INPUTS.wont_be_empty
     end
 
-    it "implements .valid_inputs" do
-      PhoneInputGroup.valid_inputs.must_equal PhoneInputGroup::VALID_INPUTS
+    it "provides RESOURCE" do
+      PhoneInputGroup::RESOURCE.wont_be_nil
     end
 
-    it "implements #resource" do
+    it "provides ALIASES" do
+      PhoneInputGroup::ALIASES.wont_be_empty
+    end
+
+    it "provides a message for accessing its nested resoruces" do
       phone_input_group.resource.must_equal :phone_numbers
+    end
+
+    it "provides aliases for field labels" do
+      PhoneInputGroup.label_for('primary').must_equal('Primary')
+      PhoneInputGroup.label_for('number_type').must_equal('Phone Number Type')
+      PhoneInputGroup.label_for('number').must_equal('Phone Number')
     end
   end
 end

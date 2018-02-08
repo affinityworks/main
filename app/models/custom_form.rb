@@ -42,8 +42,12 @@ class CustomForm < ApplicationRecord
 
   # ACCESSORS
 
+  def input_groups
+    INPUT_GROUPS.map { |msg| send(msg) }
+  end
+
   def nested_input_groups
-    NESTED_INPUT_GROUPS.map { |a| send(a) }
+    NESTED_INPUT_GROUPS.map { |msg| send(msg) }
   end
 
   # Person -> Array<EmailAddress|PhoneNumber|Address>

@@ -15,7 +15,8 @@
 
       <div class="right-aside">
 
-        <%= render partial: "members/error_alert" %>
+        <%= render partial: "error_alert",
+                   locals: { resource: @member, input_groups: @form.input_groups }%>
 
         <div class="call-to-action">
           <%= @form.call_to_action.titleize %>
@@ -27,7 +28,7 @@
 
           <% @form.person_input_group.inputs.each do |input| %>
             <div class="entry">
-              <%= f.text_field input, placeholder: input.titleize %>
+              <%= f.text_field input, placeholder: PersonInputGroup.label_for(input) %>
             </div>
           <% end # @form.person_input_groups.each do |input| %>
 
@@ -35,7 +36,7 @@
             <%= f.fields_for input_group.resource do |ff| %>
               <% input_group.inputs.each do |input| %>
                 <div class="entry">
-                  <%= ff.text_field input, placeholder: input.titleize %>
+                  <%= ff.text_field input, placeholder: input_group.class.label_for(input) %>
                 </div>
               <% end # each |input| %>
             <% end # f.fields_for input_group.resource do |ff|  %>

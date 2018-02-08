@@ -7,14 +7,17 @@ module CanSignup
       form.nested_input_groups.map { |input_group| send(input_group.resource) }
     end
 
+    def build_signup_resources_for(form)
+      signup_resources_for(form).each do |resources|
+        resources.build(primary: true)
+      end
+    end
   end
 
   class_methods do
 
     def build_for_signup(form)
-      Person.new.tap do |p|
-        p.signup_resources_for(form).each { |rs| rs.build(primary: true) }
-      end
+      Person.new.tap { |p| p.build_signup_resources_for form }
     end
 
     def create_from_signup(form, group, person_attrs)
