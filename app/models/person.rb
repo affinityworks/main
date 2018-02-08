@@ -77,8 +77,6 @@ class Person < ApplicationRecord
   has_many :organizer_memerships, -> { organizer }, :class_name => 'Membership'
   has_many :organized_groups, :source => :group, :through => :organizer_memerships
 
-  validates :family_name, :given_name, presence: true
-
   before_update :generate_update_events
 
   attr_accessor :attended_events_count #NOTE ROAR purpose

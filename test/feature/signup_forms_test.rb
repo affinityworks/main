@@ -72,7 +72,8 @@ class SignupForms < FeatureTest
       before do
         fill_out_form(
           person_email_addresses_attributes_0_address: 'invalid',
-          person_phone_numbers_attributes_0_number: 'invalid'
+          person_phone_numbers_attributes_0_number: 'invalid',
+          person_personal_addresses_attributes_0_region: 'invalid'
         )
         click_button form.submit_text
       end
@@ -80,23 +81,24 @@ class SignupForms < FeatureTest
       # TODO (aguestuser|07-Feb-2018)
       # these error messages are T.R.A.S.H.
 
-      it "uses field name aliases in error messages" do
-        page.must_have_content "First name"
-      end
-
-      it "shows an error for missing fields" do
-        page.must_have_content "can't be blank"
+      it "allows blank fields" do
+        page.wont_have_content "First name can't be blank"
       end
 
       it "shows an error for invalid email address" do
         page.must_have_content
-        "Email addresses address 'invalid' does not match" +
+        "Email address 'invalid' does not match" +
           "(?i-mx:\\A([^@\\s]+)@((?:[-a-z0-9]+\\.)+[a-z]{2,})\\z)"
       end
 
       it "shows an error for invalid phone number" do
         page.must_have_content
-        "Phone numbers number Only numbers format are allowed"
+        "Phone number only numbers format are allowed"
+      end
+
+      it "shows an error for invalid state" do
+        page.must_have_content
+        "State must"
       end
     end
 

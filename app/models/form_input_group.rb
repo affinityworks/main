@@ -17,6 +17,13 @@ class FormInputGroup < ApplicationRecord
 
   # CONSTANTS
 
+  INPUT_GROUP_CLASSNAMES = %w[
+    EmailInputGroup
+    PhoneInputGroup
+    AddressInputGroup
+    PersonInputGroup
+  ]
+
   # subclasses should override these
   RESOURCE = nil
   VALID_INPUTS = []
@@ -45,16 +52,28 @@ class FormInputGroup < ApplicationRecord
 
   def self.error_for(msg)
     self::ALIASES.keys.reduce(msg) do |acc, aliased_str|
-      acc
-        .sub(self::RESOURCE.to_s.gsub("_", " "), '')
-        .sub(aliased_str.gsub("_", " "), self::ALIASES.fetch(aliased_str))
+      acc.sub(
+        aliased_str.gsub("_", " "),
+        self::ALIASES.fetch(aliased_str)
+      )
     end
   end
 
   def self.error_for_many(input_groups, msg)
-    input_groups.reduce(msg.downcase){ |acc, ig| ig.class.error_for(acc) }
-      .lstrip
-      .capitalize
+    _msg = strip_resource_names(input_groups, msg)
+    input_groups.reduce(_msg) do |acc, ig|
+      ig.class.error_for(acc)
+    end.lstrip.camelcase
+  end
+
+  def self.strip_resource_names(input_groups, str)
+    FormInputGroup::INPUT_GROUP_CLASSNAMES
+      .reduce(str.camelcase(:lower)) do |acc, klass_name|
+      acc.sub(
+        klass_name.constantize::RESOURCE.to_s.gsub("_", " "),
+        ""
+      )
+    end
   end
 
   # ABSTRACT METHODS

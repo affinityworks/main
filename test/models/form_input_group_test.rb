@@ -87,9 +87,9 @@ class FormInputGroupTest < ActiveSupport::TestCase
       it "replaces field names with aliases for many input groups" do
         FormInputGroup.error_for_many(
           [FakeInputGroup.new, AnotherFakeInputGroup.new],
-          "Baz bam Foo",
+          "Email addresses baz bam Foo",
         ).must_equal(
-          "Bazinga! proper foo"
+          "Bazinga! Foo"
         )
       end
     end

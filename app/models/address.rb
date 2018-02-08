@@ -25,9 +25,24 @@
 #
 
 class Address < ApplicationRecord
+
+  VALID_STATES = %w[ AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS
+                     KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY
+                     NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV
+                     WI WY AS DC FM GU MH MP PW PR VI ]
+
   include ArelHelpers::ArelTable
+
   serialize :address_lines, Array
+
   belongs_to :person
+
+  validates :region, inclusion: {
+              in: VALID_STATES,
+              message: "%{value} must be one of: #{VALID_STATES.join(', ')}"
+            }
+
+
   acts_as_mappable default_units: :miles,
                    default_formula: :sphere,
                    distance_field_name: :distance,

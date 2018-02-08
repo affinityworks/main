@@ -58,7 +58,7 @@ class EventsControllerTest < ActionDispatch::IntegrationTest
     sign_in person
 
     location_attributes = { address_lines: ['asdas'], locality: 'asd', venue: 'asdasd',
-                            postal_code: '1245', region: 'asd' }
+                            postal_code: '12345', region: 'TX' }
     event_attributes = { event: { title: 'asdasd', start_date: '2017-12-31T09:10:20.000Z',
                                   origin_system: 'Affinity', description: 'description',
                                   location_attributes: location_attributes },

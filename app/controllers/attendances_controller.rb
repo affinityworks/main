@@ -109,7 +109,7 @@ class AttendancesController < ApplicationController
   def new_attendance_params
     params.require(:attendance).permit(
       :primary_email_address, :family_name, :given_name, :primary_phone_number,
-      primary_personal_address: [:locality, { address_lines: [] }, :postal_code]
+      primary_personal_address: [:locality, { address_lines: [] }, :postal_code, :region]
     )
   end
 end
