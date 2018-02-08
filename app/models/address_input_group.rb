@@ -5,7 +5,7 @@ class AddressInputGroup < FormInputGroup
   VALID_INPUTS = [
     'address_type',
     'primary',
-    #'address_lines', TODO: need to parse joined string as array
+    'address_lines',
     'locality',
     'region',
     'postal_code',

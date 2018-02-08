@@ -41,8 +41,15 @@ class SignupsController < ApplicationController
       # permit ethnicities, languages, custom (see MembersController)
       PersonInputGroup::VALID_INPUTS +
       [phone_numbers_attributes: PhoneInputGroup::VALID_INPUTS,
-      email_addresses_attributes: EmailInputGroup::VALID_INPUTS,
-      personal_addresses_attributes: AddressInputGroup::VALID_INPUTS]
-    )
+       email_addresses_attributes: EmailInputGroup::VALID_INPUTS,
+       personal_addresses_attributes: AddressInputGroup::VALID_INPUTS]
+    ).tap{ |p| arrayify_address_lines(p) }
   end
+
+  def arrayify_address_lines(p)
+    p.dig(:personal_addresses_attributes, '0').tap do |h|
+      h.merge!(address_lines: [h.fetch(:address_lines)])
+    end
+  end
+
 end
