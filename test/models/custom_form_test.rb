@@ -9,15 +9,18 @@ class CustomFormTest < ActiveSupport::TestCase
   end
 
   let(:custom_form){ custom_forms(:abstract) }
+  let(:form_attributes) do
+    {
+      name: 'foo',
+      title: 'bar',
+      description: 'baz',
+      call_to_action: 'bam',
+    }
+  end
 
   def create_form
     FakeCustomForm.create!(
-      form_attributes: {
-        name: 'foo',
-        title: 'bar',
-        description: 'baz',
-        call_to_action: 'bam',
-      },
+      form_attributes: form_attributes,
       person_input_group_attributes: { inputs: [] },
       phone_input_group_attributes: { inputs: [] },
       email_input_group_attributes: { inputs: [] },
@@ -30,18 +33,28 @@ class CustomFormTest < ActiveSupport::TestCase
     custom_form.must_be_kind_of CustomForm
   end
 
-  specify "associations" do
-    custom_form.form.must_be_instance_of Form
-    custom_form.group.must_be_instance_of Group
-    custom_form.person_input_group.must_be_kind_of PersonInputGroup
-    custom_form.email_input_group.must_be_kind_of EmailInputGroup
-    custom_form.phone_input_group.must_be_kind_of PhoneInputGroup
-    custom_form.address_input_group.must_be_kind_of AddressInputGroup
-  end
+  describe "associations" do
 
-  describe "dependencies" do
+    it "has a nested form and group" do
+      custom_form.form.must_be_instance_of Form
+      custom_form.group.must_be_instance_of Group
+    end
 
-    it "destroys associatited input groups when destroyed" do
+    it "has nested form input groups" do
+      custom_form.person_input_group.must_be_kind_of PersonInputGroup
+      custom_form.email_input_group.must_be_kind_of EmailInputGroup
+      custom_form.phone_input_group.must_be_kind_of PhoneInputGroup
+      custom_form.address_input_group.must_be_kind_of AddressInputGroup
+    end
+
+    it "initializes builds empty input groups when none are provided" do
+      f = FakeCustomForm.new(form_attributes: form_attributes)
+      CustomForm::NESTED_INPUT_GROUPS.each { |ig| f.send(ig).must_be_nil }
+      f.save
+      CustomForm::NESTED_INPUT_GROUPS.each { |ig| f.send(ig).wont_be_nil }
+    end
+
+    it "destroys associatied input groups when destroyed" do
       decrement = CustomForm::INPUT_GROUPS.count * -1
       form = create_form
 
@@ -50,6 +63,10 @@ class CustomFormTest < ActiveSupport::TestCase
       end
     end
   end
+
+
+
+
 
   describe "validations" do
 

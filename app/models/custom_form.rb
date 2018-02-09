@@ -36,16 +36,28 @@ class CustomForm < ApplicationRecord
     accepts_nested_attributes_for input_group
   end
 
+  # LIFE CYCLE HOOKS
+
+  before_create :build_empty_nests
+
+  def build_empty_nests
+    NESTED_INPUT_GROUPS.each do |input_group|
+      self.send("build_#{input_group}".to_sym) unless send(input_group).present?
+    end
+  end
+
   # VALIDATIONS
 
   validates_presence_of :type
 
   # ACCESSORS
 
+  # Array<Symbol>(implicit) -> Array<FormInputGroup>
   def input_groups
     INPUT_GROUPS.map { |msg| send(msg) }
   end
 
+  # Array<Symbol>(implicit) -> Array<FormInputGroup>
   def nested_input_groups
     NESTED_INPUT_GROUPS.map { |msg| send(msg) }
   end

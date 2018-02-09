@@ -109,16 +109,18 @@ class Signup < FeatureTest
       end
     end
 
-    private
-
-    def count_contact_infos
-      EmailAddress.count + PersonalAddress.count + PhoneNumber.count
+    describe "in a form that lacks any address input" do
+      it "should not throw an error on submit"
+      # NOTE: (aguestuser|08 Feb 2018)
+      # left pending to denote bug fixed in 075c8c2a
     end
-
   end
 
   private
 
+  def count_contact_infos
+    EmailAddress.count + PersonalAddress.count + PhoneNumber.count
+  end
   def input_selector_for(input_group, input)
     case input_group
     when PersonInputGroup
