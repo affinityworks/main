@@ -2,10 +2,16 @@ ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require 'webmock/minitest'
+require "minitest/matchers"
+require "minitest/autorun"
+require 'minitest/focus'
+require 'valid_attribute'
+require_relative "./helpers/feature_test_helper"
 
 OmniAuth.config.test_mode = true
 
 class ActiveSupport::TestCase
+  include ::ValidAttribute::Method
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   fixtures :all
 
@@ -14,5 +20,5 @@ end
 
 
 class ActionDispatch::IntegrationTest
-    include Devise::Test::IntegrationHelpers
+  include Devise::Test::IntegrationHelpers
 end

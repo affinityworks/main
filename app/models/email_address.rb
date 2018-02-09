@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: email_addresses
+#
+#  id           :integer          not null, primary key
+#  primary      :boolean
+#  address      :string
+#  address_type :string
+#  status       :string
+#  person_id    :integer
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#
+
 class EmailAddress < ApplicationRecord
   has_paper_trail
 
@@ -5,7 +19,9 @@ class EmailAddress < ApplicationRecord
 
   validates :address, uniqueness: true
   validates :address, presence: true
-  validates :address, format: { with: ADDRESS_FORMAT, message: "'%{value}' does not match #{ADDRESS_FORMAT}" }
+  validates :address,
+            format: { with: ADDRESS_FORMAT,
+                      message: "'%{value}' is not a valid email address" }
 
   belongs_to :person
 

@@ -14,10 +14,12 @@
  */
 
  // Custom bootstrap variables must be set or imported before bootstrap itself.
- @import "bootstrap";
+@import "bootstrap";
+@import "./group_signup_form.scss";
 
 $red: #d9534f;
 $green: #5cb85c;
+$lightgray: #3b5998;
 
 .btn-facebook {
   background-color: #3b5998;

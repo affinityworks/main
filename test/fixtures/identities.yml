@@ -11,3 +11,9 @@ organizer:
   uid: 'exampleUIDFacebook2'
   person_id: 6 #Organizer id
   access_token: 'access_token'
+
+new_signup:
+  provider: 'facebook'
+  uid: 'exampleUIDFacebook3'
+  person: new_signup
+  access_token: 'fake_access_token'

@@ -63,6 +63,10 @@ Rails.application.routes.draw do
   resources :groups do
     get '/dashboard', to: 'dashboard#show', as: 'dashboard'
 
+    resources :signup_forms, only: [] do
+      resources :signups, only: %i[new create]
+    end
+
     resources :members do
       get :attendances, on: :member
       resources :events
@@ -91,6 +95,7 @@ Rails.application.routes.draw do
         post :import_remote, on: :collection
       end
     end
+
   end
 
   resources :dashboard, only: [:index]

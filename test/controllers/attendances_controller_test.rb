@@ -130,7 +130,8 @@ class AttendancesControllerTest < ActionDispatch::IntegrationTest
             primary_personal_address: {
               postal_code: '54000',
               address_lines: ['123 Some Street'],
-              locality: 'Some locality'
+              locality: 'Some locality',
+              region: 'NY'
             }
           }
         }

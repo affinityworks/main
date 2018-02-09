@@ -13,6 +13,7 @@ one:
   total_submissions: 1
   person_id: 1
   creator_id: 1
+  submit_text: "Submit"
 
 two:
   id: 2
@@ -27,3 +28,24 @@ two:
   total_submissions: 1
   person_id: 2
   creator_id: 2
+
+group_signup:
+  # id: 3
+  # ^-- (so we can reference this as `form: group_signup_form`, not `form_id: 3`
+  origin_system: "Affinity"
+  name: "signup_page_1"
+  title: "Our group is great"
+  description: "<ul> \
+    <li>Morbi in sem quis dui placerat ornare. Pellentesque odio nisi, euismod in, pharetra a, ultricies in, diam. Sed arcu. Cras consequat.</li> \
+    <li>Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus.</li> \
+    <li>Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus. Nam nulla quam, gravida non, commodo a, sodales sit amet, nisi.</li> \
+    <li>Pellentesque fermentum dolor. Aliquam quam lectus, facilisis auctor, ultrices ut, elementum vulputate, nunc.</li> \
+    </ul>"
+  summary: MyString
+  call_to_action: "join our group!"
+  submit_text: 'Submit'
+  browser_url: MyString
+  featured_image_url: MyString
+  total_submissions: 0
+  person_id: 1 # `person: one` would be better!
+  creator_id: 1 # `creator: one` would be better!

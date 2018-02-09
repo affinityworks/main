@@ -1,0 +1,49 @@
+<%= render 'layouts/header' %>
+
+<div class="container-html">
+  <div class="card">
+    <div id="signup_container" class="card-block">
+
+      <div class="content">
+        <h1><%= @form.title %></h1>
+        <div>
+          <%= raw(@form.description) %>
+        </div>
+      </div>
+
+      <div class="right-aside">
+
+        <%= render partial: "error_alert",
+                   locals: { resource: @member, input_groups: @form.input_groups }%>
+
+        <div class="call-to-action">
+          <%= @form.call_to_action.titleize %>
+        </div>
+
+        <%= form_for @member,
+          as: :person,
+          url: group_signup_form_signups_path(@group, @form) do |f| %>
+
+          <% @form.person_input_group.inputs.each do |input| %>
+            <div class="entry">
+              <%= f.text_field input, placeholder: PersonInputGroup.label_for(input) %>
+            </div>
+          <% end # @form.person_input_groups.each do |input| %>
+
+          <% @form.nested_input_groups.each do |input_group| %>
+            <%= f.fields_for input_group.resource do |ff| %>
+              <% input_group.inputs.each do |input| %>
+                <div class="entry">
+                  <%= ff.text_field input, placeholder: input_group.class.label_for(input) %>
+                </div>
+              <% end # each |input| %>
+            <% end # f.fields_for input_group.resource do |ff|  %>
+          <% end # @form.sorted_input_groups.each do |input_group| %>
+
+          <%= f.submit @form.submit_text, class: 'submit' %>
+
+        <% end # form_for @member%>
+      </div>
+    </div>
+  </div>
+</div>

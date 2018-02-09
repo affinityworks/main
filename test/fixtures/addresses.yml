@@ -4,8 +4,8 @@ one:
   id: 1
   venue: my venue
   address_lines: ['first adress line']
-  locality: portland
-  region: oregon
+  locality: Portland
+  region: OR
   postal_code: 97202
   country: USA
   latitude: 38.8977
@@ -22,7 +22,7 @@ two:
   venue: another venue
   address_lines: ['123 main st']
   locality: anytown
-  region: anystate
+  region: KY
   postal_code: 40123
   country: USA
   location_id: 1
@@ -38,7 +38,7 @@ three:
   venue: MyString
   address_lines: ['MyString']
   locality: MyString
-  region: MyString
+  region: CA
   postal_code: MyString
   country: MyString
   location_id: 1
@@ -54,7 +54,7 @@ four:
   venue: personal address venue
   address_lines: ['MyString']
   locality: MyString
-  region: MyString
+  region: WV
   postal_code: MyString
   country: MyString
   location_id: 1
@@ -64,3 +64,17 @@ four:
   occupation: MyString
   person_id: 2
   type: PersonalAddress
+
+new_signup:
+  type: PersonalAddress
+  venue: personal address venue
+  address_lines: ['MyString']
+  locality: Brooklyn
+  region: NY
+  postal_code: 11238
+  country: USA
+  status: active
+  primary: true
+  address_type: Personal
+  occupation: busker
+  person: new_signup

@@ -1,3 +1,40 @@
+# == Schema Information
+#
+# Table name: people
+#
+#  id                     :integer          not null, primary key
+#  array                  :string
+#  family_name            :string
+#  given_name             :string
+#  additional_name        :string
+#  honorific_prefix       :string
+#  honorific_suffix       :string
+#  gender                 :string
+#  gender_identity        :string
+#  party_identification   :string
+#  source                 :string
+#  ethnicities            :string
+#  languages_spoken       :string
+#  birthdate              :date
+#  employer               :string
+#  custom_fields          :text
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  encrypted_password     :string           default(""), not null
+#  reset_password_token   :string
+#  reset_password_sent_at :datetime
+#  remember_created_at    :datetime
+#  sign_in_count          :integer          default(0), not null
+#  current_sign_in_at     :datetime
+#  last_sign_in_at        :datetime
+#  current_sign_in_ip     :inet
+#  last_sign_in_ip        :inet
+#  identifiers            :text             default([]), is an Array
+#  admin                  :boolean          default(FALSE)
+#  synced                 :boolean          default(TRUE)
+#  attendances_count      :integer          default(0)
+#
+
 # Devise assumes each Person has a single `email` attribute/DB column in people table. OSDI data model has multiple email_addresses.
 # The `email` attribute is used for authentication. The `email_addresses` association is for mailing list subscriptions, event attendances,
 # etc., and never used for authentication. People may have a different`email` than their primary `email_address`. This isn't intuitive,
@@ -5,6 +42,7 @@
 class Person < ApplicationRecord
   include Api::Identifiers
   include ArelHelpers::ArelTable
+  include CanSignup
 
   acts_as_taggable
   has_paper_trail ignore: [:created_at, :updated_at]
@@ -34,11 +72,10 @@ class Person < ApplicationRecord
   accepts_nested_attributes_for :email_addresses, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :phone_numbers, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :memberships, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :personal_addresses, reject_if: :all_blank, allow_destroy: true
 
   has_many :organizer_memerships, -> { organizer }, :class_name => 'Membership'
   has_many :organized_groups, :source => :group, :through => :organizer_memerships
-
-  validates :family_name, :given_name, presence: true
 
   before_update :generate_update_events
 

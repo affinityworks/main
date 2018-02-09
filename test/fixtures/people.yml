@@ -49,7 +49,7 @@ two:
     phone: iPhone
   created_at: 2016-12-18 19:30:05
   updated_at: 2016-12-18 19:30:05
-  employer: people's republic of our college town
+  employer: people\'s republic of our college town
 
 admin:
   id: 3
@@ -73,9 +73,34 @@ member2:
   given_name: Test
   encrypted_password: $2a$11$08m64awvoVFg4sLOu.zA6e70E98bWC2VNewFWUNYjtnvutb/K68xK
 
+
 organizer:
   id: 6
   identifiers: ['advocacycommons:6']
   family_name: Organizer
   given_name: Test
   encrypted_password: $2a$11$08m64awvoVFg4sLOu.zA6e70E98bWC2VNewFWUNYjtnvutb/K68xK
+
+new_signup:
+  identifiers: ['advocacycommons:473298', 'foreign_system:473298']
+  given_name: Alice
+  family_name: Wonderland
+  additional_name: Sr.
+  honorific_prefix: Ms.
+  gender: Other
+  gender_identity: Other
+  party_identification: Green
+  source: Affinity
+  ethnicities:
+    - White
+    - Hispanic
+  languages_spoken:
+    - Greek
+    - Latin
+  birthdate: 2011-09-17
+  encrypted_password: $2a$11$08m64awvoVFg4sLOu.zA6e70E98bWC2VNewFWUNYjtnvutb/K68xK
+  custom_fields:
+    phone: iPhone
+  created_at: 2016-12-18 19:30:05
+  updated_at: 2016-12-18 19:30:05
+  employer: Aspiration Tech

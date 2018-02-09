@@ -1,14 +1,5 @@
 <%= form_for @member, as: :person, class: 'form-inline', url: url  do |f| %>
-  <% if @member.errors.any? %>
-    <div id="error_explanation" class="alert alert-danger" role="alert">
-      <strong><%= pluralize(@member.errors.count, "error") %> prevented this person from being saved:</strong>
-      <ul>
-      <% @member.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= render partial: "error_alert" %>
   <div class="field form-group mt-5">
       <%= f.label :given_name, class: 'col-2 col-form-label float-left'%>
       <%= f.text_field :given_name, class: 'form-control col-5' %>
