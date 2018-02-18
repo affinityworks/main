@@ -72,6 +72,9 @@ Rails.application.routes.draw do
       resources :events
     end
 
+    get "/subgroups/new", to: 'groups#new_subgroup'
+    post "/subgroups/create", to: 'groups#create_subgroup'
+
     resources :memberships, only: [:index, :show]
 
     resources :affiliates

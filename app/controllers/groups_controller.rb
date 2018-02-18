@@ -45,6 +45,11 @@ class GroupsController < ApplicationController
     @group = Group.new
   end
 
+  # GET /groups/:group_id/subgroups/new
+  def new_subgroup
+    @group = Group.new
+  end
+
   # GET /groups/1/edit
   def edit
     @groups = Group.all
@@ -62,6 +67,22 @@ class GroupsController < ApplicationController
         format.json { render :show, status: :created, location: @group }
       else
         format.html { render :new }
+        format.json { render json: @group.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # POST /groups/:group_id/subgroups
+  def create_subgroup
+    @group = Group.new(group_params)
+    @group.build_location(location_params)
+
+    respond_to do |format|
+      if @group.save
+        format.html { redirect_to group_dashboard_path, notice: 'Subgroup was successfully created.' }
+        format.json { render :show, status: :created, location: @group }
+      else
+        format.html { render :new_subgroup }
         format.json { render json: @group.errors, status: :unprocessable_entity }
       end
     end
@@ -106,7 +127,15 @@ class GroupsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def group_params
-    params.require(:group).permit(:origin_system, :name, :description, :summary, :creator_id, :person_id, :memberships, :current_members, :role)
+    params.require(:group).permit(
+      :origin_system, :name, :description, :summary,
+      :creator_id, :person_id, :memberships, :current_members, :role,
+      locations_attributes: [:postal_code]
+    )
+  end
+
+  def location_params
+    params[:group][:locations]
   end
 
   def sort_param
