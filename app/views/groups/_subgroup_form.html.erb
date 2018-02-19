@@ -35,9 +35,9 @@
 
   <tr><td>
     <div class="field">
-      <%= f.fields_for :locations do |locations_form| %>
-        <%= locations_form.label :postal_code %>
-        <%= locations_form.text_field :postal_code %>
+      <%= f.fields_for group.build_location do |location_form| %>
+        <%= location_form.label :postal_code %>
+        <%= location_form.text_field :postal_code %>
       <% end %>
     </div>
   </td></tr>

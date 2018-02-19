@@ -75,11 +75,25 @@ class GroupsController < ApplicationController
   # POST /groups/:group_id/subgroups
   def create_subgroup
     @group = Group.new(group_params)
-    @group.build_location(location_params)
 
     respond_to do |format|
       if @group.save
-        format.html { redirect_to group_dashboard_path, notice: 'Subgroup was successfully created.' }
+        @group.update(location: GroupAddress.create(location_params[:group_address]))
+        Affiliation.create(affiliated: @group, group: Group.find(params[:group_id]))
+        @signup_form = SignupForm.create!(
+          group: @group,
+          form: Form.new(
+            name: "#{@group.name}_default_signup_form",
+            title: "#{@group.name}",
+            description: @group.description || "<div></div>",
+            call_to_action: "get involved"
+          ),
+          email_input_group: EmailInputGroup.new(
+            inputs: %w[address]
+          )
+        )
+
+        format.html { redirect_to new_group_signup_form_signup_path(signup_form_id: @signup_form), notice: 'Subgroup was successfully created.' }
         format.json { render :show, status: :created, location: @group }
       else
         format.html { render :new_subgroup }
@@ -129,13 +143,12 @@ class GroupsController < ApplicationController
   def group_params
     params.require(:group).permit(
       :origin_system, :name, :description, :summary,
-      :creator_id, :person_id, :memberships, :current_members, :role,
-      locations_attributes: [:postal_code]
+      :creator_id, :person_id, :memberships, :current_members, :role
     )
   end
 
   def location_params
-    params[:group][:locations]
+    params.require(:group).permit(group_address: [:postal_code])
   end
 
   def sort_param
