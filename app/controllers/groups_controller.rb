@@ -45,6 +45,11 @@ class GroupsController < ApplicationController
     @group = Group.new
   end
 
+  # GET /groups/:group_id/subgroups/new
+  def new_subgroup
+    @group = Group.new
+  end
+
   # GET /groups/1/edit
   def edit
     @groups = Group.all
@@ -62,6 +67,36 @@ class GroupsController < ApplicationController
         format.json { render :show, status: :created, location: @group }
       else
         format.html { render :new }
+        format.json { render json: @group.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # POST /groups/:group_id/subgroups
+  def create_subgroup
+    @group = Group.new(group_params)
+
+    respond_to do |format|
+      if @group.save
+        @group.update(location: GroupAddress.create(location_params[:group_address]))
+        Affiliation.create(affiliated: @group, group: Group.find(params[:group_id]))
+        @signup_form = SignupForm.create!(
+          group: @group,
+          form: Form.new(
+            name: "#{@group.name}_default_signup_form",
+            title: "#{@group.name}",
+            description: @group.description || "<div></div>",
+            call_to_action: "get involved"
+          ),
+          email_input_group: EmailInputGroup.new(
+            inputs: %w[address]
+          )
+        )
+
+        format.html { redirect_to new_group_signup_form_signup_path(signup_form_id: @signup_form), notice: 'Subgroup was successfully created.' }
+        format.json { render :show, status: :created, location: @group }
+      else
+        format.html { render :new_subgroup }
         format.json { render json: @group.errors, status: :unprocessable_entity }
       end
     end
@@ -106,7 +141,14 @@ class GroupsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def group_params
-    params.require(:group).permit(:origin_system, :name, :description, :summary, :creator_id, :person_id, :memberships, :current_members, :role)
+    params.require(:group).permit(
+      :origin_system, :name, :description, :summary,
+      :creator_id, :person_id, :memberships, :current_members, :role
+    )
+  end
+
+  def location_params
+    params.require(:group).permit(group_address: [:postal_code])
   end
 
   def sort_param

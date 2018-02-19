@@ -19,6 +19,17 @@ class SignupsController < ApplicationController
     end
   end
 
+  def create_subgroup
+    @member = Person.create_from_signup(@form, @group, person_params)
+    if @member.errors.any?
+      @member.build_signup_resources_for(@form)
+      render :new
+    else
+      redirect_to group_member_path(@group, @member),
+                  notice: "You joined #{@group.name}"
+    end
+  end
+
   private
 
   def set_form

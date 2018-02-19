@@ -1,0 +1,50 @@
+<%= form_for group, url: {action: "create_subgroup"} do |f| %>
+  <% if group.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(group.errors.count, "error") %> prohibited this group from being saved:</h2>
+      <ul>
+      <% group.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+<tbody>
+  <tr><td>
+    <div class="field">
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+    </div>
+  </td></tr>
+
+  <tr><td>
+    <div class="field">
+      <%= f.label :description %>
+      <%= f.text_field :description %>
+    </div>
+  </td></tr>
+  
+  <tr><td>
+    <div class="field">
+      <%= f.label :summary %>
+      <%= f.text_field :summary %>
+    </div>
+  </td></tr>
+
+  <%= f.hidden_field :id %>
+
+  <tr><td>
+    <div class="field">
+      <%= f.fields_for group.build_location do |location_form| %>
+        <%= location_form.label :postal_code %>
+        <%= location_form.text_field :postal_code %>
+      <% end %>
+    </div>
+  </td></tr>
+
+  <tr><td>
+    <div class="actions">
+      <%= f.submit "Create Subgroup", class: "btn btn-primary"%>
+    </div>
+  </td></tr>
+<% end %>

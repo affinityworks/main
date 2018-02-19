@@ -24,11 +24,13 @@
           as: :person,
           url: group_signup_form_signups_path(@group, @form) do |f| %>
 
-          <% @form.person_input_group.inputs.each do |input| %>
-            <div class="entry">
-              <%= f.text_field input, placeholder: PersonInputGroup.label_for(input) %>
-            </div>
-          <% end # @form.person_input_groups.each do |input| %>
+          <% if @form.person_input_group %>
+            <% @form.person_input_group.inputs.each do |input| %>
+              <div class="entry">
+                <%= f.text_field input, placeholder: PersonInputGroup.label_for(input) %>
+              </div>
+            <% end # @form.person_input_groups.each do |input| %>
+          <% end %>
 
           <% @form.nested_input_groups.each do |input_group| %>
             <%= f.fields_for input_group.resource do |ff| %>

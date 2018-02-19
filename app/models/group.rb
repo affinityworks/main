@@ -3,7 +3,7 @@ class Group < ApplicationRecord
   #has_paper_trail
   acts_as_taggable
 
-  validates :an_api_key, uniqueness: true
+  validates :an_api_key, uniqueness: true, allow_nil: true
 
   has_many :memberships, dependent: :destroy
   has_many :members, through: :memberships, source: :person
@@ -36,6 +36,7 @@ class Group < ApplicationRecord
   belongs_to :modified_by, class_name: "Person"
   belongs_to :location, class_name: 'GroupAddress', foreign_key: :address_id
 
+  accepts_nested_attributes_for :location
 
   def before_create
     self.modified_by = self.creator
