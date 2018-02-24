@@ -8,7 +8,7 @@ class MembershipsControllerTest < ActionDispatch::IntegrationTest
     group = groups(:two)
     sign_in person
 
-    affiliate = Group.create(an_api_key: rand(1_000_000).to_s)
+    affiliate = Group.create(an_api_key: rand(1_000_000).to_s, name: "Green Day")
     membership = Person.create(given_name: 'given_name', family_name: 'family_name')
     affiliate_membership = Membership.create(person: membership)
     affiliate.memberships.push(affiliate_membership)
@@ -79,12 +79,13 @@ class MembershipsControllerTest < ActionDispatch::IntegrationTest
   test 'get #show on affiliated' do
     person = people(:organizer)
     sign_in person
-    affiliate = Group.create(an_api_key: rand(1_000_000).to_s)
+    affiliate = Group.create(an_api_key: rand(1_000_000).to_s, name: "The Clash")
     affiliate_membership = Membership.create(person: person, group: affiliate)
     Affiliation.create(affiliated: affiliate, group: groups(:test))
 
     get group_membership_url(group_id: groups(:test).id, id: person.id), as: :json
     assert_response :success
+
 
     get group_membership_url(group_id: affiliate.id, id: person.id), as: :json
     assert_response :success

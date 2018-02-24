@@ -8,7 +8,7 @@ class MembersControllerTest < ActionDispatch::IntegrationTest
     group = person.groups.first
     sign_in person
 
-    affiliate = Group.create(an_api_key: rand(1_000_000).to_s)
+    affiliate = Group.create(an_api_key: rand(1_000_000).to_s, name: "Acab")
     affiliate_member = Person.create(given_name: 'given_name', family_name: 'family_name')
     affiliate.members.push(affiliate_member)
     Affiliation.create(affiliated: affiliate, group: group)

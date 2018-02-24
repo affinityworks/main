@@ -138,8 +138,8 @@ class GroupTest < ActiveSupport::TestCase
   end
 
   test '#all_memberships' do
-    group = Group.create(:an_api_key => "asdfasdf")
-    affiliated = Group.create(:an_api_key => 'fdafdafda')
+    group = Group.create(:an_api_key => "asdfasdf", name: "Test")
+    affiliated = Group.create(:an_api_key => 'fdafdafda', name: "Affiliated Group")
 
     Affiliation.create(group: group, affiliated: affiliated)
     membership = Person.create(given_name: 'given_name', family_name: 'family_name')
@@ -154,8 +154,8 @@ class GroupTest < ActiveSupport::TestCase
   end
 
   test '#all_members' do
-    group = Group.create(:an_api_key => "asdfasdf")
-    affiliated = Group.create(:an_api_key => 'fdafdafda')
+    group = Group.create(:an_api_key => "asdfasdf", name: "Test")
+    affiliated = Group.create(:an_api_key => 'fdafdafda', name: "Affiliated Group")
 
     Affiliation.create(group: group, affiliated: affiliated)
 
@@ -170,7 +170,7 @@ class GroupTest < ActiveSupport::TestCase
   end
 
   test '#member?' do
-    group = Group.create(:an_api_key => "asdfasdf")
+    group = Group.create(:an_api_key => "asdfasdf", name: "test")
 
     group_member = Person.create(given_name: 'given_name', family_name: 'family_name')
     no_group_member = Person.create(given_name: 'no_member', family_name: 'no_member')
@@ -217,6 +217,75 @@ class GroupTest < ActiveSupport::TestCase
 
     assert group.affiliation_with_role(person, volunteer_role), group
     assert group_fourth.affiliation_with_role(person_admin, volunteer_role), group
+
+  end
+
+  describe "nested attributes" do
+
+    it "accepts nested attributes for location" do
+      assert_difference "Address.count", 1 do
+        Group.create(
+          name: "foogroup",
+          location_attributes: {
+            postal_code: "90210"
+          }
+        )
+      end
+    end
+  end
+
+  describe "#create_subgroup" do
+    let(:group){ groups(:one) }
+    let(:group_count){ Group.count }
+    let(:address_count){ Address.count }
+    let(:affiliation_count){ Affiliation.count }
+
+    before do
+      group_count
+      address_count
+      affiliation_count
+      @subgroup = group.create_subgroup(
+        name: "trystero",
+        location_attributes: {
+          postal_code: "90210"
+        }
+      )
+    end
+
+    describe "group is valid" do
+      it "returns the group" do
+        @subgroup.valid?.must_equal true
+      end
+
+      it "creates a child group" do
+        Group.count.must_equal(group_count + 1)
+      end
+
+      it "creates a location" do
+        Address.count.must_equal(address_count + 1)
+      end
+
+      it "creates an affiliation" do
+        Affiliation.count.must_equal(affiliation_count + 1)
+      end
+
+      it "affiliates the subgroup with the group" do
+        Group.last.affiliated_with.last.must_equal(group)
+      end
+
+      it "affiliates the group with the subgroup" do
+        group.affiliates.last.must_equal(Group.last)
+      end
+    end
+
+    
+
+    describe "group is invalid" do
+      it "builds a Group with errors" do
+        subgroup = group.create_subgroup(name: nil)
+        subgroup.valid?.must_equal false
+      end
+    end
 
   end
 

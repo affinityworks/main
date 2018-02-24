@@ -3,7 +3,8 @@ class Group < ApplicationRecord
   #has_paper_trail
   acts_as_taggable
 
-  validates :an_api_key, uniqueness: true
+  validates :an_api_key, uniqueness: true, allow_nil: true
+  validates :name, presence: true
 
   has_many :memberships, dependent: :destroy
   has_many :members, through: :memberships, source: :person
@@ -35,6 +36,8 @@ class Group < ApplicationRecord
   belongs_to :creator, class_name: "Person"
   belongs_to :modified_by, class_name: "Person"
   belongs_to :location, class_name: 'GroupAddress', foreign_key: :address_id
+
+  accepts_nested_attributes_for :location
 
 
   def before_create
@@ -129,5 +132,10 @@ class Group < ApplicationRecord
     affiliated_with_role(person, role) || affiliates_with_role(person, role)
   end
 
+  def create_subgroup(subgroup_attrs)
+    Group.create(subgroup_attrs).tap do |subgroup|
+      Affiliation.create(affiliated: subgroup, group: self)
+    end
+  end
 
 end
