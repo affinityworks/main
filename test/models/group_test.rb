@@ -278,12 +278,64 @@ class GroupTest < ActiveSupport::TestCase
       end
     end
 
-    
-
     describe "group is invalid" do
       it "builds a Group with errors" do
         subgroup = group.create_subgroup(name: nil)
         subgroup.valid?.must_equal false
+      end
+    end
+  end
+
+  describe "#create_subgroup_with_organizer" do
+    let(:group){ groups(:one) }
+    let(:person_count){ Person.count }
+
+    before do
+      person_count
+      @subgroup = group.create_subgroup_with_organizer(
+        subgroup_attrs:
+          { name: "trystero", location_attributes: { postal_code: "90210" } },
+        organizer_attrs:
+          { family_name: 'Mould', given_name: 'Bob' }
+      )
+    end
+
+    describe "group is valid" do
+      it "returns the group" do
+        @subgroup.valid?.must_equal true
+      end
+
+      it "creates a organizer for the group" do
+        Person.count.must_equal(person_count + 1)
+      end
+    end
+  end
+
+  describe "#add_membership" do
+    let(:group){ groups(:one) }
+    let(:membership_count){ Membership.count }
+    let(:person_count){ Person.count }
+
+    before do
+      membership_count
+      person_count
+      @membership = group.add_member(
+        member: Person.new(family_name: "Watt", given_name: "Mike"),
+        role: 'organizer'
+      )
+    end
+
+    it "creates a membership" do
+      Membership.count.must_equal(membership_count + 1)
+    end
+
+    describe "organizer" do
+      it "creates a person" do
+        Person.count.must_equal(person_count + 1)
+      end
+
+      it "sets the membership role to organizer" do
+        @membership.role.must_equal('organizer')
       end
     end
 

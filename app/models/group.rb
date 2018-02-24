@@ -132,9 +132,22 @@ class Group < ApplicationRecord
     affiliated_with_role(person, role) || affiliates_with_role(person, role)
   end
 
+  def add_member(member:, role: 'member')
+    memberships.create(person: member, role: role)
+  end
+
   def create_subgroup(subgroup_attrs)
     Group.create(subgroup_attrs).tap do |subgroup|
       Affiliation.create(affiliated: subgroup, group: self)
+    end
+  end
+
+  def create_subgroup_with_organizer(subgroup_attrs: {}, organizer_attrs: {})
+    create_subgroup(subgroup_attrs).tap do |subgroup|
+      subgroup.add_member(
+        member: Person.new(organizer_attrs),
+        role: 'organizer'
+      )
     end
   end
 
