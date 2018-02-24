@@ -4,13 +4,25 @@ class SubgroupsController < ApplicationController
 
   # GET groups/:group_id/subgroups/new
   def new
-    @subgroup = Group.new
-    @subgroup.build_location
+    @subgroup, @organizer = Group.build_group_and_organizer
   end
 
   # POST groups/:group_id/subgroups
   def create
-    @group.create_subgroup(subgroup_params)
+    @subgroup = @group.create_subgroup_with_organizer(
+      subgroup_attrs: subgroup_params,
+      organizer_attrs: organizer_params
+    )
+    form = SignupForm.for(@subgroup) if @subgroup.valid?
+
+    if form&.valid?
+      redirect_to new_group_signup_form_signup_path(
+                    group_id: @subgroup.id,
+                    signup_form_id: form.id
+                  )
+    else
+      render :new
+    end
   end
 
   private
@@ -23,5 +35,32 @@ class SubgroupsController < ApplicationController
     params
       .require(:group)
       .permit(:name, :description, :summary, location_attributes: [:postal_code])
+  end
+
+  def organizer_params
+    params
+      .require(:group)
+      .permit(
+        organizer_attributes: [
+          :given_name,
+          :last_name,
+          :password,
+          phone_numbers_attributes: [ :number ],
+          email_addresses_attributes: [ :address ],
+          personal_addresses_attributes: [ :postal_code ]
+        ]
+      )
+      .fetch('organizer_attributes')
+      .tap { |organizer_attrs| arrayify_contact_info(organizer_attrs) }
+  end
+
+  def arrayify_contact_info(organizer_attrs)
+    [
+      'phone_numbers_attributes',
+      'email_addresses_attributes',
+      'personal_addresses_attributes'
+    ].each do |attrs|
+      organizer_attrs.merge!(attrs => [organizer_attrs.fetch(attrs)])
+    end
   end
 end

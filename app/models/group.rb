@@ -39,6 +39,20 @@ class Group < ApplicationRecord
 
   accepts_nested_attributes_for :location
 
+  class << self
+    def build_group_and_organizer
+      group = Group.new
+      group.build_location
+      membership = group.memberships.build
+      organizer = membership.build_person
+      organizer.email_addresses.build
+      organizer.phone_numbers.build
+      organizer.personal_addresses.build
+
+      [group, organizer]
+    end
+  end
+
 
   def before_create
     self.modified_by = self.creator
@@ -138,13 +152,13 @@ class Group < ApplicationRecord
 
   def create_subgroup(subgroup_attrs)
     Group.create(subgroup_attrs).tap do |subgroup|
-      Affiliation.create(affiliated: subgroup, group: self)
+      Affiliation.create(affiliated: subgroup, group: self) if subgroup.valid?
     end
   end
 
   def create_subgroup_with_organizer(subgroup_attrs: {}, organizer_attrs: {})
     create_subgroup(subgroup_attrs).tap do |subgroup|
-      subgroup.add_member(
+      subgroup.valid? && subgroup.add_member(
         member: Person.new(organizer_attrs),
         role: 'organizer'
       )

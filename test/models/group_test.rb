@@ -289,14 +289,19 @@ class GroupTest < ActiveSupport::TestCase
   describe "#create_subgroup_with_organizer" do
     let(:group){ groups(:one) }
     let(:person_count){ Person.count }
+    let(:email_count){ EmailAddress.count }
+    let(:phone_count){ PhoneNumber.count }
 
     before do
-      person_count
+      person_count; email_count; phone_count
       @subgroup = group.create_subgroup_with_organizer(
         subgroup_attrs:
           { name: "trystero", location_attributes: { postal_code: "90210" } },
         organizer_attrs:
-          { family_name: 'Mould', given_name: 'Bob' }
+          { family_name: 'Mould',
+            given_name: 'Bob',
+            email_addresses_attributes: [{ address: 'foo@bar.com' }],
+            phone_numbers_attributes: [{ number: '212-987-6543' }] }
       )
     end
 
@@ -307,6 +312,14 @@ class GroupTest < ActiveSupport::TestCase
 
       it "creates a organizer for the group" do
         Person.count.must_equal(person_count + 1)
+      end
+
+      it "creates email for organizer" do
+        EmailAddress.count.must_equal(email_count + 1)
+      end
+
+      it "creates phone number for organizer" do
+        PhoneNumber.count.must_equal(phone_count + 1)
       end
     end
   end
