@@ -1,0 +1,62 @@
+<%= render 'layouts/header' %>
+
+<div class="container-html">
+  <div class="card">
+    <div id="new-group-container" class="card-block">
+
+      <div class="content">
+
+        <h1>Create a new subgroup of <%= @group.name %></h1>
+
+        <%= form_for @subgroup, class: 'inline-form', url: {action: "create"} do |f| %>
+
+          <% if @subgroup.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@subgroup.errors.count, "error") %> prohibited this group from being saved:</h2>
+              <ul>
+                <% @subgroup.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end # if @subgroup.errors %>
+
+          <tbody>
+            <tr><td>
+              <div class="field">
+                <%= f.text_field :name, placeholder: :name %>
+              </div>
+            </td></tr>
+
+            <tr><td>
+              <div class="field">
+                <%= f.text_field :description, placeholder: :description %>
+              </div>
+            </td></tr>
+
+            <tr><td>
+              <div class="field">
+                <%= f.text_field :summary, placeholder: :summary %>
+              </div>
+            </td></tr>
+
+            <tr><td>
+              <div class="field">
+                <%= f.fields_for :location, @subgroup.location do |location_form| %>
+                  <%= location_form.text_field :postal_code, placeholder: :zip_code %>
+                <% end %>
+              </div>
+            </td></tr>
+
+            <tr><td>
+              <div class="actions">
+                <%= f.submit "Submit", class: "btn btn-primary"%>
+              </div>
+            </td></tr>
+          </tbody>
+
+        <% end # form_for %>
+      </div>
+    </div>
+  </div>
+</div>
