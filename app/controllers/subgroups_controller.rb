@@ -13,13 +13,14 @@ class SubgroupsController < ApplicationController
       subgroup_attrs: subgroup_params,
       organizer_attrs: organizer_params
     )
-    form = SignupForm.for(@subgroup) if @subgroup.valid?
-
+    if @subgroup&.valid? && @subgroup.affiliations&.last&.valid?
+      form = SignupForm.for(@subgroup)
+    end
     if form&.valid?
       redirect_to new_group_signup_form_signup_path(
-                    group_id: @subgroup.id,
-                    signup_form_id: form.id
-                  )
+        group_id: @subgroup.id,
+        signup_form_id: form.id
+      )
     else
       render :new
     end

@@ -38,6 +38,7 @@ class Group < ApplicationRecord
   belongs_to :location, class_name: 'GroupAddress', foreign_key: :address_id
 
   accepts_nested_attributes_for :location
+  accepts_nested_attributes_for :memberships
 
   class << self
     def build_group_and_organizer
@@ -157,12 +158,13 @@ class Group < ApplicationRecord
   end
 
   def create_subgroup_with_organizer(subgroup_attrs: {}, organizer_attrs: {})
-    create_subgroup(subgroup_attrs).tap do |subgroup|
-      subgroup.valid? && subgroup.add_member(
-        member: Person.new(organizer_attrs),
-        role: 'organizer'
+    create_subgroup(
+      subgroup_attrs.merge(
+        memberships_attributes: [{
+          person_attributes: organizer_attrs,
+          role: "organizer"
+        }]
       )
-    end
+    )
   end
-
 end

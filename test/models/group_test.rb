@@ -289,11 +289,12 @@ class GroupTest < ActiveSupport::TestCase
   describe "#create_subgroup_with_organizer" do
     let(:group){ groups(:one) }
     let(:person_count){ Person.count }
+    let(:membership_count){ Membership.count }
     let(:email_count){ EmailAddress.count }
     let(:phone_count){ PhoneNumber.count }
 
     before do
-      person_count; email_count; phone_count
+      person_count; email_count; phone_count; membership_count;
       @subgroup = group.create_subgroup_with_organizer(
         subgroup_attrs:
           { name: "trystero", location_attributes: { postal_code: "90210" } },
@@ -312,6 +313,17 @@ class GroupTest < ActiveSupport::TestCase
 
       it "creates a organizer for the group" do
         Person.count.must_equal(person_count + 1)
+        Person.last.given_name.must_equal "Bob"
+      end
+
+      it "makes the organizer a member of the group" do
+        Person.last.groups.last.must_equal @subgroup
+        Group.last.members.last.must_equal Person.last
+      end
+
+      focus
+      it "creates a new membership" do
+        Membership.count.must_equal(membership_count + 1)
       end
 
       it "creates email for organizer" do
@@ -321,6 +333,11 @@ class GroupTest < ActiveSupport::TestCase
       it "creates phone number for organizer" do
         PhoneNumber.count.must_equal(phone_count + 1)
       end
+    end
+
+    describe "group is not valid" do
+      # TODO ---v
+      it "provides error messages for nested attributes"
     end
   end
 
