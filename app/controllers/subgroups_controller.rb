@@ -13,7 +13,7 @@ class SubgroupsController < ApplicationController
       subgroup_attrs: subgroup_params,
       organizer_attrs: organizer_params
     )
-    if @subgroup&.valid? && @subgroup.affiliations&.last&.valid?
+    if @subgroup&.valid? && @subgroup.affiliations_with&.last&.valid?
       form = SignupForm.for(@subgroup)
     end
     if form&.valid?
