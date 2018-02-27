@@ -3,7 +3,8 @@ class Group < ApplicationRecord
   #has_paper_trail
   acts_as_taggable
 
-  validates :an_api_key, uniqueness: true
+  validates :an_api_key, uniqueness: true, allow_nil: true
+  validates :name, presence: true
 
   has_many :memberships, dependent: :destroy
   has_many :members, through: :memberships, source: :person
@@ -35,6 +36,23 @@ class Group < ApplicationRecord
   belongs_to :creator, class_name: "Person"
   belongs_to :modified_by, class_name: "Person"
   belongs_to :location, class_name: 'GroupAddress', foreign_key: :address_id
+
+  accepts_nested_attributes_for :location
+  accepts_nested_attributes_for :memberships
+
+  class << self
+    def build_group_and_organizer
+      group = Group.new
+      group.build_location
+      membership = group.memberships.build
+      organizer = membership.build_person
+      organizer.email_addresses.build
+      organizer.phone_numbers.build
+      organizer.personal_addresses.build
+
+      [group, organizer]
+    end
+  end
 
 
   def before_create
@@ -129,5 +147,24 @@ class Group < ApplicationRecord
     affiliated_with_role(person, role) || affiliates_with_role(person, role)
   end
 
+  def add_member(member:, role: 'member')
+    memberships.create(person: member, role: role)
+  end
 
+  def create_subgroup(subgroup_attrs)
+    Group.create(subgroup_attrs).tap do |subgroup|
+      Affiliation.create(affiliated: subgroup, group: self) if subgroup.valid?
+    end
+  end
+
+  def create_subgroup_with_organizer(subgroup_attrs: {}, organizer_attrs: {})
+    create_subgroup(
+      subgroup_attrs.merge(
+        memberships_attributes: [{
+          person_attributes: organizer_attrs,
+          role: "organizer"
+        }]
+      )
+    )
+  end
 end

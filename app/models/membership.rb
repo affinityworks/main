@@ -15,6 +15,7 @@ class Membership < ApplicationRecord
   validates :group_id, uniqueness: { scope: :person_id }
   #for form helpers
   accepts_nested_attributes_for :group
+  accepts_nested_attributes_for :person
 
   enum role: [:member, :organizer, :volunteer]
 

@@ -1,3 +1,42 @@
+# == Schema Information
+#
+# Table name: events
+#
+#  id                       :integer          not null, primary key
+#  origin_system            :string
+#  name                     :string
+#  title                    :string
+#  description              :string
+#  summary                  :string
+#  browser_url              :string
+#  osdi_type                :string
+#  ticket_levels            :string
+#  featured_image_url       :string
+#  total_accepted           :integer
+#  total_tickets            :integer
+#  total_amount             :float
+#  status                   :string           default("confirmed")
+#  instructions             :string
+#  start_date               :datetime
+#  end_date                 :datetime
+#  all_day_date             :date
+#  all_day                  :boolean
+#  capacity                 :integer
+#  guests_can_invite_others :boolean
+#  transparency             :string
+#  visibility               :string
+#  creator_id               :integer
+#  organizer_id             :integer
+#  modified_by_id           :integer
+#  ticket_levels_id         :integer
+#  address_id               :integer
+#  created_at               :datetime         not null
+#  updated_at               :datetime         not null
+#  share_url                :string
+#  total_shares             :integer          default(0)
+#  identifiers              :text             default([]), is an Array
+#
+
 class Event < ApplicationRecord
   include Api::Identifiers
   include ArelHelpers::ArelTable

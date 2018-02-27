@@ -63,6 +63,8 @@ Rails.application.routes.draw do
   resources :groups do
     get '/dashboard', to: 'dashboard#show', as: 'dashboard'
 
+    resources :subgroups, only: [:new, :create]
+
     resources :signup_forms, only: [] do
       resources :signups, only: %i[new create]
     end

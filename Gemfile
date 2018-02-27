@@ -120,6 +120,8 @@ group :development do
   gem 'rack-mini-profiler', require: false
   # until 4.7.3, we need develop branch b/c: https://github.com/ctran/annotate_models/pull/514
   gem 'annotate', git: 'https://github.com/ctran/annotate_models.git', branch: "develop"
+  gem 'guard'
+  gem 'guard-minitest'
 end
 
 group :test do

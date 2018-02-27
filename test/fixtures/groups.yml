@@ -27,17 +27,21 @@ two:
 test:
   id: 3
   an_api_key: 7cc9eff8d105f3ff34c6bf7683abbec6
+  name: Acab
 
 fourth:
   id: 4
   an_api_key: 'test-token-4'
+  name: Apab
 
 
 five:
   id: 5
   an_api_key: 'test-token-5'
+  name: Afab
 
 
 six:
   id: 6
   an_api_key: 'test-token-6'
+  name: Anab

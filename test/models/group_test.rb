@@ -138,8 +138,8 @@ class GroupTest < ActiveSupport::TestCase
   end
 
   test '#all_memberships' do
-    group = Group.create(:an_api_key => "asdfasdf")
-    affiliated = Group.create(:an_api_key => 'fdafdafda')
+    group = Group.create(:an_api_key => "asdfasdf", name: "Test")
+    affiliated = Group.create(:an_api_key => 'fdafdafda', name: "Affiliated Group")
 
     Affiliation.create(group: group, affiliated: affiliated)
     membership = Person.create(given_name: 'given_name', family_name: 'family_name')
@@ -154,8 +154,8 @@ class GroupTest < ActiveSupport::TestCase
   end
 
   test '#all_members' do
-    group = Group.create(:an_api_key => "asdfasdf")
-    affiliated = Group.create(:an_api_key => 'fdafdafda')
+    group = Group.create(:an_api_key => "asdfasdf", name: "Test")
+    affiliated = Group.create(:an_api_key => 'fdafdafda', name: "Affiliated Group")
 
     Affiliation.create(group: group, affiliated: affiliated)
 
@@ -170,7 +170,7 @@ class GroupTest < ActiveSupport::TestCase
   end
 
   test '#member?' do
-    group = Group.create(:an_api_key => "asdfasdf")
+    group = Group.create(:an_api_key => "asdfasdf", name: "test")
 
     group_member = Person.create(given_name: 'given_name', family_name: 'family_name')
     no_group_member = Person.create(given_name: 'no_member', family_name: 'no_member')
@@ -217,6 +217,157 @@ class GroupTest < ActiveSupport::TestCase
 
     assert group.affiliation_with_role(person, volunteer_role), group
     assert group_fourth.affiliation_with_role(person_admin, volunteer_role), group
+
+  end
+
+  describe "nested attributes" do
+
+    it "accepts nested attributes for location" do
+      assert_difference "Address.count", 1 do
+        Group.create(
+          name: "foogroup",
+          location_attributes: {
+            postal_code: "90210"
+          }
+        )
+      end
+    end
+  end
+
+  describe "#create_subgroup" do
+    let(:group){ groups(:one) }
+    let(:group_count){ Group.count }
+    let(:address_count){ Address.count }
+    let(:affiliation_count){ Affiliation.count }
+
+    before do
+      group_count
+      address_count
+      affiliation_count
+      @subgroup = group.create_subgroup(
+        name: "trystero",
+        location_attributes: {
+          postal_code: "90210"
+        }
+      )
+    end
+
+    describe "group is valid" do
+      it "returns the group" do
+        @subgroup.valid?.must_equal true
+      end
+
+      it "creates a child group" do
+        Group.count.must_equal(group_count + 1)
+      end
+
+      it "creates a location" do
+        Address.count.must_equal(address_count + 1)
+      end
+
+      it "creates an affiliation" do
+        Affiliation.count.must_equal(affiliation_count + 1)
+      end
+
+      it "affiliates the subgroup with the group" do
+        Group.last.affiliated_with.last.must_equal(group)
+      end
+
+      it "affiliates the group with the subgroup" do
+        group.affiliates.last.must_equal(Group.last)
+      end
+    end
+
+    describe "group is invalid" do
+      it "builds a Group with errors" do
+        subgroup = group.create_subgroup(name: nil)
+        subgroup.valid?.must_equal false
+      end
+    end
+  end
+
+  describe "#create_subgroup_with_organizer" do
+    let(:group){ groups(:one) }
+    let(:person_count){ Person.count }
+    let(:membership_count){ Membership.count }
+    let(:email_count){ EmailAddress.count }
+    let(:phone_count){ PhoneNumber.count }
+
+    before do
+      person_count; email_count; phone_count; membership_count;
+      @subgroup = group.create_subgroup_with_organizer(
+        subgroup_attrs:
+          { name: "trystero", location_attributes: { postal_code: "90210" } },
+        organizer_attrs:
+          { family_name: 'Mould',
+            given_name: 'Bob',
+            email_addresses_attributes: [{ address: 'foo@bar.com' }],
+            phone_numbers_attributes: [{ number: '212-987-6543' }] }
+      )
+    end
+
+    describe "group is valid" do
+      it "returns the group" do
+        @subgroup.valid?.must_equal true
+      end
+
+      it "creates a organizer for the group" do
+        Person.count.must_equal(person_count + 1)
+        Person.last.given_name.must_equal "Bob"
+      end
+
+      it "makes the organizer a member of the group" do
+        Person.last.groups.last.must_equal @subgroup
+        Group.last.members.last.must_equal Person.last
+      end
+
+      focus
+      it "creates a new membership" do
+        Membership.count.must_equal(membership_count + 1)
+      end
+
+      it "creates email for organizer" do
+        EmailAddress.count.must_equal(email_count + 1)
+      end
+
+      it "creates phone number for organizer" do
+        PhoneNumber.count.must_equal(phone_count + 1)
+      end
+    end
+
+    describe "group is not valid" do
+      # TODO ---v
+      it "provides error messages for nested attributes"
+    end
+  end
+
+  describe "#add_membership" do
+    let(:group){ groups(:one) }
+    let(:membership_count){ Membership.count }
+    let(:person_count){ Person.count }
+
+    before do
+      membership_count
+      person_count
+      @membership = group.add_member(
+        member: Person.new(family_name: "Watt", given_name: "Mike"),
+        role: 'organizer'
+      )
+    end
+
+    it "creates a membership" do
+      Membership.count.must_equal(membership_count + 1)
+    end
+
+    describe "organizer" do
+      it "creates a person" do
+        Person.count.must_equal(person_count + 1)
+      end
+
+      it "sets the membership role to organizer" do
+        @membership.role.must_equal('organizer')
+      end
+    end
 
   end
 
