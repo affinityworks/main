@@ -279,9 +279,9 @@ class Person < ApplicationRecord
       version_id: version.id,
       id: version.item_id,
       timestamp: version.created_at,
-      changed_fields: version.changeset.keys,
+      changed_fields: version&.changeset&.keys,
       whodunnit: version.whodunnit,
-      name: version.item.name
+      name: version&.item&.name
     } if version
   end
 
