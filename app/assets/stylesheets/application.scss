@@ -15,7 +15,9 @@
 
  // Custom bootstrap variables must be set or imported before bootstrap itself.
 @import "bootstrap";
-@import "./group_signup_form.scss";
+
+@import "./signup_form.scss";
+@import "./create_group_form.scss";
 
 $red: #d9534f;
 $green: #5cb85c;

@@ -1,4 +1,5 @@
 $lightgray: rgba(0, 0, 0, 0.05);
+$primaryblue: rgba(2, 117, 216, 1);
 
 #signup_container {
     display: flex;
@@ -39,20 +40,24 @@ $lightgray: rgba(0, 0, 0, 0.05);
             display: flex;
             flex-direction: column;
             margin-top: .75em;
+            input {
+                border: 1px solid $lightgray;
+                border-radius: .25em;
+                padding: .25em 0 .25em .5em;
+            }
+
             label {
                 font-weight: bold;
             }
         }
         .submit {
             @extend .btn, .btn-primary;
-            display: flex;
-            align-self: center;
-            text-transform: uppercase;
-            font-weight: bold;
-            margin: 1em auto 1em auto;
+            text-align: center;
             width: 100%;
+            text-transform: uppercase;
+            margin: 1em auto 1em auto;
+            background-color: $primaryblue;
         }
-
     }
 }
 

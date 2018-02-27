@@ -2,30 +2,34 @@
 
 <div class="container-html">
   <div class="card">
-    <div id="new-group-container" class="card-block">
+    <div id="new-subgroup-container" class="card-block">
 
-      <div class="content">
+      <div class="header">
 
         <h1>Create a <%= @group.name %> affiliate</h1>
+        <div id="errors-container">
+          <% if @subgroup.errors.any? %>
+            <div id="error_explanation" class="alert alert-danger" role="alert">
+              <strong>Your submission has <%= pluralize(@subgroup.errors.count, "error") %></strong>
+              <ul>
+                <% @subgroup.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end # if @subgroup.errors %>
+        </div>
+      </div>
 
-        <%= form_for @subgroup, class: 'inline-form', url: {action: "create"} do |f| %>
+      
+      <%= form_for @subgroup, url: {action: "create"} do |f| %>
+        <div class="form-container">
+          <div class='group-input-container'>
 
-          <div id="errors-container">
-            <% if @subgroup.errors.any? %>
-              <div id="error_explanation">
-                <h2><%= pluralize(@subgroup.errors.count, "error") %> prohibited this group from being saved:</h2>
-                <ul>
-                  <% @subgroup.errors.full_messages.each do |message| %>
-                    <li><%= message %></li>
-                  <% end %>
-                </ul>
-              </div>
-            <% end # if @subgroup.errors %>
-          </div>
+            <h2>Group Info</h2>
 
-          <div class='form-section'>
-            <h2>Group Information</h2>
-            <div id="group-fields" class='form-fields'>
+            <div class="group-inputs">
+
               <div class="field">
                 <%= f.text_field :name, placeholder: :name %>
               </div>
@@ -43,9 +47,11 @@
             </div>
           </div>
 
-          <div class="form-section">
-            <h2>Organizer Information</h2>
-            <div id="organizer-fields" class="form-fields">
+          <div class="organizer-input-container">
+
+            <h2>Organizer Info</h2>
+            
+            <div class="organizer-inputs">
               <%= f.fields_for :organizer_attributes, @organizer do |member_form| %>
                 <div class="field">
                   <%= member_form.text_field :given_name, placeholder: :first_name %>
@@ -75,12 +81,12 @@
             </div>
           </div>
 
-          <div class="submit">
-            <%= f.submit "Submit", class: "btn btn-primary"%>
-          </div>
+          <%= f.submit "Submit", class: "submit"%>
 
-        <% end # form_for %>
-      </div>
+        </div>
+      <% end # form_for %>
+      
     </div>
   </div>
+</div>
 </div>
