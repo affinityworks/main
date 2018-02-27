@@ -52,16 +52,18 @@ class SubgroupsController < ApplicationController
         ]
       )
       .fetch('organizer_attributes')
-      .tap { |organizer_attrs| arrayify_contact_info(organizer_attrs) }
+      .tap { |organizer_attrs| format_contact_info(organizer_attrs) }
   end
 
-  def arrayify_contact_info(organizer_attrs)
+  def format_contact_info(organizer_attrs)
     [
       'phone_numbers_attributes',
       'email_addresses_attributes',
       'personal_addresses_attributes'
     ].each do |attrs|
-      organizer_attrs.merge!(attrs => [organizer_attrs.fetch(attrs)])
+      organizer_attrs.merge!(
+        attrs => [organizer_attrs.fetch(attrs).merge(primary: true)]
+      )
     end
   end
 end

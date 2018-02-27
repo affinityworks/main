@@ -44,6 +44,7 @@ class SubgroupCreation < FeatureTest
     let(:email_address_count){ EmailAddress.count }
     let(:membership_count){ Membership.count }
     let(:signup_form_count){ SignupForm.count }
+    let(:last_person){ Person.last }
 
     describe "with no errors" do
       before do
@@ -101,19 +102,20 @@ class SubgroupCreation < FeatureTest
       end
 
       it "saves organizer password" do
-        Person.last.encrypted_password.wont_be_nil
-        Person.last.valid_password?("password")
+        last_person.encrypted_password.wont_be_nil
+        last_person.valid_password?("password")
       end
 
       it "saves organizer contact info" do
-        Person.last.email_addresses.last.address.must_equal 'foo@bar.com'
-        Person.last.phone_numbers.last.number.must_equal '212-867-5309'
-        Person.last.personal_addresses.last.postal_code.must_equal '90211'
+        last_person.email_addresses.last.address.must_equal 'foo@bar.com'
+        last_person.phone_numbers.last.number.must_equal '212-867-5309'
+        last_person.personal_addresses.last.postal_code.must_equal '90211'
+      end
 
-        # TODO: we should save new contact info as "primary"
-        # Person.last.primary_email_address.must_equal 'foo@bar.com'
-        # Person.last.primary_phone_number.must_equal '212-867-5309'
-        # Person.last.primary_address.postal_code.must_equal '90211'
+      it "saves contact infos as 'primary'" do
+        last_person.primary_email_address.must_equal 'foo@bar.com'
+        last_person.primary_phone_number.must_equal '212-867-5309'
+        last_person.primary_personal_address.postal_code.must_equal '90211'
       end
 
     end
