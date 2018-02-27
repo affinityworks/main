@@ -44,11 +44,11 @@ class SubgroupsController < ApplicationController
       .permit(
         organizer_attributes: [
           :given_name,
-          :last_name,
+          :family_name,
           :password,
-          phone_numbers_attributes: [ :number ],
-          email_addresses_attributes: [ :address ],
-          personal_addresses_attributes: [ :postal_code ]
+          phone_numbers_attributes: [:number],
+          email_addresses_attributes: [:address],
+          personal_addresses_attributes: [:postal_code]
         ]
       )
       .fetch('organizer_attributes')

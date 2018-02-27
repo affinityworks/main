@@ -68,7 +68,7 @@
                 </div>
                 <div class="field">
                   <%= member_form.fields_for :personal_addresses_attributes do |email_form| %>
-                    <%= email_form.text_field :address, placeholder: 'Zipcode (personal)' %>
+                    <%= email_form.text_field :postal_code, placeholder: 'Zipcode (personal)' %>
                   <% end #member_form.fields_for :email_address %>
                 </div>
               <% end %>
