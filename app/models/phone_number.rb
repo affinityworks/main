@@ -20,13 +20,15 @@
 class PhoneNumber < ApplicationRecord
   include ArelHelpers::ArelTable
   belongs_to :person
-  PHONE_FORMAT = /\A(\((\d){3}\)\s|(\+1-)?(\d){3}-)(\d){3}-(\d){4}|(\d){10}\z/
+  PHONE_FORMAT = /\A(\+\d{1,2}[\s-]?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}\z/
 
   validates :number, :presence => true,
             format: { with:  PHONE_FORMAT,
                       message: '%{value} is not a valid phone number' }
-
   validates_uniqueness_of :number, scope: :person_id
 
   scope :primary, -> { where(primary: true) }
+
+  # TODO: (aguestuser|28-Feb-2018)
+  # add before_create hook to impose standard formatting on phone numbers
 end
