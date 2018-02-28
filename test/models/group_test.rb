@@ -292,10 +292,11 @@ class GroupTest < ActiveSupport::TestCase
     let(:membership_count){ Membership.count }
     let(:email_count){ EmailAddress.count }
     let(:phone_count){ PhoneNumber.count }
+    let(:affiliation_count){ Affiliation.count }
 
     before do
-      person_count; email_count; phone_count; membership_count;
-      @subgroup = group.create_subgroup_with_organizer(
+      person_count; email_count; phone_count; membership_count; affiliation_count
+      @subgroup, @organizer = group.create_subgroup_with_organizer(
         subgroup_attrs:
           { name: "trystero", location_attributes: { postal_code: "90210" } },
         organizer_attrs:
@@ -307,8 +308,14 @@ class GroupTest < ActiveSupport::TestCase
     end
 
     describe "group is valid" do
-      it "returns the group" do
+      it "returns a valid group" do
+        @subgroup.must_be_instance_of Group
         @subgroup.valid?.must_equal true
+      end
+
+      it "returns a valid organizer" do
+        @organizer.must_be_instance_of Person
+        @organizer.valid?.must_equal true
       end
 
       it "creates a organizer for the group" do
@@ -321,7 +328,10 @@ class GroupTest < ActiveSupport::TestCase
         Group.last.members.last.must_equal Person.last
       end
 
-      focus
+      it "creates a new affiliation" do
+        Affiliation.count.must_equal(affiliation_count + 1)
+      end
+
       it "creates a new membership" do
         Membership.count.must_equal(membership_count + 1)
       end

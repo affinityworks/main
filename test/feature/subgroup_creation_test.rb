@@ -14,7 +14,7 @@ class SubgroupCreation < FeatureTest
 
     it "has fields for creating a group" do
       ['Name', 'Summary', 'Zipcode (group)'].each do |label|
-        page.find("#group-fields input[placeholder='#{label}']").wont_be_nil
+        page.find("input[placeholder='#{label}']").wont_be_nil
       end
     end
 
@@ -31,7 +31,7 @@ class SubgroupCreation < FeatureTest
         'Phone number',
         'Zipcode (personal)',
       ].each do |label|
-        page.find("#organizer-fields input[placeholder='#{label}']").wont_be_nil
+        page.find("input[placeholder='#{label}']").wont_be_nil
       end
     end
   end
@@ -76,10 +76,9 @@ class SubgroupCreation < FeatureTest
         end
       end
 
-      it "redirects to subgroup signup page" do
-        page.current_path.must_equal(
-          "/groups/#{Group.last.id}/signup_forms/#{SignupForm.last.id}/signups/new"
-        )
+      it "redirects to the user's profile page" do
+        page.current_path.must_equal "/profile"
+        page.must_have_content "Welcome"
       end
 
       it "saves group info" do

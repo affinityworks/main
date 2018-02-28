@@ -50,9 +50,14 @@
           <div class="organizer-input-container">
 
             <h2>Organizer Info</h2>
+
+            <% organizer = @subgroup.memberships.first.person %>
+            <% phone_number = organizer.phone_numbers.first %>
+            <% email_address = organizer.email_addresses.first %>
+            <% address = organizer.personal_addresses.first %>
             
             <div class="organizer-inputs">
-              <%= f.fields_for :organizer_attributes, @organizer do |member_form| %>
+              <%= f.fields_for :organizer_attributes, organizer do |member_form| %>
                 <div class="field">
                   <%= member_form.text_field :given_name, placeholder: :first_name %>
                 </div>
@@ -63,17 +68,17 @@
                   <%= member_form.password_field :password, placeholder: :password %>
                 </div>
                 <div class="field">
-                  <%= member_form.fields_for :phone_numbers_attributes do |phone_form| %>
+                  <%= member_form.fields_for :phone_numbers_attributes, phone_number do |phone_form| %>
                     <%= phone_form.text_field :number, placeholder: 'Phone number' %>  
                   <% end #member_form.fields_for :phone_number %>
                 </div>
                 <div class="field">
-                  <%= member_form.fields_for :email_addresses_attributes do |email_form| %>
+                  <%= member_form.fields_for :email_addresses_attributes, email_address do |email_form| %>
                     <%= email_form.text_field :address, placeholder: 'Email' %>
                   <% end #member_form.fields_for :email_address %>
                 </div>
                 <div class="field">
-                  <%= member_form.fields_for :personal_addresses_attributes do |email_form| %>
+                  <%= member_form.fields_for :personal_addresses_attributes, address do |email_form| %>
                     <%= email_form.text_field :postal_code, placeholder: 'Zipcode (personal)' %>
                   <% end #member_form.fields_for :email_address %>
                 </div>

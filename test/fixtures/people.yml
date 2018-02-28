@@ -99,8 +99,4 @@ new_signup:
     - Latin
   birthdate: 2011-09-17
   encrypted_password: $2a$11$08m64awvoVFg4sLOu.zA6e70E98bWC2VNewFWUNYjtnvutb/K68xK
-  custom_fields:
-    phone: iPhone
-  created_at: 2016-12-18 19:30:05
-  updated_at: 2016-12-18 19:30:05
   employer: Aspiration Tech
