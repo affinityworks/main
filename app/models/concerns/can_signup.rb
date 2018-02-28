@@ -21,12 +21,14 @@ module CanSignup
     end
 
     def create_from_signup(form, group, person_attrs)
-      group.members.new(person_attrs).tap do |member|
-        if member.save
-          group.memberships.create(:person => member, :role => 'member')
-          # group.signup.create(membership: membership, source: form)
-        end
-      end
+      Person.create(
+        person_attrs.merge(
+          memberships_attributes: [{ role: 'member', group: group }]
+          # TODO: (aguestuser|28-Feb-2018)
+          # to track signups, include nested attrs w/ something like:
+          # signup_attributes: { source: form }
+        )
+      )
     end
   end
 end

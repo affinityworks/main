@@ -19,6 +19,7 @@ class Group < ApplicationRecord
   has_many :volunteers, :source => :person, :through => :volunteer_memerships
 
   has_many :attendances, through: :members
+  # TODO: (aguestuser|28-Feb-2018) `affiliation` naming is GOD AWFUL CONFUSING
   has_many :affiliations, foreign_key: :group_id, class_name: 'Affiliation'
   has_many :affiliations_with, foreign_key: :affiliated_id, class_name: 'Affiliation'
 
@@ -39,9 +40,10 @@ class Group < ApplicationRecord
 
   accepts_nested_attributes_for :location
   accepts_nested_attributes_for :memberships
+  accepts_nested_attributes_for :affiliations_with
 
   class << self
-    def build_group_and_organizer
+    def build_group_with_organizer
       group = Group.new
       group.build_location
       membership = group.memberships.build
@@ -50,7 +52,7 @@ class Group < ApplicationRecord
       organizer.phone_numbers.build
       organizer.personal_addresses.build
 
-      [group, organizer]
+      group
     end
   end
 
@@ -152,13 +154,17 @@ class Group < ApplicationRecord
   end
 
   def create_subgroup(subgroup_attrs)
-    Group.create(subgroup_attrs).tap do |subgroup|
-      Affiliation.create(affiliated: subgroup, group: self) if subgroup.valid?
-    end
+    Group.create(
+      subgroup_attrs.merge(
+        affiliations_with_attributes: [{
+          group: self
+        }]
+      )
+    )
   end
 
   def create_subgroup_with_organizer(subgroup_attrs: {}, organizer_attrs: {})
-    create_subgroup(
+    subgroup = create_subgroup(
       subgroup_attrs.merge(
         memberships_attributes: [{
           person_attributes: organizer_attrs,
@@ -166,5 +172,6 @@ class Group < ApplicationRecord
         }]
       )
     )
+    [subgroup, subgroup.members.first]
   end
 end

@@ -4,23 +4,18 @@ class SubgroupsController < ApplicationController
 
   # GET groups/:group_id/subgroups/new
   def new
-    @subgroup, @organizer = Group.build_group_and_organizer
+    @subgroup, foo = Group.build_group_with_organizer
   end
 
   # POST groups/:group_id/subgroups
   def create
-    @subgroup = @group.create_subgroup_with_organizer(
+    @subgroup, organizer = @group.create_subgroup_with_organizer(
       subgroup_attrs: subgroup_params,
       organizer_attrs: organizer_params
     )
-    if @subgroup&.valid? && @subgroup.affiliations_with&.last&.valid?
-      form = SignupForm.for(@subgroup)
-    end
-    if form&.valid?
-      redirect_to new_group_signup_form_signup_path(
-        group_id: @subgroup.id,
-        signup_form_id: form.id
-      )
+    if @subgroup.valid?
+      SignupForm.for(@subgroup)
+      sign_in_and_redirect(organizer)
     else
       render :new
     end

@@ -40,9 +40,7 @@ class CanSignupTest < ActiveSupport::TestCase
       let(:new_member){ Person.last }
 
       before do
-        person_count
-        membership_count
-        contact_info_count
+        person_count; membership_count; contact_info_count
 
         Person.create_from_signup(form, group, person_attributes)
       end
@@ -51,8 +49,13 @@ class CanSignupTest < ActiveSupport::TestCase
         Person.count.must_equal person_count + 1
       end
 
-      it "creates a new membership" do
-        Membership.count.must_equal membership_count + 1
+      it "creates a new Membership" do
+        Membership.count.must_equal(membership_count + 1)
+      end
+
+      it "makes person a member of the group" do
+        group.memberships.last.person.must_equal new_member
+        new_member.memberships.last.group.must_equal group
       end
 
       it "saves the new member's contact info" do
@@ -64,8 +67,6 @@ class CanSignupTest < ActiveSupport::TestCase
           new_member.send(msg).first.primary?.must_equal true
         end
       end
-
-      
     end
 
     private
