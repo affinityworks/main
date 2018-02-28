@@ -34,9 +34,6 @@
                 <%= f.text_field :name, placeholder: :name %>
               </div>
               <div class="field">
-                <%= f.text_field :summary, placeholder: :summary %>
-              </div>
-              <div class="field">
                 <%= f.fields_for :location, @subgroup.location do |location_form| %>
                   <%= location_form.text_field :postal_code, placeholder: 'Zipcode (group)' %>
                 <% end %>

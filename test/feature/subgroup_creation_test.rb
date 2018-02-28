@@ -13,7 +13,7 @@ class SubgroupCreation < FeatureTest
     end
 
     it "has fields for creating a group" do
-      ['Name', 'Summary', 'Zipcode (group)'].each do |label|
+      ['Name', 'Zipcode (group)'].each do |label|
         page.find("input[placeholder='#{label}']").wont_be_nil
       end
     end
@@ -51,8 +51,7 @@ class SubgroupCreation < FeatureTest
         RESOURCES.each { |r| send("#{r}_count") }
         fill_out_form(
           'Name' => 'Jawbreaker',
-          'Description' => 'Early emo is the best emo',
-          'Summary' => 'I want to be a boat, I want to learn to swim',
+          'Description' => 'I want to be a boat, I want to learn to swim',
           'Zipcode (group)' => '90210',
           'First name' => 'herbert',
           'Last name' => 'stencil',
@@ -82,10 +81,9 @@ class SubgroupCreation < FeatureTest
       end
 
       it "saves group info" do
-        Group.last.attributes.slice(*%w[name description summary]).must_equal(
+        Group.last.attributes.slice(*%w[name description]).must_equal(
           'name' =>  "Jawbreaker",
-          'description' => 'Early emo is the best emo',
-          'summary' => 'I want to be a boat, I want to learn to swim'
+          'description' => 'I want to be a boat, I want to learn to swim'
         )
       end
 
