@@ -45,10 +45,13 @@ class SubgroupCreation < FeatureTest
     let(:membership_count){ Membership.count }
     let(:signup_form_count){ SignupForm.count }
     let(:last_person){ Person.last }
+    let(:mail_delivery){ ActionMailer::MessageDelivery }
 
     describe "with no errors" do
       before do
         RESOURCES.each { |r| send("#{r}_count") }
+        # allow(OrganizerMailer).to receive(:new_subgroup_email).and_return(mail_delivery)
+        # allow(mail_delivery).to receive(:deliver_later)
         fill_out_form(
           'Name' => 'Jawbreaker',
           'Description' => 'I want to be a boat, I want to learn to swim',
@@ -115,6 +118,13 @@ class SubgroupCreation < FeatureTest
         last_person.primary_personal_address.postal_code.must_equal '90211'
       end
 
+      it "sends a welcome email (asynchronously)" do
+        # write this in minitest style! ugh!
+        # expect(OrganizerMailer)
+        #  .to have_received(:new_subgroup_email)
+        #       .with(last_person, Group.last, SignupForm.last)
+        # expect(mail_delivery).to have_received(:deliver_later)
+      end
     end
 
     describe "with errors" do

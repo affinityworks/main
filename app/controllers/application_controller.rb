@@ -47,8 +47,9 @@ class ApplicationController < ActionController::Base
   end
 
   def volunteer_permission?
-    current_group.volunteer?(current_person) ||
-    current_group.affiliation_with_role(current_user, Membership.roles[:volunteer])
+    current_person &&
+      (current_group.volunteer?(current_person) ||
+    current_group.affiliation_with_role(current_user, Membership.roles[:volunteer]))
   end
 
   def authorized_controllers_and_actions?
