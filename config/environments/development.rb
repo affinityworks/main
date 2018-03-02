@@ -26,12 +26,7 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
-  # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
 
-  config.action_mailer.perform_caching = false
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
-  
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
@@ -54,23 +49,44 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   # TODO: (aguestuser|01-Mar-2018)
-  # couldn't we DRY this up by putting it in application.rb
-  # and making env-dependent vars vary according to env in `config/network.yml`?
-  # when doing so, consider using ENV['HEROKU_URL'] for prod
-  # which requires:
+
+  # URGENT:
+  # for URLs to make sense, we MUST provide different hostnames for:
+  # 1. swingleft prod v. affinityworks prod (w/ fixed hostnames known in advance)
+  # 2. arbitrary review apps (w/ arbitrary hostnames generated at deploy time)
+  # hard problem! potential solution:
+  # consider using ENV['HEROKU_URL'] for prod, which requires:
   # `heroku config:set HEROKU_URL=$(heroku info -s | grep web-url | cut -d= -f2)`
   # as per: http://www.chrisjmendez.com/2016/12/19/how-to-get-your-web-url-from-heroku-dynamically/
 
-  host = "app.affinity.works" # TODO: read this from config
+  # NOT URGENT:
+  # perhaps we could DRY this up by putting it in application.rb
+  # and making env-dependent vars like host vary according to env
+  # in a yml file such as `config/network.yml`?
+  # (see `ethereum.yml` in test-www-metamask for an example)
+
+  _host = 'localhost'
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.perform_caching = false
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.default_url_options = { host: host }
   config.action_mailer.smtp_settings = {
     :port           => ENV['MAILGUN_SMTP_PORT'],
     :address        => ENV['MAILGUN_SMTP_SERVER'],
     :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
     :password       => ENV['MAILGUN_SMTP_PASSWORD'],
-    :domain         => ENV['MAILGUN_DOMAIN'],#host,
+    #:domain         => "app.affinity.works",
+    :domain         => ENV['MAILGUN_DOMAIN'],
     :authentication => :plain,
-    :ssl            => true
+    #:ssl            => true
   }
+
+  # RABBLE STUFF
+  # WRONG!!!! Don't care if the mailer can't send.
+  # config.action_mailer.raise_delivery_errors = true
+  # config.action_mailer.perform_caching = false
+  # config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  
+
 end

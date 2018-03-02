@@ -14,6 +14,8 @@ class ActiveSupport::TestCase
   include ::ValidAttribute::Method
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   fixtures :all
+  # support active job helpers (like `perform_enqueued_jobs`)
+  include ActiveJob::TestHelper
 
   # Add more helper methods to be used by all tests here...
 end

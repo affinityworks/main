@@ -4,7 +4,7 @@ class SubgroupsController < ApplicationController
 
   # GET groups/:group_id/subgroups/new
   def new
-    @subgroup, foo = Group.build_group_with_organizer
+    @subgroup = Group.build_group_with_organizer
   end
 
   # POST groups/:group_id/subgroups
@@ -14,7 +14,9 @@ class SubgroupsController < ApplicationController
       organizer_attrs: organizer_params
     )
     if @subgroup.valid?
-      SignupForm.for(@subgroup)
+      OrganizerMailer
+        .new_subgroup_email(organizer, @subgroup, SignupForm.for(@subgroup))
+        .deliver_later
       sign_in_and_redirect(organizer)
     else
       render :new

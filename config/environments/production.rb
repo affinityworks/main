@@ -95,7 +95,7 @@ Rails.application.configure do
   end
 
   # TODO: see todo in development.rb
-  host = "app.affinity.works" # TODO: read this from config
+  host = "app.affinity.works" # TODO: read this from config (see `development.rb`)
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.default_url_options = { host: host }
   config.action_mailer.smtp_settings = {
@@ -103,7 +103,7 @@ Rails.application.configure do
     :address        => ENV['MAILGUN_SMTP_SERVER'],
     :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
     :password       => ENV['MAILGUN_SMTP_PASSWORD'],
-    :domain         => ENV['MAILGUN_DOMAIN'],#host,
+    :domain         => ENV['MAILGUN_DOMAIN'], #host, <- pretty sure that's wrong
     :authentication => :plain,
     :ssl            => true
   }

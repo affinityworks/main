@@ -1,4 +1,5 @@
 require_relative "../test_helper"
+require 'minitest/mock'
 
 class SubgroupCreation < FeatureTest
 
@@ -45,25 +46,26 @@ class SubgroupCreation < FeatureTest
     let(:membership_count){ Membership.count }
     let(:signup_form_count){ SignupForm.count }
     let(:last_person){ Person.last }
-    let(:mail_delivery){ ActionMailer::MessageDelivery }
+    let(:deliveries_count){ ActionMailer::Base.deliveries.size }
 
     describe "with no errors" do
       before do
         RESOURCES.each { |r| send("#{r}_count") }
-        # allow(OrganizerMailer).to receive(:new_subgroup_email).and_return(mail_delivery)
-        # allow(mail_delivery).to receive(:deliver_later)
-        fill_out_form(
-          'Name' => 'Jawbreaker',
-          'Description' => 'I want to be a boat, I want to learn to swim',
-          'Zipcode (group)' => '90210',
-          'First name' => 'herbert',
-          'Last name' => 'stencil',
-          'Password' => 'password',
-          'Phone number' => '212-867-5309',
-          'Email' => 'foo@bar.com',
-          'Zipcode (personal)' => '90211'
-        )
-        click_button "Submit"
+        deliveries_count
+        perform_enqueued_jobs do
+          fill_out_form(
+            'Name' => 'Jawbreaker',
+            'Description' => 'I want to be a boat, I want to learn to swim',
+            'Zipcode (group)' => '90210',
+            'First name' => 'herbert',
+            'Last name' => 'stencil',
+            'Password' => 'password',
+            'Phone number' => '212-867-5309',
+            'Email' => 'foo@bar.com',
+            'Zipcode (personal)' => '90211'
+          )
+          click_button "Submit"
+        end
       end
 
       RESOURCES.each do |resource|
@@ -119,11 +121,8 @@ class SubgroupCreation < FeatureTest
       end
 
       it "sends a welcome email (asynchronously)" do
-        # write this in minitest style! ugh!
-        # expect(OrganizerMailer)
-        #  .to have_received(:new_subgroup_email)
-        #       .with(last_person, Group.last, SignupForm.last)
-        # expect(mail_delivery).to have_received(:deliver_later)
+        ActionMailer::Base
+          .deliveries.size.must_equal(deliveries_count + 1)
       end
     end
 
