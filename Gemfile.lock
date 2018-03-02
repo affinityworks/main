@@ -471,6 +471,7 @@ DEPENDENCIES
   derailed
   devise
   doorkeeper
+  dotenv
   dotenv-rails
   foreman
   geokit-rails
