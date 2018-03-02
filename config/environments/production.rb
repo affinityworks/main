@@ -94,15 +94,17 @@ Rails.application.configure do
     config.logger = ActiveSupport::TaggedLogging.new(logger)
   end
 
-end
-
-
-  ActionMailer::Base.smtp_settings = {
+  # TODO: see todo in development.rb
+  host = "app.affinity.works" # TODO: read this from config
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.default_url_options = { host: host }
+  config.action_mailer.smtp_settings = {
     :port           => ENV['MAILGUN_SMTP_PORT'],
     :address        => ENV['MAILGUN_SMTP_SERVER'],
     :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
     :password       => ENV['MAILGUN_SMTP_PASSWORD'],
-    :domain         => 'app.affinity.works',
+    :domain         => ENV['MAILGUN_DOMAIN'],#host,
     :authentication => :plain,
+    :ssl            => true
   }
-  ActionMailer::Base.delivery_method = :smtp
+end

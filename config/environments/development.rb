@@ -52,15 +52,25 @@ Rails.application.configure do
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
-end
 
+  # TODO: (aguestuser|01-Mar-2018)
+  # couldn't we DRY this up by putting it in application.rb
+  # and making env-dependent vars vary according to env in `config/network.yml`?
+  # when doing so, consider using ENV['HEROKU_URL'] for prod
+  # which requires:
+  # `heroku config:set HEROKU_URL=$(heroku info -s | grep web-url | cut -d= -f2)`
+  # as per: http://www.chrisjmendez.com/2016/12/19/how-to-get-your-web-url-from-heroku-dynamically/
 
-  ActionMailer::Base.smtp_settings = {
+  host = "app.affinity.works" # TODO: read this from config
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.default_url_options = { host: host }
+  config.action_mailer.smtp_settings = {
     :port           => ENV['MAILGUN_SMTP_PORT'],
     :address        => ENV['MAILGUN_SMTP_SERVER'],
     :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
     :password       => ENV['MAILGUN_SMTP_PASSWORD'],
-    :domain         => 'app.affinity.works',
+    :domain         => ENV['MAILGUN_DOMAIN'],#host,
     :authentication => :plain,
+    :ssl            => true
   }
-  ActionMailer::Base.delivery_method = :smtp
+end
