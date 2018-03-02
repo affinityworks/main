@@ -1,3 +1,6 @@
+# secrets!
+.env
+
 *.rbc
 capybara-*.html
 .rspec
