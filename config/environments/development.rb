@@ -76,17 +76,8 @@ Rails.application.configure do
     :address        => ENV['MAILGUN_SMTP_SERVER'],
     :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
     :password       => ENV['MAILGUN_SMTP_PASSWORD'],
-    #:domain         => "app.affinity.works",
     :domain         => ENV['MAILGUN_DOMAIN'],
     :authentication => :plain,
-    #:ssl            => true
+    :ssl            => true
   }
-
-  # RABBLE STUFF
-  # WRONG!!!! Don't care if the mailer can't send.
-  # config.action_mailer.raise_delivery_errors = true
-  # config.action_mailer.perform_caching = false
-  # config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
-  
-
 end
