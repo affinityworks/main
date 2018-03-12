@@ -314,7 +314,7 @@ GEM
       method_source (~> 0.8.1)
     public_suffix (2.0.5)
     puma (3.6.2)
-    rack (2.0.3)
+    rack (2.0.4)
     rack-mini-profiler (0.10.7)
       rack (>= 1.2.0)
     rack-protection (2.0.0)
