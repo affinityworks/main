@@ -105,6 +105,7 @@ group :development, :test do
   gem 'byebug', platform: :mri
   gem 'awesome_print'
   gem 'pry' # for debugging, robe console, etc...
+  gem 'dotenv'
 end
 
 group :development do

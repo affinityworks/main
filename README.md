@@ -140,3 +140,91 @@ Webpack will automatically rebuild the dev javascript bundles on changes accordi
 ``` shell
 $ bundle exec rake react_on_rails:assets:webpack
 ```
+
+## Testing Note: Mailgun on Heroku Review apps
+
+Testing email features on Heroku review apps is a bit tricky.
+
+To successfully verify that an email feature works, you will need to:
+
+1. Log into the heroku cli
+1. Use the cli to copy mailgun credentials from `dev-affinityworks` app to your local machine
+1. Use the cli to copy those credentials from your local machine to `dev-affinityworks-pr-<PR_NUMBER_HERE>`
+
+Here is a representative shell session of that process (with credentials redacted):
+
+``` shell
+$ heroku login
+$ heroku config --app dev-affinityworks | clip
+```
+
+You should now have all the environment variables for the review app in your clipboard. If you paste them into a text file, it should look something like:
+
+```txt
+=== dev-affinityworks-pr-520 Config Vars
+DATABASE_URL:                 postgres://<some_url>
+HEROKU_POSTGRESQL_BRONZE_URL: postgres://<some_url>
+LANG:                         en_US.UTF-8
+MAILGUN_API_KEY:              key-<some_hex_string>
+MAILGUN_DOMAIN:               mg-staging.affinity.works
+MAILGUN_PUBLIC_KEY:           pubkey-<some_hex_string>
+MAILGUN_SMTP_LOGIN:           postmaster@mg-staging.affinity.works
+MAILGUN_SMTP_PASSWORD:        <some_hex_string>
+MAILGUN_SMTP_PORT:            587
+MAILGUN_SMTP_SERVER:          smtp.mailgun.org
+RACK_ENV:                     production
+RAILS_ENV:                    production
+RAILS_LOG_TO_STDOUT:          enabled
+RAILS_SERVE_STATIC_FILES:     enabled
+REDIS_URL:                    redis://<some_url>
+SECRET_KEY_BASE:              <some_hex_string>
+```
+
+(Note that we are currently copying the config vars from staging, which is sort of weird, but necessary for `reasons`.)
+
+In order to upload the mailgun-related credentials to your review app -- assuming a staging app called `dev-affinityworks-pr-666` (NOTE: the number of your PR will differ!) -- you would then perform the appropriate text-munging to issue the following cli commands:
+
+```shell
+$ heroku config:set MAILGUN_API_KEY=key-<some_hex_string> -a dev-affinityworks-pr-666
+$ heroku config:set MAILGUN_DOMAIN=mg-staging.affinity.works -a dev-affinityworks-pr-666
+$ heroku config:set MAILGUN_PUBLIC_KEY=pubkey-<some_hex_string> -a dev-affinityworks-pr-666
+$ heroku config:set MAILGUN_SMTP_LOGIN=postmaster@mg-staging.affinity.works -a dev-affinityworks-pr-666
+$ heroku config:set MAILGUN_SMTP_PASSWORD=<some_hex_string> -a dev-affinityworks-pr-666
+$ heroku config:set MAILGUN_SMTP_PORT=587 -a dev-affinityworks-pr-666
+$ heroku config:set MAILGUN_SMTP_SERVER=smtp.mailgun.org -a dev-affinityworks-pr-666
+```
+
+This should configure the review app to send emails.
+
+Now we issue this command to configure it with the proper hostname (so that links in emails are correct):
+
+``` shell
+$ heroku config:set HOSTNAME=$(heroku info --app <app_name> -s | grep web_url | cut -d= -f2)
+```
+
+And finally, we make sure that all workers are running (so that emails get sent in the background), with:
+
+``` shell
+$ heroku ps:restart worker -a dev-affinityworks-pr-666
+```
+
+Could this whole process be simplified drastically? YOU BETCHA!!! Let's do that in an upcoming card. :P
+
+
+## Configuration Note: Mailgun + Heroku
+
+It is sort of janky to use the staging credentials for dev. For one, it necessitates the manual copying process above. Secondly, if we ever delete the staging app, we won't have a free mailgun account to use for acceptance testing.
+
+Thus, at some point in the future, it will likely make sense for us to set up a dedicated `dev` mailgun account.
+
+At such point, a (hopeuflly exhaustive) set of steps for configuring the mailgun account are:
+
+1. Provision the Mailgun add-on (in the "Resources" tab of the `dev-affinityworks` app panel)
+1. Click on it (to go to the mailgun dashboard)
+1. Verify the mailgun account via email or help ticket (help ticket will be necesary if they send email to weird address)
+1. Creating new domain `mg-dev.affinity.works`
+1. Verify the domain by:
+  a. clicking "Domains" -> "Domain Verification & DNS"
+  b. observing the two `TXT` records that appear
+  c. logging into gandi.net and finding the DNS records
+  d. creating two `TXT` records with the values observed in step b above

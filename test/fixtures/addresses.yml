@@ -78,3 +78,8 @@ new_signup:
   address_type: Personal
   occupation: busker
   person: new_signup
+
+subgroup_location:
+  type: GroupAddress
+  region: NY
+  postal_code: 11238

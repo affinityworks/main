@@ -1,0 +1,14 @@
+Hi <%= @organizer.name %>, thanks for creating <%= @subgroup.name %> on affinity.works!
+
+Here are a few helpful pointers to get started.
+
+We made you a signup form to help recruit other people to your group. The form is here: <%= new_group_signup_form_signup_url(group_id: @subgroup.id, signup_form_id: @form.id) %>. Pass it around!
+
+To administer your group, login to: <%= profile_index_url %>.
+
+Feel free to email us at help@affinity.works to ask for help if you get stuck. We'd love to hear from you! :)
+
+Thanks for the work that you do,
+
+The Affinity Team
+

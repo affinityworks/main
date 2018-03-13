@@ -45,3 +45,9 @@ six:
   id: 6
   an_api_key: 'test-token-6'
   name: Anab
+
+subgroup:
+  origin_system: "Affinity"
+  name: "Chums of Chance"
+  description: "<div>We have a really big balloon and we're flying it into WWI</div>"
+  location: subgroup_location

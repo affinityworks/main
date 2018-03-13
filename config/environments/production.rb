@@ -94,15 +94,30 @@ Rails.application.configure do
     config.logger = ActiveSupport::TaggedLogging.new(logger)
   end
 
-end
+  # NOTE: to dynamically set `ENV['HOSTNAME']` for review apps, use:
+  # `heroku config:set HOSTNAME=$(heroku info --app <app_name> -s | grep web_url | cut -d= -f2)`
+  # as per: http://www.chrisjmendez.com/2016/12/19/how-to-get-your-web-url-from-heroku-dynamically/
 
-
-  ActionMailer::Base.smtp_settings = {
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.default_url_options = { host: ENV['HOSTNAME'] }
+  config.action_mailer.smtp_settings = {
     :port           => ENV['MAILGUN_SMTP_PORT'],
     :address        => ENV['MAILGUN_SMTP_SERVER'],
     :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
     :password       => ENV['MAILGUN_SMTP_PASSWORD'],
-    :domain         => 'app.affinity.works',
+    :domain         => ENV['MAILGUN_DOMAIN'],
     :authentication => :plain,
+    #:ssl            => true
+    # TODO: (aguestuser|13 Mar 2018)
+    # figure out why enabling ssl breaks heroku/mailgun
+    # and re-enable it
+    # error is of the form:
+    # | Completed 500 Internal Server Error in 101ms (ActiveRecord: 29.5ms)
+    # | OpenSSL::SSL::SSLError (SSL_connect returned=1 errno=0 state=unknown state: unknown protocol):
+    # | vendor/ruby-2.3.3/lib/ruby/2.3.0/net/smtp.rb:587:in `connect'
+    # | vendor/ruby-2.3.3/lib/ruby/2.3.0/net/smtp.rb:587:in `tlsconnect'
+    # | vendor/ruby-2.3.3/lib/ruby/2.3.0/net/smtp.rb:555:in `do_start'
+    # | vendor/ruby-2.3.3/lib/ruby/2.3.0/net/smtp.rb:521:in `start'
+    # | vendor/bundle/ruby/2.3.0/gems/mail-2.6.6/lib/mail/network/delivery_methods/smtp.rb:111:in `deliver!'
   }
-  ActionMailer::Base.delivery_method = :smtp
+end

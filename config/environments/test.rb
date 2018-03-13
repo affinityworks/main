@@ -33,6 +33,18 @@ Rails.application.configure do
   # The :test delivery method accumulates sent emails in the
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
+  config.action_mailer.default_url_options = { host: 'localhost' }
+
+  # config.action_mailer.smtp_settings = {
+  #   :port           => ENV['MAILGUN_SMTP_PORT'],
+  #   :address        => ENV['MAILGUN_SMTP_SERVER'],
+  #   :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
+  #   :password       => ENV['MAILGUN_SMTP_PASSWORD'],
+  #   :domain         => ENV['MAILGUN_DOMAIN'],#host,
+  #   :authentication => :plain,
+  #   :ssl            => true
+  # }
+
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
