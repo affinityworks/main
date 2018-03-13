@@ -48,23 +48,6 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
-  # TODO: (aguestuser|01-Mar-2018)
-
-  # URGENT:
-  # for URLs to make sense, we MUST provide different hostnames for:
-  # 1. swingleft prod v. affinityworks prod (w/ fixed hostnames known in advance)
-  # 2. arbitrary review apps (w/ arbitrary hostnames generated at deploy time)
-  # hard problem! potential solution:
-  # consider using ENV['HEROKU_URL'] for prod, which requires:
-  # `heroku config:set HEROKU_URL=$(heroku info -s | grep web-url | cut -d= -f2)`
-  # as per: http://www.chrisjmendez.com/2016/12/19/how-to-get-your-web-url-from-heroku-dynamically/
-
-  # NOT URGENT:
-  # perhaps we could DRY this up by putting it in application.rb
-  # and making env-dependent vars like host vary according to env
-  # in a yml file such as `config/network.yml`?
-  # (see `ethereum.yml` in test-www-metamask for an example)
-
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_caching = false
   config.action_mailer.perform_deliveries = true
@@ -77,6 +60,7 @@ Rails.application.configure do
     :password       => ENV['MAILGUN_SMTP_PASSWORD'],
     :domain         => ENV['MAILGUN_DOMAIN'],
     :authentication => :plain,
-    :ssl            => true
+    # TODO: enable ssl as per TODO in production.rb
+    #:ssl            => true
   }
 end
