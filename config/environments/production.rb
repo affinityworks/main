@@ -94,16 +94,18 @@ Rails.application.configure do
     config.logger = ActiveSupport::TaggedLogging.new(logger)
   end
 
-  # TODO: see todo in development.rb
-  host = "app.affinity.works" # TODO: read this from config (see `development.rb`)
+  # NOTE: to dynamically set `ENV['HOSTNAME']` for review apps, use:
+  # `heroku config:set HOSTNAME=$(heroku info --app <app_name> -s | grep web_url | cut -d= -f2)`
+  # as per: http://www.chrisjmendez.com/2016/12/19/how-to-get-your-web-url-from-heroku-dynamically/
+  #
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.default_url_options = { host: host }
+  config.action_mailer.default_url_options = { host: ENV['HOSTNAME'] }
   config.action_mailer.smtp_settings = {
     :port           => ENV['MAILGUN_SMTP_PORT'],
     :address        => ENV['MAILGUN_SMTP_SERVER'],
     :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
     :password       => ENV['MAILGUN_SMTP_PASSWORD'],
-    :domain         => ENV['MAILGUN_DOMAIN'], #host, <- pretty sure that's wrong
+    :domain         => ENV['MAILGUN_DOMAIN'],
     :authentication => :plain,
     :ssl            => true
   }

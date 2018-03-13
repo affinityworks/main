@@ -65,7 +65,6 @@ Rails.application.configure do
   # in a yml file such as `config/network.yml`?
   # (see `ethereum.yml` in test-www-metamask for an example)
 
-  _host = 'localhost'
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_caching = false
   config.action_mailer.perform_deliveries = true
