@@ -51,3 +51,4 @@ subgroup:
   name: "Chums of Chance"
   description: "<div>We have a really big balloon and we're flying it into WWI</div>"
   location: subgroup_location
+  an_api_key: 'test-token-7'
