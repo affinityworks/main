@@ -257,35 +257,6 @@ class Person < ApplicationRecord
     end
   end
 
-  def self.activity_feed(group, date=Date.today-1.days)
-
-    #need to fix this so it's only showing data you can see
-    people_version =  PaperTrail::Version.where(item_type: 'Person').
-      where.not(event: 'destroy').
-      where(created_at: date.beginning_of_day...Date.today.end_of_day)
-
-      {}.tap do |feed|
-
-      created, updated = people_version.partition { |version| version.event == 'create' }
-
-      feed[:created] = created.map { |version|
-         to_activity_json(version)
-       }
-      feed[:updated] = updated.map { |version| to_activity_json(version) }
-    end
-  end
-
-  def self.to_activity_json(version)
-    {
-      version_id: version.id,
-      id: version.item_id,
-      timestamp: version.created_at,
-      changed_fields: version&.changeset&.keys,
-      whodunnit: version.whodunnit,
-      name: version&.item&.name
-    } if version
-  end
-
   #we dont' use permitted but do use rejected
   def permitted_import_parameters
     return [:family_name, :given_name, :additional_name, :honorific_prefix,

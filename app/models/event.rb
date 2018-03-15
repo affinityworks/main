@@ -85,15 +85,6 @@ class Event < ApplicationRecord
     order(start_date: direction)
   end
 
-  def self.activity_feed(group, date=Date.today-1.days)
-    events = group.all_events.where(updated_at: date.beginning_of_day...Date.today.end_of_day)
-    {}.tap do |feed|
-      created, updated = events.partition { |event| event.updated_at == event.created_at }
-      feed[:created] = created.map(&:to_activity_json)
-      feed[:updated] = updated.map(&:to_activity_json)
-    end
-  end
-
   def origin_system_is_action_network?
     origin_system == 'Action Network'
   end
@@ -101,9 +92,4 @@ class Event < ApplicationRecord
   def group #TODO Change relation to 1 to Many
     groups.first
   end
-
-  def to_activity_json
-    as_json(only: [:title, :id, :created_at, :updated_at], include: { group: { only:[:name] } })
-  end
-
 end

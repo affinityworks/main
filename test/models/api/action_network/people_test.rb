@@ -41,7 +41,9 @@ class Api::ActionNetwork::PeopleTest < ActiveSupport::TestCase
       to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'people_page_2.json')))
 
     assert_difference 'Person.count', 2 do
-      Api::ActionNetwork::People.import!(group)
+      perform_enqueued_jobs do
+        Api::ActionNetwork::People.import!(group)
+      end
     end
 
     assert_equal local_time, person_not_from_action_network.reload.updated_at
@@ -92,7 +94,9 @@ class Api::ActionNetwork::PeopleTest < ActiveSupport::TestCase
       to_return(body: File.read(Rails.root.join('test', 'fixtures', 'files', 'people.json')))
 
     assert_difference 'Person.count', 0 do
-      Api::ActionNetwork::People.import!(another_group)
+      perform_enqueued_jobs do
+        Api::ActionNetwork::People.import!(another_group)
+      end
     end
 
     assert another_group.members.any_identifier('action_network:1efc3644-af25-4253-90b8-a0baf12dbd1e').exists?, "confirm the alredy imported user gets added to the new group"
