@@ -52,3 +52,10 @@ subgroup:
   description: "<div>We have a really big balloon and we're flying it into WWI</div>"
   location: subgroup_location
   an_api_key: 'test-token-7'
+
+swing_left:
+  origin_system: "Affinity"
+  name: "Swing Left"
+  description: "sweet chariot!"
+  location: group_location
+  an_api_key: 'test-token-8'

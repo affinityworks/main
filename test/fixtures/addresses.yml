@@ -79,6 +79,11 @@ new_signup:
   occupation: busker
   person: new_signup
 
+group_location:
+  type: GroupAddress
+  region: MA
+  postal_code: 02138
+
 subgroup_location:
   type: GroupAddress
   region: NY
