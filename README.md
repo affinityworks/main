@@ -230,3 +230,5 @@ At such point, a (hopeuflly exhaustive) set of steps for configuring the mailgun
   d. creating two `TXT` records with the values observed in step b above
 
 ## Spurious header that isn't good for anything
+
+* let's add a spurious bullet point!
