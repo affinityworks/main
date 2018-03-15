@@ -3,9 +3,7 @@ class FeatureToggle
   RULES = {
     events: {
       disable_for: {
-        groups: Set.new(
-          "Swing Left"
-        )
+        groups: Set.new(["Swing Left"])
       }
     }
   }.freeze
