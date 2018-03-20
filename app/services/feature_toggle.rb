@@ -11,16 +11,15 @@ class FeatureToggle
   class << self
     # (symbol, symbol) => boolean
     def active?(feature, group: nil)
-      active_for_group?(feature, group)
+      !disable_for_group?(feature, group)
     end
   end
 
   private
 
   class << self
-    def active_for_group?(feature, group)
-      !group ||
-        !RULES.dig(:events, :disable_for, :groups)&.include?(group.name)
+    def disable_for_group?(feature, group)
+      RULES.dig(feature, :disable_for, :groups)&.include?(group.name) if group
     end
   end
 end
