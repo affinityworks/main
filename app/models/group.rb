@@ -1,5 +1,6 @@
 class Group < ApplicationRecord
   include ArelHelpers::ArelTable
+  include Networkable
   #has_paper_trail
   acts_as_taggable
 

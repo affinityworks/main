@@ -1,0 +1,13 @@
+swing_left_ohio_membership:
+  group: swing_left_ohio
+  network: swing_left_network
+  primary: true
+
+swing_left_ohio_avengers_membership:
+  group: swing_left_ohio
+  network: the_avengers
+
+swing_left_new_york_membership:
+  group: swing_left_new_york
+  network: swing_left_network
+  primary: true

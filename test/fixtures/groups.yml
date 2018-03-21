@@ -59,3 +59,15 @@ swing_left:
   description: "sweet chariot!"
   location: group_location
   an_api_key: 'test-token-8'
+
+swing_left_ohio:
+  origin_system: "Affinity"
+  name: "Swing Left Ohio"
+  location: subgroup_location
+  an_api_key: 'test-token-9'
+
+swing_left_new_york:
+  origin_system: "Affinity"
+  name: "Swing Left New York"
+  location: subgroup_location
+  an_api_key: 'test-token-10'
