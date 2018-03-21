@@ -71,3 +71,15 @@ swing_left_new_york:
   name: "Swing Left New York"
   location: subgroup_location
   an_api_key: 'test-token-10'
+
+fantastic_four:
+  origin_system: "Affinity"
+  name: "The Fantastic Four"
+  location: subgroup_location
+  an_api_key: 'test-token-11'
+
+my_local_political_club:
+  origin_system: "Affinity"
+  name: "My Local Political Club"
+  location: subgroup_location
+  an_api_key: 'test-token-12'

@@ -19,7 +19,7 @@ The current implementation of feature toggles is given in `./feature_toggles.rb`
   * not have more than one primary network
   * not become member of same network twice
 
-* [ ] **Modify `FeatureToggles::RULES`:**
+* [x] **Modify `FeatureToggles::RULES`:**
   * enumerate the names of networks for which a given feature is to be disabled (relying on the strong guarantee that networks must have unique names) --> inject `RULES` for now
   * when calling `FeatureToggle.active?(:some_feather, group: some_group)`, inspect whether `some_group.primary_network.name` is included in the enumerated list of black listed network names to determine whether the toggle should be on or not
 

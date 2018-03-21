@@ -8,7 +8,7 @@ module Networkable
 
     # ACCESSORS
     def primary_network
-      network_memberships.primary.first.network
+      network_memberships&.primary&.first&.network
     end
   end
 end
