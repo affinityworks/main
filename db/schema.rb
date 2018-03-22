@@ -929,6 +929,8 @@ ActiveRecord::Schema.define(version: 20180321021928) do
   add_foreign_key "group_signup_forms", "groups"
   add_foreign_key "memberships", "groups"
   add_foreign_key "memberships", "people"
+  add_foreign_key "network_memberships", "groups"
+  add_foreign_key "network_memberships", "networks"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_grants", "people", column: "resource_owner_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
