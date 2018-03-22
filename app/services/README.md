@@ -26,13 +26,19 @@ The current implementation of feature toggles is given in `./feature_toggles.rb`
 * [x] **Modify `create_subgroup`**
   * when called (eg from the public subgroup creation form): add the subgroup to the parent group's `Network` (by assigning it the same `network_id` that its parent had
 
-* [ ] **Create a `networks.yml` config file that enumerates:**
-  * keys that correspond to the names of the root group of a network (eg: `swing_left:`)
-  * values that correspond to any attributes of the root group
+* [x] **read networks from configs:**
+  * Create a `networks.yml` config file that enumerates:*
+    * keys that correspond to the names of the root group of a network (eg: `swing_left:`)
+    * values that correspond to any attributes of the root group
+  * populate `FeatureToggle::NETWORKS` from this config file
+  * alt config file for tests?
+  * maybe use configs to specify `FeatureToggle::RULES`
 
-* [ ] **refactor feature toggle to always read from configs:**
+* [ ] **use feature toggle for events**
+  * note: will only be able to verify this works in test env until next step
 
 * [ ] **Create an `update_networks` migration that:**
   * we run *every time** we add a root group
   * reads the attributes of all groups in `networks.yml`
   * uses `#find_or_create` to create new `Group` or `Network` instances that have been added to the `.yml file since the last migration
+  * fun migration & verify that feature toggle works for events in dev env

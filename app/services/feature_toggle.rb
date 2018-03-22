@@ -4,25 +4,11 @@ class FeatureToggle
     Rails.configuration.networks
   ).freeze
 
-  RULES = {
-    events: {
-      disable_for: {
-        networks: Set.new([
-          NETWORKS.dig(:swing_left, :name)
-        ])
-      }
-    },
-    google_groups: {
-      enable_for: {
-        networks: Set.new([
-          NETWORKS.dig(:swing_left, :name)
-        ])
-      }
-    }
-  }.freeze
+  RULES = HashWithIndifferentAccess.new(
+    Rails.configuration.feature_toggles
+  ).freeze
 
   class << self
-    # (symbol, symbol) => boolean
     def on?(feature, group = nil)
       return enable_for_group?(feature, group) if is_opt_in?(feature)
       return !disable_for_group?(feature, group) if is_opt_out?(feature)

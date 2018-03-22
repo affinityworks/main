@@ -19,5 +19,6 @@ module AdvocacyCommons
 
     # custom config yml
     config.networks = config_for(:networks)
+    config.feature_toggles = config_for(:feature_toggles)
   end
 end
