@@ -157,9 +157,8 @@ class Group < ApplicationRecord
   def create_subgroup(subgroup_attrs)
     Group.create(
       subgroup_attrs.merge(
-        affiliations_with_attributes: [{
-          group: self
-        }]
+        affiliations_with_attributes: [{ group: self }],
+        network_memberships_attributes: network_memberships_attributes
       )
     )
   end

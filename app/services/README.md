@@ -23,17 +23,16 @@ The current implementation of feature toggles is given in `./feature_toggles.rb`
   * enumerate the names of networks for which a given feature is to be disabled (relying on the strong guarantee that networks must have unique names) --> inject `RULES` for now
   * when calling `FeatureToggle.active?(:some_feather, group: some_group)`, inspect whether `some_group.primary_network.name` is included in the enumerated list of black listed network names to determine whether the toggle should be on or not
 
-* [ ] **Modify `create_subgroup`**
+* [x] **Modify `create_subgroup`**
   * when called (eg from the public subgroup creation form): add the subgroup to the parent group's `Network` (by assigning it the same `network_id` that its parent had
 
 * [ ] **Create a `networks.yml` config file that enumerates:**
   * keys that correspond to the names of the root group of a network (eg: `swing_left:`)
   * values that correspond to any attributes of the root group
 
+* [ ] **refactor feature toggle to always read from configs:**
+
 * [ ] **Create an `update_networks` migration that:**
   * we run *every time** we add a root group
   * reads the attributes of all groups in `networks.yml`
   * uses `#find_or_create` to create new `Group` or `Network` instances that have been added to the `.yml file since the last migration
-
-* [ ] **rewrite tests for feature toggle:**
-  * always work based on configs (not injected rules)

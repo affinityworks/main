@@ -241,11 +241,14 @@ class GroupTest < ActiveSupport::TestCase
     let(:group_count){ Group.count }
     let(:address_count){ Address.count }
     let(:affiliation_count){ Affiliation.count }
-
-    before do
+    let(:count_all){
       group_count
       address_count
       affiliation_count
+    }
+
+    before do
+      count_all
       @subgroup = group.create_subgroup(
         name: "trystero",
         location_attributes: {
@@ -286,6 +289,24 @@ class GroupTest < ActiveSupport::TestCase
         subgroup.valid?.must_equal false
       end
     end
+
+
+    describe "network membership cloning" do
+
+      describe "group has no networks" do
+        it "assigns no network memberships" do
+          @subgroup.networks.must_be_empty
+        end
+      end
+
+      describe "group has primary network" do
+        let(:group){ groups(:swing_left_ohio) }
+
+        it "assings subgroup primary membership in network" do
+          @subgroup.primary_network.must_equal networks(:swing_left_network)
+        end
+      end
+    end
   end
 
   describe "#create_subgroup_with_organizer" do
@@ -295,9 +316,16 @@ class GroupTest < ActiveSupport::TestCase
     let(:email_count){ EmailAddress.count }
     let(:phone_count){ PhoneNumber.count }
     let(:affiliation_count){ Affiliation.count }
+    let(:count_all){
+      person_count
+      email_count
+      phone_count
+      membership_count
+      affiliation_count
+    }
 
     before do
-      person_count; email_count; phone_count; membership_count; affiliation_count
+      count_all
       @subgroup, @organizer = group.create_subgroup_with_organizer(
         subgroup_attrs:
           { name: "trystero", location_attributes: { postal_code: "90210" } },
@@ -345,6 +373,10 @@ class GroupTest < ActiveSupport::TestCase
       it "creates phone number for organizer" do
         PhoneNumber.count.must_equal(phone_count + 1)
       end
+    end
+
+    describe "group has primary network" do
+      it ""
     end
 
     describe "group is not valid" do

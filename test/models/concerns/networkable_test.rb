@@ -20,4 +20,19 @@ class NetworkableTest < ActiveSupport::TestCase
       swing_left_ohio.primary_network.must_equal swing_left
     end
   end
+
+  describe "nested attributes" do
+    it "accepts nested attributes for network membership" do
+      assert_difference "NetworkMembership.count", 1 do
+        Group.create(
+          name: 'foogroup',
+          network_memberships_attributes: [
+            {
+              network: networks(:the_avengers),
+            }
+          ]
+        )
+      end
+    end
+  end
 end
