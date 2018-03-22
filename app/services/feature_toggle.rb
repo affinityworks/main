@@ -1,9 +1,7 @@
 class FeatureToggle
 
-  # TODO (aguestuser|21 Mar 2018)
-  # eventually read these from Rails.configuration.networks
   NETWORKS = HashWithIndifferentAccess.new(
-    swing_left: { name: 'Swing Left Network' }
+    Rails.configuration.networks
   ).freeze
 
   RULES = {

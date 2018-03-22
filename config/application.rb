@@ -16,5 +16,8 @@ module AdvocacyCommons
 
     config.eager_load_paths << Rails.root.join('lib')
     config.active_job.queue_adapter = :resque
+
+    # custom config yml
+    config.networks = config_for(:networks)
   end
 end

@@ -1,0 +1,21 @@
+default: &default
+  swing_left:
+    name: 'Swing Left Network'
+    groups:
+     - name: 'Swing Left'
+
+development:
+  <<: *default
+
+production:
+  <<: *default
+
+test:
+  swing_left:
+    name: 'Swing Left Network'
+    groups:
+     - name: 'Swing Left'
+  the_avengers:
+    name: 'The Avengers'
+    groups:
+      - name: 'Fantastic Four'
