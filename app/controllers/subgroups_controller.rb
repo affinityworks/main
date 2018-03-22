@@ -17,6 +17,9 @@ class SubgroupsController < ApplicationController
       OrganizerMailer
         .new_subgroup_email(organizer, @subgroup, SignupForm.for(@subgroup))
         .deliver_later
+
+      CreateGoogleGroup.call(organizer: organizer, group: @subgroup) if FeatureToggle.on?(:google_groups, @subgroup)
+
       sign_in_and_redirect(organizer)
     else
       render :new

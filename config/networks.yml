@@ -1,8 +1,11 @@
 default: &default
-  swing_left:
+  swing_left_network:
     name: 'Swing Left Network'
     groups:
      - name: 'Swing Left'
+    google_gsuite_key: 'lib/networks/swing_left_network/service_account.json'
+    google_gsuite_admin_email: 'james@affinity.works'
+    google_gsuite_email_base: '@affinity.works'
 
 development:
   <<: *default
@@ -11,7 +14,7 @@ production:
   <<: *default
 
 test:
-  swing_left:
+  swing_left_network:
     name: 'Swing Left Network'
     groups:
      - name: 'Swing Left'
