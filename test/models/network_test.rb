@@ -11,5 +11,10 @@ class NetworkTest < ActiveSupport::TestCase
     it "forbids dupe names" do
       refute Network.new(name: network.name).valid?
     end
+
+    it "forbids changing name from original value" do
+      network.assign_attributes(name: "new name")
+      refute network.valid?
+    end
   end
 end

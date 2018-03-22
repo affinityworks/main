@@ -5,4 +5,11 @@ class Network < ApplicationRecord
 
   # VALIDATIONS
   validates :name, uniqueness: true
+
+  validate :name_unchanged
+  def name_unchanged
+    if name_changed? && persisted?
+      errors.add(:name, "Changing a network's name is not permitted")
+    end
+  end
 end
