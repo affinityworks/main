@@ -41,6 +41,7 @@ class Nav extends Component {
                 path={membersPath()}
                 active={activeTab === 'members'}
               />
+              {/* TODO: pick up on feature toggle here, disable if off */}
               <NavItem
                 title='Events'
                 path={eventsPath()}
@@ -67,6 +68,7 @@ class Nav extends Component {
                 active={activeTab === 'members'}
               />
 
+              {/* TODO: pick up on feature toggle here, disable if off */}
               <NavItem
                 title={`${this.isRootNav() ? 'All' : ''} Events`}
                 path={eventsPath()}

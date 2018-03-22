@@ -35,10 +35,11 @@ The current implementation of feature toggles is given in `./feature_toggles.rb`
   * maybe use configs to specify `FeatureToggle::RULES`
 
 * [ ] **use feature toggle for events**
-  * note: will only be able to verify this works in test env until next step
+  * pass feature toggles to client via API calls (grr...)
+  * update dev data so we can see this working in browser
 
 * [ ] **Create an `update_networks` migration that:**
   * we run *every time** we add a root group
   * reads the attributes of all groups in `networks.yml`
   * uses `#find_or_create` to create new `Group` or `Network` instances that have been added to the `.yml file since the last migration
-  * fun migration & verify that feature toggle works for events in dev env
+  * fun migration & verify that feature toggle works for events in dev env w/o using add-hoc data added in last step (ie: after db:reset)
