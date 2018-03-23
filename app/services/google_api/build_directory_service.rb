@@ -2,7 +2,7 @@ require 'google/apis/admin_directory_v1'
 
 class GoogleAPI::BuildDirectoryService
   class << self
-    def call(authorization: authorization)
+    def call(authorization:)
       build_directory_service(authorization)
     end
 

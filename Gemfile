@@ -137,6 +137,7 @@ group :test do
   gem 'minitest-focus'
   gem 'valid_attribute'
   gem 'minitest-rails-capybara'
+  gem 'rspec-mocks'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

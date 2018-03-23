@@ -177,7 +177,7 @@ class Group < ApplicationRecord
 
   def google_group_email
     slugified_group_name = name.downcase.split.join('-')
-    email_base = primary_network.google_gsuite_email_base
+    email_base = primary_network&.google_gsuite_email_base
     "#{slugified_group_name}#{email_base}"
   end
 end

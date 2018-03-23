@@ -16,8 +16,6 @@ class GoogleAPI::CreateGoogleGroup
     end
 
     def create_google_group(directory_service, group_email, group_name)
-      slugified_group_name = group_name.downcase.split.join('-')
-
       group = Google::Apis::AdminDirectoryV1::Group.new(
         email: group_email,
         name: group_name,
