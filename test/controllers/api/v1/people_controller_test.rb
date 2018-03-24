@@ -18,7 +18,7 @@ class Api::V1::PeopleControllerTest < ActionController::TestCase
       assert json['_embedded'].present?
 
       people = json['_embedded']['osdi:people']
-      assert_equal 7, people.size
+      assert_equal 8, people.size
 
       assert people.all? { |p| p['identifiers'].size >= 1 }, 'Each person should have an identifier'
       assert people.all? { |p| p['created_date'].present? }, 'Each person should have created_date'
@@ -48,7 +48,7 @@ class Api::V1::PeopleControllerTest < ActionController::TestCase
       assert_equal 3, people.size
 
       assert_equal 5, json['total_pages'], 'total_pages'
-      assert_equal 13, json['total_records'], 'total_records'
+      assert_equal 14, json['total_records'], 'total_records'
       assert_equal 2, json['page'], 'page'
 
       links = json['_links']
