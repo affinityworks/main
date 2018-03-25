@@ -5,8 +5,12 @@ class Subgroups::Create
         .new_subgroup_email(organizer, subgroup, SignupForm.for(subgroup))
         .deliver_later
 
-      if FeatureToggle.on?(:google_groups, @subgroup)
-        authorization = GoogleAPI::GetAuthorization.call(network: subgroup.primary_network)
+      if FeatureToggle.on?(:google_groups, subgroup)
+        service = GoogleAPI::GetAuthorization.call(network: subgroup.primary_network) 
+        
+        return unless service.success?
+
+        authorization = service.result
 
         google_group = GoogleAPI::CreateGoogleGroup.call(
           authorization: authorization,
