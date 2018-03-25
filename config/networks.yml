@@ -8,6 +8,13 @@ default: &default
     google_gsuite_email_base: '@affinity.works' # TODO: PUT IN CORRECT EMAIL BASE
     groups:
      - name: 'Swing Left'
+       organizers:
+         - given_name: 'Matt'
+           family_name: 'Ewing'
+           email: 'matt@swingleft.org'
+         - given_name: 'Jonathan'
+           family_name: 'Goldman'
+           email: 'jonathan@swingleft.org'
 
 development:
   <<: *default
