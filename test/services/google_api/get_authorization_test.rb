@@ -2,28 +2,40 @@ require_relative "../../test_helper"
 
 class GoogleAPI::GetAuthorizationTest < ActiveSupport::TestCase
   describe ".call" do
-    it "calls build_directory_service" do
-      expect(GoogleAPI::GetAuthorization).to receive(:get_authorization)
 
-      GoogleAPI::GetAuthorization.call(
-        network: double("network")
-      )
+    before do
+      network = Network.new(name: "Swing Left Network")
+      @auth_service = GoogleAPI::GetAuthorization.new(network: network)
+    end
+
+    it "calls build_directory_service" do
+      expect(@auth_service).to receive(:get_authorization)
+
+      @auth_service.call
     end
 
     it "returns correct authorizer sub" do
-      auth = GoogleAPI::GetAuthorization.call(
-        network: Network.new(name: "Swing Left Network")
-      )
+      @auth_service.call
 
-      auth.sub.must_equal "james@affinity.works"
+      @auth_service.result.sub.must_equal "james@affinity.works"
     end
 
     it "returns correct authorizer scope" do
-      auth = GoogleAPI::GetAuthorization.call(
-        network: Network.new(name: "Swing Left Network")
-      )
+      @auth_service.call
 
-      auth.scope.must_equal GoogleAPI::GetAuthorization::SCOPES
+      @auth_service.result.scope.must_equal GoogleAPI::GetAuthorization::SCOPES
+    end
+
+    it "returns with success status if Network has credentials file" do
+      @auth_service.call
+
+      @auth_service.success?.must_equal true
+    end
+
+    it "returns with fail status if Network has no credentials file" do
+      auth_service = GoogleAPI::GetAuthorization.call(network: Network.new(name: "Bad Network"))
+
+      auth_service.success?.must_equal false
     end
   end
 end
