@@ -105,7 +105,8 @@ Rails.application.routes.draw do
   resources :profile, only: [:index] do
     get :groups, on: :collection
   end
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
+  get 'feature_toggles', to: 'feature_toggles#index'
 
   namespace :api, defaults: { format: 'json' } do
     namespace :v1 do

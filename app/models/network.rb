@@ -13,6 +13,11 @@ class Network < ApplicationRecord
     end
   end
 
+  # NESTED ATTRIBUTES
+  accepts_nested_attributes_for :members
+
+  # ACCESSORS
+
   def google_gsuite_key
     Rails.configuration.networks[snakecase_name]["google_gsuite_key"]
   end

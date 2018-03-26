@@ -1,4 +1,5 @@
 class FeatureToggle
+  FEATURES = %i[events google_groups].to_set
 
   NETWORKS = HashWithIndifferentAccess.new(
     Rails.configuration.networks
@@ -12,7 +13,7 @@ class FeatureToggle
     def on?(feature, group = nil)
       return enable_for_group?(feature, group) if is_opt_in?(feature)
       return !disable_for_group?(feature, group) if is_opt_out?(feature)
-      true
+      return true if FEATURES.include?(feature) # else nil
     end
   end
 
