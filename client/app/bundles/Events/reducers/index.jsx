@@ -12,6 +12,7 @@ import member from './MemberReducer';
 import memberships from './MembershipsReducer';
 import profile from './ProfileReducer';
 import alerts from './AlertsReducer';
+import featureToggles from './FeatureTogglesReducer';
 import { reducer as form } from "redux-form";
 
 const currentGroup = (state = {}) => ( state );
@@ -21,6 +22,7 @@ const currentRole = (state = {}) => ( state );
 export default combineReducers({
   events,
   event,
+  featureToggles,
   groups,
   group,
   members,

@@ -54,3 +54,12 @@ new_signup:
   address_type: work
   status: unsubscribed
   person: new_signup
+
+troublemaker:
+  address: trouble@maker.net
+  person: troublemaker
+
+human_torch:
+  address: human@torch.net
+  person: human_torch
+  primary: true

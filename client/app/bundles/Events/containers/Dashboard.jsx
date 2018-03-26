@@ -8,7 +8,7 @@ import AttendanceActivityFeed from '../components/AttendanceActivityFeed';
 import TextEditor from '../components/TextEditor';
 import PersonActivityFeed from '../components/PersonActivityFeed';
 import SyncActivityFeed from '../components/SyncActivityFeed';
-import { fetchGroup, addAlert } from '../actions';
+import { fetchGroup, fetchFeatureToggles, addAlert } from '../actions';
 import UserAuth from '../components/UserAuth';
 import { client, dashboardPath } from '../utils';
 
@@ -20,22 +20,12 @@ class Dashboard extends Component {
   componentWillMount() {
     const { groupId } = this.props.match.params;
     this.props.fetchGroup(groupId);
-    // 
-    // TODO: set feature toggles here, by doing either:
-    // (1) fetch all feature toggle rules *once* when app loads;
-    //     access them here via selector
-    // (2) fetch granular feature toggles for group by accessing `FeatureToggle.on?`
-    //     via new `FeatureToggleController`
-    // 
-    // TRADEOFF:
-    // (1) more (possibly irrelevant) state held in memory in browser
-    //  vs.
-    // (2) more network calls
+    this.props.fetchFeatureToggles('events', groupId)
   }
 
   renderTextEditor () {
     const { attributes } = this.props.group;
-    
+
     return (
       <section>
         <TextEditor
@@ -47,7 +37,7 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { attributes } = this.props.group;
+    const { group: { attributes}, featureToggles } = this.props;
     const { events, attendances, people, sync, editText } = this.state;
 
     if(!attributes) { return null }
@@ -58,8 +48,7 @@ class Dashboard extends Component {
         <Breadcrumbs active='Dashboard' location={this.props.location} />
         <br />
 
-        {/* TODO: this is where you would inject feature toggles into Nav */}
-        <Nav activeTab='dashboard' />
+        <Nav activeTab='dashboard' eventsOn={featureToggles.events} />
         <br />
 
         {this.renderTextEditor()}
@@ -78,8 +67,15 @@ class Dashboard extends Component {
   }
 }
 
-const mapStateToProps = ({ group }) => {
-  return { group }
+const mapStateToProps = ({ group, featureToggles }) => {
+  return { group, featureToggles }
 };
 
-export default connect(mapStateToProps, { fetchGroup, addAlert })(Dashboard);
+export default connect(
+  mapStateToProps,
+  {
+    fetchGroup,
+    fetchFeatureToggles,
+    addAlert
+  }
+)(Dashboard);

@@ -1,11 +1,20 @@
+#  # TODO: swap gsuite credentials!
+
 default: &default
   swing_left_network:
     name: 'Swing Left Network'
-    groups:
-     - name: 'Swing Left'
     google_gsuite_key: 'lib/networks/swing_left_network/service_account.json' # TODO: PUT IN CORRECT KEY
     google_gsuite_admin_email: 'james@affinity.works' # TODO: PUT IN CORRECT ADMIN EMAIL
     google_gsuite_email_base: '@affinity.works' # TODO: PUT IN CORRECT EMAIL BASE
+    groups:
+     - name: 'Swing Left'
+       organizers:
+         - given_name: 'Matt'
+           family_name: 'Ewing'
+           email: 'matt@swingleft.org'
+         - given_name: 'Jonathan'
+           family_name: 'Goldman'
+           email: 'jonathan@swingleft.org'
 
 development:
   <<: *default
@@ -13,15 +22,42 @@ development:
 production:
   <<: *default
 
+
 test:
   swing_left_network:
     name: 'Swing Left Network'
-    groups:
-     - name: 'Swing Left'
     google_gsuite_key: 'test/fixtures/files/service_account.json'
     google_gsuite_admin_email: 'james@affinity.works'
     google_gsuite_email_base: '@affinity.works'
+    groups:
+     - name: 'Swing Left'
+     - name: 'Swing Left Ohio'
+       organizers:
+         - given_name: 'Serious'
+           family_name: 'Person'
+         - given_name: 'Trouble'
+           family_name: 'Maker'
+           email: 'troublemaker@riseup.net'
   the_avengers:
     name: 'The Avengers'
     groups:
-      - name: 'Fantastic Four'
+      - name: 'Wakanda'
+  against_the_day:
+    name: 'Against The Day'
+    groups:
+      - name: 'The Chums Of Chance'
+        organizers:
+          - given_name: 'Chick'
+            family_name: 'Counterfly'
+            email: 'chick@counterfly.net'
+          - given_name: 'Darby'
+            family_name: 'Suckling'
+            email: 'darby@suckling.net'
+      - name: 'The Balkan Anarchists'
+        organizers:
+          - given_name: 'Yashmeen'
+            family_name: 'Halfcourt'
+            email: 'yashmeen@halfcourt.net'
+          - given_name: 'Cyprian'
+            family_name: 'Latewood'
+            email: 'cyprian@latewood.net'
