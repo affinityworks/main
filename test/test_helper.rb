@@ -1,6 +1,7 @@
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
+require 'rspec/mocks/minitest_integration'
 require 'webmock/minitest'
 require "minitest/matchers"
 require "minitest/autorun"

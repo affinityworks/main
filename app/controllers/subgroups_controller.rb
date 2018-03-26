@@ -13,10 +13,10 @@ class SubgroupsController < ApplicationController
       subgroup_attrs: subgroup_params,
       organizer_attrs: organizer_params
     )
+
     if @subgroup.valid?
-      OrganizerMailer
-        .new_subgroup_email(organizer, @subgroup, SignupForm.for(@subgroup))
-        .deliver_later
+      Subgroups::Create.call(organizer: organizer, subgroup: @subgroup)
+      
       sign_in_and_redirect(organizer)
     else
       render :new

@@ -98,6 +98,9 @@ gem 'koala'
 gem 'cocoon'
 gem 'nokogiri', '~> 1.8'
 
+gem 'google-api-client', '~> 0.10.3'
+gem 'googleauth'
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -134,6 +137,7 @@ group :test do
   gem 'minitest-focus'
   gem 'valid_attribute'
   gem 'minitest-rails-capybara'
+  gem 'rspec-mocks'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
