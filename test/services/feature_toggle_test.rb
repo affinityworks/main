@@ -2,11 +2,6 @@ require_relative "../test_helper"
 
 class FeatureToggleTest < ActiveSupport::TestCase
 
-  it "enables a feature that has no rules" do
-    FeatureToggle.on?(:foobar).
-      must_equal true
-  end
-
   it "returns nil for a non-existent feature" do
     FeatureToggle.on?(:foobar).
       must_be_nil

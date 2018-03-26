@@ -43,3 +43,8 @@ forth:
 troublemaker_swing_left_ohio:
   group: swing_left_ohio
   person: troublemaker
+
+human_torch_fantastic_four:
+  group: fantastic_four
+  person: human_torch
+  role: 1

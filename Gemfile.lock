@@ -113,6 +113,8 @@ GEM
       xpath (>= 2.0, < 4.0)
     case_transform (0.2)
       activesupport
+    childprocess (0.9.0)
+      ffi (~> 1.0, >= 1.0.11)
     cocoon (1.2.11)
     coderay (1.1.2)
     coffee-rails (4.2.1)
@@ -423,6 +425,7 @@ GEM
     rspec-support (3.7.1)
     ruby-debug-ide (0.6.0)
       rake (>= 0.8.1)
+    rubyzip (1.2.1)
     rufus-scheduler (2.0.24)
       tzinfo (>= 0.3.22)
     safe_yaml (1.0.4)
@@ -433,6 +436,10 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
+    selenium-webdriver (2.53.4)
+      childprocess (~> 0.5)
+      rubyzip (~> 1.0)
+      websocket (~> 1.0)
     shellany (0.0.1)
     signet (0.8.1)
       addressable (~> 2.3)
@@ -478,6 +485,7 @@ GEM
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
+    websocket (1.2.5)
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
@@ -558,6 +566,7 @@ DEPENDENCIES
   rspec-mocks
   ruby-debug-ide
   sass-rails (~> 5.0)
+  selenium-webdriver
   spring
   spring-watcher-listen (~> 2.0.0)
   tzinfo-data

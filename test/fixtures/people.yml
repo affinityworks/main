@@ -87,6 +87,12 @@ troublemaker:
   family_name: Maker
   encrypted_password: $2a$11$08m64awvoVFg4sLOu.zA6e70E98bWC2VNewFWUNYjtnvutb/K68xK
 
+human_torch:
+  identifiers: ['advocacycommons:8']
+  given_name: Human
+  family_name: Torch
+  encrypted_password: $2a$11$08m64awvoVFg4sLOu.zA6e70E98bWC2VNewFWUNYjtnvutb/K68xK
+
 new_signup:
   identifiers: ['advocacycommons:473298', 'foreign_system:473298']
   given_name: Alice
