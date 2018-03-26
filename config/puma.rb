@@ -4,8 +4,30 @@
 # the maximum value specified for Puma. Default is set to 5 threads for minimum
 # and maximum, this matches the default thread size of Active Record.
 #
+
+##################
+# NOT COPIED vvv #
+##################
+
+
+#workers ENV.fetch('WEB_CONCURRENCY') { 1 }
+
+##################
+# NOT COPIED ^^^ #
+##################
+
 threads_count = ENV.fetch("RAILS_MAX_THREADS") { 5 }.to_i
 threads threads_count, threads_count
+
+##############
+# COPIED vvv #
+##############
+
+preload_app!
+
+##############
+# COPIED ^^^ #
+##############
 
 # Specifies the `port` that Puma will listen on to receive requests, default is 3000.
 #
@@ -14,6 +36,26 @@ port        ENV.fetch("PORT") { 3000 }
 # Specifies the `environment` that Puma will run in.
 #
 environment ENV.fetch("RAILS_ENV") { "development" }
+
+##############
+# COPIED vvv #
+##############
+
+before_fork do
+  ActiveRecord::Base.connection_pool.disconnect! if defined?(ActiveRecord)
+end
+
+on_worker_boot do
+  ActiveRecord::Base.establish_connection if defined?(ActiveRecord)
+
+  if defined?(Resque)
+    Resque.redis = ENV['REDIS_URL'] || 'redis://127.0.0.1:6379'
+  end
+end
+
+##############
+# COPIED ^^^ #
+##############
 
 # Specifies the number of `workers` to boot in clustered mode.
 # Workers are forked webserver processes. If using threads and workers together
