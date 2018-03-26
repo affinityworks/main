@@ -98,7 +98,7 @@ gem 'koala'
 gem 'cocoon'
 gem 'nokogiri', '~> 1.8'
 
-gem 'google-api-client'
+gem 'google-api-client', '~> 0.10.3'
 gem 'googleauth'
 
 

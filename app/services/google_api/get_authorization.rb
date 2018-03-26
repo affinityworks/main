@@ -22,9 +22,9 @@ class GoogleAPI::GetAuthorization
     @success
   end
 
-  def success!(authorizer)
+  def success!(authentication)
     @success = true
-    @result = authorizer
+    @result = authentication
   end
 
   def fail!
@@ -33,13 +33,13 @@ class GoogleAPI::GetAuthorization
   end
 
   def get_authorization(network)
-    authorizer = Google::Auth::ServiceAccountCredentials.make_creds(
+    authentication = Google::Auth::ServiceAccountCredentials.make_creds(
       json_key_io: File.open(network.google_gsuite_key),
       scope: SCOPES
     )
     
-    authorizer.sub = network.google_gsuite_admin_email
-    success!(authorizer)
+    authentication.sub = network.google_gsuite_admin_email
+    success!(authentication)
   rescue
     fail!
   end

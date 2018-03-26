@@ -511,7 +511,7 @@ DEPENDENCIES
   dotenv-rails
   foreman
   geokit-rails
-  google-api-client
+  google-api-client (~> 0.10.3)
   googleauth
   graphiql-rails
   graphql
