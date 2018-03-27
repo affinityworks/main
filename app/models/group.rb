@@ -35,6 +35,8 @@ class Group < ApplicationRecord
   has_and_belongs_to_many :petitions
   has_and_belongs_to_many :share_pages
   has_and_belongs_to_many :forms
+  has_many :custom_forms, foreign_key: :group_id, dependent: :destroy
+
   belongs_to :creator, class_name: "Person"
   belongs_to :modified_by, class_name: "Person"
   belongs_to :location, class_name: 'GroupAddress', foreign_key: :address_id
