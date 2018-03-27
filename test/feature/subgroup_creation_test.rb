@@ -19,8 +19,14 @@ class SubgroupCreation < FeatureTest
       end
     end
 
-    it "has a large description text area" do
-      page.find("textarea[placeholder='Description']").wont_be_nil
+    it "has a large description text area for group" do
+      page.find(
+        "textarea[placeholder='Description (may contain HTML)']"
+      ).wont_be_nil
+    end
+
+    it "has correct required group fields" do
+      page.find("input[placeholder='Name'][required='required']").wont_be_nil
     end
 
     it "has groups for creating an organizer" do
@@ -33,6 +39,12 @@ class SubgroupCreation < FeatureTest
         'Zipcode (personal)',
       ].each do |label|
         page.find("input[placeholder='#{label}']").wont_be_nil
+      end
+    end
+
+    it "has correct required organizer fields" do
+      ['Email', 'Password', 'First Name', 'Last Name'].each do |label|
+        "input[placeholder='#{label}'][required='required']"
       end
     end
   end
@@ -55,7 +67,7 @@ class SubgroupCreation < FeatureTest
         perform_enqueued_jobs do
           fill_out_form(
             'Name' => 'Jawbreaker',
-            'Description' => 'I want to be a boat, I want to learn to swim',
+            'Description (may contain HTML)' => 'I want to be a boat, I want to learn to swim',
             'Zipcode (group)' => '90210',
             'First name' => 'herbert',
             'Last name' => 'stencil',
