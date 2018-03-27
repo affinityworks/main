@@ -80,7 +80,7 @@ gem 'activeadmin', '~> 1.0.0.pre4'
 gem 'inherited_resources', github: 'activeadmin/inherited_resources'
 
 gem 'kaminari'
-gem 'doorkeeper'
+gem 'doorkeeper', ">= 4.3.1" # vuln pin
 gem 'httparty'
 gem 'acts-as-taggable-on', '~> 4.0'
 
