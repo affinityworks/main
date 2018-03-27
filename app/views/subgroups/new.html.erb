@@ -20,7 +20,6 @@
           <% end # if @subgroup.errors %>
         </div>
       </div>
-
       
       <%= form_for @subgroup, url: {action: "create"} do |f| %>
         <div class="form-container">
@@ -31,7 +30,7 @@
             <div class="group-inputs">
 
               <div class="field">
-                <%= f.text_field :name, placeholder: :name %>
+                <%= f.text_field :name, placeholder: :name, required: true %>
               </div>
               <div class="field">
                 <%= f.fields_for :location, @subgroup.location do |location_form| %>
@@ -39,7 +38,7 @@
                 <% end %>
               </div>
               <div class="field">
-                <%= f.text_area :description, placeholder: :description %>
+                <%= f.text_area :description, placeholder: 'Description (may contain HTML)' %>
               </div>
             </div>
           </div>
@@ -55,25 +54,34 @@
             
             <div class="organizer-inputs">
               <%= f.fields_for :organizer_attributes, organizer do |member_form| %>
+                <!-- email -->
                 <div class="field">
-                  <%= member_form.text_field :given_name, placeholder: :first_name %>
+                  <%= member_form.fields_for :email_addresses_attributes, email_address do |email_form| %>
+                    <%= email_form.text_field :address, placeholder: 'Email', required: true %>
+                  <% end #member_form.fields_for :email_address %>
+                </div>
+
+                <!-- password -->
+                <div class="field">
+                  <%= member_form.password_field :password, placeholder: :password, required: true %>
+                </div>
+
+                <!-- name -->
+                <div class="field">
+                  <%= member_form.text_field :given_name, placeholder: :first_name, required: true %>
                 </div>
                 <div class="field">
-                  <%= member_form.text_field :family_name, placeholder: :last_name %>
+                  <%= member_form.text_field :family_name, placeholder: :last_name, required: true %>
                 </div>
-                <div class="field">
-                  <%= member_form.password_field :password, placeholder: :password %>
-                </div>
+
+                <!-- phone -->
                 <div class="field">
                   <%= member_form.fields_for :phone_numbers_attributes, phone_number do |phone_form| %>
                     <%= phone_form.text_field :number, placeholder: 'Phone number' %>  
                   <% end #member_form.fields_for :phone_number %>
                 </div>
-                <div class="field">
-                  <%= member_form.fields_for :email_addresses_attributes, email_address do |email_form| %>
-                    <%= email_form.text_field :address, placeholder: 'Email' %>
-                  <% end #member_form.fields_for :email_address %>
-                </div>
+
+                <!-- zip -->
                 <div class="field">
                   <%= member_form.fields_for :personal_addresses_attributes, address do |email_form| %>
                     <%= email_form.text_field :postal_code, placeholder: 'Zipcode (personal)' %>
