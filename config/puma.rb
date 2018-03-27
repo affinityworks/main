@@ -37,25 +37,25 @@ port        ENV.fetch("PORT") { 3000 }
 #
 environment ENV.fetch("RAILS_ENV") { "development" }
 
-##############
-# COPIED vvv #
-##############
+#########################
+# NOT COPIED FROM _ vvv #
+#########################
 
-before_fork do
-  ActiveRecord::Base.connection_pool.disconnect! if defined?(ActiveRecord)
-end
+# before_fork do
+#   ActiveRecord::Base.connection_pool.disconnect! if defined?(ActiveRecord)
+# end
 
-on_worker_boot do
-  ActiveRecord::Base.establish_connection if defined?(ActiveRecord)
+# on_worker_boot do
+#   ActiveRecord::Base.establish_connection if defined?(ActiveRecord)
 
-  if defined?(Resque)
-    Resque.redis = ENV['REDIS_URL'] || 'redis://127.0.0.1:6379'
-  end
-end
+#   if defined?(Resque)
+#     Resque.redis = ENV['REDIS_URL'] || 'redis://127.0.0.1:6379'
+#   end
+# end
 
-##############
-# COPIED ^^^ #
-##############
+#########################
+# NOT COPIED FROM _ ^^^ #
+#########################
 
 # Specifies the number of `workers` to boot in clustered mode.
 # Workers are forked webserver processes. If using threads and workers together
