@@ -9,8 +9,10 @@ class Group extends Component {
   showAddress() {
     const { location } = this.props.group.attributes;
     if (location) {
-      const {locality, region, postal_code} = location;
-      return `${locality}, ${region} ${postal_code}`
+      return ['locality', 'region', 'postal_code']
+        .map(attr => location[attr])
+        .filter(Boolean) // filter falsey values
+        .join(", ");
     }
   }
 
