@@ -140,7 +140,8 @@ class MemberDetail extends Component {
 
           <span>
             Email:&nbsp;
-            <a href={`mailto:${attributes['primary-email-address']}`}>
+            <a href={`mailto:${attributes['primary-email-address']}`}
+               target="_blank">
               {attributes['primary-email-address']}
             </a>
           </span>

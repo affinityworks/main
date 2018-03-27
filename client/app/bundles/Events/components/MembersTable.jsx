@@ -34,7 +34,8 @@ class MembersTable extends Component {
     const { emails } = this.state;
     if (emails.length)
       return (
-        <a href={`mailto:${emails.join(',')}`} className='fa fa-envelope-o'/>
+        <a href={`mailto:${emails.join(',')}`} className='fa fa-envelope-o'
+           target="_blank" />
       );
     else
       return (<i className='fa fa-envelope-o'/>);
