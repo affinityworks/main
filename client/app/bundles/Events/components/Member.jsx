@@ -132,9 +132,7 @@ class Member extends Component {
           {this.renderNameLink()}
           <td>{member['primary-phone-number']}</td>
           <td>{this.localityAndRegion()}</td>
-          {isAllowed(['member'], currentRole)
-            ? <td/>
-            : <td>{this.groupColumn()}</td>}
+          {isAllowed(['member'], currentRole) && this.groupColumn()}
           {this.showTags()}
           <td>{role}</td>
           <td>

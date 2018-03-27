@@ -108,9 +108,7 @@ class MembersTable extends Component {
             {this.nameColumn()}
             {this.phoneColumn()}
             {this.locationColumn()}
-            {isAllowed(['member', 'volunteer'], currentRole)
-              ? <th/>
-              : this.groupColumn() }
+            {isAllowed(['member', 'volunteer'], currentRole) && this.groupColumn() }
             {this.showTags()}
             <SortableHeader title='Role' sortBy='role' style={{ width: '15%'}} />
             <th style={{ width: '5%'}}></th>
