@@ -19,7 +19,8 @@ class Attendance extends Component {
     const email = this.props.member['primary-email-address']
 
     if (email)
-      return <a href={`mailto:${email}`} className='fa fa-envelope-o'/>
+      return <a href={`mailto:${email}`} className='fa fa-envelope-o'
+                target="_blank"/>
   }
 
   renderFacebookLink() {

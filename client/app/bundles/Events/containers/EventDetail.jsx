@@ -49,7 +49,8 @@ class EventDetail extends Component {
     return(
       <div>
         <span> Event Organizer: </span>
-        <a href={`mailto:${attributes['primary-email-address']}`}>
+        <a href={`mailto:${attributes['primary-email-address']}`}
+           target="_blank" >
           {`${attributes['given-name']} ${attributes['family-name']}`}
         </a>
       </div>
