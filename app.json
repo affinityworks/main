@@ -25,9 +25,10 @@
     },
     "SECRET_KEY_BASE": {
       "required": true
+    },
+    "AFFINITY_HEROKU_PRIVATE_KEY": {
+      "required": true
     }
-  },
-  "formation": {
   },
   "addons": [
     "heroku-postgresql",
@@ -35,6 +36,12 @@
     "heroku-redis"
   ],
   "buildpacks": [
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-apt.git"
+    },
+    {
+      "url": "https://github.com/affinityworks/blackbox-buildpack.git"
+    },
     {
       "url": "heroku/nodejs"
     },
