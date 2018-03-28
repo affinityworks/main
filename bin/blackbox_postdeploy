@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+#
+# blackbox_postdeploy -- Decrypt all blackbox files.
+#
+
+# Usage:
+#   blackbox_postdeploy.sh [GROUP]
+#       GROUP is optional.  If supplied, the resulting files
+#       are chgrp'ed to that group.
+
+# Since this is often run in a security-critical situation, we
+# force /usr/bin and /bin to the front of the PATH.
+export PATH=/usr/bin:/bin:"$PATH"
+
+set -e
+source "${0%/*}/_blackbox_common.sh"
+
+if [[ "$1" == "" ]]; then
+  FILE_GROUP=""
+else
+  FILE_GROUP="$1"
+fi
+
+change_to_vcs_root
+prepare_keychain
+
+# Decrypt:
+echo '========== Decrypting new/changed files: START'
+while IFS= read <&99 -r unencrypted_file; do
+  encrypted_file=$(get_encrypted_filename "$unencrypted_file")
+  decrypt_file_overwrite "$encrypted_file" "$unencrypted_file"
+  cp_permissions "$encrypted_file" "$unencrypted_file"
+  if [[ ! -z "$FILE_GROUP" ]]; then
+    chmod g+r "$unencrypted_file"
+    chgrp "$FILE_GROUP" "$unencrypted_file"
+  fi
+done 99<"$BB_FILES"
+
+echo '========== Decrypting new/changed files: DONE'
