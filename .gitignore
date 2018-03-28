@@ -67,3 +67,4 @@ app/assets/webpack
 /keyrings/live/pubring.kbx~
 /keyrings/live/secring.gpg
 /config/networks.yml
+/config/feature_toggles.yml
