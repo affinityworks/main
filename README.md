@@ -228,3 +228,7 @@ At such point, a (hopeuflly exhaustive) set of steps for configuring the mailgun
   b. observing the two `TXT` records that appear
   c. logging into gandi.net and finding the DNS records
   d. creating two `TXT` records with the values observed in step b above
+
+# Secrets Managment
+
+[stub]
