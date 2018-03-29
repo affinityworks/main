@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+pushd `pwd`
+scriptpath="$( cd "$(dirname "$0")" ; pwd -P )"
+
+echo "+++ BEGINNING copy_examples"
+
+echo "... moving to project root"
+cd $scriptpath
+cd ..
+
+echo "... copying config files"
+
+declare -a configs=("networks" "feature_toggles")
+
+for config in "${configs[@]}"
+do
+   cp config/${config}.yml.example config/${config}.yml
+done
+
+echo "+++ COMPLETED copy_examples"
+
+popd

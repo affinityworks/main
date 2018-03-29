@@ -1,0 +1,26 @@
+# NOTE:
+# names given for networks must match
+# names given in `config/networks.yml`
+
+default: &default
+  google_groups:
+    enable_for:
+      networks:
+        - 'National Network'
+
+development:
+  <<: *default
+
+production:
+  <<: *default
+
+test:
+  <<: *default
+  events:
+    disable_for:
+      networks:
+        - 'National Network'
+  google_groups:
+    enable_for:
+      networks:
+        - 'National Network'

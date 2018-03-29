@@ -1,0 +1,55 @@
+default: &default
+  national_network:
+    name: "National Network"
+    google_gsuite_admin_email: 'james@affinity.works'
+    google_gsuite_email_base: '@affinity.works'
+    groups:
+      - name: 'National Network'
+        organizers:
+          - given_name: 'Test'
+            family_name: 'Organizer'
+            email: 'member@organizer.com'
+
+development:
+  <<: *default
+
+production:
+  <<: *default
+
+test:
+  national_network:
+    name: 'National Network'
+    google_gsuite_admin_email: 'james@affinity.works'
+    google_gsuite_email_base: '@affinity.works'
+    groups:
+     - name: 'National Network HQ'
+     - name: 'Ohio Chapter of National Network'
+       organizers:
+         - given_name: 'Serious'
+           family_name: 'Person'
+         - given_name: 'Trouble'
+           family_name: 'Maker'
+           email: 'troublemaker@riseup.net'
+  the_avengers:
+    name: 'The Avengers'
+    groups:
+      - name: 'Wakanda'
+  against_the_day:
+    name: 'Against The Day'
+    groups:
+      - name: 'The Chums Of Chance'
+        organizers:
+          - given_name: 'Chick'
+            family_name: 'Counterfly'
+            email: 'chick@counterfly.net'
+          - given_name: 'Darby'
+            family_name: 'Suckling'
+            email: 'darby@suckling.net'
+      - name: 'The Balkan Anarchists'
+        organizers:
+          - given_name: 'Yashmeen'
+            family_name: 'Halfcourt'
+            email: 'yashmeen@halfcourt.net'
+          - given_name: 'Cyprian'
+            family_name: 'Latewood'
+            email: 'cyprian@latewood.net'
