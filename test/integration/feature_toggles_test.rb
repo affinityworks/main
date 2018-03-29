@@ -8,8 +8,8 @@ class FeatureTogglesTest < ActionDispatch::IntegrationTest
       JSON.parse(response.body).fetch(feature)
     end
 
-    describe "for primary members of swing left network" do
-      let(:group_id){ groups(:swing_left_ohio).id }
+    describe "for primary members of national network" do
+      let(:group_id){ groups(:ohio_chapter).id }
 
       it "reports events are off" do
         toggle_for('events', group_id).must_equal false

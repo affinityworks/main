@@ -100,20 +100,20 @@ class MigrationTest < ActiveSupport::TestCase
     describe "a new organizer is added to an existing group in the config files" do
       it "does not create a new group" do
         Group
-          .where(name: 'Swing Left Ohio')
+          .where(name: 'Ohio Chapter of National Network')
           .count
           .must_equal 1
       end
 
       it "creates a new organizer and adds her to the group" do
         serious_person = Person.find_by(given_name: 'Serious', family_name: 'Person')
-        groups(:swing_left_ohio).members.must_include(serious_person)
+        groups(:ohio_chapter).members.must_include(serious_person)
       end
 
       it "is idempotent" do
-        groups(:swing_left_ohio).members.count.must_equal 2
+        groups(:ohio_chapter).members.count.must_equal 2
         Migration.update_networks
-        groups(:swing_left_ohio).members.count.must_equal 2
+        groups(:ohio_chapter).members.count.must_equal 2
       end
     end
 
@@ -145,7 +145,7 @@ class MigrationTest < ActiveSupport::TestCase
 
     describe "a group with multiple memberships is described in the configs" do
       it "does not have its secondary memberships erased" do
-        groups(:swing_left_ohio).network_memberships.count.must_equal 2
+        groups(:ohio_chapter).network_memberships.count.must_equal 2
       end
     end
   end

@@ -1,7 +1,7 @@
 require_relative '../test_helper'
 
 class NetworkTest < ActiveSupport::TestCase
-  let(:network){ networks(:swing_left_network) }
+  let(:network){ networks(:national_network) }
   let(:the_avengers){ networks(:the_avengers) }
 
   describe "associations"do

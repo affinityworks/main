@@ -5,7 +5,7 @@ Affinity offers integration with Google Groups. However, for us to provide a Goo
 1. Go to [Google Cloud Platform](https://console.developers.google.com/projectselector/iam-admin/serviceaccounts)
 2. Click create
 3. Click the edit link under the Project name text field to reveal a second field for Project ID
-4. Enter “My National Network” (or whatever you think is appropriate for the overall Swing Left project) as the project name, and leave the auto generated project ID as is.
+4. Enter “My National Network” (or whatever you think is appropriate for the overall National project) as the project name, and leave the auto generated project ID as is.
 5. Click create.
 6. On the “Service account management” page, click “Create service account”
 7. Enter “Affinity” as the Service account name

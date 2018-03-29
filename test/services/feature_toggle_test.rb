@@ -24,14 +24,14 @@ class FeatureToggleTest < ActiveSupport::TestCase
     end
 
     it "is enabled for a group whose secondary network has opted out" do
-      # my local political club is member of swing left
+      # my local political club is member of national network
       # which is not its primary network
       FeatureToggle.on?(:events, groups(:my_local_political_club)).
         must_equal true
     end
 
     it "is disabled for groups whose primary network has opted out" do
-      networks(:swing_left_network).members.each do |group|
+      networks(:national_network).members.each do |group|
         FeatureToggle.on?(:events, group).
           must_equal false
       end
@@ -55,7 +55,7 @@ class FeatureToggleTest < ActiveSupport::TestCase
     end
 
     it "is enabled for groups whose primary network has opted in" do
-      networks(:swing_left_network).members.each do |group|
+      networks(:national_network).members.each do |group|
         FeatureToggle.on?(:google_groups, group).
           must_equal true
       end

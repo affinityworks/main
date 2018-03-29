@@ -1,15 +1,15 @@
-swing_left_ohio_membership:
-  group: swing_left_ohio
-  network: swing_left_network
+ohio_chapter_membership:
+  group: ohio_chapter
+  network: national_network
   primary: true
 
-swing_left_ohio_avengers_membership:
-  group: swing_left_ohio
+ohio_chapter_avengers_membership:
+  group: ohio_chapter
   network: the_avengers
 
-swing_left_new_york_membership:
-  group: swing_left_new_york
-  network: swing_left_network
+new_york_chapter_membership:
+  group: new_york_chapter
+  network: national_network
   primary: true
 
 fantastic_four_avengers_membership:
@@ -17,7 +17,7 @@ fantastic_four_avengers_membership:
   network: the_avengers
   primary: true
 
-my_local_political_club_swing_left_membership:
+my_local_political_club_national_network_membership:
   group: my_local_club
-  network: swing_left_network
+  network: national_network
   primary: false
