@@ -68,3 +68,4 @@ app/assets/webpack
 /keyrings/live/secring.gpg
 /config/networks.yml
 /config/feature_toggles.yml
+/lib/network_credentials/1dc44930d2cea05792388a1178c936fe/google_gsuite_key.json
