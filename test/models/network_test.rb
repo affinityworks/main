@@ -22,7 +22,7 @@ class NetworkTest < ActiveSupport::TestCase
   describe "class methods" do
 
     it "finds a network by snakecase name" do
-      Network.find_by_snake_case_name("the_avengers").
+      Network.find_by_snakecase_name("the_avengers").
         must_equal the_avengers
     end
 
@@ -30,16 +30,21 @@ class NetworkTest < ActiveSupport::TestCase
       describe "with valid json filename" do
         after { FileUtils.rm_r the_avengers.credentials_dir }
 
-        it "writes gsuite key to json file in the correct (hashed) path" do
+        it "writes gsuite key to json file in the correct (md5 hash) path" do
           fixture_path = "test/fixtures/files/the_avengers_google_gsuite_key.json"
-          Network.import_gsuite_key(fixture_path)
-          JSON.parse(File.read(the_avengers.google_gsuite_key_path)).
-            must_equal JSON.parse(File.read(fixture_path))
+          imported_path = Network.import_gsuite_key(fixture_path)
+
+          imported_path.must_equal the_avengers.google_gsuite_key_path
+          read_json(imported_path).must_equal(read_json(fixture_path))
         end
       end
 
       describe "with invalid json filename" do
-        it "raises usage error to correct filename"
+        it "raises usage error" do
+          assert_raises RuntimeError do
+            Network.import_gsuite_key("foobar")
+          end
+        end
       end
     end
   end

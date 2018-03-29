@@ -20,22 +20,21 @@ class Network < ApplicationRecord
   class << self
 
     def find_by_snakecase_name(snakecase_name)
-      find_by_name(snakecase_name.titleize)
+      find_by_name(snakecase_name&.titleize)
     end
 
     def import_gsuite_key(path)
-      usage = "json filname must be formated as follows: " +
+      usage = "json filename must be formated as follows: " +
               "<valid_network_name_in_snake_case>.google_gsuite_key.json"
 
       key_regex = /([a-z_]*)_google_gsuite_key\.json/
       name = path.match(key_regex)&.send(:[], 1)
-      network = Network.find_by_snake_case_name(name)
+      network = Network.find_by_snakecase_name(name)
       raise usage unless network
 
       FileUtils.mkdir_p network.credentials_dir
       FileUtils.cp path, network.google_gsuite_key_path
-
-      puts "Import complete. Delete #{path}" unless ENV['RAILS_ENV'] == 'test'
+      network.google_gsuite_key_path
     end
   end
 
