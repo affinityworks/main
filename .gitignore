@@ -70,3 +70,8 @@ app/assets/webpack
 /config/feature_toggles.yml
 /lib/network_credentials/1dc44930d2cea05792388a1178c936fe/google_gsuite_key.json
 /lib/network_credentials/7af65312214cfedd28371a29af1c6f22/google_gsuite_key.json
+/.env.heroku.affinityworks
+/.env.heroku.1dc44930d2cea05792388a1178c936fe
+/.env.heroku.staging
+/.env.development
+/.env.heroku.dev

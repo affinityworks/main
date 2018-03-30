@@ -29,6 +29,9 @@
     "PGP_PRIVATE_KEY_HEROKU": {
       "required": true
     },
+    "FACEBOOK_API_ID": {
+      "required": true
+    },
     "FACEBOOK_API_KEY": {
       "required": true
     },

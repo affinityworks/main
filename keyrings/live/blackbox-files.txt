@@ -1,3 +1,8 @@
+.env.development
+.env.heroku.1dc44930d2cea05792388a1178c936fe
+.env.heroku.affinityworks
+.env.heroku.dev
+.env.heroku.staging
 config/feature_toggles.yml
 config/networks.yml
 lib/network_credentials/1dc44930d2cea05792388a1178c936fe/google_gsuite_key.json
