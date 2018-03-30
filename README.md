@@ -94,6 +94,7 @@ $ ./bin/install
 
 ``` shell
 $ ./bin/run-services # first run only: start redis & postgres
+$ ./bin/copy_configs # first run only: see `Secrets` section below
 $ ./bin/seed-db # first run only: seed db
 $ ./bin/run-web
 ```
@@ -133,7 +134,127 @@ $ psql
 $ ./bin/seed-db
 ```
 
-## Bnuild Javascript in Production Configuration
+## Secrets Management
+
+### Secrets For Community Contributors
+
+We provide sample versions of encrypted config files. They are in the `config` folder with names like `some_config.yml.exampl`. For the app to run, you need to copy them all to files with names like `some_config.yml`, which you can do by running the following script:
+
+``` shell
+$ ./bin/copy_configs
+```
+
+If you would like to gain access to the encrypted credentials:
+
+* shoot us an email at postmaster@affinity.works
+* drop us a note on Slack: https://advocacycommons.slack.com
+* open an issue on this repo
+
+
+### Secrets For Team Members
+
+#### Blackbox
+
+We use [blackbox](https://github.com/StackExchange/blackbox) for secrets management.
+
+It allows us to keep credentials under secure version control by:
+
+* maintaining a list of sensitive files
+* gitingoring the files
+* encrypting the files to a whitelist of PGP keys
+* allowing key-owners to decrypt and re-encrypt files with easy-to-remember commands
+
+To use it, you will first need:
+
+* a PGP key (If you don't have one, we recommend [GPGSuite](https://gpgtools.org/) for Mac users, and [this guide from Riseup](https://riseup.net/en/security/message-security/openpgp/gpg-keys) for Linux or Windows users)
+* an admin to add your PGP public key to the whitelist at `keyrings/live/blackbox-admins.txt`
+
+Now you can use the following **commands:**
+
+**Decrypt all files:**
+
+``` shell
+$ ./bin/blackbox_decrypt_all_files
+```
+
+**Encrypt a newly created file:**
+
+``` shell
+$ ./bin/blackbox_register_new_file some_file_name.yml
+```
+
+**Edit an encrypted file:**
+
+``` shell
+$ ./bin/blackbox_edit_start some_file.yml.gpg
+<do your editing>
+$ ./bin/blackbox_edit_end some_file.yml
+```
+
+**Edit an already-decrypted file:**
+
+``` shell
+<do your editing>
+$ ./bin/blackbox_edit_end some_file.yml
+```
+
+**Delete all cleartext files:**
+
+``` shell
+$ ./bin/blackbox_shred_all_files
+```
+
+**Add new public key to whitelist:**
+
+``` shell
+$ ./bin/blackbox_add_admin
+```
+
+Blackbox is all just shell commands! You can read them in `./bin`. If you'd like to install them on your machine so you can type `blackbox_some_command` instead of `./bin/blackbox_some_command**, you can:
+
+**Install blackbox on your $PATH:**
+
+``` shell
+$ git clone git@github.com:StackExchange/blackbox.git
+$ cd blackbox
+$ make copy-install
+$ cd ../ && rm -rf blackbox
+```
+
+#### Importing Partner Credentials
+
+To import Gsuite credentials for a partner group, first:
+
+* make sure the group is part of a network listed in `config/networks.yml`
+* place a copy of the network's `service_account.json` file in `lib/imports/gsuite`
+* rename the file to `some_network_google_gsuite_key.json` (where `some_network` is the snakecased version of the network's name given in `networks.yml`)
+
+Then run:
+
+``` shell
+$ rake import_keys:gsuite
+```
+
+This will:
+
+* place an encrypted version of the credentials in a nested folder of `lib/network_credentials`
+* delete and gitignore all unencrypted versions
+* automatically create a new commit to place the above changes under version control
+
+You will likely want to amend that commit to change the commit message.
+
+#### Updating networks.yml
+
+To update the list of networks:
+
+* decrypt it with `./bin/blackbox_edit_start config/networks.yml` if necessary
+* add networks, groups, and organizers following the format in the file
+* create a migration with `Migration.update_networks unless ENV['RAILS_ENV'] == 'test'` as the body of the `change` method
+* run `rake db:migrate` and `rake db:migrate RAILS_ENV=test`
+* re-encrypt the config file with `./bin/blackbox_edit_end config/networks.yml`
+* commit your changes and push them
+
+## Build Javascript in Production Configuration
 
 Webpack will automatically rebuild the dev javascript bundles on changes according to the development configuration in `client/webpack.config.js`. So it is not necessary to rebuild manually. That said, if you want to spit out a static build of the frontend that matches the production build, you can run:
 
