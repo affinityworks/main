@@ -2,9 +2,12 @@
   "name": "affinity",
   "description": "group management for self-organized work",
   "scripts": {
-    "postdeploy": "bundle exec rake db:schema:load db:seed"
+    "postdeploy": "bundle exec rake heroku:postdeploy"
   },
   "env": {
+    "HEROKU_APP_NAME": {
+      "required": true
+    },
     "LANG": {
       "required": true
     },
@@ -66,12 +69,26 @@
       "required": true
     }
   },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "standard-1x"
+    },
+    "worker": {
+      "quantity": 1,
+      "size": "standard-1x"
+    }
+  },
   "addons": [
     "heroku-postgresql",
     "scheduler",
-    "heroku-redis"
+    "heroku-redis",
+    "mailgun"
   ],
   "buildpacks": [
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-cli.git"
+    },
     {
       "url": "https://github.com/heroku/heroku-buildpack-apt.git"
     },
