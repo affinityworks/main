@@ -1,13 +1,10 @@
 {
   "name": "affinity",
-  "description": "",
+  "description": "group management for self-organized work",
   "scripts": {
     "postdeploy": "bundle exec rake db:schema:load db:seed"
   },
   "env": {
-    "HEROKU_POSTGRESQL_BRONZE_URL": {
-      "required": true
-    },
     "LANG": {
       "required": true
     },
@@ -26,14 +23,51 @@
     "SECRET_KEY_BASE": {
       "required": true
     },
-    "AFFINITY_HEROKU_PRIVATE_KEY": {
+    "DATABASE_URL": {
+      "required": true
+    },
+    "PGP_PRIVATE_KEY_HEROKU": {
+      "required": true
+    },
+    "FACEBOOK_API_KEY": {
+      "required": true
+    },
+    "FACEBOOK_API_SECRET": {
+      "required": true
+    },
+    "FACEBOOK_APP_ID": {
+      "required": true
+    },
+    "FACEBOOK_APP_SECRET": {
+      "required": true
+    },
+    "MAILGUN_API_KEY": {
+      "required": true
+    },
+    "MAILGUN_DOMAIN": {
+      "required": true
+    },
+    "MAILGUN_PUBLIC_KEY": {
+      "required": true
+    },
+    "MAILGUN_SMTP_LOGIN": {
+      "required": true
+    },
+    "MAILGUN_SMTP_PASSWORD": {
+      "required": true
+    },
+    "MAILGUN_SMTP_PORT": {
+      "required": true
+    },
+    "MAILGUN_SMTP_SERVER": {
       "required": true
     }
   },
   "addons": [
     "heroku-postgresql",
     "scheduler",
-    "heroku-redis"
+    "heroku-redis",
+    "mailgun"
   ],
   "buildpacks": [
     {
