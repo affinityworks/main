@@ -3,7 +3,7 @@ class Subgroups::Create
     def call(organizer:, subgroup:)
       OrganizerMailer
         .new_subgroup_email(organizer, subgroup, SignupForm.for(subgroup))
-        .deliver_later
+        .deliver_now
 
       if FeatureToggle.on?(:google_groups, subgroup)
         service = GoogleAPI::GetAuthorization.call(network: subgroup.primary_network) 
