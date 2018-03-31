@@ -98,8 +98,9 @@ Rails.application.configure do
   # `heroku config:set HOSTNAME=$(heroku info --app <app_name> -s | grep web_url | cut -d= -f2)`
   # as per: http://www.chrisjmendez.com/2016/12/19/how-to-get-your-web-url-from-heroku-dynamically/
 
+  hostname = ENV['HOSTNAME'] || "#{ENV['HEROKU_APP_NAME']}.herokuapp.com"
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.default_url_options = { host: ENV['HOSTNAME'] }
+  config.action_mailer.default_url_options = { host: hostname }
   config.action_mailer.smtp_settings = {
     :port           => ENV['MAILGUN_SMTP_PORT'],
     :address        => ENV['MAILGUN_SMTP_SERVER'],
