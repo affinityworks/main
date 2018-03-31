@@ -300,10 +300,10 @@ class GroupTest < ActiveSupport::TestCase
       end
 
       describe "group has primary network" do
-        let(:group){ groups(:swing_left_ohio) }
+        let(:group){ groups(:ohio_chapter) }
 
         it "assings subgroup primary membership in network" do
-          @subgroup.primary_network.must_equal networks(:swing_left_network)
+          @subgroup.primary_network.must_equal networks(:national_network)
         end
       end
     end

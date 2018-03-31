@@ -1,11 +1,11 @@
 {
   "name": "affinity",
-  "description": "",
+  "description": "group management for self-organized work",
   "scripts": {
-    "postdeploy": "bundle exec rake db:schema:load db:seed"
+    "postdeploy": "bundle exec rake heroku:postdeploy"
   },
   "env": {
-    "HEROKU_POSTGRESQL_BRONZE_URL": {
+    "HEROKU_APP_NAME": {
       "required": true
     },
     "LANG": {
@@ -25,16 +25,72 @@
     },
     "SECRET_KEY_BASE": {
       "required": true
+    },
+    "DATABASE_URL": {
+      "required": true
+    },
+    "PGP_PRIVATE_KEY_HEROKU": {
+      "required": true
+    },
+    "FACEBOOK_API_ID": {
+      "required": true
+    },
+    "FACEBOOK_API_KEY": {
+      "required": true
+    },
+    "FACEBOOK_API_SECRET": {
+      "required": true
+    },
+    "FACEBOOK_APP_ID": {
+      "required": true
+    },
+    "FACEBOOK_APP_SECRET": {
+      "required": true
+    },
+    "MAILGUN_API_KEY": {
+      "required": true
+    },
+    "MAILGUN_DOMAIN": {
+      "required": true
+    },
+    "MAILGUN_PUBLIC_KEY": {
+      "required": true
+    },
+    "MAILGUN_SMTP_LOGIN": {
+      "required": true
+    },
+    "MAILGUN_SMTP_PASSWORD": {
+      "required": true
+    },
+    "MAILGUN_SMTP_PORT": {
+      "required": true
+    },
+    "MAILGUN_SMTP_SERVER": {
+      "required": true
     }
   },
   "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "standard-1x"
+    },
+    "worker": {
+      "quantity": 1,
+      "size": "standard-1x"
+    }
   },
   "addons": [
     "heroku-postgresql",
-    "scheduler",
-    "heroku-redis"
+    "heroku-redis",
+    "scheduler"
   ],
   "buildpacks": [
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-apt.git"
+    },
+    {
+      "url": "https://github.com/affinityworks/blackbox-buildpack.git"
+    },
     {
       "url": "heroku/nodejs"
     },

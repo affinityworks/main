@@ -53,22 +53,22 @@ subgroup:
   location: subgroup_location
   an_api_key: 'test-token-7'
 
-swing_left:
+national_network:
   origin_system: "Affinity"
-  name: "Swing Left"
-  description: "sweet chariot!"
+  name: "National Network"
+  description: "one big union!"
   location: group_location
   an_api_key: 'test-token-8'
 
-swing_left_ohio:
+ohio_chapter:
   origin_system: "Affinity"
-  name: "Swing Left Ohio"
+  name: "Ohio Chapter of National Network"
   location: subgroup_location
   an_api_key: 'test-token-9'
 
-swing_left_new_york:
+new_york_chapter:
   origin_system: "Affinity"
-  name: "Swing Left New York"
+  name: "New York Chapter of National Network"
   location: subgroup_location
   an_api_key: 'test-token-10'
 

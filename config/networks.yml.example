@@ -1,20 +1,14 @@
-#  # TODO: swap gsuite credentials!
-
 default: &default
-  swing_left_network:
-    name: 'Swing Left Network'
-    google_gsuite_key: 'lib/networks/swing_left_network/service_account.json' # TODO: PUT IN CORRECT KEY
-    google_gsuite_admin_email: 'james@affinity.works' # TODO: PUT IN CORRECT ADMIN EMAIL
-    google_gsuite_email_base: '@affinity.works' # TODO: PUT IN CORRECT EMAIL BASE
+  national_network:
+    name: "National Network"
+    google_gsuite_admin_email: 'james@affinity.works'
+    google_gsuite_email_base: '@affinity.works'
     groups:
-     - name: 'Swing Left'
-       organizers:
-         - given_name: 'Matt'
-           family_name: 'Ewing'
-           email: 'matt@swingleft.org'
-         - given_name: 'Jonathan'
-           family_name: 'Goldman'
-           email: 'jonathan@swingleft.org'
+      - name: 'National Network'
+        organizers:
+          - given_name: 'Test'
+            family_name: 'Organizer'
+            email: 'member@organizer.com'
 
 development:
   <<: *default
@@ -22,16 +16,14 @@ development:
 production:
   <<: *default
 
-
 test:
-  swing_left_network:
-    name: 'Swing Left Network'
-    google_gsuite_key: 'test/fixtures/files/service_account.json'
+  national_network:
+    name: 'National Network'
     google_gsuite_admin_email: 'james@affinity.works'
     google_gsuite_email_base: '@affinity.works'
     groups:
-     - name: 'Swing Left'
-     - name: 'Swing Left Ohio'
+     - name: 'National Network HQ'
+     - name: 'Ohio Chapter of National Network'
        organizers:
          - given_name: 'Serious'
            family_name: 'Person'

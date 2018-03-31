@@ -3,14 +3,10 @@
 # names given in `config/networks.yml`
 
 default: &default
-  events:
-    disable_for:
-      networks:
-        - 'Swing Left Network'
   google_groups:
     enable_for:
       networks:
-        - 'Swing Left Network'
+        - 'National Network'
 
 development:
   <<: *default
@@ -20,3 +16,11 @@ production:
 
 test:
   <<: *default
+  events:
+    disable_for:
+      networks:
+        - 'National Network'
+  google_groups:
+    enable_for:
+      networks:
+        - 'National Network'

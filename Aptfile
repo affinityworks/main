@@ -1,0 +1,8 @@
+gnupg2
+http://mirrors.kernel.org/ubuntu/pool/main/g/gnupg2/gnupg2_2.1.11-6ubuntu2_amd64.deb
+
+gnupg-agent
+http://mirrors.kernel.org/ubuntu/pool/main/g/gnupg2/gnupg-agent_2.1.11-6ubuntu2_amd64.deb
+
+psmisc
+https://packages.ubuntu.com/xenial/amd64/psmisc/download

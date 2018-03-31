@@ -193,10 +193,14 @@ class Person < ApplicationRecord
     JsonApi::PersonRepresenter.new(self)
   end
 
+  def self.find_by_email(email)
+    includes(:email_addresses).where(email_addresses: { address: email }).first
+  end
+
   def self.find_first_by_auth_conditions(warden_conditions)
     conditions = warden_conditions.dup
     if email = conditions.delete(:email)
-      self.includes(:email_addresses).where(email_addresses: { address: email }).first
+      find_by_email(email)
     else
       super(warden_conditions)
     end

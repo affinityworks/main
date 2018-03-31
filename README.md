@@ -94,6 +94,7 @@ $ ./bin/install
 
 ``` shell
 $ ./bin/run-services # first run only: start redis & postgres
+$ ./bin/copy_configs # first run only: see `Secrets` section below
 $ ./bin/seed-db # first run only: seed db
 $ ./bin/run-web
 ```
@@ -133,7 +134,127 @@ $ psql
 $ ./bin/seed-db
 ```
 
-## Bnuild Javascript in Production Configuration
+## Secrets Management
+
+### Secrets For Community Contributors
+
+We provide sample versions of encrypted config files. They are in the `config` folder with names like `some_config.yml.exampl`. For the app to run, you need to copy them all to files with names like `some_config.yml`, which you can do by running the following script:
+
+``` shell
+$ ./bin/copy_configs
+```
+
+If you would like to gain access to the encrypted credentials:
+
+* shoot us an email at postmaster@affinity.works
+* drop us a note on Slack: https://advocacycommons.slack.com
+* open an issue on this repo
+
+
+### Secrets For Team Members
+
+#### Blackbox
+
+We use [blackbox](https://github.com/StackExchange/blackbox) for secrets management.
+
+It allows us to keep credentials under secure version control by:
+
+* maintaining a list of sensitive files
+* gitingoring the files
+* encrypting the files to a whitelist of PGP keys
+* allowing key-owners to decrypt and re-encrypt files with easy-to-remember commands
+
+To use it, you will first need:
+
+* a PGP key (If you don't have one, we recommend [GPGSuite](https://gpgtools.org/) for Mac users, and [this guide from Riseup](https://riseup.net/en/security/message-security/openpgp/gpg-keys) for Linux or Windows users)
+* an admin to add your PGP public key to the whitelist at `keyrings/live/blackbox-admins.txt`
+
+Now you can use the following **commands:**
+
+**Decrypt all files:**
+
+``` shell
+$ ./bin/blackbox_decrypt_all_files
+```
+
+**Encrypt a newly created file:**
+
+``` shell
+$ ./bin/blackbox_register_new_file some_file_name.yml
+```
+
+**Edit an encrypted file:**
+
+``` shell
+$ ./bin/blackbox_edit_start some_file.yml.gpg
+<do your editing>
+$ ./bin/blackbox_edit_end some_file.yml
+```
+
+**Edit an already-decrypted file:**
+
+``` shell
+<do your editing>
+$ ./bin/blackbox_edit_end some_file.yml
+```
+
+**Delete all cleartext files:**
+
+``` shell
+$ ./bin/blackbox_shred_all_files
+```
+
+**Add new public key to whitelist:**
+
+``` shell
+$ ./bin/blackbox_add_admin
+```
+
+Blackbox is all just shell commands! You can read them in `./bin`. If you'd like to install them on your machine so you can type `blackbox_some_command` instead of `./bin/blackbox_some_command**, you can:
+
+**Install blackbox on your $PATH:**
+
+``` shell
+$ git clone git@github.com:StackExchange/blackbox.git
+$ cd blackbox
+$ make copy-install
+$ cd ../ && rm -rf blackbox
+```
+
+#### Importing Partner Credentials
+
+To import Gsuite credentials for a partner group, first:
+
+* make sure the group is part of a network listed in `config/networks.yml`
+* place a copy of the network's `service_account.json` file in `lib/imports/gsuite`
+* rename the file to `some_network_google_gsuite_key.json` (where `some_network` is the snakecased version of the network's name given in `networks.yml`)
+
+Then run:
+
+``` shell
+$ rake import_keys:gsuite
+```
+
+This will:
+
+* place an encrypted version of the credentials in a nested folder of `lib/network_credentials`
+* delete and gitignore all unencrypted versions
+* automatically create a new commit to place the above changes under version control
+
+You will likely want to amend that commit to change the commit message.
+
+#### Updating networks.yml
+
+To update the list of networks:
+
+* decrypt it with `./bin/blackbox_edit_start config/networks.yml` if necessary
+* add networks, groups, and organizers following the format in the file
+* re-encrypt the config file with `./bin/blackbox_edit_end config/networks.yml`
+* create a migration with `rake config:update_networks` as the body of the `change` method
+* run `rake db:migrate` and `rake db:migrate RAILS_ENV=test`
+* commit your changes and push them
+
+## Build Javascript in Production Configuration
 
 Webpack will automatically rebuild the dev javascript bundles on changes according to the development configuration in `client/webpack.config.js`. So it is not necessary to rebuild manually. That said, if you want to spit out a static build of the frontend that matches the production build, you can run:
 
@@ -141,83 +262,11 @@ Webpack will automatically rebuild the dev javascript bundles on changes accordi
 $ bundle exec rake react_on_rails:assets:webpack
 ```
 
-## Testing Note: Mailgun on Heroku Review apps
-
-Testing email features on Heroku review apps is a bit tricky.
-
-To successfully verify that an email feature works, you will need to:
-
-1. Log into the heroku cli
-1. Use the cli to copy mailgun credentials from `dev-affinityworks` app to your local machine
-1. Use the cli to copy those credentials from your local machine to `dev-affinityworks-pr-<PR_NUMBER_HERE>`
-
-Here is a representative shell session of that process (with credentials redacted):
-
-``` shell
-$ heroku login
-$ heroku config --app dev-affinityworks | clip
-```
-
-You should now have all the environment variables for the review app in your clipboard. If you paste them into a text file, it should look something like:
-
-```txt
-=== dev-affinityworks-pr-520 Config Vars
-DATABASE_URL:                 postgres://<some_url>
-HEROKU_POSTGRESQL_BRONZE_URL: postgres://<some_url>
-LANG:                         en_US.UTF-8
-MAILGUN_API_KEY:              key-<some_hex_string>
-MAILGUN_DOMAIN:               mg-staging.affinity.works
-MAILGUN_PUBLIC_KEY:           pubkey-<some_hex_string>
-MAILGUN_SMTP_LOGIN:           postmaster@mg-staging.affinity.works
-MAILGUN_SMTP_PASSWORD:        <some_hex_string>
-MAILGUN_SMTP_PORT:            587
-MAILGUN_SMTP_SERVER:          smtp.mailgun.org
-RACK_ENV:                     production
-RAILS_ENV:                    production
-RAILS_LOG_TO_STDOUT:          enabled
-RAILS_SERVE_STATIC_FILES:     enabled
-REDIS_URL:                    redis://<some_url>
-SECRET_KEY_BASE:              <some_hex_string>
-```
-
-(Note that we are currently copying the config vars from staging, which is sort of weird, but necessary for `reasons`.)
-
-In order to upload the mailgun-related credentials to your review app -- assuming a staging app called `dev-affinityworks-pr-666` (NOTE: the number of your PR will differ!) -- you would then perform the appropriate text-munging to issue the following cli commands:
-
-```shell
-$ heroku config:set MAILGUN_API_KEY=key-<some_hex_string> -a dev-affinityworks-pr-666
-$ heroku config:set MAILGUN_DOMAIN=mg-staging.affinity.works -a dev-affinityworks-pr-666
-$ heroku config:set MAILGUN_PUBLIC_KEY=pubkey-<some_hex_string> -a dev-affinityworks-pr-666
-$ heroku config:set MAILGUN_SMTP_LOGIN=postmaster@mg-staging.affinity.works -a dev-affinityworks-pr-666
-$ heroku config:set MAILGUN_SMTP_PASSWORD=<some_hex_string> -a dev-affinityworks-pr-666
-$ heroku config:set MAILGUN_SMTP_PORT=587 -a dev-affinityworks-pr-666
-$ heroku config:set MAILGUN_SMTP_SERVER=smtp.mailgun.org -a dev-affinityworks-pr-666
-```
-
-This should configure the review app to send emails.
-
-Now we issue this command to configure it with the proper hostname (so that links in emails are correct):
-
-``` shell
-$ heroku config:set HOSTNAME=$(heroku info --app <app_name> -s | grep web_url | cut -d= -f2)
-```
-
-And finally, we make sure that all workers are running (so that emails get sent in the background), with:
-
-``` shell
-$ heroku ps:restart worker -a dev-affinityworks-pr-666
-```
-
-Could this whole process be simplified drastically? YOU BETCHA!!! Let's do that in an upcoming card. :P
-
-
 ## Configuration Note: Mailgun + Heroku
 
-It is sort of janky to use the staging credentials for dev. For one, it necessitates the manual copying process above. Secondly, if we ever delete the staging app, we won't have a free mailgun account to use for acceptance testing.
+Configuring the Heroku Mailgun addon is not that fun. Hopefully you never have to do it!
 
-Thus, at some point in the future, it will likely make sense for us to set up a dedicated `dev` mailgun account.
-
-At such point, a (hopeuflly exhaustive) set of steps for configuring the mailgun account are:
+Just in case you do, here is a near-exhaustive list of the steps involved in doing so:
 
 1. Provision the Mailgun add-on (in the "Resources" tab of the `dev-affinityworks` app panel)
 1. Click on it (to go to the mailgun dashboard)

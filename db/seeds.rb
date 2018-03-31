@@ -1,3 +1,5 @@
+puts "creating seed data and syncing to Action Network..."
+
 Origin.find_or_create_by(name: 'Action Network')
 Origin.find_or_create_by(name: 'Facebook')
 Origin.find_or_create_by(name: 'Affinity')
@@ -144,7 +146,7 @@ affiliate.sync_with_action_network
 affiliate_2.sync_with_action_network
 affiliate_3.sync_with_action_network
 
-
+puts "...created seed data and synced to Action Network"
 # test facebook users:
 # nkarntbiax_1498782998@tfbnw.net - mnm8;yDbzzsRuxvY
 # ekcuwfbljf_1498782997@tfbnw.net - mnm8;yDbzzsRuxvY

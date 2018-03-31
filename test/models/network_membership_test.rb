@@ -1,7 +1,7 @@
 require_relative '../test_helper'
 
 class NetworkMembershipTest < ActiveSupport::TestCase
-  let(:membership){ network_memberships(:swing_left_ohio_membership) }
+  let(:membership){ network_memberships(:ohio_chapter_membership) }
 
   describe "associations" do
     specify { membership.group.must_be_instance_of Group }
@@ -9,20 +9,20 @@ class NetworkMembershipTest < ActiveSupport::TestCase
   end
 
   describe "validations" do
-    let(:swing_left_new_york){ groups(:swing_left_new_york) }
-    let(:swing_left){ networks(:swing_left_network) }
+    let(:new_york_chapter){ groups(:new_york_chapter) }
+    let(:national_network){ networks(:national_network) }
     let(:the_avengers){ networks(:the_avengers) }
 
     it "forbids duplicate memberships" do
       refute NetworkMembership.new(
-        group: swing_left_new_york,
-        network: swing_left
+        group: new_york_chapter,
+        network: national_network
       ).valid?
     end
 
     it "forbids more than one primary membership" do
       refute NetworkMembership.new(
-        group: swing_left_new_york,
+        group: new_york_chapter,
         network: the_avengers,
         primary: true
       ).valid?

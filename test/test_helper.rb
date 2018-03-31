@@ -19,6 +19,10 @@ class ActiveSupport::TestCase
   include ActiveJob::TestHelper
 
   # Add more helper methods to be used by all tests here...
+
+  def read_json(path)
+    JSON.parse(File.read(path))
+  end
 end
 
 

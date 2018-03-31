@@ -1,23 +1,23 @@
 require_relative "../../test_helper"
 
 class NetworkableTest < ActiveSupport::TestCase
-  let(:swing_left_ohio){ groups(:swing_left_ohio) }
-  let(:swing_left){ networks(:swing_left_network) }
+  let(:ohio_chapter){ groups(:ohio_chapter) }
+  let(:national_network){ networks(:national_network) }
   let(:the_avengers){ networks(:the_avengers) }
 
   describe "associations" do
-    specify { swing_left_ohio.networks.first.must_be_kind_of Network }
+    specify { ohio_chapter.networks.first.must_be_kind_of Network }
   end
 
   describe "accessors" do
 
     it "retrieves networks" do
-      swing_left_ohio.networks.
-        must_equal [ swing_left, the_avengers ]
+      ohio_chapter.networks.
+        must_equal [ national_network, the_avengers ]
     end
 
     it "retrieves a primary network" do
-      swing_left_ohio.primary_network.must_equal swing_left
+      ohio_chapter.primary_network.must_equal national_network
     end
   end
 

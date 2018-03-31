@@ -34,10 +34,10 @@ class GoogleAPI::GetAuthorization
 
   def get_authorization(network)
     authentication = Google::Auth::ServiceAccountCredentials.make_creds(
-      json_key_io: File.open(network.google_gsuite_key),
+      json_key_io: File.open(network.google_gsuite_key_path),
       scope: SCOPES
     )
-    
+
     authentication.sub = network.google_gsuite_admin_email
     success!(authentication)
   rescue
