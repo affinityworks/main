@@ -81,9 +81,8 @@
   },
   "addons": [
     "heroku-postgresql",
-    "scheduler",
     "heroku-redis",
-    "mailgun"
+    "scheduler"
   ],
   "buildpacks": [
     {
