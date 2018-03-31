@@ -121,7 +121,9 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   # lightweight profiling tool: https://github.com/MiniProfiler/rack-mini-profiler
-  gem 'rack-mini-profiler', require: false
+  # miniprofiler is GREAT, but it appears to cause our action network sync
+  # (and thus seed:db) to fail. commenting out for now, investigating later
+  # gem 'rack-mini-profiler', require: false
   # until 4.7.3, we need develop branch b/c: https://github.com/ctran/annotate_models/pull/514
   gem 'annotate', git: 'https://github.com/ctran/annotate_models.git', branch: "develop"
   gem 'guard'

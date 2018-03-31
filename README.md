@@ -249,9 +249,9 @@ To update the list of networks:
 
 * decrypt it with `./bin/blackbox_edit_start config/networks.yml` if necessary
 * add networks, groups, and organizers following the format in the file
-* create a migration with `Migration.update_networks unless ENV['RAILS_ENV'] == 'test'` as the body of the `change` method
-* run `rake db:migrate` and `rake db:migrate RAILS_ENV=test`
 * re-encrypt the config file with `./bin/blackbox_edit_end config/networks.yml`
+* create a migration with `rake config:update_networks` as the body of the `change` method
+* run `rake db:migrate` and `rake db:migrate RAILS_ENV=test`
 * commit your changes and push them
 
 ## Build Javascript in Production Configuration
