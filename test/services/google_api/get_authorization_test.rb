@@ -20,8 +20,7 @@ class GoogleAPI::GetAuthorizationTest < ActiveSupport::TestCase
     # - leaving as a TODO for now, pending further discussion w/ @vaughan10
 
     before do
-      network = Network.create(name: "Foo Network")
-      #network = networks(:national_network)
+      network = networks(:national_network)
       @auth_service = GoogleAPI::GetAuthorization.new(network: network)
     end
 
