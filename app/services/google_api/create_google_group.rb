@@ -23,6 +23,10 @@ class GoogleAPI::CreateGoogleGroup
       )
 
       directory_service.insert_group(group)
+
+    rescue Exception => e
+      logger.error "Uncaught #{e} exception while trying to create google group: #{e.message}"
+      logger.error("Stack trace: #{backtrace.map {|l| "  #{l}\n"}.join}")
     end
   end
 end
