@@ -12,7 +12,6 @@ class SignupFormTest < ActiveSupport::TestCase
   end
 
   describe "validations" do
-
     let(:signup_form) { SignupForm.new }
 
     it "requries a group id" do
@@ -21,8 +20,17 @@ class SignupFormTest < ActiveSupport::TestCase
     end
   end
 
-  describe "factories" do
+  describe "lifecycle hooks" do
+    it "saves `form.browser_url` after creation" do
+      f= SignupForm.for(group)
+      f.form
+        .browser_url
+        .must_equal "http://localhost:3000/groups/#{group.id}" +
+                    "/signup_forms/#{f.id}/signups/new"
+    end
+  end
 
+  describe "factories" do
     it "creates a default form for a group" do
       f = SignupForm.for(group)
 
