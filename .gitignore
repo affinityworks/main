@@ -62,7 +62,10 @@ node_modules
 app/assets/webpack
 .env
 
+# temp export files for heroku config vars
+/lib/export/heroku/*
 
+# blackbox (mostly)
 /lib/networks/keyrings/live/pubring.gpg~
 /keyrings/live/pubring.kbx~
 /keyrings/live/secring.gpg
