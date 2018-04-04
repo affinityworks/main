@@ -20,15 +20,15 @@ FACEBOOK_API_SECRET=<some_value>
 FACEBOOK_APP_ID=<some_value>
 FACEBOOK_APP_SECRET=<some_value>
 ```
-* Upload the env var assignments to heroku with something like (yes we could script this):
-```
-$ heroku config:set FACEBOOK_API_KEY=<some_value> -a myapp
-$ heroku config:set FACEBOOK_API_SECRET=<some_value> -a myapp
-$ heroku config:set FACEBOOK_APP_ID=<some_value> -a myapp
-$ heroku config:set FACEBOOK_APP_SECRET=<some_value> -a myapp
-```
-* Copy and paste the env var assignments into the local copy of `myapp`'s config vars, which should be located in `.env.heroku/myapp`
-* Re-encrypt and commit these changes with `./bin/blackbox_edit_end .env.heroku/myapp`
+* Upload the credentials to heroku by:
+  * copy/pasting the variable assignment statements above into `lib/export/heroku/myapp`
+  * running:
+  ``` shell
+  $ rake heroku:export_vars
+  ```
+* Place the credentials under version control by:
+  * copy/pasting the assignment statements into `.env.heroku/myapp`
+  * re-encrypting and committing these changes with `./bin/blackbox_edit_end .env.heroku/myapp`
 
 ## Adding Redirect URIs to FB Admin Panel
 
