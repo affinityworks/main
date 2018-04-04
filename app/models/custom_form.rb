@@ -24,7 +24,13 @@ class CustomForm < ApplicationRecord
 
   belongs_to :form
   accepts_nested_attributes_for :form
-  delegate :description, :title, :name, :call_to_action, :submit_text, to: :form
+  delegate :browser_url,
+           :call_to_action,
+           :name,
+           :submit_text,
+           :title,
+           :description,
+           to: :form
 
   belongs_to :group
 

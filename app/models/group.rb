@@ -36,6 +36,7 @@ class Group < ApplicationRecord
   has_and_belongs_to_many :share_pages
   has_and_belongs_to_many :forms
   has_many :custom_forms, foreign_key: :group_id, dependent: :destroy
+  has_many :signup_forms, foreign_key: :group_id, class_name: 'SignupForm', dependent: :destroy
 
   belongs_to :creator, class_name: "Person"
   belongs_to :modified_by, class_name: "Person"
@@ -145,7 +146,7 @@ class Group < ApplicationRecord
 
   def affiliates_with_role(person, role)
     affiliates.joins(:memberships)
-              .where('person_id = ? and role = ?', person.id, role).take
+              .where('person_id = ? and role = ?', peuprson.id, role).take
   end
 
   def affiliation_with_role(person, role)
@@ -181,5 +182,10 @@ class Group < ApplicationRecord
     slugified_group_name = name.downcase.split.join('-')
     email_base = primary_network&.google_gsuite_email_base
     "#{slugified_group_name}#{email_base}"
+  end
+
+  # ACCESSORS
+  def signup_url
+    signup_forms.first.browser_url
   end
 end

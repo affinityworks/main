@@ -1,4 +1,4 @@
-require 'test_helper'
+require_relative '../test_helper'
 
 class GroupTest < ActiveSupport::TestCase
   test "basic person associations" do
@@ -220,6 +220,15 @@ class GroupTest < ActiveSupport::TestCase
     assert group.affiliation_with_role(person, volunteer_role), group
     assert group_fourth.affiliation_with_role(person_admin, volunteer_role), group
 
+  end
+
+  describe "accessors" do
+    #TODO: (aguestuser) move some of above tests into this bracket
+    it "returns the group's sigup page url" do
+      groups(:fantastic_four)
+        .signup_url
+        .must_equal forms(:fantastic_four_signup).browser_url
+    end
   end
 
   describe "nested attributes" do
