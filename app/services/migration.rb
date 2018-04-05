@@ -54,5 +54,14 @@ class Migration
         end
       end
     end
+
+    def backfill_signup_form_fields
+      SignupForm.all.each do |sf|
+        sf.person_input_group&.update!(required: %w[given_name family_name])
+        sf.email_input_group&.update!(required: %w[address])
+        sf.address_input_group&.update!(required: %w[postal_code])
+        sf.phone_input_group&.update!(inputs: %w[number], required: [])
+      end
+    end
   end
 end

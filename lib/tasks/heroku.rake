@@ -1,5 +1,9 @@
 namespace :heroku do
   task postdeploy: :environment do
+
+    # TODO: delete this after #521 is deployed
+    Migration.backfill_signup_form_fields
+
     if ENV["HEROKU_APP_NAME"]&.include? "dev"
       logger = Logger.new(STDOUT)
 
