@@ -55,11 +55,13 @@ class Migration
       end
     end
 
-    def backfill_signup_urls
-      Group
-        .all
-        .select{ |g| g.signup_forms.first.present? && g.signup_url.nil? }
-        .each { |g| g.signup_forms.first.save_browser_url }
+    def backfill_signup_form_fields
+      SignupForm.all.each do |sf|
+        sf.person_input_group&.update!(required: %w[given_name family_name])
+        sf.email_input_group&.update!(required: %w[address])
+        sf.address_input_group&.update!(required: %w[postal_code])
+        sf.phone_input_group&.update!(inputs: %w[number], required: [])
+      end
     end
   end
 end

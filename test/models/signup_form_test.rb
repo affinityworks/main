@@ -31,26 +31,43 @@ class SignupFormTest < ActiveSupport::TestCase
   end
 
   describe "factories" do
-    it "creates a default form for a group" do
-      f = SignupForm.for(group)
+    describe ".for" do
+      let(:f){ SignupForm.for group }
 
-      f.group.must_equal(group)
+      specify { f.group.must_equal(group) }
+      specify { f.name.must_equal "#{group.name}_default_signup_form" }
+      specify { f.title.must_equal group.name }
+      specify { f.description.must_equal group.description }
+      specify { f.call_to_action.must_equal "get involved" }
 
-      f.name.must_equal "#{group.name}_default_signup_form"
-      f.title.must_equal group.name
-      f.description.must_equal group.description
-      f.call_to_action.must_equal "get involved"
+      it 'includes correct person fields' do
+        f.person_input_group.inputs
+          .must_equal %w[given_name family_name]
+      end
 
-      f.person_input_group.inputs.must_equal(
-        %w[given_name family_name]
-      )
-      f.email_input_group.inputs.must_equal(
-        %w[address]
-      )
-      f.address_input_group.inputs.must_equal(
-        %w[postal_code]
-      )
-      f.phone_input_group.inputs.must_equal []
+      it 'requires correct person fields' do
+        f.person_input_group.required
+          .must_equal %w[given_name family_name]
+      end
+
+      it 'includes correct email fields' do
+        f.email_input_group.inputs
+          .must_equal %w[address]
+      end
+
+      it 'requires correct address fields' do
+        f.address_input_group.required
+          .must_equal %w[postal_code]
+      end
+
+      it 'includes correct phone fields' do
+        f.phone_input_group.inputs
+          .must_equal %w[number]
+      end
+
+      it 'requires no phone fields' do
+        f.phone_input_group.required.must_be_empty
+      end
     end
   end
 end

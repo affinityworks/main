@@ -108,5 +108,11 @@ class FormInputGroup < ApplicationRecord
     self.class::VALID_INPUTS & inputs
   end
 
+  def label_for(input)
+    self.class.label_for(input) + (required?(input) ? "*" : "")
+  end
 
+  def required?(input)
+    required.include? input
+  end
 end

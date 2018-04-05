@@ -26,7 +26,10 @@
 
           <% @form.person_input_group.inputs.each do |input| %>
             <div class="entry">
-              <%= f.text_field input, placeholder: PersonInputGroup.label_for(input) %>
+              <%= f.text_field input,
+                  placeholder: @form.person_input_group.label_for(input),
+                  required: @form.person_input_group.required?(input)
+              %>
             </div>
           <% end # @form.person_input_groups.each do |input| %>
 
@@ -34,7 +37,10 @@
             <%= f.fields_for input_group.resource do |ff| %>
               <% input_group.inputs.each do |input| %>
                 <div class="entry">
-                  <%= ff.text_field input, placeholder: input_group.class.label_for(input) %>
+                  <%= ff.text_field input,
+                      placeholder: input_group.label_for(input),
+                      required: input_group.required?(input)
+                  %>
                 </div>
               <% end # each |input| %>
             <% end # f.fields_for input_group.resource do |ff|  %>

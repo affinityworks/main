@@ -23,20 +23,18 @@ class FormInputGroupTest < ActiveSupport::TestCase
 
   let(:input_group){ form_input_groups(:abstract) }
 
-  specify "inheritance" do
-    input_group.must_be_instance_of FakeInputGroup
-    input_group.must_be_kind_of FormInputGroup
+  describe "inheritance" do
+    specify { input_group.must_be_instance_of FakeInputGroup }
+    specify { input_group.must_be_kind_of FormInputGroup }
   end
 
   describe "associations" do
-
     it "belongs to a custom form" do
       input_group.custom_form.must_be_kind_of CustomForm
     end
   end
 
   describe "attributes" do
-
     it "has an array of available inputs" do
       input_group.inputs.must_be_kind_of Array
     end
@@ -51,7 +49,6 @@ class FormInputGroupTest < ActiveSupport::TestCase
   end
 
   describe "interface" do
-
     it "has nil RESOURCE" do
       FormInputGroup::RESOURCE.must_be_nil
     end
@@ -69,7 +66,6 @@ class FormInputGroupTest < ActiveSupport::TestCase
     end
 
     describe "a concrete instance" do
-
       it "provides a message for accessing nested resources" do
         input_group.resource.must_equal :fakes
       end
@@ -113,10 +109,30 @@ class FormInputGroupTest < ActiveSupport::TestCase
   end
 
   describe "accessors" do
-
     it "provides a sorted list of inputs" do
       input_group.inputs = FakeInputGroup::VALID_INPUTS.dup.reverse
       input_group.sorted_inputs.must_equal FakeInputGroup::VALID_INPUTS
+    end
+
+    it "provides a label for a required field" do
+      input_group.label_for(input_group.inputs.second)
+        .must_equal "Barrr*"
+    end
+
+    it "provides a label for an optional field" do
+      input_group.label_for(input_group.inputs.first)
+        .must_equal "Proper Foo"
+    end
+  end
+
+  describe "predicates" do
+
+    it "reports that a field is required" do
+      input_group.required?(input_group.inputs.second).must_equal true
+    end
+
+    it "reports that a field is not required" do
+      input_group.required?(input_group.inputs.first).must_equal false
     end
   end
 end

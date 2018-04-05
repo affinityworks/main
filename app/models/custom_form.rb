@@ -14,8 +14,8 @@ class CustomForm < ApplicationRecord
 
   NESTED_INPUT_GROUPS = [
     :email_input_group,
-    :phone_input_group,
     :address_input_group,
+    :phone_input_group,
   ]
 
   INPUT_GROUPS = [:person_input_group] + NESTED_INPUT_GROUPS

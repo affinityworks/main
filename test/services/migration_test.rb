@@ -150,18 +150,37 @@ class MigrationTest < ActiveSupport::TestCase
     end
   end
 
-  describe ".backfill_signup_urls" do
-    focus
-    it "saves urls for groups that have signup forms but no saved urls" do
-      needing_backfill = -> do
-        Group.all
-          .select{ |g| g.signup_forms.first.present? && g.signup_url.nil? }
-          .count
-      end
+  describe "#backfill_signup_form_fields" do
+    let(:group){ groups(:one) }
 
-      needing_backfill.call.must_equal 1
-      Migration.backfill_signup_urls
-      needing_backfill.call.must_equal 0
+    it "updates legacy signup form fields to match new requirements" do
+      legacy_form = SignupForm.create!(
+        group: group,
+        form: Form.new(
+          name: "#{group.name}_default_signup_form",
+          title: "#{group.name}",
+          description: group.description || "<div></div>",
+          call_to_action: "get involved"
+        ),
+        person_input_group: PersonInputGroup.new(
+          inputs: %w[given_name family_name],
+        ),
+        email_input_group: EmailInputGroup.new(
+          inputs: %w[address],
+        ),
+        address_input_group: AddressInputGroup.new(
+          inputs: %w[postal_code],
+        ),
+        phone_input_group: PhoneInputGroup.new
+      )
+      Migration.backfill_signup_form_fields
+      legacy_form.reload
+
+      legacy_form.person_input_group.required.must_equal %w[given_name family_name]
+      legacy_form.email_input_group.required.must_equal %w[address]
+      legacy_form.address_input_group.required.must_equal %w[postal_code]
+      legacy_form.phone_input_group.inputs.must_equal %w[number]
+      legacy_form.phone_input_group.required.must_be_empty
     end
   end
 end

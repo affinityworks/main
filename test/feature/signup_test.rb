@@ -29,7 +29,7 @@ class Signup < FeatureTest
           ig = form.send(input_group)
           page
             .find(input_selector_for(ig, input))['placeholder']
-            .must_equal(ig.class.label_for(input))
+            .must_equal(ig.label_for(input))
         end
       end
     end
@@ -100,7 +100,7 @@ class Signup < FeatureTest
 
       it "shows an error for invalid postal code" do
         page.must_have_content(
-          "Postal code invalid is not a valid postal code"
+          "Zip code invalid is not a valid postal code"
         )
       end
 
