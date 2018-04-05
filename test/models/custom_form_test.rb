@@ -144,8 +144,8 @@ class CustomFormTest < ActiveSupport::TestCase
     it "provides a list of input groups for nested attributes" do
       custom_form.nested_input_groups
         .must_equal([custom_form.email_input_group,
-                     custom_form.phone_input_group,
-                     custom_form.address_input_group])
+                     custom_form.address_input_group,
+                     custom_form.phone_input_group])
     end
   end
 end

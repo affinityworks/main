@@ -25,8 +25,8 @@ class CanSignupTest < ActiveSupport::TestCase
     it "provides a list of associated resources required by a form" do
       person.signup_resources_for(form)
         .must_equal([person.email_addresses,
-                     person.phone_numbers,
-                     person.personal_addresses])
+                     person.personal_addresses,
+                     person.phone_numbers])
     end
   end
 
