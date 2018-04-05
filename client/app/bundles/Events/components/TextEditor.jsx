@@ -98,25 +98,33 @@ class TextEditor extends Component {
 
     return (
       <div className='col-md-12'>
-          <div className='row'>
-            <div className="col-md-3">
-                <h4>Aditional Description</h4>
-            </div>
+        <div className='row'>
+          <div className="col-md-6">
+            <h4>Whiteboard</h4>              
             <UserAuth allowed={['organizer']}>
-              <div className='col-md-12 mb-3'>
-                <button
-                  className='btn btn-primary btn-sm btn-edit'
-                  onClick={this.handleShowEditor.bind(this)}
-                >
-                  <span className='fa fa-pencil-square-o'></span> Edit description
-                </button>
+              <div style={{color: 'lightgray', fontWeight: 'italic'}}>
+                What's important for the group to know?
               </div>
             </UserAuth>
           </div>
+        </div>
 
-          <div className='text-preview'>
-            <div dangerouslySetInnerHTML={{ __html: textValue }} />
-          </div>
+        <div className='text-preview'>
+          <div dangerouslySetInnerHTML={{ __html: textValue }} />
+        </div>
+
+        <div style={{ margin: '1rem 0'}}>
+          <UserAuth allowed={['organizer']}>
+            <div>
+              <button
+                className='btn btn-primary btn-sm btn-edit'
+                onClick={this.handleShowEditor.bind(this)}
+              >
+                <span className='fa fa-pencil-square-o'></span> Edit Whiteboard
+              </button>
+            </div>
+          </UserAuth>
+        </div>
       </div>
     )
   }
