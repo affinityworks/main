@@ -186,6 +186,12 @@ class Group < ApplicationRecord
 
   # ACCESSORS
   def signup_url
-    signup_forms&.first&.browser_url
+    has_signup_form? &&
+      Rails.application.routes.url_helpers.
+        new_group_signup_form_signup_url(self, signup_forms.first)
+  end
+
+  def has_signup_form?
+    !signup_forms.empty?
   end
 end

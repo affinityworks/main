@@ -223,11 +223,12 @@ class GroupTest < ActiveSupport::TestCase
   end
 
   describe "accessors" do
-    #TODO: (aguestuser) move some of above tests into this bracket
-    it "returns the group's sigup page url" do
+      it "returns the group's signup page url" do
       groups(:fantastic_four)
         .signup_url
-        .must_equal forms(:fantastic_four_signup).browser_url
+        .must_equal 'http://localhost:3000' +
+                    '/groups/1036040811' +
+                    '/signup_forms/350404309/signups/new'
     end
   end
 
