@@ -149,19 +149,4 @@ class MigrationTest < ActiveSupport::TestCase
       end
     end
   end
-
-  describe ".backfill_signup_urls" do
-    focus
-    it "saves urls for groups that have signup forms but no saved urls" do
-      needing_backfill = -> do
-        Group.all
-          .select{ |g| g.signup_forms.first.present? && g.signup_url.nil? }
-          .count
-      end
-
-      needing_backfill.call.must_equal 1
-      Migration.backfill_signup_urls
-      needing_backfill.call.must_equal 0
-    end
-  end
 end

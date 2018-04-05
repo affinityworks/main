@@ -54,12 +54,5 @@ class Migration
         end
       end
     end
-
-    def backfill_signup_urls
-      Group
-        .all
-        .select{ |g| g.signup_forms.first.present? && g.signup_url.nil? }
-        .each { |g| g.signup_forms.first.save_browser_url }
-    end
   end
 end
