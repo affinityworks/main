@@ -17,6 +17,7 @@ class AddressInputGroup < FormInputGroup
     address_lines: 'address',
     locality: 'city',
     region: 'state',
+    postal_code: 'zip code',
   ).freeze
 
 end
