@@ -172,7 +172,7 @@ class TextEditor extends Component {
       <div className='col-md-12'>
         <div className="row">
           <div className="col-md-3">
-              <h4>Aditional Description</h4>
+              <h4>Whiteboard</h4>
           </div>
           <div className='col-md-4'>
             <button
