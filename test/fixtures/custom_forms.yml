@@ -13,3 +13,8 @@ fantastic_four_signup:
   type: SignupForm
   group: fantastic_four
   form: fantastic_four_signup
+
+legacy_group_signup:
+  type: SignupForm
+  group: legacy_group
+  form: legacy_group_signup

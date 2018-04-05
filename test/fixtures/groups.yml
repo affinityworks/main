@@ -83,3 +83,9 @@ my_local_political_club:
   name: "My Local Political Club"
   location: subgroup_location
   an_api_key: 'test-token-12'
+
+legacy_group:
+  origin_system: "Affinity"
+  name: "Legacy Group"
+  location: subgroup_location
+  an_api_key: 'test-token-13'

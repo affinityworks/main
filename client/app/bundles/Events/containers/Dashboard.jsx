@@ -54,7 +54,11 @@ class Dashboard extends Component {
 
         {this.renderTextEditor()}
         <hr/>
-        <GroupResources {...{ signupUrl: attributes['signup-url'] } } />
+        <GroupResources {...{
+          resources: [{
+            description: 'Signup Page', link: attributes['signup-url']
+          }]
+        }}/>
         <hr/>
 
         <div className="edit-button">

@@ -37,7 +37,7 @@ Rails.application.configure do
   # The :test delivery method accumulates sent emails in the
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
-  config.action_mailer.default_url_options = { host: 'localhost' }
+  config.action_mailer.default_url_options = { host: hostname }
 
   # config.action_mailer.smtp_settings = {
   #   :port           => ENV['MAILGUN_SMTP_PORT'],
