@@ -52,7 +52,7 @@ class Api::V1::PeopleControllerTest < ActionController::TestCase
       assert_equal 2, json['page'], 'page'
 
       links = json['_links']
-      assert_equal 'http://test.host/api/v1/people', links['self']['href'], 'self link'
+      assert_equal 'http://test.host:3000/api/v1/people', links['self']['href'], 'self link'
       assert_equal '/api/v1/people?page=1', links['previous']['href'], 'previous link'
       assert_equal '/api/v1/people?page=3', links['next']['href'], 'next link'
     end
