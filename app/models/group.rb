@@ -146,7 +146,7 @@ class Group < ApplicationRecord
 
   def affiliates_with_role(person, role)
     affiliates.joins(:memberships)
-              .where('person_id = ? and role = ?', peuprson.id, role).take
+              .where('person_id = ? and role = ?', person.id, role).take
   end
 
   def affiliation_with_role(person, role)
