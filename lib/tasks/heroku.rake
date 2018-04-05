@@ -1,5 +1,9 @@
 namespace :heroku do
   task postdeploy: :environment do
+
+    # TODO (05 Apr 2018): remove this after deploying PR #600
+    Migration.backfill_signup_urls
+
     if ENV["HEROKU_APP_NAME"]&.include? "dev"
       logger = Logger.new(STDOUT)
 

@@ -59,3 +59,13 @@ fantastic_four_signup:
   call_to_action: "join our group!"
   submit_text: 'Submit'
   browser_url: 'http://localhost:3000/groups/1036040811/signup_forms/350404309/signups/new'
+
+legacy_group_signup:
+  origin_system: "Affinity"
+  name: "legacy_group_signup_form"
+  title: "We're old. Help us!"
+  description: "We can tell good stories"
+  summary: MyString
+  call_to_action: "join our group!"
+  submit_text: 'Submit'
+  # look! no browser_url!!!
