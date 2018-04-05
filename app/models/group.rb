@@ -186,6 +186,6 @@ class Group < ApplicationRecord
 
   # ACCESSORS
   def signup_url
-    signup_forms.first.browser_url
+    signup_forms&.first&.browser_url
   end
 end
