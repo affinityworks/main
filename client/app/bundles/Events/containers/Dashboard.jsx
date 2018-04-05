@@ -10,6 +10,7 @@ import PersonActivityFeed from '../components/PersonActivityFeed';
 import SyncActivityFeed from '../components/SyncActivityFeed';
 import { fetchGroup, fetchFeatureToggles, addAlert } from '../actions';
 import UserAuth from '../components/UserAuth';
+import GroupResources from '../components/GroupResources';
 import { client, dashboardPath } from '../utils';
 
 class Dashboard extends Component {
@@ -37,7 +38,7 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { group: { attributes}, featureToggles } = this.props;
+    const { group: { attributes }, featureToggles } = this.props;
     const { events, attendances, people, sync, editText } = this.state;
 
     if(!attributes) { return null }
@@ -52,6 +53,8 @@ class Dashboard extends Component {
         <br />
 
         {this.renderTextEditor()}
+        <hr/>
+        <GroupResources {...{ signupUrl: attributes['signup-url'] } } />
         <hr/>
 
         <div className="edit-button">

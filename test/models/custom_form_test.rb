@@ -64,10 +64,6 @@ class CustomFormTest < ActiveSupport::TestCase
     end
   end
 
-
-
-
-
   describe "validations" do
 
     let(:custom_form){ CustomForm.new }
@@ -132,9 +128,15 @@ class CustomFormTest < ActiveSupport::TestCase
   end
 
   describe "accessors" do
-
     it "delegates to nested form accessors" do
-      [:description, :title, :name, :call_to_action, :submit_text].each do |method|
+      [
+        :browser_url,
+        :call_to_action,
+        :description,
+        :name,
+        :submit_text,
+        :title,
+      ].each do |method|
         custom_form.send(method).must_equal custom_form.form.send(method)
       end
     end

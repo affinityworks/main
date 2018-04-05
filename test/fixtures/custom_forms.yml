@@ -8,3 +8,8 @@ group_signup:
   group_id: 1
   form: group_signup
   # has_many :form_input_groups
+
+fantastic_four_signup:
+  type: SignupForm
+  group: fantastic_four
+  form: fantastic_four_signup

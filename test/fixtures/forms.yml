@@ -49,3 +49,13 @@ group_signup:
   total_submissions: 0
   person_id: 1 # `person: one` would be better!
   creator_id: 1 # `creator: one` would be better!
+
+fantastic_four_signup:
+  origin_system: "Affinity"
+  name: "fantastic_four_signup_form"
+  title: "Come fight SHIELD!"
+  description: "We offer great benefits"
+  summary: MyString
+  call_to_action: "join our group!"
+  submit_text: 'Submit'
+  browser_url: 'http://localhost:3000/groups/1036040811/signup_forms/350404309/signups/new'

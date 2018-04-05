@@ -10,6 +10,7 @@ class JsonApi::GroupRepresenter < Roar::Decorator
     property :origin_system
     property :browser_url
     property :featured_image_url
+    property :signup_url
 
     property :creator, extend: JsonApi::PeopleRepresenter, class: Person
   end

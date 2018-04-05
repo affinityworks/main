@@ -99,6 +99,8 @@ Rails.application.configure do
   # as per: http://www.chrisjmendez.com/2016/12/19/how-to-get-your-web-url-from-heroku-dynamically/
 
   hostname = ENV['HOSTNAME'] || "#{ENV['HEROKU_APP_NAME']}.herokuapp.com"
+  Rails.application.routes.default_url_options = { host: hostname, port: 3000 }
+
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.default_url_options = { host: hostname }
   config.action_mailer.smtp_settings = {
