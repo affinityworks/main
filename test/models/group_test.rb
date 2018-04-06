@@ -223,12 +223,20 @@ class GroupTest < ActiveSupport::TestCase
   end
 
   describe "accessors" do
-      it "returns the group's signup page url" do
+    it "returns the group's signup page url" do
       groups(:fantastic_four)
         .signup_url
         .must_equal 'http://localhost:3000' +
                     '/groups/1036040811' +
                     '/signup_forms/350404309/signups/new'
+    end
+
+    it "returns the group's subgroup creation url" do
+      groups(:fantastic_four)
+        .new_subgroup_url
+        .must_equal 'http://localhost:3000' +
+                    '/groups/1036040811' +
+                    '/subgroups/new'
     end
   end
 
