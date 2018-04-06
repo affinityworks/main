@@ -1,10 +1,12 @@
-<%= render 'groups/navigation' %>
-<div class = "container-html">
+<%= render 'layouts/modal_header' %>
+<div class="container-html modal-container">
   <div class="card">
     <div class="card-block">
       <h3>Add Member</h3>
       <div>
-        <%= render 'form', person: @person, url: group_members_path(@group, @member) %>
+        <%= render 'form', person: @person,
+                           url: group_members_path(@group, @member),
+                           cancel_path: group_members_path(@group) %>
       </div>
     </div>
   </div>
