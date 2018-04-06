@@ -2,7 +2,7 @@ import React from 'react';
 
 const GroupResources = ({resources}) => (
   <div>
-    <h4>Resources:</h4>
+    <h4>Resources</h4>
     {
       EmptyListOf(resources) ||
       <ul>

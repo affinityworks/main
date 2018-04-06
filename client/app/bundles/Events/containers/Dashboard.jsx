@@ -56,7 +56,9 @@ class Dashboard extends Component {
         <hr/>
         <GroupResources {...{
           resources: [{
-            description: 'Signup Page', link: attributes['signup-url']
+            description: 'Recruit new members', link: attributes['signup-url'],
+          },{
+            description: 'Recruit new subgroups', link: attributes['new-subgroup-url'],
           }]
         }}/>
         <hr/>
