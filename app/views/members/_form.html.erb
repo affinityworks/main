@@ -1,3 +1,5 @@
+<% # locals: cancel_url %>
+
 <%= form_for @member, as: :person, class: 'form-inline', url: url  do |f| %>
   <%= render partial: "error_alert" %>
   <div class="field form-group mt-5">
@@ -18,7 +20,7 @@
     <%= f.text_field :gender_identity, class: 'form-control col-5' %>
   </div>
   <div class="field form-group">
-    <%= f.label :party_identification, class: 'col-2 col-form-label float-left' %>
+    <%= f.label 'party', class: 'col-2 col-form-label float-left' %>
     <%= f.text_field :party_identification, class: 'form-control col-5' %>
   </div>
   <div class="field form-group">
@@ -51,7 +53,8 @@
         </div>
       </div>
   </section>
-  <div class="actions">
+  <div class="actions modal-actions">
     <%= f.submit "Submit", class: "btn btn-primary" %>
+    <%= link_to "Cancel", cancel_path,  class: "btn btn-danger" %>
   </div>
 <% end %>
