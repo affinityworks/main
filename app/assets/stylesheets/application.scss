@@ -18,6 +18,7 @@
 
 @import "./signup_form.scss";
 @import "./create_group_form.scss";
+@import "./member_form.scss";
 
 $red: #d9534f;
 $green: #5cb85c;
@@ -255,31 +256,5 @@ input:checked + .slider:before {
     margin: 2rem 0 2rem 0;
     p {
         margin: 0;
-    }
-}
-
-.modal-background {
-    background-color: lightgray;
-    padding-left: 4rem;
-    padding-right: 4rem;
-}
-
-.modal-header {
-    @extend .modal-background;
-}
-
-.modal-container {
-    @extend .modal-background;
-    margin-top: -.5rem;
-    padding-bottom: 4rem;
-}
-
-.modal-actions {
-    display: flex;
-    flex-direction: row;
-    padding-bottom: 1rem;
-    justify-content: flex-start;
-    .btn {
-        margin: 0 .5rem 0 .5rem;
     }
 }

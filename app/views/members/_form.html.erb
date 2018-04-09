@@ -1,49 +1,36 @@
 <% # locals: cancel_url %>
 
-<%= form_for @member, as: :person, class: 'form-inline', url: url  do |f| %>
+<%= form_for @member, as: :person, url: url  do |f| %>
   <%= render partial: "error_alert" %>
   <div class="field form-group mt-5">
-      <%= f.label :given_name, class: 'col-2 col-form-label float-left'%>
-      <%= f.text_field :given_name, class: 'form-control col-5' %>
+      <%= f.text_field :given_name,
+          placeholder: 'First Name*',
+          required: true,
+          class: 'wide' %>
+  </div>
+  <div class="field form-group">
+    <%= f.text_field :family_name,
+        placeholder: 'Last Name*',
+        required: true,
+        class: 'wide' %>
   </div>
 
   <div class="field form-group">
-    <%= f.label :family_name, class: 'col-2 col-form-label float-left' %>
-    <%= f.text_field :family_name, class: 'form-control col-5' %>
+
   </div>
-  <div class="field form-group">
-    <%= f.label :gender, class: 'col-2 col-form-label float-left' %>
-    <%= f.select :gender, @member.gender_options, {}, class: 'form-control col-5' %>
-  </div>
-  <div class="field form-group">
-    <%= f.label :gender_identity, class: 'col-2 col-form-label float-left' %>
-    <%= f.text_field :gender_identity, class: 'form-control col-5' %>
-  </div>
-  <div class="field form-group">
-    <%= f.label 'party', class: 'col-2 col-form-label float-left' %>
-    <%= f.text_field :party_identification, class: 'form-control col-5' %>
-  </div>
-  <div class="field form-group">
-    <%= f.label :birthdate, class: 'col-2 col-form-label float-left' %>
-    <%= f.text_field :birthdate, class: 'form-control col-5' %>
-  </div>
-  <div class="field form-group">
-    <%= f.label :employer, class: 'col-2 col-form-label float-left' %>
-    <%= f.text_field :employer, class: 'form-control col-5' %>
-  </div>
+
   <section class="pb-4">
-    <h4 class="pb-2">Email Addreses</h4>
     <div class="js-email_addresses">
-        <%= f.fields_for :email_addresses do |email_address| %>
-        <%= render 'email_address_fields', f: email_address %>
-        <% end %>
-        <div class="links">
-          <%= link_to_add_association 'Add Email Address', f, :email_addresses, class: 'email-field' %>
-        </div>
+      <%= f.fields_for :email_addresses do |email_address| %>
+        <%= render 'email_address_fields', f: email_address, ff: f %>
+      <% end %>
+      <div class="links">
+        <%= link_to_add_association 'Add Email Address', f, :email_addresses, class: 'add-contact-field' %>
       </div>
+    </div>
   </section>
+
   <section class="pb-4">
-    <h4 class="pb-2">Phone Numbers</h4>
     <div class="js-phone_numbers">
         <%= f.fields_for :phone_numbers do |phone_number| %>
           <%= render 'phone_number_fields', f: phone_number %>

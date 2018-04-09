@@ -1,0 +1,61 @@
+
+
+.modal-background {
+    background-color: lightgray;
+    padding-left: 4rem;
+    padding-right: 4rem;
+}
+
+.modal-header {
+    @extend .modal-background;
+}
+
+.modal-container {
+    @extend .modal-background;
+    margin-top: -.5rem;
+    padding-bottom: 4rem;
+    h3 {
+        text-align: center;
+    }
+    .card {
+        width: 66%!important;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 50%;
+    }
+    .multi-value-fields{
+        display: flex;
+        flex-direction: row;
+        align-content: flex-start;
+        align-items: center;
+        .btn {
+            margin-left: .5rem;
+        }
+        input {
+            padding-left: .1rem;
+        }
+    }
+    input.wide{
+        @extend .col-12;
+        padding-left: .1rem;
+    }
+    input.thin {
+        @extend .col-8;
+        @extend .mr-4;
+    }
+}
+
+.modal-actions {
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 1rem;
+    justify-content: center;
+    .btn {
+        margin: 0 .5rem 0 .5rem;
+    }
+}
+
+.add-contact-field {
+    margin-top: 0;
+}
+

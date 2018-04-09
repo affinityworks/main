@@ -1,8 +1,8 @@
-<div class="nested-fields field pb-3 field form-group">
-  <%= f.label :number, 'phone number', class: 'col-2 col-form-label float-left' %>
-  <%= f.text_field :number, class: 'mr-4 float-left phone-input' %>
-  <%= f.check_box :primary, class: 'js-phone-primary' %>
-  <%= f.label :primary %>
-  <%= link_to_remove_association "Remove", f, class: 'btn btn-danger btn-sm' %>
+<div class="multi-value-fields field form-group">
+  <%= f.text_field :number, class: 'thin', placeholder: 'Phone' %>
+  <div class="multi-contact-info-group">
+    <%= f.check_box :primary, class: 'js-phone-primary' %>
+    <%= f.label :primary %>
+    <%= link_to_remove_association "Remove", f, class: 'btn btn-danger btn-sm' %>
+  </div>
 </div>
-
