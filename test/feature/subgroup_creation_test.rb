@@ -155,5 +155,90 @@ class SubgroupCreation < FeatureTest
         page.must_have_content "error"
       end
     end
+
+    describe "with google group integration enabled" do
+      let(:fancy_group){ groups(:ohio_chapter) }
+      let(:google_group_email){ 'ohio-chapter@nationalnetwork.com' }
+      let(:google_group_double) do
+        double(Google::Apis::AdminDirectoryV1::Group, id: 1, email: google_group_email)
+      end
+      let(:authentication_double){ double(Google::Auth::ServiceAccountCredentials) }
+      let(:directory_service_double){ double(Google::Apis::AdminDirectoryV1::DirectoryService)}
+      let(:group_settings_double){ double(Google::Apis::GroupssettingsV1::Groups) }
+      let(:settings_service_double){ double(Google::Apis::GroupssettingsV1::GroupssettingsService) }
+      let(:google_group_member_double){ double(Google::Apis::AdminDirectoryV1::Member)}
+
+      before do
+        # authentication
+        allow(Google::Auth::ServiceAccountCredentials)
+          .to receive(:make_creds).and_return(authentication_double)
+        allow(authentication_double)
+          .to receive(:sub=)
+        allow(Google::Auth::ServiceAccountCredentials)
+          .to receive(:sub=)
+
+        # group creation
+        allow(Google::Apis::AdminDirectoryV1::DirectoryService)
+          .to receive(:new).and_return(directory_service_double)
+        allow(directory_service_double)
+          .to receive(:authorization=)
+        allow(Google::Apis::AdminDirectoryV1::Group)
+          .to receive(:new).and_return(google_group_double)
+        allow(directory_service_double)
+          .to receive(:insert_group).and_return(google_group_double)
+
+        # group permissions setting
+        allow(Google::Apis::GroupssettingsV1::Groups)
+          .to receive(:new).and_return(group_settings_double)
+        allow(group_settings_double).to receive(:authorization=)
+        allow(Google::Apis::GroupssettingsV1::GroupssettingsService)
+          .to receive(:new).and_return(settings_service_double)
+        allow(settings_service_double).to receive(:authorization=)
+        allow(settings_service_double).to receive(:update_group) # <- expect!
+
+        # adding member
+        allow(Google::Apis::AdminDirectoryV1::Member)
+          .to receive(:new).and_return(google_group_member_double)
+        allow(directory_service_double).to receive(:insert_member)
+
+        # fill out form!
+        visit "/groups/#{fancy_group.id}/subgroups/new"
+        perform_enqueued_jobs do
+          fill_out_form(
+            'Name' => 'Jawbreaker',
+            'Description (may contain HTML)' => 'I want to be a boat, I want to learn to swim',
+            'Zipcode (group)' => '90210',
+            'First name' => 'herbert',
+            'Last name' => 'stencil',
+            'Password' => 'password',
+            'Phone number' => '212-867-5309',
+            'Email' => 'foo@bar.com',
+            'Zipcode (personal)' => '90211'
+          )
+          click_button "Submit"
+        end
+      end
+
+      it "creates a google group" do
+        expect(Google::Apis::AdminDirectoryV1::Group)
+          .to have_received(:new).with(email: Group.last.google_group_email,
+                                       name: Group.last.name,
+                                       description: GoogleAPI::CreateGoogleGroup::DESCRIPTION)
+        expect(directory_service_double)
+          .to have_received(:insert_group).with(google_group_double)
+      end
+
+      it "adds permissive settings to google group" do
+        expect(settings_service_double)
+          .to have_received(:update_group).with(google_group_email,
+                                                group_settings_double)
+      end
+
+      it "adds member to google group" do
+        expect(directory_service_double)
+          .to have_received(:insert_member).with(google_group_double.id,
+                                                 google_group_member_double)
+      end
+    end
   end
 end

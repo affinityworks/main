@@ -14,10 +14,10 @@ class GoogleAPI::AddMemberToGoogleGroup
     end
 
 
-    def add_member_to_google_group(directory_service, group, email)
+    def add_member_to_google_group(directory_service, google_group, email)
       member = Google::Apis::AdminDirectoryV1::Member.new(email: email, role: "OWNER")
 
-      directory_service.insert_member(group.id, member)
+      directory_service.insert_member(google_group.id, member)
     end
   end
 end
