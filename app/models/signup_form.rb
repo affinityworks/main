@@ -29,7 +29,7 @@ class SignupForm < CustomForm
         name: "#{group.name}_default_signup_form",
         title: "#{group.name}",
         description: group.description || "<div></div>",
-        call_to_action: "get involved"
+        call_to_action: "join our group"
       ),
       person_input_group: PersonInputGroup.new(
         inputs: %w[given_name family_name],

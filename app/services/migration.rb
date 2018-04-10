@@ -61,6 +61,7 @@ class Migration
         sf.email_input_group&.update!(required: %w[address])
         sf.address_input_group&.update!(required: %w[postal_code])
         sf.phone_input_group&.update!(inputs: %w[number], required: [])
+        sf.update!(call_to_action: 'join our group')
       end
     end
   end
