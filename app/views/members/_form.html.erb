@@ -3,45 +3,42 @@
 <%= form_for @member, as: :person, url: url  do |f| %>
   <%= render partial: "error_alert" %>
 
-  <div class="field form-group mt-3">
+  <div class="form-group mt-3">
       <%= f.text_field :given_name, placeholder: 'First Name*', required: true, class: 'wide' %>
   </div>
 
-  <div class="field form-group">
+  <div class="form-group">
     <%= f.text_field :family_name, placeholder: 'Last Name*', required: true, class: 'wide' %>
   </div>
 
-  <div class="field form-group">
-    <%= f.fields_for :personal_addresses do |address_form| %>
-      <%= address_form.text_field :postal_code, placeholder: 'Zip Code*', required: true, class: 'wide' %>
-      <%= address_form.hidden_field :primary, value: true %>
+  <div class="form-group">
+    <%= f.fields_for :personal_addresses do |ff| %>
+      <%= ff.text_field :postal_code, placeholder: 'Zip Code*', required: true, class: 'wide' %>
+      <%= ff.hidden_field :primary, value: true %>
     <% end # f.fields_for :personal_addresses %>
   </div>
 
-  <section class="pb-4">
-    <div class="js-email_addresses">
-      <%= f.fields_for :email_addresses do |email_address_form| %>
-        <%= render 'email_address_fields', f: email_address_form %>
-      <% end %>
-      <div class="links">
-        <%= link_to_add_association 'Add Email Address', f, :email_addresses, class: 'add-contact-field' %>
-      </div>
+  <div class="pb-4 js-email_addresses">
+    <%= f.fields_for :email_addresses do |email_address_form| %>
+      <%= render 'email_address_fields', f: email_address_form %>
+    <% end %>
+    <div class="links">
+      <%= link_to_add_association 'Add Email Address', f, :email_addresses, class: 'add-contact-field' %>
     </div>
-  </section>
+  </div>
 
-  <section class="pb-4">
-    <div class="js-phone_numbers">
-        <%= f.fields_for :phone_numbers do |phone_number_form| %>
-          <%= render 'phone_number_fields', f: phone_number_form %>
-        <% end %>
-        <div class="links">
-          <%= link_to_add_association 'Add Phone Number', f, :phone_numbers %>
-        </div>
-      </div>
-  </section>
-  
+  <div class="pb-4 js-phone_numbers">
+    <%= f.fields_for :phone_numbers, @member.phone_numbers.first do |phone_number_form| %>
+      <%= render 'phone_number_fields', f: phone_number_form %>
+    <% end %>
+    <div class="links">
+      <%= link_to_add_association 'Add Phone Number', f, :phone_numbers %>
+    </div>
+  </div>
+
   <div class="actions modal-actions">
     <%= f.submit "Submit", class: "btn btn-primary" %>
     <%= link_to "Cancel", cancel_path,  class: "btn btn-danger" %>
   </div>
-<% end %>
+
+<% end # form_for @member %>

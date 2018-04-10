@@ -4,25 +4,11 @@ class AddEditMember < FeatureTest
   let(:group){ groups(:fantastic_four) }
   let(:organizer){ people(:human_torch) }
   let(:person_count){ Person.count }
-  let(:add_member_attrs) do
-    {
-
-    }
-  end
-  let(:edit_member_attrs) do
-    {
-      'First Name*' =>  'funny',
-      'Last Name*'  =>  'cat',
-      'Email*'      =>  'funn@cat.com',
-      'Zip Code*'   =>  '99999',
-      'Phone'       =>  '999-999-9999',
-    }
-  end
 
   describe "adding a member" do
     before do
-      person_count
       login_as organizer
+      person_count
       visit "/groups/#{group.id}/members/new"
       fill_out_form('First Name*' =>  'serious',
                     'Last Name*'  =>  'person',
@@ -47,6 +33,29 @@ class AddEditMember < FeatureTest
       p.primary_email_address.must_equal 'serious@person.com'
       p.primary_personal_address.postal_code.must_equal '11111'
       p.primary_phone_number.must_equal '111-111-1111'
+    end
+
+    describe "without providing required fields" do
+      it "does not save form entries" do
+        assert_difference ->{Person.count}, 0 do
+          visit "/groups/#{group.id}/members/new"
+          click_button 'Submit'
+        end
+      end
+    end
+
+    describe "without providing optional fields" do
+      it "saves form entries" do
+        assert_difference ->{Person.count}, 1 do
+          visit "/groups/#{group.id}/members/new"
+          fill_out_form('First Name*' =>  'optional',
+                        'Last Name*'  =>  'person',
+                        'Email*'      =>  'optional@person.com',
+                        'Zip Code*'   =>  '11111',
+                        'Phone'       =>  '')
+          click_button 'Submit'
+        end
+      end
     end
 
     describe "editing member" do

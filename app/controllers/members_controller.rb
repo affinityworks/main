@@ -4,6 +4,8 @@ class MembersController < ApplicationController
   before_action :set_group
   before_action :set_members, only: :index
   before_action :set_member, only: [:show, :edit, :update, :destroy, :attendances]
+  before_action :build_member, only: %i[new]
+  before_action :build_member_resources, only: %i[new edit]
 
   protect_from_forgery except: [:update, :create] #TODO: Add the csrf token in react.
 
@@ -41,10 +43,6 @@ class MembersController < ApplicationController
 
   # GET /groups/:id/members/new
   def new
-    @member = @group.members.new
-    @member.personal_addresses.build(primary: true)
-    @member.email_addresses.build(primary: true)
-    @member.phone_numbers.build
     authorize! :manage, @group
   end
 
@@ -118,8 +116,14 @@ class MembersController < ApplicationController
           memberships_attributes: [:id, :role],
           phone_numbers_attributes: [:id, :number, :primary, :_destroy],
           email_addresses_attributes: [:id, :address, :primary, :_destroy],
-          personal_addresses_attributes: [:id, :primary, :postal_code]
-      )
+          personal_addresses_attributes: [:id, :primary, :postal_code])
+      .tap{ |person_attrs| handle_empty_contact_info(person_attrs) }
+  end
+
+  def handle_empty_contact_info(person_attrs)
+    if person_attrs.dig('phone_numbers_attributes', '0', 'number') == ''
+      person_attrs.merge!('phone_numbers_attributes' => [])
+    end
   end
 
   def set_member
@@ -163,5 +167,13 @@ class MembersController < ApplicationController
     end
   end
 
-end
+  def build_member
+    @member = @group.members.new
+  end
 
+  def build_member_resources
+    %i[personal_addresses email_addresses phone_numbers].each do |x|
+      @member.send(x).build(primary: true) if @member.send(x).empty?
+    end
+  end
+end
