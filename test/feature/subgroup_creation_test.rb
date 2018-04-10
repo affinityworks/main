@@ -224,6 +224,7 @@ class SubgroupCreation < FeatureTest
           .to have_received(:new).with(email: Group.last.google_group_email,
                                        name: Group.last.name,
                                        description: GoogleAPI::CreateGoogleGroup::DESCRIPTION)
+
         expect(directory_service_double)
           .to have_received(:insert_group).with(google_group_double)
       end
@@ -235,6 +236,10 @@ class SubgroupCreation < FeatureTest
       end
 
       it "adds member to google group" do
+        expect(Google::Apis::AdminDirectoryV1::Member)
+          .to have_received(:new).with(email: Person.last.email,
+                                       role: GoogleAPI::Roles::OWNER)
+
         expect(directory_service_double)
           .to have_received(:insert_member).with(google_group_double.id,
                                                  google_group_member_double)

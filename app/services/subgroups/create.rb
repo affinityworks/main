@@ -31,7 +31,8 @@ class Subgroups::Create
         GoogleAPI::AddMemberToGoogleGroup.call(
           authorization: authorization,
           google_group: google_group,
-          email: organizer.email
+          email: organizer.email,
+          role: GoogleAPI::Roles::OWNER
         )
       end
     end
