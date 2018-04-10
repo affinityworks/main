@@ -10,10 +10,11 @@
   <div class="field form-group">
     <%= f.text_field :family_name, placeholder: 'Last Name*', required: true, class: 'wide' %>
   </div>
-  
+
   <div class="field form-group">
     <%= f.fields_for :personal_addresses do |address_form| %>
-      <%= address_form.text_field :postal_code, placeholder: 'Zipcode*', required: true, class: 'wide' %>
+      <%= address_form.text_field :postal_code, placeholder: 'Zip Code*', required: true, class: 'wide' %>
+      <%= address_form.hidden_field :primary, value: true %>
     <% end # f.fields_for :personal_addresses %>
   </div>
 

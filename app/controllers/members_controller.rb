@@ -42,8 +42,9 @@ class MembersController < ApplicationController
   # GET /groups/:id/members/new
   def new
     @member = @group.members.new
+    @member.personal_addresses.build(primary: true)
     @member.email_addresses.build(primary: true)
-    @member.phone_numbers.build(primary: true)
+    @member.phone_numbers.build
     authorize! :manage, @group
   end
 
@@ -117,7 +118,7 @@ class MembersController < ApplicationController
           memberships_attributes: [:id, :role],
           phone_numbers_attributes: [:id, :number, :primary, :_destroy],
           email_addresses_attributes: [:id, :address, :primary, :_destroy],
-          personal_addresses_attributes: [:id, :postal_code]
+          personal_addresses_attributes: [:id, :primary, :postal_code]
       )
   end
 
