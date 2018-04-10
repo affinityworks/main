@@ -38,7 +38,7 @@ class SignupFormTest < ActiveSupport::TestCase
       specify { f.name.must_equal "#{group.name}_default_signup_form" }
       specify { f.title.must_equal group.name }
       specify { f.description.must_equal group.description }
-      specify { f.call_to_action.must_equal "get involved" }
+      specify { f.call_to_action.must_equal "join our group" }
 
       it 'includes correct person fields' do
         f.person_input_group.inputs

@@ -83,8 +83,8 @@
 
                 <!-- zip -->
                 <div class="field">
-                  <%= member_form.fields_for :personal_addresses_attributes, address do |email_form| %>
-                    <%= email_form.text_field :postal_code, placeholder: 'Zipcode (personal)' %>
+                  <%= member_form.fields_for :personal_addresses_attributes, address do |address_form| %>
+                    <%= address_form.text_field :postal_code, placeholder: 'Zipcode (personal)' %>
                   <% end #member_form.fields_for :email_address %>
                 </div>
               <% end %>
