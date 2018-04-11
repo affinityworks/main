@@ -173,6 +173,8 @@ class PersonTest < ActiveSupport::TestCase
   end
 
   test 'look up primary and non primary phone number' do
+    # NOTE: (aguestuser|12 Apr 2018)
+    # fixed a non-deterministic test here by changing fixtures
     assert_equal '098-765-4321', people(:one).primary_phone_number
     assert_equal '123-456-7890', people(:two).primary_phone_number
     assert_equal '', people(:organizer).primary_phone_number
@@ -244,9 +246,14 @@ class PersonTest < ActiveSupport::TestCase
 
     assert_equal 2, result.count
     assert_includes result.map{ |mapping| mapping[:fb_rsvp] }, remote_rsvps.first
-    assert_equal person_1.id, result.first[:person].represented.id
     assert_includes result.map{ |mapping| mapping[:fb_rsvp] }, remote_rsvps.last
-    assert_equal person_2.id, result.last[:person].represented.id
+    # NOTE: (aguestuser|11 Apr 2018)
+    # no idea what's going on here, but these assertions are non-deterministic:
+    # assert_equal person_1.id, result.first[:person].represented.id
+    # assert_equal person_2.id, result.last[:person].represented.id
+    # instead lets try:
+    assert_equal [person_1.id, person_2.id].sort,
+                 result.map { |x| x[:person].represented.id }.sort
   end
 
   test 'json_representation' do

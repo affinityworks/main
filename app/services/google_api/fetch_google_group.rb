@@ -1,12 +1,9 @@
 class GoogleAPI::FetchGoogleGroup
   class << self
-    # (Google::Auth::ServiceAccountCredentials, String)
+    # (Google::Apis::AdminDirectoryV1::DirectoryService, String)
     # => Google::Apis::AdminDirectoryV1::Group
-    def call(authorization:, group_key:)
-      GoogleAPI::
-        BuildDirectoryService
-        .call(authorization: authorization)
-        .get_group(group_key)
+    def call(directory_service:, group_key:)
+      directory_service.get_group(group_key)
     end
   end
 end

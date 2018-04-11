@@ -166,8 +166,7 @@ class SubgroupCreation < FeatureTest
       let(:google_group_double) do
         double(Google::Apis::AdminDirectoryV1::Group,
                id: "0279ka6516ngz0s",
-               email: google_group_email,
-               non_editable_aliases: [google_group_group_key]
+               email: google_group_email
               )
       end
       let(:group_settings_double){ double(Google::Apis::GroupssettingsV1::Groups) }

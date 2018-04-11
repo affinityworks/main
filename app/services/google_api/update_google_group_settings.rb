@@ -12,7 +12,8 @@ class GoogleAPI::UpdateGoogleGroupSettings
     private
 
     def update_google_group_settings(authorization, google_group)
-      group_settings = Google::Apis::GroupssettingsV1::Groups.new(allow_external_members: "true", is_archived: "true")
+      group_settings = Google::Apis::GroupssettingsV1::Groups
+                         .new(allow_external_members: "true", is_archived: "true")
       settings_service = Google::Apis::GroupssettingsV1::GroupssettingsService.new
       settings_service.authorization = authorization
 

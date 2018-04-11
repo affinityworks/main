@@ -9,9 +9,9 @@ class GoogleAPI::GetAuthorization
 
   def initialize(network:)
     @network = network # Network
-    @success = nil # Boolean
-    @result = nil # Google::Auth::ServiceAccountCredentials
-    @error = "" # Exception
+    @success = nil     # Boolean
+    @result = nil      # Google::Auth::ServiceAccountCredentials
+    @error = ""        # String
   end
 
   # Network -> Void
@@ -23,9 +23,9 @@ class GoogleAPI::GetAuthorization
     @success
   end
 
-  def success!(authentication)
+  def success!(authorization)
     @success = true
-    @result = authentication
+    @result = authorization
   end
 
   def fail!
@@ -34,13 +34,13 @@ class GoogleAPI::GetAuthorization
   end
 
   def get_authorization(network)
-    authentication = Google::Auth::ServiceAccountCredentials.make_creds(
+    authorization = Google::Auth::ServiceAccountCredentials.make_creds(
       json_key_io: File.open(network.google_gsuite_key_path),
       scope: SCOPES
     )
 
-    authentication.sub = network.google_gsuite_admin_email
-    success!(authentication)
+    authorization.sub = network.google_gsuite_admin_email
+    success!(authorization)
   rescue
     fail!
   end

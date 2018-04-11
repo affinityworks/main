@@ -1,7 +1,6 @@
 require_relative "../test_helper"
 
 class MigrationTest < ActiveSupport::TestCase
-
   describe "#update_networks" do
     before { Migration.update_networks }
 
@@ -14,8 +13,8 @@ class MigrationTest < ActiveSupport::TestCase
       end
 
       it "creates the groups and adds them to the network" do
-        against_the_day.members.map(&:name)
-          .must_equal(['The Chums Of Chance', 'The Balkan Anarchists'])
+        against_the_day.members.map(&:name).sort
+          .must_equal(['The Chums Of Chance', 'The Balkan Anarchists'].sort)
       end
 
       it "is idempotent" do

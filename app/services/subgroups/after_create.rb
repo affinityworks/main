@@ -6,41 +6,13 @@ class Subgroups::AfterCreate
         .deliver_later
 
       if FeatureToggle.on?(:google_groups, subgroup)
-        # TODO (aguestuser|30 Mar 2018)
-        # - these api calls should probably happen in a job
-        # - they cause form to hang for several seconds before submit success
-        # - also: consider creating a wrapper class to encapsulate state
-        #   and replace below calls with 0-argument chained method calls
-        service = GoogleAPI::GetAuthorization.call(network: subgroup.primary_network) 
-        return unless service.success?
-        authorization = service.result
-
-        google_group = GoogleAPI::CreateGoogleGroup.call(
-          authorization: authorization,
-          group_email: subgroup.google_group_email,
-          group_name: subgroup.name
-        )
-
-        # TODO: extract this! (along with everything else in this long-ass function!)
-        return unless google_group
-        GoogleGroup.create!(
-          group: subgroup,
-          group_key: google_group.id,
-          email: google_group.email,
-          url: GoogleGroup.url_from(google_group.email),
-        )
-
-        GoogleAPI::UpdateGoogleGroupSettings.call(
-          authorization: authorization,
-          google_group: google_group
-        )
-
-        GoogleAPI::AddMemberToGoogleGroup.call(
-          authorization: authorization,
-          google_group: google_group,
-          email: organizer.email,
-          role: GoogleAPI::Roles::OWNER
-        )
+        # TODO (aguestuser|11 Ap 2018):
+        # do this in a job; network calls take several seconds
+        GoogleAPI::Service.new
+          .authenticate(network: subgroup.primary_network)
+          .create_google_group(email: subgroup.google_group_email, name: subgroup.name)
+          .save_google_group(group: subgroup)
+          .add_member_to_google_group(email: organizer.email, role: GoogleAPI::Roles::OWNER)
       end
     end
   end
