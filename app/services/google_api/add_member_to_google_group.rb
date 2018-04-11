@@ -2,6 +2,11 @@ require 'google/apis/admin_directory_v1'
 
 class GoogleAPI::AddMemberToGoogleGroup
   class << self
+    # (Google::Auth::ServiceAccountCredentials,
+    #  Google::Apis::GroupssettingsV1::Groups,
+    #  String,
+    #  String)
+    #  => Google::Apis::AdminDirectoryV1::Member
     def call(authorization:, google_group:, email:, role:)
       directory_service = build_directory_service(authorization)
       add_member_to_google_group(directory_service, google_group, email, role)

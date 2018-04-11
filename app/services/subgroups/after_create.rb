@@ -1,4 +1,4 @@
-class Subgroups::Create
+class Subgroups::AfterCreate
   class << self
     def call(organizer:, subgroup:)
       OrganizerMailer
@@ -12,9 +12,7 @@ class Subgroups::Create
         # - also: consider creating a wrapper class to encapsulate state
         #   and replace below calls with 0-argument chained method calls
         service = GoogleAPI::GetAuthorization.call(network: subgroup.primary_network) 
-
         return unless service.success?
-
         authorization = service.result
 
         google_group = GoogleAPI::CreateGoogleGroup.call(

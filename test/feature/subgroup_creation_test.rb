@@ -184,17 +184,19 @@ class SubgroupCreation < FeatureTest
         allow(Google::Auth::ServiceAccountCredentials)
           .to receive(:sub=)
 
-        # group creation
+        # connecting to directory service
         allow(Google::Apis::AdminDirectoryV1::DirectoryService)
           .to receive(:new).and_return(directory_service_double)
         allow(directory_service_double)
           .to receive(:authorization=)
+
+        # creating group
         allow(Google::Apis::AdminDirectoryV1::Group)
           .to receive(:new).and_return(google_group_double)
         allow(directory_service_double)
           .to receive(:insert_group).and_return(google_group_double)
 
-        # group permissions setting
+        # setting group group permissions
         allow(Google::Apis::GroupssettingsV1::Groups)
           .to receive(:new).and_return(group_settings_double)
         allow(group_settings_double).to receive(:authorization=)

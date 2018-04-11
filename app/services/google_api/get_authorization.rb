@@ -8,12 +8,13 @@ class GoogleAPI::GetAuthorization
   ].freeze
 
   def initialize(network:)
-    @network = network
-    @success = nil
-    @result = nil
-    @error = ""
+    @network = network # Network
+    @success = nil # Boolean
+    @result = nil # Google::Auth::ServiceAccountCredentials
+    @error = "" # Exception
   end
 
+  # Network -> Void
   def call
     tap { get_authorization(@network) }
   end
