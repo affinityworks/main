@@ -13,6 +13,9 @@ class GroupTest < ActiveSupport::TestCase
     assert_kind_of Person, one.modified_by
     assert_kind_of Person, one.members.first
     assert_kind_of Event, one.events.first
+
+    ohio_chapter = groups(:ohio_chapter)
+    assert_kind_of GoogleGroup, ohio_chapter.google_group
   end
 
   test "sync_with_action_network" do

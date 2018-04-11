@@ -38,6 +38,7 @@ class Group < ApplicationRecord
   has_and_belongs_to_many :forms
   has_many :custom_forms, foreign_key: :group_id, dependent: :destroy
   has_many :signup_forms, foreign_key: :group_id, class_name: 'SignupForm', dependent: :destroy
+  has_one :google_group, dependent: :destroy
 
   belongs_to :creator, class_name: "Person"
   belongs_to :modified_by, class_name: "Person"

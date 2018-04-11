@@ -1,0 +1,7 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+ohio_chapter:
+  group: ohio_chapter
+  group_key: national-network-ohio-chapter@affinity.works.test-google-a.com
+  email: national-network-ohio-chapter@affinity.works
+  url: https://groups.google.com/a/affinity.works/forum/#!forum/#national-network-ohio-chapter
