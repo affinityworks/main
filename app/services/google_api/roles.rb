@@ -1,3 +1,5 @@
 module GoogleAPI::Roles
-  OWNER = 'OWNER'
+  OWNER   = 'OWNER'
+  MANAGER = 'MANAGER'
+  MEMBER  = 'MEMBER'
 end

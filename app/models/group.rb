@@ -186,18 +186,21 @@ class Group < ApplicationRecord
     "#{slugified_group_name}#{email_base}"
   end
 
-  # PREDICATES
-  def has_signup_form?
-    !signup_forms.empty?
+  # ACCESSORS
+  def signup_form
+    signup_forms.first
   end
 
-  # ACCESSORS
   def signup_url
-    has_signup_form? &&
-      UrlHelpers.new_group_signup_form_signup_url(self, signup_forms.first)
+    signup_form &&
+      UrlHelpers.new_group_signup_form_signup_url(self, signup_form)
   end
 
   def new_subgroup_url
     UrlHelpers.new_group_subgroup_url(self)
+  end
+
+  def google_group_key
+    google_group.group_key
   end
 end

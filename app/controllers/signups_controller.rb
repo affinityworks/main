@@ -14,6 +14,7 @@ class SignupsController < ApplicationController
       @member.build_signup_resources_for(@form)
       render :new
     else
+      Signups::AfterCreate.call(member: @member, group: @group)
       redirect_to group_member_path(@group, @member),
                   notice: "You joined #{@group.name}"
     end

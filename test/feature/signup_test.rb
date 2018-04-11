@@ -1,12 +1,10 @@
 require_relative "../test_helper"
 
 class Signup < FeatureTest
-
   let(:form){ custom_forms(:group_signup) }
   before { visit "/groups/#{form.group.id}/signup_forms/#{form.id}/signups/new" }
 
   describe "viewing signup form" do
-
     it "has a title" do
       page.must_have_content form.title
     end
@@ -106,6 +104,69 @@ class Signup < FeatureTest
 
       it "shows an error for invalid state" do
         page.must_have_content("State invalid must be one of:")
+      end
+    end
+
+    describe "with google group integration enabled" do
+      let(:fancy_group){ groups(:ohio_chapter) }
+      let(:google_group_email){ 'ohio-chapter@nationalnetwork.com' }
+      let(:google_group_group_key){ "#{google_group_email}.test-google-a.com" }
+      let(:authentication_double){ double(Google::Auth::ServiceAccountCredentials) }
+      let(:directory_service_double){ double(Google::Apis::AdminDirectoryV1::DirectoryService)}
+      let(:google_group_double) do
+        double(Google::Apis::AdminDirectoryV1::Group,
+               id: 1,
+               email: google_group_email,
+               non_editable_aliases: [google_group_group_key]
+              )
+      end
+      let(:google_group_member_double){ double(Google::Apis::AdminDirectoryV1::Member)}
+
+      before do
+        # authentication
+        allow(Google::Auth::ServiceAccountCredentials)
+          .to receive(:make_creds).and_return(authentication_double)
+        allow(authentication_double)
+          .to receive(:sub=)
+        allow(Google::Auth::ServiceAccountCredentials)
+          .to receive(:sub=)
+
+        # connecting to directory service
+        allow(Google::Apis::AdminDirectoryV1::DirectoryService)
+          .to receive(:new).and_return(directory_service_double)
+        allow(directory_service_double)
+          .to receive(:authorization=)
+
+        # fetching group
+        allow(directory_service_double)
+          .to receive(:get_group).and_return(google_group_double)
+
+        # adding member
+        allow(Google::Apis::AdminDirectoryV1::Member)
+          .to receive(:new).and_return(google_group_member_double)
+        allow(directory_service_double).to receive(:insert_member)
+
+        # fill out form!
+        form = SignupForm.for(fancy_group)
+        visit "/groups/#{fancy_group.id}/signup_forms/#{form.id}/signups/new"
+        fill_out_form(
+          'First Name*'    => 'Serious',
+          'Last Name*'     => 'Person',
+          'Email Address*' => 'serious@person.com',
+          'Zip Code*'      => '11111',
+          'Phone Number'   => '111-111-1111'
+        )
+        click_button form.submit_text
+      end
+
+      it "adds member to group's google group" do
+        expect(Google::Apis::AdminDirectoryV1::Member)
+          .to have_received(:new).with(email: Person.last.email,
+                                       role: GoogleAPI::Roles::MEMBER)
+
+        expect(directory_service_double)
+          .to have_received(:insert_member).with(google_group_double.id,
+                                                 google_group_member_double)
       end
     end
 
