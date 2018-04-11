@@ -207,7 +207,9 @@ $ ./bin/blackbox_shred_all_files
 **Add new public key to whitelist:**
 
 ``` shell
-$ ./bin/blackbox_add_admin
+$ ./bin/blackbox_addadmin
+$ ./bin/blackbox_shred_all_files
+$ ./bin/blackbox_update_all_files # re-encrypts to new whitelist
 ```
 
 Blackbox is all just shell commands! You can read them in `./bin`. If you'd like to install them on your machine so you can type `blackbox_some_command` instead of `./bin/blackbox_some_command**, you can:

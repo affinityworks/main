@@ -17,4 +17,4 @@ set -e
 source "${0%/*}/_blackbox_common.sh"
 
 gpg_agent_notice
-exec blackbox_postdeploy "$@"
+exec ./bin/blackbox_postdeploy "$@"
