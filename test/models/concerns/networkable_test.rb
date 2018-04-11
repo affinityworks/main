@@ -7,6 +7,11 @@ class NetworkableTest < ActiveSupport::TestCase
 
   describe "associations" do
     specify { ohio_chapter.networks.first.must_be_kind_of Network }
+    it "deletes network memberships when deleting a group" do
+      assert_difference ->{NetworkMembership.count}, -2 do
+        ohio_chapter.destroy!
+      end
+    end
   end
 
   describe "accessors" do

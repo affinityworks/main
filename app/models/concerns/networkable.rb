@@ -3,7 +3,7 @@ module Networkable
 
   included do
     # ASSOCIATIONS
-    has_many :network_memberships
+    has_many :network_memberships, dependent: :destroy
     has_many :networks, through: :network_memberships
 
     # NESTED ATTRIBUTES
