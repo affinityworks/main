@@ -23,6 +23,14 @@ class Subgroups::Create
           group_name: subgroup.name
         )
 
+        # TODO: extract this! (along with everything else in this long-ass function!)
+        GoogleGroup.create!(
+          group: subgroup,
+          group_key: google_group.non_editable_aliases.first,
+          email: google_group.email,
+          url: GoogleGroup.url_from(google_group.email),
+        )
+
         GoogleAPI::UpdateGoogleGroupSettings.call(
           authorization: authorization,
           google_group: google_group

@@ -22,4 +22,13 @@ class GoogleGroupTest < ActiveSupport::TestCase
       end
     end
   end
+
+  describe "class methods" do
+    describe ".url_from" do
+      it "parses a google group url from a google group email" do
+        GoogleGroup.url_from("foo-bar@baz.com")
+          .must_equal "https://groups.google.com/a/baz.com/forum/#!forum/foo-bar"
+      end
+    end
+  end
 end

@@ -159,14 +159,21 @@ class SubgroupCreation < FeatureTest
     describe "with google group integration enabled" do
       let(:fancy_group){ groups(:ohio_chapter) }
       let(:google_group_email){ 'ohio-chapter@nationalnetwork.com' }
-      let(:google_group_double) do
-        double(Google::Apis::AdminDirectoryV1::Group, id: 1, email: google_group_email)
-      end
+      let(:google_group_group_key){ "#{google_group_email}.test-google-a.com" }
+      let(:google_group_url){ "https://groups.google.com/a/nationalnetwork.com/forum/#!forum/ohio-chapter" }
       let(:authentication_double){ double(Google::Auth::ServiceAccountCredentials) }
       let(:directory_service_double){ double(Google::Apis::AdminDirectoryV1::DirectoryService)}
+      let(:google_group_double) do
+        double(Google::Apis::AdminDirectoryV1::Group,
+               id: 1,
+               email: google_group_email,
+               non_editable_aliases: [google_group_group_key]
+              )
+      end
       let(:group_settings_double){ double(Google::Apis::GroupssettingsV1::Groups) }
       let(:settings_service_double){ double(Google::Apis::GroupssettingsV1::GroupssettingsService) }
       let(:google_group_member_double){ double(Google::Apis::AdminDirectoryV1::Member)}
+      let(:google_group_count){ GoogleGroup.count }
 
       before do
         # authentication
@@ -200,6 +207,9 @@ class SubgroupCreation < FeatureTest
         allow(Google::Apis::AdminDirectoryV1::Member)
           .to receive(:new).and_return(google_group_member_double)
         allow(directory_service_double).to receive(:insert_member)
+
+        # count google groups
+        google_group_count
 
         # fill out form!
         visit "/groups/#{fancy_group.id}/subgroups/new"
@@ -243,6 +253,20 @@ class SubgroupCreation < FeatureTest
         expect(directory_service_double)
           .to have_received(:insert_member).with(google_group_double.id,
                                                  google_group_member_double)
+      end
+
+      it "stores a record of the new google group" do
+        GoogleGroup.count.must_equal(google_group_count + 1)
+      end
+
+      it "saves the google group's important attributes" do
+        GoogleGroup.last.attributes.slice(*%w[group_id group_key email url])
+          .must_equal(
+            'group_id'  => Group.last.id,
+            'group_key' => google_group_group_key,
+            'email'     => google_group_email,
+            'url'       => google_group_url
+          )
       end
     end
   end
