@@ -22,9 +22,10 @@ class Subgroups::AfterCreate
         )
 
         # TODO: extract this! (along with everything else in this long-ass function!)
+        return unless google_group
         GoogleGroup.create!(
           group: subgroup,
-          group_key: google_group.non_editable_aliases.first,
+          group_key: google_group.id,
           email: google_group.email,
           url: GoogleGroup.url_from(google_group.email),
         )

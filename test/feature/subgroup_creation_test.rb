@@ -165,7 +165,7 @@ class SubgroupCreation < FeatureTest
       let(:directory_service_double){ double(Google::Apis::AdminDirectoryV1::DirectoryService)}
       let(:google_group_double) do
         double(Google::Apis::AdminDirectoryV1::Group,
-               id: 1,
+               id: "0279ka6516ngz0s",
                email: google_group_email,
                non_editable_aliases: [google_group_group_key]
               )
@@ -265,7 +265,7 @@ class SubgroupCreation < FeatureTest
         GoogleGroup.last.attributes.slice(*%w[group_id group_key email url])
           .must_equal(
             'group_id'  => Group.last.id,
-            'group_key' => google_group_group_key,
+            'group_key' => google_group_double.id,
             'email'     => google_group_email,
             'url'       => google_group_url
           )
