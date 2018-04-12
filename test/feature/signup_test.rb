@@ -64,6 +64,12 @@ class Signup < FeatureTest
           new_member.reload.send(msg).first.primary?.must_equal true
         end
       end
+
+      it "redirects to member homepage" do
+        # TODO (aguestuser|12 Apr 2018)
+        # change this to "/home" when playing #571
+        current_path.must_equal "/profile"
+      end
     end
 
     describe "with errors" do
