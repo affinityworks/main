@@ -15,8 +15,8 @@ class SignupsController < ApplicationController
       render :new
     else
       Signups::AfterCreate.call(member: @member, group: @group)
-      redirect_to group_member_path(@group, @member),
-                  notice: "You joined #{@group.name}"
+      flash[:notice] = "You joined #{@group.name}"
+      sign_in_and_redirect(@member)
     end
   end
 
