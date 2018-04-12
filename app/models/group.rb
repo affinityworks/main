@@ -201,6 +201,10 @@ class Group < ApplicationRecord
   end
 
   def google_group_key
-    google_group.group_key
+    google_group&.group_key
+  end
+
+  def google_group_url
+    google_group&.url
   end
 end

@@ -241,6 +241,13 @@ class GroupTest < ActiveSupport::TestCase
                     '/groups/1036040811' +
                     '/subgroups/new'
     end
+
+    it "returns the group's google group url" do
+      groups(:ohio_chapter)
+        .google_group_url
+        .must_equal 'https://groups.google.com/a/affinity.works' +
+                    '/forum/#!forum/#national-network-ohio-chapter'
+    end
   end
 
   describe "nested attributes" do
