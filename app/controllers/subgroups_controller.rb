@@ -13,10 +13,8 @@ class SubgroupsController < ApplicationController
       subgroup_attrs: subgroup_params,
       organizer_attrs: organizer_params
     )
-
     if @subgroup.valid?
-      Subgroups::Create.call(organizer: organizer, subgroup: @subgroup)
-      
+      Subgroups::AfterCreate.call(organizer: organizer, subgroup: @subgroup)
       sign_in_and_redirect(organizer)
     else
       render :new

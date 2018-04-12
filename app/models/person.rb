@@ -126,7 +126,7 @@ class Person < ApplicationRecord
   end
 
   def email
-    primary_email_address
+    primary_email_address || email_addresses.first&.address
   end
 
   #i'm not really sure if this is needed but devise was failing without it.

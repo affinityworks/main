@@ -38,6 +38,7 @@ class Group < ApplicationRecord
   has_and_belongs_to_many :forms
   has_many :custom_forms, foreign_key: :group_id, dependent: :destroy
   has_many :signup_forms, foreign_key: :group_id, class_name: 'SignupForm', dependent: :destroy
+  has_one :google_group, dependent: :destroy
 
   belongs_to :creator, class_name: "Person"
   belongs_to :modified_by, class_name: "Person"
@@ -185,18 +186,25 @@ class Group < ApplicationRecord
     "#{slugified_group_name}#{email_base}"
   end
 
-  # PREDICATES
-  def has_signup_form?
-    !signup_forms.empty?
+  # ACCESSORS
+  def signup_form
+    signup_forms.first
   end
 
-  # ACCESSORS
   def signup_url
-    has_signup_form? &&
-      UrlHelpers.new_group_signup_form_signup_url(self, signup_forms.first)
+    signup_form &&
+      UrlHelpers.new_group_signup_form_signup_url(self, signup_form)
   end
 
   def new_subgroup_url
     UrlHelpers.new_group_subgroup_url(self)
+  end
+
+  def google_group_key
+    google_group&.group_key
+  end
+
+  def google_group_url
+    google_group&.url
   end
 end

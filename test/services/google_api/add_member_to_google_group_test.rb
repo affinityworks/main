@@ -2,38 +2,33 @@ require_relative "../../test_helper"
 
 class GoogleAPI::AddMemberToGoogleGroupTest < ActiveSupport::TestCase
   describe ".call" do
-    it "calls build_directory_service" do
-      expect(GoogleAPI::AddMemberToGoogleGroup).to receive(:build_directory_service)
-      allow(GoogleAPI::AddMemberToGoogleGroup).to receive(:add_member_to_google_group)
+    let(:directory_service_double){ double(Google::Apis::GroupssettingsV1::Groups) }
+    let(:google_group_member_double){ double(Google::Apis::AdminDirectoryV1::Member) }
+    let(:google_group_double){ double(Google::Apis::AdminDirectoryV1::Group, id: 1) }
+
+    before do
+      allow(Google::Apis::AdminDirectoryV1::Member)
+        .to receive(:new).and_return(google_group_member_double)
+      allow(directory_service_double)
+        .to receive(:insert_member).and_return(google_group_member_double)
 
       GoogleAPI::AddMemberToGoogleGroup.call(
-        authorization: double("auth"),
-        google_group: double("google_group"),
-        email: "test@group.com"
+        directory_service: directory_service_double,
+        google_group: google_group_double,
+        email: "foo@bar.com",
+        role: "OWNER"
       )
     end
 
-    it "calls add_member_to_google_group" do
-      allow(GoogleAPI::AddMemberToGoogleGroup).to receive(:build_directory_service)
-      expect(GoogleAPI::AddMemberToGoogleGroup).to receive(:add_member_to_google_group)
-      
-      GoogleAPI::AddMemberToGoogleGroup.call(
-        authorization: double("auth"),
-        google_group: double("google_group"),
-        email: "test@group.com"
-      )
+    it "constructs a new google group member" do
+      expect(Google::Apis::AdminDirectoryV1::Member)
+        .to have_received(:new).with(email: "foo@bar.com", role: "OWNER")
     end
 
-    it "calls insert_member on directory service" do
-      directory_service = double("directory service")
-      allow(GoogleAPI::AddMemberToGoogleGroup).to receive(:build_directory_service).and_return(directory_service)
-      expect(directory_service).to receive(:insert_member)
-      
-      GoogleAPI::AddMemberToGoogleGroup.call(
-        authorization: double("auth"),
-        google_group: instance_double("google group", id: 1),
-        email: "test@group.com"
-      )
+    it "inserts the member into the google group" do
+      expect(directory_service_double)
+        .to have_received(:insert_member).with(google_group_double.id,
+                                               google_group_member_double)
     end
   end
 end

@@ -2,6 +2,8 @@ require 'google/apis/admin_directory_v1'
 
 class GoogleAPI::BuildDirectoryService
   class << self
+    # Google::Auth::ServiceAccountCredentials
+    # => Google::Apis::AdminDirectoryV1::DirectoryService
     def call(authorization:)
       build_directory_service(authorization)
     end

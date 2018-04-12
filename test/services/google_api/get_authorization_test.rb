@@ -2,56 +2,79 @@ require_relative "../../test_helper"
 
 class GoogleAPI::GetAuthorizationTest < ActiveSupport::TestCase
   describe ".call" do
-
-    # TODO: (aguestuser|29 Mar 2018)
-    # - these tests make un-mocked/stubbed calls to the google api
-    #   (via `Google::Auth::ServiceAccountCredentials.make_creds` at `get_authorization.rb:36`)
-    # - as such, they must look for and find a valid credentials file
-    #   on their local file system and make a network call in order to pass
-    # - currenly we satisfy that criteria by allowthing them to look for
-    #   `lib/network_credentials/7af65312214cfedd28371a29af1c6f22/google_gsuite_key.json`
-    #   (which is always encrypted and gitignored, and thus safe)
-    # - however, that means these tests can never pass on travis unless we
-    #   encrypte them to a private key that we also store on travis, or expose
-    #   our gsuite credentials, both of which seem undesirable
-    # - a better strategy might be to
-    #   (1) provide a dummy plaintext credentials file (for "Foo Network")
-    #   (2) stub the call to `Google::Auth::ServiceAccountCredentials.make_creds`
-    # - leaving as a TODO for now, pending further discussion w/ @vaughan10
+    let(:network){ networks(:national_network) }
+    let(:credentials_double){ double(File) }
+    let(:authorization_double) do
+      double(Google::Auth::ServiceAccountCredentials,
+             scopes: GoogleAPI::GetAuthorization::SCOPES)
+    end
 
     before do
-      network = networks(:national_network)
-      @auth_service = GoogleAPI::GetAuthorization.new(network: network)
+      # for most cases, assume credentials reading works
+      allow(File)
+        .to receive(:open).and_return(credentials_double)
+      allow(File)
+        .to receive(:closed?).and_return(true)
     end
 
-    it "calls build_directory_service" do
-      expect(@auth_service).to receive(:get_authorization)
+    describe "when authentication succeeds" do
+      before do
+        allow(Google::Auth::ServiceAccountCredentials)
+          .to receive(:make_creds).and_return(authorization_double)
+        allow(authorization_double)
+          .to receive(:sub=)
 
-      @auth_service.call
+        @auth_service = GoogleAPI::GetAuthorization.call(network: network)
+      end
+
+      it "reads credentials from disk" do
+        expect(File)
+          .to have_received(:open).with(network.google_gsuite_key_path)
+      end
+
+      it "constructs an authorization object" do
+        expect(Google::Auth::ServiceAccountCredentials)
+          .to have_received(:make_creds).with(
+                json_key_io: credentials_double,
+                scope: GoogleAPI::GetAuthorization::SCOPES
+              )
+      end
+
+      it "sets the sub on the authorization object" do
+        expect(authorization_double)
+          .to have_received(:sub=).with(network.google_gsuite_admin_email)
+      end
+
+      it "returns success status" do
+        @auth_service.success?.must_equal true
+      end
+
+      it "returns authorization object as result" do
+        @auth_service.result.must_equal authorization_double
+      end
     end
 
-    it "returns correct authorizer sub" do
-      @auth_service.call
+    describe "when credentials can't be found" do
+      before do
+        allow(File).to receive(:open).and_raise("BOOM!")
+        @auth_service = GoogleAPI::GetAuthorization.call(network: network)
+      end
 
-      @auth_service.result.sub.must_equal "james@affinity.works"
+      it "returns failure status" do
+        @auth_service.success?.must_equal false
+      end
     end
 
-    it "returns correct authorizer scope" do
-      @auth_service.call
+    describe "when authentication fails" do
+      before do
+        allow(Google::Auth::ServiceAccountCredentials)
+          .to receive(:make_creds).and_raise("oh noes!")
+        @auth_service = GoogleAPI::GetAuthorization.call(network: network)
+      end
 
-      @auth_service.result.scope.must_equal GoogleAPI::GetAuthorization::SCOPES
-    end
-
-    it "returns with success status if Network has credentials file" do
-      @auth_service.call
-
-      @auth_service.success?.must_equal true
-    end
-
-    it "returns with fail status if Network has no credentials file" do
-      auth_service = GoogleAPI::GetAuthorization.call(network: Network.new(name: "Bad Network"))
-
-      auth_service.success?.must_equal false
+      it "returns failure status" do
+        @auth_service.success?.must_equal false
+      end
     end
   end
 end

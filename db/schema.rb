@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180329205502) do
+ActiveRecord::Schema.define(version: 20180411003356) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -361,6 +361,16 @@ ActiveRecord::Schema.define(version: 20180329205502) do
     t.text     "identifiers",        default: [],              array: true
     t.index ["creator_id"], name: "index_fundraising_pages_on_creator_id", using: :btree
     t.index ["modified_by_id"], name: "index_fundraising_pages_on_modified_by_id", using: :btree
+  end
+
+  create_table "google_groups", force: :cascade do |t|
+    t.integer  "group_id",   null: false
+    t.string   "group_key",  null: false
+    t.string   "email",      null: false
+    t.string   "url",        null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_google_groups_on_group_id", using: :btree
   end
 
   create_table "group_signup_forms", force: :cascade do |t|
