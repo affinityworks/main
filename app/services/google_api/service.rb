@@ -43,7 +43,7 @@ class GoogleAPI::Service
 
   # (String) => GoogleAPI::Service
   def fetch_google_group(group_key:)
-    return self unless @directory_service
+    return self unless @directory_service && group_key
     @google_group = FetchGoogleGroup.call(
       directory_service: @directory_service,
       group_key: group_key

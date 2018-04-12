@@ -194,6 +194,19 @@ class GoogleAPI::ServiceTest < ActiveSupport::TestCase
         expect(GoogleAPI::FetchGoogleGroup).not_to have_received(:call)
       end
     end
+
+    describe "when group_key is nil" do
+      before do
+        allow(GoogleAPI::FetchGoogleGroup).to receive(:call)
+        GoogleAPI::Service
+          .new(directory_service: directory_service_double)
+          .fetch_google_group(group_key: nil)
+      end
+
+      it "does not try to fetch google group" do
+        expect(GoogleAPI::FetchGoogleGroup).not_to have_received(:call)
+      end
+    end
   end
 
   describe "#add_member_to_google_group" do
