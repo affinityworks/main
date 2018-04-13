@@ -60,6 +60,8 @@ Rails.application.routes.draw do
 
   resources :tags, only: [:create, :destroy]
 
+  get 'account', to: 'members#account'
+
   resources :groups do
     get '/dashboard', to: 'dashboard#show', as: 'dashboard'
 
@@ -102,7 +104,8 @@ Rails.application.routes.draw do
 
   resources :dashboard, only: [:index]
 
-  resources :profile, only: [:index] do
+  get 'home', to: 'profile#index', as: 'profile_home'
+  resources :profile, only: [] do
     get :groups, on: :collection
   end
 

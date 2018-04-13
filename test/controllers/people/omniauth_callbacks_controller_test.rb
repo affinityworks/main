@@ -23,7 +23,7 @@ class People::OmniauthCallbacksControllerTest < ActionDispatch::IntegrationTest
 
     omni_auth_with_email(identity.uid, email)
     get person_facebook_omniauth_callback_url
-    assert_redirected_to profile_index_url
+    assert_redirected_to profile_home_url
     assert flash[:notice], success_message
 
     sign_in person

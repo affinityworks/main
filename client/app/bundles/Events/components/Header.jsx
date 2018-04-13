@@ -19,7 +19,7 @@ class Header extends Component {
         <div className="row container">
           <div className="col-10">
             <h2>
-              <a href="/" className="affinity-logo"><img src="/images/affinity-logo.svg" width="230" /></a>
+              <a href="/home" className="affinity-logo"><img src="/images/affinity-logo.svg" width="230" /></a>
               <small style={{ position: 'relative', bottom: '-5px', marginLeft: '5px' }}>
                 {this.currentGroupName()}
               </small>
@@ -32,7 +32,7 @@ class Header extends Component {
                 <span> {`${currentUser.given_name} ${currentUser.family_name}`} </span>
               </button>
               <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <a className="dropdown-item" href='/profile/'>Account</a>
+                <a className="dropdown-item" href={`/account?group_id=${currentGroup.id}&person_id=${currentUser.id}`}>Account</a>
                 <a className="dropdown-item" href="/admin/logout">Logout</a>
               </div>
             </div>

@@ -22,7 +22,7 @@ class OrganizerMailerTest < ActionMailer::TestCase
     end
 
     it "links to organizer profile page" do
-      body.must_match "/profile"
+      body.must_match "/home"
     end
 
     it "provides help email" do
