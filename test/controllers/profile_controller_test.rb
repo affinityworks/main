@@ -17,11 +17,11 @@ class ProfileControllerTest < ActionDispatch::IntegrationTest
   end
 
 
-  test 'get #profile' do
+  test 'get #index' do
     person = people(:organizer)
     sign_in person
 
-    get profile_index_url
+    get profile_home_url
     assert_response :success
   end
 

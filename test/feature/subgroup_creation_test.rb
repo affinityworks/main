@@ -93,7 +93,7 @@ class SubgroupCreation < FeatureTest
       end
 
       it "redirects to the user's profile page" do
-        page.current_path.must_equal "/profile"
+        page.current_path.must_equal "/home"
         page.must_have_content "Welcome"
       end
 

@@ -5,7 +5,7 @@ require 'test_helper'
 class AuthenticationTest < ActionDispatch::IntegrationTest
 
   test "redirects group member to their profile page on login" do
-    get "/profile/"
+    get "/account"
     assert_response :redirect
     follow_redirect!
 
@@ -14,11 +14,11 @@ class AuthenticationTest < ActionDispatch::IntegrationTest
     assert_response :redirect
     follow_redirect!
     assert_response :success
-    assert path == profile_index_path
+    assert path == profile_home_path
   end
 
   test "redirects group organizer to their profile on login" do
-    get "/profile/"
+    get "/account"
     assert_response :redirect
     follow_redirect!
 
@@ -27,7 +27,7 @@ class AuthenticationTest < ActionDispatch::IntegrationTest
     assert_response :redirect
     follow_redirect!
     assert_response :success
-    assert profile_index_path == path
+    assert profile_home_path == path
   end
 
 end

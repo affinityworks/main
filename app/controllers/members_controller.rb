@@ -46,6 +46,15 @@ class MembersController < ApplicationController
     authorize! :manage, @group
   end
 
+  def account
+    group = Group.find(params[:group_id]) if params[:group_id]
+    person = Person.find(params[:person_id]) if params[:person_id]
+
+    valid_group = (group && group.members.include?(person)) ? group : person.groups.first
+    
+    return redirect_to edit_group_member_path(group_id: valid_group.id, id: person.id)
+  end
+
   # GET /groups/:id/members/1/edit
   def edit
     @groups = Group.all

@@ -66,9 +66,7 @@ class Signup < FeatureTest
       end
 
       it "redirects to member homepage" do
-        # TODO (aguestuser|12 Apr 2018)
-        # change this to "/home" when playing #571
-        current_path.must_equal "/profile"
+        current_path.must_equal "/home"
       end
     end
 
