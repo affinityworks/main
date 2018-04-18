@@ -7,7 +7,7 @@ class Subgroups::AferCreateTest < ActiveSupport::TestCase
       double(Group,
              name: "foo",
              primary_network: double(Network),
-             google_group_email: "foo@bar.com")
+             build_google_group_email: "foo@bar.com")
     end
 
     before do

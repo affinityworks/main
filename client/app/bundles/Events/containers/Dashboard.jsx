@@ -59,6 +59,8 @@ class Dashboard extends Component {
             description: 'Recruit new members', link: attributes['signup-url'],
           },{
             description: 'Google Group', link: attributes['google-group-url'],
+          },{
+            description: 'Google Group Email', mailto: attributes['google-group-email']
           }]
         }}/>
         <hr/>

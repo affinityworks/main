@@ -232,7 +232,7 @@ class SubgroupCreation < FeatureTest
 
       it "creates a google group" do
         expect(Google::Apis::AdminDirectoryV1::Group)
-          .to have_received(:new).with(email: Group.last.google_group_email,
+          .to have_received(:new).with(email: Group.last.build_google_group_email,
                                        name: Group.last.name,
                                        description: GoogleAPI::CreateGoogleGroup::DESCRIPTION)
 

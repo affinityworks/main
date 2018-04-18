@@ -10,7 +10,7 @@ class Subgroups::AfterCreate
         # do this in a job; network calls take several seconds
         GoogleAPI::Service.new
           .authenticate(network: subgroup.primary_network)
-          .create_google_group(email: subgroup.google_group_email, name: subgroup.name)
+          .create_google_group(email: subgroup.build_google_group_email, name: subgroup.name)
           .save_google_group(group: subgroup)
           .add_member_to_google_group(email: organizer.email, role: GoogleAPI::Roles::OWNER)
       end
