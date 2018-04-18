@@ -17,9 +17,7 @@ class Members extends Component {
 
   render() {
     const { currentRole, currentGroup, location } = this.props;
-    const activeText = managingCurrentGroupWithAffiliates(currentGroup)
-      ? 'All Members'
-      : 'Members';
+    const activeText = 'Members';
 
     return (
       <div>

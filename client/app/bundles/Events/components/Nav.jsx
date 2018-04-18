@@ -62,7 +62,7 @@ class Nav extends Component {
               { this.renderGroupsTab() }
 
               <NavItem
-                title={`${this.isRootNav() ? 'All' : ''} Members`}
+                title="Members"
                 path={membersPath()}
                 active={activeTab === 'members'}
               />
