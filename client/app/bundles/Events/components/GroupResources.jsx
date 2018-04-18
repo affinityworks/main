@@ -21,10 +21,13 @@ const EmptyListOf = (resources) => (
     null
 );
 
-const GroupResource = (r) => (
-  r.link && <li>
-    {r.description}: <a href={r.link}>{r.link}</a>
-  </li>
-);
+const GroupResource = (r) => {
+  if(r.link) {
+    return <li> {r.description}: <a href={r.link}>{r.link}</a> </li>
+  }
+  else if(r.mailto) {
+    return <li> {r.description}: <a href={`mailto:${r.mailto}`} target="_blank">{r.mailto}</a> </li>
+  }
+};
 
 export default GroupResources;
