@@ -20,7 +20,7 @@ class TextEditor extends Component {
   }
 
   updateDescription (description) {
-    client.put(`${groupPath()}.json`, { group: {description: `${description}`} })
+    client.put(`${groupPath()}.json`, { group: {whiteboard: `${description}`} })
     .then(response => { 
       let type = 'success';
     })

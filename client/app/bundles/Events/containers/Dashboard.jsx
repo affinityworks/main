@@ -30,7 +30,7 @@ class Dashboard extends Component {
     return (
       <section>
         <TextEditor
-          textDescription={attributes.description}
+          textDescription={attributes.whiteboard}
           addAlert={this.props.addAlert}
         />
       </section>
