@@ -41,11 +41,11 @@ class Address < ApplicationRecord
 
   validates :region,
             inclusion: { in: VALID_STATES + [nil, ""],
-                         message: "%{value} must be one of: #{VALID_STATES.join(', ')}", }
+                         message: "'%{value}' must be one of: #{VALID_STATES.join(', ')}", }
 
   validates :postal_code,
             format: { with: POSTAL_CODE_FORMAT,
-                      message: "%{value} is not a valid postal code" }
+                      message: "'%{value}' is not a valid zip code" }
 
 
   acts_as_mappable default_units: :miles,

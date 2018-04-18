@@ -1,18 +1,10 @@
-@import "./common_forms.scss";
-
 $lightgray: rgba(0, 0, 0, 0.05);
 $primaryblue: rgba(2, 117, 216, 1);
 
-#signup_container {
+#join-group-container {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    .field_with_errors {
-        @extend .alert;
-        padding: inherit;
-        margin: 0;
-        background-color: red;
-    }
     .content {
         display: flex;
         max-width: 66%;
@@ -38,18 +30,12 @@ $primaryblue: rgba(2, 117, 216, 1);
             font-weight: bold;
             color: $blue;
         }
-        .entry {
+        .join-button-group{
             display: flex;
             flex-direction: column;
-            margin-top: .75em;
-            input {
-                border: 1px solid $lightgray;
-                border-radius: .25em;
-                padding: .25em 0 .25em .5em;
-            }
-
-            label {
-                font-weight: bold;
+            .join-button-email {
+                @extend .button;
+                background-color: $primaryblue;
             }
         }
     }

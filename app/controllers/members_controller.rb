@@ -1,10 +1,12 @@
 class MembersController < ApplicationController
-  before_action :authenticate_person!
+  before_action :authenticate_person!, except: %i[new create]
+  before_action :set_signup_mode, only: %i[new create]
+  before_action :maybe_authenticate_person, only: %i[new create]
   before_action :authorize_group_access
   before_action :set_group
   before_action :set_members, only: :index
   before_action :set_member, only: [:show, :edit, :update, :destroy, :attendances]
-  before_action :build_member, only: %i[new]
+  before_action :build_member, only: %i[new create]
   before_action :build_member_resources, only: %i[new edit]
 
   protect_from_forgery except: [:update, :create] #TODO: Add the csrf token in react.
@@ -43,7 +45,8 @@ class MembersController < ApplicationController
 
   # GET /groups/:id/members/new
   def new
-    authorize! :manage, @group
+    authorize! :manage, @group unless is_signup_form?
+    render :signup_form if is_signup_form?
   end
 
   def account
@@ -51,7 +54,6 @@ class MembersController < ApplicationController
     person = Person.find(params[:person_id]) if params[:person_id]
 
     valid_group = (group && group.members.include?(person)) ? group : person.groups.first
-    
     return redirect_to edit_group_member_path(group_id: valid_group.id, id: person.id)
   end
 
@@ -64,20 +66,34 @@ class MembersController < ApplicationController
 
   # POST /groups/:id/members/
   # POST /groups/:id/members/.json
-  def create
-    @member = @group.members.new(person_params)
 
-    respond_to do |format|
-      if @member.save
-        @group.memberships.create(:person => @member, :role => 'member')
-        format.html { redirect_to group_member_path(@group, @member), notice: 'Member was successfully created.' }
-        format.json { render json: @member, status: :created, location: group_members_path(@group) }
+  def create
+    @member = Person.create(
+      person_params.merge(
+        memberships_attributes: [{role: 'member', group: @group}]))
+    respond_to do |fmt|
+      @member.valid? ? handle_create_sucess(fmt) : handle_create_error(fmt)
+    end
+  end
+
+  def handle_create_sucess(fmt)
+    fmt.html do
+      if is_signup_form?
+        Signups::AfterCreate.call(member: @member, group: @group)
+        flash[:notice] = "You joined #{@group.name}"
+        sign_in_and_redirect(@member)
       else
-        format.html { render :new }
-        format.json { render json: @group.errors, status: :unprocessable_entity }
+        redirect_to group_member_path(@group, @member),
+                    notice: 'Member was successfully created.'
       end
     end
+    fmt.json{ render :show, status: :ok, location: group_member_path(group, member) }
+  end
 
+  def handle_create_error(fmt)
+    build_member_resources
+    fmt.html { render is_signup_form? ? :signup_form : :new }
+    fmt.json { render json: @group.errors, status: :unprocessable_entity }
   end
 
 
@@ -107,25 +123,33 @@ class MembersController < ApplicationController
 
   private
 
+  def set_signup_mode
+    @signup_mode = params[:signup_mode]
+  end
+
+  def maybe_authenticate_person
+    authenticate_person! unless is_signup_form?
+  end
+
   # only returns nil / empty symbol
   def person_params
     params.require(:person).permit(
-          :family_name,
-          :given_name,
-          :gender,
-          :gender_identity,
-          :party_identification,
-          :birthdate,
-          :employer,
-          :primary_email_address,
-          :primary_phone_number,
-          ethnicities: [],
-          languages_spoken: [],
-          custom_fields: {},
-          memberships_attributes: [:id, :role],
-          phone_numbers_attributes: [:id, :number, :primary, :_destroy],
-          email_addresses_attributes: [:id, :address, :primary, :_destroy],
-          personal_addresses_attributes: [:id, :primary, :postal_code])
+      :family_name,
+      :given_name,
+      :gender,
+      :gender_identity,
+      :party_identification,
+      :birthdate,
+      :employer,
+      :primary_email_address,
+      :primary_phone_number,
+      ethnicities: [],
+      languages_spoken: [],
+      custom_fields: {},
+      memberships_attributes: [:id, :role],
+      phone_numbers_attributes: [:id, :number, :primary, :_destroy],
+      email_addresses_attributes: [:id, :address, :primary, :_destroy],
+      personal_addresses_attributes: [:id, :primary, :postal_code])
       .tap{ |person_attrs| handle_empty_contact_info(person_attrs) }
   end
 

@@ -24,7 +24,7 @@ class PhoneNumber < ApplicationRecord
 
   validates :number, :presence => true,
             format: { with:  PHONE_FORMAT,
-                      message: '%{value} is not a valid phone number' }
+                      message: "'%{value}' is not a valid phone number" }
   validates_uniqueness_of :number, scope: :person_id
 
   scope :primary, -> { where(primary: true) }

@@ -3,7 +3,7 @@
     <strong><%= pluralize(@member.errors.count, "error") %> prevented this person from being saved:</strong>
     <ul>
       <% @member.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+        <li><%= PersonPresenter.formatted_error message %></li>
       <% end %>
     </ul>
   </div>

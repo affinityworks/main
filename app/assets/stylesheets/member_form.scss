@@ -1,7 +1,7 @@
-
+$lightgray: rgba(0, 0, 0, 0.05);
 
 .modal-background {
-    background-color: lightgray;
+    background-color: $lightgray;
     padding-left: 4rem;
     padding-right: 4rem;
 }
@@ -12,7 +12,6 @@
 
 .modal-container {
     @extend .modal-background;
-    margin-top: -.5rem;
     padding-bottom: 4rem;
     h3 {
         text-align: center;

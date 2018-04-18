@@ -1,7 +1,7 @@
 class GroupsController < ApplicationController
-  before_action :authorize_group_access, except: [:new]
-  before_action :set_group, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_person!
+  before_action :authorize_group_access, except: [:new, :join]
+  before_action :set_group, only: [:show, :edit, :update, :destroy, :join]
+  before_action :authenticate_person!, except: [:join]
 
   protect_from_forgery except: [:update] #TODO: Add the csrf token in react.
 
@@ -94,10 +94,14 @@ class GroupsController < ApplicationController
     end
   end
 
+  # GET /groups/1/join
+  def join
+  end
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_group
-    @group = Group.find(params[:id])
+    @group = Group.find(params[:id] || params[:group_id])
   end
 
   def authorized_controllers_and_actions?

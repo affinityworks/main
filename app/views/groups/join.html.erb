@@ -1,0 +1,27 @@
+<%= render 'layouts/header' %>
+
+<div class="container-html">
+  <div class="card">
+    <div id="join-group-container" class="card-block">
+
+      <div class="content">
+        <h1><%= @group.name %></h1>
+        <div>
+          <%= raw(@group.description) %>
+        </div>
+      </div>
+
+      <div class="right-aside">
+        <div class="call-to-action">
+          Join our group!
+        </div>
+        <div class="join-button-group">
+          <a class="join-button-email"
+             href="<%=new_group_member_path(@group, signup_mode: 'email')%>">
+            Join with email
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
