@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180411003356) do
+ActiveRecord::Schema.define(version: 20180418155604) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -398,6 +398,7 @@ ActiveRecord::Schema.define(version: 20180411003356) do
     t.string   "an_api_key"
     t.datetime "synced_at"
     t.integer  "address_id"
+    t.text     "whiteboard"
     t.index ["an_api_key"], name: "index_groups_on_an_api_key", unique: true, using: :btree
     t.index ["creator_id"], name: "index_groups_on_creator_id", using: :btree
     t.index ["modified_by_id"], name: "index_groups_on_modified_by_id", using: :btree
