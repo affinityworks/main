@@ -174,10 +174,12 @@ class JoinGroupTest < FeatureTest
               .to receive(:new).and_return(google_group_member_double)
             allow(directory_service_double).to receive(:insert_member)
 
-            # fill out form!
-            visit "/groups/#{fancy_group.id}/members/new?signup_mode=email"
-            fill_out_form(submissions_by_input_label)
-            click_button "Submit"
+            perform_enqueued_jobs do
+              # fill out form!
+              visit "/groups/#{fancy_group.id}/members/new?signup_mode=email"
+              fill_out_form(submissions_by_input_label)
+              click_button "Submit"
+            end
           end
 
           it "adds member to group's google group" do
