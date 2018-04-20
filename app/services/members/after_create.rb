@@ -1,4 +1,4 @@
-class Signups::AfterCreate
+class Members::AfterCreate
   class << self
     def call(member:, group:)
       # TODO (aguestuser|10 Apr 2018): we should probably send a welcome email?

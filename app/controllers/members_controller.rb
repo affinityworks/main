@@ -78,16 +78,18 @@ class MembersController < ApplicationController
 
   def handle_create_sucess(fmt)
     fmt.html do
+      Members::AfterCreate.call(member: @member, group: @group)
       if is_signup_form?
-        Signups::AfterCreate.call(member: @member, group: @group)
         flash[:notice] = "You joined #{@group.name}"
         sign_in_and_redirect(@member)
       else
-        redirect_to group_member_path(@group, @member),
-                    notice: 'Member was successfully created.'
+        flash[:notice] = 'Member was successfully created.'
+        redirect_to group_member_path(@group, @member)
       end
     end
-    fmt.json{ render :show, status: :ok, location: group_member_path(group, member) }
+    fmt.json do
+      render :show, status: :ok, location: group_member_path(@group, @member)
+    end
   end
 
   def handle_create_error(fmt)
