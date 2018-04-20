@@ -1,7 +1,7 @@
-
+$lightgray: rgba(0, 0, 0, 0.05);
 
 .modal-background {
-    background-color: lightgray;
+    background-color: $lightgray;
     padding-left: 4rem;
     padding-right: 4rem;
 }
@@ -12,7 +12,6 @@
 
 .modal-container {
     @extend .modal-background;
-    margin-top: -.5rem;
     padding-bottom: 4rem;
     h3 {
         text-align: center;
@@ -22,6 +21,9 @@
         margin-left: auto;
         margin-right: auto;
         margin-bottom: 50%;
+        .card-block {
+            padding: 2rem 25%;
+        }
     }
     .multi-value-fields{
         display: flex;
@@ -35,13 +37,27 @@
             padding-left: .1rem;
         }
     }
+    .form-group {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+    .field {
+        width: 100%;
+    }
     input.wide{
-        @extend .col-12;
+        @extend .field;
         padding-left: .1rem;
     }
     input.thin {
-        @extend .col-8;
+        @extend .field;
         @extend .mr-4;
+    }
+    .field_with_errors {
+        @extend .form-group;
+        margin-bottom: 0;
+        width: 100%;
     }
 }
 

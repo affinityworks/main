@@ -3,6 +3,15 @@ require 'test_helper'
 class GroupsControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
+  describe "routes" do
+    specify do
+      assert_routing(
+        { path: "/groups/1/join", method: :get },
+        { controller: "groups", action: "join", group_id: "1" }
+      )
+    end
+  end
+
   setup do
     @person = people(:two)
     @group = @person.groups.first

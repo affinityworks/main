@@ -13,8 +13,10 @@ module AdvocacyCommons
     # -- all .rb files in that directory are automatically loaded.
     config.eager_load_paths << Rails.root.join('app', 'graph', 'types')
     config.eager_load_paths << Rails.root.join('app', 'graph', 'fields')
+    config.eager_load_paths << Rails.root.join('app', 'presenters')
 
     config.eager_load_paths << Rails.root.join('lib')
+
     config.active_job.queue_adapter = :resque
 
     # custom config yml

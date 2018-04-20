@@ -41,6 +41,7 @@ class ApplicationController < ActionController::Base
 
   def authorize_group_access
     return unless current_group
+    return if is_signup_form?
     authorize! :read, current_group && return if volunteer_permission?
     authorize! :read, current_group && return if authorized_controllers_and_actions?
     authorize! :manage, current_group
@@ -53,8 +54,20 @@ class ApplicationController < ActionController::Base
   end
 
   def authorized_controllers_and_actions?
-    controller_names = %w(members memberships events)
-    controller_names.include?(controller_name) && action_name == 'index'
+    return true if is_public_list?
+    return true if is_signup_form?
+    false
+  end
+
+  def is_public_list?
+    %w(members memberships events).include?(controller_name) &&
+      action_name == 'index'
+  end
+
+  def is_signup_form?
+    controller_name == 'members' &&
+      (action_name == 'new' || action_name == 'create') &&
+      params[:signup_mode]
   end
 
   rescue_from CanCan::AccessDenied do |_exception|

@@ -64,6 +64,7 @@ Rails.application.routes.draw do
 
   resources :groups do
     get '/dashboard', to: 'dashboard#show', as: 'dashboard'
+    get '/join', to: 'groups#join'
 
     resources :subgroups, only: [:new, :create]
 
