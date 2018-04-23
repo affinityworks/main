@@ -17,7 +17,6 @@ class Subgroups::AferCreateTest < ActiveSupport::TestCase
 
     it "calls OrganizerMailer" do
       expect(OrganizerMailer).to receive_message_chain(:new_subgroup_email, :deliver_later)
-      expect(SignupForm).to receive(:for)
 
       Subgroups::AfterCreate.call(organizer: Person.new, subgroup: Group.new)
     end
