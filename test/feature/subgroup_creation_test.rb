@@ -4,7 +4,7 @@ require 'minitest/mock'
 class SubgroupCreation < FeatureTest
 
   let(:group){ groups(:one) }
-  RESOURCES = %w[group address person membership phone_number email_address signup_form].freeze
+  RESOURCES = %w[group address person membership phone_number email_address].freeze
 
   before { visit "/groups/#{group.id}/subgroups/new" }
 

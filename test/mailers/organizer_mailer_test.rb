@@ -5,8 +5,7 @@ class OrganizerMailerTest < ActionMailer::TestCase
   describe "new_subgroup_email" do
     let(:organizer){ people(:organizer) }
     let(:subgroup){ groups(:subgroup) }
-    let(:signup_form){ forms(:group_signup) }
-    let(:mail){ OrganizerMailer.new_subgroup_email(organizer, subgroup, signup_form) }
+    let(:mail){ OrganizerMailer.new_subgroup_email(organizer, subgroup) }
     let(:body){ mail.body.raw_source }
 
     it "mentions subgroup in subject" do
