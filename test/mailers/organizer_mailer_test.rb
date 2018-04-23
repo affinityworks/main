@@ -18,7 +18,7 @@ class OrganizerMailerTest < ActionMailer::TestCase
     end
 
     it "links to signup form" do
-      body.must_match "/groups/#{subgroup.id}/signup_forms/#{signup_form.id}/signups/new"
+      body.must_match "/groups/#{subgroup.id}/join"
     end
 
     it "links to organizer profile page" do
