@@ -11,6 +11,7 @@ class JsonApi::GroupRepresenter < Roar::Decorator
     property :browser_url
     property :featured_image_url
     property :signup_url
+    property :join_url
     property :new_subgroup_url
     property :google_group_url
     property :google_group_email

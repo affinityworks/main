@@ -48,3 +48,8 @@ human_torch_fantastic_four:
   group: fantastic_four
   person: human_torch
   role: 1
+
+the_thing_fantastic_four:
+  group: fantastic_four
+  person: the_thing
+  role: 0

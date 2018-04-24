@@ -226,6 +226,12 @@ class GroupTest < ActiveSupport::TestCase
   end
 
   describe "accessors" do
+    it "returns the url for the group's join page" do
+      groups(:fantastic_four)
+        .join_url
+        .must_equal 'http://localhost:3000/groups/1036040811/join'
+    end
+
     it "returns the group's signup page url" do
       groups(:fantastic_four)
         .signup_url

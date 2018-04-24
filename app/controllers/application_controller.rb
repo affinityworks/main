@@ -42,15 +42,31 @@ class ApplicationController < ActionController::Base
   def authorize_group_access
     return unless current_group
     return if is_signup_form?
-    authorize! :read, current_group && return if volunteer_permission?
-    authorize! :read, current_group && return if authorized_controllers_and_actions?
+    return if has_group_read_access?
     authorize! :manage, current_group
   end
 
-  def volunteer_permission?
-    current_person &&
-      (current_group.volunteer?(current_person) ||
-    current_group.affiliation_with_role(current_user, Membership.roles[:volunteer]))
+  def is_signup_form?
+    controller_name == 'members' &&
+      (action_name == 'new' || action_name == 'create') &&
+      params[:signup_mode]
+  end
+
+  def has_group_read_access?
+    if authorize! :read, current_group
+      return true if has_role?(:volunteer)
+      return true if has_role?(:member) && is_dashboard?
+      return true if authorized_controllers_and_actions?
+    end
+    false
+  end
+
+  def has_role?(role)
+    return unless current_person
+    return true if current_group.send "#{role}?", current_person
+    return true if current_group.affiliation_with_role current_user,
+                                                       Membership.roles.fetch(role)
+    false
   end
 
   def authorized_controllers_and_actions?
@@ -59,16 +75,15 @@ class ApplicationController < ActionController::Base
     false
   end
 
+  def is_dashboard?
+    controller_name == 'dashboard'
+  end
+
   def is_public_list?
     %w(members memberships events).include?(controller_name) &&
       action_name == 'index'
   end
 
-  def is_signup_form?
-    controller_name == 'members' &&
-      (action_name == 'new' || action_name == 'create') &&
-      params[:signup_mode]
-  end
 
   rescue_from CanCan::AccessDenied do |_exception|
     respond_to do |format|

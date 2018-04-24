@@ -34,21 +34,7 @@ class Nav extends Component {
     return (
       <div>
         <UserAuth allowed={['member']}>
-          <div>
-            <ul className="nav nav-tabs">
-              <NavItem
-                title='Members'
-                path={membersPath()}
-                active={activeTab === 'members'}
-              />
-              {eventsOn && <NavItem
-                title='Events'
-                path={eventsPath()}
-                active={activeTab === 'events'}
-              />}
-            </ul>
-            <br />
-          </div>
+          <div></div>
         </UserAuth>
         <UserAuth allowed={['organizer', 'volunteer']}>
           <div>

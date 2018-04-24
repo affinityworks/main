@@ -197,6 +197,10 @@ class Group < ApplicationRecord
       UrlHelpers.new_group_signup_form_signup_url(self, signup_form)
   end
 
+  def join_url
+    UrlHelpers.group_join_url(self)
+  end
+
   def new_subgroup_url
     UrlHelpers.new_group_subgroup_url(self)
   end

@@ -56,11 +56,11 @@ class Dashboard extends Component {
         <hr/>
         <GroupResources {...{
           resources: [{
-            description: 'Recruit new members', link: attributes['signup-url'],
+            description: 'Recruit members', link: attributes['join-url'],
           },{
-            description: 'Google Group', link: attributes['google-group-url'],
+            description: 'Email the group', mailto: attributes['google-group-email']
           },{
-            description: 'Google Group Email', mailto: attributes['google-group-email']
+            description: 'Edit Google Group settings', link: attributes['google-group-url'],
           }]
         }}/>
         <hr/>
