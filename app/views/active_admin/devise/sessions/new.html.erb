@@ -28,10 +28,10 @@
           <%- if devise_mapping.omniauthable? %>
             <%- resource_class.omniauth_providers.each do |provider| %>
               <div class="col-md-8">
-                  <span class="fa fa-facebook"></span>
-                  <%= link_to omniauth_authorize_path(resource_name, provider), class: 'btn btn-facebook' do %>
-                    <%= image_tag 'facebook-logo.svg', class: 'facebook-icon' %> 
-                    <span>Continue with <%= OmniAuth::Utils.camelize(provider) %></span>
+                  <span class=<%= "fa fa-#{provider}" %>></span>
+                  <%= link_to omniauth_authorize_path(resource_name, provider), class: "btn btn-#{provider}" do %>
+                    <%= image_tag "#{provider}-logo.svg", class: "#{provider}-icon" %> 
+                    <span>Log In with <%= OmniAuth::Utils.camelize(provider) %></span>
                   <% end %>
                   <br />
               </div>

@@ -252,7 +252,7 @@ Devise.setup do |config|
 
 
   config.omniauth :twitter, ENV['TWITTER_APP_ID'], ENV['TWITTER_APP_SECRET']
-  config.omniauth :google_oauth2, ENV['GOOGLE_APP_ID'], ENV['GOOGLE_APP_SECRET']
+  config.omniauth :google_oauth2, ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'], {}
   # TODO: (aguestuser|05 Apr 2018)
   # reenable user_events, rspv_events scopes after login review
   config.omniauth :facebook,
