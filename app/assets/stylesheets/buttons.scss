@@ -10,15 +10,19 @@ $primaryblue: rgba(2, 117, 216, 1);
     margin: 1em auto 1em auto;
     cursor: pointer;
     color: white;
-    &:hover, &:active {
+    &:hover, &:active, &:visited {
         color: white;
     }
 }
 
+.btn-primary {
+    @extend .btn;
+}
 
 .btn-edit {
     cursor: pointer;
 }
+
 .btn-delete {
     span {
         color: #d9534f;
@@ -34,12 +38,9 @@ $primaryblue: rgba(2, 117, 216, 1);
     @extend .btn-danger;
 }
 
-.btn-primary {
-    @extend .btn;
-}
 
 .btn-facebook {
-    @extend .btn;
+    @extend .button;
     background-color: #3b5998;
     border-color: #3b5998;
 }
@@ -51,7 +52,7 @@ $primaryblue: rgba(2, 117, 216, 1);
 }
 
 .btn-email {
-    @extend button;
+    @extend .button;
     background-color: $green;
     border-color: $green;
 }
@@ -67,13 +68,11 @@ $primaryblue: rgba(2, 117, 216, 1);
         width: 1.5rem;
         margin-right: .5rem;
     }
-    @extend .button;
     width: 100%;
     height: 2.8rem;
 }
 
 .btn-login {
-    @extend .button;
     display: flex;
     flex-direction: row;
     align-items: center;
