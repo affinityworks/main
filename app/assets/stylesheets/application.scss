@@ -16,24 +16,15 @@
  // Custom bootstrap variables must be set or imported before bootstrap itself.
 @import "bootstrap";
 
-@import "./common_forms.scss";
 @import "./signup_form.scss";
 @import "./create_group_form.scss";
 @import "./member_form.scss";
 @import "./join_group_page.scss";
+@import "./buttons.scss";
 
 $red: #d9534f;
 $green: #5cb85c;
 $lightgray: #3b5998;
-
-.btn-facebook {
-  background-color: #3b5998;
-  border-color: #3b5998;
-  color: white;
-  &:hover, &:active {
-    color: white;
-  }
-}
 
 .list-group-item.active span {
   color: white !important;
@@ -246,17 +237,10 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
-.btn-edit {
-  cursor: pointer;
-}
-.btn-delete {
-  span {
-    color: #d9534f;
-  }
-}
 .text-preview {
     margin: 2rem 0 2rem 0;
     p {
         margin: 0;
     }
 }
+

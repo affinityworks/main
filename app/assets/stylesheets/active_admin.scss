@@ -10,6 +10,8 @@
 // Active Admin's got SASS!
 @import "bootstrap";
 @import "active_admin/mixins";
+@import "login_page.scss";
+@import "buttons.scss";
 
 // Overriding any non-variable SASS must be done after the fact.
 // For example, to change the default status-tag color:

@@ -1,0 +1,113 @@
+$red: #d9534f;
+$green: #5cb85c;
+$lightgray: #3b5998;
+$primaryblue: rgba(2, 117, 216, 1);
+
+.button {
+    @extend .btn;
+    text-align: center;
+    text-transform: uppercase!important;
+    margin: 1em auto 1em auto;
+    cursor: pointer;
+    color: white;
+    &:hover, &:active {
+        color: white;
+    }
+}
+
+
+.btn-edit {
+    cursor: pointer;
+}
+.btn-delete {
+    span {
+        color: #d9534f;
+    }
+}
+
+.submit-btn {
+    @extend .button;
+    @extend .btn-primary;
+}
+.cancel-btn {
+    @extend .button;
+    @extend .btn-danger;
+}
+
+.btn-primary {
+    @extend .btn;
+}
+
+.btn-facebook {
+    @extend .btn;
+    background-color: #3b5998;
+    border-color: #3b5998;
+}
+
+.btn-google {
+    @extend .button;
+    background-color: $red;
+    border-color: $red;
+}
+
+.btn-email {
+    @extend button;
+    background-color: $green;
+    border-color: $green;
+}
+
+.btn-join {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin: .5rem 0;
+    color: $red;
+    img {
+        width: 1.5rem;
+        margin-right: .5rem;
+    }
+    @extend .button;
+    width: 100%;
+    height: 2.8rem;
+}
+
+.btn-login {
+    @extend .button;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 2.8rem;
+    margin: .5rem 0;
+    img {
+        width: 1.5rem;
+        height: 1.5rem;
+        margin-right: .5rem;
+    }
+}
+
+.btn-join:hover, .btn-login:hover {
+    -webkit-filter: brightness(70%);
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    -ms-transition: all 1s ease;
+    transition: all 1s ease;
+    color: white;
+}
+
+.btn-facebook-login {
+    @extend .btn-login;
+    @extend .btn-facebook;
+}
+
+.btn-google-login {
+    @extend .btn-login;
+    @extend .btn-google;
+}
+
+.btn-email-login {
+    @extend .btn-login;
+    @extend .btn-email;
+}

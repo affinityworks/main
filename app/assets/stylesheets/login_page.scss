@@ -1,0 +1,29 @@
+.login-content {
+    .or {
+        position: relative;
+        background-color: white;
+        width: 1rem;
+        left: 50%;
+        margin: -1.8rem 0 -2rem 0;
+    }
+    .oauth-group {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: 1rem 0 2rem 0;
+    }
+    .email-group {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-top: 1rem;
+        .email-helpers {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            div {
+                margin-top: 1rem;
+            }
+        }
+    }
+}
