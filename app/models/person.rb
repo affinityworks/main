@@ -49,7 +49,7 @@ class Person < ApplicationRecord
 
   devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable,
          :registerable,
-         :omniauthable, omniauth_providers: [:facebook]
+         :omniauthable, omniauth_providers: [:facebook, :google_oauth2]
 
   serialize :custom_fields, Hash
   serialize :ethnicities, Array
@@ -209,10 +209,13 @@ class Person < ApplicationRecord
   def self.from_omniauth(auth, signed_in_resource = nil)
     email = auth.info.email
     return unless email
+
     email = EmailAddress.find_by(address: email)
     return unless email
+
     identity = Identity.find_for_oauth(auth)
     person = signed_in_resource || email.person
+    
     omniauth_signed_in_resource(email, identity, person)
   end
 

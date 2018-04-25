@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   id="svg8"
+   version="1.1"
+   viewBox="0 0 210 210"
+   height="210mm"
+   width="210mm">
+  <defs
+     id="defs2">
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient5432">
+      <stop
+         id="stop5430"
+         offset="0"
+         style="stop-color:#000000;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient5426">
+      <stop
+         id="stop5424"
+         offset="0"
+         style="stop-color:#000000;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient5276">
+      <stop
+         id="stop5274"
+         offset="0"
+         style="stop-color:#000000;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient5264">
+      <stop
+         id="stop5262"
+         offset="0"
+         style="stop-color:#000000;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient4965">
+      <stop
+         id="stop4963"
+         offset="0"
+         style="stop-color:#000000;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient4815">
+      <stop
+         id="stop4813"
+         offset="0"
+         style="stop-color:#000000;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient4807">
+      <stop
+         id="stop4805"
+         offset="0"
+         style="stop-color:#000000;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient4793">
+      <stop
+         id="stop4800"
+         offset="0"
+         style="stop-color:#000000;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient4793-7">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop4797" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient4793-6">
+      <stop
+         id="stop4791"
+         offset="0"
+         style="stop-color:#000000;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient4774">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop4786" />
+    </linearGradient>
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient4780">
+      <stop
+         id="stop4778"
+         offset="0"
+         style="stop-color:#ffffff;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient4774-3">
+      <stop
+         id="stop4772"
+         offset="0"
+         style="stop-color:#000000;stop-opacity:1;" />
+    </linearGradient>
+  </defs>
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     transform="translate(0,-87)"
+     id="layer1">
+    <path
+       id="path5701"
+       d="M 93.560314,295.15343 C 90.515029,294.7544 85.118356,293.67757 81.463236,292.73966 65.297604,288.59147 50.861146,281.18362 38.81966,270.85772 34.936344,267.52768 27.151356,259.43395 24.266305,255.72722 15.142643,244.00512 8.7934159,231.13709 5.2320692,217.15042 2.5902773,206.77516 2.5308122,206.20685 2.5303078,191.32813 2.5298843,178.86314 2.5669528,177.9662 3.2365113,174.24103 6.4635198,156.28704 14.001286,139.66628 25.318487,125.55031 c 2.389554,-2.98046 12.695402,-13.23213 15.770771,-15.68783 11.386645,-9.09229 26.118612,-16.360309 40.454693,-19.958336 9.313818,-2.337545 10.554982,-2.460081 24.869519,-2.455268 14.178,0.0048 15.72518,0.150017 24.47497,2.297782 16.96553,4.164443 34.7322,13.731002 46.79762,25.198422 l 2.36831,2.25092 -16.93489,16.95469 c -9.3142,9.32508 -17.04179,16.9547 -17.17243,16.9547 -0.13065,0 -2.30859,-1.41207 -4.83985,-3.13791 -10.3372,-7.04809 -17.6978,-10.37531 -25.12685,-11.35815 -4.17861,-0.55282 -16.134782,-0.46762 -19.736821,0.14064 -6.48327,1.09481 -14.638416,4.43956 -20.802661,8.532 -3.733454,2.47863 -10.861837,9.34092 -13.920836,13.40114 -3.641768,4.83373 -7.215524,12.50448 -8.937841,19.18425 -1.613205,6.25671 -1.96077,17.11635 -0.763556,23.85691 1.096198,6.17165 4.648992,14.73717 8.545518,20.6026 7.909238,11.90577 22.067053,21.28228 35.615577,23.58764 4.11641,0.70043 16.46822,0.71915 20.97607,0.0318 5.61245,-0.8558 13.2223,-3.80945 18.20277,-7.06515 4.58059,-2.99432 10.30708,-8.84063 13.89542,-14.18623 2.17769,-3.24412 4.11741,-6.97224 3.79522,-7.29441 -0.31462,-0.31464 -10.95611,-0.59765 -31.39002,-0.83482 l -19.27971,-0.22378 v -23.54545 -23.54546 l 35.76196,0.0257 c 46.85223,0.0335 66.08983,0.28546 66.45108,0.86999 0.27171,0.43964 1.21639,5.19303 1.89559,9.53807 0.53696,3.43507 0.52002,25.2579 -0.0228,29.3354 -1.291,9.6985 -4.2684,20.89012 -7.92245,29.77951 -4.96782,12.08549 -11.63441,22.00449 -20.74815,30.87054 -6.23425,6.06482 -12.60937,10.70033 -20.07118,14.59425 -10.92939,5.70346 -24.56487,9.73495 -36.44243,10.77462 -3.35092,0.29332 -25.454208,0.3852 -27.520834,0.1144 z"
+       style="fill:#ffffff;stroke:none;stroke-width:0;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;paint-order:fill markers stroke" />
+  </g>
+</svg>
