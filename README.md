@@ -96,7 +96,7 @@ $ ./bin/install
 $ ./bin/run-services # first run only: start redis & postgres
 $ ./bin/copy_configs # first run only: see `Secrets` section below
 $ ./bin/seed-db # first run only: seed db
-$ ./bin/run-web
+$ ./bin/run
 ```
 
 **Shut down cleanly:**

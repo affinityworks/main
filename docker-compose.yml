@@ -1,5 +1,7 @@
 version: '3' # specifies version of `docker-compose`
 
+# TODO: add worker image
+
 services:
   db:
     image: postgres:${AFFINITY_POSTGRES_VERSION}
