@@ -47,6 +47,12 @@
     "FACEBOOK_APP_SECRET": {
       "required": true
     },
+    "GOOGLE_CLIENT_ID": {
+      "required": true
+    },
+    "GOOGLE_CLIENT_SECRET": {
+      "required": true
+    },
     "MAILGUN_API_KEY": {
       "required": true
     },
