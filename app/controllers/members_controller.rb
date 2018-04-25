@@ -203,7 +203,12 @@ class MembersController < ApplicationController
   end
 
   def build_member
-    @member = @group.members.new
+    case @signup_mode
+    when 'facebook', 'google'
+      @member = @group.members.new person_params
+    else
+      @member = @group.members.new
+    end
   end
 
   def build_member_resources

@@ -206,7 +206,15 @@ class Person < ApplicationRecord
     end
   end
 
-  def self.from_omniauth(auth, signed_in_resource = nil)
+  def self.from_oauth_signup(auth)
+    return unless email = auth.info.email
+    new(
+      given_name: auth.info.name, # will be wrong, but we'll let user edit it!
+      email_addresses: [EmailAddress.new(address: email)]
+    )
+  end
+
+  def self.from_oauth_login(auth, signed_in_resource = nil)
     email = auth.info.email
     return unless email
 

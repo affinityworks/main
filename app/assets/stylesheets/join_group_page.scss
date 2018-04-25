@@ -33,10 +33,7 @@ $primaryblue: rgba(2, 117, 216, 1);
         .join-button-group{
             display: flex;
             flex-direction: column;
-            .join-button-email {
-                @extend .button;
-                background-color: $primaryblue;
-            }
+            width: 75%;
         }
     }
 }

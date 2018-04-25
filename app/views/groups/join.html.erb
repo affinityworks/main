@@ -16,10 +16,22 @@
           Join our group!
         </div>
         <div class="join-button-group">
-          <a class="join-button-email"
-             href="<%=new_group_member_path(@group, signup_mode: 'email')%>">
-            Join with email
-          </a>
+          <!-- join with fb -->
+            <%= link_to omniauth_authorize_path(:person,
+                                                :facebook,
+                                                auth_mode: 'signup',
+                                                group_id: @group.id),
+                                                class: 'btn-join btn-facebook' do %>
+              <%= image_tag 'facebook-logo.svg', class: 'facebook-icon' %>
+              <span>Join with Facebook</span>
+            <% end %>
+            <!-- join with email -->
+            <%= link_to new_group_member_path(@group,
+                                               signup_mode: 'email'),
+                                               class: 'btn-join btn-primary' do %>
+              <%= image_tag 'email-icon.svg' %>
+              <span>Join with email</span>
+            <% end %>
         </div>
       </div>
     </div>
