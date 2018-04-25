@@ -40,10 +40,10 @@
               <%= ff.hidden_field :primary, value: true %>
             <% end # f.fields_for :phone_numbers %>
           </div>
-          
+
           <div class="actions modal-actions">
-            <%= f.submit "Submit", class: "submit-btn" %>
-            <%= link_to "Cancel", group_join_path(@group),  class: "cancel-btn" %>
+            <%= f.submit "Submit", class: "btn-submit" %>
+            <%= link_to "Cancel", group_join_path(@group),  class: "btn-cancel" %>
           </div>
 
         <% end # form_for @member %>

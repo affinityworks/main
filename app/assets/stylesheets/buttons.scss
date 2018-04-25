@@ -25,11 +25,11 @@ $primaryblue: rgba(2, 117, 216, 1);
     }
 }
 
-.submit-btn {
+.btn-submit {
     @extend .button;
     @extend .btn-primary;
 }
-.cancel-btn {
+.btn-cancel {
     @extend .button;
     @extend .btn-danger;
 }
