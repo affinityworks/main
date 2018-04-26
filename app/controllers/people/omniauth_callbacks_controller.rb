@@ -1,4 +1,5 @@
 class People::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  before_action :set_auth
   before_action :set_auth_mode
   before_action :set_group_id
 
@@ -11,6 +12,10 @@ class People::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   private
+
+  def set_auth
+    @auth = request.env["omniauth.auth"].except(:credentials, :extra)
+  end
 
   def set_auth_mode
     @auth_mode = request.env.dig("omniauth.params", "auth_mode")
@@ -25,22 +30,12 @@ class People::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def signup(service)
-    if @person = Person.from_oauth_signup(request.env["omniauth.auth"])
-      # TODO: (aguestuser|24 Apr 2018)
-      # pass attributes for an `Identity` to the members controller and:
-      # 1. contstruct and save an Identity instance
-      # 2. pass it to `omni_auth_signed_in_resource` (see`Person.from_oauth_login`)
-      # (but don't do either until we have actually validated/saved the Person)
+    if @person = Person.from_oauth_signup(@auth)
       redirect_to new_group_member_path(
                     signup_mode: service,
                     group_id: @group_id,
-                    person: {
-                      given_name: @person.given_name,
-                      email_addresses_attributes: [
-                        @person.email_addresses.first.attributes
-                      ]
-                    })
-
+                    person: { auth: @auth }
+                  )
     end
   end
 

@@ -207,10 +207,12 @@ class Person < ApplicationRecord
   end
 
   def self.from_oauth_signup(auth)
-    return unless email = auth.info.email
+    return unless email = auth.dig('info', 'email')
+    given, _, family = auth.dig('info', 'name').partition(" ")
     new(
-      given_name: auth.info.name, # will be wrong, but we'll let user edit it!
-      email_addresses: [EmailAddress.new(address: email)]
+      given_name: given,
+      family_name: family,
+      email_addresses: [EmailAddress.new(address: email, primary: true)]
     )
   end
 
@@ -223,7 +225,7 @@ class Person < ApplicationRecord
 
     identity = Identity.find_for_oauth(auth)
     person = signed_in_resource || email.person
-    
+
     omniauth_signed_in_resource(email, identity, person)
   end
 

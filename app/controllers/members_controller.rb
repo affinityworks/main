@@ -1,4 +1,6 @@
 class MembersController < ApplicationController
+  SIGNUP_MODES = %w[email facebook google].freeze
+
   before_action :authenticate_person!, except: %i[new create]
   before_action :set_signup_mode, only: %i[new create]
   before_action :maybe_authenticate_person, only: %i[new create]
@@ -33,36 +35,12 @@ class MembersController < ApplicationController
     end
   end
 
-  def attendances
-    @attendances = @member.attendances.includes(:event).order('events.start_date')
-    respond_to do |format|
-      format.html
-      format.json do
-        render json: JsonApi::AttendanceWithEventsRepresenter.for_collection.new(@attendances).to_json
-      end
-    end
-  end
 
   # GET /groups/:id/members/new
   def new
     authorize! :manage, @group unless is_signup_form?
-    render :signup_form if is_signup_form?
+    render "signup_form_#{@signup_mode}" if is_signup_form?
   end
-
-  def account
-    group = Group.find(params[:group_id]) if params[:group_id]
-    person = Person.find(params[:person_id]) if params[:person_id]
-
-    valid_group = (group && group.members.include?(person)) ? group : person.groups.first
-    return redirect_to edit_group_member_path(group_id: valid_group.id, id: person.id)
-  end
-
-  # GET /groups/:id/members/1/edit
-  def edit
-    @groups = Group.all
-    authorize! :manage, @group
-  end
-
 
   # POST /groups/:id/members/
   # POST /groups/:id/members/.json
@@ -76,28 +54,11 @@ class MembersController < ApplicationController
     end
   end
 
-  def handle_create_sucess(fmt)
-    fmt.html do
-      Members::AfterCreate.call(member: @member, group: @group)
-      if is_signup_form?
-        flash[:notice] = "You joined #{@group.name}"
-        sign_in_and_redirect(@member)
-      else
-        flash[:notice] = 'Member was successfully created.'
-        redirect_to group_member_path(@group, @member)
-      end
-    end
-    fmt.json do
-      render :show, status: :ok, location: group_member_path(@group, @member)
-    end
+  # GET /groups/:id/members/1/edit
+  def edit
+    @groups = Group.all
+    authorize! :manage, @group
   end
-
-  def handle_create_error(fmt)
-    build_member_resources
-    fmt.html { render is_signup_form? ? :signup_form : :new }
-    fmt.json { render json: @group.errors, status: :unprocessable_entity }
-  end
-
 
   # PATCH/PUT /groups/1
   # PATCH/PUT /groups/1.json
@@ -123,19 +84,29 @@ class MembersController < ApplicationController
     end
   end
 
+  def attendances
+    @attendances = @member.attendances.includes(:event).order('events.start_date')
+    respond_to do |format|
+      format.html
+      format.json do
+        render json: JsonApi::AttendanceWithEventsRepresenter.for_collection.new(@attendances).to_json
+      end
+    end
+  end
+
+  def account
+    group = Group.find(params[:group_id]) if params[:group_id]
+    person = Person.find(params[:person_id]) if params[:person_id]
+
+    valid_group = (group && group.members.include?(person)) ? group : person.groups.first
+    return redirect_to edit_group_member_path(group_id: valid_group.id, id: person.id)
+  end
+
   private
 
-  def set_signup_mode
-    @signup_mode = params[:signup_mode]
-  end
-
-  def maybe_authenticate_person
-    authenticate_person! unless is_signup_form?
-  end
-
-  # only returns nil / empty symbol
   def person_params
     params.require(:person).permit(
+      :auth,
       :family_name,
       :given_name,
       :gender,
@@ -155,10 +126,8 @@ class MembersController < ApplicationController
       .tap{ |person_attrs| handle_empty_contact_info(person_attrs) }
   end
 
-  def handle_empty_contact_info(person_attrs)
-    if person_attrs.dig('phone_numbers_attributes', '0', 'number') == ''
-      person_attrs.merge!('phone_numbers_attributes' => [])
-    end
+  def maybe_authenticate_person
+    authenticate_person! unless is_signup_form?
   end
 
   def set_member
@@ -179,7 +148,6 @@ class MembersController < ApplicationController
   end
 
   def set_members
-
     member_ids = Membership.where(:group_id =>@group.affiliates.pluck(:id).push(@group.id) ).pluck(:person_id)
 
     @members = Person.where(:id => member_ids).includes(
@@ -203,17 +171,52 @@ class MembersController < ApplicationController
   end
 
   def build_member
-    case @signup_mode
-    when 'facebook', 'google'
-      @member = @group.members.new person_params
+    if action_name == 'new' && is_oauth_signup?
+      @member = Person.from_oauth_signup(params[:person][:auth])
     else
-      @member = @group.members.new
+      @member = Person.new
     end
   end
 
   def build_member_resources
     %i[personal_addresses email_addresses phone_numbers].each do |x|
       @member.send(x).build(primary: true) if @member.send(x).empty?
+    end
+  end
+
+  def set_signup_mode
+    @signup_mode = SIGNUP_MODES.dup.delete params[:signup_mode]
+  end
+
+  def is_oauth_signup?
+    %w[facebook goolge].include? @signup_mode
+  end
+
+  def handle_create_sucess(fmt)
+    fmt.html do
+      Members::AfterCreate.call(member: @member, group: @group)
+      if is_signup_form?
+        flash[:notice] = "You joined #{@group.name}"
+        sign_in_and_redirect(@member)
+      else
+        flash[:notice] = 'Member was successfully created.'
+        redirect_to group_member_path(@group, @member)
+      end
+    end
+    fmt.json do
+      render :show, status: :ok, location: group_member_path(@group, @member)
+    end
+  end
+
+  def handle_create_error(fmt)
+    build_member_resources
+    fmt.html { render is_signup_form? ? "signup_form_#{@signup_mode}" : :new }
+    fmt.json { render json: @group.errors, status: :unprocessable_entity }
+  end
+
+  def handle_empty_contact_info(person_attrs)
+    if person_attrs.dig('phone_numbers_attributes', '0', 'number') == ''
+      person_attrs.merge!('phone_numbers_attributes' => [])
     end
   end
 end

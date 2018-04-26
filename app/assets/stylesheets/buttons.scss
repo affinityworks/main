@@ -63,7 +63,6 @@ $primaryblue: rgba(2, 117, 216, 1);
     align-items: center;
     justify-content: center;
     margin: .5rem 0;
-    color: $red;
     img {
         width: 1.5rem;
         margin-right: .5rem;
@@ -108,5 +107,15 @@ $primaryblue: rgba(2, 117, 216, 1);
 
 .btn-email-login {
     @extend .btn-login;
+    @extend .btn-email;
+}
+
+.btn-facebook-join {
+    @extend .btn-join;
+    @extend .btn-facebook;
+}
+
+.btn-email-join {
+    @extend .btn-join;
     @extend .btn-email;
 }

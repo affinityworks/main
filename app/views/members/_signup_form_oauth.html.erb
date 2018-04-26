@@ -1,0 +1,45 @@
+<%= render 'layouts/modal_header' %>
+<div class="container-html modal-container">
+  <div class="card">
+    <div class="card-block">
+      <h3>Join <%= @group.name %></h3>
+      <div>
+        <%= form_for @member, as: :person, url: group_members_path(@group, signup_mode: @signup_mode) do |f| %>
+          <div class="prompt">
+            We just need a little more info...
+          </div>
+
+          <%= render partial: "error_alert" %>
+
+          <%= f.hidden_field :signup_mode, value: 'email'%>
+          <%= f.fields_for :email_addresses do |ff| %>
+            <%= ff.hidden_field :address, value: @member.primary_email_address %>
+            <%= ff.hidden_field :primary, value: true %>
+          <% end # f.fields_for :email_addresses %>
+          <%= f.hidden_field :given_name, value: @member.given_name %>
+          <%= f.hidden_field :family_name, value: @member.family_name %>
+
+          <div class="form-group">
+            <%= f.fields_for :personal_addresses do |ff| %>
+              <%= ff.text_field :postal_code, placeholder: 'Zip Code*', required: true, class: 'wide' %>
+              <%= ff.hidden_field :primary, value: true %>
+            <% end # f.fields_for :personal_addresses %>
+          </div>
+
+          <div class="form-group">
+            <%= f.fields_for :phone_numbers do |ff| %>
+              <%= ff.text_field :number, placeholder: 'Phone', class: 'wide' %>
+              <%= ff.hidden_field :primary, value: true %>
+            <% end # f.fields_for :phone_numbers %>
+          </div>
+
+          <div class="actions modal-actions">
+            <%= f.submit "Submit", class: "btn-submit" %>
+            <%= link_to "Cancel", group_join_path(@group),  class: "btn-cancel" %>
+          </div>
+
+        <% end # form_for @member %>
+      </div>
+    </div>
+  </div>
+</div>

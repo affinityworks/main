@@ -13,22 +13,20 @@
 
       <div class="right-aside">
         <div class="call-to-action">
-          Join our group!
+          Join our group
         </div>
         <div class="join-button-group">
           <!-- join with fb -->
-            <%= link_to omniauth_authorize_path(:person,
-                                                :facebook,
-                                                auth_mode: 'signup',
-                                                group_id: @group.id),
-                                                class: 'btn-join btn-facebook' do %>
-              <%= image_tag 'facebook-logo.svg', class: 'facebook-icon' %>
+          <%= link_to omniauth_authorize_path(:person,
+                                              :facebook,
+                                              auth_mode: 'signup', group_id: @group.id),
+                      class: 'btn-facebook-join' do %>
+              <%= image_tag 'facebook-logo.svg' %>
               <span>Join with Facebook</span>
             <% end %>
             <!-- join with email -->
-            <%= link_to new_group_member_path(@group,
-                                               signup_mode: 'email'),
-                                               class: 'btn-join btn-primary' do %>
+            <%= link_to new_group_member_path(@group, signup_mode: 'email'),
+                        class: 'btn-join btn-email' do %>
               <%= image_tag 'email-icon.svg' %>
               <span>Join with email</span>
             <% end %>
