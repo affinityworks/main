@@ -23,4 +23,10 @@ class FeatureTest < ActiveSupport::TestCase
     end
   end
 
+  # () -> Hash(String, String)
+  def current_params
+    CGI.parse(URI.parse(page.current_url).query).transform_values do |v|
+      v.first
+    end
+  end
 end
