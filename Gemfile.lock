@@ -392,6 +392,8 @@ GEM
     rb-fsevent (0.10.2)
     rb-inotify (0.9.7)
       ffi (>= 0.5.0)
+    rbnacl (5.0.0)
+      ffi
     react_on_rails (6.8.0)
       addressable
       connection_pool
@@ -562,6 +564,7 @@ DEPENDENCIES
   rails-controller-testing
   rake (= 12.1.0)
   rb-fsevent (~> 0.10.2)
+  rbnacl
   react_on_rails
   redis
   resque

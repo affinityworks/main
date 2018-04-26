@@ -101,6 +101,9 @@ gem 'nokogiri', '~> 1.8'
 gem 'google-api-client', '~> 0.10.3'
 gem 'googleauth'
 
+# crypto
+gem 'rbnacl'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'dotenv-rails'
