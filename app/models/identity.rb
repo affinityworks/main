@@ -1,17 +1,44 @@
+# == Schema Information
+#
+# Table name: identities
+#
+#  id           :integer          not null, primary key
+#  provider     :string
+#  uid          :string
+#  person_id    :integer
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  access_token :string
+#
+
 class Identity < ActiveRecord::Base
   before_save :request_long_lived_token
 
   belongs_to :person
-  validates_presence_of :uid, :provider, :person_id
+  validates_presence_of :uid, :provider#, :person_id
   validates_uniqueness_of :uid, :scope => :provider
 
   scope :facebook, -> { where(provider: 'facebook') }
   scope :twitter, -> { where(provider: 'twitter') }
   scope :google_oauth2, -> { where(provider: 'google_oauth2') }
 
-  def self.find_for_oauth(auth)
-    find_or_initialize_by(uid: auth.uid, provider: auth.provider) do |identity|
-      identity.access_token = auth.credentials.token
+  #
+  # CLASS METHODS
+  #
+  class << self
+    def find_for_oauth(auth)
+      find_or_initialize_by(uid: auth.fetch('uid'),
+                            provider: auth.fetch('provider')) do |identity|
+        identity.access_token = auth.dig('credentials', 'token')
+      end
+    end
+
+    def attributes_for_signup(auth)
+      {
+        uid: auth.fetch('uid'),
+        provider: auth.fetch('provider'),
+        access_token: auth.dig('credentials', 'token')
+      }
     end
   end
 

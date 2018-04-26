@@ -2,16 +2,24 @@ require_relative "../test_helper"
 
 class JoinGroupTest < FeatureTest
   let(:group){ groups(:fantastic_four) }
+  let(:fb_token) do
+    "UwlcA5KfBMIfSXx8dYmTusAs5FNmqBDQ13L6upHh84mBua5TR7"+
+      "sK7eGYm9FSGz6pTdfv7xzziIKnPQLOEEw6icFuIFjrjSxQxHfx"+
+      "LpQEYWgz6zzs2U209liTg5JFRm9u7RmRzpxEaaWI9M9u61CAh7"+
+      "psEMkjqsfRBFi4hm89iJ91tACuiQGxtZhKr"
+  end
   let(:mock_fb_auth) do
     OmniAuth::AuthHash.new(
-      {
-        "provider" => "facebook",
-        "uid"      => "100174124183958",
-        "info"     => {
-          "email"    => "testy@affinity.works",
-          "name"     => "Testy McGee",
-          "image"    => "http://graph.facebook.com/v2.6/100174124183958/picture"
-        }
+      { "provider"     => "facebook",
+        "uid"          => "100174124183958",
+        "credentials"  =>
+        { "token"        => fb_token ,
+          "expires_at"   => "1529880563",
+          "expires"      => "true" },
+        "info"         =>
+        { "email"        => "testy@affinity.works",
+          "name"         => "Testy McGee",
+          "image"        => "http://graph.facebook.com/v2.6/100174124183958/picture" }
       }
     )
   end
@@ -207,7 +215,10 @@ class JoinGroupTest < FeatureTest
       end # picking email path
 
       describe "picking facebook path" do
+        let(:identity_count){ Identity.count }
+
         before do
+          identity_count
           OmniAuth.config.mock_auth[:facebook] = mock_fb_auth
           click_link "Join with Facebook"
         end
@@ -220,16 +231,34 @@ class JoinGroupTest < FeatureTest
           current_params['signup_mode'].must_equal 'facebook'
         end
 
-        it "passes oauth params to form" do
+        it "passes non-sensitive oauth data as cleartext params" do
           {
-            "provider" => current_params["person[auth][provider]"],
-            "uid" => current_params["person[auth][uid]"],
+            "provider" => current_params["person[oauth][provider]"],
+            "uid" => current_params["person[oauth][uid]"],
+            "credentials" => {
+              # omit token from this test
+              "expires_at" => current_params["person[oauth][credentials][expires_at]"],
+              "expires" => current_params["person[oauth][credentials][expires]"],
+            },
             "info" => {
-              "email" => current_params["person[auth][info][email]"],
-              "name" => current_params["person[auth][info][name]"],
-              "image" => current_params["person[auth][info][image]"],
+              "email" => current_params["person[oauth][info][email]"],
+              "name" => current_params["person[oauth][info][name]"],
+              "image" => current_params["person[oauth][info][image]"],
             }
-          }.must_equal mock_fb_auth
+          }.must_equal(
+            mock_fb_auth.to_hash.merge(
+              "credentials" => mock_fb_auth
+                                 .to_hash
+                                 .fetch('credentials')
+                                 .except('token')
+            )
+          )
+        end
+
+        it "passes oauth token as encrypted param" do
+          Crypto.decrypt_with_nacl_secret(
+            current_params["person[oauth][credentials][token]"]
+          ).must_equal mock_fb_auth.dig('credentials', 'token')
         end
 
         describe "viewing facebook signup form" do
@@ -265,30 +294,83 @@ class JoinGroupTest < FeatureTest
             # we don't test for submission errors here: covered in email branch
             let(:person_count){ Person.count }
             let(:membership_count){ Membership.count }
-
-            before do
-              person_count; membership_count
-              fill_out_form submissions_by_input_label
-              click_button 'Submit'
-            end
-
-            it "creates a new person" do
-              Person.count.must_equal person_count + 1
-            end
-
-            it "creates a new membership" do
-              Membership.count.must_equal membership_count + 1
-            end
-
-            it "stores persons's contact info" do
-              [:email_addresses, :phone_numbers, :personal_addresses].each do |msg|
-                Person.last.send(msg).first.primary?.must_equal true
+            let(:identity_count){ Identity.count }
+            let(:stub_identity_creation_response) do
+              -> do
+                stub_request(
+                  :get,
+                  "https://graph.facebook.com/v2.9/oauth/access_token"+
+                  "?client_id="+
+                  "&client_secret="+
+                  "&fb_exchange_token=UwlcA5KfBMIfSXx8dYmTusAs5FNmqBDQ13L6upH"+
+                  "h84mBua5TR7sK7eGYm9FSGz6pTdfv7xzziIKnPQLOEEw6icFuIFjrjSxQx"+
+                  "HfxLpQEYWgz6zzs2U209liTg5JFRm9u7RmRzpxEaaWI9M9u61CAh7psEMk"+
+                  "jqsfRBFi4hm89iJ91tACuiQGxtZhKr&grant_type=fb_exchange_token"
+                ).to_return(:status => 200)
               end
             end
 
-            it "redirects to member homepage" do
-              current_path.must_equal "/home"
-            end
+            describe "with no errrors" do
+              before do
+                person_count; membership_count; identity_count
+                stub_identity_creation_response.call
+                fill_out_form submissions_by_input_label
+                click_button 'Submit'
+              end
+
+              it "creates a new person" do
+                Person.count.must_equal person_count + 1
+              end
+
+              it "creates a new membership" do
+                Membership.count.must_equal membership_count + 1
+              end
+
+              it "does creates a new identity" do
+                Identity.count.must_equal identity_count + 1
+              end
+
+              it "stores persons's contact info" do
+                [:email_addresses, :phone_numbers, :personal_addresses].each do |msg|
+                  Person.last.send(msg).first.primary?.must_equal true
+                end
+              end
+
+              it "stores person's facebook identity" do
+                Identity.last.attributes.slice('uid', 'provider', 'access_token')
+                  .must_equal('uid'          => mock_fb_auth['uid'],
+                              'provider'     => mock_fb_auth['provider'],
+                              'access_token' => mock_fb_auth['credentials']['token'])
+              end
+
+              it "redirects to member homepage" do
+                current_path.must_equal "/home"
+              end
+            end # with no errors
+
+            describe "with invalid inputs" do
+              before do
+                fill_out_form(
+                  submissions_by_input_label.merge(
+                    'Zip Code*' => 'invalid',
+                    'Phone'     => 'invalid',
+                  )
+                )
+                click_button "Submit"
+              end
+
+              it "shows an error for invalid phone number" do
+                page.must_have_content(
+                  "Phone number 'invalid' is not a valid phone number"
+                )
+              end
+
+              it "shows an error for invalid postal code" do
+                page.must_have_content(
+                  "Zip code 'invalid' is not a valid zip code"
+                )
+              end
+            end # with invalid inputs
           end # filling out facebook signup form
         end # viewing facebook signup form
       end # picking facebook path

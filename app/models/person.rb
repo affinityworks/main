@@ -73,6 +73,7 @@ class Person < ApplicationRecord
   accepts_nested_attributes_for :phone_numbers, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :memberships, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :personal_addresses, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :identities, reject_if: :all_blank, allow_destroy: true
 
   # TODO: (aguestuser|28-Feb-2018) fix `memership` typos
   has_many :organizer_memerships, -> { organizer }, :class_name => 'Membership'
@@ -206,13 +207,16 @@ class Person < ApplicationRecord
     end
   end
 
-  def self.from_oauth_signup(auth)
+  def self.from_oauth_signup(auth, person_params={})
     return unless email = auth.dig('info', 'email')
     given, _, family = auth.dig('info', 'name').partition(" ")
     new(
-      given_name: given,
-      family_name: family,
-      email_addresses: [EmailAddress.new(address: email, primary: true)]
+      person_params.merge(
+        given_name: given,
+        family_name: family,
+        email_addresses: [EmailAddress.new(address: email, primary: true)],
+        identities_attributes: [Identity.attributes_for_signup(auth)],
+      )
     )
   end
 
@@ -300,6 +304,13 @@ class Person < ApplicationRecord
 
   def role_in_group(group)
     memberships.find_by(group: group)&.role
+  end
+
+  def build_contact_info
+    %i[personal_addresses email_addresses phone_numbers].each do |x|
+      send(x).build(primary: true) if send(x).empty?
+    end
+    self
   end
 
   private

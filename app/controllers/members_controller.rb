@@ -3,6 +3,7 @@ class MembersController < ApplicationController
 
   before_action :authenticate_person!, except: %i[new create]
   before_action :set_signup_mode, only: %i[new create]
+  before_action :set_oauth, only: %i[new create]
   before_action :maybe_authenticate_person, only: %i[new create]
   before_action :authorize_group_access
   before_action :set_group
@@ -46,9 +47,12 @@ class MembersController < ApplicationController
   # POST /groups/:id/members/.json
 
   def create
-    @member = Person.create(
-      person_params.merge(
-        memberships_attributes: [{role: 'member', group: @group}]))
+    if is_oauth_signup?
+      @member = Person.from_oauth_signup(decrypt_token(@oauth), person_params)
+      @member.save
+    else
+      @member = Person.create(person_params)
+    end
     respond_to do |fmt|
       @member.valid? ? handle_create_sucess(fmt) : handle_create_error(fmt)
     end
@@ -106,7 +110,6 @@ class MembersController < ApplicationController
 
   def person_params
     params.require(:person).permit(
-      :auth,
       :family_name,
       :given_name,
       :gender,
@@ -114,6 +117,7 @@ class MembersController < ApplicationController
       :party_identification,
       :birthdate,
       :employer,
+      :password,
       :primary_email_address,
       :primary_phone_number,
       ethnicities: [],
@@ -122,15 +126,63 @@ class MembersController < ApplicationController
       memberships_attributes: [:id, :role],
       phone_numbers_attributes: [:id, :number, :primary, :_destroy],
       email_addresses_attributes: [:id, :address, :primary, :_destroy],
-      personal_addresses_attributes: [:id, :primary, :postal_code])
-      .tap{ |person_attrs| handle_empty_contact_info(person_attrs) }
+      personal_addresses_attributes: [:id, :primary, :postal_code],
+      oauth: [:provider,
+              :uid,
+              credentials: [:token, :expires_at, :expires ],
+              info:        [:email, :name, :image ] ]
+    ).tap{ |person_attrs| handle_empty_contact_info(person_attrs) }
+      .tap { |person_attrs| maybe_set_role(person_attrs) }
+  end
+
+
+  def handle_empty_contact_info(person_attrs)
+    if person_attrs.dig('phone_numbers_attributes', '0', 'number') == ''
+      person_attrs.merge!('phone_numbers_attributes' => [])
+    end
+  end
+
+  def maybe_set_role(person_attrs)
+    if action_name == 'create'
+      person_attrs.merge!(
+        memberships_attributes: [{role: 'member', group: @group}]
+      )
+    end
+  end
+
+  def oauth_params
+    params.require(:person).require(:oauth)
+  end
+
+  def set_oauth
+    @oauth = parse_oauth if is_oauth_signup?
+  end
+
+  def parse_oauth
+    case oauth_params
+    when String # POST to #create
+      JSON.parse(oauth_params).to_hash
+    when ActionController::Parameters # GET to #new
+      JSON.generate(oauth_params.to_hash)
+    end.as_json
+  end
+
+  def decrypt_token(oauth_hash)
+    if token = oauth_hash.dig('credentials', 'token')
+      oauth_hash.merge!(
+        'credentials' => {
+          'token' => Crypto.decrypt_with_nacl_secret(token)
+        }
+      )
+    end
   end
 
   def maybe_authenticate_person
     authenticate_person! unless is_signup_form?
   end
 
-  def set_member
+  def setmember
+    # NOTE: aguestuser thinks this is way to complex and should be re-written
     #@membership = Membership.where(:group_id =>@group.affiliates.pluck(:id).push(@group.id) )
     if @group
       #are we looking at the person in the context of a specific group, then what groups can we see
@@ -140,6 +192,7 @@ class MembersController < ApplicationController
       group_ids = Affiliation.where(:group_id =>organized_groups_ids).pluck(:affiliated_id).concat(organized_groups_ids).uniq
     end
     @memberships = Membership.where(:group_id => group_ids, :person_id => params[:id])
+    # NOTE(aguestuser): wut? really?!
     @member = @memberships.first.person if @memberships.any?
   end
 
@@ -172,11 +225,12 @@ class MembersController < ApplicationController
 
   def build_member
     if action_name == 'new' && is_oauth_signup?
-      @member = Person.from_oauth_signup(params[:person][:auth])
+      @member = Person.from_oauth_signup(oauth_params)
     else
       @member = Person.new
     end
   end
+
 
   def build_member_resources
     %i[personal_addresses email_addresses phone_numbers].each do |x|
@@ -189,7 +243,7 @@ class MembersController < ApplicationController
   end
 
   def is_oauth_signup?
-    %w[facebook goolge].include? @signup_mode
+    %w[facebook google].include? @signup_mode
   end
 
   def handle_create_sucess(fmt)
@@ -212,11 +266,5 @@ class MembersController < ApplicationController
     build_member_resources
     fmt.html { render is_signup_form? ? "signup_form_#{@signup_mode}" : :new }
     fmt.json { render json: @group.errors, status: :unprocessable_entity }
-  end
-
-  def handle_empty_contact_info(person_attrs)
-    if person_attrs.dig('phone_numbers_attributes', '0', 'number') == ''
-      person_attrs.merge!('phone_numbers_attributes' => [])
-    end
   end
 end

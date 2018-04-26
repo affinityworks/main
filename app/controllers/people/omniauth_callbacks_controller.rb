@@ -14,7 +14,7 @@ class People::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   private
 
   def set_auth
-    @auth = request.env["omniauth.auth"].except(:credentials, :extra)
+    @auth = request.env["omniauth.auth"].except(:extra)
   end
 
   def set_auth_mode
@@ -31,11 +31,11 @@ class People::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def signup(service)
     if @person = Person.from_oauth_signup(@auth)
-      redirect_to new_group_member_path(
-                    signup_mode: service,
-                    group_id: @group_id,
-                    person: { auth: @auth }
-                  )
+      redirect_to new_group_member_path(signup_mode: service,
+                                        group_id: @group_id,
+                                        person: { oauth: encrypt_token(@auth) })
+    else
+      handle_error service, group_join_path(@group_id)
     end
   end
 
@@ -44,9 +44,21 @@ class People::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       sign_in_and_redirect @person, event: :authentication #throws if @person not activated
       set_flash_message(:notice, :success, kind: service) if is_navigational_format?
     else
-      flash[:error] = I18n.t("devise.omniauth_callbacks.failure", kind: service)
-      session["devise.#{service}_data}"] = request.env["omniauth.auth"].except(:extra)
-      redirect_to new_person_session_url
+      handle_error service, new_person_session_url
     end
+  end
+
+  def handle_error(service, redirect_url)
+    flash[:error] = I18n.t("devise.omniauth_callbacks.failure", kind: service)
+    session["devise.#{service}_data}"] = @auth
+    redirect_to redirect_url
+  end
+
+  def encrypt_token(auth)
+    auth.merge(
+      'credentials' => {
+        'token' => Crypto.encrypt_to_nacl_secret(auth.credentials.token)
+      }
+    )
   end
 end

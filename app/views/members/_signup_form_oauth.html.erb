@@ -11,13 +11,7 @@
 
           <%= render partial: "error_alert" %>
 
-          <%= f.hidden_field :signup_mode, value: 'email'%>
-          <%= f.fields_for :email_addresses do |ff| %>
-            <%= ff.hidden_field :address, value: @member.primary_email_address %>
-            <%= ff.hidden_field :primary, value: true %>
-          <% end # f.fields_for :email_addresses %>
-          <%= f.hidden_field :given_name, value: @member.given_name %>
-          <%= f.hidden_field :family_name, value: @member.family_name %>
+          <%= f.hidden_field :oauth, value: @oauth %>
 
           <div class="form-group">
             <%= f.fields_for :personal_addresses do |ff| %>
