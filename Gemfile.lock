@@ -129,9 +129,6 @@ GEM
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     crass (1.0.3)
-    debase (0.2.2.beta10)
-      debase-ruby_core_source
-    debase-ruby_core_source (0.9.9)
     debug_inspector (0.0.2)
     declarative (0.0.9)
     declarative-option (0.1.0)
@@ -429,8 +426,6 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.7.0)
     rspec-support (3.7.1)
-    ruby-debug-ide (0.6.0)
-      rake (>= 0.8.1)
     rubyzip (1.2.1)
     rufus-scheduler (2.0.24)
       tzinfo (>= 0.3.22)
@@ -518,7 +513,6 @@ DEPENDENCIES
   cancancan
   cocoon
   coffee-rails (~> 4.2)
-  debase (= 0.2.2.beta10)
   derailed
   devise
   doorkeeper (>= 4.3.1)
@@ -572,7 +566,6 @@ DEPENDENCIES
   roar
   roar-jsonapi
   rspec-mocks
-  ruby-debug-ide
   sass-rails (~> 5.0)
   selenium-webdriver
   spring

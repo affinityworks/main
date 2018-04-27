@@ -40,9 +40,13 @@ gem 'wicked_pdf'
 gem 'wkhtmltopdf-heroku'
 gem 'wkhtmltopdf-binary-edge', '~> 0.12.4.0'
 
-gem 'ruby-debug-ide'
+# NOTE(aguestuser|27 Apr 2018)
+# these ide debugger gems break ruby 2.5.1 installs
+# commenting them until we can figure out how to successfully
+# upgrade to ruby 2.5.1, rails 5.2.0
+#gem 'ruby-debug-ide'
 #gem 'rdebug-ide'
-gem 'debase', '0.2.2.beta10'
+#gem 'debase'
 # This is an optional gem. When included, GraphQL will use a parser written in C
 # instead of the Ruby parser shipped with graphql-ruby.
 #gem 'graphql-libgraphqlparser', '~> 0.2'
