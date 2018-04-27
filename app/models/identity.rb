@@ -44,6 +44,14 @@ class Identity < ActiveRecord::Base
   private
 
   def request_long_lived_token
-    self.access_token = Facebook::Authorization.new(self).request_long_lived_token
+    if provider == 'facebook'
+      # TODO: (aguester|26 Apr 2018)
+      # - do we want to support long-lived acces tokens for google OAuth?
+      # - it's the difference btw/ keeping user logged in for 2 hours & 60 days
+      # - see: https://stackoverflow.com/questions/41956452/long-lived-access-token-for-google-oauth-2-0#41956680
+      self.access_token = Facebook::Authorization
+                            .new(self)
+                            .request_long_lived_token
+    end
   end
 end

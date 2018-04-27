@@ -46,6 +46,8 @@ class People::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     else
       handle_error service, new_person_session_url
     end
+  rescue
+    handle_error service, new_person_session_url
   end
 
   def handle_error(service, redirect_url)

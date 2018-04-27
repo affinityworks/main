@@ -115,6 +115,11 @@ $primaryblue: rgba(2, 117, 216, 1);
     @extend .btn-facebook;
 }
 
+.btn-google-join {
+    @extend .btn-join;
+    @extend .btn-google;
+}
+
 .btn-email-join {
     @extend .btn-join;
     @extend .btn-email;
