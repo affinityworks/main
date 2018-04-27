@@ -1,7 +1,7 @@
 namespace :heroku do
   task release: :environment do
     Rake::Task["db:migrate"]
-    #Migration.update_networks
+    Migration.update_networks
   end
 
   task postdeploy: :environment do
