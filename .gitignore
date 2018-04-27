@@ -79,3 +79,4 @@ app/assets/webpack
 /.env.heroku/dev-affinityworks
 /.env.heroku/staging-affinityworks
 /lib/network_credentials/0745bfb6179a1691185d50abd0f4fd85/google_gsuite_key.json
+/.env.test

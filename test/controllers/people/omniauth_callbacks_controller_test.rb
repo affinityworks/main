@@ -4,6 +4,14 @@ require 'minitest/mock'
 class People::OmniauthCallbacksControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
+  # TODO: (aguestuser|26 Apr 2018)
+  # - replace these with browser tests
+  # - this testing approach makes it impossible to pass "omniauth.params" to
+  #   `People::OmniAuthCallbacksController#facebook`
+  # - it therefore forces us to write application code (#set_auth_mode) that defaults
+  #   to `auth_mode == 'login'` --> okay for now, but major antipattern to let
+  #   tests dictate shape of application code in a way that constrains its logic
+
   test 'GET #facebook' do
     person = people(:one)
     omni_auth_no_email

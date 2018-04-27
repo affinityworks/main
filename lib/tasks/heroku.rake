@@ -9,7 +9,7 @@ namespace :heroku do
       logger = Logger.new(STDOUT)
 
       # this will sync from ActionNetwork (sloooow!), avoid it if we can
-      if Membership.count == 0
+      if false #Membership.count == 0
         logger.info("seeding database...")
         Rake::Task["db:schema:load"].execute
         Rake::Task["db:seed"].execute

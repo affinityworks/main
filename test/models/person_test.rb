@@ -180,7 +180,7 @@ class PersonTest < ActiveSupport::TestCase
     assert_equal '', people(:organizer).primary_phone_number
   end
 
-  test '#from_omniauth' do
+  test '#from_oauth_login' do
     auth = Minitest::Mock.new
     info = Minitest::Mock.new
     credentials = Minitest::Mock.new
@@ -195,7 +195,7 @@ class PersonTest < ActiveSupport::TestCase
     auth.expect :credentials, credentials
     facebook_auth.expect :request_long_lived_token, 'new_token'
     Facebook::Authorization.stub :new, facebook_auth do
-      assert_equal Person.first, Person.from_omniauth(auth)
+      assert_equal Person.first, Person.from_oauth_login(auth)
     end
 
     auth.expect :provider, 'facebook'
@@ -206,7 +206,7 @@ class PersonTest < ActiveSupport::TestCase
     auth.expect :credentials, credentials
     facebook_auth.expect :request_long_lived_token, 'new_token'
     Facebook::Authorization.stub :new, facebook_auth do
-      assert_equal Person.first, Person.from_omniauth(auth)
+      assert_equal Person.first, Person.from_oauth_login(auth)
     end
 
     auth.expect :provider, 'facebook'
@@ -220,7 +220,7 @@ class PersonTest < ActiveSupport::TestCase
     old_identity_count = Identity.count
 
     Facebook::Authorization.stub :new, facebook_auth do
-      person = Person.from_omniauth(auth, Person.last)
+      person = Person.from_oauth_login(auth, Person.last)
       assert_equal Person.last, person
       assert_equal old_identity_count, Identity.count
       assert_equal person, Identity.last.person
@@ -234,7 +234,7 @@ class PersonTest < ActiveSupport::TestCase
     auth.expect :credentials, credentials
     facebook_auth.expect :request_long_lived_token, 'new_token'
     Facebook::Authorization.stub :new, facebook_auth do
-      assert_nil Person.from_omniauth(auth)
+      assert_nil Person.from_oauth_login(auth)
     end
   end
 

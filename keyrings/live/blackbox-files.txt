@@ -3,6 +3,7 @@
 .env.heroku/affinityworks
 .env.heroku/dev-affinityworks
 .env.heroku/staging-affinityworks
+.env.test
 config/feature_toggles.yml
 config/networks.yml
 lib/network_credentials/0745bfb6179a1691185d50abd0f4fd85/google_gsuite_key.json
