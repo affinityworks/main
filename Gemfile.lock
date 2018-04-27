@@ -391,6 +391,8 @@ GEM
       ffi (>= 0.5.0)
     rbnacl (5.0.0)
       ffi
+    rbnacl-libsodium (1.0.16)
+      rbnacl (>= 3.0.1)
     react_on_rails (6.8.0)
       addressable
       connection_pool
@@ -558,7 +560,7 @@ DEPENDENCIES
   rails-controller-testing
   rake (= 12.1.0)
   rb-fsevent (~> 0.10.2)
-  rbnacl
+  rbnacl-libsodium
   react_on_rails
   redis
   resque

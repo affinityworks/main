@@ -106,7 +106,7 @@ gem 'google-api-client', '~> 0.10.3'
 gem 'googleauth'
 
 # crypto
-gem 'rbnacl'
+gem 'rbnacl-libsodium'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
