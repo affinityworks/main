@@ -150,8 +150,18 @@ class MembersController < ApplicationController
     end
   end
 
+  # () -> ActionController::Parameters | String
   def oauth_params
-    params.require(:person).require(:oauth)
+    oauth = params.require(:person).require(:oauth)
+    case action_name
+    when 'new' # => ActionController::Parameters
+      oauth.permit(:provider,
+                  :uid,
+                  credentials: [:token, :expires_at, :expires ],
+                  info:        [:email, :name, :image ])
+    when 'create' # => String
+      oauth
+    end
   end
 
   def set_oauth
@@ -162,10 +172,10 @@ class MembersController < ApplicationController
   # OmniAuth::AuthHash | JSONString
   def parse_oauth
     case oauth_params
-    when String # POST to #create
-      OmniAuth::AuthHash.new(JSON.parse(oauth_params).to_hash)
-    when ActionController::Parameters # GET to #new
-      JSON.generate(oauth_params.to_hash)
+    when ActionController::Parameters
+      JSON.generate(oauth_params.to_h)
+    when String
+      OmniAuth::AuthHash.new(JSON.parse(oauth_params).to_h)
     end.as_json
   end
 
@@ -230,7 +240,7 @@ class MembersController < ApplicationController
 
   def build_member
     if action_name == 'new' && is_oauth_signup?
-      @member = Person.from_oauth_signup(OmniAuth::AuthHash.new(oauth_params.to_hash))
+      @member = Person.from_oauth_signup(OmniAuth::AuthHash.new(oauth_params.to_h))
     else
       @member = Person.new
     end
