@@ -5,13 +5,13 @@
     <%= link_to omniauth_authorize_path(:person, :facebook, auth_mode: 'login'),
                 class: "btn-facebook-login" do %>
       <%= image_tag "facebook-logo.svg"%> 
-      <span>Log In with Facebook</span>
+      <span>Login with Facebook</span>
     <% end %>
 
     <%= link_to omniauth_authorize_path(:person, :google_oauth2, auth_mode: 'login'),
                 class: "btn-google-login" do %>
       <%= image_tag "google-logo.svg"%> 
-      <span>Log In with Google</span>
+      <span>Login with Google</span>
     <% end %>
 
   </div>
@@ -35,7 +35,7 @@
       <div class="email-group">
         <div class="btn-email-login">
           <%= image_tag "email-icon.svg"%>
-          <%= f.submit "Log in with email", class: "btn-email-login" %>
+          <%= f.submit "Login with email", class: "btn-email-login" %>
         </div>
       </div>
       <div class="email-helpers">
