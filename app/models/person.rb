@@ -208,8 +208,8 @@ class Person < ApplicationRecord
   end
 
   def self.from_oauth_signup(auth, person_params={})
-    return unless email = auth.dig('info', 'email')
-    given, _, family = auth.dig('info', 'name').partition(" ")
+    return unless email = auth.info.email
+    given, _, family = auth.info.name.partition(" ")
     new(
       person_params.merge(
         given_name: given,

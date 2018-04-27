@@ -33,7 +33,7 @@ class CryptoTest < ActiveSupport::TestCase
       end
 
       it "transcodes a hex string to a base64 string" do
-        "49276d".hex_to_base_64.must_equal "SSdt"
+        "49276d".hex_to_base64.must_equal "SSdt"
       end
     end
 

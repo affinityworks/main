@@ -2,12 +2,14 @@
   <h2>Log in</h2>
   <div class="oauth-group">
 
-    <%= link_to omniauth_authorize_path(:person, :facebook), class: "btn-facebook-login" do %>
+    <%= link_to omniauth_authorize_path(:person, :facebook, auth_mode: 'login'),
+                class: "btn-facebook-login" do %>
       <%= image_tag "facebook-logo.svg"%> 
       <span>Log In with Facebook</span>
     <% end %>
 
-    <%= link_to omniauth_authorize_path(:person, :google_oauth2), class: "btn-google-login" do %>
+    <%= link_to omniauth_authorize_path(:person, :google_oauth2, auth_mode: 'login'),
+                class: "btn-google-login" do %>
       <%= image_tag "google-logo.svg"%> 
       <span>Log In with Google</span>
     <% end %>

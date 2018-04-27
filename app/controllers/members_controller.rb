@@ -158,21 +158,26 @@ class MembersController < ApplicationController
     @oauth = parse_oauth if is_oauth_signup?
   end
 
+  # String | ActionController::Parameters ->
+  # OmniAuth::AuthHash | JSONString
   def parse_oauth
     case oauth_params
     when String # POST to #create
-      JSON.parse(oauth_params).to_hash
+      OmniAuth::AuthHash.new(JSON.parse(oauth_params).to_hash)
     when ActionController::Parameters # GET to #new
       JSON.generate(oauth_params.to_hash)
     end.as_json
   end
 
+  # OmniAuth::AuthHash -> OmniAuth::AuthHash
   def decrypt_token(oauth_hash)
     if token = oauth_hash.dig('credentials', 'token')
-      oauth_hash.merge!(
-        'credentials' => {
-          'token' => Crypto.decrypt_with_nacl_secret(token)
-        }
+      OmniAuth::AuthHash.new(
+        oauth_hash.merge!(
+          'credentials' => {
+            'token' => Crypto.decrypt_with_nacl_secret(token)
+          }
+        )
       )
     end
   end
@@ -181,7 +186,11 @@ class MembersController < ApplicationController
     authenticate_person! unless is_signup_form?
   end
 
-  def setmember
+  def set_group
+    @group = Group.find(params[:group_id]) if params[:group_id]
+  end
+
+  def set_member
     # NOTE: aguestuser thinks this is way to complex and should be re-written
     #@membership = Membership.where(:group_id =>@group.affiliates.pluck(:id).push(@group.id) )
     if @group
@@ -194,10 +203,6 @@ class MembersController < ApplicationController
     @memberships = Membership.where(:group_id => group_ids, :person_id => params[:id])
     # NOTE(aguestuser): wut? really?!
     @member = @memberships.first.person if @memberships.any?
-  end
-
-  def set_group
-    @group = Group.find(params[:group_id]) if params[:group_id]
   end
 
   def set_members
@@ -225,7 +230,7 @@ class MembersController < ApplicationController
 
   def build_member
     if action_name == 'new' && is_oauth_signup?
-      @member = Person.from_oauth_signup(oauth_params)
+      @member = Person.from_oauth_signup(OmniAuth::AuthHash.new(oauth_params.to_hash))
     else
       @member = Person.new
     end

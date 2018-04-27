@@ -27,17 +27,16 @@ class Identity < ActiveRecord::Base
   #
   class << self
     def find_for_oauth(auth)
-      find_or_initialize_by(uid: auth.fetch('uid'),
-                            provider: auth.fetch('provider')) do |identity|
-        identity.access_token = auth.dig('credentials', 'token')
+      find_or_initialize_by(uid: auth.uid, provider: auth.provider) do |identity|
+        identity.access_token = auth.credentials.token
       end
     end
 
     def attributes_for_signup(auth)
       {
-        uid: auth.fetch('uid'),
-        provider: auth.fetch('provider'),
-        access_token: auth.dig('credentials', 'token')
+        uid: auth.uid,
+        provider: auth.provider,
+        access_token: auth.credentials.token
       }
     end
   end

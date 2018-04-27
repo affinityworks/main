@@ -19,7 +19,8 @@
           <!-- join with fb -->
           <%= link_to omniauth_authorize_path(:person,
                                               :facebook,
-                                              auth_mode: 'signup', group_id: @group.id),
+                                              auth_mode: 'signup',
+                                              group_id: @group.id),
                       class: 'btn-facebook-join' do %>
               <%= image_tag 'facebook-logo.svg' %>
               <span>Join with Facebook</span>
