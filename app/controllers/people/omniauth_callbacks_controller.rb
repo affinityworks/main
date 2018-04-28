@@ -30,7 +30,7 @@ class People::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def signup(service)
-    if @person = Person.from_oauth_signup(@auth)
+    if @person = Person.build_from_oauth_signup(@auth)
       redirect_to new_group_member_path(signup_mode: service,
                                         group_id: @group_id,
                                         person: { oauth: encrypt_token(@auth) })

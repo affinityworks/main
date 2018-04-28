@@ -31,14 +31,6 @@ class Identity < ActiveRecord::Base
         identity.access_token = auth.credentials.token
       end
     end
-
-    def attributes_for_signup(auth)
-      {
-        uid: auth.uid,
-        provider: auth.provider,
-        access_token: auth.credentials.token
-      }
-    end
   end
 
   private

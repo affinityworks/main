@@ -207,18 +207,24 @@ class Person < ApplicationRecord
     end
   end
 
-  def self.from_oauth_signup(auth, person_params={})
-    return unless email = auth.info.email
-    given, _, family = auth.info.name.partition(" ")
-    new(
-      person_params.merge(
-        given_name: given,
-        family_name: family,
-        email_addresses: [EmailAddress.new(address: email, primary: true)],
-        identities_attributes: [Identity.attributes_for_signup(auth)],
-      )
-    )
+  def self.build_from_oauth_signup(auth, person_params={})
+    email, given, family = self.parse_info_from_auth(auth)
+    return unless email
+    new self.new_signup_attrs(auth, person_params, email, given, family)
   end
+
+  def self.create_or_update_from_oauth_signup(auth, person_params={})
+    email, given, family = self.parse_info_from_auth(auth)
+    return unless email
+    if person = Person.find_by_email(email)
+      save_omniauth(EmailAddress.find_by(address: email),
+                    Identity.find_for_oauth(auth),
+                    person.tap{ |p| p.update(person_params)})
+    else
+      create self.new_signup_attrs(auth, person_params, email, given, family)
+    end
+  end
+
 
   def self.from_oauth_login(auth, signed_in_resource = nil)
     email = auth.info.email
@@ -316,6 +322,30 @@ class Person < ApplicationRecord
   private
 
   class << self
+
+    #
+    # OAUTH SIGNUP HELPERS
+    #
+
+    def new_signup_attrs(auth, person_params, email, given, family)
+      person_params.merge(
+        given_name: given,
+        family_name: family,
+        email_addresses: [EmailAddress.new(address: email, primary: true)],
+        identities: [Identity.find_for_oauth(auth)],
+      )
+    end
+
+    def parse_info_from_auth(auth)
+      email = auth.info.email
+      given, _, family = auth.info.name.partition(" ")
+      [email, given, family]
+    end
+
+    #
+    # OAUTH LOGIN HELPERS
+    #
+
     def omniauth_signed_in_resource(email, identity, person)
       return nil if email.person != person
       return nil if identity.persisted? && identity.person != person
@@ -329,6 +359,8 @@ class Person < ApplicationRecord
       person.save if email.new_record? || identity.new_record?
       person
     end
+
+
   end
 
   def generate_update_events
