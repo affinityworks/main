@@ -27,7 +27,7 @@
       "required": true
     },
     "DATABASE_URL": {
-      "required": true
+      "required": false
     },
     "PGP_PRIVATE_KEY_HEROKU": {
       "required": true
