@@ -60,7 +60,7 @@ class EventsController < ApplicationController
     filter = params.fetch(:filter) { nil }
 
     if filter_by_key(filter, :name)
-      @events = Event.joins(:location).where(
+      @events = @events.joins(:location).where(
         'addresses.venue ilike ? or title ilike ?', "%#{params[:filter][:name]}%","%#{params[:filter][:name]}%"
       )
     end
