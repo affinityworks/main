@@ -38,4 +38,9 @@ namespace :heroku do
 
     puts "--- DONE exporting config vars"
   end
+
+  task ci: :environment do
+    Rake::Task["assets:precompile"].execute
+    sh "cd client && npm run build:client"
+  end
 end
