@@ -108,7 +108,8 @@
     "test": {
       "scripts": {
         "test": "rails test"
-      }
+      },
+      "addons": ["heroku-postgresql:in-dyno", "heroku-redis:in-dyno"]
     }
   }
 }
