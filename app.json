@@ -107,6 +107,7 @@
   "environments": {
     "test": {
       "scripts": {
+        "test-setup": "rake heroku:ci",
         "test": "rails test"
       },
       "addons": ["heroku-postgresql:in-dyno", "heroku-redis:in-dyno"]
