@@ -7,7 +7,6 @@ require "minitest/matchers"
 require "minitest/autorun"
 require 'minitest/focus'
 require 'valid_attribute'
-require 'pry-remote'
 require_relative "./helpers/feature_test_helper"
 
 OmniAuth.config.test_mode = true
