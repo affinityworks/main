@@ -194,95 +194,100 @@ class Person < ApplicationRecord
     JsonApi::PersonRepresenter.new(self)
   end
 
-  def self.find_by_email(email)
-    includes(:email_addresses).where(email_addresses: { address: email }).first
-  end
+  #
+  # CLASS METHODS
+  #
 
-  def self.find_first_by_auth_conditions(warden_conditions)
-    conditions = warden_conditions.dup
-    if email = conditions.delete(:email)
-      find_by_email(email)
-    else
-      super(warden_conditions)
+  class << self
+    def find_by_email(email)
+      includes(:email_addresses).where(email_addresses: { address: email }).first
     end
-  end
 
-  def self.build_from_oauth_signup(auth, person_params={})
-    email, given, family = self.parse_info_from_auth(auth)
-    return unless email
-    new self.new_signup_attrs(auth, person_params, email, given, family)
-  end
-
-  def self.create_or_update_from_oauth_signup(auth, person_params={})
-    email, given, family = self.parse_info_from_auth(auth)
-    return unless email
-    if person = Person.find_by_email(email)
-      save_omniauth(EmailAddress.find_by(address: email),
-                    Identity.find_for_oauth(auth),
-                    person.tap{ |p| p.update(person_params)})
-    else
-      create self.new_signup_attrs(auth, person_params, email, given, family)
-    end
-  end
-
-
-  def self.from_oauth_login(auth, signed_in_resource = nil)
-    email = auth.info.email
-    return unless email
-
-    email = EmailAddress.find_by(address: email)
-    return unless email
-
-    identity = Identity.find_for_oauth(auth)
-    person = signed_in_resource || email.person
-
-    omniauth_signed_in_resource(email, identity, person)
-  end
-
-  def self.add_event_attended(people, current_group)
-    people.each do |person|
-      person.attended_events_count = person.attended_group_events_count(current_group)
-    end
-  end
-
-  def self.map_with_remote_rsvps(remote_rsvps)
-    all.each.with_object([]) do |person, mapping|
-      matches, remote_rsvps = remote_rsvps.partition do |rsvp|
-        rsvp['name'].include?(person.given_name) &&
-        rsvp['name'].include?(person.family_name)
+    def find_first_by_auth_conditions(warden_conditions)
+      conditions = warden_conditions.dup
+      if email = conditions.delete(:email)
+        find_by_email(email)
+      else
+        super(warden_conditions)
       end
-
-      mapping << { fb_rsvp: matches.first, person: person.json_representation } if matches.any?
     end
-  end
 
-  def self.unmatched_remote_rsvps(remote_rsvps)
-    remote_rsvps.delete_if { |rsvp| all.collect(&:name).include?(rsvp['name']) }
-  end
+    def build_from_oauth_signup(auth, person_params={})
+      email, given, family = self.parse_info_from_auth(auth)
+      return unless email
+      new new_signup_attrs(auth, person_params, email, given, family)
+    end
 
-  def self.import_remote(remote_people, group, event, member_id)
-    remote_people.each do |remote_person|
-      name_array = remote_person[:name].split(' ')
-      family_name = name_array.pop
-      given_name = name_array.join(' ')
-
-      person = Person.by_email(remote_person[:email]).first if remote_person[:email]
-      person ||= Person.new(synced: false, given_name: given_name,
-          family_name: family_name
-        )
-
-      person.email_addresses.find_or_initialize_by(address: remote_person[:email]) if remote_person[:email]
-
-      person.add_identifier('facebook', remote_person[:id])
-      person.memberships.find_or_initialize_by(group_id: group.id)
-      person.attendances.find_or_initialize_by(event_id: event.id).tap do |attendance|
-        attendance.origins.push(Origin.facebook)
-        attendance.invited_by_id ||= member_id
-        attendance.status ||= 'accepted'
+    def create_or_update_from_oauth_signup(auth, person_params={})
+      email, given, family = parse_info_from_auth(auth)
+      return unless email
+      if person = Person.find_by_email(email)
+        save_omniauth(EmailAddress.find_by(address: email),
+                      Identity.find_for_oauth(auth),
+                      person.tap{ |p| p.update(person_params)})
+      else
+        create new_signup_attrs(auth, person_params, email, given, family)
       end
-      person.save
     end
-  end
+
+    def from_oauth_login(auth, signed_in_resource = nil)
+      email = auth.info.email
+      return unless email
+
+      email = EmailAddress.find_by(address: email)
+      return unless email
+
+      identity = Identity.find_for_oauth(auth)
+      person = signed_in_resource || email.person
+
+      omniauth_signed_in_resource(email, identity, person)
+    end
+
+    def add_event_attended(people, current_group)
+      people.each do |person|
+        person.attended_events_count = person.attended_group_events_count(current_group)
+      end
+    end
+
+    def map_with_remote_rsvps(remote_rsvps)
+      all.each.with_object([]) do |person, mapping|
+        matches, remote_rsvps = remote_rsvps.partition do |rsvp|
+          rsvp['name'].include?(person.given_name) &&
+            rsvp['name'].include?(person.family_name)
+        end
+
+        mapping << { fb_rsvp: matches.first, person: person.json_representation } if matches.any?
+      end
+    end
+
+    def unmatched_remote_rsvps(remote_rsvps)
+      remote_rsvps.delete_if { |rsvp| all.collect(&:name).include?(rsvp['name']) }
+    end
+
+    def import_remote(remote_people, group, event, member_id)
+      remote_people.each do |remote_person|
+        name_array = remote_person[:name].split(' ')
+        family_name = name_array.pop
+        given_name = name_array.join(' ')
+
+        person = Person.by_email(remote_person[:email]).first if remote_person[:email]
+        person ||= Person.new(synced: false, given_name: given_name,
+                              family_name: family_name
+                             )
+
+        person.email_addresses.find_or_initialize_by(address: remote_person[:email]) if remote_person[:email]
+
+        person.add_identifier('facebook', remote_person[:id])
+        person.memberships.find_or_initialize_by(group_id: group.id)
+        person.attendances.find_or_initialize_by(event_id: event.id).tap do |attendance|
+          attendance.origins.push(Origin.facebook)
+          attendance.invited_by_id ||= member_id
+          attendance.status ||= 'accepted'
+        end
+        person.save
+      end
+    end # import_remote
+  end # CLASS METHODS
 
   #we dont' use permitted but do use rejected
   def permitted_import_parameters
