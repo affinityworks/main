@@ -96,6 +96,7 @@ class GroupsController < ApplicationController
 
   # GET /groups/1/join
   def join
+    @membership = Membership.new
   end
 
   private

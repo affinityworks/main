@@ -33,22 +33,39 @@ class MembershipsController < ApplicationController
     end
   end
 
+  # POST /memberships
+  # POST /groups/:group_id/memberships
+
+  def create
+    if @membership = Membership.create(membership_params)
+      redirect_to group_dashboard_path(@membership.group),
+                  notice: "You are now a member of #{@membership.group.name}"
+    else
+      redirect_to profile_home_path,
+                  error: "Failed to create new membership"
+    end
+  end
+
   def update
     @membership = Membership.find(:id).role
     respond_to do |format|
-    if @membership.role == "member"
-      @membership.update(role: 'organizer')
-      format.html { redirect_to group_dashboard_path, notice: 'Member is now an Organizer.' }
-      format.json { render :show, status: :created, location: @membership }
-    else
-      @membership.update(role: 'member')
-      format.html { redirect_back(fallback_location: root_path) }
-      format.json { render json: @membership.errors, status: :unprocessable_entity }
+      if @membership.role == "member"
+        @membership.update(role: 'organizer')
+        format.html { redirect_to group_dashboard_path, notice: 'Member is now an Organizer.' }
+        format.json { render :show, status: :created, location: @membership }
+      else
+        @membership.update(role: 'member')
+        format.html { redirect_back(fallback_location: root_path) }
+        format.json { render json: @membership.errors, status: :unprocessable_entity }
       end
     end
   end
 
   private
+
+  def membership_params
+    params.require(:membership).permit(:group_id, :person_id, :role)
+  end
 
   def find_memberships
 
