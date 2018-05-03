@@ -279,3 +279,6 @@ Just in case you do, here is a near-exhaustive list of the steps involved in doi
   b. observing the two `TXT` records that appear
   c. logging into gandi.net and finding the DNS records
   d. creating two `TXT` records with the values observed in step b above
+
+
+## Heroku Pipeline and CI
