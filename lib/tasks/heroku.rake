@@ -40,7 +40,7 @@ namespace :heroku do
   end
 
   task ci: :environment do
-    Rake::Task["assets:precompile"].execute
-    sh "cd client && yarn install"
+    #Rake::Task["assets:precompile"].execute
+    #sh "cd client && yarn install"
   end
 end
