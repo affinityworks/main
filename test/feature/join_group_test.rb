@@ -5,7 +5,7 @@ class JoinGroupTest < FeatureTest
   let(:organizer){ people(:organizer) }
 
   # facebook fixtures
-  let(:fb_token) do
+  let(:facebook_token) do
     "UwlcA5KfBMIfSXx8dYmTusAs5FNmqBDQ13L6upHh84mBua5TR7sK7eGYm9FSGz6pTdfv7xzz"+
       "iIKnPQLOEEw6icFuIFjrjSxQxHfxLpQEYWgz6zzs2U209liTg5JFRm9u7RmRzpxEaaWI9M"+
       "9u61CAh7psEMkjqsfRBFi4hm89iJ91tACuiQGxtZhKr"
@@ -15,7 +15,7 @@ class JoinGroupTest < FeatureTest
       { "provider"     => "facebook",
         "uid"          => "100174124183958",
         "credentials"  =>
-        { "token"        => fb_token ,
+        { "token"        => facebook_token ,
           "expires_at"   => "1529880563",
           "expires"      => "true" },
         "info"         =>
@@ -35,18 +35,15 @@ class JoinGroupTest < FeatureTest
       }
     )
   end
-  let(:stub_long_lived_access_token_response) do
+  let(:facebook_authorization_double){ double(Facebook::Authorization) }
+  let(:stub_long_lived_access_token_request) do
     -> do
-      stub_request(
-        :get,
-        "https://graph.facebook.com/v2.9/oauth/access_token"+
-        "?client_id="+
-        "&client_secret="+
-        "&fb_exchange_token=UwlcA5KfBMIfSXx8dYmTusAs5FNmqBDQ13L6upH"+
-        "h84mBua5TR7sK7eGYm9FSGz6pTdfv7xzziIKnPQLOEEw6icFuIFjrjSxQx"+
-        "HfxLpQEYWgz6zzs2U209liTg5JFRm9u7RmRzpxEaaWI9M9u61CAh7psEMk"+
-        "jqsfRBFi4hm89iJ91tACuiQGxtZhKr&grant_type=fb_exchange_token"
-      ).to_return(:status => 200)
+      allow(Facebook::Authorization)
+        .to receive(:new)
+              .and_return(facebook_authorization_double)
+      allow(facebook_authorization_double)
+        .to receive(:request_long_lived_token)
+              .and_return(facebook_token)
     end
   end
 
@@ -332,6 +329,7 @@ class JoinGroupTest < FeatureTest
             end
           end
 
+
           it "has correct required fields" do
             required_labels.each do |label|
               "input[placeholder='#{label}'][required='required']"
@@ -344,88 +342,73 @@ class JoinGroupTest < FeatureTest
             end
           end
 
-          # describe "filling out facebook signup form" do
-          #   # we don't test for submission errors here: covered in email branch
-          #   let(:person_count){ Person.count }
-          #   let(:membership_count){ Membership.count }
-          #   let(:identity_count){ Identity.count }
-          #   let(:stub_long_lived_access_token_response) do
-          #     -> do
-          #       stub_request(
-          #         :get,
-          #         "https://graph.facebook.com/v2.9/oauth/access_token"+
-          #         "?client_id="+
-          #         "&client_secret="+
-          #         "&fb_exchange_token=UwlcA5KfBMIfSXx8dYmTusAs5FNmqBDQ13L6upH"+
-          #         "h84mBua5TR7sK7eGYm9FSGz6pTdfv7xzziIKnPQLOEEw6icFuIFjrjSxQx"+
-          #         "HfxLpQEYWgz6zzs2U209liTg5JFRm9u7RmRzpxEaaWI9M9u61CAh7psEMk"+
-          #         "jqsfRBFi4hm89iJ91tACuiQGxtZhKr&grant_type=fb_exchange_token"
-          #       ).to_return(:status => 200)
-          #     end
-          #   end
+          describe "filling out facebook signup form" do
+            let(:person_count){ Person.count }
+            let(:membership_count){ Membership.count }
+            let(:identity_count){ Identity.count }
 
-          #   describe "with no errrors" do
-          #     before do
-          #       person_count; membership_count; identity_count
-          #       stub_long_lived_access_token_response.call
-          #       fill_out_form submissions_by_input_label
-          #       click_button 'Submit'
-          #     end
+            describe "with no errrors" do
+              before do
+                person_count; membership_count; identity_count
+                stub_long_lived_access_token_request.call
+                fill_out_form submissions_by_input_label
+                click_button 'Submit'
+              end
 
-          #     it "creates a new person" do
-          #       Person.count.must_equal person_count + 1
-          #     end
+              it "creates a new person" do
+                Person.count.must_equal person_count + 1
+              end
 
-          #     it "creates a new membership" do
-          #       Membership.count.must_equal membership_count + 1
-          #     end
+              it "creates a new membership" do
+                Membership.count.must_equal membership_count + 1
+              end
 
-          #     it "does creates a new identity" do
-          #       Identity.count.must_equal identity_count + 1
-          #     end
+              it "does creates a new identity" do
+                Identity.count.must_equal identity_count + 1
+              end
 
-          #     it "stores persons's contact info" do
-          #       [:email_addresses, :phone_numbers, :personal_addresses].each do |msg|
-          #         Person.last.send(msg).first.primary?.must_equal true
-          #       end
-          #     end
+              it "stores persons's contact info" do
+                [:email_addresses, :phone_numbers, :personal_addresses].each do |msg|
+                  Person.last.send(msg).first.primary?.must_equal true
+                end
+              end
 
-          #     it "stores person's facebook identity" do
-          #       Identity.last.attributes.slice('uid', 'provider', 'access_token')
-          #         .must_equal('uid'          => mock_fb_auth['uid'],
-          #                     'provider'     => mock_fb_auth['provider'],
-          #                     'access_token' => mock_fb_auth['credentials']['token'])
-          #     end
+              it "stores person's facebook identity" do
+                Identity.last.attributes.slice('uid', 'provider', 'access_token')
+                  .must_equal('uid'          => mock_facebook_auth['uid'],
+                              'provider'     => mock_facebook_auth['provider'],
+                              'access_token' => mock_facebook_auth['credentials']['token'])
+              end
 
-          #     it "redirects to member homepage" do
-          #       current_path.must_equal "/home"
-          #     end
-          #   end # with no errors
+              it "redirects to member homepage" do
+                current_path.must_equal "/home"
+              end
+            end # with no errors
 
-          #   describe "with invalid inputs" do
-          #     before do
-          #       fill_out_form(
-          #         submissions_by_input_label.merge(
-          #           'Zip Code*' => 'invalid',
-          #           'Phone'     => 'invalid',
-          #         )
-          #       )
-          #       click_button "Submit"
-          #     end
+            describe "with invalid inputs" do
+              before do
+                fill_out_form(
+                  submissions_by_input_label.merge(
+                    'Zip Code*' => 'invalid',
+                    'Phone'     => 'invalid',
+                  )
+                )
+                click_button "Submit"
+              end
 
-          #     it "shows an error for invalid phone number" do
-          #       page.must_have_content(
-          #         "Phone number 'invalid' is not a valid phone number"
-          #       )
-          #     end
+              it "shows an error for invalid phone number" do
+                page.must_have_content(
+                  "Phone number 'invalid' is not a valid phone number"
+                )
+              end
 
-          #     it "shows an error for invalid postal code" do
-          #       page.must_have_content(
-          #         "Zip code 'invalid' is not a valid zip code"
-          #       )
-          #     end
-          #   end # with invalid inputs
-          # end # filling out facebook signup form
+              it "shows an error for invalid postal code" do
+                page.must_have_content(
+                  "Zip code 'invalid' is not a valid zip code"
+                )
+              end
+            end # with invalid inputs
+          end # filling out facebook signup form
         end # viewing facebook signup form
       end # picking facebook path
 
@@ -587,7 +570,7 @@ class JoinGroupTest < FeatureTest
 
       before do
         person_count; membership_count; identity_count
-        stub_long_lived_access_token_response.call
+        stub_long_lived_access_token_request.call
         click_link "Join with Facebook"
         fill_out_form({'Zip Code*'   => '11111',
                        'Phone'       => '111-111-1111',})
