@@ -1,0 +1,28 @@
+<div class="join-button-group">
+  <!-- join with facebook -->
+  <%= link_to omniauth_authorize_path(:person,
+                                      :facebook,
+                                      auth_mode: 'signup',
+                                      group_id: @group.id),
+              class: 'btn-facebook-join' do %>
+  <%= image_tag 'facebook-logo.svg' %>
+  <span>Join with Facebook</span>
+  <% end %>
+
+  <!-- join with google -->
+  <%= link_to omniauth_authorize_path(:person,
+                                      :google_oauth2,
+                                      auth_mode: 'signup',
+                                      group_id: @group.id),
+              class: 'btn-google-join' do %>
+  <%= image_tag 'google-logo.svg' %>
+  <span>Join with Google</span>
+  <% end %>
+
+  <!-- join with email -->
+  <%= link_to new_group_member_path(@group, signup_mode: 'email'),
+              class: 'btn-join btn-email' do %>
+  <%= image_tag 'email-icon.svg' %>
+  <span>Join with email</span>
+  <% end %>
+</div>

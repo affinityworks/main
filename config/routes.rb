@@ -77,7 +77,7 @@ Rails.application.routes.draw do
       resources :events
     end
 
-    resources :memberships, only: [:index, :show]
+    resources :memberships, only: [:index, :show, :create]
 
     resources :affiliates
 

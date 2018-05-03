@@ -1,0 +1,4 @@
+<div class="already-joined-notice">
+  Oops! You already joined <%= link_to @group.name, group_dashboard_path(@group) %>
+  on <%= @membership.created_at.strftime('%B %d, %Y') %>.
+</div>

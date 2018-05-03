@@ -1,0 +1,8 @@
+<div class="join-button-group">
+  <%=form_for @membership, url: group_memberships_path(@group) do |f| %>
+    <%= f.hidden_field :group_id, value: @group.id %>
+    <%= f.hidden_field :person_id, value: current_person.id %>
+    <%= f.hidden_field :role, value: 'member' %>
+    <%=f.submit "Join", class: "btn-primary-join" %>
+  <% end %>
+</div>
