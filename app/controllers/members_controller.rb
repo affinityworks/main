@@ -48,13 +48,13 @@ class MembersController < ApplicationController
 
   def create
     if is_oauth_signup?
-      @member = Person.from_oauth_signup(decrypt_token(@oauth), person_params)
-      @member.save
+      @member = Person.create_or_update_from_oauth_signup(decrypt_token(@oauth),
+                                                          person_params)
     else
       @member = Person.create(person_params)
     end
     respond_to do |fmt|
-      @member.valid? ? handle_create_sucess(fmt) : handle_create_error(fmt)
+      @member&.valid? ? handle_create_sucess(fmt) : handle_create_error(fmt)
     end
   end
 
@@ -240,7 +240,7 @@ class MembersController < ApplicationController
 
   def build_member
     if action_name == 'new' && is_oauth_signup?
-      @member = Person.from_oauth_signup(OmniAuth::AuthHash.new(oauth_params.to_h))
+      @member = Person.build_from_oauth_signup(OmniAuth::AuthHash.new(oauth_params.to_h))
     else
       @member = Person.new
     end
