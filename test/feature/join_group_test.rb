@@ -1,9 +1,6 @@
 require_relative "../test_helper"
 
 class JoinGroupTest < FeatureTest
-  let(:group){ groups(:fantastic_four) }
-  let(:organizer){ people(:organizer) }
-
   # facebook fixtures
   let(:facebook_token) do
     "UwlcA5KfBMIfSXx8dYmTusAs5FNmqBDQ13L6upHh84mBua5TR7sK7eGYm9FSGz6pTdfv7xzz"+
@@ -165,82 +162,6 @@ class JoinGroupTest < FeatureTest
     # basic fixtures
     let(:group){ groups(:fantastic_four) }
     let(:organizer){ people(:organizer) }
-
-    # facebook fixtures
-    let(:fb_token) do
-      "UwlcA5KfBMIfSXx8dYmTusAs5FNmqBDQ13L6upHh84mBua5TR7sK7eGYm9FSGz6pTdfv7xzz"+
-        "iIKnPQLOEEw6icFuIFjrjSxQxHfxLpQEYWgz6zzs2U209liTg5JFRm9u7RmRzpxEaaWI9M"+
-        "9u61CAh7psEMkjqsfRBFi4hm89iJ91tACuiQGxtZhKr"
-    end
-    let(:mock_facebook_auth) do
-      OmniAuth::AuthHash.new(
-        { "provider"     => "facebook",
-          "uid"          => "100174124183958",
-          "credentials"  =>
-          { "token"        => fb_token ,
-            "expires_at"   => "1529880563",
-            "expires"      => "true" },
-          "info"         =>
-          { "email"        => "testy@affinity.works",
-            "name"         => "Testy McGee",
-            "image"        => "http://graph.facebook.com/v2.6/"+
-                              "100174124183958/picture" }
-        }
-      )
-    end
-    let(:mock_facebook_auth_existing_user) do
-      mock_facebook_auth.merge(
-        "info" => {
-          "email" => "organizer@admin.com",
-          "name"  => "DifferentlyNamed Organizer",
-          "image" => mock_facebook_auth['image']
-        }
-      )
-    end
-    let(:stub_long_lived_access_token_response) do
-      -> do
-        stub_request(
-          :get,
-          "https://graph.facebook.com/v2.9/oauth/access_token"+
-          "?client_id="+
-          "&client_secret="+
-          "&fb_exchange_token=UwlcA5KfBMIfSXx8dYmTusAs5FNmqBDQ13L6upH"+
-          "h84mBua5TR7sK7eGYm9FSGz6pTdfv7xzziIKnPQLOEEw6icFuIFjrjSxQx"+
-          "HfxLpQEYWgz6zzs2U209liTg5JFRm9u7RmRzpxEaaWI9M9u61CAh7psEMk"+
-          "jqsfRBFi4hm89iJ91tACuiQGxtZhKr&grant_type=fb_exchange_token"
-        ).to_return(:status => 200)
-      end
-    end
-
-    # google fixtures
-    let(:google_token) do
-      "ya29.GluqBT22iW1wYDxF1U295fvAkjpwtOBmp_Yym7rHmj0HIc3KcauH8f4a3Rdkc7SB"+
-        "xcU1h9lUJjeP-PgMpLhGzpoK-W43-Q53UCqMUJjxf82qJEtjm6byTgAILyWn"
-    end
-    let(:mock_google_auth) do
-      OmniAuth::AuthHash.new(
-        { "provider"     => "google",
-          "uid"          => "106985388443100843978",
-          "credentials"  =>
-          { "token"        => google_token ,
-            "expires_at"   => "1524802515",
-            "expires"      => "true" },
-          "info"         =>
-          { "email"        => "testy@affinity.works",
-            "name"         => "Testy McGee",
-            "image"        => "https://lh6.googleusercontent.com/-nw_wxuaEA_0"+
-                              "/AAAAAAAAAAI/AAAAAAAAAAc/jASoGVsZEYI/photo.jpg" },
-        }
-      )
-    end
-    let(:mock_google_auth_existing_user) do
-      mock_google_auth.merge(
-        mock_google_auth.fetch("info").merge(
-          "email" => "organizer@admin.com",
-          "name"  => "Test Organizer",
-        )
-      )
-    end
 
     describe "as a first time user" do
       before do
@@ -514,7 +435,7 @@ class JoinGroupTest < FeatureTest
               describe "with no errrors" do
                 before do
                   person_count; membership_count; identity_count
-                  stub_long_lived_access_token_response.call
+                  stub_long_lived_access_token_request.call
                   fill_out_form submissions_by_input_label
                   click_button 'Submit'
                 end
@@ -619,7 +540,6 @@ class JoinGroupTest < FeatureTest
           end
 
           describe "viewing google signup form" do
-
             let(:submissions_by_input_label) do
               {'Zip Code*'   => '11111',
                'Phone'       => '111-111-1111',}
@@ -649,7 +569,6 @@ class JoinGroupTest < FeatureTest
             end
 
             describe "filling out google signup form" do
-              # we don't test for submission errors here: covered in email branch
               let(:person_count){ Person.count }
               let(:membership_count){ Membership.count }
               let(:identity_count){ Identity.count }
@@ -734,7 +653,7 @@ class JoinGroupTest < FeatureTest
 
         before do
           person_count; membership_count; identity_count
-          stub_long_lived_access_token_response.call
+          stub_long_lived_access_token_request.call
           click_link "Join with Facebook"
           fill_out_form({'Zip Code*'   => '11111',
                          'Phone'       => '111-111-1111',})
