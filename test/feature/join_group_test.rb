@@ -82,7 +82,27 @@ class JoinGroupTest < FeatureTest
     let(:fantastic_four){ groups(:fantastic_four) }
     let(:ohio_chapter){ groups(:ohio_chapter) }
 
-    before { login_as people(:human_torch) }
+    before { login_as organizer }
+
+    describe "who is already a member of the group" do
+      before do
+        fantastic_four.members.must_include organizer
+        visit "/groups/#{fantastic_four.id}/join"
+      end
+
+      it "does not show a join button" do
+        page.wont_have_button "Join"
+      end
+
+      it "shows a notification that user has already joined" do
+        page.must_have_content "already joined"
+      end
+
+      it "links to group's dashboard" do
+        page.must_have_link fantastic_four.name,
+                            href: "/groups/#{fantastic_four.id}/dashboard"
+      end
+    end
 
     describe "who is not a member of the group" do
       before do

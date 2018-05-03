@@ -28,13 +28,22 @@ $primaryblue: rgba(2, 117, 216, 1);
             font-size: 1.5em;
             margin-top: .5em;
             font-weight: bold;
-            color: $blue;
+            color: $primaryblue;
         }
-        .join-button-group{
-            display: flex;
-            flex-direction: column;
+        .aside-contents {
             width: 85%;
             margin: 1rem 0;
+            text-align: center;
+        }
+        .join-button-group {
+            @extend .aside-contents;
+            display: flex;
+            flex-direction: column;
+        }
+        .already-joined-notice {
+            @extend .aside-contents;
+            padding: 0;
+            font-style: italic;
         }
     }
 }

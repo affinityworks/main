@@ -16,7 +16,11 @@
           Join our group
         </div>
         <% if current_person %>
-          <%= render 'join_buttons_logged_in' %>
+          <% if @group.members.include? current_person %>
+            <%= render 'already_joined_notice' %>
+          <% else %>
+            <%= render 'join_buttons_logged_in' %>
+          <% end %>
         <% else %>
           <%= render 'join_buttons_logged_out' %>
         <% end %>
