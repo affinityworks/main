@@ -5,7 +5,7 @@ class JoinGroupTest < FeatureTest
   let(:organizer){ people(:organizer) }
 
   # facebook fixtures
-  let(:fb_token) do
+  let(:facebook_token) do
     "UwlcA5KfBMIfSXx8dYmTusAs5FNmqBDQ13L6upHh84mBua5TR7sK7eGYm9FSGz6pTdfv7xzz"+
       "iIKnPQLOEEw6icFuIFjrjSxQxHfxLpQEYWgz6zzs2U209liTg5JFRm9u7RmRzpxEaaWI9M"+
       "9u61CAh7psEMkjqsfRBFi4hm89iJ91tACuiQGxtZhKr"
@@ -15,7 +15,7 @@ class JoinGroupTest < FeatureTest
       { "provider"     => "facebook",
         "uid"          => "100174124183958",
         "credentials"  =>
-        { "token"        => fb_token ,
+        { "token"        => facebook_token ,
           "expires_at"   => "1529880563",
           "expires"      => "true" },
         "info"         =>
@@ -35,18 +35,15 @@ class JoinGroupTest < FeatureTest
       }
     )
   end
-  let(:stub_long_lived_access_token_response) do
+  let(:facebook_authorization_double){ double(Facebook::Authorization) }
+  let(:stub_long_lived_access_token_request) do
     -> do
-      stub_request(
-        :get,
-        "https://graph.facebook.com/v2.9/oauth/access_token"+
-        "?client_id="+
-        "&client_secret="+
-        "&fb_exchange_token=UwlcA5KfBMIfSXx8dYmTusAs5FNmqBDQ13L6upH"+
-        "h84mBua5TR7sK7eGYm9FSGz6pTdfv7xzziIKnPQLOEEw6icFuIFjrjSxQx"+
-        "HfxLpQEYWgz6zzs2U209liTg5JFRm9u7RmRzpxEaaWI9M9u61CAh7psEMk"+
-        "jqsfRBFi4hm89iJ91tACuiQGxtZhKr&grant_type=fb_exchange_token"
-      ).to_return(:status => 200)
+      allow(Facebook::Authorization)
+        .to receive(:new)
+              .and_return(facebook_authorization_double)
+      allow(facebook_authorization_double)
+        .to receive(:request_long_lived_token)
+              .and_return(facebook_token)
     end
   end
 
@@ -332,6 +329,7 @@ class JoinGroupTest < FeatureTest
             end
           end
 
+
           it "has correct required fields" do
             required_labels.each do |label|
               "input[placeholder='#{label}'][required='required']"
@@ -345,7 +343,6 @@ class JoinGroupTest < FeatureTest
           end
 
           describe "filling out facebook signup form" do
-            # we don't test for submission errors here: covered in email branch
             let(:person_count){ Person.count }
             let(:membership_count){ Membership.count }
             let(:identity_count){ Identity.count }
@@ -353,7 +350,7 @@ class JoinGroupTest < FeatureTest
             describe "with no errrors" do
               before do
                 person_count; membership_count; identity_count
-                stub_long_lived_access_token_response.call
+                stub_long_lived_access_token_request.call
                 fill_out_form submissions_by_input_label
                 click_button 'Submit'
               end
@@ -366,7 +363,7 @@ class JoinGroupTest < FeatureTest
                 Membership.count.must_equal membership_count + 1
               end
 
-              it "creates a new identity" do
+              it "does creates a new identity" do
                 Identity.count.must_equal identity_count + 1
               end
 
@@ -573,7 +570,7 @@ class JoinGroupTest < FeatureTest
 
       before do
         person_count; membership_count; identity_count
-        stub_long_lived_access_token_response.call
+        stub_long_lived_access_token_request.call
         click_link "Join with Facebook"
         fill_out_form({'Zip Code*'   => '11111',
                        'Phone'       => '111-111-1111',})

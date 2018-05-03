@@ -27,7 +27,7 @@
       "required": true
     },
     "DATABASE_URL": {
-      "required": true
+      "required": false
     },
     "PGP_PRIVATE_KEY_HEROKU": {
       "required": true
@@ -103,5 +103,14 @@
     {
       "url": "heroku/ruby"
     }
-  ]
+  ],
+  "environments": {
+    "test": {
+      "scripts": {
+        "test-setup": "rake heroku:ci",
+        "test": "rails test"
+      },
+      "addons": ["heroku-postgresql:in-dyno", "heroku-redis:in-dyno"]
+    }
+  }
 }

@@ -38,4 +38,8 @@ namespace :heroku do
 
     puts "--- DONE exporting config vars"
   end
+
+  task ci: :environment do
+    sh "cd client && bundle exec rake react_on_rails:locale && yarn run build:production"
+  end
 end
