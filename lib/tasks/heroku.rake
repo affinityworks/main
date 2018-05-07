@@ -1,3 +1,5 @@
+require 'yaml'
+
 namespace :heroku do
   task release: :environment do
     Rake::Task["db:migrate"]
@@ -18,22 +20,28 @@ namespace :heroku do
   end
 
   task export_vars: :environment do
-    puts "--- BEGIN exporting config vars"
-    export_path = "lib/export/heroku"
+    puts "--- Checking for heroku-config plugin"
+    plugins = `heroku plugins`
+    
+    if plugins.include? "heroku-config"
+      puts "heroku-config plugin already installed!"
+    else
+      puts "Installing heroku-config plugin..."
+      sh "heroku plugins:install heroku-config"
+    end
 
-    Dir.
-      entries(export_path).
-      select{ |f| f != "." && f != ".." }.
-      each do |app_name|
+    puts "--- BEGIN exporting heroku config vars"
+    heroku_dir = ".env.heroku"
+
+    heroku_apps = YAML.load_file("config/heroku.yml")["apps"]
+
+    heroku_apps.each do |filename, app_name|
 
       puts "--- exporting vars for #{app_name}"
-      File.readlines("#{export_path}/#{app_name}").each do |var_assignment|
-        cmd = "heroku config:set #{var_assignment.sub("\n", "")} -a #{app_name}"
-        %x(#{cmd})
-      end
 
-      puts "--- deleting files for #{app_name}"
-      FileUtils.rm("#{export_path}/#{app_name}")
+      sh "heroku config:push -f #{heroku_dir}/#{filename} -a #{app_name}"
+
+      puts "\n"
     end
 
     puts "--- DONE exporting config vars"
