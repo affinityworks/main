@@ -115,6 +115,7 @@ group :development, :test do
   gem 'awesome_print'
   gem 'pry' # for debugging, robe console, etc...
   gem 'dotenv'
+  gem 'pry-remote'
 end
 
 group :development do
@@ -134,7 +135,6 @@ group :development do
   gem 'annotate', git: 'https://github.com/ctran/annotate_models.git', branch: "develop"
   gem 'guard'
   gem 'guard-minitest'
-  gem 'pry-remote'
 end
 
 group :test do
