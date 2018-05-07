@@ -261,6 +261,31 @@ class PersonTest < ActiveSupport::TestCase
     assert_equal person, person.json_representation.represented
   end
 
+  describe "predicates" do
+    describe "#is_member_of?" do
+      it "returns true if person is member of group" do
+        people(:human_torch).is_member_of?(groups(:fantastic_four))
+          .must_equal true
+      end
+
+      it "returns false if person is not member of group" do
+        people(:human_torch).is_member_of?(groups(:ohio_chapter))
+          .must_equal false
+      end
+    end
+
+    describe "#missing_contact_info?" do
+      it "returns true if person missing zip code" do
+        addresses(:new_signup).update(postal_code: nil)
+        assert people(:new_signup).missing_contact_info?
+      end
+
+      it "returns false if person has zip code" do
+        refute people(:new_signup).missing_contact_info?
+      end
+    end
+  end
+
   test '#import_remote' do
     remote_attendance_1 = { id: '123456', name: 'Jon Snow' }
     remote_attendance_2 = { id: '123457', name: 'Example Long Name' }

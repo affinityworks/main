@@ -1,16 +1,18 @@
 class MembersController < ApplicationController
   SIGNUP_MODES = %w[email facebook google].freeze
-
+  # authentication
   before_action :authenticate_person!, except: %i[new create]
-  before_action :set_signup_mode, only: %i[new create]
-  before_action :set_oauth, only: %i[new create]
-  before_action :maybe_authenticate_person, only: %i[new create]
+  before_action :allow_logged_out_signups, only: %i[new create]
   before_action :authorize_group_access
+  # setters
+  before_action :set_signup_mode, only: %i[new create edit update]
+  before_action :set_oauth, only: %i[new create edit update]
   before_action :set_group
   before_action :set_members, only: :index
   before_action :set_member, only: [:show, :edit, :update, :destroy, :attendances]
   before_action :build_member, only: %i[new create]
   before_action :build_member_resources, only: %i[new edit]
+  before_action :set_target, only: %i[new create edit update]
 
   protect_from_forgery except: [:update, :create] #TODO: Add the csrf token in react.
 
@@ -37,10 +39,14 @@ class MembersController < ApplicationController
   end
 
 
+
   # GET /groups/:id/members/new
   def new
-    authorize! :manage, @group unless is_signup_form?
-    render "signup_form_#{@signup_mode}" if is_signup_form?
+    if is_signup_form?
+      render "signup_form_#{@signup_mode}"
+    else
+      authorize! :manage, @group # dupe of authorize_group_access? (@aguestuser)
+    end
   end
 
   # POST /groups/:id/members/
@@ -48,8 +54,7 @@ class MembersController < ApplicationController
 
   def create
     if is_oauth_signup?
-      @member = Person.create_or_update_from_oauth_signup(decrypt_token(@oauth),
-                                                          person_params)
+      @member = Person.create_from_oauth_signup(decrypt_token(@oauth), person_params)
     else
       @member = Person.create(person_params)
     end
@@ -60,21 +65,24 @@ class MembersController < ApplicationController
 
   # GET /groups/:id/members/1/edit
   def edit
-    @groups = Group.all
-    authorize! :manage, @group
+    if is_signup_form?
+      render "signup_form_#{@signup_mode}"
+    else
+      @groups = Group.all
+      authorize! :manage, @group # redundant? (@aguestuser)
+    end
   end
 
   # PATCH/PUT /groups/1
   # PATCH/PUT /groups/1.json
   def update
     respond_to do |format|
-      if @member.update(person_params)
-        format.html { redirect_to group_member_path(@group, @member), notice: 'Member was successfully updated.' }
-        format.json { render :show, status: :ok, location: group_member_path(@group, @member) }
+      if is_oauth_signup?
+        ok = @member.update_from_oauth_signup(decrypt_token(@oauth), person_params)
       else
-        format.html { render :edit }
-        format.json { render json: @member.errors, status: :unprocessable_entity }
+        ok = @member.update(person_params)
       end
+      ok ? handle_update_success(format) : handle_update_error(format)
     end
   end
 
@@ -132,7 +140,7 @@ class MembersController < ApplicationController
               credentials: [:token, :expires_at, :expires ],
               info:        [:email, :name, :image ] ]
     ).tap{ |person_attrs| handle_empty_contact_info(person_attrs) }
-      .tap { |person_attrs| maybe_set_role(person_attrs) }
+      .tap { |person_attrs| maybe_set_memberships(person_attrs) }
   end
 
 
@@ -142,8 +150,9 @@ class MembersController < ApplicationController
     end
   end
 
-  def maybe_set_role(person_attrs)
-    if action_name == 'create'
+  def maybe_set_memberships(person_attrs)
+    # feels hacky. change this? (@aguestuser)
+    if action_name == 'create' || is_signup_form?
       person_attrs.merge!(
         memberships_attributes: [{role: 'member', group: @group}]
       )
@@ -154,12 +163,12 @@ class MembersController < ApplicationController
   def oauth_params
     oauth = params.require(:person).require(:oauth)
     case action_name
-    when 'new' # => ActionController::Parameters
+    when 'new', 'edit' # => ActionController::Parameters
       oauth.permit(:provider,
                   :uid,
                   credentials: [:token, :expires_at, :expires ],
                   info:        [:email, :name, :image ])
-    when 'create' # => String
+    when 'create', 'update' # => String
       oauth
     end
   end
@@ -192,27 +201,29 @@ class MembersController < ApplicationController
     end
   end
 
-  def maybe_authenticate_person
+  def allow_logged_out_signups
     authenticate_person! unless is_signup_form?
   end
 
   def set_group
-    @group = Group.find(params[:group_id]) if params[:group_id]
+    @group = current_group # this is dumb (@aguestuser)
   end
 
   def set_member
-    # NOTE: aguestuser thinks this is way to complex and should be re-written
-    #@membership = Membership.where(:group_id =>@group.affiliates.pluck(:id).push(@group.id) )
-    if @group
-      #are we looking at the person in the context of a specific group, then what groups can we see
-      group_ids = @group.affiliates.pluck(:id).push(@group.id)
-    else  #or did we not get any group
-      organized_groups_ids = current_user.organized_groups.pluck(:id)
-      group_ids = Affiliation.where(:group_id =>organized_groups_ids).pluck(:affiliated_id).concat(organized_groups_ids).uniq
+    if is_oauth_signup?
+      @member = Person.find(params.require(:id).to_i)
+    else
+      # NOTE: aguestuser thinks this is way to complex and should be re-written
+      if @group
+        #are we looking at the person in the context of a specific group, then what groups can we see
+        group_ids = @group.affiliates.pluck(:id).push(@group.id)
+      else  #or did we not get any group
+        organized_groups_ids = current_user.organized_groups.pluck(:id)
+        group_ids = Affiliation.where(:group_id =>organized_groups_ids).pluck(:affiliated_id).concat(organized_groups_ids).uniq
+      end
+      @memberships = Membership.where(:group_id => group_ids, :person_id => params[:id])
+      @member = @memberships.first.person if @memberships.any?
     end
-    @memberships = Membership.where(:group_id => group_ids, :person_id => params[:id])
-    # NOTE(aguestuser): wut? really?!
-    @member = @memberships.first.person if @memberships.any?
   end
 
   def set_members
@@ -223,12 +234,7 @@ class MembersController < ApplicationController
       ).page(params[:page])
 
     if params[:filter]
-      #in the future we might want ot search all fields like address, town, city, state... etc....
       @members = @members.where('given_name ilike ? or family_name ilike ?', "%#{params[:filter]}%","%#{params[:filter]}%")
-      #members = Member.arel_table
-      #wildcard_search = "%#{params[:filter]}%"
-
-      #@members = @members.where('given_name ilike :search or family_name ilike :search', :search wildcard_search)
     elsif params[:email]
       @members = @members.by_email(params[:email])
     end
@@ -236,6 +242,20 @@ class MembersController < ApplicationController
     if params[:sort]
       @members = @members.order(params[:sort] => params[:direction])
     end
+  end
+
+  def set_target
+    return unless is_signup_form?
+    case action_name
+    when 'new', 'create'
+      @target = group_members_path(@group, signup_mode: @signup_mode)
+    when 'edit', 'update'
+      @target = group_member_path(@group, @member, signup_mode: @signup_mode)
+    end
+  end
+
+  def set_cancel
+    @cancel = group_join_path(@group) if is_signup_form?
   end
 
   def build_member
@@ -258,7 +278,7 @@ class MembersController < ApplicationController
   end
 
   def is_oauth_signup?
-    %w[facebook google].include? @signup_mode
+    %w[facebook google].include?(@signup_mode)
   end
 
   def handle_create_sucess(fmt)
@@ -266,6 +286,7 @@ class MembersController < ApplicationController
       Members::AfterCreate.call(member: @member, group: @group)
       if is_signup_form?
         flash[:notice] = "You joined #{@group.name}"
+        session[:redirect_uri] = group_dashboard_path(@group)
         sign_in_and_redirect(@member)
       else
         flash[:notice] = 'Member was successfully created.'
@@ -282,4 +303,16 @@ class MembersController < ApplicationController
     fmt.html { render is_signup_form? ? "signup_form_#{@signup_mode}" : :new }
     fmt.json { render json: @group.errors, status: :unprocessable_entity }
   end
+
+  def handle_update_success(format)
+
+    format.html { redirect_to group_member_path(@group, @member), notice: 'Member was successfully updated.' }
+    format.json { render :show, status: :ok, location: group_member_path(@group, @member) }
+  end
+
+  def handle_update_error(format)
+    format.html { render :edit }
+    format.json { render json: @member.errors, status: :unprocessable_entity }
+  end
+
 end

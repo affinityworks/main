@@ -194,6 +194,16 @@ class Person < ApplicationRecord
     JsonApi::PersonRepresenter.new(self)
   end
 
+  # PREDICATES
+
+  def is_member_of?(group)
+    group.members.include?(self)
+  end
+
+  def missing_contact_info?
+    primary_personal_address&.postal_code.nil?
+  end
+
   #
   # CLASS METHODS
   #
@@ -213,21 +223,17 @@ class Person < ApplicationRecord
     end
 
     def build_from_oauth_signup(auth, person_params={})
-      email, given, family = self.parse_info_from_auth(auth)
-      return unless email
-      new new_signup_attrs(auth, person_params, email, given, family)
+      from_oauth_signup :new, auth, person_params
     end
 
-    def create_or_update_from_oauth_signup(auth, person_params={})
+    def create_from_oauth_signup(auth, person_params={})
+      from_oauth_signup :create, auth, person_params
+    end
+
+    def from_oauth_signup(constructor, auth, person_params={})
       email, given, family = parse_info_from_auth(auth)
       return unless email
-      if person = Person.find_by_email(email)
-        save_omniauth(EmailAddress.find_by(address: email),
-                      Identity.find_for_oauth(auth),
-                      person.tap{ |p| p.update(person_params)})
-      else
-        create new_signup_attrs(auth, person_params, email, given, family)
-      end
+      send constructor, signup_attrs(auth, person_params, email, given, family)
     end
 
     def from_oauth_login(auth, signed_in_resource = nil)
@@ -289,6 +295,16 @@ class Person < ApplicationRecord
     end # import_remote
   end # CLASS METHODS
 
+  #
+  # MUTATIONS
+  #
+
+  def update_from_oauth_signup(auth, person_params={})
+    self.class.save_omniauth(EmailAddress.find_by(address: auth.info.email),
+                             Identity.find_for_oauth(auth),
+                             self.tap{ |p| p.update!(person_params)})
+  end
+
   #we dont' use permitted but do use rejected
   def permitted_import_parameters
     return [:family_name, :given_name, :additional_name, :honorific_prefix,
@@ -332,7 +348,7 @@ class Person < ApplicationRecord
     # OAUTH SIGNUP HELPERS
     #
 
-    def new_signup_attrs(auth, person_params, email, given, family)
+    def signup_attrs(auth, person_params, email, given, family)
       person_params.merge(
         given_name: given,
         family_name: family,
