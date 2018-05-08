@@ -640,10 +640,58 @@ class JoinGroupTest < FeatureTest
       end # viewing the join page
     end # as a first time user
 
-    describe "as user with an affinity account" do
+    describe "as person with a pre-existing affinity account" do
       before do
         OmniAuth.config.mock_auth[:facebook] = mock_facebook_auth_existing_user
         OmniAuth.config.mock_auth[:google_oauth2] = mock_google_auth_existing_user
+      end
+
+      describe "picking the email path" do
+        let(:submissions_by_input_label) do
+          {'Email*'      => organizer.email,
+           'Password*'   => 'password',
+           'First Name*' => 'foo',
+           'Last Name*'  => 'bar',
+           'Zip Code*'   => '11111',
+           'Phone'       => '111-111-1111',}
+        end
+
+        before do
+          person_count; membership_count; identity_count
+          visit "/groups/#{group.id}/join"
+          click_link "Join with email"
+          fill_out_form submissions_by_input_label
+          click_button "Submit"
+        end
+
+        it "does not create a new person" do
+          Person.count.must_equal person_count
+        end
+
+        it "does not create a new membership" do
+          Membership.count.must_equal membership_count
+        end
+
+        it "redirects to the login page" do
+          current_path.must_equal "/admin/login"
+        end
+
+        it "provides an error notification" do
+          page.html.must_match "#{organizer.email} already exists"
+          page.html.must_match "login to join #{group.name}"
+        end
+
+        describe "after logging in" do
+          before do
+            fill_out_form("Email"    => organizer.email,
+                          "Password" => 'password')
+            click_button "Login with email"
+          end
+
+          it "redirects to the join page" do
+            current_path.must_equal "/groups/#{group.id}/join"
+          end
+        end
       end
 
       describe "who is already a group member" do

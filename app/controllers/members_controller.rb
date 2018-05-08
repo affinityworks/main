@@ -55,6 +55,8 @@ class MembersController < ApplicationController
   def create
     if is_oauth_signup?
       @member = Person.create_from_oauth_signup(decrypt_token(@oauth), person_params)
+    elsif is_email_signup? && person = Person.find_by_email_param(person_params)
+      return handle_create_dupe_email person.primary_email_address
     else
       @member = Person.create(person_params)
     end
@@ -62,6 +64,7 @@ class MembersController < ApplicationController
       @member&.valid? ? handle_create_sucess(fmt) : handle_create_error(fmt)
     end
   end
+
 
   # GET /groups/:id/members/1/edit
   def edit
@@ -281,6 +284,14 @@ class MembersController < ApplicationController
     %w[facebook google].include?(@signup_mode)
   end
 
+  def is_email_signup?
+    @signup_mode == 'email'
+  end
+
+  ##########################
+  # ACTION RESULT HANDLERS #
+  ##########################
+
   def handle_create_sucess(fmt)
     fmt.html do
       Members::AfterCreate.call(member: @member, group: @group)
@@ -296,6 +307,13 @@ class MembersController < ApplicationController
     fmt.json do
       render :show, status: :ok, location: group_member_path(@group, @member)
     end
+  end
+
+  def handle_create_dupe_email(email)
+    session[:redirect_uri] = group_join_path(current_group)
+    flash[:error] = "Oops! A user with email #{email} already exists." +
+                    "Please login to join #{current_group.name}."
+    redirect_to new_person_session_path
   end
 
   def handle_create_error(fmt)
@@ -314,5 +332,4 @@ class MembersController < ApplicationController
     format.html { render :edit }
     format.json { render json: @member.errors, status: :unprocessable_entity }
   end
-
 end

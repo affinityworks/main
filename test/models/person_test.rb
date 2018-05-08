@@ -261,6 +261,41 @@ class PersonTest < ActiveSupport::TestCase
     assert_equal person, person.json_representation.represented
   end
 
+  describe "class methods" do
+
+    describe ".find_by_email_param" do
+      let(:person){ people(:organizer) }
+      let(:group){ groups(:six) }
+
+      describe "when params contain email of existing person" do
+        let(:params) do
+          ActionController::Parameters.new(
+            email_addresses_attributes: ActionController::Parameters.new(
+              '0' => { address: person.primary_email_address }
+            ),
+          ).permit(email_addresses_attributes: [:address])
+        end
+
+        it "returns person with matched email address" do
+          Person.find_by_email_param(params).must_equal person
+        end
+      end
+
+      describe "when params do not contain email of an existing person" do
+        let(:params) do
+          ActionController::Parameters.new(
+            email_addresses_attributes: ActionController::Parameters.new(
+              '0' => { address: 'qwertyuiop@asdfghjkl.zxcvbnm' }
+            )).permit(email_addresses_attributes: [:address])
+        end
+
+        it "returns nil" do
+          Person.find_by_email_param(params).must_be_nil
+        end
+      end
+    end
+  end
+
   describe "predicates" do
     describe "#is_member_of?" do
       it "returns true if person is member of group" do

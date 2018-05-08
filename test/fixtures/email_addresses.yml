@@ -42,7 +42,7 @@ member2:
   address: member2@member.com
   person_id: 5
 
-admin:
+organizer:
   id: 7
   primary: true
   address: organizer@admin.com

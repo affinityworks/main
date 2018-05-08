@@ -222,6 +222,10 @@ class Person < ApplicationRecord
       end
     end
 
+    def find_by_email_param(person_params)
+      find_by_email(person_params.dig('email_addresses_attributes', '0', 'address'))
+    end
+
     def build_from_oauth_signup(auth, person_params={})
       from_oauth_signup :new, auth, person_params
     end
