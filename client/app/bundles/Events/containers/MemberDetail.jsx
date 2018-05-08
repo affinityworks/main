@@ -99,7 +99,7 @@ class MemberDetail extends Component {
 
     return (
       <div className='check-member mb-3'>
-        <span className='mr-3'>{`Is ${isOrganizer ? 'organizer' : 'member'} of ${membership.attributes.group.data.attributes.name}`}</span>
+        <span className='toggle-left-side'>Member</span>
         <label className='switch'>
         <input
           name='isOrganizer'
@@ -110,6 +110,7 @@ class MemberDetail extends Component {
         />
         <span className='slider round'></span>
         </label>
+        <span className='toggle-right-side'>Organizer</span>
       </div>
     )
   }
