@@ -281,6 +281,48 @@ Just in case you do, here is a near-exhaustive list of the steps involved in doi
   d. creating two `TXT` records with the values observed in step b above
 
 
-## Heroku Pipeline and CI
+## Heroku Pipeline/CI/ENV
 
-### Woah
+### Heroku Pipeline
+
+The current pipeline has 3 stages: Review -> Staging -> Production
+
+#### Review
+
+Build: Built automatically by any new Pull Requests. 
+
+Env: Pulls all environment variables from the Staging app environment in Heroku. 
+
+Arity: There will be one Review app for each PR until the PR is merged, upon which the Review app is destroyed.
+
+#### Staging
+
+Build: Built automatically upon any new merges of Pull Requests into master.
+
+Env: Gets environment variables from the file .env.heroku/staging-affinityworks.
+
+Arity: Only one Staging app.
+
+#### Production
+
+Build: Production is built manually built upon promoting Staging.
+
+Env: Gets environment variables from the file .env.heroku/affinityworks
+
+Arity: Currently there is one general Production app, as well as one client specific Production app.
+
+### Heroku CI
+
+Description: The Heroku CI is currently set up to run automatically upon any of the following conditions: a push to an open Pull Request, a merge of a PR into master, a promotion from one app in the pipeline up to the next (such as from staging to production).
+
+Build: The Heroku CI build pays attention to the `environments: test` section of `app.json` in this repo. This section contains both the `test-setup` script to run before running the tests as well as the `test` script for actually executing the tests.
+
+Env: Gets environment variables from settings panel in the Settings panel of the Pipeline, under the section *Heroku CI*.
+
+
+### Heroku ENV
+
+To add a new environment variable to all of the Heroku apps, follow these steps:
+1. Add the variable and its value to all of the files listed in config/heroku.yml
+1. Run the command `rake heroku:export_vars` from the command line
+1. Ensure that the variable has been added to each environment by running the command `heroku config:get $VAR -a $ENV` where $VAR is the name of the variable and $ENV is one of the envs listed in heroku.yml
