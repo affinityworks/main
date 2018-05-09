@@ -237,6 +237,7 @@ class Person < ApplicationRecord
     def from_oauth_signup(constructor, auth, person_params={})
       email, given, family = parse_info_from_auth(auth)
       return unless email
+      # TODO (aguestuser|09 May 2018): consider rewriting this for clarity
       send constructor, signup_attrs(auth, person_params, email, given, family)
     end
 
@@ -304,9 +305,9 @@ class Person < ApplicationRecord
   #
 
   def update_from_oauth_signup(auth, person_params={})
-    self.class.save_omniauth(EmailAddress.find_by(address: auth.info.email),
-                             Identity.find_for_oauth(auth),
-                             self.tap{ |p| p.update!(person_params)})
+    Person.save_omniauth(EmailAddress.find_by(address: auth.info.email),
+                         Identity.find_for_oauth(auth),
+                         self.tap{ |p| p.update!(person_params) })
   end
 
   #we dont' use permitted but do use rejected

@@ -1,30 +1,35 @@
 class People::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  AUTH_ACTIONS = %w[login signup].freeze
   before_action :set_auth
-  before_action :set_auth_mode
+  before_action :set_auth_action
 
   def facebook
     @service = "facebook"
-    send @auth_mode
+    send AUTH_ACTIONS.dup.delete(@auth_action)
   end
 
   def google_oauth2
     @service = "google"
-    send @auth_mode
+    send AUTH_ACTIONS.dup.delete(@auth_action)
   end
 
   private
 
   ###########
-  # HELPERS #
+  # SETTERS #
   ###########
 
   def set_auth
     @auth = request.env.fetch("omniauth.auth", {}).except(:extra)
   end
 
-  def set_auth_mode
-    @auth_mode = request.env.dig("omniauth.params", "auth_mode") || 'login'
+  def set_auth_action
+    @auth_action = request.env.dig("omniauth.params", "auth_action") || 'login'
   end
+
+  ###########
+  # ACTIONS #
+  ###########
 
   def login
     if @person = Person.from_oauth_login(@auth, current_person)
@@ -45,9 +50,9 @@ class People::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
   end
 
-  #####################
-  # SECONDARY HELPERS #
-  #####################
+  ###########
+  # HELPERS #
+  ###########
 
   def handle_new_person
     redirect_to new_group_member_path(signup_mode: @service,
