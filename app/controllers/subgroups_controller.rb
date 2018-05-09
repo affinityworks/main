@@ -15,7 +15,7 @@ class SubgroupsController < ApplicationController
     )
     if @subgroup.valid?
       Subgroups::AfterCreate.call(organizer: organizer, subgroup: @subgroup)
-      sign_in_and_redirect(organizer)
+      sign_in_and_redirect_to(organizer, group_dashboard_path(@subgroup))
     else
       render :new
     end
@@ -36,21 +36,19 @@ class SubgroupsController < ApplicationController
   def organizer_params
     params
       .require(:group)
-      .permit(
-        organizer_attributes: [
-          :given_name,
-          :family_name,
-          :password,
-          phone_numbers_attributes: [:number],
-          email_addresses_attributes: [:address],
-          personal_addresses_attributes: [:postal_code]
-        ]
-      )
-      .fetch('organizer_attributes')
-      .tap { |organizer_attrs| format_contact_info(organizer_attrs) }
+      .require(:organizer_attributes)
+      .permit(:id,
+              :given_name,
+              :family_name,
+              :password,
+              phone_numbers_attributes: [:number],
+              email_addresses_attributes: [:address],
+              personal_addresses_attributes: [:postal_code])
+      .tap { |o_params| format_contact_info(o_params) }
   end
 
   def format_contact_info(organizer_attrs)
+    return if current_person # we only gather contact info for logged-out users
     [
       'phone_numbers_attributes',
       'email_addresses_attributes',

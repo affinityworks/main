@@ -1,0 +1,6 @@
+<% organizer = @subgroup.memberships.first.person %>
+<div class="organizer-input-container-hidden">
+  <%= f.fields_for :organizer_attributes, organizer do |member_form| %>
+    <%= member_form.hidden_field :id, value: current_person.id %>
+  <% end %>
+</div>
