@@ -1,0 +1,47 @@
+<div class="organizer-input-container">
+
+  <h2>Organizer Info</h2>
+
+  <% organizer = @subgroup.memberships.first.person %>
+  <% phone_number = organizer.phone_numbers.first %>
+  <% email_address = organizer.email_addresses.first %>
+  <% address = organizer.personal_addresses.first %>
+
+  <div class="organizer-inputs">
+    <%= f.fields_for :organizer_attributes, organizer do |member_form| %>
+      <!-- email -->
+      <div class="field">
+        <%= member_form.fields_for :email_addresses_attributes, email_address do |email_form| %>
+          <%= email_form.text_field :address, placeholder: 'Email', required: true %>
+        <% end #member_form.fields_for :email_address %>
+      </div>
+
+      <!-- password -->
+      <div class="field">
+        <%= member_form.password_field :password, placeholder: :password, required: true %>
+      </div>
+
+      <!-- name -->
+      <div class="field">
+        <%= member_form.text_field :given_name, placeholder: :first_name, required: true %>
+      </div>
+      <div class="field">
+        <%= member_form.text_field :family_name, placeholder: :last_name, required: true %>
+      </div>
+
+      <!-- phone -->
+      <div class="field">
+        <%= member_form.fields_for :phone_numbers_attributes, phone_number do |phone_form| %>
+          <%= phone_form.text_field :number, placeholder: 'Phone number' %>
+        <% end #member_form.fields_for :phone_number %>
+      </div>
+
+      <!-- zip -->
+      <div class="field">
+        <%= member_form.fields_for :personal_addresses_attributes, address do |address_form| %>
+          <%= address_form.text_field :postal_code, placeholder: 'Zipcode (personal)' %>
+        <% end #member_form.fields_for :email_address %>
+      </div>
+    <% end %>
+  </div>
+</div>

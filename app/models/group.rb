@@ -171,13 +171,18 @@ class Group < ApplicationRecord
   def create_subgroup_with_organizer(subgroup_attrs: {}, organizer_attrs: {})
     subgroup = create_subgroup(
       subgroup_attrs.merge(
-        memberships_attributes: [{
-          person_attributes: organizer_attrs,
-          role: "organizer"
-        }]
+        memberships_attributes: parse_membership_attrs(organizer_attrs)
       )
     )
     [subgroup, subgroup.members.first]
+  end
+
+  def parse_membership_attrs(organizer_attrs)
+    if id = organizer_attrs.fetch('id', nil)
+      [{ person_id: id, role: 'organizer' }]
+    else
+      [{ person_attributes: organizer_attrs, role: 'organizer' }]
+    end
   end
 
   def build_google_group_email

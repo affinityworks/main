@@ -23,57 +23,63 @@ $primaryblue: rgba(2, 117, 216, 1);
     }
     .form-container {
         display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        .fields-container {
-            /* background-color: $lightgray; */
-            padding: 1em;
-        }
-        // TODO: extract this!
-        .field {
+        flex-direction: column;
+        .inputs-container {
             display: flex;
-            flex-direction: column;
-            margin-top: .75em;
-            input, textarea {
-                border: 1px solid $lightgray;
-                border-radius: .25em;
-                padding: .5em;
+            flex-direction: row;
+            flex-wrap: wrap;
+            .fields-container {
+                /* background-color: $lightgray; */
+                padding: 1em;
             }
-            textarea {
-                min-height: 13em;
-            }
-        }
-        .group-input-container {
-            @extend .fields-container;
-            display: flex;
-            flex-direction: column;
-            min-width: 67%;
-            flex-grow: 2;
-            padding-right: 1em;
-            .group-inputs {
+            // TODO: extract this!
+            .field {
                 display: flex;
                 flex-direction: column;
+                margin-top: .75em;
+                input, textarea {
+                    border: 1px solid $lightgray;
+                    border-radius: .25em;
+                    padding: .5em;
+                }
+                textarea {
+                    min-height: 13em;
+                }
             }
-        }
-        .organizer-input-container {
-            @extend .fields-container;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-            min-width: 33%;
-            .organizer-inputs {
+            .group-input-container {
+                @extend .fields-container;
                 display: flex;
                 flex-direction: column;
+                min-width: 67%;
+                flex-grow: 2;
+                padding-right: 1em;
+                .group-inputs {
+                    display: flex;
+                    flex-direction: column;
+                }
+            }
+            .organizer-input-container {
+                @extend .fields-container;
+                display: flex;
+                flex-direction: column;
+                flex-grow: 1;
+                min-width: 33%;
+                .organizer-inputs {
+                    display: flex;
+                    flex-direction: column;
+                }
+            }
+            .organizer-input-container-hidden {
+                width: 0%;
+            }
+        }
+        .submit-container {
+            :first-child {
+                width: 25%;
+            }
+            display: flex;
+            flex-direction: row;
+        }
 
-            }
-        }
-        .submit {
-            @extend .btn, .btn-primary;
-            text-align: center;
-            width: 33%;
-            text-transform: uppercase;
-            margin: 1em auto 1em auto;
-            background-color: $primaryblue;
-        }
     }
 }
