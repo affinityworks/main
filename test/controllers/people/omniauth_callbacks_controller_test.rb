@@ -8,8 +8,8 @@ class People::OmniauthCallbacksControllerTest < ActionDispatch::IntegrationTest
   # - replace these with browser tests
   # - this testing approach makes it impossible to pass "omniauth.params" to
   #   `People::OmniAuthCallbacksController#facebook`
-  # - it therefore forces us to write application code (#set_auth_mode) that defaults
-  #   to `auth_mode == 'login'` --> okay for now, but major antipattern to let
+  # - it therefore forces us to write application code (#set_auth_action) that defaults
+  #   to `auth_action == 'login'` --> okay for now, but major antipattern to let
   #   tests dictate shape of application code in a way that constrains its logic
 
   test 'GET #facebook' do

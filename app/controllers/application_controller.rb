@@ -9,8 +9,20 @@ class ApplicationController < ActionController::Base
   end
 
   def current_group
-    group_id = controller_name == 'groups' ? params[:id] : params[:group_id]
-    Group.find(group_id) if group_id
+    if group_id = parse_group_id
+      Group.find(group_id)
+    end
+  end
+
+  def parse_group_id
+    case controller_name
+    when 'groups'
+      params[:id]
+    when 'omniauth_callbacks'
+      request.env.dig("omniauth.params", "group_id")
+    else
+      params[:group_id]
+    end
   end
 
   def current_role
@@ -67,7 +79,7 @@ class ApplicationController < ActionController::Base
 
   def authorized_controllers_and_actions?
     return true if is_public_list?
-    return true if is_signup_form?
+    return true if is_unauthenticated_signup_form?
     return true if is_join_request?
     false
   end
@@ -77,9 +89,13 @@ class ApplicationController < ActionController::Base
       action_name == 'index'
   end
 
+  def is_unauthenticated_signup_form?
+    is_signup_form? && %w[new create].include?(action_name)
+  end
+
   def is_signup_form?
     controller_name == 'members' &&
-      (action_name == 'new' || action_name == 'create') &&
+      %w[new create edit update].include?(action_name) &&
       params[:signup_mode]
   end
 
@@ -93,8 +109,6 @@ class ApplicationController < ActionController::Base
     controller_name == 'dashboard'
   end
 
-
-
   rescue_from CanCan::AccessDenied do |_exception|
     respond_to do |format|
       format.html do
@@ -103,6 +117,12 @@ class ApplicationController < ActionController::Base
       end
       format.json { head :forbidden }
     end
+  end
+
+  # util
+  def sign_in_and_redirect_to(resource, path)
+    session[:redirect_uri] = path
+    sign_in_and_redirect resource
   end
 
   private

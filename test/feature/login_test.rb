@@ -52,12 +52,12 @@ class LoginTest < FeatureTest
 
   it "has a button to login with facebook" do
     page.must_have_link "Login with Facebook",
-                        href: "/admin/auth/facebook?auth_mode=login"
+                        href: "/admin/auth/facebook?auth_action=login"
   end
 
   it "has a button to login with google" do
     page.must_have_link "Login with Google",
-                        href: "/admin/auth/google_oauth2?auth_mode=login"
+                        href: "/admin/auth/google_oauth2?auth_action=login"
   end
 
   it "has a form to login with email" do

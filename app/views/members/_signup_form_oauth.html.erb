@@ -4,7 +4,7 @@
     <div class="card-block">
       <h3>Join <%= @group.name %></h3>
       <div>
-        <%= form_for @member, as: :person, url: group_members_path(@group, signup_mode: @signup_mode) do |f| %>
+        <%= form_for @member, as: :person, url: @target do |f| %>
           <div class="prompt">
             We just need a little more info...
           </div>

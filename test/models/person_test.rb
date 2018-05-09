@@ -261,6 +261,66 @@ class PersonTest < ActiveSupport::TestCase
     assert_equal person, person.json_representation.represented
   end
 
+  describe "class methods" do
+
+    describe ".find_by_email_param" do
+      let(:person){ people(:organizer) }
+      let(:group){ groups(:six) }
+
+      describe "when params contain email of existing person" do
+        let(:params) do
+          ActionController::Parameters.new(
+            email_addresses_attributes: ActionController::Parameters.new(
+              '0' => { address: person.primary_email_address }
+            ),
+          ).permit(email_addresses_attributes: [:address])
+        end
+
+        it "returns person with matched email address" do
+          Person.find_by_email_param(params).must_equal person
+        end
+      end
+
+      describe "when params do not contain email of an existing person" do
+        let(:params) do
+          ActionController::Parameters.new(
+            email_addresses_attributes: ActionController::Parameters.new(
+              '0' => { address: 'qwertyuiop@asdfghjkl.zxcvbnm' }
+            )).permit(email_addresses_attributes: [:address])
+        end
+
+        it "returns nil" do
+          Person.find_by_email_param(params).must_be_nil
+        end
+      end
+    end
+  end
+
+  describe "predicates" do
+    describe "#is_member_of?" do
+      it "returns true if person is member of group" do
+        people(:human_torch).is_member_of?(groups(:fantastic_four))
+          .must_equal true
+      end
+
+      it "returns false if person is not member of group" do
+        people(:human_torch).is_member_of?(groups(:ohio_chapter))
+          .must_equal false
+      end
+    end
+
+    describe "#missing_contact_info?" do
+      it "returns true if person missing zip code" do
+        addresses(:new_signup).update(postal_code: nil)
+        assert people(:new_signup).missing_contact_info?
+      end
+
+      it "returns false if person has zip code" do
+        refute people(:new_signup).missing_contact_info?
+      end
+    end
+  end
+
   test '#import_remote' do
     remote_attendance_1 = { id: '123456', name: 'Jon Snow' }
     remote_attendance_2 = { id: '123457', name: 'Example Long Name' }

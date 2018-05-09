@@ -1,7 +1,12 @@
 require_relative "../test_helper"
 
 class JoinGroupTest < FeatureTest
+  ###################
+  # SHARED FIXTURES #
+  ###################
+
   # facebook fixtures
+
   let(:facebook_token) do
     "UwlcA5KfBMIfSXx8dYmTusAs5FNmqBDQ13L6upHh84mBua5TR7sK7eGYm9FSGz6pTdfv7xzz"+
       "iIKnPQLOEEw6icFuIFjrjSxQxHfxLpQEYWgz6zzs2U209liTg5JFRm9u7RmRzpxEaaWI9M"+
@@ -162,6 +167,9 @@ class JoinGroupTest < FeatureTest
     # basic fixtures
     let(:group){ groups(:fantastic_four) }
     let(:organizer){ people(:organizer) }
+    let(:person_count){ Person.count }
+    let(:membership_count){ Membership.count }
+    let(:identity_count){ Identity.count }
 
     describe "as a first time user" do
       before do
@@ -258,8 +266,8 @@ class JoinGroupTest < FeatureTest
                   end
                 end
 
-                it "redirects to member homepage" do
-                  current_path.must_equal "/home"
+                it "redirects to group dashboard" do
+                  current_path.must_equal "/groups/#{group.id}/dashboard"
                 end
               end # with no errors
 
@@ -427,12 +435,8 @@ class JoinGroupTest < FeatureTest
             end
 
             describe "filling out facebook signup form" do
-              # we don't test for submission errors here: covered in email branch
-              let(:person_count){ Person.count }
-              let(:membership_count){ Membership.count }
-              let(:identity_count){ Identity.count }
 
-              describe "with no errrors" do
+              describe "with no errors" do
                 before do
                   person_count; membership_count; identity_count
                   stub_long_lived_access_token_request.call
@@ -466,7 +470,7 @@ class JoinGroupTest < FeatureTest
                 end
 
                 it "redirects to member homepage" do
-                  current_path.must_equal "/home"
+                  current_path.must_equal "/groups/#{group.id}/dashboard"
                 end
               end # with no errors
 
@@ -569,9 +573,6 @@ class JoinGroupTest < FeatureTest
             end
 
             describe "filling out google signup form" do
-              let(:person_count){ Person.count }
-              let(:membership_count){ Membership.count }
-              let(:identity_count){ Identity.count }
 
               describe "with no errrors" do
                 before do
@@ -606,7 +607,7 @@ class JoinGroupTest < FeatureTest
                 end
 
                 it "redirects to member homepage" do
-                  current_path.must_equal "/home"
+                  current_path.must_equal "/groups/#{group.id}/dashboard"
                 end
               end # with no errors
 
@@ -639,24 +640,27 @@ class JoinGroupTest < FeatureTest
       end # viewing the join page
     end # as a first time user
 
-    describe "as user with an affinity account" do
+    describe "as person with a pre-existing affinity account" do
       before do
         OmniAuth.config.mock_auth[:facebook] = mock_facebook_auth_existing_user
         OmniAuth.config.mock_auth[:google_oauth2] = mock_google_auth_existing_user
-        visit "/groups/#{group.id}/join"
       end
 
-      describe "picking facebook path" do
-        let(:person_count){ Person.count }
-        let(:membership_count){ Membership.count }
-        let(:identity_count){ Identity.count }
+      describe "picking the email path" do
+        let(:submissions_by_input_label) do
+          {'Email*'      => organizer.email,
+           'Password*'   => 'password',
+           'First Name*' => 'foo',
+           'Last Name*'  => 'bar',
+           'Zip Code*'   => '11111',
+           'Phone'       => '111-111-1111',}
+        end
 
         before do
           person_count; membership_count; identity_count
-          stub_long_lived_access_token_request.call
-          click_link "Join with Facebook"
-          fill_out_form({'Zip Code*'   => '11111',
-                         'Phone'       => '111-111-1111',})
+          visit "/groups/#{group.id}/join"
+          click_link "Join with email"
+          fill_out_form submissions_by_input_label
           click_button "Submit"
         end
 
@@ -664,36 +668,161 @@ class JoinGroupTest < FeatureTest
           Person.count.must_equal person_count
         end
 
-        it "creates a new membership" do
-          Membership.count.must_equal membership_count + 1
+        it "does not create a new membership" do
+          Membership.count.must_equal membership_count
         end
 
-        it "creates a new identity" do
-          Identity.count.must_equal identity_count + 1
+        it "redirects to the login page" do
+          current_path.must_equal "/admin/login"
         end
 
-        it "does not change person's name" do
-          organizer.given_name.must_equal("Test")
+        it "provides an error notification" do
+          page.html.must_match "#{organizer.email} already exists"
+          page.html.must_match "login to join #{group.name}"
         end
 
-        it "stores persons's contact info" do
-          [:email_addresses, :phone_numbers, :personal_addresses].each do |msg|
-            organizer.send(msg).first.primary?.must_equal true
+        describe "after logging in" do
+          before do
+            fill_out_form("Email"    => organizer.email,
+                          "Password" => 'password')
+            click_button "Login with email"
+          end
+
+          it "redirects to the join page" do
+            current_path.must_equal "/groups/#{group.id}/join"
           end
         end
+      end
 
-        it "stores person's facebook identity" do
-          Identity.last.attributes.slice('person_id', 'uid', 'provider', 'access_token')
-            .must_equal('person_id'    => organizer.id,
-                        'uid'          => mock_facebook_auth['uid'],
-                        'provider'     => mock_facebook_auth['provider'],
-                        'access_token' => mock_facebook_auth['credentials']['token'])
+      describe "who is already a group member" do
+        before do
+          group.add_member(member: organizer)
+          visit "/groups/#{group.id}/join"
         end
 
-        it "redirects to member homepage" do
-          current_path.must_equal "/home"
+        describe "picking Facebook path" do
+          before do
+            stub_long_lived_access_token_request.call
+            click_link "Join with Facebook"
+          end
+
+          it "logs person in and redirects to group dashboard page" do
+            current_path.must_equal "/groups/#{group.id}/dashboard"
+          end
+
+          it "flashes 'already a member' message" do
+            page.html.must_match "already a member"
+          end
         end
-      end # picking facebook path
+      end
+
+      describe "who is not a group member" do
+
+        describe "and lacks contact info" do
+          before do
+            person_count; membership_count; identity_count
+            visit "/groups/#{group.id}/join"
+          end
+
+          describe "picking facebook path" do
+            before do
+              stub_long_lived_access_token_request.call
+              click_link "Join with Facebook"
+            end
+
+            it "redirects to edit member page" do
+              current_path
+                .must_equal "/groups/#{group.id}/members/#{organizer.id}/edit"
+            end
+
+            describe "clicking cancel" do
+              before { click_link "Cancel" }
+
+              it "does not create a new membership" do
+                Membership.count.must_equal membership_count
+              end
+
+              it "redirects back to join page" do
+                current_path.must_equal "/groups/#{group.id}/join"
+              end
+            end # clicking cancel
+
+            describe "filling in missing info" do
+              before do
+                fill_out_form({'Zip Code*'   => '11111',
+                               'Phone'       => '111-111-1111',})
+                click_button "Submit"
+              end
+
+              it "does not create a new person" do
+                Person.count.must_equal person_count
+              end
+
+              it "creates a new membership" do
+                Membership.count.must_equal membership_count + 1
+                Membership.last.person.must_equal organizer
+                Membership.last.group.must_equal group
+              end
+
+              it "creates a new identity" do
+                Identity.count.must_equal identity_count + 1
+              end
+
+              it "does not change person's name" do
+                organizer.given_name.must_equal("Test")
+              end
+
+              it "stores persons's contact info" do
+                [:email_addresses, :phone_numbers, :personal_addresses].each do |msg|
+                  organizer.send(msg).first.primary?.must_equal true
+                end
+              end
+
+              it "stores person's facebook identity" do
+                Identity.last.attributes.slice('person_id', 'uid', 'provider', 'access_token')
+                  .must_equal('person_id'    => organizer.id,
+                              'uid'          => mock_facebook_auth['uid'],
+                              'provider'     => mock_facebook_auth['provider'],
+                              'access_token' => mock_facebook_auth['credentials']['token'])
+              end
+
+              it "redirects to member homepage" do
+                current_path.must_equal "/home"
+              end
+            end # filling in missing info
+          end # picking facebook path
+        end # and lacks contact info
+
+        describe "and has contact info" do
+          before do
+            organizer.update(
+              personal_addresses: [
+                PersonalAddress.new(
+                  primary: true,
+                  postal_code: 11111
+                )
+              ]
+            )
+            assert organizer.primary_personal_address.postal_code
+            visit "/groups/#{group.id}/join"
+          end
+
+          describe "picking facebook path" do
+            before do
+              stub_long_lived_access_token_request.call
+              click_link "Join with Facebook"
+            end
+
+            it "adds person to group" do
+              assert organizer.is_member_of?(group)
+            end
+
+            it "logs person in and redirects to group dashboard" do
+              current_path.must_equal "/groups/#{group.id}/dashboard"
+            end
+          end
+        end # and has contact info
+      end # who is not a group member
     end # as user with an affinity account
   end # logged out
 end # JoinGroupTest
