@@ -1,0 +1,11 @@
+<% content_for :application do %>
+  <%= render 'layouts/modal_header' %>
+  <div class="container-html modal-container">
+    <div class="card">
+      <div class="card-block">
+        <%= yield :signup_form %>
+      </div>
+    </div>
+  </div>
+<% end #content_for :application %>
+<%= render template: 'layouts/application' %>

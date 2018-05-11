@@ -67,7 +67,7 @@ class AttendanceForm extends Component {
             />
 
             <Input
-              label='Zipcode:'
+              label='Zip Code:'
               classes='col-md-2'
               value={newAttendance.postal_code}
               onChange={(e) => setAttendanceAttribute('postal_code', e.target.value)}

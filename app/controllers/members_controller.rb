@@ -43,7 +43,7 @@ class MembersController < ApplicationController
   # GET /groups/:id/members/new
   def new
     if is_signup_form?
-      render "signup_form_#{@signup_mode}"
+      render "signup_form_#{@signup_mode}", layout: "signup"
     else
       authorize! :manage, @group # dupe of authorize_group_access? (@aguestuser)
     end
@@ -69,7 +69,7 @@ class MembersController < ApplicationController
   # GET /groups/:id/members/1/edit
   def edit
     if is_signup_form?
-      render "signup_form_#{@signup_mode}"
+      render "signup_form_#{@signup_mode}", layout: "signup"
     else
       @groups = Group.all
       authorize! :manage, @group # redundant? (@aguestuser)
@@ -318,8 +318,14 @@ class MembersController < ApplicationController
 
   def handle_create_error(fmt)
     build_member_resources
-    fmt.html { render is_signup_form? ? "signup_form_#{@signup_mode}" : :new }
     fmt.json { render json: @group.errors, status: :unprocessable_entity }
+    fmt.html do
+      if is_signup_form?
+        render "signup_form_#{@signup_mode}", layout: 'signup'
+      else
+        render :new
+      end
+    end
   end
 
   def handle_update_success(format)

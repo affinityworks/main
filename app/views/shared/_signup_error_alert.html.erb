@@ -1,0 +1,11 @@
+<%# locals: person: Person %>
+<% if person.errors.any? %>
+  <div id="error_explanation" class="alert alert-danger" role="alert">
+    <strong><%= pluralize(person.errors.count, "error") %> prevented this person from being saved:</strong>
+    <ul>
+      <% person.errors.full_messages.each do |message| %>
+        <li><%= PersonPresenter.formatted_error message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

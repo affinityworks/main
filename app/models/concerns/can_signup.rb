@@ -1,23 +1,22 @@
 module CanSignup
   extend ActiveSupport::Concern
+  RESOURCE_COLLECTIONS = [:email_addresses,
+                          :personal_addresses,
+                          :phone_numbers].freeze
 
   included do
-
-    def signup_resources_for(form)
-      form.nested_input_groups.map { |input_group| send(input_group.resource) }
-    end
-
-    def build_signup_resources_for(form)
-      signup_resources_for(form).each do |resources|
-        resources.build(primary: true) if resources.empty?
+    def build_signup_resources
+      RESOURCE_COLLECTIONS.each do |resource_collection|
+        if send(resource_collection).empty?
+          send(resource_collection).build(primary: true)
+        end
       end
     end
   end
 
   class_methods do
-
-    def build_for_signup(form)
-      Person.new.tap { |p| p.build_signup_resources_for form }
+    def build_for_signup
+      Person.new.tap { |p| p.build_signup_resources }
     end
 
     def create_from_signup(form, group, person_attrs)

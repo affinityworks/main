@@ -23,10 +23,10 @@ class CanSignupTest < ActiveSupport::TestCase
 
   describe "instance methods" do
     it "provides a list of associated resources required by a form" do
-      person.signup_resources_for(form)
-        .must_equal([person.email_addresses,
-                     person.personal_addresses,
-                     person.phone_numbers])
+      person.build_signup_resources
+      [person.email_addresses,
+       person.personal_addresses,
+       person.phone_numbers].each { |x| x.wont_be_empty }
     end
   end
 

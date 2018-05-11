@@ -22,7 +22,7 @@ namespace :heroku do
   task export_vars: :environment do
     puts "--- Checking for heroku-config plugin"
     plugins = `heroku plugins`
-    
+
     if plugins.include? "heroku-config"
       puts "heroku-config plugin already installed!"
     else
