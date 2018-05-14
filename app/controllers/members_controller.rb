@@ -323,9 +323,15 @@ class MembersController < ApplicationController
   end
 
   def handle_update_success(format)
-
-    format.html { redirect_to group_member_path(@group, @member), notice: 'Member was successfully updated.' }
     format.json { render :show, status: :ok, location: group_member_path(@group, @member) }
+    format.html do
+      if is_signup_form?
+        sign_in_and_redirect_to(@member, group_dashboard_path(@group))
+      else
+        redirect_to group_member_path(@group, @member),
+                    notice: 'Member was successfully updated.'
+      end
+    end
   end
 
   def handle_update_error(format)

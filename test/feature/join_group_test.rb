@@ -787,7 +787,7 @@ class JoinGroupTest < FeatureTest
               end
 
               it "redirects to member homepage" do
-                current_path.must_equal "/home"
+                current_path.must_equal "/groups/#{group.id}/dashboard"
               end
             end # filling in missing info
           end # picking facebook path
