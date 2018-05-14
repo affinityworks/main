@@ -1,39 +1,37 @@
-<%= render 'layouts/modal_header' %>
-<div class="container-html modal-container">
-  <div class="card">
-    <div class="card-block">
-      <h3>Join <%= @group.name %></h3>
-      <div>
-        <%= form_for @member, as: :person, url: @target do |f| %>
-          <div class="prompt">
-            We just need a little more info...
-          </div>
-
-          <%= render partial: "error_alert" %>
-
-          <%= f.hidden_field :oauth, value: @oauth %>
-
-          <div class="form-group">
-            <%= f.fields_for :personal_addresses do |ff| %>
-              <%= ff.text_field :postal_code, placeholder: 'Zip Code*', required: true, class: 'wide' %>
-              <%= ff.hidden_field :primary, value: true %>
-            <% end # f.fields_for :personal_addresses %>
-          </div>
-
-          <div class="form-group">
-            <%= f.fields_for :phone_numbers do |ff| %>
-              <%= ff.text_field :number, placeholder: 'Phone', class: 'wide' %>
-              <%= ff.hidden_field :primary, value: true %>
-            <% end # f.fields_for :phone_numbers %>
-          </div>
-
-          <div class="actions modal-actions">
-            <%= f.submit "Submit", class: "btn-submit" %>
-            <%= link_to "Cancel", group_join_path(@group),  class: "btn-cancel" %>
-          </div>
-
-        <% end # form_for @member %>
+<% content_for :signup_form do %>
+  <h3>Join <%= @group.name %></h3>
+  <div>
+    <%= form_for @member, as: :person, url: @target do |f| %>
+      <div class="prompt">
+        We just need a little more info...
       </div>
-    </div>
+
+      <!-- errors -->
+      <%= render "shared/signup_error_alert", person: @member %>
+
+      <!-- hidden fields -->
+      <%= f.hidden_field :oauth, value: @oauth %>
+
+      <!-- inputs -->
+      <div class="form-group">
+        <%= f.fields_for :personal_addresses do |ff| %>
+          <%= ff.text_field :postal_code, placeholder: 'Zip Code*', required: true, class: 'wide' %>
+          <%= ff.hidden_field :primary, value: true %>
+        <% end # f.fields_for :personal_addresses %>
+      </div>
+
+      <div class="form-group">
+        <%= f.fields_for :phone_numbers do |ff| %>
+          <%= ff.text_field :number, placeholder: 'Phone', class: 'wide' %>
+          <%= ff.hidden_field :primary, value: true %>
+        <% end # f.fields_for :phone_numbers %>
+      </div>
+
+      <div class="actions modal-actions">
+        <%= f.submit "Submit", class: "btn-submit" %>
+        <%= link_to "Cancel", group_join_path(@group),  class: "btn-cancel" %>
+      </div>
+
+    <% end # form_for @member %>
   </div>
-</div>
+<% end #content_for :signup_form %>

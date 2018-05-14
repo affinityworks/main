@@ -20,44 +20,42 @@
           <% end # if @subgroup.errors %>
         </div>
       </div>
-      
-      <%= form_for @subgroup, url: {action: "create"} do |f| %>
+
+      <%= form_for @subgroup, as: :subgroup, url: { action: @target_action } do |f| %>
+
         <div class="form-container">
+
           <div class="inputs-container">
             <div class='group-input-container'>
 
               <h2>Group Info</h2>
 
               <div class="group-inputs">
-
                 <div class="field">
-                  <%= f.text_field :name, placeholder: :name, required: true %>
+                  <%= f.text_field :name, placeholder: 'Name*', required: true %>
                 </div>
                 <div class="field">
                   <%= f.fields_for :location, @subgroup.location do |location_form| %>
-                    <%= location_form.text_field :postal_code, placeholder: 'Zipcode (group)' %>
+                    <%= location_form.text_field :postal_code, placeholder: 'Zip Code' %>
                   <% end %>
                 </div>
                 <div class="field">
-                  <%= f.text_area :description, placeholder: 'Description (may contain HTML)' %>
+                  <%= f.text_area :description, placeholder: 'Description' %>
                 </div>
               </div>
-            </div>
 
-            <% if current_person %>
-              <%= render 'organizer_info_logged_in', f: f %>
-            <% else %>
-              <%= render 'organizer_info_logged_out', f: f %>
-            <% end %>
+            </div>
           </div>
 
           <div class="submit-container">
-            <%= f.submit "Submit", class: "btn-submit"%>
+            <% if current_person %>
+              <%= render 'submit_logged_in', f: f %>
+            <% else %>
+              <%= render 'submit_logged_out', f: f %>
+            <% end %>
           </div>
         </div>
       <% end # form_for %>
-      
     </div>
   </div>
-</div>
 </div>

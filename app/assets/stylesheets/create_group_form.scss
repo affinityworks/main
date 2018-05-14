@@ -73,12 +73,13 @@ $primaryblue: rgba(2, 117, 216, 1);
                 width: 0%;
             }
         }
-        .submit-container {
-            :first-child {
-                width: 25%;
-            }
+        .create-buttons-container {
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
+            align-items: center;
+            button {
+                width: 33%;
+            }
         }
 
     }

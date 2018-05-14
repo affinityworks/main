@@ -11,6 +11,6 @@
   </head>
 
   <body>
-    <%= yield %>
+    <%= content_for?(:application) ? yield(:application) : yield %>
   </body>
 </html>
