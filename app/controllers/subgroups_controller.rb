@@ -13,14 +13,30 @@ class SubgroupsController < ApplicationController
   def signup
     @person = Person.build_for_signup
     @subgroup = JSON.generate(subgroup_params.to_h)
-    render "signup_form_#{@signup_mode}", layout: 'signup'
+    if @signup_mode == 'email'
+      render "signup_form_#{@signup_mode}", layout: 'signup'
+    else
+      redirect_to omniauth_authorize_path(
+        :person,
+        @signup_mode,
+        subgroup_json: JSON.generate(subgroup_params.to_h),
+        auth_action:   'signup',
+        signup_reason: 'create_group'
+      )
+    end
   end
 
   # POST groups/:group_id/subgroups
   def create
+    if is_oauth_signup?
+      @person = Person.create_from_oauth_signup(decrypt_token(@oauth),organizer_params)
+      organizer_attrs = @person.attributes
+    else
+      organizer_attrs = organizer_params
+    end
     @subgroup, @person = @group.create_subgroup_with_organizer(
       subgroup_attrs: subgroup_params,
-      organizer_attrs: organizer_params
+      organizer_attrs: organizer_attrs
     )
     @subgroup.valid? ? handle_create_success : handle_create_error
   end
@@ -46,6 +62,25 @@ class SubgroupsController < ApplicationController
                        'create'
   end
 
+  # TODO: dry this!
+  def set_oauth
+    @oauth = oauth_params if is_oauth_signup?
+  end
+
+
+
+  # String | ActionController::Parameters ->
+  # OmniAuth::AuthHash | JSONString
+  def parse_oauth
+    case oauth_params
+    when ActionController::Parameters
+      JSON.generate(oauth_params.to_h)
+    when String
+      OmniAuth::AuthHash.new(JSON.parse(oauth_params).to_h)
+    end.as_json
+  end
+
+
   ##########
   # PARAMS #
   ##########
@@ -67,6 +102,21 @@ class SubgroupsController < ApplicationController
     end
   end
 
+  # TODO: DRY THIS UP!!!!
+  # () -> ActionController::Parameters | String
+  def oauth_params
+    oauth = params.require(:person).require(:oauth)
+    case action_name
+    when 'new', 'signup' # => ActionController::Parameters
+      oauth.permit(:provider,
+                   :uid,
+                   credentials: [:token, :expires_at, :expires ],
+                   info:        [:email, :name, :image ])
+    when 'create' # => String
+      OmniAuth::AuthHash.new(JSON.parse(oauth).to_h)
+    end
+  end
+
   def organizer_params
     base = params[:person] ?
              params.require(:person) :
@@ -78,7 +128,8 @@ class SubgroupsController < ApplicationController
               :password,
               phone_numbers_attributes: [:number],
               email_addresses_attributes: [:address],
-              personal_addresses_attributes: [:postal_code])
+              personal_addresses_attributes: [:postal_code]
+             )
        .tap { |prams| format(prams) }
   end
 
@@ -119,6 +170,29 @@ class SubgroupsController < ApplicationController
       render "signup_form_#{@signup_mode}", layout: 'signup'
     else
       render :new
+    end
+  end
+
+  ###########
+  # HELPERS #
+  ###########
+
+  # TODO: DRY THIS!
+  def is_oauth_signup?
+    %[facebook google].include? @signup_mode
+  end
+
+  # TODO: DRY THIS!
+  # OmniAuth::AuthHash -> OmniAuth::AuthHash
+  def decrypt_token(oauth_hash)
+    if token = oauth_hash.dig('credentials', 'token')
+      OmniAuth::AuthHash.new(
+        oauth_hash.merge!(
+          'credentials' => {
+            'token' => Crypto.decrypt_with_nacl_secret(token)
+          }
+        )
+      )
     end
   end
 end
