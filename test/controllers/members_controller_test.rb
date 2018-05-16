@@ -148,4 +148,15 @@ class MembersControllerTest < ActionDispatch::IntegrationTest
     get attendances_group_member_url(group_id: person.groups.first.id, id: person.id), as: :json
     assert_response :success
   end
+
+  describe "#edit" do
+    it "allows a member to access" do
+      group = groups(:fourth)
+      person = people(:one)
+      sign_in person 
+
+      get edit_group_member_url(group_id: group.id, id: person.id, signup_mode: "email")
+      assert_response 200
+    end
+  end
 end

@@ -137,6 +137,8 @@ class MembersController < ApplicationController
   end
 
   def authorize_member_access
+    return if is_signup_form?
+    
     case action_name 
     when "edit", "update"
       authorize! :manage, @member

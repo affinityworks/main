@@ -21,6 +21,8 @@ class Ability
             permitted_flag = true
           end
         end
+
+        permitted_flag = false unless Membership.where(person: person, group: current_group).exists?
         permitted_flag
       end
 
