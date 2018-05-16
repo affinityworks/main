@@ -179,16 +179,11 @@ class GroupTest < ActiveSupport::TestCase
 
     group_member = Person.create(given_name: 'given_name', family_name: 'family_name')
     no_group_member = Person.create(given_name: 'no_member', family_name: 'no_member')
-    organizer = Person.create(given_name: 'organizer', family_name: 'organizer')
 
-    group_membership = Membership.create(person: organizer, role: 'organizer')
-    group.members.push(group_member)
-    group.memberships.push(group_membership)
+    group_membership = Membership.create(person: group_member, group: group, role: 'organizer')
 
     assert group.member?(group_member)
     assert_not group.member?(no_group_member)
-    assert_not group.member?(organizer)
-
   end
 
   test '#affiliation_with_role?' do

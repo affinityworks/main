@@ -11,6 +11,19 @@ class Ability
         person.groups.include?(current_group)
       end
 
+      can :manage, Person do |person|
+        permitted_flag = false
+        permitted_flag = true if person == current_user
+        permitted_flag = true if Membership.organizer.exists?(group: current_group, person: current_user)
+
+        current_group.affiliated_with.each do |affilated_group|
+          if permitted_flag == false && Membership.organizer.exists?(person: current_user, group: affilated_group)
+            permitted_flag = true
+          end
+        end
+        permitted_flag
+      end
+
       can :read, Attendance do |attendance|
         attendance.person.groups.include?(current_group)
       end
@@ -38,6 +51,7 @@ class Ability
             permitted_flag = true
           end
         end
+
         permitted_flag
       end
 

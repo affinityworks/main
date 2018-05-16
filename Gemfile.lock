@@ -245,6 +245,8 @@ GEM
       addressable
       faraday
       json (>= 1.8)
+    launchy (2.4.3)
+      addressable (~> 2.3)
     libv8 (5.3.332.38.5)
     listen (3.0.8)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -269,7 +271,7 @@ GEM
     mini_portile2 (2.3.0)
     mini_racer (0.1.9)
       libv8 (~> 5.3)
-    minitest (5.11.3)
+    minitest (5.10.3)
     minitest-capybara (0.8.2)
       capybara (~> 2.2)
       minitest (~> 5.0)
@@ -538,8 +540,10 @@ DEPENDENCIES
   jquery-ui-rails (~> 5.0.4)
   kaminari
   koala
+  launchy
   memory_profiler
   mini_racer
+  minitest (~> 5.10.3)
   minitest-focus
   minitest-matchers
   minitest-rails-capybara
