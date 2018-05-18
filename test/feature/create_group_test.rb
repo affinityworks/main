@@ -62,42 +62,105 @@ class CreateGroupTest < FeatureTest
           end
 
           describe "via facebook signup" do
-            before { click_button 'Create with Facebook' }
-
-            focus
-            it "redirects to oauth callback endpoint" do
-              current_path.must_equal "/admin/auth/facebook/callback"""
+            before do 
+              fill_out_form group_values_by_input
+              click_button 'Create with Facebook'
             end
 
-            #focus
-            # it "redirects to signup form" do
-            #   current_path.must_equal "/groups/#{group.id}/subgroups/signup"
-            # end
-
-            #focus
-            it "sets the signup_reason to 'join_group'" do
-              current_params['signup_reason'].must_equal 'join_group'
+            it "redirects to signup form" do
+              current_path.must_equal "/groups/#{group.id}/subgroups/oauth_signup"
             end
 
             it "passes encrypted params"
             it "passes cleartext params"
 
             describe "viewing signup form" do
+              it "has inputs for creating an organizer" do
+                ['Zip Code*',
+                 'Phone'].each do |label|
+                  page.find("input[placeholder='#{label}']").wont_be_nil
+                end
+              end
+
+              it "has correct required fields" do
+                ['Zip Code*'].each do |label|
+                  "input[placeholder='#{label}'][required='required']"
+                end
+              end
             end # viewing signup form
 
             describe "clicking 'Cancel" do
-              it "redirects to subgroup creation page"
+              before { click_link 'Cancel' }
+              it "returns to subgroup creation page" do
+                current_path.must_equal "/groups/#{group.id}/subgroups/new"
+              end
             end
 
             describe "submitting signup form" do
               describe "with no errors" do
-                it "creates a group"
-                it "creates a person"
-                it "makes person organizer of the group"
-                it "sends a welcome email"
+                before do
+                  RESOURCES.each { |r| send("#{r}_count") }
+                  deliveries_count; 
+                  stub_long_lived_access_token_request.call
+                  perform_enqueued_jobs do
+                    fill_out_form(
+                      'Zip Code*' => '90211',
+                      'Phone' => '2128675309'
+                    )
+                    click_button "Submit"
+                  end
+                end
+
+                it "creates a new group" do
+                  Group.count.must_equal group_count + 1
+                end
+
+                it "creates a new person" do
+                  Person.count.must_equal person_count + 1
+                end
+
+                it "makes person organizer of the group" do
+                  Membership.last.role.must_equal "organizer"
+                end
+
+                it "sends a welcome email" do
+                  ActionMailer::Base
+                    .deliveries.size.must_equal(deliveries_count + 1)
+                end
               end
+
               describe "with invalid entries" do
-                it "shows error messages"
+                before do
+                  RESOURCES.each { |r| send("#{r}_count") }
+                  stub_long_lived_access_token_request.call
+                  fill_out_form(
+                    'Phone'     => 'invalid',
+                    'Zip Code*' => 'invalid'
+                  )
+                  click_button "Submit"
+                end
+
+                it "re-renders signup page" do
+                  page.must_have_content "Organizer Signup"
+                end
+
+                it "does not create any resources" do
+                  RESOURCES.each do |resource|
+                    resource.camelize.constantize.count.must_equal(send("#{resource}_count"))
+                  end
+                end
+
+                it "shows an error for invalid phone number" do
+                  page.must_have_content(
+                    "Phone number 'invalid' is not a valid phone number"
+                  )
+                end
+
+                it "shows an error for invalid postal code" do
+                  page.must_have_content(
+                    "Zip code 'invalid' is not a valid zip code"
+                  )
+                end
               end
             end # subgmiting signup form
           end # via facbeook signup
@@ -255,6 +318,8 @@ class CreateGroupTest < FeatureTest
                   end
                 end
 
+
+                focus
                 it "shows an error for invalid email address" do
                   page.must_have_content(
                     "Email address 'invalid' is not a valid email address"

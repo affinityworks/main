@@ -69,6 +69,7 @@ Rails.application.routes.draw do
     resources :subgroups, only: [:new, :create] do
       collection do
         post '/signup', to: 'subgroups#signup'
+        get '/oauth_signup', to: 'subgroups#oauth_signup'
       end
     end
 

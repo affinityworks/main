@@ -1,0 +1,18 @@
+<% content_for :signup_form do %>
+  <h3>Organizer Signup</h3>
+  <div>
+    <div class="prompt">
+      We need some info to create your account...
+    </div>
+    <%= form_for @person, url: { action: @target_action,
+                                 signup_mode: @signup_mode,
+                                 subgroup: @subgroup } do |f| %>
+      <!-- errors -->
+      <%= render "shared/signup_error_alert", person: @person %>
+      <!-- inputs -->
+      <%= render partial: "shared/signup_fields_oauth", locals: { f: f, oauth: @oauth } %>
+      <!-- action buttons -->
+      <%= render "shared/modal_actions", f: f, cancel_path: new_group_subgroup_path(current_group) %>
+    <% end # form_for @person %>
+  </div>
+<% end #content_for :signup_form%>

@@ -3,13 +3,14 @@ class SubgroupsController < ApplicationController
   before_action :set_group
   before_action :set_signup_mode
   before_action :set_target_action
+  before_action :set_oauth, only: %i[oauth_signup create]
 
   # GET groups/:group_id/subgroups/new
   def new
     @subgroup = Group.build_group_with_organizer
   end
 
-  # GET groups/:group_id/subgroups/signup
+  # POST groups/:group_id/subgroups/signup
   def signup
     @person = Person.build_for_signup
     @subgroup = JSON.generate(subgroup_params.to_h)
@@ -21,23 +22,34 @@ class SubgroupsController < ApplicationController
         @signup_mode,
         subgroup_json: JSON.generate(subgroup_params.to_h),
         auth_action:   'signup',
-        signup_reason: 'create_group'
+        signup_reason: 'create_group',
+        group_id: @group.id
       )
     end
+  end
+
+  def oauth_signup
+    @person = Person.build_for_signup
+    @subgroup = JSON.generate(subgroup_params.to_h)
+    render "signup_form_#{@signup_mode}", layout: 'signup'
   end
 
   # POST groups/:group_id/subgroups
   def create
     if is_oauth_signup?
-      @person = Person.create_from_oauth_signup(decrypt_token(@oauth),organizer_params)
+      @person = Person.create_from_oauth_signup(decrypt_token(@oauth), organizer_params)
       organizer_attrs = @person.attributes
+      
+      return handle_create_error unless @person.valid?
     else
       organizer_attrs = organizer_params
     end
+
     @subgroup, @person = @group.create_subgroup_with_organizer(
       subgroup_attrs: subgroup_params,
       organizer_attrs: organizer_attrs
     )
+
     @subgroup.valid? ? handle_create_success : handle_create_error
   end
 
@@ -62,12 +74,13 @@ class SubgroupsController < ApplicationController
                        'create'
   end
 
-  # TODO: dry this!
   def set_oauth
-    @oauth = oauth_params if is_oauth_signup?
+    @oauth = parse_oauth if is_oauth_signup?
   end
 
-
+  ###########
+  # OAUTH #
+  ###########
 
   # String | ActionController::Parameters ->
   # OmniAuth::AuthHash | JSONString
@@ -77,7 +90,38 @@ class SubgroupsController < ApplicationController
       JSON.generate(oauth_params.to_h)
     when String
       OmniAuth::AuthHash.new(JSON.parse(oauth_params).to_h)
+    when OmniAuth::AuthHash
+      oauth_params
     end.as_json
+  end
+
+   # TODO: DRY THIS UP!!!!
+  # () -> ActionController::Parameters | String
+  def oauth_params
+    oauth = params.require(:person).require(:oauth)
+    case action_name
+    when 'new', 'signup', 'oauth_signup' # => ActionController::Parameters
+      oauth.permit(:provider,
+                   :uid,
+                   credentials: [:token, :expires_at, :expires ],
+                   info:        [:email, :name, :image ])
+    when 'create' # => String
+      OmniAuth::AuthHash.new(JSON.parse(oauth).to_h)
+    end
+  end
+
+    # TODO: DRY THIS!
+  # OmniAuth::AuthHash -> OmniAuth::AuthHash
+  def decrypt_token(oauth_hash)
+    if token = oauth_hash.dig('credentials', 'token')
+      OmniAuth::AuthHash.new(
+        oauth_hash.merge!(
+          'credentials' => {
+            'token' => Crypto.decrypt_with_nacl_secret(token)
+          }
+        )
+      )
+    end
   end
 
 
@@ -102,21 +146,6 @@ class SubgroupsController < ApplicationController
     end
   end
 
-  # TODO: DRY THIS UP!!!!
-  # () -> ActionController::Parameters | String
-  def oauth_params
-    oauth = params.require(:person).require(:oauth)
-    case action_name
-    when 'new', 'signup' # => ActionController::Parameters
-      oauth.permit(:provider,
-                   :uid,
-                   credentials: [:token, :expires_at, :expires ],
-                   info:        [:email, :name, :image ])
-    when 'create' # => String
-      OmniAuth::AuthHash.new(JSON.parse(oauth).to_h)
-    end
-  end
-
   def organizer_params
     base = params[:person] ?
              params.require(:person) :
@@ -133,24 +162,24 @@ class SubgroupsController < ApplicationController
        .tap { |prams| format(prams) }
   end
 
-  def format(prams)
-    prams
+  def format(params)
+    params
       .tap { |p| format_contact_info(p) }
       .tap { |p| handle_empty_contact_info(p) }
   end
 
-  def format_contact_info(prams)
+  def format_contact_info(params)
     return if current_person # only gather contact info for logged-out users
     [
-      'phone_numbers_attributes',
-      'email_addresses_attributes',
-      'personal_addresses_attributes'
-    ].each { |collection| prams.dig(collection, '0').merge!(primary: true) }
+      'phone_numbers_attributes',  'email_addresses_attributes',  'personal_addresses_attributes'
+    ].each do |collection| 
+      params.dig(collection, '0').merge!(primary: true) if params.dig(collection, '0')
+    end.compact
   end
 
-  def handle_empty_contact_info(prams)
-    if prams.dig('phone_numbers_attributes', '0', 'number')&.empty?
-      prams.delete('phone_numbers_attributes')
+  def handle_empty_contact_info(params)
+    if params.dig('phone_numbers_attributes', '0', 'number')&.empty?
+      params.delete('phone_numbers_attributes')
     end
   end
 
@@ -165,8 +194,9 @@ class SubgroupsController < ApplicationController
 
   def handle_create_error
     if @signup_mode
-      @person = @subgroup.memberships.first.person
-      @subgroup = JSON.generate(subgroup_params.to_h)
+      @person = @person || Person.build_for_signup
+      # @subgroup = @JSON.generate(subgroup_params.to_h)
+      # @oauth = encrypt_token(@oauth)
       render "signup_form_#{@signup_mode}", layout: 'signup'
     else
       render :new
@@ -179,20 +209,6 @@ class SubgroupsController < ApplicationController
 
   # TODO: DRY THIS!
   def is_oauth_signup?
-    %[facebook google].include? @signup_mode
-  end
-
-  # TODO: DRY THIS!
-  # OmniAuth::AuthHash -> OmniAuth::AuthHash
-  def decrypt_token(oauth_hash)
-    if token = oauth_hash.dig('credentials', 'token')
-      OmniAuth::AuthHash.new(
-        oauth_hash.merge!(
-          'credentials' => {
-            'token' => Crypto.decrypt_with_nacl_secret(token)
-          }
-        )
-      )
-    end
+    %w[facebook google].include? @signup_mode
   end
 end

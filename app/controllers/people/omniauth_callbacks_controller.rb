@@ -78,10 +78,10 @@ class People::OmniauthCallbacksController < Devise::OmniauthCallbacksController
                                         group_id: current_group.id,
                                         person: { oauth: encrypt_token(@auth) })
     when 'create_group'
-      redirect_to group_subgroups_path(signup_mode: @service,
-                                       group_id: current_group.id,
-                                       subgroup: @subgroup_json,
-                                       person: { oauth: encrypt_token(@auth) })
+      redirect_to oauth_signup_group_subgroups_path(signup_mode: @service,
+                                                    group_id: current_group.id,
+                                                    subgroup: @subgroup_attrs,
+                                                    person: { oauth: encrypt_token(@auth) })
     end
   end
 
@@ -92,7 +92,7 @@ class People::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def is_existing_member?
-    @person.is_member_of? current_group && @signup_reason == 'join_group'
+    @person.is_member_of?(current_group) && @signup_reason == 'join_group'
   end
 
   def handle_existing_member
