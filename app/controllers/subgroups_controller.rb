@@ -115,7 +115,7 @@ class SubgroupsController < ApplicationController
   def decrypt_token(oauth_hash)
     if token = oauth_hash.dig('credentials', 'token')
       OmniAuth::AuthHash.new(
-        oauth_hash.merge!(
+        oauth_hash.merge(
           'credentials' => {
             'token' => Crypto.decrypt_with_nacl_secret(token)
           }
@@ -195,8 +195,8 @@ class SubgroupsController < ApplicationController
   def handle_create_error
     if @signup_mode
       @person = @person || Person.build_for_signup
-      # @subgroup = @JSON.generate(subgroup_params.to_h)
-      # @oauth = encrypt_token(@oauth)
+      @subgroup = JSON.generate(subgroup_params.to_h)
+      @oauth = JSON.generate(@oauth)
       render "signup_form_#{@signup_mode}", layout: 'signup'
     else
       render :new
