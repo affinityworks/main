@@ -28,6 +28,7 @@ class SubgroupsController < ApplicationController
     end
   end
 
+  # GET groups/:group_id/subgroups/oauth_signup
   def oauth_signup
     @person = Person.build_for_signup
     @subgroup = JSON.generate(subgroup_params.to_h)
