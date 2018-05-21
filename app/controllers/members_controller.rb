@@ -50,8 +50,8 @@ class MembersController < ApplicationController
   # POST /groups/:id/members/.json
 
   def create
-    if is_oauth_signup?
-      @member = Person.create_from_oauth_signup(decrypt_token(@oauth), person_params)
+    if Oauth.is_oauth_signup?(@signup_mode)
+      @member = Person.create_from_oauth_signup(Oauth.decrypt_token(@oauth), person_params)
     elsif is_email_signup? && person = Person.find_by_email_param(person_params)
       return handle_create_dupe_email person.primary_email_address
     else
@@ -72,8 +72,8 @@ class MembersController < ApplicationController
   # PATCH/PUT /groups/:id/members/1.json
   def update
     respond_to do |format|
-      if is_oauth_signup?
-        ok = @member.update_from_oauth_signup(decrypt_token(@oauth), person_params)
+      if Oauth.is_oauth_signup?(@signup_mode)
+        ok = @member.update_from_oauth_signup(Oauth.decrypt_token(@oauth), person_params)
       else
         ok = @member.update(person_params)
       end
@@ -177,7 +177,7 @@ class MembersController < ApplicationController
   end
 
   def set_oauth
-    @oauth = parse_oauth if is_oauth_signup?
+    @oauth = parse_oauth if Oauth.is_oauth_signup?(@signup_mode)
   end
 
   # String | ActionController::Parameters ->
@@ -191,19 +191,6 @@ class MembersController < ApplicationController
     end.as_json
   end
 
-  # OmniAuth::AuthHash -> OmniAuth::AuthHash
-  def decrypt_token(oauth_hash)
-    if token = oauth_hash.dig('credentials', 'token')
-      OmniAuth::AuthHash.new(
-        oauth_hash.merge!(
-          'credentials' => {
-            'token' => Crypto.decrypt_with_nacl_secret(token)
-          }
-        )
-      )
-    end
-  end
-
   def allow_logged_out_signups
     authenticate_person! unless is_signup_form?
   end
@@ -213,7 +200,7 @@ class MembersController < ApplicationController
   end
 
   def set_member
-    if is_oauth_signup?
+    if Oauth.is_oauth_signup?(@signup_mode)
       @member = Person.find(params.require(:id).to_i)
     else
       # NOTE: aguestuser thinks this is way to complex and should be re-written
@@ -266,7 +253,7 @@ class MembersController < ApplicationController
   end
 
   def build_member
-    if action_name == 'new' && is_oauth_signup?
+    if action_name == 'new' && Oauth.is_oauth_signup?(@signup_mode)
       @member = Person.build_from_oauth_signup(OmniAuth::AuthHash.new(oauth_params.to_h))
     else
       @member = Person.new
@@ -281,10 +268,6 @@ class MembersController < ApplicationController
 
   def set_signup_mode
     @signup_mode = SIGNUP_MODES.dup.delete params[:signup_mode]
-  end
-
-  def is_oauth_signup?
-    %w[facebook google].include?(@signup_mode)
   end
 
   def is_email_signup?

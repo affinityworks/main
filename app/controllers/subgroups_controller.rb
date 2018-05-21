@@ -19,7 +19,7 @@ class SubgroupsController < ApplicationController
     else
       redirect_to omniauth_authorize_path(
         :person,
-        @signup_mode,
+        omniauth_value,
         subgroup_json: JSON.generate(subgroup_params.to_h),
         auth_action:   'signup',
         signup_reason: 'create_group',
@@ -31,13 +31,13 @@ class SubgroupsController < ApplicationController
   def oauth_signup
     @person = Person.build_for_signup
     @subgroup = JSON.generate(subgroup_params.to_h)
-    render "signup_form_#{@signup_mode}", layout: 'signup'
+    render "signup_form_oauth", layout: 'signup'
   end
 
   # POST groups/:group_id/subgroups
   def create
-    if is_oauth_signup?
-      @person = Person.create_from_oauth_signup(decrypt_token(@oauth), organizer_params)
+    if Oauth.is_oauth_signup?(@signup_mode)
+      @person = Person.create_from_oauth_signup(Oauth.decrypt_token(@oauth), organizer_params)
       organizer_attrs = @person.attributes
       
       return handle_create_error unless @person.valid?
@@ -75,7 +75,7 @@ class SubgroupsController < ApplicationController
   end
 
   def set_oauth
-    @oauth = parse_oauth if is_oauth_signup?
+    @oauth = parse_oauth if Oauth.is_oauth_signup?(@signup_mode)
   end
 
   ###########
@@ -107,20 +107,6 @@ class SubgroupsController < ApplicationController
                    info:        [:email, :name, :image ])
     when 'create' # => String
       OmniAuth::AuthHash.new(JSON.parse(oauth).to_h)
-    end
-  end
-
-    # TODO: DRY THIS!
-  # OmniAuth::AuthHash -> OmniAuth::AuthHash
-  def decrypt_token(oauth_hash)
-    if token = oauth_hash.dig('credentials', 'token')
-      OmniAuth::AuthHash.new(
-        oauth_hash.merge(
-          'credentials' => {
-            'token' => Crypto.decrypt_with_nacl_secret(token)
-          }
-        )
-      )
     end
   end
 
@@ -197,7 +183,7 @@ class SubgroupsController < ApplicationController
       @person = @person || Person.build_for_signup
       @subgroup = JSON.generate(subgroup_params.to_h)
       @oauth = JSON.generate(@oauth)
-      render "signup_form_#{@signup_mode}", layout: 'signup'
+      render "signup_form_#{signup_mode_form}", layout: 'signup'
     else
       render :new
     end
@@ -207,8 +193,19 @@ class SubgroupsController < ApplicationController
   # HELPERS #
   ###########
 
-  # TODO: DRY THIS!
-  def is_oauth_signup?
-    %w[facebook google].include? @signup_mode
+  def omniauth_value
+    { 
+      "facebook" => "facebook",
+      "google" => "google_oauth2"
+    }[@signup_mode]
+  end
+
+  def signup_mode_form
+    case @signup_mode
+    when "email"
+      "email"
+    when "facebook", "google"
+      "oauth"
+    end
   end
 end

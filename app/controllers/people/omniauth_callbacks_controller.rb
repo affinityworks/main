@@ -76,12 +76,12 @@ class People::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     when 'join_group'
       redirect_to new_group_member_path(signup_mode: @service,
                                         group_id: current_group.id,
-                                        person: { oauth: encrypt_token(@auth) })
+                                        person: { oauth: Oauth.encrypt_token(@auth) })
     when 'create_group'
       redirect_to oauth_signup_group_subgroups_path(signup_mode: @service,
                                                     group_id: current_group.id,
                                                     subgroup: @subgroup_attrs,
-                                                    person: { oauth: encrypt_token(@auth) })
+                                                    person: { oauth: Oauth.encrypt_token(@auth) })
     end
   end
 
@@ -108,7 +108,7 @@ class People::OmniauthCallbacksController < Devise::OmniauthCallbacksController
         group_id: current_group.id,
         id: @person.id,
         person: {
-          oauth: encrypt_token(@auth)
+          oauth: Oauth.encrypt_token(@auth)
         }
       )
     )
@@ -133,13 +133,5 @@ class People::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     flash[:error] = I18n.t("devise.omniauth_callbacks.failure", kind: @service)
     session["devise.#{@service}_data}"] = @auth
     redirect_to redirect_url
-  end
-
-  def encrypt_token(auth)
-    auth.merge(
-      'credentials' => {
-        'token' => Crypto.encrypt_to_nacl_secret(auth.credentials.token)
-      }
-    )
   end
 end

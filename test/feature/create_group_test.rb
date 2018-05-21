@@ -318,8 +318,6 @@ class CreateGroupTest < FeatureTest
                   end
                 end
 
-
-                focus
                 it "shows an error for invalid email address" do
                   page.must_have_content(
                     "Email address 'invalid' is not a valid email address"
