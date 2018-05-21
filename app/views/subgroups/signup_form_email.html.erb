@@ -8,7 +8,7 @@
                                  signup_mode: @signup_mode,
                                  subgroup: @subgroup } do |f| %>
       <!-- errors -->
-      <%= render "shared/signup_error_alert", person: @person %>
+      <%= render "shared/signup_aggregate_error_alert", errors: @errors %>
       <!-- inputs -->
       <%= render "shared/signup_fields_email", f: f %>
       <!-- action buttons -->

@@ -180,6 +180,7 @@ class SubgroupsController < ApplicationController
 
   def handle_create_error
     if @signup_mode
+      @errors = AggregateError.new(objects: [@person, @subgroup]).errors
       @person = @person || Person.build_for_signup
       @subgroup = JSON.generate(subgroup_params.to_h)
       @oauth = JSON.generate(@oauth)

@@ -71,9 +71,6 @@ class CreateGroupTest < FeatureTest
               current_path.must_equal "/groups/#{group.id}/subgroups/oauth_signup"
             end
 
-            it "passes encrypted params"
-            it "passes cleartext params"
-
             describe "viewing signup form" do
               it "has inputs for creating an organizer" do
                 ['Zip Code*',
