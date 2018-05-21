@@ -134,7 +134,7 @@ class Group < ApplicationRecord
   end
 
   def member?(person)
-    member_members.include?(person)
+    memberships.where(person_id: person.id).any?
   end
 
   def volunteer?(person)

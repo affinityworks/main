@@ -141,6 +141,7 @@ group :test do
   gem 'rails-controller-testing'
   gem 'webmock'
   #gem 'minitest-spec'
+  gem 'minitest', '~> 5.10.3'
   gem 'minitest-spec-rails'
   gem 'minitest-matchers'
   gem 'minitest-focus'
@@ -148,6 +149,7 @@ group :test do
   gem 'minitest-rails-capybara'
   gem 'rspec-mocks'
   gem 'selenium-webdriver'
+  gem 'launchy'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

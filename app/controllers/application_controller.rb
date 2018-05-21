@@ -59,7 +59,6 @@ class ApplicationController < ActionController::Base
     authorize! :manage, current_group
   end
 
-
   def has_group_read_access?
     if authorize! :read, current_group
       return true if has_role?(:volunteer)

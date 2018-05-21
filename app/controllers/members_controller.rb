@@ -3,13 +3,16 @@ class MembersController < ApplicationController
   # authentication
   before_action :authenticate_person!, except: %i[new create]
   before_action :allow_logged_out_signups, only: %i[new create]
-  before_action :authorize_group_access
+  before_action :authorize_group_access, except: %i[edit account update]
+
   # setters
   before_action :set_signup_mode, only: %i[new create edit update]
   before_action :set_oauth, only: %i[new create edit update]
   before_action :set_group
   before_action :set_members, only: :index
   before_action :set_member, only: [:show, :edit, :update, :destroy, :attendances]
+  before_action :set_person, only: [:account]
+  before_action :authorize_member_access, only: %i[edit account update]
   before_action :build_member, only: %i[new create]
   before_action :build_member_resources, only: %i[new edit]
   before_action :set_target, only: %i[new create edit update]
@@ -38,15 +41,9 @@ class MembersController < ApplicationController
     end
   end
 
-
-
   # GET /groups/:id/members/new
   def new
-    if is_signup_form?
-      render "signup_form_#{@signup_mode}", layout: "signup"
-    else
-      authorize! :manage, @group # dupe of authorize_group_access? (@aguestuser)
-    end
+    return render "signup_form_#{@signup_mode}", layout: "signup" if is_signup_form?
   end
 
   # POST /groups/:id/members/
@@ -68,16 +65,11 @@ class MembersController < ApplicationController
 
   # GET /groups/:id/members/1/edit
   def edit
-    if is_signup_form?
-      render "signup_form_#{@signup_mode}", layout: "signup"
-    else
-      @groups = Group.all
-      authorize! :manage, @group # redundant? (@aguestuser)
-    end
+    return render "signup_form_#{@signup_mode}", layout: "signup" if is_signup_form?
   end
 
-  # PATCH/PUT /groups/1
-  # PATCH/PUT /groups/1.json
+  # PATCH/PUT /groups/:id/members/1
+  # PATCH/PUT /groups/:id/members/1.json
   def update
     respond_to do |format|
       if is_oauth_signup?
@@ -110,11 +102,9 @@ class MembersController < ApplicationController
   end
 
   def account
-    group = Group.find(params[:group_id]) if params[:group_id]
-    person = Person.find(params[:person_id]) if params[:person_id]
+    group = determine_group_for_account
 
-    valid_group = (group && group.members.include?(person)) ? group : person.groups.first
-    return redirect_to edit_group_member_path(group_id: valid_group.id, id: person.id)
+    return redirect_to edit_group_member_path(group_id: group.id, id: @person.id)
   end
 
   private
@@ -146,6 +136,16 @@ class MembersController < ApplicationController
       .tap { |person_attrs| maybe_set_memberships(person_attrs) }
   end
 
+  def authorize_member_access
+    return if is_signup_form?
+    
+    case action_name 
+    when "edit", "update"
+      authorize! :manage, @member
+    else
+      authorize! :manage, @person
+    end
+  end
 
   def handle_empty_contact_info(person_attrs)
     if person_attrs.dig('phone_numbers_attributes', '0', 'number') == ''
@@ -229,6 +229,10 @@ class MembersController < ApplicationController
     end
   end
 
+  def set_person
+    @person = Person.find(params.require(:person_id).to_i)
+  end
+
   def set_members
     member_ids = Membership.where(:group_id =>@group.affiliates.pluck(:id).push(@group.id) ).pluck(:person_id)
 
@@ -269,7 +273,6 @@ class MembersController < ApplicationController
     end
   end
 
-
   def build_member_resources
     %i[personal_addresses email_addresses phone_numbers].each do |x|
       @member.send(x).build(primary: true) if @member.send(x).empty?
@@ -286,6 +289,11 @@ class MembersController < ApplicationController
 
   def is_email_signup?
     @signup_mode == 'email'
+  end
+
+  def determine_group_for_account
+    group = Group.find_by_id(params[:group_id])
+    group&.member?(@person) ? group : @person.groups.first
   end
 
   ##########################
