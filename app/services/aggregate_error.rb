@@ -6,10 +6,15 @@ class AggregateError
   end
 
   def collect_errors
-    @objects.reduce([]) { |acc, obj| acc << collect_messages(obj) }.flatten
+    @objects
+      .map { |obj| collect_messages(obj) }
+      .flatten
   end
 
   def collect_messages(obj)
-    obj.errors.full_messages.map { |message| PersonPresenter.formatted_error(message) }.reject { |message| message.empty? }.flatten
+    obj.errors.full_messages
+      .map { |message| PersonPresenter.formatted_error(message) }
+      .reject { |message| message.empty? }
+      .flatten
   end
 end
