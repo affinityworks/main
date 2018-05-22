@@ -244,12 +244,14 @@ class JoinGroupTest < FeatureTest
             describe "submitting email signup form" do
               let(:person_count){ Person.count }
               let(:membership_count){ Membership.count }
+              let(:mail_count){ ActionMailer::Base.deliveries.size }
 
               describe "with no errors" do
                 before do
-                  person_count; membership_count
+                  person_count; membership_count; mail_count
                   fill_out_form submissions_by_input_label
-                  click_button 'Submit'
+
+                  perform_enqueued_jobs { click_button 'Submit' }
                 end
 
                 it "creates a new person" do
@@ -264,6 +266,10 @@ class JoinGroupTest < FeatureTest
                   [:email_addresses, :phone_numbers, :personal_addresses].each do |msg|
                     Person.last.send(msg).first.primary?.must_equal true
                   end
+                end
+
+                it "sends a welcome email" do
+                  ActionMailer::Base.deliveries.size.must_equal(mail_count + 1)
                 end
 
                 it "redirects to group dashboard" do

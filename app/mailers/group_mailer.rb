@@ -1,9 +1,7 @@
 class GroupMailer < ApplicationMailer
 
-  def create_group_email(organizer, subgroup)
-    @organizer = organizer; @subgroup = subgroup;
-    mail(to: @organizer.primary_email_address,
-         subject: "Welcome to #{@subgroup.name}")
-
+  def join_group_email(person, group)
+    @person = person; @group = group;
+    mail(to: @person.primary_email_address, subject: "Welcome to #{@group.name}")
   end
 end
