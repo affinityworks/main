@@ -1,6 +1,5 @@
 require_relative "../test_helper"
 require_relative "../helpers/oauth_fixtures"
-#require 'minitest/mock'
 
 class CreateGroupTest < FeatureTest
   # shared fixtures
@@ -255,12 +254,6 @@ class CreateGroupTest < FeatureTest
                 it "saves organizer password" do
                   last_person.encrypted_password.wont_be_nil
                   last_person.valid_password?("password")
-                end
-
-                it "saves organizer contact info" do
-                  last_person.email_addresses.last.address.must_equal 'foo@bar.com'
-                  last_person.phone_numbers.last.number.must_equal '212-867-5309'
-                  last_person.personal_addresses.last.postal_code.must_equal '90211'
                 end
 
                 it "saves contact infos as 'primary'" do

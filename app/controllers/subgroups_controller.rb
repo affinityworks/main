@@ -172,18 +172,18 @@ class SubgroupsController < ApplicationController
       .tap { |p| handle_empty_contact_info(p) }
   end
 
-  def format_contact_info(params)
+  def format_contact_info(_params)
     return if current_person&.has_contact_info?
     [
       'phone_numbers_attributes',  'email_addresses_attributes',  'personal_addresses_attributes'
     ].each do |collection| 
-      params.dig(collection, '0').merge!(primary: true) if params.dig(collection, '0')
+      _params.dig(collection, '0').merge!(primary: true) if _params.dig(collection, '0')
     end.compact
   end
 
-  def handle_empty_contact_info(params)
-    if params.dig('phone_numbers_attributes', '0', 'number')&.empty?
-      params.delete('phone_numbers_attributes')
+  def handle_empty_contact_info(_params)
+    if _params.dig('phone_numbers_attributes', '0', 'number')&.empty?
+      _params.delete('phone_numbers_attributes')
     end
   end
 
