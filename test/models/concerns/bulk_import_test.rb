@@ -4,6 +4,7 @@ class BulkImportTest < ActiveSupport::TestCase
   describe ".bulk_import_members" do
     let(:group){groups(:ohio_chapter) } # google-group enabled
     let(:person_count){ Person.count }
+    let(:mail_count){ ActionMailer::Base.deliveries.size }
 
     describe "with correctly formatted csv" do
       let(:csv) do
@@ -13,7 +14,7 @@ class BulkImportTest < ActiveSupport::TestCase
       end
 
       before do
-        person_count
+        person_count; mail_count;
         allow(GoogleGroupJobs::AddNewMemberToGroupJob)
           .to receive(:perform_later).and_return(nil)
         perform_enqueued_jobs do
@@ -46,6 +47,10 @@ class BulkImportTest < ActiveSupport::TestCase
             person.send(info).wont_be_nil
           end
         end
+      end
+
+      it "sends each person a welcome email" do
+        ActionMailer::Base.deliveries.size.must_equal mail_count + 2
       end
 
       it "adds each person to google group" do

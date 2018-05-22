@@ -1,22 +1,21 @@
 require_relative "../../test_helper"
 
 class Subgroups::AferCreateTest < ActiveSupport::TestCase
+  let(:person){ double(Person, email: "foo@bar.com") }
+  let(:group) do
+    double(Group,
+           name: "foo",
+           primary_network: double(Network),
+           build_google_group_email: "foo@bar.com")
+  end
+
   describe ".call" do
-    let(:person){ double(Person, email: "foo@bar.com") }
-    let(:group) do
-      double(Group,
-             name: "foo",
-             primary_network: double(Network),
-             build_google_group_email: "foo@bar.com")
-    end
-
     before do
-      allow(OrganizerMailer).to receive_message_chain(:new_subgroup_email, :deliver_later)
-      allow(SignupForm).to receive(:for)
+      allow(GroupMailer).to receive_message_chain(:join_group_email, :deliver_later)
     end
 
-    it "calls OrganizerMailer" do
-      expect(OrganizerMailer).to receive_message_chain(:new_subgroup_email, :deliver_later)
+    it "calls GroupMailer" do
+      expect(GroupMailer).to receive_message_chain(:join_group_email, :deliver_later)
 
       Subgroups::AfterCreate.call(organizer: Person.new, subgroup: Group.new)
     end
@@ -25,12 +24,6 @@ class Subgroups::AferCreateTest < ActiveSupport::TestCase
       before { allow(FeatureToggle).to receive(:on?).and_return(true) }
 
       it "calls GoogleAPI services if authorization is successful" do
-        # NOTE: (aguestuser|11 Apr 2018)
-        # - IMHO, these are brittle (arguably anemic) tests
-        # - evidence: a working refactor caused need for substantial re-writes
-        # - i think a browser test suffices (and is more flexible)
-        # - :. i am no writing similar tests for `Signups::AfterCreate`
-        # - happy to discuss and be proven wrong! :D
         expect(GoogleAPI::Service)
           .to receive_message_chain(
                 :new,
