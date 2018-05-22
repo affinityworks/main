@@ -120,6 +120,7 @@ new_signup:
   employer: Aspiration Tech
 
 testy:
+  identifiers: ['advocacycommons:473299', 'foreign_system:473299']
   given_name: Testy
   family_name: McGee
   additional_name: Sr.
