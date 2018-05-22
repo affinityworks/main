@@ -1,11 +1,11 @@
 require_relative "../test_helper"
 
-class OrganizerMailerTest < ActionMailer::TestCase
+class GroupMailerTest < ActionMailer::TestCase
 
-  describe "new_subgroup_email" do
+  describe "create_group_email" do
     let(:organizer){ people(:organizer) }
     let(:subgroup){ groups(:subgroup) }
-    let(:mail){ OrganizerMailer.new_subgroup_email(organizer, subgroup) }
+    let(:mail){ GroupMailer.create_group_email(organizer, subgroup) }
     let(:body){ mail.body.raw_source }
 
     it "mentions subgroup in subject" do

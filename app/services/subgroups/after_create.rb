@@ -1,8 +1,8 @@
 class Subgroups::AfterCreate
   class << self
     def call(organizer:, subgroup:)
-      OrganizerMailer
-        .new_subgroup_email(organizer, subgroup)
+      GroupMailer
+        .create_group_email(organizer, subgroup)
         .deliver_later
 
       if FeatureToggle.on?(:google_groups, subgroup)
