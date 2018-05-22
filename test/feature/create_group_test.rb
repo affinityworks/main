@@ -56,9 +56,9 @@ class CreateGroupTest < FeatureTest
       end
 
       describe "creating subgroup" do
-        describe "as a first-time use" do
+        describe "as a first-time user" do
           before do
-            OmniAuth.config.mock_auth[:facebook] = mock_facebook_auth
+            OmniAuth.config.mock_auth[:facebook] = mock_facebook_auth_non_existing_user
           end
 
           describe "via facebook signup" do
@@ -456,6 +456,115 @@ class CreateGroupTest < FeatureTest
             end # submitting signup form
           end # via email signup
         end # as a first-timeuser
+
+        describe "as a returning user" do
+          before do
+            OmniAuth.config.mock_auth[:facebook] = mock_facebook_auth
+          end
+
+          describe "via facebook" do
+
+            describe "who lacks contact info" do
+              let(:person) { people(:testy) }
+              before do
+                RESOURCES.each { |r| send("#{r}_count") }
+                fill_out_form group_values_by_input
+                click_button 'Create with Facebook'
+              end
+
+              it "redirects to signup form" do
+                current_path.must_equal "/groups/#{group.id}/subgroups/oauth_signup"
+              end
+
+              it "does not create any resources" do
+                RESOURCES.each do |resource|
+                  resource.camelize.constantize.count.must_equal(send("#{resource}_count"))
+                end
+              end
+
+              describe "submitting signup form" do
+                before do
+                  RESOURCES.each { |r| send("#{r}_count") }
+                  deliveries_count; 
+                  stub_long_lived_access_token_request.call
+                  perform_enqueued_jobs do
+                    fill_out_form(
+                      'Zip Code*' => '90211',
+                      'Phone' => '2128675309'
+                    )
+                    click_button "Submit"
+                  end
+                end
+
+                it "creates a new group" do
+                  Group.count.must_equal group_count + 1
+                end
+
+                it "does not a new person" do
+                  Person.count.must_equal person_count
+                end
+
+                it "makes person organizer of the group" do
+                  Membership.where(group: Group.find_by_name("Jawbreaker"), person: person).last.role.must_equal "organizer"
+                end
+
+                it "updates the Persons zip code" do
+                  person.personal_addresses.last.postal_code.must_equal "90211"
+                end
+
+                it "updates the Persons zip code" do
+                  person.phone_numbers.last.number.must_equal "2128675309"
+                end
+
+                it "sends a welcome email" do
+                  ActionMailer::Base
+                    .deliveries.size.must_equal(deliveries_count + 1)
+                end
+              end # submitting signup form
+            end # who lacks contact info
+
+            describe "and has contact info" do
+              let(:person) { people(:testy) }
+              before do
+                person.update(
+                  personal_addresses: [
+                    PersonalAddress.new(
+                      primary: true,
+                      postal_code: 11111
+                    )
+                  ]
+                )
+                deliveries_count;
+                RESOURCES.each { |r| send("#{r}_count") }
+                perform_enqueued_jobs do
+                  fill_out_form group_values_by_input
+                  click_button 'Create with Facebook'
+                end
+              end
+
+              it "creates a new group" do
+                Group.count.must_equal group_count + 1
+              end
+
+              it "does not create a new person" do
+                Person.count.must_equal person_count
+              end
+
+              it "makes person organizer of the group" do
+                Membership.where(group: Group.find_by_name("Jawbreaker"), person: person).last.role.must_equal "organizer"
+              end
+
+              it "sends a welcome email" do
+                ActionMailer::Base
+                  .deliveries.size.must_equal(deliveries_count + 1)
+              end
+
+              it "redirects to signup form" do
+                current_path.must_equal "/groups/#{Group.last.id}/dashboard"
+              end
+            end # and has contact info
+          end # via facbeook signup
+        end # returning user
       end # creating subgroup
     end # viewing group-creation form
   end # for logged-out person

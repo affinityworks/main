@@ -63,3 +63,8 @@ human_torch:
   address: human@torch.net
   person: human_torch
   primary: true
+
+testy:
+  address: testy@affinity.works
+  person: testy
+  primary: true

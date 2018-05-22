@@ -86,9 +86,22 @@ class People::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def handle_existing_person
-    return handle_existing_member if is_existing_member?
-    return handle_missing_contact_info if @person.missing_contact_info?
-    handle_simple_signup
+    case @signup_reason
+    when 'join_group'
+      return handle_existing_member if is_existing_member?
+      return handle_missing_contact_info if @person.missing_contact_info?
+      handle_simple_signup
+    when 'create_group'
+      sign_in_and_redirect_to(
+        @person,
+        oauth_signup_group_subgroups_path(
+          signup_mode: @service,
+          group_id: current_group.id,
+          subgroup: @subgroup_attrs,
+          person: { oauth: Oauth.encrypt_token(@auth) }
+        )
+      )
+    end
   end
 
   def is_existing_member?

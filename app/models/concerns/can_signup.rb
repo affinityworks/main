@@ -30,4 +30,8 @@ module CanSignup
       )
     end
   end
+
+  def prepare_for_contact_update
+    self.tap { |p| p.build_signup_resources }
+  end
 end

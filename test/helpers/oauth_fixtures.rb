@@ -8,6 +8,7 @@ module OAuthFixtures
         "iIKnPQLOEEw6icFuIFjrjSxQxHfxLpQEYWgz6zzs2U209liTg5JFRm9u7RmRzpxEaaWI9M"+
         "9u61CAh7psEMkjqsfRBFi4hm89iJ91tACuiQGxtZhKr"
     end
+
     let(:mock_facebook_auth) do
       OmniAuth::AuthHash.new(
         { "provider"     => "facebook",
@@ -24,16 +25,27 @@ module OAuthFixtures
         }
       )
     end
+
     let(:mock_facebook_auth_existing_user) do
       mock_facebook_auth.merge(
         "info" => {
           "email" => "organizer@admin.com",
-          "name"  => "DifferentlyNamed Organizer",
-          "image" => mock_facebook_auth['image']
+          "name"  => "DifferentlyNamed Organizer"        
         }
       )
     end
+
+    let(:mock_facebook_auth_non_existing_user) do
+      mock_facebook_auth.merge(
+        "info" => {
+          "email" => "testy@testtest.com",
+          "name"  => "Test Organizer"        
+        }
+      )
+    end
+
     let(:facebook_authorization_double){ double(Facebook::Authorization) }
+
     let(:stub_long_lived_access_token_request) do
       -> do
         allow(Facebook::Authorization)
@@ -50,6 +62,7 @@ module OAuthFixtures
       "ya29.GluqBT22iW1wYDxF1U295fvAkjpwtOBmp_Yym7rHmj0HIc3KcauH8f4a3Rdkc7SB"+
         "xcU1h9lUJjeP-PgMpLhGzpoK-W43-Q53UCqMUJjxf82qJEtjm6byTgAILyWn"
     end
+
     let(:mock_google_auth) do
       OmniAuth::AuthHash.new(
         { "provider"     => "google",
@@ -66,11 +79,21 @@ module OAuthFixtures
         }
       )
     end
+
     let(:mock_google_auth_existing_user) do
       mock_google_auth.merge(
-        mock_google_auth.fetch("info").merge(
+        "info" => mock_google_auth.fetch("info").merge(
           "email" => "organizer@admin.com",
           "name"  => "Test Organizer",
+        )
+      )
+    end
+
+    let(:mock_google_auth_non_existing_user) do
+      mock_google_auth.merge(
+        "info" => mock_google_auth.fetch("info").merge(
+          "email" => "testy@testtest.com",
+          "name"  => "Test Organizer"
         )
       )
     end

@@ -98,8 +98,8 @@ class JoinGroupTest < FeatureTest
 
     describe "as a first time user" do
       before do
-        OmniAuth.config.mock_auth[:facebook] = mock_facebook_auth
-        OmniAuth.config.mock_auth[:google_oauth2] = mock_google_auth
+        OmniAuth.config.mock_auth[:facebook] = mock_facebook_auth_non_existing_user
+        OmniAuth.config.mock_auth[:google_oauth2] = mock_google_auth_non_existing_user
       end
 
       describe "viewing the join page" do
@@ -320,8 +320,8 @@ class JoinGroupTest < FeatureTest
                 "image" => current_params["person[oauth][info][image]"],
               }
             }.must_equal(
-              mock_facebook_auth.to_hash.merge(
-                "credentials" => mock_facebook_auth
+              mock_facebook_auth_non_existing_user.to_hash.merge(
+                "credentials" => mock_facebook_auth_non_existing_user
                                    .to_hash
                                    .fetch('credentials')
                                    .except('token')
@@ -459,8 +459,8 @@ class JoinGroupTest < FeatureTest
                 "image" => current_params["person[oauth][info][image]"],
               }
             }.must_equal(
-              mock_google_auth.to_hash.merge(
-                "credentials" => mock_google_auth
+              mock_google_auth_non_existing_user.to_hash.merge(
+                "credentials" => mock_google_auth_non_existing_user
                                    .to_hash
                                    .fetch('credentials')
                                    .except('token')

@@ -6,7 +6,7 @@
     </div>
     <%= form_for @person, url: { action: @target_action,
                                  signup_mode: @signup_mode,
-                                 subgroup: @subgroup } do |f| %>
+                                 subgroup: @subgroup }, method: :POST do |f| %>
       <!-- errors -->
       <%= render "shared/signup_aggregate_error_alert", errors: @errors %>
       <!-- inputs -->

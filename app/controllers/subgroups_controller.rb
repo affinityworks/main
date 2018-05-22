@@ -30,22 +30,39 @@ class SubgroupsController < ApplicationController
 
   # GET groups/:group_id/subgroups/oauth_signup
   def oauth_signup
-    @person = Person.build_for_signup
-    @subgroup = JSON.generate(subgroup_params.to_h)
-    render "signup_form_oauth", layout: 'signup'
+    if current_person&.has_contact_info?
+      create_subgroup_with_organizer(current_person.attributes)
+    else
+      @person = current_person&.prepare_for_contact_update || Person.build_for_signup
+      @subgroup = JSON.generate(subgroup_params.to_h)
+
+      render "signup_form_oauth", layout: 'signup'
+    end
   end
 
   # POST groups/:group_id/subgroups
   def create
-    if Oauth.is_oauth_signup?(@signup_mode)
+    if Oauth.is_oauth_signup?(@signup_mode) && current_person.nil?
       @person = Person.create_from_oauth_signup(Oauth.decrypt_token(@oauth), organizer_params)
       organizer_attrs = @person.attributes
       
+      return handle_create_error unless @person.valid?
+    elsif current_person
+      @person = current_person
+      @person.update(organizer_params)
+      organizer_attrs = @person.attributes
+
       return handle_create_error unless @person.valid?
     else
       organizer_attrs = organizer_params
     end
 
+    create_subgroup_with_organizer(organizer_attrs)
+  end
+
+  private
+
+  def create_subgroup_with_organizer(organizer_attrs)
     @subgroup, @person = @group.create_subgroup_with_organizer(
       subgroup_attrs: subgroup_params,
       organizer_attrs: organizer_attrs
@@ -53,8 +70,6 @@ class SubgroupsController < ApplicationController
 
     @subgroup.valid? ? handle_create_success : handle_create_error
   end
-
-  private
 
   ###########
   # SETTERS #
