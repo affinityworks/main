@@ -2,40 +2,43 @@ require_relative "../../test_helper"
 
 class BulkImportTest < ActiveSupport::TestCase
   describe ".bulk_import_members" do
-    let(:group){groups(:fantastic_four) }
+    let(:group){groups(:ohio_chapter) } # google-group enabled
     let(:person_count){ Person.count }
 
     describe "with correctly formatted csv" do
       let(:csv) do
         "first_name,last_name,email,zip_code,phone\n" +
           "alice,foo,alice@anarchist.website,11111,222-222-2222\n" +
-          "bob,foo,bob@anarchist.website,11111,222-222-2222,\n" +
-          "carla,foo,carla@anarchist.website,11111,222-222-2222,\n"
+          "bob,foo,bob@anarchist.website,11111,222-222-2222,\n"
       end
 
       before do
         person_count
-        group.bulk_import_members(csv)
+        allow(GoogleGroupJobs::AddNewMemberToGroupJob)
+          .to receive(:perform_later).and_return(nil)
+        perform_enqueued_jobs do
+          group.bulk_import_members(csv)
+        end
       end
 
       it "creates a person for each row" do
-        Person.count.must_equal person_count + 3
+        Person.count.must_equal person_count + 2
       end
 
       it "makes each person a member of group" do
-        Person.last(3).each do |person|
+        Person.last(2).each do |person|
           person.is_member_of?(group).must_equal true
         end
       end
 
       it "does not create passwords for any person" do
-        Person.last(3).each do |person|
+        Person.last(2).each do |person|
           person.encrypted_password.must_be_empty
         end
       end
 
       it "stores contact info for each person" do
-        Person.last(3).each do |person|
+        Person.last(2).each do |person|
           [:primary_phone_number,
            :primary_email_address,
            :primary_personal_address
@@ -43,6 +46,11 @@ class BulkImportTest < ActiveSupport::TestCase
             person.send(info).wont_be_nil
           end
         end
+      end
+
+      it "adds each person to google group" do
+        expect(GoogleGroupJobs::AddNewMemberToGroupJob)
+          .to have_received(:perform_later).twice
       end
     end
 

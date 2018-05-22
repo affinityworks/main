@@ -31,11 +31,16 @@ module BulkImport
         .join("\n")
     end
 
-    # String -> String?
+    # String -> Nil|String
     def try_import_member(row)
       return unless well_formed?(row)
       person = Person.create(parse_attributes(row))
-      person.valid? ? nil : row
+      if person.valid?
+        Members::AfterCreate.call(member: person, group: self)
+        nil
+      else
+        row
+      end
     end
 
     # String -> Boolean
