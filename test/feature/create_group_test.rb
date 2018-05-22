@@ -512,6 +512,10 @@ class CreateGroupTest < FeatureTest
                   person.personal_addresses.last.postal_code.must_equal "90211"
                 end
 
+                it "updates the Persons zip code to be primary" do
+                  person.personal_addresses.last.primary.must_equal true
+                end
+
                 it "updates the Persons zip code" do
                   person.phone_numbers.last.number.must_equal "2128675309"
                 end

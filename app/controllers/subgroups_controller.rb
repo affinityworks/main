@@ -171,7 +171,7 @@ class SubgroupsController < ApplicationController
   end
 
   def format_contact_info(params)
-    return if current_person # only gather contact info for logged-out users
+    return if current_person&.has_contact_info?
     [
       'phone_numbers_attributes',  'email_addresses_attributes',  'personal_addresses_attributes'
     ].each do |collection| 
