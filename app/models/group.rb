@@ -2,6 +2,7 @@ class Group < ApplicationRecord
   include ArelHelpers::ArelTable
   include Networkable
   include UrlHelpers
+  include BulkImport
   #has_paper_trail
   acts_as_taggable
 
