@@ -1,9 +1,4 @@
 <div class="create-buttons-container">
-  <!-- email -->
-  <%= f.button(type: 'submit', name: 'commit', value: 'email', class: "btn-email-join") do %>
-    <%= image_tag 'email-icon.svg' %>
-    <span>Create with Email</span>
-  <% end %>
   
   <!-- facebook -->
   <%= f.button(type: 'submit', name: 'commit', value: 'facebook', class: "btn-facebook-join") do %>
@@ -17,4 +12,9 @@
     <span>Create with Google</span>
   <% end %>
   
+  <!-- email -->
+  <%= f.button(type: 'submit', name: 'commit', value: 'email', class: "btn-email-join") do %>
+    <%= image_tag 'email-icon.svg' %>
+    <span>Create with Email</span>
+  <% end %>
 </div>

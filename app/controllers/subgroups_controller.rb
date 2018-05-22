@@ -157,9 +157,9 @@ class SubgroupsController < ApplicationController
               :given_name,
               :family_name,
               :password,
-              phone_numbers_attributes: [:number],
-              email_addresses_attributes: [:address],
-              personal_addresses_attributes: [:postal_code]
+              phone_numbers_attributes: [:id, :number],
+              email_addresses_attributes: [:id, :address],
+              personal_addresses_attributes: [:id, :postal_code]
              )
        .tap { |prams| format(prams) }
   end
