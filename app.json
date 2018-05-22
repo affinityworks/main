@@ -73,6 +73,9 @@
     },
     "MAILGUN_SMTP_SERVER": {
       "required": true
+    },
+    "NACL_SECRET_KEY": {
+      "required": true
     }
   },
   "formation": {

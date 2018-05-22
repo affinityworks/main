@@ -15,7 +15,6 @@ Assuming you want to add redirect URIs for an app with hostname `myapp.heroku.co
 https://myapp.herokuapp.com/admin/auth/facebook/callback
 https://myapp.herokuapp.com/admin/auth/facebook/callbackRemove
 ```
-https://staging-affinityworks-pr699.herokuapp.com/admin/auth/facebook/callback
 
 * click "Save"
 
