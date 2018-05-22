@@ -29,6 +29,8 @@ class SubgroupsController < ApplicationController
   end
 
   # GET groups/:group_id/subgroups/oauth_signup
+  # Need this as a GET route because it is redirected to from Oauth
+  # as opposed to email which can POST straight to signup action
   def oauth_signup
     if current_person&.has_contact_info?
       create_subgroup_with_organizer(current_person.attributes)
@@ -161,11 +163,11 @@ class SubgroupsController < ApplicationController
               email_addresses_attributes: [:id, :address],
               personal_addresses_attributes: [:id, :postal_code]
              )
-       .tap { |prams| format(prams) }
+       .tap { |_params| format(_params) }
   end
 
-  def format(params)
-    params
+  def format(_params)
+    _params
       .tap { |p| format_contact_info(p) }
       .tap { |p| handle_empty_contact_info(p) }
   end
