@@ -1,20 +1,18 @@
-<div class="login-content pt-5">
-    
-<h2>Forgot your password?</h2>
+<div class="login-content pt-5 password-form-container">
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= devise_error_messages! %>
+  <div class="logo"></div>
+  <h3>Forgot your password?</h3>
 
-  <div class="field form-group row mt-5">
-    <%= f.label :email, class: "col-2 col-form-label mr-4" %><br />
-    <%= f.email_field :email, autofocus: true, class: "form-control col-md-9" %>
-  </div>
+  <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+    <%= devise_error_messages! %>
 
-  <div class="actions text-right">
-    <%= f.submit "Send me reset password instructions", class: 'btn btn-success' %>
-  </div>
-<% end %>
-<div class="text-right mt-4">
-  <%= render "devise/shared/links" %>
-</div>
+    <div class="field form-group row mt-5">
+      <%= f.email_field :email, placeholder: 'Email', autofocus: true %>
+    </div>
+
+    <div class="actions modal-actions">
+      <%= f.submit "Send password update link", class: "btn-submit" %>
+      <%= link_to "Cancel", "/admin/login",  class: "btn-cancel" %>
+    </div>
+  <% end # form %>
 </div>

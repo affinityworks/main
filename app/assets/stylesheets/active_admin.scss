@@ -62,7 +62,7 @@ body.logged_out {
   #content_wrapper {
     #active_admin_content {
       box-shadow: none;
-      h2 {
+      .logo {
         font-size: 0;
         box-shadow: none;
         color: #0069ff;
@@ -77,9 +77,6 @@ body.logged_out {
         padding: 0.5em 1em;
         background-color: transparent;
         font-weight: normal;
-      }
-      #error_explanation {
-        display: none;
       }
 
       .action input[type="submit"] {
@@ -101,4 +98,43 @@ body.logged_out {
       }
     }
   }
+  h3 {
+      margin-top: 1em;
+  }
+  .password-form-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      #error_explanation {
+          @extend .error_box;
+          h2 {
+              display: none;
+          }
+          li {
+              list-style-type: none;
+              margin: 1rem 0 0 -1rem;
+          }
+      }
+      .field_with_errors {
+          width: 100%;
+      }
+      input#person_email {
+          @extend .form-control;
+          width: 100%;
+      }
+  }
+}
+
+.error_box {
+    border: 1px solid $red;
+    margin-top: 1.5rem;
+    border-radius: .5rem;
+    color: $red;
+    background-color: lightpink;
+}
+
+.flash_error {
+    @extend .error_box;
+    padding: 1rem;
+    margin-top: 2rem!important;
 }

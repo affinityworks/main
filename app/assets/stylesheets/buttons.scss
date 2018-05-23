@@ -130,3 +130,18 @@ $primaryblue: rgba(2, 117, 216, 1);
     @extend .button;
     @extend .btn-primary;
 }
+
+.btn-password {
+    @extend button;
+}
+
+.modal-actions {
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+    .btn {
+        margin: 0 .5rem 0 .5rem;
+    }
+}
