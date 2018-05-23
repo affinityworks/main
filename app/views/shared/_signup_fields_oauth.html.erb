@@ -1,0 +1,17 @@
+<!-- hidden fields -->
+<%= f.hidden_field :oauth, value: oauth %>
+
+<!-- inputs -->
+<div class="form-group">
+  <%= f.fields_for :personal_addresses do |ff| %>
+    <%= ff.text_field :postal_code, placeholder: 'Zip Code*', required: true, class: 'wide' %>
+    <%= ff.hidden_field :primary, value: true %>
+  <% end # f.fields_for :personal_addresses %>
+</div>
+
+<div class="form-group">
+  <%= f.fields_for :phone_numbers do |ff| %>
+    <%= ff.text_field :number, placeholder: 'Phone', class: 'wide' %>
+    <%= ff.hidden_field :primary, value: true %>
+  <% end # f.fields_for :phone_numbers %>
+</div>

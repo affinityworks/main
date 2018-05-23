@@ -140,7 +140,6 @@ end
 group :test do
   gem 'rails-controller-testing'
   gem 'webmock'
-  #gem 'minitest-spec'
   gem 'minitest', '~> 5.10.3'
   gem 'minitest-spec-rails'
   gem 'minitest-matchers'

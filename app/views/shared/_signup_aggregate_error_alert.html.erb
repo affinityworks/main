@@ -1,0 +1,11 @@
+<%# locals: errors: Array %>
+<% if errors&.any? %>
+  <div id="error_explanation" class="alert alert-danger" role="alert">
+    <strong><%= "#{errors.count} errors" %> prevented this person from being saved:</strong>
+    <ul>
+      <% errors.each do |error| %>
+        <li><%= error %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

@@ -11,7 +11,7 @@ Here is what to do if you want to extend Google OAuth support to a new instance 
 * click the name of the first item in the "Oauth 2.0 client ids" list, which is just "Affinity"
 * in the `Valid OAuth Redirect URIs` list, add a url of the following form:
   ```
-  https://myapp.herokuapp.com/admin/auth/google_oauth2_/callback
+  https://myapp.herokuapp.com/admin/auth/google_oauth2/callback
   ```
 * click "Save"
 

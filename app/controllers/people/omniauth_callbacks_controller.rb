@@ -1,16 +1,19 @@
 class People::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   AUTH_ACTIONS = %w[login signup].freeze
+  SIGNUP_REASONS = %w[create_group join_group].freeze
   before_action :set_auth
   before_action :set_auth_action
+  before_action :set_signup_reason
+  before_action :set_subgroup_attrs
 
   def facebook
     @service = "facebook"
-    send AUTH_ACTIONS.dup.delete(@auth_action)
+    send @auth_action
   end
 
   def google_oauth2
     @service = "google"
-    send AUTH_ACTIONS.dup.delete(@auth_action)
+    send @auth_action
   end
 
   private
@@ -24,7 +27,21 @@ class People::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def set_auth_action
-    @auth_action = request.env.dig("omniauth.params", "auth_action") || 'login'
+    @auth_action = AUTH_ACTIONS.dup.delete(
+      request.env.dig("omniauth.params", "auth_action") || 'login'
+    )
+  end
+
+  def set_signup_reason
+    @signup_reason = SIGNUP_REASONS.dup.delete(
+      request.env.dig("omniauth.params", "signup_reason")
+    )
+  end
+
+  def set_subgroup_attrs
+    if json = request.env.dig("omniauth.params", "subgroup_json")
+      @subgroup_attrs = JSON.parse(json).to_h
+    end
   end
 
   ###########
@@ -55,15 +72,40 @@ class People::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   ###########
 
   def handle_new_person
-    redirect_to new_group_member_path(signup_mode: @service,
-                                      group_id: current_group.id,
-                                      person: { oauth: encrypt_token(@auth) })
+    case @signup_reason
+    when 'join_group'
+      redirect_to new_group_member_path(signup_mode: @service,
+                                        group_id: current_group.id,
+                                        person: { oauth: Oauth.encrypt_token(@auth) })
+    when 'create_group'
+      redirect_to oauth_signup_group_subgroups_path(signup_mode: @service,
+                                                    group_id: current_group.id,
+                                                    subgroup: @subgroup_attrs,
+                                                    person: { oauth: Oauth.encrypt_token(@auth) })
+    end
   end
 
   def handle_existing_person
-    return handle_existing_member if @person.is_member_of? current_group
-    return handle_missing_contact_info if @person.missing_contact_info?
-    handle_simple_signup
+    case @signup_reason
+    when 'join_group'
+      return handle_existing_member if is_existing_member?
+      return handle_missing_contact_info if @person.missing_contact_info?
+      handle_simple_signup
+    when 'create_group'
+      sign_in_and_redirect_to(
+        @person,
+        oauth_signup_group_subgroups_path(
+          signup_mode: @service,
+          group_id: current_group.id,
+          subgroup: @subgroup_attrs,
+          person: { oauth: Oauth.encrypt_token(@auth) }
+        )
+      )
+    end
+  end
+
+  def is_existing_member?
+    @person.is_member_of?(current_group) && @signup_reason == 'join_group'
   end
 
   def handle_existing_member
@@ -79,7 +121,7 @@ class People::OmniauthCallbacksController < Devise::OmniauthCallbacksController
         group_id: current_group.id,
         id: @person.id,
         person: {
-          oauth: encrypt_token(@auth)
+          oauth: Oauth.encrypt_token(@auth)
         }
       )
     )
@@ -104,13 +146,5 @@ class People::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     flash[:error] = I18n.t("devise.omniauth_callbacks.failure", kind: @service)
     session["devise.#{@service}_data}"] = @auth
     redirect_to redirect_url
-  end
-
-  def encrypt_token(auth)
-    auth.merge(
-      'credentials' => {
-        'token' => Crypto.encrypt_to_nacl_secret(auth.credentials.token)
-      }
-    )
   end
 end

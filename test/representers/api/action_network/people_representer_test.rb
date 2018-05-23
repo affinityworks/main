@@ -29,6 +29,6 @@ class Api::ActionNetwork::PeopleRepresenterTest < ActiveSupport::TestCase
     raw_json = Api::Collections::PeopleRepresenter.new(collection, request).to_json
     json = JSON.parse(raw_json)
     assert_equal 1, json['page']
-    assert_equal 10, json['_embedded']['osdi:people'].size
+    assert_equal 11, json['_embedded']['osdi:people'].size
   end
 end

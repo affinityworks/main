@@ -6,11 +6,11 @@
     </div>
     <%= form_for @person, url: { action: @target_action,
                                  signup_mode: @signup_mode,
-                                 subgroup: @subgroup } do |f| %>
+                                 subgroup: @subgroup }, method: :POST do |f| %>
       <!-- errors -->
       <%= render "shared/signup_aggregate_error_alert", errors: @errors %>
       <!-- inputs -->
-      <%= render "shared/signup_fields_email", f: f %>
+      <%= render partial: "shared/signup_fields_oauth", locals: { f: f, oauth: @oauth } %>
       <!-- action buttons -->
       <%= render "shared/modal_actions", f: f, cancel_path: new_group_subgroup_path(current_group) %>
     <% end # form_for @person %>

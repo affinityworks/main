@@ -118,3 +118,23 @@ new_signup:
   birthdate: 2011-09-17
   encrypted_password: $2a$11$08m64awvoVFg4sLOu.zA6e70E98bWC2VNewFWUNYjtnvutb/K68xK
   employer: Aspiration Tech
+
+testy:
+  identifiers: ['advocacycommons:473299', 'foreign_system:473299']
+  given_name: Testy
+  family_name: McGee
+  additional_name: Sr.
+  honorific_prefix: Ms.
+  gender: Other
+  gender_identity: Other
+  party_identification: Green
+  source: Affinity
+  ethnicities:
+    - White
+    - Hispanic
+  languages_spoken:
+    - Greek
+    - Latin
+  birthdate: 2011-09-17
+  encrypted_password: $2a$11$08m64awvoVFg4sLOu.zA6e70E98bWC2VNewFWUNYjtnvutb/K68xK
+  employer: Aspiration Tech

@@ -204,6 +204,10 @@ class Person < ApplicationRecord
     primary_personal_address&.postal_code.nil?
   end
 
+  def has_contact_info?
+    !missing_contact_info?
+  end
+
   #
   # CLASS METHODS
   #

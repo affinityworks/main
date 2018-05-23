@@ -78,7 +78,7 @@ class EventTest < ActiveSupport::TestCase
   end
 
   test '.origin_system_is_action_network?' do
-    event = Event.create(origin_system: 'Action Network', title: 'title', origin_system: 'Action Network', title: 'title',
+    event = Event.create(origin_system: 'Action Network', title: 'title',
                                start_date: 2.days.ago, status: 'status')
 
     assert event.origin_system_is_action_network?
