@@ -14,6 +14,9 @@ $primaryblue: rgba(2, 117, 216, 1);
         div {
             display: flex;
         }
+        .group-description {
+          white-space: pre-wrap;
+        }
     }
     .right-aside {
         @extend .card;
