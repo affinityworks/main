@@ -255,4 +255,50 @@ class GoogleAPI::ServiceTest < ActiveSupport::TestCase
       end
     end
   end
+
+  describe "#remove_member_from_google_group" do
+    describe "when auth has occured and google group exists" do
+      before do
+        allow(GoogleAPI::RemoveMemberFromGoogleGroup).to receive(:call)
+        @service = GoogleAPI::Service
+                     .new(directory_service: directory_service_double,
+                          google_group: google_group_double)
+                     .remove_member_from_google_group(email: 'foo@foo.com')
+      end
+
+      it "removes member from google group" do
+        expect(GoogleAPI::RemoveMemberFromGoogleGroup)
+          .to have_received(:call)
+                .with(directory_service: directory_service_double,
+                      google_group: google_group_double,
+                      email: 'foo@foo.com')
+      end
+    end
+
+    describe "when auth has not occured" do
+      before do
+        allow(GoogleAPI::RemoveMemberFromGoogleGroup).to receive(:call)
+        @service = GoogleAPI::Service
+                     .new(directory_service: nil, google_group: google_group_double)
+                     .remove_member_from_google_group(email: 'foo')
+      end
+
+      it "does not try to remove member from google group" do
+        expect(GoogleAPI::RemoveMemberFromGoogleGroup).not_to have_received(:call)
+      end
+    end
+
+    describe "when google group has not been set" do
+      before do
+        allow(GoogleAPI::RemoveMemberFromGoogleGroup).to receive(:call)
+        @service = GoogleAPI::Service
+                     .new(directory_service: directory_service_double, google_group: nil)
+                     .remove_member_from_google_group(email: 'foo')
+      end
+
+      it "does not try to remove member to google group" do
+        expect(GoogleAPI::RemoveMemberFromGoogleGroup).not_to have_received(:call)
+      end
+    end
+  end
 end

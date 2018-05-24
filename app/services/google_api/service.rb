@@ -5,7 +5,7 @@ class GoogleAPI::Service
   def initialize(args = {})
     @authorization = args[:authorization]         # Google::Auth::ServiceAccountCredentials
     @directory_service = args[:directory_service] # Google::Apis::AdminDirectoryV1::DirectoryService
-    @google_group = args[:google_group]           # Google::Apis::AdminDirect%%%%%oryV1::Group
+    @google_group = args[:google_group]           # Google::Apis::AdminDirectoryV1::Group
   end
 
   # Network => GoogleAPI::Service
@@ -59,6 +59,17 @@ class GoogleAPI::Service
       google_group:      @google_group,
       email:             email,
       role:              role
+    )
+    self
+  end
+
+  # (String, String) -> GoogleAPI::Service
+  def remove_member_from_google_group(email:)
+    return self unless @directory_service && @google_group
+    RemoveMemberFromGoogleGroup.call(
+      directory_service: @directory_service,
+      google_group:      @google_group,
+      email:             email
     )
     self
   end
