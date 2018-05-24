@@ -1,19 +1,7 @@
 module SignupHandlers::JoinGroup
   PATHS = Rails.application.routes.url_helpers
 
-  class Handler
-    def initialize(args)
-      @person = args[:person] # Person
-      @signup_reason = args[:signup_reason] # String
-      @group = args[:group] # Group,
-      @subgroup_attrs = args[:subgroup_attrs] # Hash,
-      @auth = args[:auth] # OmniAuth::AuthHash,
-      @controller = args[:controller] # ApplicationController
-      @service = args[:service] # String
-    end
-  end
-
-  class NewMember < Handler
+  class NewMember < SignupHandlers::Handler
     def handle
       @controller.redirect_to(
         PATHS.new_group_member_path(
@@ -25,7 +13,7 @@ module SignupHandlers::JoinGroup
     end
   end
 
-  class AlreadyMember < Handler
+  class AlreadyMember < SignupHandlers::Handler
     def handle
       @controller.flash[:notice] = "You are already a member of #{@group.name}"
       @controller.sign_in_and_redirect_to(
@@ -35,7 +23,7 @@ module SignupHandlers::JoinGroup
     end
   end
 
-  class InfoNeeded < Handler
+  class InfoNeeded < SignupHandlers::Handler
     def handle
       @controller.sign_in_and_redirect_to(
         @person,
@@ -51,7 +39,7 @@ module SignupHandlers::JoinGroup
     end
   end
 
-  class NoInfoNeeded < Handler
+  class NoInfoNeeded < SignupHandlers::Handler
     def handle
       @person.update_from_oauth_signup(
         @auth,
@@ -64,7 +52,7 @@ module SignupHandlers::JoinGroup
     end
   end
 
-  class Invalid < Handler
+  class Invalid < SignupHandlers::Handler
     def handle
       @controller.handle_error PATHS.group_join_path(@group)
     end

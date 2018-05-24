@@ -18,6 +18,26 @@ class People::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     send @auth_action
   end
 
+  def login
+    if @person = Person.from_oauth_login(@auth, current_person)
+      sign_in_and_redirect @person, event: :authentication #throws if @person not activated
+      set_flash_message(:notice, :success, kind: @service) if is_navigational_format?
+    else
+      handle_error new_person_session_url
+    end
+  end
+
+  def signup
+    SignupHandlers.for(
+      signup_reason: @signup_reason,
+      group: current_group,
+      subgroup_attrs: @subgroup_attrs,
+      auth: @auth,
+      controller: self,
+      service: @service
+    ).handle
+  end
+
   def handle_error(redirect_path)
     flash[:error] = I18n.t("devise.omniauth_callbacks.failure", kind: @service)
     session["devise.#{@service}_data}"] = @auth
@@ -50,29 +70,5 @@ class People::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     if json = request.env.dig("omniauth.params", "subgroup_json")
       @subgroup_attrs = JSON.parse(json).to_h
     end
-  end
-
-  ###########
-  # ACTIONS #
-  ###########
-
-  def login
-    if @person = Person.from_oauth_login(@auth, current_person)
-      sign_in_and_redirect @person, event: :authentication #throws if @person not activated
-      set_flash_message(:notice, :success, kind: @service) if is_navigational_format?
-    else
-      handle_error new_person_session_url
-    end
-  end
-
-  def signup
-    SignupHandlers.for(
-      signup_reason: @signup_reason,
-      group: current_group,
-      subgroup_attrs: @subgroup_attrs,
-      auth: @auth,
-      controller: self,
-      service: @service
-    ).handle
   end
 end
