@@ -33,6 +33,7 @@ class Header extends Component {
               </button>
               <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
                 <a className="dropdown-item" href={`/account?group_id=${currentGroup.id}&person_id=${currentUser.id}`}>Account</a>
+                <a className="dropdown-item" href="/home">My Groups</a>
                 <a className="dropdown-item" href="/admin/logout">Logout</a>
               </div>
             </div>
