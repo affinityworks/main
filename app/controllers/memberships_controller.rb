@@ -2,7 +2,9 @@ class MembershipsController < ApplicationController
   before_action :authenticate_person!
   before_action :authorize_group_access
   before_action :find_memberships, only: [:index]
-  #before_action :authorize_and_load_membership, only: [:show]
+  # TODO: THIS IS DANGEROUS!!!
+  # for fix, wee comment in `client/app/bundles/Events/utils/Client.jsx`
+  protect_from_forgery except: [:destroy]
 
   def index
     respond_to do |format|
@@ -47,6 +49,8 @@ class MembershipsController < ApplicationController
   end
 
   def update
+    # NOTE (aguestuser): I just moved this here. i did not write it!
+    # i strongly suspect that this code would crash if ever executed
     @membership = Membership.find(:id).role
     respond_to do |format|
       if @membership.role == "member"
@@ -60,6 +64,21 @@ class MembershipsController < ApplicationController
       end
     end
   end
+
+  # DELETE /groups/:group_id/memberships/:id
+  # DELETE /groups/:group_id/memberships/:id.json
+  def destroy
+    @membership = Membership.find(params.require(:id).to_i)
+    @membership.destroy
+
+    respond_to do |format|
+      format.html { redirect_to members_url, notice: 'Membership destroyed.' }
+      format.json do
+        render json: { membership: { id: @membership.id } }
+      end
+    end
+  end
+
 
   private
 

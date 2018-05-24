@@ -40,7 +40,7 @@ class Members extends Component {
   }
 
   render() {
-    const { memberships, showGroupName, location, currentRole, currentGroup } = this.props
+    const { memberships, showGroupName, location, currentRole, currentGroup, deleteMembership } = this.props;
     const { search } = location;
     const { filter } = queryString.parse(search);
 
@@ -64,14 +64,15 @@ class Members extends Component {
         </UserAuth>
         <br />
 
-        <MembersTable
-          memberships={memberships}
-          showGroupName={showGroupName}
-          memberTagList={this.props.tags}
-          currentRole={currentRole}
-          currentGroup={currentGroup}
-          location={location}
-        />
+        <MembersTable {...{
+          memberTagList: this.props.tags,
+          memberships,
+          showGroupName,
+          currentRole,
+          currentGroup,
+          location,
+          deleteMembership,
+        }}/>
 
         <br />
 
@@ -82,8 +83,7 @@ class Members extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { currentGroup, memberships: { memberships, total_pages, page, tags } } = state
-
+  const { currentGroup, memberships: { memberships, total_pages, page, tags } } = state;
   return { currentGroup, memberships, total_pages, page, tags };
 };
 

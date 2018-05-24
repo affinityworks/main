@@ -121,7 +121,7 @@ class Member extends Component {
   }
 
   render() {
-    const { member, role, currentRole} = this.props
+    const { member, role, currentRole, membershipId, deleteMembership } = this.props
     
     if(!member) { return null }
 
@@ -138,6 +138,13 @@ class Member extends Component {
           <td>{role}</td>
           <td>
             <EmailLink email={email} />
+          </td>
+          <td>
+            <a
+               style={{cursor: 'pointer', color: "royalblue"}}
+               onClick={() => deleteMembership(membershipId)}>
+              <b>x</b>
+            </a>
           </td>
         </tr>
     );
