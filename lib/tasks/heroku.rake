@@ -20,6 +20,18 @@ namespace :heroku do
   end
 
   task export_vars: :environment do
+    puts "***************************WARNING*****************************"
+    puts "  IF YOU HAVE LOCAL ENV VARS THAT CONFLICT WITH HEROKU VALUES,"
+    puts "      RUNNING THIS SCRIPT WILL OVERWRITE THE HEROKU VALUES"
+    puts "           ARE YOU SURE YOU WANT TO CONTINUE? (y/n)"
+    puts "***************************************************************"
+
+    answer = STDIN.gets.chomp
+    exit unless answer == 'y' || answer == 'yes'
+
+    puts "--- decrypting config files"
+    sh "./bin/blackbox_decrypt_all_files"
+
     puts "--- Checking for heroku-config plugin"
     plugins = `heroku plugins`
 
@@ -39,7 +51,7 @@ namespace :heroku do
 
       puts "--- exporting vars for #{app_name}"
 
-      sh "heroku config:push -f #{heroku_dir}/#{filename} -a #{app_name}"
+      sh "heroku config:push -o -f #{heroku_dir}/#{filename} -a #{app_name}"
 
       puts "\n"
     end
