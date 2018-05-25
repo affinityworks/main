@@ -75,7 +75,7 @@ class Breadcrumbs extends Component {
       <ol className='breadcrumb'>
         <li className='breadcrumb-item'>
           <UserAuth allowed={['member']}>
-            <a href='/profile/'>{currentGroup.name}</a>
+            <Link to={ dashboardPath(currentGroup.id) }>{currentGroup.name}</Link>
           </UserAuth>
           <UserAuth allowed={['organizer', 'volunteer']}>
             <Link to={ dashboardPath(currentGroup.id) }>{currentGroup.name}</Link>
