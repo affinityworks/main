@@ -13,10 +13,11 @@
           <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span>
-              <%= current_person.name %> </span>
+              <%= current_person.name %></span>
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
               <%= link_to 'Account', account_path(person_id: current_person), class: "dropdown-item" %>
+              <%= link_to 'My Groups', profile_home_path, class: "dropdown-item" %>
               <%= link_to 'Logout', destroy_person_session_path, class: "dropdown-item" %>
             </div>
           </div>
