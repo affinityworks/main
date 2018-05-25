@@ -60,7 +60,7 @@ class Dashboard extends Component {
           },{
             description: 'Email the group', mailto: attributes['google-group-email']
           },{
-            description: 'Edit Google Group settings', link: attributes['google-group-url'],
+            description: 'Edit Google Group settings', link: attributes['google-group-url'], auth_link: true
           }]
         }}/>
         <hr/>

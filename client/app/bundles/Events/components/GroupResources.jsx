@@ -1,4 +1,5 @@
 import React from 'react';
+import UserAuth from '../components/UserAuth';
 
 const GroupResources = ({resources}) => (
   <div>
@@ -22,7 +23,10 @@ const EmptyListOf = (resources) => (
 );
 
 const GroupResource = (r) => {
-  if(r.link) {
+  if(r.auth_link){
+    return <UserAuth allowed={['organizer']}><li> {r.description}: <a href={r.link}>{r.link}</a> </li></UserAuth>
+  } 
+  else if(r.link) {
     return <li> {r.description}: <a href={r.link}>{r.link}</a> </li>
   }
   else if(r.mailto) {
