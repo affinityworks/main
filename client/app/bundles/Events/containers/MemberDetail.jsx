@@ -121,6 +121,7 @@ class MemberDetail extends Component {
       return this.renderBlankTemplate();
     const { attributes } = membership.attributes.person.data;
     const phone = attributes['primary-phone-number'];
+    const zipCode = attributes['primary-personal-address']['postal_code'];
 
     return (
       <div>
@@ -139,13 +140,15 @@ class MemberDetail extends Component {
 
           {phone && <span style={{ marginRight: '20px' }}> Phone: {phone} </span>}
 
-          <span>
+          <span style={{ marginRight: '20px' }}>
             Email:&nbsp;
             <a href={`mailto:${attributes['primary-email-address']}`}
                target="_blank">
               {attributes['primary-email-address']}
             </a>
           </span>
+
+          {zipCode && <span>Zip Code: {zipCode}</span>}
         </div>
 
         <hr style={{ marginTop: '0.5rem' }} />
