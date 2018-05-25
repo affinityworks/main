@@ -5,7 +5,9 @@ Here are a few helpful links to get started:
 * Login: <%= new_person_session_url %>
 * View your group dashboard: <%= group_dashboard_url(@group) %>
 * Recruit new members: <%= group_join_url(@group) %>
+<% if @group.google_group_email %>
 * Email the group's mailing list: <%= @group.google_group_email %>
+<% end %>
 
 Feel free to contactsupport at help@affinity.works to ask for help if you get stuck.
 
