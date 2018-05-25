@@ -63,10 +63,13 @@ class MembersTable extends Component {
 
   renderMembers() {
     return this.props.memberships.map(membership => {
-      const { tags } = membership.attributes;
+      const { tags, id: membershipId } = membership.attributes;
       const person = membership.attributes.person.data;
 
-      return <Member key={person.id} id={person.id}
+      return <Member
+        key={person.id}
+        id={person.id}
+        membershipId={membershipId}
         member={person.attributes}
         currentRole={this.props.currentRole}
         groups={person.relationships.groups.data}
@@ -78,6 +81,7 @@ class MembersTable extends Component {
         tags={tags}
         location={this.props.location}
         memberTagList={this.props.memberTagList}
+        deleteMembership={this.props.deleteMembership}
       />
     })
   }
@@ -113,6 +117,7 @@ class MembersTable extends Component {
             {this.showTags()}
             <SortableHeader title='Role' sortBy='role' style={{ width: '15%'}} />
             <th style={{ width: '5%'}}></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>

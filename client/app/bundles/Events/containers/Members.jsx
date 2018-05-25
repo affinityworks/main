@@ -6,8 +6,8 @@ import history from '../history';
 import Nav from '../components/Nav';
 import GroupMembers from '../components/Members';
 import Breadcrumbs from '../components/Breadcrumbs';
-import { fetchCurrentUserGroups } from '../actions';
-import { managingCurrentGroupWithAffiliates } from '../utils'
+import { deleteMembership, fetchCurrentUserGroups } from '../actions';
+import { managingCurrentGroupWithAffiliates } from '../utils';
 
 class Members extends Component {
   showGroupName() {
@@ -16,7 +16,7 @@ class Members extends Component {
   }
 
   render() {
-    const { currentRole, currentGroup, location } = this.props;
+    const { currentRole, currentGroup, location, deleteMembership } = this.props;
     const activeText = 'Members';
 
     return (
@@ -35,6 +35,7 @@ class Members extends Component {
           history={this.props.history}
           showGroupName={this.showGroupName()}
           currentRole={currentRole}
+          deleteMembership={deleteMembership}
         />
       </div>
     );
@@ -42,9 +43,13 @@ class Members extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { currentGroup, currentRole } = state
-
-  return { currentGroup, currentRole }
+  const { currentGroup, currentRole } = state;
+  return { currentGroup, currentRole };
 };
 
-export default connect(mapStateToProps, { fetchCurrentUserGroups })(Members);
+const actions = {
+  deleteMembership,
+  fetchCurrentUserGroups
+};
+
+export default connect(mapStateToProps, actions)(Members);

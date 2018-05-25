@@ -5,6 +5,11 @@ import history from '../history';
 
 const client = axios.create();
 
+// TODO (aguestuser|Thu 24 May 2018):
+// - we are currently exposed to CSRF attacks on members and memberhips routes (maybe more?)
+// - fix:  in *every* requrest retrieve CSRF tokenand include it in a custom header w/ something like:
+//   'X-CSRF-Token': $("meta[name='csrf-token']").attr("content")
+
 client.interceptors.response.use(response => {
   return response;
 }, function(error) {

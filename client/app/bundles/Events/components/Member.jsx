@@ -65,6 +65,24 @@ class Member extends Component {
     }
   }
 
+  deleteMembershipColumn() {
+    const { role, currentRole, membershipId, deleteMembership } = this.props
+
+    return (
+      <UserAuth allowed={['organizer']}>
+        <td>
+          { (role === "member") &&
+            <a
+               style={{cursor: 'pointer', color: "royalblue"}}
+               onClick={() => deleteMembership(membershipId)}>
+              <b>x</b>
+            </a>
+          }
+        </td>
+      </UserAuth>
+    )
+  }
+
   showTags() {
     const { tags, membershipId } = this.props;
 
@@ -121,7 +139,7 @@ class Member extends Component {
   }
 
   render() {
-    const { member, role, currentRole} = this.props
+    const { member, role, currentRole, membershipId, deleteMembership } = this.props
     
     if(!member) { return null }
 
@@ -139,6 +157,7 @@ class Member extends Component {
           <td>
             <EmailLink email={email} />
           </td>
+          {this.deleteMembershipColumn()}
         </tr>
     );
   }
