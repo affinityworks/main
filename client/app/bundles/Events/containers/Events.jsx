@@ -21,9 +21,7 @@ class Events extends Component {
 
   render() {
     const { currentGroup, location, currentRole } = this.props;
-    const activeText = managingCurrentGroupWithAffiliates(currentGroup)
-      ? 'All Events'
-      : 'Events';
+    const activeText = 'Events';
 
     return (
       <div>

@@ -54,7 +54,7 @@ class Nav extends Component {
               />
 
               {eventsOn && <NavItem
-                title={`${this.isRootNav() ? 'All' : ''} Events`}
+                title={'Events'}
                 path={eventsPath()}
                 active={activeTab === 'events'}
               />}
