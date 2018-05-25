@@ -69,7 +69,11 @@ class MembershipsController < ApplicationController
   # DELETE /groups/:group_id/memberships/:id.json
   def destroy
     @membership = Membership.find(params.require(:id).to_i)
+    member = @membership.person
+    group = @membership.group
+
     @membership.destroy
+    Memberships::AfterDestroy.call(member: member, group: group)
 
     respond_to do |format|
       format.html { redirect_to members_url, notice: 'Membership destroyed.' }

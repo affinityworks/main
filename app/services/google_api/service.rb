@@ -74,6 +74,16 @@ class GoogleAPI::Service
     self
   end
 
+  # (String, String) -> GoogleAPI::Service
+  def list_members_in_google_group
+    return self unless @directory_service && @google_group
+    ListMembersInGoogleGroup.call(
+      directory_service: @directory_service,
+      google_group:      @google_group
+    )
+    self
+  end
+
   private
 
   # () => Void
