@@ -111,6 +111,12 @@ gem 'scout_apm'
 # crypto
 gem 'rbnacl-libsodium'
 
+# factories
+# - included here so we can use them on staging
+# - eg: rake qa:gen_big_subgroup
+gem 'factory_bot_rails'
+gem 'faker'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'dotenv-rails'
@@ -119,8 +125,6 @@ group :development, :test do
   gem 'pry' # for debugging, robe console, etc...
   gem 'dotenv'
   gem 'pry-remote'
-  gem 'factory_bot_rails'
-  gem 'faker'
 end
 
 group :development do
