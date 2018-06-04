@@ -105,6 +105,9 @@ gem 'nokogiri', '~> 1.8'
 gem 'google-api-client', '~> 0.10.3'
 gem 'googleauth'
 
+# memory profiling
+gem 'scout_apm'
+
 # crypto
 gem 'rbnacl-libsodium'
 
