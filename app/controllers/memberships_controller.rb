@@ -91,44 +91,31 @@ class MembershipsController < ApplicationController
   end
 
   def find_memberships
-
-    if current_group
-      #are we looking at the person in the context of a specific group, then what groups can we see
-      member_ids = Membership.where(:group_id =>current_group.affiliates.pluck(:id).push(current_group.id) ).pluck(:id)
-    else  #or did we not get any group
-      organized_groups_ids = current_user.organized_groups.pluck(:id)
-      group_ids = Membership.where(:group_id =>organized_groups_ids.concat(organized_groups_ids).uniq).pluck(:id)
-    end
-
-
-    @memberships = Membership.select("memberships.*, people.given_name, addresses.locality").distinct.where(:id => member_ids).
-      joins(:person).
-      joins(ArelHelpers.join_association(Person, [:email_addresses, :personal_addresses, :phone_numbers], Arel::Nodes::OuterJoin) ).
-      page(params[:page])
+    @memberships = 
+      Membership
+        .includes(:group, :tags, :notes, person: [ :email_addresses, 
+                                                   :personal_addresses, 
+                                                   :phone_numbers, 
+                                                   :groups ])
+        .where(group_id: current_group.affiliates.pluck(:id).push(current_group.id))
+        .order("#{sort_param} #{direction_param}")
+        .page(params[:page])
 
     @memberships = @memberships.tagged_with(params[:tag]) if params[:tag]
 
     if search_term = params[:filter]
-      @memberships = @memberships.by_name(search_term).or(
-        @memberships.by_email(search_term)
-      ).or(
-        @memberships.by_location(search_term)
-      )
-    end
-
-    if sort_param && direction_param
-      sort = if sort_param == 'name'
-        'people.given_name'
-      else
-        sort_param
-      end
-      @memberships = @memberships.order("#{sort} #{direction_param}")
+      @memberships = 
+        @memberships.by_name(search_term)
+          .or(@memberships.by_email(search_term))
+          .or(@memberships.by_location(search_term))
     end
   end
 
   def sort_param
-     return unless params[:sort] || nil
-    @sort_param ||= ['name', 'role', 'group_name', 'addresses.locality'].delete(params[:sort])
+    #return unless params[:sort] || nil
+    @sort_param ||= ['name', 'role', 'group_name', 'addresses.locality']
+      .delete(params.fetch(:sort, 'name'))
+      .gsub('name', 'people.given_name')  
   end
 
   def authorize_and_load_membership

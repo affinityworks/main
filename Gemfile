@@ -105,8 +105,17 @@ gem 'nokogiri', '~> 1.8'
 gem 'google-api-client', '~> 0.10.3'
 gem 'googleauth'
 
+# memory profiling
+gem 'scout_apm'
+
 # crypto
 gem 'rbnacl-libsodium'
+
+# factories
+# - included here so we can use them on staging
+# - eg: rake qa:gen_big_subgroup
+gem 'factory_bot_rails'
+gem 'faker'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -127,10 +136,20 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+
+  #############
+  # profiling #
+  #############
   # lightweight profiling tool: https://github.com/MiniProfiler/rack-mini-profiler
   # miniprofiler is GREAT, but it appears to cause our action network sync
   # (and thus seed:db) to fail. commenting out for now, investigating later
-  # gem 'rack-mini-profiler', require: false
+  gem 'rack-mini-profiler'
+  # For memory profiling
+  gem 'memory_profiler'
+  # For call-stack profiling flamegraphs
+  gem 'flamegraph'
+  gem 'stackprof'
+
   # until 4.7.3, we need develop branch b/c: https://github.com/ctran/annotate_models/pull/514
   gem 'annotate', git: 'https://github.com/ctran/annotate_models.git', branch: "develop"
   gem 'guard'

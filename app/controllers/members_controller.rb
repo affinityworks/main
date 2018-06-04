@@ -8,8 +8,7 @@ class MembersController < ApplicationController
   # setters
   before_action :set_signup_mode, only: %i[new create edit update]
   before_action :set_oauth, only: %i[new create edit update]
-  before_action :set_group
-  before_action :set_members, only: :index
+  before_action :set_group, except: [:index]
   before_action :set_member, only: [:show, :edit, :update, :destroy, :attendances]
   before_action :set_person, only: [:account]
   before_action :authorize_member_access, only: %i[edit account update]
@@ -19,18 +18,7 @@ class MembersController < ApplicationController
 
   protect_from_forgery except: [:update, :create] #TODO: Add the csrf token in react.
 
-  def index
-    respond_to do |format|
-      format.html
-      format.json do
-        render json: {
-          members: JsonApi::PeopleRepresenter.for_collection.new(Person.add_event_attended(@members, current_group)),
-          total_pages: @members.total_pages,
-          page: @members.current_page
-        }.to_json
-      end
-    end
-  end
+  def index; end
 
   def show
     respond_to do |format|
@@ -218,24 +206,6 @@ class MembersController < ApplicationController
 
   def set_person
     @person = Person.find(params.require(:person_id).to_i)
-  end
-
-  def set_members
-    member_ids = Membership.where(:group_id =>@group.affiliates.pluck(:id).push(@group.id) ).pluck(:person_id)
-
-    @members = Person.where(:id => member_ids).includes(
-        [:email_addresses, :personal_addresses, :phone_numbers]
-      ).page(params[:page])
-
-    if params[:filter]
-      @members = @members.where('given_name ilike ? or family_name ilike ?', "%#{params[:filter]}%","%#{params[:filter]}%")
-    elsif params[:email]
-      @members = @members.by_email(params[:email])
-    end
-
-    if params[:sort]
-      @members = @members.order(params[:sort] => params[:direction])
-    end
   end
 
   def set_target

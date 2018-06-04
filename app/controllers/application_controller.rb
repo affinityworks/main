@@ -10,7 +10,9 @@ class ApplicationController < ActionController::Base
 
   def current_group
     if group_id = parse_group_id
-      Group.find(group_id)
+      Group
+        .includes(:affiliates, :affiliated_with)
+        .find(group_id)
     end
   end
 
@@ -143,7 +145,6 @@ class ApplicationController < ActionController::Base
   end
 
   def direction_param
-    return unless params[:direction]
-    @direction_param ||= ['asc', 'desc'].delete(params[:direction])
+    @direction_param ||= ['asc', 'desc'].delete(params.fetch(:direction, 'asc'))
   end
 end

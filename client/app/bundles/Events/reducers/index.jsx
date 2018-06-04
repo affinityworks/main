@@ -7,7 +7,6 @@ import newAttendance from './AttendanceFormReducer';
 import groups from './GroupsReducer';
 import group from './GroupReducer';
 import affiliates from './AffiliatesReducer';
-import members from './MembersReducer';
 import member from './MemberReducer';
 import memberships from './MembershipsReducer';
 import profile from './ProfileReducer';
@@ -25,7 +24,6 @@ export default combineReducers({
   featureToggles,
   groups,
   group,
-  members,
   member,
   memberships,
   attendances,
