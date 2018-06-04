@@ -1,6 +1,5 @@
 import {
   FETCH_MEMBER,
-  FETCH_MEMBERS,
   LOOK_UP_MEMBER,
   LOOK_UP_MEMBER_START,
   FETCH_MEMBERS_EVENTS
@@ -8,20 +7,6 @@ import {
 
 import { membersPath, client } from '../utils';
 import { addAlert } from '../actions';
-
-export const fetchMembers = (queryString = '') => {
-  return (dispatch) => {
-    client.get(`${membersPath()}.json${queryString}`)
-      .then(response => {
-        dispatch({
-          type: FETCH_MEMBERS,
-          payload: response
-        });
-      }).catch(alert => {
-        dispatch(addAlert(alert));
-      });
-  }
-};
 
 export const fetchMember = (id) => {
   return (dispatch) => {
