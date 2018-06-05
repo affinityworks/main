@@ -27,6 +27,12 @@ Group.find(3).toggle_feature_on(:email_google_group)
 Group.find(3).toggle_feature_off(:email_google_group)
 ```
 
+## Generate feature toggle with Rake task
+
+```shell
+$ rake feature_toggles:create[feature_name]
+```
+
 # Static Feature Toggles
 
 TK-TODO
