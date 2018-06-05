@@ -7,6 +7,7 @@ class MembershipsController < ApplicationController
   protect_from_forgery except: [:destroy]
 
   def index
+    require 'memory_profiler'; MemoryProfiler.start
     respond_to do |format|
       format.html
       format.json do
@@ -18,6 +19,8 @@ class MembershipsController < ApplicationController
         }.to_json
       end
     end
+    report = MemoryProfiler.stop
+    report.pretty_print
   end
 
   def show
