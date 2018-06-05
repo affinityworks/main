@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180418155604) do
+ActiveRecord::Schema.define(version: 20180605190757) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -300,6 +300,14 @@ ActiveRecord::Schema.define(version: 20180418155604) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.index ["share_page_id"], name: "index_facebook_shares_on_share_page_id", using: :btree
+  end
+
+  create_table "feature_toggles", force: :cascade do |t|
+    t.integer  "group_id"
+    t.boolean  "email_google_group"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.index ["group_id"], name: "index_feature_toggles_on_group_id", using: :btree
   end
 
   create_table "form_input_groups", force: :cascade do |t|
@@ -933,6 +941,7 @@ ActiveRecord::Schema.define(version: 20180418155604) do
   add_foreign_key "events", "addresses"
   add_foreign_key "events", "ticket_levels", column: "ticket_levels_id"
   add_foreign_key "facebook_shares", "share_pages"
+  add_foreign_key "feature_toggles", "groups"
   add_foreign_key "form_input_groups", "custom_forms"
   add_foreign_key "forms", "people"
   add_foreign_key "forms", "submissions", column: "submissions_id"

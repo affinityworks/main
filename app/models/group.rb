@@ -3,6 +3,7 @@ class Group < ApplicationRecord
   include Networkable
   include UrlHelpers
   include BulkImport
+  include HasFeatureToggles
   #has_paper_trail
   acts_as_taggable
 
