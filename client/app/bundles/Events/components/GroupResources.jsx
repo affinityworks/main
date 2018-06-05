@@ -23,7 +23,7 @@ const EmptyListOf = (resources) => (
 );
 
 const GroupResource = (r) => {
-  if(r.auth_link){
+  if(r.auth_link && r.link){
     return <UserAuth allowed={['organizer']}><li> {r.description}: <a href={r.link}>{r.link}</a> </li></UserAuth>
   } 
   else if(r.link) {
