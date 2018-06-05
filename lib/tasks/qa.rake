@@ -20,11 +20,29 @@ namespace :qa do
     puts "DONE! #{MEMBER_COUNT}-member subgroup created with id #{sg.id}."
   end
 
+  task gen_big_subgroup_with_membership_tags: :environment do
+    puts "Starting gen big subgroup...."
+    g = Group.find_by_name("National Network")
+    sg = FactoryBot.create(:subgroup_with_members_and_membership_tags,
+                           affiliated_with: [g],
+                           member_count: MEMBER_COUNT)
+    puts "DONE! #{MEMBER_COUNT}-member subgroup created with id #{sg.id}."
+  end
+
   task remove_big_subgroup: :environment do
     puts "deleting last group..."
     Group.last.destroy
     puts "deleting #{MEMBER_COUNT} members..."
     Person.last(MEMBER_COUNT).map(&:destroy)
     puts "DONE!"
+  end
+
+  task remove_big_subgroup_with_membership_tags: :environment do
+    puts "deleting last group..."
+    Group.last.destroy
+    puts "deleting #{MEMBER_COUNT} members..."
+    Person.last(MEMBER_COUNT).map(&:destroy)
+    puts "DONE!"
+    Tag.last(MEMBER_COUNT*3).map(&:destroy)
   end
 end

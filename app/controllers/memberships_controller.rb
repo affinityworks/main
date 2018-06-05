@@ -2,17 +2,25 @@ class MembershipsController < ApplicationController
   before_action :authenticate_person!
   before_action :authorize_group_access
   before_action :find_memberships, only: [:index]
+  before_action :find_group_tags, only: [:index]
   # TODO: THIS IS DANGEROUS!!!
   # for fix, wee comment in `client/app/bundles/Events/utils/Client.jsx`
   protect_from_forgery except: [:destroy]
 
+  # PERFORMANCE NOTE: (vaughanj10, aguestuser|06/05/18) 
+  # Marshalling large amounts of tags to JSON consumes a lot of memory
+  # - Currently we preload all tags associated with a group into the DOM
+  #   (and "typeahead" tagging works by filtering a list of pre-loaded tags)
+  # - If this breaks at scale, it would be advisable to provide tags incrementally/lazily 
+  #   (ie: fetch tags that match user input on keystrokes from a /tags endpoing intead of in bulk here)
+  # - We are deferring this optimization now as it is not yet needed
   def index
     respond_to do |format|
       format.html
       format.json do
         render json: {
           memberships: JsonApi::MembershipRepresenter.for_collection.new(@memberships),
-          tags: JsonApi::TagsRepresenter.for_collection.new(Tag.type_membership),
+          tags: JsonApi::TagsRepresenter.for_collection.new(@tags),
           total_pages: @memberships.total_pages,
           page: @memberships.current_page
         }.to_json
@@ -109,6 +117,11 @@ class MembershipsController < ApplicationController
           .or(@memberships.by_email(search_term))
           .or(@memberships.by_location(search_term))
     end
+  end
+
+  def find_group_tags
+    @tags =
+      Tag.type_membership_with_ids(current_group.memberships.pluck(:id))
   end
 
   def sort_param

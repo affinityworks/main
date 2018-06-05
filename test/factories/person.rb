@@ -22,5 +22,17 @@ FactoryBot.define do
         p.phone_numbers << FactoryBot.create(:phone_number)
       end
     end
+
+    factory :person_with_contact_info_and_tags do
+      after :create do |p|
+        p.email_addresses << FactoryBot.create(:email_address)
+        p.personal_addresses << FactoryBot.create(:personal_address)
+        p.phone_numbers << FactoryBot.create(:phone_number)
+
+        tags = 3.times.map { FactoryBot.build(:tag).name }
+        p.tag_list.add(tags)
+        p.save
+      end
+    end
   end
 end

@@ -23,4 +23,20 @@ FactoryBot.define do
       end
     end
   end
+
+  factory :subgroup_with_members_and_membership_tags, parent: :subgroup do
+    transient do
+      member_count 1
+    end
+
+    after :create do |group, evaluator|
+      evaluator.member_count.times do
+        FactoryBot.create(
+          :membership_with_tags,
+          person: FactoryBot.create(:person_with_contact_info),
+          group: group
+        )
+      end
+    end
+  end
 end

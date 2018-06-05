@@ -25,23 +25,51 @@ class TagsControllerTest < ActionDispatch::IntegrationTest
     assert_response :not_found
   end
 
-  test 'delete #destroy' do
-    person = people(:organizer)
-    sign_in person
+  describe 'delete #destroy' do
+    let(:tag_count){ Tag.count }
 
-    tag_name = 'example'
-    group = groups(:test)
-    group.tag_list.add('example')
-    group.save
+    before do
+      person = people(:organizer)
+      sign_in person
 
-    assert_equal group.reload.tag_list, ['example']
-    assert_difference 'Tag.count', 0 do
-      delete tag_url(resource_type: 'group', resource_id: group.id, id: group.tags.first.id), as: :json
-      assert_empty group.reload.tag_list
+      tag_name = 'example'
+      @group = groups(:test)
+      @group.tag_list.add('example')
+      @group.save
     end
 
+    describe 'tag has one has tagging' do
+      before do
+        tag_count
+        delete tag_url(resource_type: 'group', resource_id: @group.id, id: @group.tags.first.id), as: :json
+      end
 
+      it "removes a tagging" do
+        @group.reload.tag_list.must_be_empty
+      end
 
-    assert_response :success
+      it "removes the tag" do
+        Tag.count.must_equal(tag_count - 1)
+      end
+    end
+
+    describe 'tag has multiple taggings' do
+      before do
+        group_two = groups(:two)
+        group_two.tag_list.add('example')
+        group_two.save
+
+        tag_count
+        delete tag_url(resource_type: 'group', resource_id: @group.id, id: @group.tags.first.id), as: :json
+      end
+
+      it "removes a tagging" do
+        @group.reload.tag_list.must_be_empty
+      end
+
+      it "does not remove the tag" do
+        Tag.count.must_equal tag_count
+      end
+    end
   end
 end
