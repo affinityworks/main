@@ -9,7 +9,7 @@ class UserAuth extends Component {
       children 
     } = this.props
 
-    return allowed.indexOf(currentRole) >= 0 ? children : null
+    return allowed.includes(currentRole) ? children : null
   }
 }
 

@@ -1,13 +1,14 @@
 import React from 'react';
 import UserAuth from '../components/UserAuth';
+import FeatureToggle from '../components/FeatureToggle';
 
-const GroupResources = ({resources}) => (
+const GroupResources = ({toggles, resources}) => (
   <div>
     <h4>Resources</h4>
     {
       EmptyListOf(resources) ||
       <ul>
-        {resources.map(GroupResource)}
+        {resources.map((resource, i) => GroupResource({key: i, resource, toggles}))}
       </ul>
     }
   </div>
@@ -22,15 +23,21 @@ const EmptyListOf = (resources) => (
     null
 );
 
-const GroupResource = (r) => {
-  if(r.auth_link && r.link){
-    return <UserAuth allowed={['organizer']}><li> {r.description}: <a href={r.link}>{r.link}</a> </li></UserAuth>
+const GroupResource = ({key, resource, toggles}) => {
+  if(resource.auth_link && resource.link){
+    return <UserAuth {...{key, allowed: ['organizer']}}>
+            <li {...{key}}>
+              {resource.description}: <a href={resource.link}>{resource.link}</a> 
+            </li>
+          </UserAuth>
   } 
-  else if(r.link) {
-    return <li> {r.description}: <a href={r.link}>{r.link}</a> </li>
+  else if(resource.link) {
+    return <li {...{key}}> {resource.description}: <a href={resource.link}>{resource.link}</a> </li>
   }
-  else if(r.mailto) {
-    return <li> {r.description}: <a href={`mailto:${r.mailto}`} target="_blank">{r.mailto}</a> </li>
+  else if(resource.mailto) {
+    return <FeatureToggle {...{key, on: toggles.email_google_group}}>
+            <li {...{key}}> {resource.description}: <a href={`mailto:${resource.mailto}`} target="_blank">{resource.mailto}</a> </li>
+           </FeatureToggle>
   }
 };
 

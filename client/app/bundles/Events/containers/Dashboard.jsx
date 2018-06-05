@@ -55,6 +55,7 @@ class Dashboard extends Component {
         {this.renderTextEditor()}
         <hr/>
         <GroupResources {...{
+          toggles: attributes['feature-toggles'],
           resources: [{
             description: 'Recruit members', link: attributes['join-url'],
           },{
