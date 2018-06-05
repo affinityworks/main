@@ -1,6 +1,6 @@
 require_relative '../test_helper'
 
-class FeatureTogglesTest < ActionDispatch::IntegrationTest
+class StaticFeatureTogglesTest < ActionDispatch::IntegrationTest
 
   describe ".index api calls" do
     def toggle_for(feature, group_id)

@@ -3,7 +3,7 @@ class Subgroups::AfterCreate
     def call(organizer:, subgroup:)
       GroupMailer.join_group_email(organizer, subgroup).deliver_later
 
-      if FeatureToggle.on?(:google_groups, subgroup)
+      if StaticFeatureToggle.on?(:google_groups, subgroup)
         # TODO (aguestuser|11 Ap 2018):
         # do this in a job; network calls take several seconds
         GoogleAPI::Service.new

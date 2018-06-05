@@ -13,7 +13,7 @@ class Members::AferCreateTest < ActiveSupport::TestCase
 
     describe "when gsuite toggle off" do
       before do
-        allow(FeatureToggle).to receive(:on?).and_return(false)
+        allow(StaticFeatureToggle).to receive(:on?).and_return(false)
         Members::AfterCreate.call(member: person, group: group)
       end
 
@@ -30,7 +30,7 @@ class Members::AferCreateTest < ActiveSupport::TestCase
 
     describe "when gsuite feature toggled on " do
       before do
-        allow(FeatureToggle).to receive(:on?).and_return(true)
+        allow(StaticFeatureToggle).to receive(:on?).and_return(true)
         Members::AfterCreate.call(member: person, group: group)
       end
 

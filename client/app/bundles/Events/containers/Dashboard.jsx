@@ -8,7 +8,7 @@ import AttendanceActivityFeed from '../components/AttendanceActivityFeed';
 import TextEditor from '../components/TextEditor';
 import PersonActivityFeed from '../components/PersonActivityFeed';
 import SyncActivityFeed from '../components/SyncActivityFeed';
-import { fetchGroup, fetchFeatureToggles, addAlert } from '../actions';
+import { fetchGroup, fetchStaticFeatureToggles, addAlert } from '../actions';
 import UserAuth from '../components/UserAuth';
 import GroupResources from '../components/GroupResources';
 import { client, dashboardPath } from '../utils';
@@ -21,7 +21,7 @@ class Dashboard extends Component {
   componentWillMount() {
     const { groupId } = this.props.match.params;
     this.props.fetchGroup(groupId);
-    this.props.fetchFeatureToggles('events', groupId)
+    this.props.fetchStaticFeatureToggles('events', groupId)
   }
 
   renderTextEditor () {
@@ -38,7 +38,7 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { group: { attributes }, featureToggles } = this.props;
+    const { group: { attributes }, staticFeatureToggles } = this.props;
     const { events, attendances, people, sync, editText } = this.state;
 
     if(!attributes) { return null }
@@ -49,7 +49,7 @@ class Dashboard extends Component {
         <Breadcrumbs active='Dashboard' location={this.props.location} />
         <br />
 
-        <Nav activeTab='dashboard' eventsOn={featureToggles.events} />
+        <Nav activeTab='dashboard' eventsOn={staticFeatureToggles.events} />
         <br />
 
         {this.renderTextEditor()}
@@ -78,15 +78,15 @@ class Dashboard extends Component {
   }
 }
 
-const mapStateToProps = ({ group, featureToggles }) => {
-  return { group, featureToggles }
+const mapStateToProps = ({ group, staticFeatureToggles }) => {
+  return { group, staticFeatureToggles }
 };
 
 export default connect(
   mapStateToProps,
   {
     fetchGroup,
-    fetchFeatureToggles,
+    fetchStaticFeatureToggles,
     addAlert
   }
 )(Dashboard);

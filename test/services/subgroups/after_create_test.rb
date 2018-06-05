@@ -21,7 +21,7 @@ class Subgroups::AferCreateTest < ActiveSupport::TestCase
     end
 
     describe "gsuite feature toggle is on" do
-      before { allow(FeatureToggle).to receive(:on?).and_return(true) }
+      before { allow(StaticFeatureToggle).to receive(:on?).and_return(true) }
 
       it "calls GoogleAPI services if authorization is successful" do
         expect(GoogleAPI::Service)
@@ -37,7 +37,7 @@ class Subgroups::AferCreateTest < ActiveSupport::TestCase
     end
 
     describe "gsuite feature toggle is off" do
-      before { allow(FeatureToggle).to receive(:on?).and_return(false) }
+      before { allow(StaticFeatureToggle).to receive(:on?).and_return(false) }
 
       it "does not call GoogleAPI services" do
         expect(GoogleAPI::Service).to_not receive(:new)

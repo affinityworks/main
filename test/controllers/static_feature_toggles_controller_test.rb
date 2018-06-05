@@ -1,6 +1,6 @@
 require_relative "../test_helper"
 
-class FeatureTogglesControllerTest < ActionController::TestCase
+class StaticFeatureTogglesControllerTest < ActionController::TestCase
   test "routes" do
     assert_routing(
       { path: '/feature_toggles', method: :get },
