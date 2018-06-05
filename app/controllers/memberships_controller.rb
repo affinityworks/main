@@ -7,6 +7,13 @@ class MembershipsController < ApplicationController
   # for fix, wee comment in `client/app/bundles/Events/utils/Client.jsx`
   protect_from_forgery except: [:destroy]
 
+  # PERFORMANCE NOTE: (vaughanj10, aguestuser|06/05/18) 
+  # Marshalling large amounts of tags to JSON consumes a lot of memory
+  # - Currently we preload all tags associated with a group into the DOM
+  #   (and "typeahead" tagging works by filtering a list of pre-loaded tags)
+  # - If this breaks at scale, it would be advisable to provide tags incrementally/lazily 
+  #   (ie: fetch tags that match user input on keystrokes from a /tags endpoing intead of in bulk here)
+  # - We are deferring this optimization now as it is not yet needed
   def index
     respond_to do |format|
       format.html

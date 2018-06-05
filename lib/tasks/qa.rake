@@ -36,4 +36,13 @@ namespace :qa do
     Person.last(MEMBER_COUNT).map(&:destroy)
     puts "DONE!"
   end
+
+  task remove_big_subgroup_with_membership_tags: :environment do
+    puts "deleting last group..."
+    Group.last.destroy
+    puts "deleting #{MEMBER_COUNT} members..."
+    Person.last(MEMBER_COUNT).map(&:destroy)
+    puts "DONE!"
+    Tag.last(MEMBER_COUNT*3).map(&:destroy)
+  end
 end
