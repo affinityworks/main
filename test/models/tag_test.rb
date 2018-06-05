@@ -28,7 +28,6 @@ class EventTest < ActiveSupport::TestCase
   end
 
   describe '.type_membership_with_ids' do
-    focus
     it 'only returns tags associated with memberships in group' do
       membership = memberships(:one)
       membership.tag_list.add('tag_1', 'tag_2', 'tag_3')
