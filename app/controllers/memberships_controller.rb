@@ -2,6 +2,7 @@ class MembershipsController < ApplicationController
   before_action :authenticate_person!
   before_action :authorize_group_access
   before_action :find_memberships, only: [:index]
+  before_action :find_group_tags, only: [:index]
   # TODO: THIS IS DANGEROUS!!!
   # for fix, wee comment in `client/app/bundles/Events/utils/Client.jsx`
   protect_from_forgery except: [:destroy]
@@ -12,7 +13,7 @@ class MembershipsController < ApplicationController
       format.json do
         render json: {
           memberships: JsonApi::MembershipRepresenter.for_collection.new(@memberships),
-          tags: JsonApi::TagsRepresenter.for_collection.new(Tag.type_membership),
+          tags: JsonApi::TagsRepresenter.for_collection.new(@tags),
           total_pages: @memberships.total_pages,
           page: @memberships.current_page
         }.to_json
@@ -109,6 +110,11 @@ class MembershipsController < ApplicationController
           .or(@memberships.by_email(search_term))
           .or(@memberships.by_location(search_term))
     end
+  end
+
+  def find_group_tags
+    @tags =
+      Tag.type_membership_with_ids(current_group.memberships.pluck(:id))
   end
 
   def sort_param
