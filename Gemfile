@@ -154,7 +154,6 @@ group :development do
   gem 'annotate', git: 'https://github.com/ctran/annotate_models.git', branch: "develop"
   gem 'guard'
   gem 'guard-minitest'
-  gem 'memory_profiler'
 end
 
 group :test do
