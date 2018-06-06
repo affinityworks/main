@@ -29,9 +29,6 @@ gem 'roar-jsonapi'
 
 # postgresql database adatper
 gem 'pg'
-gem 'graphql'
-gem 'graphql-rails-resolver'
-gem 'graphiql-rails'
 
 #pretty layout for console
 gem 'hirb'
@@ -88,7 +85,6 @@ gem 'doorkeeper', ">= 4.3.1" # vuln pin
 gem 'httparty'
 gem 'acts-as-taggable-on', '~> 4.0'
 
-gem 'newrelic_rpm'
 gem 'paper_trail'
 gem 'derailed'
 gem 'memory_profiler'
@@ -116,6 +112,9 @@ gem 'rbnacl-libsodium'
 # - eg: rake qa:gen_big_subgroup
 gem 'factory_bot_rails'
 gem 'faker'
+
+# heroku memory monitor / worker restarter
+gem 'whacamole'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

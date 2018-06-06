@@ -20,7 +20,6 @@ module Api::ActionNetwork::Import
     next_uri = client.links && client.links['next']&.href
     [collection.resources, next_uri]
   rescue => e
-    NewRelic::Agent.notice_error(e)
     logger.error e.inspect
     retry if (retries += 1) < 3
     [[], nil]
@@ -45,7 +44,6 @@ module Api::ActionNetwork::Import
     yield(resource) if block_given?
     resource
   rescue => e
-    NewRelic::Agent.notice_error(e)
     logger.error e.inspect
     retry if (retries += 1) < 3
     nil
@@ -94,7 +92,6 @@ module Api::ActionNetwork::Import
       resource.update_column(:updated_at, updated_at_time) if updated_at_time
       resource
     rescue Exception => e
-      NewRelic::Agent.notice_error(e)
       logger.error resource
       logger.error e
       raise e
