@@ -301,7 +301,6 @@ GEM
     multipart-post (2.0.0)
     mustermann (1.0.2)
     nenv (0.3.0)
-    newrelic_rpm (5.2.0.345)
     nio4r (2.1.0)
     nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
@@ -555,7 +554,6 @@ DEPENDENCIES
   minitest-matchers
   minitest-rails-capybara
   minitest-spec-rails
-  newrelic_rpm
   nokogiri (~> 1.8)
   omniauth
   omniauth-facebook

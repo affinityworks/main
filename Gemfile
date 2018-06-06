@@ -85,7 +85,6 @@ gem 'doorkeeper', ">= 4.3.1" # vuln pin
 gem 'httparty'
 gem 'acts-as-taggable-on', '~> 4.0'
 
-gem 'newrelic_rpm'
 gem 'paper_trail'
 gem 'derailed'
 gem 'memory_profiler'

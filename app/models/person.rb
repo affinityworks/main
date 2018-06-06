@@ -79,8 +79,6 @@ class Person < ApplicationRecord
   has_many :organizer_memerships, -> { organizer }, :class_name => 'Membership'
   has_many :organized_groups, :source => :group, :through => :organizer_memerships
 
-  before_update :generate_update_events
-
   attr_accessor :attended_events_count #NOTE ROAR purpose
 
   after_create :custom_field_to_phone_number
@@ -389,18 +387,5 @@ class Person < ApplicationRecord
       person.save if email.new_record? || identity.new_record?
       person
     end
-
-
   end
-
-  def generate_update_events
-    record_update_event('PersonUpdated')
-    record_update_event('PersonPasswordUpdated') if encrypted_password_changed?
-  end
-
-  def record_update_event(name)
-    ::NewRelic::Agent.record_custom_event(name, id: id, email: primary_email_address)
-  end
-
-
 end
