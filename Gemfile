@@ -29,9 +29,6 @@ gem 'roar-jsonapi'
 
 # postgresql database adatper
 gem 'pg'
-gem 'graphql'
-gem 'graphql-rails-resolver'
-gem 'graphiql-rails'
 
 #pretty layout for console
 gem 'hirb'

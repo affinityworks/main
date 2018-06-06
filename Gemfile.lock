@@ -198,11 +198,6 @@ GEM
       multi_json (~> 1.11)
       os (~> 0.9)
       signet (~> 0.7)
-    graphiql-rails (1.4.1)
-      rails
-    graphql (1.4.2)
-    graphql-rails-resolver (0.2.9)
-      graphql (>= 0.19.0)
     guard (2.14.2)
       formatador (>= 0.2.4)
       listen (>= 2.7, < 4.0)
@@ -306,7 +301,7 @@ GEM
     multipart-post (2.0.0)
     mustermann (1.0.2)
     nenv (0.3.0)
-    newrelic_rpm (3.18.1.330)
+    newrelic_rpm (5.2.0.345)
     nio4r (2.1.0)
     nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
@@ -541,9 +536,6 @@ DEPENDENCIES
   geokit-rails
   google-api-client (~> 0.10.3)
   googleauth
-  graphiql-rails
-  graphql
-  graphql-rails-resolver
   guard
   guard-minitest
   hirb
