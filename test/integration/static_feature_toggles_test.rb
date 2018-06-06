@@ -4,7 +4,7 @@ class StaticFeatureTogglesTest < ActionDispatch::IntegrationTest
 
   describe ".index api calls" do
     def toggle_for(feature, group_id)
-      get '/feature_toggles', params: { feature: feature, group_id: group_id }
+      get '/static_feature_toggles', params: { feature: feature, group_id: group_id }
       JSON.parse(response.body).fetch(feature)
     end
 
