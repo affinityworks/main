@@ -501,6 +501,7 @@ GEM
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
+    whacamole (1.2.0)
     wicked_pdf (1.1.0)
     wkhtmltopdf-binary-edge (0.12.4.0)
     wkhtmltopdf-heroku (2.12.4.0)
@@ -589,6 +590,7 @@ DEPENDENCIES
   valid_attribute
   web-console
   webmock
+  whacamole
   wicked_pdf
   wkhtmltopdf-binary-edge (~> 0.12.4.0)
   wkhtmltopdf-heroku
