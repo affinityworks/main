@@ -115,7 +115,7 @@ Rails.application.routes.draw do
     get :groups, on: :collection
   end
 
-  get 'feature_toggles', to: 'feature_toggles#index'
+  get 'static_feature_toggles', to: 'static_feature_toggles#index'
 
   namespace :api, defaults: { format: 'json' } do
     namespace :v1 do

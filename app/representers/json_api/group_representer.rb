@@ -16,6 +16,7 @@ class JsonApi::GroupRepresenter < Roar::Decorator
     property :google_group_url
     property :google_group_email
     property :whiteboard
+    property :feature_toggles, default: {}
 
     property :creator, extend: JsonApi::PeopleRepresenter, class: Person
   end

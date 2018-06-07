@@ -1,4 +1,4 @@
-class FeatureToggle
+class StaticFeatureToggle
   FEATURES = %i[events google_groups].to_set
 
   NETWORKS = HashWithIndifferentAccess.new(
