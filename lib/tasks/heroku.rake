@@ -2,7 +2,7 @@ require 'yaml'
 
 namespace :heroku do
   task release: :environment do
-    Rake::Task["db:migrate"]
+    Rake::Task["db:migrate"].execute
     Migration.update_networks
   end
 
