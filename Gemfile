@@ -65,7 +65,7 @@ gem 'jquery-ui-rails', '~> 5.0.4'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 gem 'roar'
-gem 'react_on_rails'
+gem 'react_on_rails', '~> 6.8.0'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
@@ -96,7 +96,7 @@ gem 'rb-fsevent', '~> 0.10.2'
 gem 'arel-helpers'
 gem 'koala'
 gem 'cocoon'
-gem 'nokogiri', '~> 1.8'
+gem 'nokogiri'
 
 gem 'google-api-client', '~> 0.10.3'
 gem 'googleauth'
@@ -112,6 +112,10 @@ gem 'rbnacl-libsodium'
 # - eg: rake qa:gen_big_subgroup
 gem 'factory_bot_rails'
 gem 'faker'
+
+# Excel / Spreadsheet Export
+gem 'axlsx_rails'
+gem 'zip-zip'
 
 # heroku memory monitor / worker restarter
 gem 'whacamole'
