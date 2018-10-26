@@ -141,7 +141,7 @@ class Events extends Component {
             </div>
             <UserAuth allowed={['organizer']}>
               <button
-                className='btn btn-primary mr-2'
+                className='btn btn-primary mr-2 btn-add-event'
                 onClick={this.displayEventCreate}
               >
                 Add Event
@@ -151,7 +151,7 @@ class Events extends Component {
             <UserAuth allowed={['organizer']}>
               <div className='col-3 text-right'>
                 <a href={`/admin/auth/facebook?group_id=${id}`} className='btn btn-facebook'>
-                  Import Event From Facebook
+                  Import Facebook Event
                 </a>
               </div>
             </UserAuth>
