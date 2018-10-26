@@ -1,0 +1,6 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "Events") do |sheet|
+  @events.each do |event|
+    sheet.add_row [event.name, event.title, event.description, event.summary, event.start_date, event.end_date]
+  end
+end
