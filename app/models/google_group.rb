@@ -1,6 +1,6 @@
 class GoogleGroup < ApplicationRecord
   # ASSOCIATIONS
-  belongs_to :group
+  belongs_to :group, optional: true
 
   # VALIDATIONS
   validates_presence_of %i[group_id group_key email url]

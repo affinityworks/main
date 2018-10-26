@@ -22,7 +22,7 @@ class CustomForm < ApplicationRecord
 
   # ASSOCIATIONS
 
-  belongs_to :form
+  belongs_to :form, optional: true
   accepts_nested_attributes_for :form
   delegate :browser_url,
            :call_to_action,
@@ -32,7 +32,7 @@ class CustomForm < ApplicationRecord
            :description,
            to: :form
 
-  belongs_to :group
+  belongs_to :group, optional: true
 
   INPUT_GROUPS.each do |input_group|
     has_one input_group,

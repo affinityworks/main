@@ -14,7 +14,7 @@
 class Identity < ActiveRecord::Base
   before_save :request_long_lived_token
 
-  belongs_to :person
+  belongs_to :person, optional: true
   validates_presence_of :uid, :provider#, :person_id
   validates_uniqueness_of :uid, :scope => :provider
 

@@ -19,7 +19,7 @@
 
 class PhoneNumber < ApplicationRecord
   include ArelHelpers::ArelTable
-  belongs_to :person
+  belongs_to :person, optional: true
   PHONE_FORMAT = /\A(\+\d{1,2}[\s-]?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}\z/
 
   validates :number, :presence => true,

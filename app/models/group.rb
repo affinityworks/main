@@ -42,9 +42,9 @@ class Group < ApplicationRecord
   has_many :signup_forms, foreign_key: :group_id, class_name: 'SignupForm', dependent: :destroy
   has_one :google_group, dependent: :destroy
 
-  belongs_to :creator, class_name: "Person"
-  belongs_to :modified_by, class_name: "Person"
-  belongs_to :location, class_name: 'GroupAddress', foreign_key: :address_id
+  belongs_to :creator, class_name: "Person", optional: true
+  belongs_to :modified_by, class_name: "Person", optional: true
+  belongs_to :location, class_name: 'GroupAddress', foreign_key: :address_id, optional: true
 
   accepts_nested_attributes_for :location
   accepts_nested_attributes_for :memberships

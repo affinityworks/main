@@ -43,8 +43,8 @@ class Form < ApplicationRecord
   # ASSOCIATIONS
   #
 
-  belongs_to :person
-  belongs_to :creator, :class_name => "Person"
+  belongs_to :person, optional: true
+  belongs_to :creator, :class_name => "Person", optional: true
   has_many :submissions
   has_many :answers, :through => "Questions"
 

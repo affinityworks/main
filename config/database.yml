@@ -14,8 +14,8 @@ development:
   <<: *default
   database: affinity_development
   host: localhost
-  username: affinity
-  password: r1Zih6bEiyu7pdu
+  username: rabble
+  password: 
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".

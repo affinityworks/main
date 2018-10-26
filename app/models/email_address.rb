@@ -23,7 +23,7 @@ class EmailAddress < ApplicationRecord
             format: { with: ADDRESS_FORMAT,
                       message: "'%{value}' is not a valid email address" }
 
-  belongs_to :person
+  belongs_to :person, optional: true
 
   before_save :update_person_identifier
 

@@ -1,7 +1,7 @@
 class NetworkMembership < ApplicationRecord
   # ASSOCIATIONS
-  belongs_to :group
-  belongs_to :network
+  belongs_to :group, optional: true
+  belongs_to :network, optional: true
 
   # SCOPES
   scope :primary, ->{ where(primary: true) }

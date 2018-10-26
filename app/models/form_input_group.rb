@@ -31,7 +31,7 @@ class FormInputGroup < ApplicationRecord
 
   # ASSOCIATIONS
 
-  belongs_to :custom_form
+  belongs_to :custom_form, optional: true
 
   # LIFE_CYCLE HOOKS
 

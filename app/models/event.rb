@@ -55,14 +55,14 @@ class Event < ApplicationRecord
 
   has_many :ticket_levels#, dependent: :destroy
 
-  belongs_to :location, class_name: 'Address', foreign_key: :address_id
-  belongs_to :creator, class_name: 'Person'
-  belongs_to :organizer, class_name: 'Person'
-  belongs_to :modified_by, class_name: 'Person'
+  belongs_to :location, class_name: 'Address', foreign_key: :address_id, optional: true
+  belongs_to :creator, class_name: 'Person', optional: true
+  belongs_to :organizer, class_name: 'Person', optional: true
+  belongs_to :modified_by, class_name: 'Person', optional: true
   has_many :attendances, dependent: :destroy
   has_many :attendees, through: :attendances, source: :person
   has_many :reminders, dependent: :destroy
-  has_and_belongs_to_many :groups
+  has_and_belongs_to_many :groups, optional: true
   has_many :facebook_events, dependent: :destroy
   has_one :attendance_event, dependent: :destroy
   has_one :no_attendance_event, dependent: :destroy

@@ -16,8 +16,8 @@ class Attendance < ApplicationRecord
 
 
   has_many :tickets
-  belongs_to :person
-  belongs_to :event
+  belongs_to :person, optional: true
+  belongs_to :event, optional: true
 
   has_many :email_addresses, through: :person
   has_many :phone_numbers, through: :person

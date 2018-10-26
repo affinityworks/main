@@ -1,6 +1,6 @@
 class TagOrigin < ApplicationRecord
-  belongs_to :tag
-  belongs_to :origin
+  belongs_to :tag, optional: true
+  belongs_to :origin, optional: true
   has_many :taggings, through: :tag
 
   validates :uid, presence: true

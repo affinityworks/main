@@ -1,6 +1,6 @@
 class Answer < ApplicationRecord
-  belongs_to :responses
-  belongs_to :person
-  belongs_to :question
-  belongs_to :canvass
+  belongs_to :responses, optional: true
+  belongs_to :person, optional: true
+  belongs_to :question, optional: true
+  belongs_to :canvass, optional: true
 end

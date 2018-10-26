@@ -18,9 +18,10 @@ module Api::ActionNetwork::Events
         logger.info "info: Api::ActionNetwork::Events#import! from #{next_uri}"
 
         events, next_uri = request_resources_from_action_network(next_uri, group)
-
+        #logger.debug events.first.save!
         existing_events, new_events = partition(events)
-
+        #logger.debug "Existing Events: #{existing_events}"
+        #logger.debug "New Events:#{new_events}"
         new_count += new_events.size
 
         existing_count += existing_count.size
@@ -51,7 +52,9 @@ module Api::ActionNetwork::Events
   end
 
   def self.associate_with_group(new_events, group)
+
     new_events.each do |event|
+      #logger.debug event.errors
       event.groups.push(group)
       event.organizer.groups.push(group)   if event.organizer
       event.creator.groups.push(group)     if event.creator

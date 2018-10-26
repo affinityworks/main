@@ -14,7 +14,7 @@
 #
 
 class Submission < ApplicationRecord
-  belongs_to :form
-  belongs_to :person
-  belongs_to :referrer_data
+  belongs_to :form, optional: true
+  belongs_to :person, optional: true
+  belongs_to :referrer_data, optional: true
 end

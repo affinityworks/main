@@ -3,7 +3,7 @@ module HasAttendanceEvent
   include Api::Identifiers
 
   included do
-    belongs_to :event
+    belongs_to :event, optional: true
 
     def self.replicate_and_export(event)
       return unless should_replicate? event

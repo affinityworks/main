@@ -75,9 +75,9 @@ class Person < ApplicationRecord
   accepts_nested_attributes_for :personal_addresses, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :identities, reject_if: :all_blank, allow_destroy: true
 
-  # TODO: (aguestuser|28-Feb-2018) fix `memership` typos
-  has_many :organizer_memerships, -> { organizer }, :class_name => 'Membership'
-  has_many :organized_groups, :source => :group, :through => :organizer_memerships
+  # TODO: (aguestuser|28-Feb-2018) fix `membership` typos
+  has_many :organizer_memberships, -> { organizer }, :class_name => 'Membership'
+  has_many :organized_groups, :source => :group, :through => :organizer_memberships
 
   attr_accessor :attended_events_count #NOTE ROAR purpose
 

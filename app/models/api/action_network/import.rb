@@ -87,15 +87,23 @@ module Api::ActionNetwork::Import
 
   def create_single_resource(resource)
     begin
-      updated_at_time = resource.updated_at
-      resource.tap(&:save!)
-      resource.update_column(:updated_at, updated_at_time) if updated_at_time
-      resource
-    rescue Exception => e
-      logger.error resource
-      logger.error e
-      raise e
+      save_resource(resource)
+    rescue
+      begin #yes this is an ugly hack. sorry -rabble elections and all
+        save_resource(resource.class.new(resource.attributes))
+      rescue Exception => e
+        logger.error resource
+        logger.error e
+        raise e
+      end
     end
+  end
+
+  def save_resource(resource)
+    updated_at_time = resource.updated_at
+    resource.tap(&:save!)
+    resource.update_column(:updated_at, updated_at_time) if updated_at_time
+    resource
   end
 
   def create(new_resources)

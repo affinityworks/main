@@ -37,7 +37,7 @@ class Address < ApplicationRecord
 
   serialize :address_lines, Array
 
-  belongs_to :person
+  belongs_to :person, optional: true
 
   validates :region,
             inclusion: { in: VALID_STATES + [nil, ""],
