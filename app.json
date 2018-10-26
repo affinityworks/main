@@ -101,6 +101,9 @@
       "url": "https://github.com/affinityworks/blackbox-buildpack.git"
     },
     {
+      "url": "hhttps://github.com/JustinLove/heroku-buildpack-libsodium.git"    
+    },
+    {
       "url": "heroku/nodejs"
     },
     {
