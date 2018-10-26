@@ -9,6 +9,7 @@ class EventsController < ApplicationController
   def index
     respond_to do |format|
       format.html
+      format.xlsx
       format.json do
         render json: {
           events: JsonApi::EventsRepresenter.for_collection.new(Event.add_attendance_counts(@events)),
