@@ -135,6 +135,10 @@ $primaryblue: rgba(2, 117, 216, 1);
     @extend button;
 }
 
+.btn-add-event {
+    height: 38px;
+}
+
 .modal-actions {
     display: flex;
     flex-direction: row;
