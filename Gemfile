@@ -22,6 +22,7 @@ gem 'omniauth-facebook'
 gem 'omniauth-twitter'
 gem 'omniauth-google-oauth2'
 gem 'bootstrap', '~> 4.0.0.alpha5'
+gem 'bootstrap-sass' 
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.3.3'
 end
@@ -66,6 +67,7 @@ gem 'jquery-ui-rails', '~> 5.0.4'
 gem 'jbuilder', '~> 2.5'
 gem 'roar'
 gem 'react_on_rails'
+
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
@@ -175,7 +177,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 ruby ">=2.3.3"
 
-gem 'mini_racer', platforms: :ruby
+gem 'mini_racer', '~> 0.2.3', platforms: :ruby
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.3.3'
