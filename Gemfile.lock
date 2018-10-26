@@ -600,6 +600,7 @@ DEPENDENCIES
   rails-controller-testing
   rake (= 12.1.0)
   rb-fsevent (~> 0.10.2)
+  rbnacl
   rbnacl-libsodium
   react_on_rails (~> 6.8.0)
   redis

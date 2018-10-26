@@ -107,6 +107,7 @@ gem 'googleauth'
 gem 'scout_apm'
 
 # crypto
+gem 'rbnacl'
 gem 'rbnacl-libsodium'
 
 # factories
